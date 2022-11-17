@@ -7,11 +7,6 @@
     "generated-code/*"
   ],
   "scripts": {
-    "build": "run-p build:*",
-    "build:bamboo-api": "gen-tool/build-api.js bamboo-api",
-    "build:bitbucket-api": "gen-tool/build-api.js bitbucket-api",
-    "build:confluence-cloud-api": "gen-tool/build-api.js confluence-cloud-api",
-    "build:jira-cloud-api": "gen-tool/build-api.js jira-cloud-api",
     "fetch": "run-s 'fetch:**'",
     "fetch:swagger:confluence-cloud-api": "curl -o confluence-cloud-api/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
     "fetch:swagger:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
