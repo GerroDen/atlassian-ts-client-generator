@@ -16,7 +16,7 @@
     "fetch:swagger:confluence-cloud-api": "curl -o confluence-cloud-api/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
     "fetch:swagger:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
     "fetch:swagger:bamboo-api": "curl -o bamboo-api/swagger.json https://developer.atlassian.com/server/bamboo/swagger.v3.json",
-    "fetch:swagger:bitbucket-api": "curl -o bamboo-api/swagger.json https://developer.atlassian.com/server/bitbucket/8.6.swagger.v3.json",
+    "fetch:swagger:bitbucket-api": "curl -o bitbucket-api/swagger.json https://developer.atlassian.com/server/bitbucket/8.6.swagger.v3.json",
     "gen": "run-s 'gen:*'",
     "gen:bamboo-api": "gen-tool/gen-api.js bamboo-api && tsc -p generated-code/bamboo-api --noEmit",
     "gen:bitbucket-api": "gen-tool/gen-api.js bitbucket-api && gen-tool/fix-bitbucket-gen.js && tsc -p generated-code/bitbucket-api --noEmit",
