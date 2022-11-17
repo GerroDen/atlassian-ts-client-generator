@@ -1,0 +1,40 @@
+{
+  "name": "atlassian-js-client-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "generated-code/*"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:bamboo-api": "gen-tool/build-api.js bamboo-api",
+    "build:bitbucket-api": "gen-tool/build-api.js bitbucket-api",
+    "build:bitrise-api": "gen-tool/build-api.js bitrise-api",
+    "build:confluence-cloud-api": "gen-tool/build-api.js confluence-cloud-api",
+    "build:jira-cloud-api": "gen-tool/build-api.js jira-cloud-api",
+    "fetch": "run-p 'fetch:**'",
+    "fetch:swagger:bitrise-api": "curl -o bitrise-api/swagger.json https://api-docs.bitrise.io/docs/swagger.json",
+    "fetch:swagger:confluence-cloud-api": "curl -o confluence-cloud-api/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
+    "fetch:swagger:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
+    "fetch:wadl:bamboo-api": "curl -su lkimmel -o bamboo-api/application.wadl https://bamtwo.apps.seibert-media.net/rest/api/1.0/application.wadl",
+    "fetch:wadl:bitbucket-api": "curl -su lkimmel -o bitbucket-api/application.wadl https://bitbucket.apps.seibert-media.net/rest/api/1.0/application.wadl",
+    "gen": "run-s 'gen:*'",
+    "gen:bamboo-api": "gen-tool/conv-wadl.js bamboo-api && gen-tool/fix-wadl.js bamboo-api && gen-tool/gen-api.js bamboo-api && tsc -p generated-code/bamboo-api --noEmit",
+    "gen:bitbucket-api": "gen-tool/conv-wadl.js bitbucket-api && gen-tool/fix-wadl.js bitbucket-api && gen-tool/gen-api.js bitbucket-api && gen-tool/fix-bitbucket-gen.js && tsc -p generated-code/bitbucket-api --noEmit",
+    "gen:bitrise-api": "gen-tool/gen-api.js bitrise-api",
+    "gen:confluence-cloud-api": "gen-tool/gen-api.js confluence-cloud-api && gen-tool/fix-confluence-cloud-gen.js && tsc -p generated-code/confluence-cloud-api --noEmit",
+    "gen:jira-cloud-api": "gen-tool/gen-api.js jira-cloud-api && gen-tool/fix-jira-cloud-gen.js && tsc -p generated-code/jira-cloud-api --noEmit",
+    "lint": "eslint . --ext js,cjs"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.2",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "exec-sh": "^0.4.0",
+    "glob": "^8.0.3",
+    "npm-check-updates": "^16.4.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1"
+  }
+}
