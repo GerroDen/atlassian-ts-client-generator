@@ -10,12 +10,12 @@ try {
     /** @type string */
     let content = await fs.readFile(file, { encoding: "utf8" });
     content = content.replaceAll(
-      "arrayLabelCreate: Array | LabelCreate;",
-      "arrayLabelCreate: Array<LabelCreate> | LabelCreate;"
+      "links?: { [key: string]: GenericLinksValue; };",
+      "_links?: { [key: string]: GenericLinksValue; };"
     );
     content = content.replaceAll(
-      "links?: { [key: string]: any | string; };",
-      "_links?: { [key: string]: any | string; };"
+      "status: BulkRemoveContentStatesStatusEnum;",
+      "status: BulkRemoveContentStatesOperationStatusEnum;"
     );
     await fs.writeFile(file, content);
   }
