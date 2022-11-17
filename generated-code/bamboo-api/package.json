@@ -1,0 +1,8 @@
+{
+  "name": "bamboo-api",
+  "version": "9.0.1",
+  "description": "OpenAPI client for bamboo-api",
+  "author": "OpenAPI-Generator",
+  "private": true,
+  "main": "src/index.ts"
+}
