@@ -3,7 +3,7 @@ import glob from "glob";
 import { promises as fs } from "fs";
 
 try {
-  const files = glob.sync("generated-code/jira-cloud-api/**/*.ts", {
+  const files = glob.sync("generated-code/jira-*cloud-api/**/*.ts", {
     absolute: true,
   });
   for (let file of files) {
@@ -25,6 +25,7 @@ try {
       "{ [key: string]: any; }"
     );
     content = content.replace(/Set<(.*?)>;/g, "$1[];");
+    content = content.replace(/export \* from '\.\/BoardsApi';\n/g, "");
     await fs.writeFile(file, content);
   }
 } catch (e) {

@@ -1,0 +1,8 @@
+{
+  "name": "jira-software-cloud-api",
+  "version": "1001.0.0",
+  "description": "OpenAPI client for jira-software-cloud-api",
+  "author": "OpenAPI-Generator",
+  "private": true,
+  "main": "src/index.ts"
+}
