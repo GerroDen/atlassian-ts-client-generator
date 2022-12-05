@@ -502,20 +502,20 @@ export type GetFieldsPaginatedTypeEnum = typeof GetFieldsPaginatedTypeEnum[keyof
  */
 export const GetFieldsPaginatedOrderByEnum = {
     ContextsCount: 'contextsCount',
-    ContextsCountDescDesc: '-contextsCount',
-    ContextsCountAscAsc: '+contextsCount',
+    ContextsCountDesc: '-contextsCount',
+    ContextsCountAsc: '+contextsCount',
     LastUsed: 'lastUsed',
-    LastUsedDescDesc: '-lastUsed',
-    LastUsedAscAsc: '+lastUsed',
+    LastUsedDesc: '-lastUsed',
+    LastUsedAsc: '+lastUsed',
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     ScreensCount: 'screensCount',
-    ScreensCountDescDesc: '-screensCount',
-    ScreensCountAscAsc: '+screensCount',
+    ScreensCountDesc: '-screensCount',
+    ScreensCountAsc: '+screensCount',
     ProjectsCount: 'projectsCount',
-    ProjectsCountDescDesc: '-projectsCount',
-    ProjectsCountAscAsc: '+projectsCount'
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
 export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum[keyof typeof GetFieldsPaginatedOrderByEnum];
 /**
@@ -523,13 +523,13 @@ export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum
  */
 export const GetTrashedFieldsPaginatedOrderByEnum = {
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     TrashDate: 'trashDate',
-    TrashDateDescDesc: '-trashDate',
-    TrashDateAscAsc: '+trashDate',
+    TrashDateDesc: '-trashDate',
+    TrashDateAsc: '+trashDate',
     PlannedDeletionDate: 'plannedDeletionDate',
-    PlannedDeletionDateDescDesc: '-plannedDeletionDate',
-    PlannedDeletionDateAscAsc: '+plannedDeletionDate'
+    PlannedDeletionDateDesc: '-plannedDeletionDate',
+    PlannedDeletionDateAsc: '+plannedDeletionDate'
 } as const;
 export type GetTrashedFieldsPaginatedOrderByEnum = typeof GetTrashedFieldsPaginatedOrderByEnum[keyof typeof GetTrashedFieldsPaginatedOrderByEnum];

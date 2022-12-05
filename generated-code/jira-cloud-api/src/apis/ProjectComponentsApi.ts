@@ -375,16 +375,16 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
  */
 export const GetProjectComponentsPaginatedOrderByEnum = {
     Description: 'description',
-    DescriptionDescDesc: '-description',
-    DescriptionAscAsc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     IssueCount: 'issueCount',
-    IssueCountDescDesc: '-issueCount',
-    IssueCountAscAsc: '+issueCount',
+    IssueCountDesc: '-issueCount',
+    IssueCountAsc: '+issueCount',
     Lead: 'lead',
-    LeadDescDesc: '-lead',
-    LeadAscAsc: '+lead',
+    LeadDesc: '-lead',
+    LeadAsc: '+lead',
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name'
+    NameDesc: '-name',
+    NameAsc: '+name'
 } as const;
 export type GetProjectComponentsPaginatedOrderByEnum = typeof GetProjectComponentsPaginatedOrderByEnum[keyof typeof GetProjectComponentsPaginatedOrderByEnum];

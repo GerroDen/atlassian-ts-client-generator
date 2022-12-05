@@ -626,10 +626,10 @@ export class IssueTypeScreenSchemesApi extends runtime.BaseAPI {
  */
 export const GetIssueTypeScreenSchemesOrderByEnum = {
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    IdDescDesc: '-id',
-    IdAscAsc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetIssueTypeScreenSchemesOrderByEnum = typeof GetIssueTypeScreenSchemesOrderByEnum[keyof typeof GetIssueTypeScreenSchemesOrderByEnum];

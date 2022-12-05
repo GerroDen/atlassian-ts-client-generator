@@ -242,13 +242,13 @@ export class WorkflowsApi extends runtime.BaseAPI {
  */
 export const GetWorkflowsPaginatedOrderByEnum = {
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Created: 'created',
-    CreatedDescDesc: '-created',
-    CreatedAscAsc: '+created',
+    CreatedDesc: '-created',
+    CreatedAsc: '+created',
     Updated: 'updated',
-    UpdatedAscAsc: '+updated',
-    UpdatedDescDesc: '-updated'
+    UpdatedAsc: '+updated',
+    UpdatedDesc: '-updated'
 } as const;
 export type GetWorkflowsPaginatedOrderByEnum = typeof GetWorkflowsPaginatedOrderByEnum[keyof typeof GetWorkflowsPaginatedOrderByEnum];

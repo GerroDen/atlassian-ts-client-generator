@@ -906,23 +906,23 @@ export type GetAllDashboardsFilterEnum = typeof GetAllDashboardsFilterEnum[keyof
  */
 export const GetDashboardsPaginatedOrderByEnum = {
     Description: 'description',
-    DescriptionDescDesc: '-description',
-    DescriptionAscAsc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     FavoriteCount: 'favorite_count',
-    FavoriteCountDescDesc: '-favorite_count',
-    FavoriteCountAscAsc: '+favorite_count',
+    FavoriteCountDesc: '-favorite_count',
+    FavoriteCountAsc: '+favorite_count',
     Id: 'id',
-    IdDescDesc: '-id',
-    IdAscAsc: '+id',
+    IdDesc: '-id',
+    IdAsc: '+id',
     IsFavorite: 'is_favorite',
-    IsFavoriteDescDesc: '-is_favorite',
-    IsFavoriteAscAsc: '+is_favorite',
+    IsFavoriteDesc: '-is_favorite',
+    IsFavoriteAsc: '+is_favorite',
     Name: 'name',
-    NameDescDesc: '-name',
-    NameAscAsc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Owner: 'owner',
-    OwnerDescDesc: '-owner',
-    OwnerAscAsc: '+owner'
+    OwnerDesc: '-owner',
+    OwnerAsc: '+owner'
 } as const;
 export type GetDashboardsPaginatedOrderByEnum = typeof GetDashboardsPaginatedOrderByEnum[keyof typeof GetDashboardsPaginatedOrderByEnum];
 /**

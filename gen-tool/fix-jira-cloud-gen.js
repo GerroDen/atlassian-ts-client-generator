@@ -2,10 +2,14 @@
 import glob from "glob";
 import { promises as fs } from "fs";
 
+const [, scriptName, dir] = process.argv;
+if (!dir) {
+  console.error(`dir is required: ${scriptName} <dir>`);
+  process.exit(1);
+}
+
 try {
-  const files = glob.sync("generated-code/jira-*cloud-api/**/*.ts", {
-    absolute: true,
-  });
+  const files = glob.sync(`${dir}/**/*.ts`, { absolute: true });
   for (let file of files) {
     /** @type string */
     let content = await fs.readFile(file, { encoding: "utf8" });
