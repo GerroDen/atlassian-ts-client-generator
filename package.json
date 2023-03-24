@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "fetch": "run-s 'fetch:*'",
-    "fetch:confluence-cloud-api": "curl -o confluence-cloud-api/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
+    "fetch:confluence-cloud-api-v1": "curl -o confluence-cloud-api-v1/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
+    "fetch:confluence-cloud-api-v2": "curl -o confluence-cloud-api-v2/swagger.json https://developer.atlassian.com/cloud/confluence/openapi-v2.v3.json",
     "fetch:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
     "fetch:jira-software-cloud-api": "curl -o jira-software-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/software/swagger.v3.json",
     "fetch:bamboo-api": "curl -o bamboo-api/swagger.json https://developer.atlassian.com/server/bamboo/swagger.v3.json",
@@ -16,7 +17,8 @@
     "gen": "run-s 'gen:*'",
     "gen:bamboo-api": "gen-tool/gen-api.js bamboo-api && tsc -p generated-code/bamboo-api --noEmit",
     "gen:bitbucket-api": "gen-tool/gen-api.js bitbucket-api && gen-tool/fix-bitbucket-gen.js && tsc -p generated-code/bitbucket-api --noEmit",
-    "gen:confluence-cloud-api": "gen-tool/gen-api.js confluence-cloud-api && gen-tool/fix-confluence-cloud-gen.js && tsc -p generated-code/confluence-cloud-api --noEmit",
+    "gen:confluence-cloud-api-v1": "gen-tool/gen-api.js confluence-cloud-api-v1 && gen-tool/fix-confluence-cloud-gen.js && tsc -p generated-code/confluence-cloud-api-v1 --noEmit",
+    "gen:confluence-cloud-api-v2": "gen-tool/gen-api.js confluence-cloud-api-v2 && tsc -p generated-code/confluence-cloud-api-v2 --noEmit",
     "gen:jira-cloud-api": "gen-tool/gen-api.js jira-cloud-api && gen-tool/fix-jira-cloud-gen.js generated-code/jira-cloud-api && tsc -p generated-code/jira-cloud-api --noEmit",
     "gen:jira-software-cloud-api": "gen-tool/gen-api.js jira-software-cloud-api && gen-tool/fix-jira-cloud-gen.js generated-code/jira-software-cloud-api && tsc -p generated-code/jira-software-cloud-api --noEmit",
     "lint": "eslint . --ext js,cjs"
