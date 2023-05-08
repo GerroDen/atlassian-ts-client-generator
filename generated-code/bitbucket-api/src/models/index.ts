@@ -20,6 +20,18 @@ export interface AddSshKeyRequest {
     bitLength?: number;
     /**
      * 
+     * @type {string}
+     * @memberof AddSshKeyRequest
+     */
+    readonly createdDate?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddSshKeyRequest
+     */
+    expiryDays?: number;
+    /**
+     * 
      * @type {number}
      * @memberof AddSshKeyRequest
      */
@@ -29,7 +41,13 @@ export interface AddSshKeyRequest {
      * @type {string}
      * @memberof AddSshKeyRequest
      */
-    readonly label?: string;
+    label?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddSshKeyRequest
+     */
+    readonly lastAuthenticated?: string;
     /**
      * 
      * @type {string}
@@ -70,12 +88,6 @@ export interface AdminPasswordUpdate {
 export interface ApplicationUser {
     /**
      * 
-     * @type {boolean}
-     * @memberof ApplicationUser
-     */
-    active?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof ApplicationUser
      */
@@ -92,6 +104,12 @@ export interface ApplicationUser {
      * @memberof ApplicationUser
      */
     type?: ApplicationUserTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApplicationUser
+     */
+    active?: boolean;
     /**
      * 
      * @type {string}
@@ -125,137 +143,6 @@ export type ApplicationUserTypeEnum = typeof ApplicationUserTypeEnum[keyof typeo
 /**
  * 
  * @export
- * @interface AssignParticipantRoleRequest
- */
-export interface AssignParticipantRoleRequest {
-    /**
-     * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof AssignParticipantRoleRequest
-     */
-    user?: AssignParticipantRoleRequestUser;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequest
-     */
-    role?: AssignParticipantRoleRequestRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequest
-     */
-    status?: AssignParticipantRoleRequestStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequest
-     */
-    lastReviewedCommit?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AssignParticipantRoleRequest
-     */
-    approved?: boolean;
-}
-
-
-/**
- * @export
- */
-export const AssignParticipantRoleRequestRoleEnum = {
-    Author: 'AUTHOR',
-    Reviewer: 'REVIEWER',
-    Participant: 'PARTICIPANT'
-} as const;
-export type AssignParticipantRoleRequestRoleEnum = typeof AssignParticipantRoleRequestRoleEnum[keyof typeof AssignParticipantRoleRequestRoleEnum];
-
-/**
- * @export
- */
-export const AssignParticipantRoleRequestStatusEnum = {
-    Unapproved: 'UNAPPROVED',
-    NeedsWork: 'NEEDS_WORK',
-    Approved: 'APPROVED'
-} as const;
-export type AssignParticipantRoleRequestStatusEnum = typeof AssignParticipantRoleRequestStatusEnum[keyof typeof AssignParticipantRoleRequestStatusEnum];
-
-/**
- * 
- * @export
- * @interface AssignParticipantRoleRequestUser
- */
-export interface AssignParticipantRoleRequestUser {
-    /**
-     * 
-     * @type {object}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    links?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    emailAddress?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    type?: AssignParticipantRoleRequestUserTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssignParticipantRoleRequestUser
-     */
-    avatarUrl?: string;
-}
-
-
-/**
- * @export
- */
-export const AssignParticipantRoleRequestUserTypeEnum = {
-    Normal: 'NORMAL',
-    Service: 'SERVICE'
-} as const;
-export type AssignParticipantRoleRequestUserTypeEnum = typeof AssignParticipantRoleRequestUserTypeEnum[keyof typeof AssignParticipantRoleRequestUserTypeEnum];
-
-/**
- * 
- * @export
  * @interface Context
  */
 export interface Context {
@@ -265,38 +152,6 @@ export interface Context {
      * @memberof Context
      */
     commitMessage?: string;
-}
-/**
- * 
- * @export
- * @interface DeleteBranchRequest
- */
-export interface DeleteBranchRequest {
-    [key: string]: object | any;
-    /**
-     * Don't actually delete the ref name, just do a dry run
-     * @type {boolean}
-     * @memberof DeleteBranchRequest
-     */
-    dryRun?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DeleteBranchRequest
-     */
-    empty?: boolean;
-    /**
-     * Commit ID that the provided ref name is expected to point to
-     * @type {string}
-     * @memberof DeleteBranchRequest
-     */
-    endPoint?: string;
-    /**
-     * Name of the ref to be deleted
-     * @type {string}
-     * @memberof DeleteBranchRequest
-     */
-    name?: string;
 }
 /**
  * 
@@ -315,31 +170,7 @@ export interface EnrichedRepository {
      * @type {string}
      * @memberof EnrichedRepository
      */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepository
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepository
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepository
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepository
-     */
-    readonly description?: string;
+    readonly defaultBranch?: string;
     /**
      * 
      * @type {string}
@@ -354,6 +185,30 @@ export interface EnrichedRepository {
     readonly statusMessage?: string;
     /**
      * 
+     * @type {object}
+     * @memberof EnrichedRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnrichedRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedRepository
+     */
+    slug?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof EnrichedRepository
      */
@@ -366,34 +221,40 @@ export interface EnrichedRepository {
     readonly forkable?: boolean;
     /**
      * 
+     * @type {RestChangesetRepositoryOrigin}
+     * @memberof EnrichedRepository
+     */
+    origin?: RestChangesetRepositoryOrigin;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof EnrichedRepository
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
      * @type {string}
      * @memberof EnrichedRepository
      */
-    readonly defaultBranch?: string;
+    readonly scope?: string;
     /**
      * 
-     * @type {EnrichedRepositoryOrigin}
+     * @type {string}
      * @memberof EnrichedRepository
      */
-    origin?: EnrichedRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnrichedRepository
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof EnrichedRepository
-     */
-    readonly relatedLinks?: object;
+    readonly description?: string;
     /**
      * 
      * @type {string}
      * @memberof EnrichedRepository
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedRepository
+     */
+    readonly _public?: boolean;
     /**
      * 
      * @type {number}
@@ -406,12 +267,6 @@ export interface EnrichedRepository {
      * @memberof EnrichedRepository
      */
     readonly state?: EnrichedRepositoryStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnrichedRepository
-     */
-    readonly _public?: boolean;
     /**
      * 
      * @type {object}
@@ -435,128 +290,6 @@ export type EnrichedRepositoryStateEnum = typeof EnrichedRepositoryStateEnum[key
 /**
  * 
  * @export
- * @interface EnrichedRepositoryOrigin
- */
-export interface EnrichedRepositoryOrigin {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly hierarchyId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly statusMessage?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly forkable?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly defaultBranch?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly relatedLinks?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly state?: EnrichedRepositoryOriginStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    readonly _public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof EnrichedRepositoryOrigin
-     */
-    links?: object;
-}
-
-
-/**
- * @export
- */
-export const EnrichedRepositoryOriginStateEnum = {
-    Available: 'AVAILABLE',
-    InitialisationFailed: 'INITIALISATION_FAILED',
-    Initialising: 'INITIALISING',
-    Offline: 'OFFLINE'
-} as const;
-export type EnrichedRepositoryOriginStateEnum = typeof EnrichedRepositoryOriginStateEnum[keyof typeof EnrichedRepositoryOriginStateEnum];
-
-/**
- * 
- * @export
  * @interface EnrichedRepositoryProperties
  */
 export interface EnrichedRepositoryProperties {
@@ -565,13 +298,13 @@ export interface EnrichedRepositoryProperties {
      * @type {string}
      * @memberof EnrichedRepositoryProperties
      */
-    defaultBranchId?: string;
+    metadataHash?: string;
     /**
      * 
      * @type {string}
      * @memberof EnrichedRepositoryProperties
      */
-    metadataHash?: string;
+    defaultBranchId?: string;
     /**
      * 
      * @type {string}
@@ -717,13 +450,13 @@ export interface ExampleJsonLastModifiedCallback {
      * @type {RestChangesetToCommit}
      * @memberof ExampleJsonLastModifiedCallback
      */
-    pomXml?: RestChangesetToCommit;
+    readmeMd?: RestChangesetToCommit;
     /**
      * 
      * @type {RestChangesetToCommit}
      * @memberof ExampleJsonLastModifiedCallback
      */
-    readmeMd?: RestChangesetToCommit;
+    pomXml?: RestChangesetToCommit;
 }
 /**
  * 
@@ -771,16 +504,16 @@ export interface ExamplePutMultipartFormData {
 export interface ExampleRequirements {
     /**
      * 
-     * @type {string}
-     * @memberof ExampleRequirements
-     */
-    count?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof ExampleRequirements
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleRequirements
+     */
+    count?: string;
 }
 /**
  * 
@@ -871,16 +604,16 @@ export interface ExampleSocketAddress {
 export interface ExampleStatus {
     /**
      * 
-     * @type {string}
-     * @memberof ExampleStatus
-     */
-    serverId?: string;
-    /**
-     * 
      * @type {number}
      * @memberof ExampleStatus
      */
     currentNumberOfUsers?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleStatus
+     */
+    serverId?: string;
 }
 /**
  * 
@@ -928,43 +661,43 @@ export interface FilePart {
 /**
  * 
  * @export
- * @interface FindBranches200Response
+ * @interface FindByCommit200Response
  */
-export interface FindBranches200Response {
+export interface FindByCommit200Response {
     /**
      * 
      * @type {Array<RestMinimalRef>}
-     * @memberof FindBranches200Response
+     * @memberof FindByCommit200Response
      */
     values?: Array<RestMinimalRef>;
     /**
      * 
      * @type {number}
-     * @memberof FindBranches200Response
+     * @memberof FindByCommit200Response
      */
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof FindBranches200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
-     * @memberof FindBranches200Response
+     * @memberof FindByCommit200Response
      */
     isLastPage?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof FindBranches200Response
+     * @memberof FindByCommit200Response
      */
     nextPageStart?: number;
     /**
      * 
      * @type {number}
-     * @memberof FindBranches200Response
+     * @memberof FindByCommit200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FindByCommit200Response
      */
     limit?: number;
 }
@@ -988,12 +721,6 @@ export interface FindUsersInGroup200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof FindUsersInGroup200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof FindUsersInGroup200Response
      */
@@ -1004,6 +731,12 @@ export interface FindUsersInGroup200Response {
      * @memberof FindUsersInGroup200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FindUsersInGroup200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1031,12 +764,6 @@ export interface GetActivities200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetActivities200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetActivities200Response
      */
@@ -1047,6 +774,12 @@ export interface GetActivities200Response {
      * @memberof GetActivities200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetActivities200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1074,12 +807,6 @@ export interface GetAll1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetAll1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetAll1200Response
      */
@@ -1090,6 +817,12 @@ export interface GetAll1200Response {
      * @memberof GetAll1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1117,12 +850,6 @@ export interface GetAll200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetAll200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetAll200Response
      */
@@ -1137,6 +864,55 @@ export interface GetAll200Response {
      * 
      * @type {number}
      * @memberof GetAll200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll200Response
+     */
+    limit?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetAll2200Response
+ */
+export interface GetAll2200Response {
+    /**
+     * 
+     * @type {Array<RestProjectSettingsRestriction>}
+     * @memberof GetAll2200Response
+     */
+    values?: Array<RestProjectSettingsRestriction>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll2200Response
+     */
+    size?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetAll2200Response
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll2200Response
+     */
+    nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll2200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAll2200Response
      */
     limit?: number;
 }
@@ -1173,12 +949,6 @@ export interface GetAllMeshMigrationSummaries200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetAllMeshMigrationSummaries200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetAllMeshMigrationSummaries200Response
      */
@@ -1189,6 +959,12 @@ export interface GetAllMeshMigrationSummaries200Response {
      * @memberof GetAllMeshMigrationSummaries200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAllMeshMigrationSummaries200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1216,12 +992,6 @@ export interface GetAllReposForProject200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetAllReposForProject200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetAllReposForProject200Response
      */
@@ -1232,6 +1002,12 @@ export interface GetAllReposForProject200Response {
      * @memberof GetAllReposForProject200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAllReposForProject200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1259,12 +1035,6 @@ export interface GetBranches200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetBranches200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetBranches200Response
      */
@@ -1275,6 +1045,12 @@ export interface GetBranches200Response {
      * @memberof GetBranches200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBranches200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1302,12 +1078,6 @@ export interface GetBuildStatus200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetBuildStatus200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetBuildStatus200Response
      */
@@ -1318,6 +1088,12 @@ export interface GetBuildStatus200Response {
      * @memberof GetBuildStatus200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBuildStatus200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1345,12 +1121,6 @@ export interface GetChanges1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetChanges1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetChanges1200Response
      */
@@ -1361,6 +1131,12 @@ export interface GetChanges1200Response {
      * @memberof GetChanges1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetChanges1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1388,12 +1164,6 @@ export interface GetComments200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetComments200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetComments200Response
      */
@@ -1404,6 +1174,12 @@ export interface GetComments200Response {
      * @memberof GetComments200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetComments200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1431,12 +1207,6 @@ export interface GetCommits200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetCommits200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetCommits200Response
      */
@@ -1447,6 +1217,12 @@ export interface GetCommits200Response {
      * @memberof GetCommits200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetCommits200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1474,12 +1250,6 @@ export interface GetCommits200Response1 {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetCommits200Response1
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetCommits200Response1
      */
@@ -1490,6 +1260,12 @@ export interface GetCommits200Response1 {
      * @memberof GetCommits200Response1
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetCommits200Response1
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1517,12 +1293,6 @@ export interface GetConfigurations200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetConfigurations200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetConfigurations200Response
      */
@@ -1533,6 +1303,12 @@ export interface GetConfigurations200Response {
      * @memberof GetConfigurations200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetConfigurations200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1560,12 +1336,6 @@ export interface GetExportJobMessages200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetExportJobMessages200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetExportJobMessages200Response
      */
@@ -1576,6 +1346,12 @@ export interface GetExportJobMessages200Response {
      * @memberof GetExportJobMessages200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetExportJobMessages200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1586,43 +1362,43 @@ export interface GetExportJobMessages200Response {
 /**
  * 
  * @export
- * @interface GetForRepository200Response
+ * @interface GetForProject1200Response
  */
-export interface GetForRepository200Response {
+export interface GetForProject1200Response {
     /**
      * 
      * @type {Array<RestSshAccessKey>}
-     * @memberof GetForRepository200Response
+     * @memberof GetForProject1200Response
      */
     values?: Array<RestSshAccessKey>;
     /**
      * 
      * @type {number}
-     * @memberof GetForRepository200Response
+     * @memberof GetForProject1200Response
      */
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetForRepository200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
-     * @memberof GetForRepository200Response
+     * @memberof GetForProject1200Response
      */
     isLastPage?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof GetForRepository200Response
+     * @memberof GetForProject1200Response
      */
     nextPageStart?: number;
     /**
      * 
      * @type {number}
-     * @memberof GetForRepository200Response
+     * @memberof GetForProject1200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetForProject1200Response
      */
     limit?: number;
 }
@@ -1646,12 +1422,6 @@ export interface GetGroups1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetGroups1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetGroups1200Response
      */
@@ -1662,6 +1432,12 @@ export interface GetGroups1200Response {
      * @memberof GetGroups1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGroups1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1689,12 +1465,6 @@ export interface GetGroups200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetGroups200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetGroups200Response
      */
@@ -1705,6 +1475,12 @@ export interface GetGroups200Response {
      * @memberof GetGroups200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGroups200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1732,12 +1508,6 @@ export interface GetGroupsWithAnyPermission200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetGroupsWithAnyPermission200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetGroupsWithAnyPermission200Response
      */
@@ -1748,6 +1518,12 @@ export interface GetGroupsWithAnyPermission200Response {
      * @memberof GetGroupsWithAnyPermission200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGroupsWithAnyPermission200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1775,12 +1551,6 @@ export interface GetHistory200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetHistory200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetHistory200Response
      */
@@ -1791,6 +1561,12 @@ export interface GetHistory200Response {
      * @memberof GetHistory200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetHistory200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1818,12 +1594,6 @@ export interface GetKeysForUser200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetKeysForUser200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetKeysForUser200Response
      */
@@ -1834,6 +1604,12 @@ export interface GetKeysForUser200Response {
      * @memberof GetKeysForUser200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetKeysForUser200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1861,12 +1637,6 @@ export interface GetLabelables200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetLabelables200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetLabelables200Response
      */
@@ -1877,6 +1647,12 @@ export interface GetLabelables200Response {
      * @memberof GetLabelables200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLabelables200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1904,12 +1680,6 @@ export interface GetLabels200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetLabels200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetLabels200Response
      */
@@ -1920,6 +1690,12 @@ export interface GetLabels200Response {
      * @memberof GetLabels200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLabels200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1947,12 +1723,6 @@ export interface GetLikers200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetLikers200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetLikers200Response
      */
@@ -1963,6 +1733,12 @@ export interface GetLikers200Response {
      * @memberof GetLikers200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLikers200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -1990,12 +1766,6 @@ export interface GetPage200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetPage200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetPage200Response
      */
@@ -2006,6 +1776,12 @@ export interface GetPage200Response {
      * @memberof GetPage200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetPage200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2033,12 +1809,6 @@ export interface GetProjects200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetProjects200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetProjects200Response
      */
@@ -2049,6 +1819,12 @@ export interface GetProjects200Response {
      * @memberof GetProjects200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetProjects200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2076,12 +1852,6 @@ export interface GetPullRequestSuggestions200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetPullRequestSuggestions200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetPullRequestSuggestions200Response
      */
@@ -2092,6 +1862,12 @@ export interface GetPullRequestSuggestions200Response {
      * @memberof GetPullRequestSuggestions200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetPullRequestSuggestions200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2119,12 +1895,6 @@ export interface GetPullRequests1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetPullRequests1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetPullRequests1200Response
      */
@@ -2135,6 +1905,12 @@ export interface GetPullRequests1200Response {
      * @memberof GetPullRequests1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetPullRequests1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2162,12 +1938,6 @@ export interface GetRefChangeActivity200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetRefChangeActivity200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetRefChangeActivity200Response
      */
@@ -2182,6 +1952,55 @@ export interface GetRefChangeActivity200Response {
      * 
      * @type {number}
      * @memberof GetRefChangeActivity200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRefChangeActivity200Response
+     */
+    limit?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetRepoSyncStatus200Response
+ */
+export interface GetRepoSyncStatus200Response {
+    /**
+     * 
+     * @type {Array<RestMirrorRepositorySynchronizationStatus>}
+     * @memberof GetRepoSyncStatus200Response
+     */
+    values?: Array<RestMirrorRepositorySynchronizationStatus>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepoSyncStatus200Response
+     */
+    size?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetRepoSyncStatus200Response
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepoSyncStatus200Response
+     */
+    nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepoSyncStatus200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepoSyncStatus200Response
      */
     limit?: number;
 }
@@ -2205,12 +2024,6 @@ export interface GetReports200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetReports200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetReports200Response
      */
@@ -2221,6 +2034,12 @@ export interface GetReports200Response {
      * @memberof GetReports200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetReports200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2248,12 +2067,6 @@ export interface GetRepositoriesRecentlyAccessed200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetRepositoriesRecentlyAccessed200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetRepositoriesRecentlyAccessed200Response
      */
@@ -2264,6 +2077,12 @@ export interface GetRepositoriesRecentlyAccessed200Response {
      * @memberof GetRepositoriesRecentlyAccessed200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepositoriesRecentlyAccessed200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2291,12 +2110,6 @@ export interface GetRepositoryHooks1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetRepositoryHooks1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetRepositoryHooks1200Response
      */
@@ -2307,6 +2120,12 @@ export interface GetRepositoryHooks1200Response {
      * @memberof GetRepositoryHooks1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRepositoryHooks1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2334,12 +2153,6 @@ export interface GetRestrictions1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetRestrictions1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetRestrictions1200Response
      */
@@ -2350,6 +2163,12 @@ export interface GetRestrictions1200Response {
      * @memberof GetRestrictions1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetRestrictions1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2377,12 +2196,6 @@ export interface GetReviewerGroups1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetReviewerGroups1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetReviewerGroups1200Response
      */
@@ -2393,6 +2206,12 @@ export interface GetReviewerGroups1200Response {
      * @memberof GetReviewerGroups1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetReviewerGroups1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2420,12 +2239,6 @@ export interface GetSshKeys200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetSshKeys200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetSshKeys200Response
      */
@@ -2436,6 +2249,12 @@ export interface GetSshKeys200Response {
      * @memberof GetSshKeys200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetSshKeys200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2463,12 +2282,6 @@ export interface GetTags200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetTags200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetTags200Response
      */
@@ -2479,6 +2292,12 @@ export interface GetTags200Response {
      * @memberof GetTags200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetTags200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2506,12 +2325,6 @@ export interface GetUsersWithAnyPermission1200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof GetUsersWithAnyPermission1200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetUsersWithAnyPermission1200Response
      */
@@ -2522,6 +2335,12 @@ export interface GetUsersWithAnyPermission1200Response {
      * @memberof GetUsersWithAnyPermission1200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUsersWithAnyPermission1200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2564,6 +2383,25 @@ export interface GroupAndUsers {
 /**
  * 
  * @export
+ * @interface GroupPickerContext
+ */
+export interface GroupPickerContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupPickerContext
+     */
+    context?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupPickerContext
+     */
+    itemName?: string;
+}
+/**
+ * 
+ * @export
  * @interface ListMirrors200Response
  */
 export interface ListMirrors200Response {
@@ -2581,12 +2419,6 @@ export interface ListMirrors200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof ListMirrors200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof ListMirrors200Response
      */
@@ -2597,6 +2429,12 @@ export interface ListMirrors200Response {
      * @memberof ListMirrors200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListMirrors200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2624,12 +2462,6 @@ export interface ListParticipants200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof ListParticipants200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof ListParticipants200Response
      */
@@ -2640,6 +2472,12 @@ export interface ListParticipants200Response {
      * @memberof ListParticipants200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListParticipants200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2667,12 +2505,6 @@ export interface ListRequests200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof ListRequests200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof ListRequests200Response
      */
@@ -2683,6 +2515,12 @@ export interface ListRequests200Response {
      * @memberof ListRequests200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRequests200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -2710,12 +2548,6 @@ export interface ListUpstreamServers200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof ListUpstreamServers200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof ListUpstreamServers200Response
      */
@@ -2731,88 +2563,13 @@ export interface ListUpstreamServers200Response {
      * @type {number}
      * @memberof ListUpstreamServers200Response
      */
-    limit?: number;
-}
-/**
- * 
- * @export
- * @interface MinimalRef
- */
-export interface MinimalRef {
-    /**
-     * 
-     * @type {string}
-     * @memberof MinimalRef
-     */
-    displayId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MinimalRef
-     */
-    id?: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof MinimalRef
-     */
-    type?: any | null;
-}
-/**
- * Page of refs
- * @export
- * @interface PageOfRefs
- */
-export interface PageOfRefs {
-    [key: string]: object | any;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PageOfRefs
-     */
-    empty?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PageOfRefs
-     */
-    isLastPage?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PageOfRefs
-     */
-    lastPage?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageOfRefs
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageOfRefs
-     */
-    nextPageStart?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageOfRefs
-     */
-    size?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageOfRefs
-     */
     start?: number;
     /**
      * 
-     * @type {Array<MinimalRef>}
-     * @memberof PageOfRefs
+     * @type {number}
+     * @memberof ListUpstreamServers200Response
      */
-    values?: Array<MinimalRef>;
+    limit?: number;
 }
 /**
  * 
@@ -2825,7 +2582,13 @@ export interface RepositoryHookDetails {
      * @type {string}
      * @memberof RepositoryHookDetails
      */
-    version?: string;
+    configFormKey?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof RepositoryHookDetails
+     */
+    supportedScopes?: Set<RepositoryHookDetailsSupportedScopesEnum>;
     /**
      * 
      * @type {string}
@@ -2837,13 +2600,7 @@ export interface RepositoryHookDetails {
      * @type {string}
      * @memberof RepositoryHookDetails
      */
-    configFormKey?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof RepositoryHookDetails
-     */
-    supportedScopes?: Set<RepositoryHookDetailsSupportedScopesEnum>;
+    version?: string;
     /**
      * 
      * @type {string}
@@ -2902,13 +2659,13 @@ export interface RestAccessToken {
      * @type {string}
      * @memberof RestAccessToken
      */
-    name?: string;
+    id?: string;
     /**
      * 
      * @type {string}
      * @memberof RestAccessToken
      */
-    id?: string;
+    name?: string;
 }
 /**
  * 
@@ -2943,12 +2700,6 @@ export interface RestAccessTokenRequest {
 export interface RestAggregateRejectCounter {
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestAggregateRejectCounter
-     */
-    user?: AssignParticipantRoleRequestUser;
-    /**
-     * 
      * @type {number}
      * @memberof RestAggregateRejectCounter
      */
@@ -2959,6 +2710,12 @@ export interface RestAggregateRejectCounter {
      * @memberof RestAggregateRejectCounter
      */
     rejectCount?: number;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestAggregateRejectCounter
+     */
+    user?: RestPullRequestParticipantUser;
 }
 /**
  * 
@@ -2968,10 +2725,10 @@ export interface RestAggregateRejectCounter {
 export interface RestAnalyticsSettings {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestAnalyticsSettings
      */
-    supportEntitlementNumber?: string;
+    serverTime?: number;
     /**
      * 
      * @type {boolean}
@@ -2980,10 +2737,10 @@ export interface RestAnalyticsSettings {
     canCollectAnalytics?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestAnalyticsSettings
      */
-    serverTime?: number;
+    supportEntitlementNumber?: string;
 }
 /**
  * 
@@ -2993,16 +2750,16 @@ export interface RestAnalyticsSettings {
 export interface RestAnnouncementBanner {
     /**
      * 
-     * @type {boolean}
-     * @memberof RestAnnouncementBanner
-     */
-    enabled?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestAnnouncementBanner
      */
     audience?: RestAnnouncementBannerAudienceEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestAnnouncementBanner
+     */
+    enabled?: boolean;
     /**
      * 
      * @type {string}
@@ -3032,7 +2789,7 @@ export interface RestApplicationProperties {
      * @type {string}
      * @memberof RestApplicationProperties
      */
-    version?: string;
+    buildDate?: string;
     /**
      * 
      * @type {string}
@@ -3044,7 +2801,7 @@ export interface RestApplicationProperties {
      * @type {string}
      * @memberof RestApplicationProperties
      */
-    buildDate?: string;
+    version?: string;
     /**
      * 
      * @type {string}
@@ -3060,16 +2817,10 @@ export interface RestApplicationProperties {
 export interface RestApplicationUser {
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof RestApplicationUser
      */
-    links?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestApplicationUser
-     */
-    active?: boolean;
+    emailAddress?: string;
     /**
      * 
      * @type {string}
@@ -3078,10 +2829,10 @@ export interface RestApplicationUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof RestApplicationUser
      */
-    emailAddress?: string;
+    links?: object;
     /**
      * 
      * @type {string}
@@ -3100,6 +2851,12 @@ export interface RestApplicationUser {
      * @memberof RestApplicationUser
      */
     type?: RestApplicationUserTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestApplicationUser
+     */
+    active?: boolean;
     /**
      * 
      * @type {string}
@@ -3138,12 +2895,6 @@ export interface RestApplicationUserWithPermissions {
     effectivePermissions?: object;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestApplicationUserWithPermissions
-     */
-    active?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestApplicationUserWithPermissions
      */
@@ -3160,6 +2911,12 @@ export interface RestApplicationUserWithPermissions {
      * @memberof RestApplicationUserWithPermissions
      */
     type?: RestApplicationUserWithPermissionsTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestApplicationUserWithPermissions
+     */
+    active?: boolean;
     /**
      * 
      * @type {string}
@@ -3342,10 +3099,10 @@ export interface RestAuthenticationRequest {
 export interface RestAutoDeclineSettings {
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {number}
      * @memberof RestAutoDeclineSettings
      */
-    scope?: RestAutoDeclineSettingsScope;
+    inactivityWeeks?: number;
     /**
      * 
      * @type {boolean}
@@ -3354,10 +3111,10 @@ export interface RestAutoDeclineSettings {
     enabled?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {RestAutoDeclineSettingsScope}
      * @memberof RestAutoDeclineSettings
      */
-    inactivityWeeks?: number;
+    scope?: RestAutoDeclineSettingsScope;
 }
 /**
  * 
@@ -3420,6 +3177,66 @@ export interface RestBitbucketLicense {
      * @type {number}
      * @memberof RestBitbucketLicense
      */
+    readonly expiryDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
+    readonly daysBeforeExpiry?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
+    readonly gracePeriodEndDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
+    readonly maintenanceExpiryDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
+    readonly maximumNumberOfUsers?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
+    readonly purchaseDate?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBitbucketLicense
+     */
+    readonly unlimitedNumberOfUsers?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBitbucketLicense
+     */
+    readonly serverId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBitbucketLicense
+     */
+    license?: string;
+    /**
+     * 
+     * @type {RestBitbucketLicenseStatus}
+     * @memberof RestBitbucketLicense
+     */
+    status?: RestBitbucketLicenseStatus;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBitbucketLicense
+     */
     readonly numberOfDaysBeforeExpiry?: number;
     /**
      * 
@@ -3441,66 +3258,6 @@ export interface RestBitbucketLicense {
     readonly supportEntitlementNumber?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestBitbucketLicense
-     */
-    readonly unlimitedNumberOfUsers?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBitbucketLicense
-     */
-    license?: string;
-    /**
-     * 
-     * @type {RestBitbucketLicenseStatus}
-     * @memberof RestBitbucketLicense
-     */
-    status?: RestBitbucketLicenseStatus;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly expiryDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly purchaseDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly maximumNumberOfUsers?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly maintenanceExpiryDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly gracePeriodEndDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBitbucketLicense
-     */
-    readonly daysBeforeExpiry?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBitbucketLicense
-     */
-    readonly serverId?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestBitbucketLicense
      */
@@ -3514,16 +3271,16 @@ export interface RestBitbucketLicense {
 export interface RestBitbucketLicenseStatus {
     /**
      * 
-     * @type {string}
-     * @memberof RestBitbucketLicenseStatus
-     */
-    serverId?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestBitbucketLicenseStatus
      */
     currentNumberOfUsers?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBitbucketLicenseStatus
+     */
+    serverId?: string;
 }
 /**
  * 
@@ -3539,16 +3296,16 @@ export interface RestBranch {
     readonly displayId?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestBranch
-     */
-    readonly _default?: boolean;
-    /**
-     * 
      * @type {any}
      * @memberof RestBranch
      */
     type?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBranch
+     */
+    readonly _default?: boolean;
     /**
      * 
      * @type {string}
@@ -3574,13 +3331,6 @@ export interface RestBranch {
  * @interface RestBranchCreateRequest
  */
 export interface RestBranchCreateRequest {
-    [key: string]: object | any;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestBranchCreateRequest
-     */
-    empty?: boolean;
     /**
      * Name of the branch to be created
      * @type {string}
@@ -3600,19 +3350,12 @@ export interface RestBranchCreateRequest {
  * @interface RestBranchDeleteRequest
  */
 export interface RestBranchDeleteRequest {
-    [key: string]: object | any;
     /**
      * Don't actually delete the ref name, just do a dry run
      * @type {boolean}
      * @memberof RestBranchDeleteRequest
      */
     dryRun?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestBranchDeleteRequest
-     */
-    empty?: boolean;
     /**
      * Commit ID that the provided ref name is expected to point to
      * @type {string}
@@ -3656,13 +3399,13 @@ export interface RestBuildStats {
      * @type {number}
      * @memberof RestBuildStats
      */
-    successful?: number;
+    inProgress?: number;
     /**
      * 
      * @type {number}
      * @memberof RestBuildStats
      */
-    inProgress?: number;
+    successful?: number;
     /**
      * 
      * @type {number}
@@ -3684,34 +3427,10 @@ export interface RestBuildStats {
 export interface RestBuildStatus {
     /**
      * 
-     * @type {string}
+     * @type {RestBuildStatusTestResults}
      * @memberof RestBuildStatus
      */
-    url?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildStatus
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBuildStatus
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBuildStatus
-     */
-    buildNumber?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildStatus
-     */
-    createdDate?: number;
+    testResults?: RestBuildStatusTestResults;
     /**
      * 
      * @type {number}
@@ -3720,10 +3439,34 @@ export interface RestBuildStatus {
     updatedDate?: number;
     /**
      * 
-     * @type {RestBuildStatusTestResults}
+     * @type {number}
      * @memberof RestBuildStatus
      */
-    testResults?: RestBuildStatusTestResults;
+    createdDate?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildStatus
+     */
+    url?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildStatus
+     */
+    buildNumber?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildStatus
+     */
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildStatus
+     */
+    duration?: number;
     /**
      * 
      * @type {string}
@@ -3892,12 +3635,6 @@ export interface RestBuildStatusTestResults {
      * @type {number}
      * @memberof RestBuildStatusTestResults
      */
-    skipped?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildStatusTestResults
-     */
     successful?: number;
     /**
      * 
@@ -3905,6 +3642,12 @@ export interface RestBuildStatusTestResults {
      * @memberof RestBuildStatusTestResults
      */
     failed?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildStatusTestResults
+     */
+    skipped?: number;
 }
 /**
  * 
@@ -3971,24 +3714,6 @@ export interface RestBulkUserRateLimitSettingsUpdateRequestSettings {
 export interface RestChange {
     /**
      * 
-     * @type {string}
-     * @memberof RestChange
-     */
-    nodeType?: RestChangeNodeTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChange
-     */
-    executable?: boolean;
-    /**
-     * 
-     * @type {RestCommentThreadDiffAnchorSrcPath}
-     * @memberof RestChange
-     */
-    srcPath?: RestCommentThreadDiffAnchorSrcPath;
-    /**
-     * 
      * @type {RestChangeConflict}
      * @memberof RestChange
      */
@@ -4017,6 +3742,24 @@ export interface RestChange {
      * @memberof RestChange
      */
     srcExecutable?: boolean;
+    /**
+     * 
+     * @type {RestCommentThreadDiffAnchorSrcPath}
+     * @memberof RestChange
+     */
+    srcPath?: RestCommentThreadDiffAnchorSrcPath;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChange
+     */
+    executable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChange
+     */
+    nodeType?: RestChangeNodeTypeEnum;
     /**
      * 
      * @type {string}
@@ -4069,39 +3812,39 @@ export type RestChangeTypeEnum = typeof RestChangeTypeEnum[keyof typeof RestChan
 export interface RestChangeConflict {
     /**
      * 
-     * @type {RestChangeConflictTheirChange}
+     * @type {RestChangeConflictOurChange}
      * @memberof RestChangeConflict
      */
-    theirChange?: RestChangeConflictTheirChange;
+    ourChange?: RestChangeConflictOurChange;
     /**
      * 
-     * @type {RestChangeConflictTheirChange}
+     * @type {RestChangeConflictOurChange}
      * @memberof RestChangeConflict
      */
-    ourChange?: RestChangeConflictTheirChange;
+    theirChange?: RestChangeConflictOurChange;
 }
 /**
  * 
  * @export
- * @interface RestChangeConflictTheirChange
+ * @interface RestChangeConflictOurChange
  */
-export interface RestChangeConflictTheirChange {
+export interface RestChangeConflictOurChange {
     /**
      * 
      * @type {RestCommentThreadDiffAnchorSrcPath}
-     * @memberof RestChangeConflictTheirChange
+     * @memberof RestChangeConflictOurChange
      */
     srcPath?: RestCommentThreadDiffAnchorSrcPath;
     /**
      * 
      * @type {string}
-     * @memberof RestChangeConflictTheirChange
+     * @memberof RestChangeConflictOurChange
      */
-    type?: RestChangeConflictTheirChangeTypeEnum;
+    type?: RestChangeConflictOurChangeTypeEnum;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorSrcPath}
-     * @memberof RestChangeConflictTheirChange
+     * @memberof RestChangeConflictOurChange
      */
     path?: RestCommentThreadDiffAnchorSrcPath;
 }
@@ -4110,7 +3853,7 @@ export interface RestChangeConflictTheirChange {
 /**
  * @export
  */
-export const RestChangeConflictTheirChangeTypeEnum = {
+export const RestChangeConflictOurChangeTypeEnum = {
     Add: 'ADD',
     Copy: 'COPY',
     Delete: 'DELETE',
@@ -4118,7 +3861,7 @@ export const RestChangeConflictTheirChangeTypeEnum = {
     Move: 'MOVE',
     Unknown: 'UNKNOWN'
 } as const;
-export type RestChangeConflictTheirChangeTypeEnum = typeof RestChangeConflictTheirChangeTypeEnum[keyof typeof RestChangeConflictTheirChangeTypeEnum];
+export type RestChangeConflictOurChangeTypeEnum = typeof RestChangeConflictOurChangeTypeEnum[keyof typeof RestChangeConflictOurChangeTypeEnum];
 
 /**
  * 
@@ -4126,18 +3869,6 @@ export type RestChangeConflictTheirChangeTypeEnum = typeof RestChangeConflictThe
  * @interface RestChangeset
  */
 export interface RestChangeset {
-    /**
-     * 
-     * @type {RestChangesetRepository}
-     * @memberof RestChangeset
-     */
-    repository?: RestChangesetRepository;
-    /**
-     * 
-     * @type {RestChangesetChanges}
-     * @memberof RestChangeset
-     */
-    changes?: RestChangesetChanges;
     /**
      * 
      * @type {RestChangesetFromCommit}
@@ -4150,6 +3881,18 @@ export interface RestChangeset {
      * @memberof RestChangeset
      */
     toCommit?: RestChangesetToCommit;
+    /**
+     * 
+     * @type {RestChangesetChanges}
+     * @memberof RestChangeset
+     */
+    changes?: RestChangesetChanges;
+    /**
+     * 
+     * @type {RestChangesetRepository}
+     * @memberof RestChangeset
+     */
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {object}
@@ -4177,12 +3920,6 @@ export interface RestChangesetChanges {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof RestChangesetChanges
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestChangesetChanges
      */
@@ -4193,6 +3930,12 @@ export interface RestChangesetChanges {
      * @memberof RestChangesetChanges
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetChanges
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -4230,31 +3973,7 @@ export interface RestChangesetRepository {
      * @type {string}
      * @memberof RestChangesetRepository
      */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetRepository
-     */
-    readonly description?: string;
+    readonly defaultBranch?: string;
     /**
      * 
      * @type {string}
@@ -4269,6 +3988,30 @@ export interface RestChangesetRepository {
     readonly statusMessage?: string;
     /**
      * 
+     * @type {object}
+     * @memberof RestChangesetRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    slug?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestChangesetRepository
      */
@@ -4281,34 +4024,40 @@ export interface RestChangesetRepository {
     readonly forkable?: boolean;
     /**
      * 
+     * @type {RestChangesetRepositoryOrigin}
+     * @memberof RestChangesetRepository
+     */
+    origin?: RestChangesetRepositoryOrigin;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestChangesetRepository
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
      * @type {string}
      * @memberof RestChangesetRepository
      */
-    readonly defaultBranch?: string;
+    readonly scope?: string;
     /**
      * 
-     * @type {EnrichedRepositoryOrigin}
+     * @type {string}
      * @memberof RestChangesetRepository
      */
-    origin?: EnrichedRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangesetRepository
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestChangesetRepository
-     */
-    readonly relatedLinks?: object;
+    readonly description?: string;
     /**
      * 
      * @type {string}
      * @memberof RestChangesetRepository
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepository
+     */
+    readonly _public?: boolean;
     /**
      * 
      * @type {number}
@@ -4321,12 +4070,6 @@ export interface RestChangesetRepository {
      * @memberof RestChangesetRepository
      */
     readonly state?: RestChangesetRepositoryStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestChangesetRepository
-     */
-    readonly _public?: boolean;
     /**
      * 
      * @type {object}
@@ -4350,21 +4093,228 @@ export type RestChangesetRepositoryStateEnum = typeof RestChangesetRepositorySta
 /**
  * 
  * @export
+ * @interface RestChangesetRepositoryOrigin
+ */
+export interface RestChangesetRepositoryOrigin {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly statusMessage?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly _public?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly state?: RestChangesetRepositoryOriginStateEnum;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    links?: object;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangesetRepositoryOriginStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestChangesetRepositoryOriginStateEnum = typeof RestChangesetRepositoryOriginStateEnum[keyof typeof RestChangesetRepositoryOriginStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestChangesetRepositoryOriginProject
+ */
+export interface RestChangesetRepositoryOriginProject {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    avatar?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     * @deprecated
+     */
+    readonly namespace?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    key: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly _public?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly type?: RestChangesetRepositoryOriginProjectTypeEnum;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    links?: object;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangesetRepositoryOriginProjectTypeEnum = {
+    Normal: 'NORMAL',
+    Personal: 'PERSONAL'
+} as const;
+export type RestChangesetRepositoryOriginProjectTypeEnum = typeof RestChangesetRepositoryOriginProjectTypeEnum[keyof typeof RestChangesetRepositoryOriginProjectTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface RestChangesetToCommit
  */
 export interface RestChangesetToCommit {
     /**
      * 
-     * @type {Array<RestMinimalCommit>}
+     * @type {number}
      * @memberof RestChangesetToCommit
      */
-    parents?: Array<RestMinimalCommit>;
+    committerTimestamp?: number;
     /**
      * 
-     * @type {RestChangesetToCommitAuthor}
+     * @type {RestChangesetToCommitCommitter}
      * @memberof RestChangesetToCommit
      */
-    author?: RestChangesetToCommitAuthor;
+    committer?: RestChangesetToCommitCommitter;
     /**
      * 
      * @type {number}
@@ -4373,16 +4323,16 @@ export interface RestChangesetToCommit {
     authorTimestamp?: number;
     /**
      * 
-     * @type {RestChangesetToCommitAuthor}
+     * @type {RestChangesetToCommitCommitter}
      * @memberof RestChangesetToCommit
      */
-    committer?: RestChangesetToCommitAuthor;
+    author?: RestChangesetToCommitCommitter;
     /**
      * 
-     * @type {number}
+     * @type {Array<RestMinimalCommit>}
      * @memberof RestChangesetToCommit
      */
-    committerTimestamp?: number;
+    parents?: Array<RestMinimalCommit>;
     /**
      * 
      * @type {string}
@@ -4405,25 +4355,25 @@ export interface RestChangesetToCommit {
 /**
  * 
  * @export
- * @interface RestChangesetToCommitAuthor
+ * @interface RestChangesetToCommitCommitter
  */
-export interface RestChangesetToCommitAuthor {
+export interface RestChangesetToCommitCommitter {
     /**
      * 
      * @type {string}
-     * @memberof RestChangesetToCommitAuthor
-     */
-    avatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangesetToCommitAuthor
+     * @memberof RestChangesetToCommitCommitter
      */
     emailAddress?: string;
     /**
      * 
      * @type {string}
-     * @memberof RestChangesetToCommitAuthor
+     * @memberof RestChangesetToCommitCommitter
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetToCommitCommitter
      */
     name?: string;
 }
@@ -4433,6 +4383,12 @@ export interface RestChangesetToCommitAuthor {
  * @interface RestClusterInformation
  */
 export interface RestClusterInformation {
+    /**
+     * 
+     * @type {RestClusterInformationLocalNode}
+     * @memberof RestClusterInformation
+     */
+    localNode?: RestClusterInformationLocalNode;
     /**
      * 
      * @type {Array<RestClusterNode>}
@@ -4445,12 +4401,6 @@ export interface RestClusterInformation {
      * @memberof RestClusterInformation
      */
     running?: boolean;
-    /**
-     * 
-     * @type {RestClusterInformationLocalNode}
-     * @memberof RestClusterInformation
-     */
-    localNode?: RestClusterInformationLocalNode;
 }
 /**
  * 
@@ -4460,22 +4410,16 @@ export interface RestClusterInformation {
 export interface RestClusterInformationLocalNode {
     /**
      * 
-     * @type {boolean}
-     * @memberof RestClusterInformationLocalNode
-     */
-    local?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestClusterInformationLocalNode
      */
     buildVersion?: string;
     /**
      * 
-     * @type {RestClusterNodeAddress}
+     * @type {boolean}
      * @memberof RestClusterInformationLocalNode
      */
-    address?: RestClusterNodeAddress;
+    local?: boolean;
     /**
      * 
      * @type {string}
@@ -4488,6 +4432,12 @@ export interface RestClusterInformationLocalNode {
      * @memberof RestClusterInformationLocalNode
      */
     id?: string;
+    /**
+     * 
+     * @type {RestClusterNodeAddress}
+     * @memberof RestClusterInformationLocalNode
+     */
+    address?: RestClusterNodeAddress;
 }
 /**
  * 
@@ -4497,22 +4447,16 @@ export interface RestClusterInformationLocalNode {
 export interface RestClusterNode {
     /**
      * 
-     * @type {boolean}
-     * @memberof RestClusterNode
-     */
-    local?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestClusterNode
      */
     buildVersion?: string;
     /**
      * 
-     * @type {RestClusterNodeAddress}
+     * @type {boolean}
      * @memberof RestClusterNode
      */
-    address?: RestClusterNodeAddress;
+    local?: boolean;
     /**
      * 
      * @type {string}
@@ -4525,6 +4469,12 @@ export interface RestClusterNode {
      * @memberof RestClusterNode
      */
     id?: string;
+    /**
+     * 
+     * @type {RestClusterNodeAddress}
+     * @memberof RestClusterNode
+     */
+    address?: RestClusterNodeAddress;
 }
 /**
  * 
@@ -4552,11 +4502,23 @@ export interface RestClusterNodeAddress {
  */
 export interface RestComment {
     /**
-     * 
-     * @type {string}
+     * Indicates if this comment thread has been marked as resolved or not
+     * @type {boolean}
      * @memberof RestComment
      */
-    readonly html?: string;
+    threadResolved?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestComment
+     */
+    readonly updatedDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestComment
+     */
+    readonly createdDate?: number;
     /**
      * 
      * @type {boolean}
@@ -4565,10 +4527,46 @@ export interface RestComment {
     readonly reply?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestComment
+     */
+    readonly pending?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestComment
+     */
+    readonly anchored?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestComment
+     */
+    readonly html?: string;
+    /**
+     * 
+     * @type {RestUserReactionCommentAuthor}
+     * @memberof RestComment
+     */
+    author?: RestUserReactionCommentAuthor;
+    /**
+     * 
+     * @type {RestUserReactionCommentAnchor}
+     * @memberof RestComment
+     */
+    anchor?: RestUserReactionCommentAnchor;
+    /**
+     * 
      * @type {string}
      * @memberof RestComment
      */
     text?: string;
+    /**
+     * 
+     * @type {Array<RestComment>}
+     * @memberof RestComment
+     */
+    readonly comments?: Array<RestComment>;
     /**
      * 
      * @type {number}
@@ -4581,48 +4579,6 @@ export interface RestComment {
      * @memberof RestComment
      */
     severity?: string;
-    /**
-     * 
-     * @type {Array<RestComment>}
-     * @memberof RestComment
-     */
-    readonly comments?: Array<RestComment>;
-    /**
-     * 
-     * @type {RestUserReactionCommentAnchor}
-     * @memberof RestComment
-     */
-    anchor?: RestUserReactionCommentAnchor;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestComment
-     */
-    readonly createdDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestComment
-     */
-    readonly updatedDate?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestComment
-     */
-    readonly anchored?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestComment
-     */
-    readonly pending?: boolean;
-    /**
-     * 
-     * @type {RestUserReactionCommentAuthor}
-     * @memberof RestComment
-     */
-    author?: RestUserReactionCommentAuthor;
     /**
      * 
      * @type {RestUserReactionCommentParent}
@@ -4656,16 +4612,16 @@ export interface RestComment {
 export interface RestCommentJiraIssue {
     /**
      * 
-     * @type {string}
-     * @memberof RestCommentJiraIssue
-     */
-    issueKey?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestCommentJiraIssue
      */
     commentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentJiraIssue
+     */
+    issueKey?: string;
 }
 /**
  * 
@@ -4675,10 +4631,10 @@ export interface RestCommentJiraIssue {
 export interface RestCommentThreadDiffAnchor {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestCommentThreadDiffAnchor
      */
-    line?: number;
+    fileType?: RestCommentThreadDiffAnchorFileTypeEnum;
     /**
      * 
      * @type {string}
@@ -4690,19 +4646,13 @@ export interface RestCommentThreadDiffAnchor {
      * @type {string}
      * @memberof RestCommentThreadDiffAnchor
      */
-    lineType?: RestCommentThreadDiffAnchorLineTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentThreadDiffAnchor
-     */
     fromHash?: string;
     /**
      * 
      * @type {string}
      * @memberof RestCommentThreadDiffAnchor
      */
-    fileType?: RestCommentThreadDiffAnchorFileTypeEnum;
+    lineType?: RestCommentThreadDiffAnchorLineTypeEnum;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorPullRequest}
@@ -4711,10 +4661,10 @@ export interface RestCommentThreadDiffAnchor {
     pullRequest?: RestCommentThreadDiffAnchorPullRequest;
     /**
      * 
-     * @type {RestCommentThreadDiffAnchorSrcPath}
+     * @type {boolean}
      * @memberof RestCommentThreadDiffAnchor
      */
-    srcPath?: RestCommentThreadDiffAnchorSrcPath;
+    readonly lineComment?: boolean;
     /**
      * 
      * @type {string}
@@ -4723,10 +4673,16 @@ export interface RestCommentThreadDiffAnchor {
     toHash?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {RestCommentThreadDiffAnchorSrcPath}
      * @memberof RestCommentThreadDiffAnchor
      */
-    readonly lineComment?: boolean;
+    srcPath?: RestCommentThreadDiffAnchorSrcPath;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentThreadDiffAnchor
+     */
+    line?: number;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorSrcPath}
@@ -4735,6 +4691,15 @@ export interface RestCommentThreadDiffAnchor {
     path?: RestCommentThreadDiffAnchorSrcPath;
 }
 
+
+/**
+ * @export
+ */
+export const RestCommentThreadDiffAnchorFileTypeEnum = {
+    From: 'FROM',
+    To: 'TO'
+} as const;
+export type RestCommentThreadDiffAnchorFileTypeEnum = typeof RestCommentThreadDiffAnchorFileTypeEnum[keyof typeof RestCommentThreadDiffAnchorFileTypeEnum];
 
 /**
  * @export
@@ -4757,15 +4722,6 @@ export const RestCommentThreadDiffAnchorLineTypeEnum = {
 export type RestCommentThreadDiffAnchorLineTypeEnum = typeof RestCommentThreadDiffAnchorLineTypeEnum[keyof typeof RestCommentThreadDiffAnchorLineTypeEnum];
 
 /**
- * @export
- */
-export const RestCommentThreadDiffAnchorFileTypeEnum = {
-    From: 'FROM',
-    To: 'TO'
-} as const;
-export type RestCommentThreadDiffAnchorFileTypeEnum = typeof RestCommentThreadDiffAnchorFileTypeEnum[keyof typeof RestCommentThreadDiffAnchorFileTypeEnum];
-
-/**
  * 
  * @export
  * @interface RestCommentThreadDiffAnchorPullRequest
@@ -4773,34 +4729,16 @@ export type RestCommentThreadDiffAnchorFileTypeEnum = typeof RestCommentThreadDi
 export interface RestCommentThreadDiffAnchorPullRequest {
     /**
      * 
-     * @type {RestPullRequestToRef}
+     * @type {Array<RestPullRequestParticipant>}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    toRef?: RestPullRequestToRef;
+    reviewers?: Array<RestPullRequestParticipant>;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<RestPullRequestParticipant>}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    closed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentThreadDiffAnchorPullRequest
-     */
-    title?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentThreadDiffAnchorPullRequest
-     */
-    version?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentThreadDiffAnchorPullRequest
-     */
-    description?: string;
+    participants?: Array<RestPullRequestParticipant>;
     /**
      * 
      * @type {string}
@@ -4815,22 +4753,10 @@ export interface RestCommentThreadDiffAnchorPullRequest {
     closedDate?: number;
     /**
      * 
-     * @type {RestPullRequestToRef}
+     * @type {number}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    fromRef?: RestPullRequestToRef;
-    /**
-     * 
-     * @type {Array<RestPullRequestParticipant>}
-     * @memberof RestCommentThreadDiffAnchorPullRequest
-     */
-    participants?: Array<RestPullRequestParticipant>;
-    /**
-     * 
-     * @type {Array<RestPullRequestParticipant>}
-     * @memberof RestCommentThreadDiffAnchorPullRequest
-     */
-    reviewers?: Array<RestPullRequestParticipant>;
+    updatedDate?: number;
     /**
      * 
      * @type {number}
@@ -4839,16 +4765,40 @@ export interface RestCommentThreadDiffAnchorPullRequest {
     createdDate?: number;
     /**
      * 
+     * @type {RestPullRequestFromRef}
+     * @memberof RestCommentThreadDiffAnchorPullRequest
+     */
+    fromRef?: RestPullRequestFromRef;
+    /**
+     * 
+     * @type {RestPullRequestFromRef}
+     * @memberof RestCommentThreadDiffAnchorPullRequest
+     */
+    toRef?: RestPullRequestFromRef;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentThreadDiffAnchorPullRequest
+     */
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentThreadDiffAnchorPullRequest
+     */
+    description?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    updatedDate?: number;
+    version?: number;
     /**
      * 
      * @type {boolean}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    locked?: boolean;
+    open?: boolean;
     /**
      * 
      * @type {number}
@@ -4866,7 +4816,13 @@ export interface RestCommentThreadDiffAnchorPullRequest {
      * @type {boolean}
      * @memberof RestCommentThreadDiffAnchorPullRequest
      */
-    open?: boolean;
+    locked?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentThreadDiffAnchorPullRequest
+     */
+    closed?: boolean;
     /**
      * 
      * @type {object}
@@ -4903,6 +4859,12 @@ export interface RestCommentThreadDiffAnchorSrcPath {
      * @type {string}
      * @memberof RestCommentThreadDiffAnchorSrcPath
      */
+    extension?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentThreadDiffAnchorSrcPath
+     */
     name?: string;
     /**
      * 
@@ -4910,12 +4872,6 @@ export interface RestCommentThreadDiffAnchorSrcPath {
      * @memberof RestCommentThreadDiffAnchorSrcPath
      */
     parent?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentThreadDiffAnchorSrcPath
-     */
-    extension?: string;
 }
 /**
  * 
@@ -4925,16 +4881,16 @@ export interface RestCommentThreadDiffAnchorSrcPath {
 export interface RestCommit {
     /**
      * 
-     * @type {Array<RestMinimalCommit>}
+     * @type {number}
      * @memberof RestCommit
      */
-    parents?: Array<RestMinimalCommit>;
+    committerTimestamp?: number;
     /**
      * 
-     * @type {RestChangesetToCommitAuthor}
+     * @type {RestChangesetToCommitCommitter}
      * @memberof RestCommit
      */
-    author?: RestChangesetToCommitAuthor;
+    committer?: RestChangesetToCommitCommitter;
     /**
      * 
      * @type {number}
@@ -4943,16 +4899,16 @@ export interface RestCommit {
     authorTimestamp?: number;
     /**
      * 
-     * @type {RestChangesetToCommitAuthor}
+     * @type {RestChangesetToCommitCommitter}
      * @memberof RestCommit
      */
-    committer?: RestChangesetToCommitAuthor;
+    author?: RestChangesetToCommitCommitter;
     /**
      * 
-     * @type {number}
+     * @type {Array<RestMinimalCommit>}
      * @memberof RestCommit
      */
-    committerTimestamp?: number;
+    parents?: Array<RestMinimalCommit>;
     /**
      * 
      * @type {string}
@@ -4980,16 +4936,16 @@ export interface RestCommit {
 export interface RestConflict {
     /**
      * 
-     * @type {RestChangeConflictTheirChange}
+     * @type {RestChangeConflictOurChange}
      * @memberof RestConflict
      */
-    theirChange?: RestChangeConflictTheirChange;
+    ourChange?: RestChangeConflictOurChange;
     /**
      * 
-     * @type {RestChangeConflictTheirChange}
+     * @type {RestChangeConflictOurChange}
      * @memberof RestConflict
      */
-    ourChange?: RestChangeConflictTheirChange;
+    theirChange?: RestChangeConflictOurChange;
 }
 /**
  * 
@@ -5039,12 +4995,6 @@ export type RestConflictChangeTypeEnum = typeof RestConflictChangeTypeEnum[keyof
 export interface RestConnectivitySummary {
     /**
      * 
-     * @type {string}
-     * @memberof RestConnectivitySummary
-     */
-    errorMessage?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestConnectivitySummary
      */
@@ -5055,6 +5005,12 @@ export interface RestConnectivitySummary {
      * @memberof RestConnectivitySummary
      */
     reachable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestConnectivitySummary
+     */
+    errorMessage?: string;
 }
 /**
  * 
@@ -5139,16 +5095,16 @@ export interface RestDefaultReviewersRequest {
     reviewers?: Array<RestApplicationUser>;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRequiredBuildConditionSetRequestExemptRefMatcher}
      * @memberof RestDefaultReviewersRequest
      */
-    sourceMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    sourceMatcher?: RestRequiredBuildConditionSetRequestExemptRefMatcher;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRequiredBuildConditionSetRequestExemptRefMatcher}
      * @memberof RestDefaultReviewersRequest
      */
-    targetMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    targetMatcher?: RestRequiredBuildConditionSetRequestExemptRefMatcher;
 }
 /**
  * 
@@ -5158,10 +5114,16 @@ export interface RestDefaultReviewersRequest {
 export interface RestDeployment {
     /**
      * 
-     * @type {number}
+     * @type {RestChangesetFromCommit}
      * @memberof RestDeployment
      */
-    deploymentSequenceNumber?: number;
+    fromCommit?: RestChangesetFromCommit;
+    /**
+     * 
+     * @type {RestChangesetFromCommit}
+     * @memberof RestDeployment
+     */
+    toCommit?: RestChangesetFromCommit;
     /**
      * 
      * @type {string}
@@ -5170,10 +5132,10 @@ export interface RestDeployment {
     url?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentEnvironment}
      * @memberof RestDeployment
      */
-    description?: string;
+    environment?: RestDeploymentEnvironment;
     /**
      * 
      * @type {RestChangesetRepository}
@@ -5188,22 +5150,16 @@ export interface RestDeployment {
     lastUpdated?: number;
     /**
      * 
-     * @type {RestDeploymentEnvironment}
+     * @type {string}
      * @memberof RestDeployment
      */
-    environment?: RestDeploymentEnvironment;
+    description?: string;
     /**
      * 
-     * @type {RestChangesetFromCommit}
+     * @type {number}
      * @memberof RestDeployment
      */
-    fromCommit?: RestChangesetFromCommit;
-    /**
-     * 
-     * @type {RestChangesetFromCommit}
-     * @memberof RestDeployment
-     */
-    toCommit?: RestChangesetFromCommit;
+    deploymentSequenceNumber?: number;
     /**
      * 
      * @type {string}
@@ -5363,21 +5319,89 @@ export interface RestDetailedGroup {
 /**
  * 
  * @export
+ * @interface RestDetailedInvocation
+ */
+export interface RestDetailedInvocation {
+    /**
+     * 
+     * @type {RestDetailedInvocationEventScope}
+     * @memberof RestDetailedInvocation
+     */
+    eventScope?: RestDetailedInvocationEventScope;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDetailedInvocation
+     */
+    finish?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDetailedInvocation
+     */
+    event?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestDetailedInvocation
+     */
+    request?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDetailedInvocation
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDetailedInvocation
+     */
+    duration?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestDetailedInvocation
+     */
+    result?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDetailedInvocation
+     */
+    id?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RestDetailedInvocationEventScope
+ */
+export interface RestDetailedInvocationEventScope {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDetailedInvocationEventScope
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDetailedInvocationEventScope
+     */
+    type?: string;
+}
+/**
+ * 
+ * @export
  * @interface RestDetailedUser
  */
 export interface RestDetailedUser {
     /**
      * 
-     * @type {number}
-     * @memberof RestDetailedUser
-     */
-    lastAuthenticationTimestamp?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestDetailedUser
      */
-    mutableGroups?: boolean;
+    deletable?: boolean;
     /**
      * 
      * @type {boolean}
@@ -5389,7 +5413,7 @@ export interface RestDetailedUser {
      * @type {boolean}
      * @memberof RestDetailedUser
      */
-    deletable?: boolean;
+    mutableGroups?: boolean;
     /**
      * 
      * @type {string}
@@ -5398,16 +5422,16 @@ export interface RestDetailedUser {
     directoryName?: string;
     /**
      * 
-     * @type {object}
+     * @type {number}
      * @memberof RestDetailedUser
      */
-    links?: object;
+    lastAuthenticationTimestamp?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestDetailedUser
      */
-    active?: boolean;
+    emailAddress?: string;
     /**
      * 
      * @type {string}
@@ -5416,10 +5440,10 @@ export interface RestDetailedUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof RestDetailedUser
      */
-    emailAddress?: string;
+    links?: object;
     /**
      * 
      * @type {string}
@@ -5438,6 +5462,12 @@ export interface RestDetailedUser {
      * @memberof RestDetailedUser
      */
     type?: RestDetailedUserTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestDetailedUser
+     */
+    active?: boolean;
     /**
      * 
      * @type {string}
@@ -5470,6 +5500,18 @@ export type RestDetailedUserTypeEnum = typeof RestDetailedUserTypeEnum[keyof typ
 export interface RestDiff {
     /**
      * 
+     * @type {Array<RestComment>}
+     * @memberof RestDiff
+     */
+    lineComments?: Array<RestComment>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestDiff
+     */
+    truncated?: boolean;
+    /**
+     * 
      * @type {Array<RestDiffHunk>}
      * @memberof RestDiff
      */
@@ -5485,25 +5527,13 @@ export interface RestDiff {
      * @type {RestCommentThreadDiffAnchorSrcPath}
      * @memberof RestDiff
      */
-    destination?: RestCommentThreadDiffAnchorSrcPath;
+    source?: RestCommentThreadDiffAnchorSrcPath;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorSrcPath}
      * @memberof RestDiff
      */
-    source?: RestCommentThreadDiffAnchorSrcPath;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestDiff
-     */
-    truncated?: boolean;
-    /**
-     * 
-     * @type {Array<RestComment>}
-     * @memberof RestDiff
-     */
-    lineComments?: Array<RestComment>;
+    destination?: RestCommentThreadDiffAnchorSrcPath;
     /**
      * 
      * @type {object}
@@ -5528,12 +5558,6 @@ export interface RestDiffHunk {
      * @type {number}
      * @memberof RestDiffHunk
      */
-    destinationSpan?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDiffHunk
-     */
     sourceSpan?: number;
     /**
      * 
@@ -5541,6 +5565,12 @@ export interface RestDiffHunk {
      * @memberof RestDiffHunk
      */
     destinationLine?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDiffHunk
+     */
+    destinationSpan?: number;
     /**
      * 
      * @type {Array<RestDiffSegment>}
@@ -5571,19 +5601,7 @@ export interface RestDiffLine {
      * @type {string}
      * @memberof RestDiffLine
      */
-    line?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDiffLine
-     */
-    destination?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDiffLine
-     */
-    source?: number;
+    conflictMarker?: RestDiffLineConflictMarkerEnum;
     /**
      * 
      * @type {Array<number>}
@@ -5592,16 +5610,28 @@ export interface RestDiffLine {
     commentIds?: Array<number>;
     /**
      * 
-     * @type {string}
-     * @memberof RestDiffLine
-     */
-    conflictMarker?: RestDiffLineConflictMarkerEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestDiffLine
      */
     truncated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDiffLine
+     */
+    line?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDiffLine
+     */
+    source?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDiffLine
+     */
+    destination?: number;
 }
 
 
@@ -5623,16 +5653,16 @@ export type RestDiffLineConflictMarkerEnum = typeof RestDiffLineConflictMarkerEn
 export interface RestDiffSegment {
     /**
      * 
-     * @type {Array<RestDiffLine>}
-     * @memberof RestDiffSegment
-     */
-    lines?: Array<RestDiffLine>;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestDiffSegment
      */
     truncated?: boolean;
+    /**
+     * 
+     * @type {Array<RestDiffLine>}
+     * @memberof RestDiffSegment
+     */
+    lines?: Array<RestDiffLine>;
     /**
      * 
      * @type {string}
@@ -5663,13 +5693,13 @@ export interface RestEmoticon {
      * @type {string}
      * @memberof RestEmoticon
      */
-    url?: string;
+    shortcut?: string;
     /**
      * 
      * @type {string}
      * @memberof RestEmoticon
      */
-    shortcut?: string;
+    url?: string;
     /**
      * 
      * @type {string}
@@ -5683,18 +5713,6 @@ export interface RestEmoticon {
  * @interface RestEnhancedEntityLink
  */
 export interface RestEnhancedEntityLink {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnhancedEntityLink
-     */
-    projectId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEnhancedEntityLink
-     */
-    projectKey?: string;
     /**
      * 
      * @type {string}
@@ -5713,6 +5731,18 @@ export interface RestEnhancedEntityLink {
      * @memberof RestEnhancedEntityLink
      */
     displayUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnhancedEntityLink
+     */
+    projectKey?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnhancedEntityLink
+     */
+    projectId?: number;
 }
 /**
  * 
@@ -5800,6 +5830,48 @@ export interface RestExportRequestRepositoriesRequest {
 /**
  * 
  * @export
+ * @interface RestFarmSynchronizationRequest
+ */
+export interface RestFarmSynchronizationRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestFarmSynchronizationRequest
+     */
+    attempt?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestFarmSynchronizationRequest
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestFarmSynchronizationRequest
+     */
+    externalRepoId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestFarmSynchronizationRequest
+     */
+    type?: RestFarmSynchronizationRequestTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestFarmSynchronizationRequestTypeEnum = {
+    Incremental: 'incremental',
+    Snapshot: 'snapshot'
+} as const;
+export type RestFarmSynchronizationRequestTypeEnum = typeof RestFarmSynchronizationRequestTypeEnum[keyof typeof RestFarmSynchronizationRequestTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface RestGitTagCreateRequest
  */
 export interface RestGitTagCreateRequest {
@@ -5853,12 +5925,6 @@ export type RestGitTagCreateRequestTypeEnum = typeof RestGitTagCreateRequestType
 export interface RestGpgKey {
     /**
      * 
-     * @type {string}
-     * @memberof RestGpgKey
-     */
-    text?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestGpgKey
      */
@@ -5875,6 +5941,12 @@ export interface RestGpgKey {
      * @memberof RestGpgKey
      */
     readonly subKeys?: Array<RestGpgSubKey>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGpgKey
+     */
+    text?: string;
     /**
      * 
      * @type {string}
@@ -5915,22 +5987,10 @@ export interface RestGpgSubKey {
 export interface RestHookScript {
     /**
      * 
-     * @type {number}
-     * @memberof RestHookScript
-     */
-    version?: number;
-    /**
-     * 
      * @type {string}
      * @memberof RestHookScript
      */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestHookScript
-     */
-    pluginKey?: string;
+    updatedDate?: string;
     /**
      * 
      * @type {string}
@@ -5942,7 +6002,19 @@ export interface RestHookScript {
      * @type {string}
      * @memberof RestHookScript
      */
-    updatedDate?: string;
+    pluginKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestHookScript
+     */
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestHookScript
+     */
+    version?: number;
     /**
      * 
      * @type {string}
@@ -6006,22 +6078,10 @@ export interface RestHookScriptConfig {
 export interface RestHookScriptConfigScript {
     /**
      * 
-     * @type {number}
-     * @memberof RestHookScriptConfigScript
-     */
-    version?: number;
-    /**
-     * 
      * @type {string}
      * @memberof RestHookScriptConfigScript
      */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestHookScriptConfigScript
-     */
-    pluginKey?: string;
+    updatedDate?: string;
     /**
      * 
      * @type {string}
@@ -6033,7 +6093,19 @@ export interface RestHookScriptConfigScript {
      * @type {string}
      * @memberof RestHookScriptConfigScript
      */
-    updatedDate?: string;
+    pluginKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestHookScriptConfigScript
+     */
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestHookScriptConfigScript
+     */
+    version?: number;
     /**
      * 
      * @type {string}
@@ -6098,10 +6170,10 @@ export interface RestImportRequest {
 export interface RestInsightAnnotation {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestInsightAnnotation
      */
-    line?: number;
+    externalId?: string;
     /**
      * 
      * @type {string}
@@ -6110,10 +6182,10 @@ export interface RestInsightAnnotation {
     link?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestInsightAnnotation
      */
-    severity?: string;
+    line?: number;
     /**
      * 
      * @type {string}
@@ -6125,7 +6197,7 @@ export interface RestInsightAnnotation {
      * @type {string}
      * @memberof RestInsightAnnotation
      */
-    externalId?: string;
+    severity?: string;
     /**
      * 
      * @type {string}
@@ -6166,28 +6238,10 @@ export interface RestInsightAnnotationsResponse {
 export interface RestInsightReport {
     /**
      * 
-     * @type {Array<RestInsightReportData>}
-     * @memberof RestInsightReport
-     */
-    data?: Array<RestInsightReportData>;
-    /**
-     * 
      * @type {string}
      * @memberof RestInsightReport
      */
-    title?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestInsightReport
-     */
-    link?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestInsightReport
-     */
-    details?: string;
+    reporter?: string;
     /**
      * 
      * @type {number}
@@ -6205,19 +6259,37 @@ export interface RestInsightReport {
      * @type {string}
      * @memberof RestInsightReport
      */
-    reporter?: string;
+    link?: string;
     /**
      * 
      * @type {string}
      * @memberof RestInsightReport
      */
-    key?: string;
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestInsightReport
+     */
+    details?: string;
+    /**
+     * 
+     * @type {Array<RestInsightReportData>}
+     * @memberof RestInsightReport
+     */
+    data?: Array<RestInsightReportData>;
     /**
      * 
      * @type {string}
      * @memberof RestInsightReport
      */
     result?: RestInsightReportResultEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestInsightReport
+     */
+    key?: string;
 }
 
 
@@ -6282,6 +6354,12 @@ export interface RestJiraIssue {
 export interface RestJob {
     /**
      * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestJob
+     */
+    initiator?: RestPullRequestParticipantUser;
+    /**
+     * 
      * @type {number}
      * @memberof RestJob
      */
@@ -6291,31 +6369,19 @@ export interface RestJob {
      * @type {number}
      * @memberof RestJob
      */
-    endDate?: number;
+    startDate?: number;
     /**
      * 
      * @type {number}
      * @memberof RestJob
      */
-    startDate?: number;
+    endDate?: number;
     /**
      * 
      * @type {string}
      * @memberof RestJob
      */
     nodeId?: string;
-    /**
-     * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestJob
-     */
-    initiator?: AssignParticipantRoleRequestUser;
-    /**
-     * 
-     * @type {RestJobProgress}
-     * @memberof RestJob
-     */
-    progress?: RestJobProgress;
     /**
      * 
      * @type {number}
@@ -6334,6 +6400,12 @@ export interface RestJob {
      * @memberof RestJob
      */
     type?: string;
+    /**
+     * 
+     * @type {RestJobProgress}
+     * @memberof RestJob
+     */
+    progress?: RestJobProgress;
 }
 
 
@@ -6365,25 +6437,25 @@ export interface RestJobMessage {
      * @type {string}
      * @memberof RestJobMessage
      */
-    text?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestJobMessage
-     */
-    severity?: RestJobMessageSeverityEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestJobMessage
-     */
     createdDate?: string;
     /**
      * 
      * @type {string}
      * @memberof RestJobMessage
      */
+    text?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJobMessage
+     */
     subject?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJobMessage
+     */
+    severity?: RestJobMessageSeverityEnum;
     /**
      * 
      * @type {string}
@@ -6452,31 +6524,7 @@ export interface RestLabelable {
      * @type {string}
      * @memberof RestLabelable
      */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestLabelable
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestLabelable
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestLabelable
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestLabelable
-     */
-    readonly description?: string;
+    readonly defaultBranch?: string;
     /**
      * 
      * @type {string}
@@ -6491,6 +6539,30 @@ export interface RestLabelable {
     readonly statusMessage?: string;
     /**
      * 
+     * @type {object}
+     * @memberof RestLabelable
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestLabelable
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestLabelable
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestLabelable
+     */
+    slug?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestLabelable
      */
@@ -6503,34 +6575,40 @@ export interface RestLabelable {
     readonly forkable?: boolean;
     /**
      * 
+     * @type {RestChangesetRepositoryOrigin}
+     * @memberof RestLabelable
+     */
+    origin?: RestChangesetRepositoryOrigin;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestLabelable
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
      * @type {string}
      * @memberof RestLabelable
      */
-    readonly defaultBranch?: string;
+    readonly scope?: string;
     /**
      * 
-     * @type {EnrichedRepositoryOrigin}
+     * @type {string}
      * @memberof RestLabelable
      */
-    origin?: EnrichedRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestLabelable
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestLabelable
-     */
-    readonly relatedLinks?: object;
+    readonly description?: string;
     /**
      * 
      * @type {string}
      * @memberof RestLabelable
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestLabelable
+     */
+    readonly _public?: boolean;
     /**
      * 
      * @type {number}
@@ -6543,12 +6621,6 @@ export interface RestLabelable {
      * @memberof RestLabelable
      */
     readonly state?: RestLabelableStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestLabelable
-     */
-    readonly _public?: boolean;
     /**
      * 
      * @type {object}
@@ -6601,6 +6673,30 @@ export interface RestMailConfiguration {
      * @type {string}
      * @memberof RestMailConfiguration
      */
+    senderAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
+    hostname?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestMailConfiguration
+     */
+    requireStartTls?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestMailConfiguration
+     */
+    useStartTls?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
     password?: string;
     /**
      * 
@@ -6610,40 +6706,16 @@ export interface RestMailConfiguration {
     username?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestMailConfiguration
      */
-    senderAddress?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMailConfiguration
-     */
-    useStartTls?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMailConfiguration
-     */
-    requireStartTls?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMailConfiguration
-     */
-    hostname?: string;
+    port?: number;
     /**
      * 
      * @type {string}
      * @memberof RestMailConfiguration
      */
     protocol?: RestMailConfigurationProtocolEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestMailConfiguration
-     */
-    port?: number;
 }
 
 
@@ -6696,10 +6768,10 @@ export interface RestMeshMigrationRequest {
     all?: boolean;
     /**
      * 
-     * @type {RestMeshMigrationRequestMaxBytesPerSecond}
+     * @type {StartMeshMigrationRequestMaxBytesPerSecond}
      * @memberof RestMeshMigrationRequest
      */
-    maxBytesPerSecond?: RestMeshMigrationRequestMaxBytesPerSecond;
+    maxBytesPerSecond?: StartMeshMigrationRequestMaxBytesPerSecond;
     /**
      * 
      * @type {Set<number>}
@@ -6716,28 +6788,21 @@ export interface RestMeshMigrationRequest {
 /**
  * 
  * @export
- * @interface RestMeshMigrationRequestMaxBytesPerSecond
- */
-export interface RestMeshMigrationRequestMaxBytesPerSecond {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestMeshMigrationRequestMaxBytesPerSecond
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMeshMigrationRequestMaxBytesPerSecond
-     */
-    present?: boolean;
-}
-/**
- * 
- * @export
  * @interface RestMeshMigrationSummary
  */
 export interface RestMeshMigrationSummary {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMeshMigrationSummary
+     */
+    maxBandwidth?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMeshMigrationSummary
+     */
+    endTime?: number;
     /**
      * 
      * @type {number}
@@ -6752,24 +6817,6 @@ export interface RestMeshMigrationSummary {
     startTime?: number;
     /**
      * 
-     * @type {number}
-     * @memberof RestMeshMigrationSummary
-     */
-    endTime?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestMeshMigrationSummary
-     */
-    maxBandwidth?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestMeshMigrationSummary
-     */
-    progress?: number;
-    /**
-     * 
      * @type {object}
      * @memberof RestMeshMigrationSummary
      */
@@ -6780,6 +6827,12 @@ export interface RestMeshMigrationSummary {
      * @memberof RestMeshMigrationSummary
      */
     state?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMeshMigrationSummary
+     */
+    progress?: number;
 }
 /**
  * 
@@ -6787,18 +6840,6 @@ export interface RestMeshMigrationSummary {
  * @interface RestMeshNode
  */
 export interface RestMeshNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMeshNode
-     */
-    rpcId?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMeshNode
-     */
-    offline?: boolean;
     /**
      * 
      * @type {number}
@@ -6810,7 +6851,19 @@ export interface RestMeshNode {
      * @type {string}
      * @memberof RestMeshNode
      */
+    rpcId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMeshNode
+     */
     rpcUrl?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestMeshNode
+     */
+    offline?: boolean;
     /**
      * 
      * @type {string}
@@ -6852,16 +6905,16 @@ export type RestMeshNodeStateEnum = typeof RestMeshNodeStateEnum[keyof typeof Re
 export interface RestMigrationRepository {
     /**
      * 
-     * @type {RestChangesetRepository}
-     * @memberof RestMigrationRepository
-     */
-    repository?: RestChangesetRepository;
-    /**
-     * 
      * @type {string}
      * @memberof RestMigrationRepository
      */
     migrationState?: RestMigrationRepositoryMigrationStateEnum;
+    /**
+     * 
+     * @type {RestChangesetRepository}
+     * @memberof RestMigrationRepository
+     */
+    repository?: RestChangesetRepository;
 }
 
 
@@ -6937,27 +6990,108 @@ export type RestMinimalRefTypeEnum = typeof RestMinimalRefTypeEnum[keyof typeof 
 /**
  * 
  * @export
+ * @interface RestMirrorHashes
+ */
+export interface RestMirrorHashes {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorHashes
+     */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorHashes
+     */
+    content?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestMirrorRepositorySynchronizationStatus
+ */
+export interface RestMirrorRepositorySynchronizationStatus {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    localProjectId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    localRepoId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    repoSlug?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    externalRepoId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    failedSyncCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    lastSyncDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    upstreamId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    initialSyncDate?: string;
+    /**
+     * 
+     * @type {RestMirrorRepositorySynchronizationStatusHashes}
+     * @memberof RestMirrorRepositorySynchronizationStatus
+     */
+    hashes?: RestMirrorRepositorySynchronizationStatusHashes;
+}
+/**
+ * 
+ * @export
+ * @interface RestMirrorRepositorySynchronizationStatusHashes
+ */
+export interface RestMirrorRepositorySynchronizationStatusHashes {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatusHashes
+     */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorRepositorySynchronizationStatusHashes
+     */
+    content?: string;
+}
+/**
+ * 
+ * @export
  * @interface RestMirrorServer
  */
 export interface RestMirrorServer {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMirrorServer
-     */
-    baseUrl?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMirrorServer
-     */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMirrorServer
-     */
-    lastSeenDate?: string;
     /**
      * 
      * @type {string}
@@ -6976,6 +7110,24 @@ export interface RestMirrorServer {
      * @memberof RestMirrorServer
      */
     productVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorServer
+     */
+    lastSeenDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirrorServer
+     */
+    baseUrl?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestMirrorServer
+     */
+    enabled?: boolean;
     /**
      * 
      * @type {string}
@@ -7042,19 +7194,13 @@ export interface RestMirroredRepository {
      * @type {string}
      * @memberof RestMirroredRepository
      */
-    lastUpdated?: string;
+    mirrorName?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<RestNamedLink>}
      * @memberof RestMirroredRepository
      */
-    status?: RestMirroredRepositoryStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMirroredRepository
-     */
-    repositoryId?: string;
+    pushUrls?: Array<RestNamedLink>;
     /**
      * 
      * @type {Array<RestNamedLink>}
@@ -7066,19 +7212,25 @@ export interface RestMirroredRepository {
      * @type {string}
      * @memberof RestMirroredRepository
      */
-    mirrorName?: string;
-    /**
-     * 
-     * @type {Array<RestNamedLink>}
-     * @memberof RestMirroredRepository
-     */
-    pushUrls?: Array<RestNamedLink>;
+    status?: RestMirroredRepositoryStatusEnum;
     /**
      * 
      * @type {boolean}
      * @memberof RestMirroredRepository
      */
     available?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirroredRepository
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirroredRepository
+     */
+    repositoryId?: string;
 }
 
 
@@ -7124,24 +7276,6 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
      * @type {string}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
-    baseUrl?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestMirroredRepositoryDescriptorMirrorServer
-     */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMirroredRepositoryDescriptorMirrorServer
-     */
-    lastSeenDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMirroredRepositoryDescriptorMirrorServer
-     */
     mirrorType?: RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum;
     /**
      * 
@@ -7155,6 +7289,24 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
     productVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirroredRepositoryDescriptorMirrorServer
+     */
+    lastSeenDate: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMirroredRepositoryDescriptorMirrorServer
+     */
+    baseUrl?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestMirroredRepositoryDescriptorMirrorServer
+     */
+    enabled?: boolean;
     /**
      * 
      * @type {string}
@@ -7398,12 +7550,6 @@ export interface RestNodeConnectivitySummary {
 export interface RestNodeConnectivitySummarySummary {
     /**
      * 
-     * @type {string}
-     * @memberof RestNodeConnectivitySummarySummary
-     */
-    errorMessage?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestNodeConnectivitySummarySummary
      */
@@ -7414,6 +7560,12 @@ export interface RestNodeConnectivitySummarySummary {
      * @memberof RestNodeConnectivitySummarySummary
      */
     reachable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNodeConnectivitySummarySummary
+     */
+    errorMessage?: string;
 }
 /**
  * 
@@ -7435,12 +7587,6 @@ export interface RestPageRestChange {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof RestPageRestChange
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestPageRestChange
      */
@@ -7451,6 +7597,12 @@ export interface RestPageRestChange {
      * @memberof RestPageRestChange
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageRestChange
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -7475,6 +7627,12 @@ export interface RestPath {
      * @type {string}
      * @memberof RestPath
      */
+    extension?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPath
+     */
     name?: string;
     /**
      * 
@@ -7482,12 +7640,6 @@ export interface RestPath {
      * @memberof RestPath
      */
     parent?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPath
-     */
-    extension?: string;
 }
 /**
  * 
@@ -7542,10 +7694,10 @@ export interface RestPermittedGroupGroup {
 export interface RestPermittedUser {
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
+     * @type {RestPullRequestParticipantUser}
      * @memberof RestPermittedUser
      */
-    user?: AssignParticipantRoleRequestUser;
+    user?: RestPullRequestParticipantUser;
     /**
      * 
      * @type {string}
@@ -7586,13 +7738,13 @@ export interface RestPerson {
      * @type {string}
      * @memberof RestPerson
      */
-    avatarUrl?: string;
+    emailAddress?: string;
     /**
      * 
      * @type {string}
      * @memberof RestPerson
      */
-    emailAddress?: string;
+    avatarUrl?: string;
     /**
      * 
      * @type {string}
@@ -7630,13 +7782,19 @@ export interface RestProject {
      * @type {string}
      * @memberof RestProject
      */
-    readonly scope?: string;
+    avatarUrl?: string;
     /**
      * 
      * @type {string}
      * @memberof RestProject
      */
-    readonly description?: string;
+    avatar?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProject
+     */
+    readonly scope?: string;
     /**
      * 
      * @type {string}
@@ -7649,13 +7807,7 @@ export interface RestProject {
      * @type {string}
      * @memberof RestProject
      */
-    avatar?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProject
-     */
-    avatarUrl?: string;
+    readonly description?: string;
     /**
      * 
      * @type {string}
@@ -7670,6 +7822,12 @@ export interface RestProject {
     key?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestProject
+     */
+    readonly _public?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof RestProject
      */
@@ -7680,12 +7838,6 @@ export interface RestProject {
      * @memberof RestProject
      */
     readonly type?: RestProjectTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestProject
-     */
-    readonly _public?: boolean;
     /**
      * 
      * @type {object}
@@ -7707,6 +7859,81 @@ export type RestProjectTypeEnum = typeof RestProjectTypeEnum[keyof typeof RestPr
 /**
  * 
  * @export
+ * @interface RestProjectSettingsRestriction
+ */
+export interface RestProjectSettingsRestriction {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestriction
+     */
+    featureKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestriction
+     */
+    processedState?: RestProjectSettingsRestrictionProcessedStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestriction
+     */
+    componentKey?: string;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestProjectSettingsRestriction
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestriction
+     */
+    namespace?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestProjectSettingsRestrictionProcessedStateEnum = {
+    Unprocessed: 'UNPROCESSED',
+    Processed: 'PROCESSED',
+    Failed: 'FAILED',
+    InProgress: 'IN_PROGRESS'
+} as const;
+export type RestProjectSettingsRestrictionProcessedStateEnum = typeof RestProjectSettingsRestrictionProcessedStateEnum[keyof typeof RestProjectSettingsRestrictionProcessedStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestProjectSettingsRestrictionRequest
+ */
+export interface RestProjectSettingsRestrictionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestrictionRequest
+     */
+    componentKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestrictionRequest
+     */
+    featureKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectSettingsRestrictionRequest
+     */
+    namespace: string;
+}
+/**
+ * 
+ * @export
  * @interface RestProperties
  */
 export interface RestProperties {
@@ -7715,13 +7942,13 @@ export interface RestProperties {
      * @type {string}
      * @memberof RestProperties
      */
-    defaultBranchId?: string;
+    metadataHash?: string;
     /**
      * 
      * @type {string}
      * @memberof RestProperties
      */
-    metadataHash?: string;
+    defaultBranchId?: string;
     /**
      * 
      * @type {string}
@@ -7737,34 +7964,16 @@ export interface RestProperties {
 export interface RestPullRequest {
     /**
      * 
-     * @type {RestPullRequestToRef}
+     * @type {Array<RestPullRequestParticipant>}
      * @memberof RestPullRequest
      */
-    toRef?: RestPullRequestToRef;
+    reviewers?: Array<RestPullRequestParticipant>;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<RestPullRequestParticipant>}
      * @memberof RestPullRequest
      */
-    closed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequest
-     */
-    title?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPullRequest
-     */
-    version?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequest
-     */
-    description?: string;
+    participants?: Array<RestPullRequestParticipant>;
     /**
      * 
      * @type {string}
@@ -7779,22 +7988,10 @@ export interface RestPullRequest {
     closedDate?: number;
     /**
      * 
-     * @type {RestPullRequestToRef}
+     * @type {number}
      * @memberof RestPullRequest
      */
-    fromRef?: RestPullRequestToRef;
-    /**
-     * 
-     * @type {Array<RestPullRequestParticipant>}
-     * @memberof RestPullRequest
-     */
-    participants?: Array<RestPullRequestParticipant>;
-    /**
-     * 
-     * @type {Array<RestPullRequestParticipant>}
-     * @memberof RestPullRequest
-     */
-    reviewers?: Array<RestPullRequestParticipant>;
+    updatedDate?: number;
     /**
      * 
      * @type {number}
@@ -7803,16 +8000,40 @@ export interface RestPullRequest {
     createdDate?: number;
     /**
      * 
+     * @type {RestPullRequestFromRef}
+     * @memberof RestPullRequest
+     */
+    fromRef?: RestPullRequestFromRef;
+    /**
+     * 
+     * @type {RestPullRequestFromRef}
+     * @memberof RestPullRequest
+     */
+    toRef?: RestPullRequestFromRef;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequest
+     */
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequest
+     */
+    description?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestPullRequest
      */
-    updatedDate?: number;
+    version?: number;
     /**
      * 
      * @type {boolean}
      * @memberof RestPullRequest
      */
-    locked?: boolean;
+    open?: boolean;
     /**
      * 
      * @type {number}
@@ -7830,7 +8051,13 @@ export interface RestPullRequest {
      * @type {boolean}
      * @memberof RestPullRequest
      */
-    open?: boolean;
+    locked?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPullRequest
+     */
+    closed?: boolean;
     /**
      * 
      * @type {object}
@@ -7864,16 +8091,16 @@ export interface RestPullRequestActivity {
     action?: RestPullRequestActivityActionEnum;
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestPullRequestActivity
-     */
-    user?: AssignParticipantRoleRequestUser;
-    /**
-     * 
      * @type {number}
      * @memberof RestPullRequestActivity
      */
     createdDate?: number;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestPullRequestActivity
+     */
+    user?: RestPullRequestParticipantUser;
     /**
      * 
      * @type {number}
@@ -7907,21 +8134,137 @@ export type RestPullRequestActivityActionEnum = typeof RestPullRequestActivityAc
 /**
  * 
  * @export
+ * @interface RestPullRequestAssignParticipantRoleRequest
+ */
+export interface RestPullRequestAssignParticipantRoleRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequest
+     */
+    role?: RestPullRequestAssignParticipantRoleRequestRoleEnum;
+    /**
+     * 
+     * @type {RestPullRequestAssignParticipantRoleRequestUser}
+     * @memberof RestPullRequestAssignParticipantRoleRequest
+     */
+    user?: RestPullRequestAssignParticipantRoleRequestUser;
+}
+
+
+/**
+ * @export
+ */
+export const RestPullRequestAssignParticipantRoleRequestRoleEnum = {
+    Author: 'AUTHOR',
+    Reviewer: 'REVIEWER',
+    Participant: 'PARTICIPANT'
+} as const;
+export type RestPullRequestAssignParticipantRoleRequestRoleEnum = typeof RestPullRequestAssignParticipantRoleRequestRoleEnum[keyof typeof RestPullRequestAssignParticipantRoleRequestRoleEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestPullRequestAssignParticipantRoleRequestUser
+ */
+export interface RestPullRequestAssignParticipantRoleRequestUser {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    emailAddress?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignParticipantRoleRequestUser
+     */
+    type?: RestPullRequestAssignParticipantRoleRequestUserTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestPullRequestAssignParticipantRoleRequestUserTypeEnum = {
+    Normal: 'NORMAL',
+    Service: 'SERVICE'
+} as const;
+export type RestPullRequestAssignParticipantRoleRequestUserTypeEnum = typeof RestPullRequestAssignParticipantRoleRequestUserTypeEnum[keyof typeof RestPullRequestAssignParticipantRoleRequestUserTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestPullRequestAssignStatusRequest
+ */
+export interface RestPullRequestAssignStatusRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestAssignStatusRequest
+     */
+    status?: RestPullRequestAssignStatusRequestStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestPullRequestAssignStatusRequestStatusEnum = {
+    Unapproved: 'UNAPPROVED',
+    NeedsWork: 'NEEDS_WORK',
+    Approved: 'APPROVED'
+} as const;
+export type RestPullRequestAssignStatusRequestStatusEnum = typeof RestPullRequestAssignStatusRequestStatusEnum[keyof typeof RestPullRequestAssignStatusRequestStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface RestPullRequestCondition
  */
 export interface RestPullRequestCondition {
-    /**
-     * 
-     * @type {RestPullRequestConditionScope}
-     * @memberof RestPullRequestCondition
-     */
-    scope?: RestPullRequestConditionScope;
-    /**
-     * 
-     * @type {Array<RestApplicationUser>}
-     * @memberof RestPullRequestCondition
-     */
-    reviewers?: Array<RestApplicationUser>;
     /**
      * 
      * @type {number}
@@ -7930,16 +8273,28 @@ export interface RestPullRequestCondition {
     requiredApprovals?: number;
     /**
      * 
-     * @type {RestRequiredBuildConditionRefMatcher}
+     * @type {Array<RestApplicationUser>}
      * @memberof RestPullRequestCondition
      */
-    targetRefMatcher?: RestRequiredBuildConditionRefMatcher;
+    reviewers?: Array<RestApplicationUser>;
     /**
      * 
-     * @type {RestRequiredBuildConditionRefMatcher}
+     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
      * @memberof RestPullRequestCondition
      */
-    sourceRefMatcher?: RestRequiredBuildConditionRefMatcher;
+    targetRefMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * 
+     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @memberof RestPullRequestCondition
+     */
+    sourceRefMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * 
+     * @type {RestPullRequestConditionScope}
+     * @memberof RestPullRequestCondition
+     */
+    scope?: RestPullRequestConditionScope;
     /**
      * 
      * @type {number}
@@ -8032,6 +8387,54 @@ export interface RestPullRequestFinishReviewRequest {
 /**
  * 
  * @export
+ * @interface RestPullRequestFromRef
+ */
+export interface RestPullRequestFromRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestFromRef
+     */
+    displayId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestFromRef
+     */
+    latestCommit?: string;
+    /**
+     * 
+     * @type {RestChangesetRepository}
+     * @memberof RestPullRequestFromRef
+     */
+    repository?: RestChangesetRepository;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestFromRef
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestFromRef
+     */
+    type?: RestPullRequestFromRefTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestPullRequestFromRefTypeEnum = {
+    Branch: 'BRANCH',
+    Tag: 'TAG'
+} as const;
+export type RestPullRequestFromRefTypeEnum = typeof RestPullRequestFromRefTypeEnum[keyof typeof RestPullRequestFromRefTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface RestPullRequestMergeConfig
  */
 export interface RestPullRequestMergeConfig {
@@ -8074,16 +8477,16 @@ export interface RestPullRequestMergeConfigDefaultStrategy {
     readonly flag?: string;
     /**
      * 
-     * @type {string}
-     * @memberof RestPullRequestMergeConfigDefaultStrategy
-     */
-    readonly description?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestPullRequestMergeConfigDefaultStrategy
      */
     readonly enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestMergeConfigDefaultStrategy
+     */
+    readonly description?: string;
     /**
      * 
      * @type {string}
@@ -8154,16 +8557,16 @@ export interface RestPullRequestMergeStrategy {
     readonly flag?: string;
     /**
      * 
-     * @type {string}
-     * @memberof RestPullRequestMergeStrategy
-     */
-    readonly description?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestPullRequestMergeStrategy
      */
     readonly enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestMergeStrategy
+     */
+    readonly description?: string;
     /**
      * 
      * @type {string}
@@ -8191,6 +8594,12 @@ export interface RestPullRequestMergeStrategy {
 export interface RestPullRequestMergeability {
     /**
      * 
+     * @type {boolean}
+     * @memberof RestPullRequestMergeability
+     */
+    conflicted?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof RestPullRequestMergeability
      */
@@ -8201,12 +8610,6 @@ export interface RestPullRequestMergeability {
      * @memberof RestPullRequestMergeability
      */
     vetoes?: Array<RestRepositoryHookVeto>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPullRequestMergeability
-     */
-    conflicted?: boolean;
 }
 
 
@@ -8228,10 +8631,22 @@ export type RestPullRequestMergeabilityOutcomeEnum = typeof RestPullRequestMerge
 export interface RestPullRequestParticipant {
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
+     * @type {string}
      * @memberof RestPullRequestParticipant
      */
-    user?: AssignParticipantRoleRequestUser;
+    lastReviewedCommit?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPullRequestParticipant
+     */
+    approved?: boolean;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestPullRequestParticipant
+     */
+    user?: RestPullRequestParticipantUser;
     /**
      * 
      * @type {string}
@@ -8244,18 +8659,6 @@ export interface RestPullRequestParticipant {
      * @memberof RestPullRequestParticipant
      */
     status?: RestPullRequestParticipantStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipant
-     */
-    lastReviewedCommit?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPullRequestParticipant
-     */
-    approved?: boolean;
 }
 
 
@@ -8278,6 +8681,78 @@ export const RestPullRequestParticipantStatusEnum = {
     Approved: 'APPROVED'
 } as const;
 export type RestPullRequestParticipantStatusEnum = typeof RestPullRequestParticipantStatusEnum[keyof typeof RestPullRequestParticipantStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestPullRequestParticipantUser
+ */
+export interface RestPullRequestParticipantUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    emailAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestPullRequestParticipantUser
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPullRequestParticipantUser
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    type?: RestPullRequestParticipantUserTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPullRequestParticipantUser
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestParticipantUser
+     */
+    avatarUrl?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestPullRequestParticipantUserTypeEnum = {
+    Normal: 'NORMAL',
+    Service: 'SERVICE'
+} as const;
+export type RestPullRequestParticipantUserTypeEnum = typeof RestPullRequestParticipantUserTypeEnum[keyof typeof RestPullRequestParticipantUserTypeEnum];
 
 /**
  * 
@@ -8316,12 +8791,6 @@ export interface RestPullRequestRebaseResultRefChange {
      * @type {string}
      * @memberof RestPullRequestRebaseResultRefChange
      */
-    refId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestRebaseResultRefChange
-     */
     fromHash?: string;
     /**
      * 
@@ -8329,6 +8798,12 @@ export interface RestPullRequestRebaseResultRefChange {
      * @memberof RestPullRequestRebaseResultRefChange
      */
     toHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPullRequestRebaseResultRefChange
+     */
+    refId?: string;
     /**
      * 
      * @type {string}
@@ -8411,12 +8886,6 @@ export interface RestPullRequestRebaseability {
 export interface RestPullRequestRef {
     /**
      * 
-     * @type {RestChangesetRepository}
-     * @memberof RestPullRequestRef
-     */
-    repository?: RestChangesetRepository;
-    /**
-     * 
      * @type {string}
      * @memberof RestPullRequestRef
      */
@@ -8427,6 +8896,12 @@ export interface RestPullRequestRef {
      * @memberof RestPullRequestRef
      */
     latestCommit?: string;
+    /**
+     * 
+     * @type {RestChangesetRepository}
+     * @memberof RestPullRequestRef
+     */
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {string}
@@ -8516,24 +8991,6 @@ export interface RestPullRequestSettingsMergeConfig {
 export interface RestPullRequestSuggestion {
     /**
      * 
-     * @type {RestPullRequestRebaseResultRefChangeRef}
-     * @memberof RestPullRequestSuggestion
-     */
-    toRef?: RestPullRequestRebaseResultRefChangeRef;
-    /**
-     * 
-     * @type {RestChangesetRepository}
-     * @memberof RestPullRequestSuggestion
-     */
-    repository?: RestChangesetRepository;
-    /**
-     * 
-     * @type {RestPullRequestRebaseResultRefChangeRef}
-     * @memberof RestPullRequestSuggestion
-     */
-    fromRef?: RestPullRequestRebaseResultRefChangeRef;
-    /**
-     * 
      * @type {number}
      * @memberof RestPullRequestSuggestion
      */
@@ -8544,55 +9001,25 @@ export interface RestPullRequestSuggestion {
      * @memberof RestPullRequestSuggestion
      */
     refChange?: RestPullRequestRebaseResultRefChange;
-}
-/**
- * 
- * @export
- * @interface RestPullRequestToRef
- */
-export interface RestPullRequestToRef {
+    /**
+     * 
+     * @type {RestPullRequestRebaseResultRefChangeRef}
+     * @memberof RestPullRequestSuggestion
+     */
+    fromRef?: RestPullRequestRebaseResultRefChangeRef;
+    /**
+     * 
+     * @type {RestPullRequestRebaseResultRefChangeRef}
+     * @memberof RestPullRequestSuggestion
+     */
+    toRef?: RestPullRequestRebaseResultRefChangeRef;
     /**
      * 
      * @type {RestChangesetRepository}
-     * @memberof RestPullRequestToRef
+     * @memberof RestPullRequestSuggestion
      */
     repository?: RestChangesetRepository;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestToRef
-     */
-    displayId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestToRef
-     */
-    latestCommit?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestToRef
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestToRef
-     */
-    type?: RestPullRequestToRefTypeEnum;
 }
-
-
-/**
- * @export
- */
-export const RestPullRequestToRefTypeEnum = {
-    Branch: 'BRANCH',
-    Tag: 'TAG'
-} as const;
-export type RestPullRequestToRefTypeEnum = typeof RestPullRequestToRefTypeEnum[keyof typeof RestPullRequestToRefTypeEnum];
-
 /**
  * 
  * @export
@@ -8610,12 +9037,6 @@ export interface RestPushRefChange {
      * @type {string}
      * @memberof RestPushRefChange
      */
-    refId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPushRefChange
-     */
     fromHash?: string;
     /**
      * 
@@ -8623,6 +9044,12 @@ export interface RestPushRefChange {
      * @memberof RestPushRefChange
      */
     toHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPushRefChange
+     */
+    refId?: string;
     /**
      * 
      * @type {string}
@@ -8667,16 +9094,35 @@ export type RestPushRefChangeTypeEnum = typeof RestPushRefChangeTypeEnum[keyof t
 export interface RestRateLimitSettings {
     /**
      * 
+     * @type {RestRateLimitSettingsDefaultSettings}
+     * @memberof RestRateLimitSettings
+     */
+    defaultSettings?: RestRateLimitSettingsDefaultSettings;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestRateLimitSettings
      */
     enabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface RestRateLimitSettingsDefaultSettings
+ */
+export interface RestRateLimitSettingsDefaultSettings {
     /**
      * 
-     * @type {RestBulkUserRateLimitSettingsUpdateRequestSettings}
-     * @memberof RestRateLimitSettings
+     * @type {number}
+     * @memberof RestRateLimitSettingsDefaultSettings
      */
-    defaultSettings?: RestBulkUserRateLimitSettingsUpdateRequestSettings;
+    fillRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRateLimitSettingsDefaultSettings
+     */
+    capacity?: number;
 }
 /**
  * 
@@ -8701,13 +9147,13 @@ export interface RestRawAccessToken {
      * @type {string}
      * @memberof RestRawAccessToken
      */
-    name?: string;
+    id?: string;
     /**
      * 
      * @type {string}
      * @memberof RestRawAccessToken
      */
-    id?: string;
+    name?: string;
 }
 /**
  * 
@@ -8720,12 +9166,6 @@ export interface RestRefChange {
      * @type {string}
      * @memberof RestRefChange
      */
-    refId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRefChange
-     */
     fromHash?: string;
     /**
      * 
@@ -8733,6 +9173,12 @@ export interface RestRefChange {
      * @memberof RestRefChange
      */
     toHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRefChange
+     */
+    refId?: string;
     /**
      * 
      * @type {string}
@@ -8778,10 +9224,10 @@ export interface RestRefMatcher {
     id?: string;
     /**
      * 
-     * @type {RestRefMatcherType}
+     * @type {UpdatePullRequestCondition1RequestSourceMatcherType}
      * @memberof RestRefMatcher
      */
-    type?: RestRefMatcherType;
+    type?: UpdatePullRequestCondition1RequestSourceMatcherType;
 }
 /**
  * 
@@ -8824,16 +9270,22 @@ export type RestRefMatcherTypeIdEnum = typeof RestRefMatcherTypeIdEnum[keyof typ
 export interface RestRefRestriction {
     /**
      * 
+     * @type {Array<RestSshAccessKey>}
+     * @memberof RestRefRestriction
+     */
+    accessKeys?: Array<RestSshAccessKey>;
+    /**
+     * 
      * @type {Array<RestApplicationUser>}
      * @memberof RestRefRestriction
      */
     users?: Array<RestApplicationUser>;
     /**
      * 
-     * @type {RestPullRequestConditionScope}
+     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
      * @memberof RestRefRestriction
      */
-    scope?: RestPullRequestConditionScope;
+    matcher?: UpdatePullRequestCondition1RequestSourceMatcher;
     /**
      * 
      * @type {Array<string>}
@@ -8842,16 +9294,10 @@ export interface RestRefRestriction {
     groups?: Array<string>;
     /**
      * 
-     * @type {RestRequiredBuildConditionRefMatcher}
+     * @type {RestPullRequestConditionScope}
      * @memberof RestRefRestriction
      */
-    matcher?: RestRequiredBuildConditionRefMatcher;
-    /**
-     * 
-     * @type {Array<RestSshAccessKey>}
-     * @memberof RestRefRestriction
-     */
-    accessKeys?: Array<RestSshAccessKey>;
+    scope?: RestPullRequestConditionScope;
     /**
      * 
      * @type {number}
@@ -8864,6 +9310,19 @@ export interface RestRefRestriction {
      * @memberof RestRefRestriction
      */
     type?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestRefSyncQueue
+ */
+export interface RestRefSyncQueue {
+    /**
+     * 
+     * @type {Array<RestFarmSynchronizationRequest>}
+     * @memberof RestRefSyncQueue
+     */
+    values?: Array<RestFarmSynchronizationRequest>;
 }
 /**
  * 
@@ -8910,10 +9369,16 @@ export type RestRefSyncRequestActionEnum = typeof RestRefSyncRequestActionEnum[k
 export interface RestRefSyncStatus {
     /**
      * 
-     * @type {boolean}
+     * @type {RestRefSyncStatusAheadRefs}
      * @memberof RestRefSyncStatus
      */
-    enabled?: boolean;
+    aheadRefs?: RestRefSyncStatusAheadRefs;
+    /**
+     * 
+     * @type {RestRefSyncStatusAheadRefs}
+     * @memberof RestRefSyncStatus
+     */
+    divergedRefs?: RestRefSyncStatusAheadRefs;
     /**
      * 
      * @type {number}
@@ -8922,22 +9387,16 @@ export interface RestRefSyncStatus {
     readonly lastSync?: number;
     /**
      * 
-     * @type {RestRefSyncStatusOrphanedRefs}
+     * @type {RestRefSyncStatusAheadRefs}
      * @memberof RestRefSyncStatus
      */
-    orphanedRefs?: RestRefSyncStatusOrphanedRefs;
+    orphanedRefs?: RestRefSyncStatusAheadRefs;
     /**
      * 
-     * @type {RestRefSyncStatusOrphanedRefs}
+     * @type {boolean}
      * @memberof RestRefSyncStatus
      */
-    divergedRefs?: RestRefSyncStatusOrphanedRefs;
-    /**
-     * 
-     * @type {RestRefSyncStatusOrphanedRefs}
-     * @memberof RestRefSyncStatus
-     */
-    aheadRefs?: RestRefSyncStatusOrphanedRefs;
+    enabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -8948,60 +9407,60 @@ export interface RestRefSyncStatus {
 /**
  * 
  * @export
- * @interface RestRefSyncStatusOrphanedRefs
+ * @interface RestRefSyncStatusAheadRefs
  */
-export interface RestRefSyncStatusOrphanedRefs {
+export interface RestRefSyncStatusAheadRefs {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRefSyncStatusAheadRefs
+     */
+    state?: RestRefSyncStatusAheadRefsStateEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof RestRefSyncStatusOrphanedRefs
+     * @memberof RestRefSyncStatusAheadRefs
      */
     tag?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof RestRefSyncStatusOrphanedRefs
-     */
-    state?: RestRefSyncStatusOrphanedRefsStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRefSyncStatusOrphanedRefs
+     * @memberof RestRefSyncStatusAheadRefs
      */
     displayId?: string;
     /**
      * 
      * @type {string}
-     * @memberof RestRefSyncStatusOrphanedRefs
+     * @memberof RestRefSyncStatusAheadRefs
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof RestRefSyncStatusOrphanedRefs
+     * @memberof RestRefSyncStatusAheadRefs
      */
-    type?: RestRefSyncStatusOrphanedRefsTypeEnum;
+    type?: RestRefSyncStatusAheadRefsTypeEnum;
 }
 
 
 /**
  * @export
  */
-export const RestRefSyncStatusOrphanedRefsStateEnum = {
+export const RestRefSyncStatusAheadRefsStateEnum = {
     Ahead: 'AHEAD',
     Diverged: 'DIVERGED',
     Orphaned: 'ORPHANED'
 } as const;
-export type RestRefSyncStatusOrphanedRefsStateEnum = typeof RestRefSyncStatusOrphanedRefsStateEnum[keyof typeof RestRefSyncStatusOrphanedRefsStateEnum];
+export type RestRefSyncStatusAheadRefsStateEnum = typeof RestRefSyncStatusAheadRefsStateEnum[keyof typeof RestRefSyncStatusAheadRefsStateEnum];
 
 /**
  * @export
  */
-export const RestRefSyncStatusOrphanedRefsTypeEnum = {
+export const RestRefSyncStatusAheadRefsTypeEnum = {
     Branch: 'BRANCH',
     Tag: 'TAG'
 } as const;
-export type RestRefSyncStatusOrphanedRefsTypeEnum = typeof RestRefSyncStatusOrphanedRefsTypeEnum[keyof typeof RestRefSyncStatusOrphanedRefsTypeEnum];
+export type RestRefSyncStatusAheadRefsTypeEnum = typeof RestRefSyncStatusAheadRefsTypeEnum[keyof typeof RestRefSyncStatusAheadRefsTypeEnum];
 
 /**
  * 
@@ -9011,16 +9470,16 @@ export type RestRefSyncStatusOrphanedRefsTypeEnum = typeof RestRefSyncStatusOrph
 export interface RestRejectedRef {
     /**
      * 
-     * @type {boolean}
-     * @memberof RestRejectedRef
-     */
-    tag?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestRejectedRef
      */
     state?: RestRejectedRefStateEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestRejectedRef
+     */
+    tag?: boolean;
     /**
      * 
      * @type {string}
@@ -9085,31 +9544,7 @@ export interface RestRepository {
      * @type {string}
      * @memberof RestRepository
      */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepository
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepository
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepository
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepository
-     */
-    readonly description?: string;
+    readonly defaultBranch?: string;
     /**
      * 
      * @type {string}
@@ -9124,6 +9559,30 @@ export interface RestRepository {
     readonly statusMessage?: string;
     /**
      * 
+     * @type {object}
+     * @memberof RestRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRepository
+     */
+    slug?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestRepository
      */
@@ -9136,34 +9595,40 @@ export interface RestRepository {
     readonly forkable?: boolean;
     /**
      * 
+     * @type {RestChangesetRepositoryOrigin}
+     * @memberof RestRepository
+     */
+    origin?: RestChangesetRepositoryOrigin;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestRepository
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
      * @type {string}
      * @memberof RestRepository
      */
-    readonly defaultBranch?: string;
+    readonly scope?: string;
     /**
      * 
-     * @type {EnrichedRepositoryOrigin}
+     * @type {string}
      * @memberof RestRepository
      */
-    origin?: EnrichedRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepository
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestRepository
-     */
-    readonly relatedLinks?: object;
+    readonly description?: string;
     /**
      * 
      * @type {string}
      * @memberof RestRepository
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestRepository
+     */
+    readonly _public?: boolean;
     /**
      * 
      * @type {number}
@@ -9176,12 +9641,6 @@ export interface RestRepository {
      * @memberof RestRepository
      */
     readonly state?: RestRepositoryStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestRepository
-     */
-    readonly _public?: boolean;
     /**
      * 
      * @type {object}
@@ -9210,10 +9669,10 @@ export type RestRepositoryStateEnum = typeof RestRepositoryStateEnum[keyof typeo
 export interface RestRepositoryHook {
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {RepositoryHookDetails}
      * @memberof RestRepositoryHook
      */
-    scope?: RestAutoDeclineSettingsScope;
+    details?: RepositoryHookDetails;
     /**
      * 
      * @type {boolean}
@@ -9222,10 +9681,10 @@ export interface RestRepositoryHook {
     enabled?: boolean;
     /**
      * 
-     * @type {RepositoryHookDetails}
+     * @type {RestAutoDeclineSettingsScope}
      * @memberof RestRepositoryHook
      */
-    details?: RepositoryHookDetails;
+    scope?: RestAutoDeclineSettingsScope;
     /**
      * 
      * @type {boolean}
@@ -9244,13 +9703,13 @@ export interface RestRepositoryHookVeto {
      * @type {string}
      * @memberof RestRepositoryHookVeto
      */
-    detailedMessage?: string;
+    summaryMessage?: string;
     /**
      * 
      * @type {string}
      * @memberof RestRepositoryHookVeto
      */
-    summaryMessage?: string;
+    detailedMessage?: string;
 }
 /**
  * 
@@ -9325,25 +9784,13 @@ export interface RestRepositoryPullRequestSettings {
      * @type {boolean}
      * @memberof RestRepositoryPullRequestSettings
      */
-    requiredAllTasksComplete?: boolean;
+    requiredAllApprovers?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {RestRepositoryPullRequestSettingsRequiredApprovers}
      * @memberof RestRepositoryPullRequestSettings
      */
-    requiredApproversDeprecated?: number;
-    /**
-     * 
-     * @type {RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds}
-     * @memberof RestRepositoryPullRequestSettings
-     */
-    requiredSuccessfulBuilds?: RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepositoryPullRequestSettings
-     */
-    requiredSuccessfulBuildsDeprecated?: number;
+    requiredApprovers?: RestRepositoryPullRequestSettingsRequiredApprovers;
     /**
      * 
      * @type {RestPullRequestSettingsMergeConfig}
@@ -9355,32 +9802,44 @@ export interface RestRepositoryPullRequestSettings {
      * @type {boolean}
      * @memberof RestRepositoryPullRequestSettings
      */
-    requiredAllApprovers?: boolean;
+    requiredAllTasksComplete?: boolean;
     /**
      * 
-     * @type {RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds}
+     * @type {number}
      * @memberof RestRepositoryPullRequestSettings
      */
-    requiredApprovers?: RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds;
+    requiredApproversDeprecated?: number;
+    /**
+     * 
+     * @type {RestRepositoryPullRequestSettingsRequiredApprovers}
+     * @memberof RestRepositoryPullRequestSettings
+     */
+    requiredSuccessfulBuilds?: RestRepositoryPullRequestSettingsRequiredApprovers;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRepositoryPullRequestSettings
+     */
+    requiredSuccessfulBuildsDeprecated?: number;
 }
 /**
  * 
  * @export
- * @interface RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds
+ * @interface RestRepositoryPullRequestSettingsRequiredApprovers
  */
-export interface RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds
-     */
-    count?: string;
+export interface RestRepositoryPullRequestSettingsRequiredApprovers {
     /**
      * 
      * @type {boolean}
-     * @memberof RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds
+     * @memberof RestRepositoryPullRequestSettingsRequiredApprovers
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRepositoryPullRequestSettingsRequiredApprovers
+     */
+    count?: string;
 }
 /**
  * 
@@ -9390,10 +9849,10 @@ export interface RestRepositoryPullRequestSettingsRequiredSuccessfulBuilds {
 export interface RestRepositoryRefChangeActivity {
     /**
      * 
-     * @type {RestChangesetRepository}
+     * @type {RestRepositoryRefChangeActivityRefChange}
      * @memberof RestRepositoryRefChangeActivity
      */
-    repository?: RestChangesetRepository;
+    refChange?: RestRepositoryRefChangeActivityRefChange;
     /**
      * 
      * @type {string}
@@ -9402,22 +9861,22 @@ export interface RestRepositoryRefChangeActivity {
     trigger?: string;
     /**
      * 
-     * @type {RestRepositoryRefChangeActivityRefChange}
+     * @type {RestChangesetRepository}
      * @memberof RestRepositoryRefChangeActivity
      */
-    refChange?: RestRepositoryRefChangeActivityRefChange;
-    /**
-     * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestRepositoryRefChangeActivity
-     */
-    user?: AssignParticipantRoleRequestUser;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {number}
      * @memberof RestRepositoryRefChangeActivity
      */
     createdDate?: number;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestRepositoryRefChangeActivity
+     */
+    user?: RestPullRequestParticipantUser;
     /**
      * 
      * @type {number}
@@ -9442,12 +9901,6 @@ export interface RestRepositoryRefChangeActivityRefChange {
      * @type {string}
      * @memberof RestRepositoryRefChangeActivityRefChange
      */
-    refId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepositoryRefChangeActivityRefChange
-     */
     fromHash?: string;
     /**
      * 
@@ -9455,6 +9908,12 @@ export interface RestRepositoryRefChangeActivityRefChange {
      * @memberof RestRepositoryRefChangeActivityRefChange
      */
     toHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRepositoryRefChangeActivityRefChange
+     */
+    refId?: string;
     /**
      * 
      * @type {string}
@@ -9517,6 +9976,18 @@ export interface RestRepositorySelector {
  */
 export interface RestRequiredBuildCondition {
     /**
+     * 
+     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @memberof RestRequiredBuildCondition
+     */
+    exemptRefMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * 
+     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @memberof RestRequiredBuildCondition
+     */
+    refMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
      * A non-empty list of build parent keys that require green builds for this merge check to pass
      * @type {Array<string>}
      * @memberof RestRequiredBuildCondition
@@ -9524,47 +9995,10 @@ export interface RestRequiredBuildCondition {
     buildParentKeys?: Array<string>;
     /**
      * 
-     * @type {RestRequiredBuildConditionRefMatcher}
-     * @memberof RestRequiredBuildCondition
-     */
-    refMatcher?: RestRequiredBuildConditionRefMatcher;
-    /**
-     * 
-     * @type {RestRequiredBuildConditionRefMatcher}
-     * @memberof RestRequiredBuildCondition
-     */
-    exemptRefMatcher?: RestRequiredBuildConditionRefMatcher;
-    /**
-     * 
      * @type {number}
      * @memberof RestRequiredBuildCondition
      */
     id?: number;
-}
-/**
- * 
- * @export
- * @interface RestRequiredBuildConditionRefMatcher
- */
-export interface RestRequiredBuildConditionRefMatcher {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRequiredBuildConditionRefMatcher
-     */
-    displayId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRequiredBuildConditionRefMatcher
-     */
-    id?: string;
-    /**
-     * 
-     * @type {RestRefMatcherType}
-     * @memberof RestRequiredBuildConditionRefMatcher
-     */
-    type?: RestRefMatcherType;
 }
 /**
  * 
@@ -9580,17 +10014,75 @@ export interface RestRequiredBuildConditionSetRequest {
     buildParentKeys: Array<string>;
     /**
      * 
+     * @type {RestRequiredBuildConditionSetRequestExemptRefMatcher}
+     * @memberof RestRequiredBuildConditionSetRequest
+     */
+    exemptRefMatcher?: RestRequiredBuildConditionSetRequestExemptRefMatcher;
+    /**
+     * 
      * @type {RestRefMatcher}
      * @memberof RestRequiredBuildConditionSetRequest
      */
-    exemptRefMatcher?: RestRefMatcher;
+    refMatcher: RestRefMatcher;
+}
+/**
+ * 
+ * @export
+ * @interface RestRequiredBuildConditionSetRequestExemptRefMatcher
+ */
+export interface RestRequiredBuildConditionSetRequestExemptRefMatcher {
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
-     * @memberof RestRequiredBuildConditionSetRequest
+     * @type {string}
+     * @memberof RestRequiredBuildConditionSetRequestExemptRefMatcher
      */
-    refMatcher: UpdatePullRequestCondition1RequestSourceMatcher;
+    displayId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRequiredBuildConditionSetRequestExemptRefMatcher
+     */
+    id?: string;
+    /**
+     * 
+     * @type {RestRequiredBuildConditionSetRequestExemptRefMatcherType}
+     * @memberof RestRequiredBuildConditionSetRequestExemptRefMatcher
+     */
+    type?: RestRequiredBuildConditionSetRequestExemptRefMatcherType;
 }
+/**
+ * 
+ * @export
+ * @interface RestRequiredBuildConditionSetRequestExemptRefMatcherType
+ */
+export interface RestRequiredBuildConditionSetRequestExemptRefMatcherType {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRequiredBuildConditionSetRequestExemptRefMatcherType
+     */
+    id?: RestRequiredBuildConditionSetRequestExemptRefMatcherTypeIdEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRequiredBuildConditionSetRequestExemptRefMatcherType
+     */
+    name?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestRequiredBuildConditionSetRequestExemptRefMatcherTypeIdEnum = {
+    AnyRef: 'ANY_REF',
+    Branch: 'BRANCH',
+    Pattern: 'PATTERN',
+    ModelCategory: 'MODEL_CATEGORY',
+    ModelBranch: 'MODEL_BRANCH'
+} as const;
+export type RestRequiredBuildConditionSetRequestExemptRefMatcherTypeIdEnum = typeof RestRequiredBuildConditionSetRequestExemptRefMatcherTypeIdEnum[keyof typeof RestRequiredBuildConditionSetRequestExemptRefMatcherTypeIdEnum];
+
 /**
  * 
  * @export
@@ -9629,10 +10121,10 @@ export interface RestRestrictionRequest {
     readonly id?: number;
     /**
      * 
-     * @type {UpdatePullRequestCondition1RequestSourceMatcher}
+     * @type {RestRequiredBuildConditionSetRequestExemptRefMatcher}
      * @memberof RestRestrictionRequest
      */
-    matcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    matcher?: RestRequiredBuildConditionSetRequestExemptRefMatcher;
     /**
      * 
      * @type {RestPullRequestConditionScope}
@@ -9666,6 +10158,12 @@ export interface RestRestrictionRequest {
 export interface RestReviewerGroup {
     /**
      * 
+     * @type {string}
+     * @memberof RestReviewerGroup
+     */
+    avatarUrl?: string;
+    /**
+     * 
      * @type {Array<ApplicationUser>}
      * @memberof RestReviewerGroup
      */
@@ -9682,12 +10180,6 @@ export interface RestReviewerGroup {
      * @memberof RestReviewerGroup
      */
     description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestReviewerGroup
-     */
-    avatarUrl?: string;
     /**
      * 
      * @type {string}
@@ -9758,17 +10250,17 @@ export interface RestScopesExample {
  */
 export interface RestSecretScanningAllowlistRule {
     /**
-     * If present, regular expression for matching a secret on a code line
-     * @type {string}
-     * @memberof RestSecretScanningAllowlistRule
-     */
-    lineRegex?: string;
-    /**
      * If present, regular expression matching file names
      * @type {string}
      * @memberof RestSecretScanningAllowlistRule
      */
     pathRegex?: string;
+    /**
+     * If present, regular expression for matching a secret on a code line
+     * @type {string}
+     * @memberof RestSecretScanningAllowlistRule
+     */
+    lineRegex?: string;
     /**
      * Human readable name for the rule
      * @type {string}
@@ -9814,11 +10306,11 @@ export interface RestSecretScanningAllowlistRuleSetRequest {
  */
 export interface RestSecretScanningRule {
     /**
-     * 
-     * @type {RestSecretScanningRuleScope}
+     * If present, regular expression matching file names
+     * @type {string}
      * @memberof RestSecretScanningRule
      */
-    scope?: RestSecretScanningRuleScope;
+    pathRegex?: string;
     /**
      * If present, regular expression for matching a secret on a code line
      * @type {string}
@@ -9826,11 +10318,11 @@ export interface RestSecretScanningRule {
      */
     lineRegex?: string;
     /**
-     * If present, regular expression matching file names
-     * @type {string}
+     * 
+     * @type {RestSecretScanningRuleScope}
      * @memberof RestSecretScanningRule
      */
-    pathRegex?: string;
+    scope?: RestSecretScanningRuleScope;
     /**
      * Human readable name for the rule
      * @type {string}
@@ -10018,10 +10510,10 @@ export interface RestSingleAddInsightAnnotationRequest {
 export interface RestSshAccessKey {
     /**
      * 
-     * @type {RestSshAccessKeyProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof RestSshAccessKey
      */
-    project?: RestSshAccessKeyProject;
+    project?: RestChangesetRepositoryOriginProject;
     /**
      * 
      * @type {RestChangesetRepository}
@@ -10071,16 +10563,16 @@ export type RestSshAccessKeyPermissionEnum = typeof RestSshAccessKeyPermissionEn
 export interface RestSshAccessKeyKey {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestSshAccessKeyKey
      */
-    text?: string;
+    expiryDays?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestSshAccessKeyKey
      */
-    readonly label?: string;
+    bitLength?: number;
     /**
      * 
      * @type {string}
@@ -10089,10 +10581,28 @@ export interface RestSshAccessKeyKey {
     algorithmType?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestSshAccessKeyKey
      */
-    bitLength?: number;
+    readonly createdDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshAccessKeyKey
+     */
+    readonly lastAuthenticated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshAccessKeyKey
+     */
+    label?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshAccessKeyKey
+     */
+    text?: string;
     /**
      * 
      * @type {number}
@@ -10122,112 +10632,15 @@ export interface RestSshAccessKeyLocations {
 /**
  * 
  * @export
- * @interface RestSshAccessKeyProject
- */
-export interface RestSshAccessKeyProject {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     * @deprecated
-     */
-    readonly namespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    avatar?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    avatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly type?: RestSshAccessKeyProjectTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSshAccessKeyProject
-     */
-    readonly _public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestSshAccessKeyProject
-     */
-    links?: object;
-}
-
-
-/**
- * @export
- */
-export const RestSshAccessKeyProjectTypeEnum = {
-    Normal: 'NORMAL',
-    Personal: 'PERSONAL'
-} as const;
-export type RestSshAccessKeyProjectTypeEnum = typeof RestSshAccessKeyProjectTypeEnum[keyof typeof RestSshAccessKeyProjectTypeEnum];
-
-/**
- * 
- * @export
  * @interface RestSshKey
  */
 export interface RestSshKey {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestSshKey
      */
-    text?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshKey
-     */
-    readonly label?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestSshKey
-     */
-    algorithmType?: string;
+    expiryDays?: number;
     /**
      * 
      * @type {number}
@@ -10236,6 +10649,36 @@ export interface RestSshKey {
     bitLength?: number;
     /**
      * 
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    algorithmType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    readonly createdDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    readonly lastAuthenticated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    label?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    text?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestSshKey
      */
@@ -10244,9 +10687,97 @@ export interface RestSshKey {
 /**
  * 
  * @export
+ * @interface RestSshKeySettings
+ */
+export interface RestSshKeySettings {
+    /**
+     * 
+     * @type {RestSshKeySettingsMaxExpiryDays}
+     * @memberof RestSshKeySettings
+     */
+    maxExpiryDays?: RestSshKeySettingsMaxExpiryDays;
+    /**
+     * 
+     * @type {Array<RestSshKeyTypeRestriction>}
+     * @memberof RestSshKeySettings
+     */
+    keyTypeRestrictions?: Array<RestSshKeyTypeRestriction>;
+}
+/**
+ * 
+ * @export
+ * @interface RestSshKeySettingsMaxExpiryDays
+ */
+export interface RestSshKeySettingsMaxExpiryDays {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestSshKeySettingsMaxExpiryDays
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSshKeySettingsMaxExpiryDays
+     */
+    present?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface RestSshKeyTypeRestriction
+ */
+export interface RestSshKeyTypeRestriction {
+    /**
+     * 
+     * @type {RestSshKeyTypeRestrictionMinKeyLength}
+     * @memberof RestSshKeyTypeRestriction
+     */
+    minKeyLength?: RestSshKeyTypeRestrictionMinKeyLength;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSshKeyTypeRestriction
+     */
+    allowed?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestSshKeyTypeRestriction
+     */
+    algorithm?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestSshKeyTypeRestrictionMinKeyLength
+ */
+export interface RestSshKeyTypeRestrictionMinKeyLength {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestSshKeyTypeRestrictionMinKeyLength
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSshKeyTypeRestrictionMinKeyLength
+     */
+    present?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface RestSshSettings
  */
 export interface RestSshSettings {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSshSettings
+     */
+    accessKeysEnabled?: boolean;
     /**
      * 
      * @type {string}
@@ -10259,12 +10790,6 @@ export interface RestSshSettings {
      * @memberof RestSshSettings
      */
     enabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSshSettings
-     */
-    accessKeysEnabled?: boolean;
     /**
      * 
      * @type {SimpleSshKeyFingerprint}
@@ -10289,13 +10814,13 @@ export interface RestSyncProgress {
      * @type {number}
      * @memberof RestSyncProgress
      */
-    syncedRepos?: number;
+    totalRepos?: number;
     /**
      * 
      * @type {number}
      * @memberof RestSyncProgress
      */
-    totalRepos?: number;
+    syncedRepos?: number;
     /**
      * 
      * @type {boolean}
@@ -10368,12 +10893,6 @@ export interface RestTestResults {
      * @type {number}
      * @memberof RestTestResults
      */
-    skipped?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestTestResults
-     */
     successful?: number;
     /**
      * 
@@ -10381,6 +10900,12 @@ export interface RestTestResults {
      * @memberof RestTestResults
      */
     failed?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestTestResults
+     */
+    skipped?: number;
 }
 /**
  * 
@@ -10393,13 +10918,13 @@ export interface RestTokenBucketSettings {
      * @type {number}
      * @memberof RestTokenBucketSettings
      */
-    capacity?: number;
+    fillRate?: number;
     /**
      * 
      * @type {number}
      * @memberof RestTokenBucketSettings
      */
-    fillRate?: number;
+    capacity?: number;
 }
 /**
  * 
@@ -10412,13 +10937,13 @@ export interface RestUpstreamServer {
      * @type {string}
      * @memberof RestUpstreamServer
      */
-    baseUrl?: string;
+    apiBaseUrl?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUpstreamServer
      */
-    apiBaseUrl?: string;
+    baseUrl?: string;
     /**
      * 
      * @type {string}
@@ -10469,16 +10994,16 @@ export type RestUpstreamServerTypeEnum = typeof RestUpstreamServerTypeEnum[keyof
 export interface RestUpstreamSettings {
     /**
      * 
-     * @type {string}
-     * @memberof RestUpstreamSettings
-     */
-    mode?: RestUpstreamSettingsModeEnum;
-    /**
-     * 
      * @type {Set<string>}
      * @memberof RestUpstreamSettings
      */
     projectIds?: Set<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUpstreamSettings
+     */
+    mode?: RestUpstreamSettingsModeEnum;
 }
 
 
@@ -10499,22 +11024,22 @@ export type RestUpstreamSettingsModeEnum = typeof RestUpstreamSettingsModeEnum[k
 export interface RestUserRateLimitSettings {
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestUserRateLimitSettings
-     */
-    user?: AssignParticipantRoleRequestUser;
-    /**
-     * 
-     * @type {RestBulkUserRateLimitSettingsUpdateRequestSettings}
-     * @memberof RestUserRateLimitSettings
-     */
-    settings?: RestBulkUserRateLimitSettingsUpdateRequestSettings;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestUserRateLimitSettings
      */
     whitelisted?: boolean;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestUserRateLimitSettings
+     */
+    user?: RestPullRequestParticipantUser;
+    /**
+     * 
+     * @type {RestRateLimitSettingsDefaultSettings}
+     * @memberof RestUserRateLimitSettings
+     */
+    settings?: RestRateLimitSettingsDefaultSettings;
 }
 /**
  * 
@@ -10543,16 +11068,16 @@ export interface RestUserRateLimitSettingsUpdateRequest {
 export interface RestUserReaction {
     /**
      * 
-     * @type {AssignParticipantRoleRequestUser}
-     * @memberof RestUserReaction
-     */
-    user?: AssignParticipantRoleRequestUser;
-    /**
-     * 
      * @type {RestUserReactionEmoticon}
      * @memberof RestUserReaction
      */
     emoticon?: RestUserReactionEmoticon;
+    /**
+     * 
+     * @type {RestPullRequestParticipantUser}
+     * @memberof RestUserReaction
+     */
+    user?: RestPullRequestParticipantUser;
     /**
      * 
      * @type {RestUserReactionComment}
@@ -10567,11 +11092,23 @@ export interface RestUserReaction {
  */
 export interface RestUserReactionComment {
     /**
-     * 
-     * @type {string}
+     * Indicates if this comment thread has been marked as resolved or not
+     * @type {boolean}
      * @memberof RestUserReactionComment
      */
-    readonly html?: string;
+    threadResolved?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestUserReactionComment
+     */
+    readonly updatedDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestUserReactionComment
+     */
+    readonly createdDate?: number;
     /**
      * 
      * @type {boolean}
@@ -10580,10 +11117,46 @@ export interface RestUserReactionComment {
     readonly reply?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestUserReactionComment
+     */
+    readonly pending?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestUserReactionComment
+     */
+    readonly anchored?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUserReactionComment
+     */
+    readonly html?: string;
+    /**
+     * 
+     * @type {RestUserReactionCommentAuthor}
+     * @memberof RestUserReactionComment
+     */
+    author?: RestUserReactionCommentAuthor;
+    /**
+     * 
+     * @type {RestUserReactionCommentAnchor}
+     * @memberof RestUserReactionComment
+     */
+    anchor?: RestUserReactionCommentAnchor;
+    /**
+     * 
      * @type {string}
      * @memberof RestUserReactionComment
      */
     text?: string;
+    /**
+     * 
+     * @type {Array<RestComment>}
+     * @memberof RestUserReactionComment
+     */
+    readonly comments?: Array<RestComment>;
     /**
      * 
      * @type {number}
@@ -10596,48 +11169,6 @@ export interface RestUserReactionComment {
      * @memberof RestUserReactionComment
      */
     severity?: string;
-    /**
-     * 
-     * @type {Array<RestComment>}
-     * @memberof RestUserReactionComment
-     */
-    readonly comments?: Array<RestComment>;
-    /**
-     * 
-     * @type {RestUserReactionCommentAnchor}
-     * @memberof RestUserReactionComment
-     */
-    anchor?: RestUserReactionCommentAnchor;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestUserReactionComment
-     */
-    readonly createdDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestUserReactionComment
-     */
-    readonly updatedDate?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestUserReactionComment
-     */
-    readonly anchored?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestUserReactionComment
-     */
-    readonly pending?: boolean;
-    /**
-     * 
-     * @type {RestUserReactionCommentAuthor}
-     * @memberof RestUserReactionComment
-     */
-    author?: RestUserReactionCommentAuthor;
     /**
      * 
      * @type {RestUserReactionCommentParent}
@@ -10671,10 +11202,10 @@ export interface RestUserReactionComment {
 export interface RestUserReactionCommentAnchor {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestUserReactionCommentAnchor
      */
-    line?: number;
+    fileType?: RestUserReactionCommentAnchorFileTypeEnum;
     /**
      * 
      * @type {string}
@@ -10686,19 +11217,13 @@ export interface RestUserReactionCommentAnchor {
      * @type {string}
      * @memberof RestUserReactionCommentAnchor
      */
-    lineType?: RestUserReactionCommentAnchorLineTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestUserReactionCommentAnchor
-     */
     fromHash?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUserReactionCommentAnchor
      */
-    fileType?: RestUserReactionCommentAnchorFileTypeEnum;
+    lineType?: RestUserReactionCommentAnchorLineTypeEnum;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorPullRequest}
@@ -10707,10 +11232,10 @@ export interface RestUserReactionCommentAnchor {
     pullRequest?: RestCommentThreadDiffAnchorPullRequest;
     /**
      * 
-     * @type {RestCommentThreadDiffAnchorSrcPath}
+     * @type {boolean}
      * @memberof RestUserReactionCommentAnchor
      */
-    srcPath?: RestCommentThreadDiffAnchorSrcPath;
+    readonly lineComment?: boolean;
     /**
      * 
      * @type {string}
@@ -10719,10 +11244,16 @@ export interface RestUserReactionCommentAnchor {
     toHash?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {RestCommentThreadDiffAnchorSrcPath}
      * @memberof RestUserReactionCommentAnchor
      */
-    readonly lineComment?: boolean;
+    srcPath?: RestCommentThreadDiffAnchorSrcPath;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestUserReactionCommentAnchor
+     */
+    line?: number;
     /**
      * 
      * @type {RestCommentThreadDiffAnchorSrcPath}
@@ -10731,6 +11262,15 @@ export interface RestUserReactionCommentAnchor {
     path?: RestCommentThreadDiffAnchorSrcPath;
 }
 
+
+/**
+ * @export
+ */
+export const RestUserReactionCommentAnchorFileTypeEnum = {
+    From: 'FROM',
+    To: 'TO'
+} as const;
+export type RestUserReactionCommentAnchorFileTypeEnum = typeof RestUserReactionCommentAnchorFileTypeEnum[keyof typeof RestUserReactionCommentAnchorFileTypeEnum];
 
 /**
  * @export
@@ -10753,15 +11293,6 @@ export const RestUserReactionCommentAnchorLineTypeEnum = {
 export type RestUserReactionCommentAnchorLineTypeEnum = typeof RestUserReactionCommentAnchorLineTypeEnum[keyof typeof RestUserReactionCommentAnchorLineTypeEnum];
 
 /**
- * @export
- */
-export const RestUserReactionCommentAnchorFileTypeEnum = {
-    From: 'FROM',
-    To: 'TO'
-} as const;
-export type RestUserReactionCommentAnchorFileTypeEnum = typeof RestUserReactionCommentAnchorFileTypeEnum[keyof typeof RestUserReactionCommentAnchorFileTypeEnum];
-
-/**
  * 
  * @export
  * @interface RestUserReactionCommentAuthor
@@ -10769,16 +11300,10 @@ export type RestUserReactionCommentAnchorFileTypeEnum = typeof RestUserReactionC
 export interface RestUserReactionCommentAuthor {
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof RestUserReactionCommentAuthor
      */
-    links?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestUserReactionCommentAuthor
-     */
-    active?: boolean;
+    emailAddress?: string;
     /**
      * 
      * @type {string}
@@ -10787,10 +11312,10 @@ export interface RestUserReactionCommentAuthor {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof RestUserReactionCommentAuthor
      */
-    emailAddress?: string;
+    links?: object;
     /**
      * 
      * @type {string}
@@ -10809,6 +11334,12 @@ export interface RestUserReactionCommentAuthor {
      * @memberof RestUserReactionCommentAuthor
      */
     type?: RestUserReactionCommentAuthorTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestUserReactionCommentAuthor
+     */
+    active?: boolean;
     /**
      * 
      * @type {string}
@@ -10840,6 +11371,42 @@ export type RestUserReactionCommentAuthorTypeEnum = typeof RestUserReactionComme
  */
 export interface RestUserReactionCommentParent {
     /**
+     * Indicates if this comment thread has been marked as resolved or not
+     * @type {boolean}
+     * @memberof RestUserReactionCommentParent
+     */
+    threadResolved?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestUserReactionCommentParent
+     */
+    readonly updatedDate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestUserReactionCommentParent
+     */
+    readonly createdDate?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestUserReactionCommentParent
+     */
+    readonly reply?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestUserReactionCommentParent
+     */
+    readonly pending?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestUserReactionCommentParent
+     */
+    readonly anchored?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof RestUserReactionCommentParent
@@ -10847,10 +11414,16 @@ export interface RestUserReactionCommentParent {
     readonly html?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {RestUserReactionCommentAuthor}
      * @memberof RestUserReactionCommentParent
      */
-    readonly reply?: boolean;
+    author?: RestUserReactionCommentAuthor;
+    /**
+     * 
+     * @type {RestUserReactionCommentAnchor}
+     * @memberof RestUserReactionCommentParent
+     */
+    anchor?: RestUserReactionCommentAnchor;
     /**
      * 
      * @type {string}
@@ -10869,42 +11442,6 @@ export interface RestUserReactionCommentParent {
      * @memberof RestUserReactionCommentParent
      */
     severity?: string;
-    /**
-     * 
-     * @type {RestUserReactionCommentAnchor}
-     * @memberof RestUserReactionCommentParent
-     */
-    anchor?: RestUserReactionCommentAnchor;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestUserReactionCommentParent
-     */
-    readonly createdDate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestUserReactionCommentParent
-     */
-    readonly updatedDate?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestUserReactionCommentParent
-     */
-    readonly anchored?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestUserReactionCommentParent
-     */
-    readonly pending?: boolean;
-    /**
-     * 
-     * @type {RestUserReactionCommentAuthor}
-     * @memberof RestUserReactionCommentParent
-     */
-    author?: RestUserReactionCommentAuthor;
     /**
      * 
      * @type {number}
@@ -10935,13 +11472,13 @@ export interface RestUserReactionEmoticon {
      * @type {string}
      * @memberof RestUserReactionEmoticon
      */
-    url?: string;
+    shortcut?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUserReactionEmoticon
      */
-    shortcut?: string;
+    url?: string;
     /**
      * 
      * @type {string}
@@ -10979,25 +11516,13 @@ export interface RestWebhook {
      * @type {string}
      * @memberof RestWebhook
      */
-    url?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestWebhook
-     */
-    _configuration?: object;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof RestWebhook
-     */
-    events?: Set<string>;
+    scopeType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestWebhook
      */
-    active?: boolean;
+    sslVerificationRequired?: boolean;
     /**
      * 
      * @type {object}
@@ -11006,10 +11531,78 @@ export interface RestWebhook {
     statistics?: object;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestWebhook
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof RestWebhook
+     */
+    events?: Set<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestWebhook
+     */
+    url?: string;
+    /**
+     * 
+     * @type {RestWebhookCredentials}
+     * @memberof RestWebhook
+     */
+    credentials?: RestWebhookCredentials;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestWebhook
+     */
+    _configuration?: object;
+    /**
+     * 
      * @type {string}
      * @memberof RestWebhook
      */
     name?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestWebhookCredentials
+ */
+export interface RestWebhookCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestWebhookCredentials
+     */
+    password?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestWebhookCredentials
+     */
+    username?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestWebhookScope
+ */
+export interface RestWebhookScope {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestWebhookScope
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestWebhookScope
+     */
+    type?: string;
 }
 /**
  * 
@@ -11050,12 +11643,6 @@ export interface Search2200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof Search2200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof Search2200Response
      */
@@ -11066,6 +11653,12 @@ export interface Search2200Response {
      * @memberof Search2200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Search2200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -11093,12 +11686,6 @@ export interface Search3200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof Search3200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof Search3200Response
      */
@@ -11109,6 +11696,12 @@ export interface Search3200Response {
      * @memberof Search3200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Search3200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -11136,12 +11729,6 @@ export interface SearchMeshMigrationRepos200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof SearchMeshMigrationRepos200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof SearchMeshMigrationRepos200Response
      */
@@ -11152,6 +11739,12 @@ export interface SearchMeshMigrationRepos200Response {
      * @memberof SearchMeshMigrationRepos200Response
      */
     nextPageStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SearchMeshMigrationRepos200Response
+     */
+    start?: number;
     /**
      * 
      * @type {number}
@@ -11307,16 +11900,16 @@ export interface StartMeshMigrationRequest {
     all?: boolean;
     /**
      * 
-     * @type {Set<number>}
-     * @memberof StartMeshMigrationRequest
-     */
-    projectIds?: Set<number>;
-    /**
-     * 
      * @type {StartMeshMigrationRequestMaxBytesPerSecond}
      * @memberof StartMeshMigrationRequest
      */
     maxBytesPerSecond?: StartMeshMigrationRequestMaxBytesPerSecond;
+    /**
+     * 
+     * @type {Set<number>}
+     * @memberof StartMeshMigrationRequest
+     */
+    projectIds?: Set<number>;
     /**
      * 
      * @type {Set<number>}
@@ -11332,57 +11925,57 @@ export interface StartMeshMigrationRequest {
 export interface StartMeshMigrationRequestMaxBytesPerSecond {
     /**
      * 
-     * @type {boolean}
-     * @memberof StartMeshMigrationRequestMaxBytesPerSecond
-     */
-    present?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof StartMeshMigrationRequestMaxBytesPerSecond
      */
     asLong?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StartMeshMigrationRequestMaxBytesPerSecond
+     */
+    present?: boolean;
 }
 /**
  * 
  * @export
- * @interface StreamDiff200Response
+ * @interface StreamDiff2200Response
  */
-export interface StreamDiff200Response {
+export interface StreamDiff2200Response {
     /**
      * 
      * @type {Array<RestDiff>}
-     * @memberof StreamDiff200Response
+     * @memberof StreamDiff2200Response
      */
     values?: Array<RestDiff>;
     /**
      * 
      * @type {number}
-     * @memberof StreamDiff200Response
+     * @memberof StreamDiff2200Response
      */
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof StreamDiff200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
-     * @memberof StreamDiff200Response
+     * @memberof StreamDiff2200Response
      */
     isLastPage?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof StreamDiff200Response
+     * @memberof StreamDiff2200Response
      */
     nextPageStart?: number;
     /**
      * 
      * @type {number}
-     * @memberof StreamDiff200Response
+     * @memberof StreamDiff2200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StreamDiff2200Response
      */
     limit?: number;
 }
@@ -11406,12 +11999,6 @@ export interface StreamFiles200Response {
     size?: number;
     /**
      * 
-     * @type {number}
-     * @memberof StreamFiles200Response
-     */
-    start?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof StreamFiles200Response
      */
@@ -11427,6 +12014,12 @@ export interface StreamFiles200Response {
      * @type {number}
      * @memberof StreamFiles200Response
      */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StreamFiles200Response
+     */
     limit?: number;
 }
 /**
@@ -11435,18 +12028,6 @@ export interface StreamFiles200Response {
  * @interface UpdatePullRequestCondition1Request
  */
 export interface UpdatePullRequestCondition1Request {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdatePullRequestCondition1Request
-     */
-    requiredApprovals?: number;
-    /**
-     * 
-     * @type {Array<RestApplicationUser>}
-     * @memberof UpdatePullRequestCondition1Request
-     */
-    reviewers?: Array<RestApplicationUser>;
     /**
      * 
      * @type {UpdatePullRequestCondition1RequestSourceMatcher}
@@ -11459,6 +12040,18 @@ export interface UpdatePullRequestCondition1Request {
      * @memberof UpdatePullRequestCondition1Request
      */
     targetMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdatePullRequestCondition1Request
+     */
+    requiredApprovals?: number;
+    /**
+     * 
+     * @type {Array<RestApplicationUser>}
+     * @memberof UpdatePullRequestCondition1Request
+     */
+    reviewers?: Array<RestApplicationUser>;
 }
 /**
  * 
@@ -11496,13 +12089,13 @@ export interface UpdatePullRequestCondition1RequestSourceMatcherType {
      * @type {string}
      * @memberof UpdatePullRequestCondition1RequestSourceMatcherType
      */
-    id?: UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof UpdatePullRequestCondition1RequestSourceMatcherType
      */
-    name?: string;
+    id?: UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum;
 }
 
 

@@ -1,4 +1,4 @@
-## bitbucket-api@8.6
+## bitbucket-api@8.10
 
 This generator creates TypeScript/JavaScript client that utilizes [Fetch API](https://fetch.spec.whatwg.org/). The generated Node module can be used in the following environments:
 
@@ -36,7 +36,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install bitbucket-api@8.6 --save
+npm install bitbucket-api@8.10 --save
 ```
 
 _unPublished (not recommended):_
