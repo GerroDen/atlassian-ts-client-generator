@@ -22,6 +22,14 @@ try {
       /properties\?: Array<object>;/g,
       "properties?: Array<string>;"
     );
+    content = content.replace(
+      /type\?: object;/g,
+      `type?: "scrum" | "kanban" | "simple";`
+    );
+    content = content.replace(
+      /typeKey\?: string;/g,
+      `typeKey?: "business" | "service_desk" | "software";`
+    );
     content = content.replace(/_16x16/g, `["16x16"]`);
     content = content.replace(/_24x24/g, `["24x24"]`);
     content = content.replace(/_32x32/g, `["32x32"]`);
