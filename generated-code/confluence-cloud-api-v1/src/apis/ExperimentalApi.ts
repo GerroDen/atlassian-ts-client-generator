@@ -18,21 +18,11 @@ import type {
   LabelArray,
   LabelCreate,
   LongTask,
-  UserProperty,
-  UserPropertyCreate,
-  UserPropertyKeyArray,
-  UserPropertyUpdate,
 } from '../models';
 
 export interface AddLabelsToSpaceRequest {
     spaceKey: string;
     labelCreate: Array<LabelCreate>;
-}
-
-export interface CreateUserPropertyRequest {
-    userId: string;
-    key: string;
-    body: UserPropertyCreate;
 }
 
 export interface DeleteLabelFromSpaceRequest {
@@ -45,33 +35,11 @@ export interface DeletePageTreeRequest {
     id: string;
 }
 
-export interface DeleteUserPropertyRequest {
-    userId: string;
-    key: string;
-}
-
 export interface GetLabelsForSpaceRequest {
     spaceKey: string;
     prefix?: GetLabelsForSpacePrefixEnum;
     start?: number;
     limit?: number;
-}
-
-export interface GetUserPropertiesRequest {
-    userId: string;
-    start?: number;
-    limit?: number;
-}
-
-export interface GetUserPropertyRequest {
-    userId: string;
-    key: string;
-}
-
-export interface UpdateUserPropertyRequest {
-    userId: string;
-    key: string;
-    body: UserPropertyUpdate;
 }
 
 /**
@@ -124,56 +92,6 @@ export class ExperimentalApi extends runtime.BaseAPI {
     async addLabelsToSpace(requestParameters: AddLabelsToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
         const response = await this.addLabelsToSpaceRaw(requestParameters, initOverrides);
         return await response.value();
-    }
-
-    /**
-     * Creates a property for a user. For more information  about user properties, see [Confluence entity properties] (https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  `Note:` the number of properties which could be created per app in a tenant for each user might be restricted by fixed system limits. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Create user property by key
-     */
-    async createUserPropertyRaw(requestParameters: CreateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling createUserProperty.');
-        }
-
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling createUserProperty.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createUserProperty.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.body,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Creates a property for a user. For more information  about user properties, see [Confluence entity properties] (https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  `Note:` the number of properties which could be created per app in a tenant for each user might be restricted by fixed system limits. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Create user property by key
-     */
-    async createUserProperty(requestParameters: CreateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.createUserPropertyRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -268,49 +186,6 @@ export class ExperimentalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a property for the given user. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Delete user property
-     */
-    async deleteUserPropertyRaw(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling deleteUserProperty.');
-        }
-
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteUserProperty.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deletes a property for the given user. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Delete user property
-     */
-    async deleteUserProperty(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteUserPropertyRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Returns a list of labels associated with a space. Can provide a prefix as well as other filters to select different types of labels.
      * Get Space Labels
      */
@@ -360,148 +235,6 @@ export class ExperimentalApi extends runtime.BaseAPI {
     async getLabelsForSpace(requestParameters: GetLabelsForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
         const response = await this.getLabelsForSpaceRaw(requestParameters, initOverrides);
         return await response.value();
-    }
-
-    /**
-     * Returns the properties for a user as list of property keys. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user properties
-     */
-    async getUserPropertiesRaw(requestParameters: GetUserPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserPropertyKeyArray>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling getUserProperties.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:user.property:confluence"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns the properties for a user as list of property keys. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user properties
-     */
-    async getUserProperties(requestParameters: GetUserPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPropertyKeyArray> {
-        const response = await this.getUserPropertiesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns the property corresponding to `key` for a user. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user property
-     */
-    async getUserPropertyRaw(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserProperty>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling getUserProperty.');
-        }
-
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getUserProperty.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:user.property:confluence"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns the property corresponding to `key` for a user. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user property
-     */
-    async getUserProperty(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserProperty> {
-        const response = await this.getUserPropertyRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Updates a property for the given user. Note, you cannot update the key of a user property, only the value. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Update user property
-     */
-    async updateUserPropertyRaw(requestParameters: UpdateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling updateUserProperty.');
-        }
-
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling updateUserProperty.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateUserProperty.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.body,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Updates a property for the given user. Note, you cannot update the key of a user property, only the value. For more information about user properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/). `Note`, these properties stored against a user are on a Confluence site level and not space/content level.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Update user property
-     */
-    async updateUserProperty(requestParameters: UpdateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.updateUserPropertyRaw(requestParameters, initOverrides);
     }
 
 }

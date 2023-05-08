@@ -18,7 +18,6 @@ import type {
   AccountIdEmailRecord,
   BulkUserLookupArray,
   GroupArrayWithLinks,
-  MigratedUserArray,
   User,
   UserAnonymous,
 } from '../models';
@@ -30,13 +29,6 @@ export interface GetAnonymousUserRequest {
 export interface GetBulkUserLookupRequest {
     accountId: string;
     expand?: Array<GetBulkUserLookupExpandEnum>;
-    limit?: number;
-}
-
-export interface GetBulkUserMigrationRequest {
-    key?: Array<string>;
-    username?: Array<string>;
-    start?: number;
     limit?: number;
 }
 
@@ -157,58 +149,6 @@ export class UsersApi extends runtime.BaseAPI {
      */
     async getBulkUserLookup(requestParameters: GetBulkUserLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkUserLookupArray> {
         const response = await this.getBulkUserLookupRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns the accountIds for the users specified in the key or username parameters. Note that multiple key and username parameters can be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Get user accountIds
-     */
-    async getBulkUserMigrationRaw(requestParameters: GetBulkUserMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MigratedUserArray>> {
-        const queryParameters: any = {};
-
-        if (requestParameters.key) {
-            queryParameters['key'] = requestParameters.key;
-        }
-
-        if (requestParameters.username) {
-            queryParameters['username'] = requestParameters.username;
-        }
-
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/user/bulk/migration`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns the accountIds for the users specified in the key or username parameters. Note that multiple key and username parameters can be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Get user accountIds
-     */
-    async getBulkUserMigration(requestParameters: GetBulkUserMigrationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MigratedUserArray> {
-        const response = await this.getBulkUserMigrationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

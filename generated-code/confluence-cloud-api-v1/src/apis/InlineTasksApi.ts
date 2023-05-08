@@ -52,7 +52,7 @@ export interface UpdateTaskByIdRequest {
 export class InlineTasksApi extends runtime.BaseAPI {
 
     /**
-     * Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
      * Get inline task based on global ID
      */
     async getTaskByIdRaw(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Task>> {
@@ -83,7 +83,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
      * Get inline task based on global ID
      */
     async getTaskById(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
@@ -92,7 +92,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
      * Get inline tasks based on search parameters
      */
     async searchTasksRaw(requestParameters: SearchTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TaskPageResponse>> {
@@ -175,7 +175,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
      * Get inline tasks based on search parameters
      */
     async searchTasks(requestParameters: SearchTasksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskPageResponse> {

@@ -63,7 +63,7 @@ export interface UpdateSpacePropertyRequest {
 export class SpacePropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property
      */
     async createSpacePropertyRaw(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
@@ -101,7 +101,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property
      */
     async createSpaceProperty(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
@@ -110,7 +110,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property for key
      */
     async createSpacePropertyForKeyRaw(requestParameters: CreateSpacePropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
@@ -152,7 +152,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property for key
      */
     async createSpacePropertyForKey(requestParameters: CreateSpacePropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
@@ -161,7 +161,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Delete space property
      */
     async deleteSpacePropertyRaw(requestParameters: DeleteSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -196,7 +196,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Delete space property
      */
     async deleteSpaceProperty(requestParameters: DeleteSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -204,7 +204,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space properties
      */
     async getSpacePropertiesRaw(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpacePropertyArray>> {
@@ -247,7 +247,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space properties
      */
     async getSpaceProperties(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpacePropertyArray> {
@@ -256,7 +256,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space property
      */
     async getSpacePropertyRaw(requestParameters: GetSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
@@ -295,7 +295,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space property
      */
     async getSpaceProperty(requestParameters: GetSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
@@ -304,7 +304,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Update space property
      */
     async updateSpacePropertyRaw(requestParameters: UpdateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
@@ -346,7 +346,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Update space property
      */
     async updateSpaceProperty(requestParameters: UpdateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {

@@ -141,7 +141,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
      * Create content
      */
     async createContentRaw(requestParameters: CreateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
@@ -183,7 +183,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
      * Create content
      */
     async createContent(requestParameters: CreateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {
@@ -192,7 +192,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page` or `blogpost` and its status is `current`, it will be trashed. - If the content\'s type is `page` or `blogpost` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment` or `attachment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page` or `blogpost` and its status is `current`, it will be trashed. - If the content\'s type is `page` or `blogpost` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment` or `attachment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
      * Delete content
      */
     async deleteContentRaw(requestParameters: DeleteContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -227,7 +227,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page` or `blogpost` and its status is `current`, it will be trashed. - If the content\'s type is `page` or `blogpost` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment` or `attachment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page` or `blogpost` and its status is `current`, it will be trashed. - If the content\'s type is `page` or `blogpost` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment` or `attachment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
      * Delete content
      */
     async deleteContent(requestParameters: DeleteContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -235,7 +235,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
      * Get content
      */
     async getContentRaw(requestParameters: GetContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -302,7 +302,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
      * Get content
      */
     async getContent(requestParameters: GetContentRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
@@ -311,7 +311,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content by ID
      */
     async getContentByIdRaw(requestParameters: GetContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
@@ -362,7 +362,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content by ID
      */
     async getContentById(requestParameters: GetContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {
@@ -371,7 +371,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
      * Get content history
      */
     async getHistoryForContentRaw(requestParameters: GetHistoryForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentHistory>> {
@@ -406,7 +406,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
      * Get content history
      */
     async getHistoryForContent(requestParameters: GetHistoryForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentHistory> {
@@ -585,7 +585,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Update content
      */
     async updateContentRaw(requestParameters: UpdateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
@@ -631,7 +631,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Update content
      */
     async updateContent(requestParameters: UpdateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {

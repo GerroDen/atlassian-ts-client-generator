@@ -250,7 +250,7 @@ export interface AsyncContentBody {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof AsyncContentBody
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -1524,7 +1524,7 @@ export interface Content {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Content
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -1887,6 +1887,12 @@ export interface ContentBody {
     dynamic?: ContentBody;
     /**
      * 
+     * @type {ContentBody}
+     * @memberof ContentBody
+     */
+    raw?: ContentBody;
+    /**
+     * 
      * @type {ContentBodyExpandable}
      * @memberof ContentBody
      */
@@ -2052,6 +2058,7 @@ export interface ContentBodyExpandable {
  * @interface ContentChildType
  */
 export interface ContentChildType {
+    [key: string]: any | any;
     /**
      * 
      * @type {ContentChildTypeAttachment}
@@ -2163,7 +2170,7 @@ export interface ContentChildren {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentChildren
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -2704,6 +2711,12 @@ export interface ContentHistory {
     ownedBy?: User | null;
     /**
      * 
+     * @type {User}
+     * @memberof ContentHistory
+     */
+    lastOwnedBy?: User | null;
+    /**
+     * 
      * @type {string}
      * @memberof ContentHistory
      */
@@ -2743,7 +2756,7 @@ export interface ContentHistory {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentHistory
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -2794,6 +2807,12 @@ export interface ContentHistoryExpandable {
      * @memberof ContentHistoryExpandable
      */
     ownedBy?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentHistoryExpandable
+     */
+    lastOwnedBy?: string;
 }
 /**
  * 
@@ -3416,7 +3435,7 @@ export interface ContentRestrictionAddOrUpdateArrayOneOf {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentRestrictionAddOrUpdateArrayOneOf
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -3656,7 +3675,7 @@ export interface ContentRestrictions {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentRestrictions
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4299,7 +4318,7 @@ export interface ContentUpdate {
      */
     version: ContentUpdateVersion | null;
     /**
-     * The updated title of the content. If you are not changing this field, set this to the current `title`.
+     * The updated title of the content. If you are updating a non-draft `page` or `blogpost`, title is required. If you are not changing the title, set this field to the the current title.
      * @type {string}
      * @memberof ContentUpdate
      */
@@ -4444,6 +4463,12 @@ export interface ContentUpdateVersion {
      * @memberof ContentUpdateVersion
      */
     number: number;
+    /**
+     * An optional message to be stored with the corresponding version.
+     * @type {string}
+     * @memberof ContentUpdateVersion
+     */
+    message?: string | null;
 }
 /**
  * 
@@ -4702,7 +4727,7 @@ export interface GetContentForSpace200Response {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof GetContentForSpace200Response
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4721,7 +4746,7 @@ export interface GetRestrictionsByOperation200ResponseValue {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof GetRestrictionsByOperation200ResponseValue
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4803,7 +4828,7 @@ export interface Group {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Group
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -5104,7 +5129,7 @@ export interface LabelArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LabelArray
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5766,7 +5791,7 @@ export interface LookAndFeelWithLinks {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LookAndFeelWithLinks
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5779,7 +5804,7 @@ export interface LookAndFeelWithLinksAllOf {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LookAndFeelWithLinksAllOf
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5810,7 +5835,7 @@ export interface MacroInstance {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof MacroInstance
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5870,73 +5895,6 @@ export interface Message {
  * @export
  */
 export type MessageArgsInner = string | { [key: string]: any; };
-/**
- * 
- * @export
- * @interface MigratedUser
- */
-export interface MigratedUser {
-    /**
-     * This property is no longer available and will be removed from the documentation soon.
-     * Use `accountId` instead.
-     * See the [deprecation notice](/cloud/confluence/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof MigratedUser
-     */
-    username?: string | null;
-    /**
-     * This property is no longer available and will be removed from the documentation soon.
-     * Use `accountId` instead.
-     * See the [deprecation notice](/cloud/confluence/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof MigratedUser
-     */
-    key?: string | null;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products.
-     * For example, `384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`.
-     * @type {string}
-     * @memberof MigratedUser
-     */
-    accountId?: string | null;
-}
-/**
- * 
- * @export
- * @interface MigratedUserArray
- */
-export interface MigratedUserArray {
-    /**
-     * 
-     * @type {Array<MigratedUser>}
-     * @memberof MigratedUserArray
-     */
-    results: Array<MigratedUser>;
-    /**
-     * 
-     * @type {number}
-     * @memberof MigratedUserArray
-     */
-    start: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MigratedUserArray
-     */
-    limit: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MigratedUserArray
-     */
-    size: number;
-    /**
-     * 
-     * @type {{ [key: string]: GenericLinksValue; }}
-     * @memberof MigratedUserArray
-     */
-    links: { [key: string]: GenericLinksValue; };
-}
 /**
  * 
  * @export
@@ -6071,7 +6029,7 @@ export interface PermissionCheckResponse {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof PermissionCheckResponse
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * The user or group that the permission applies to.
@@ -7163,7 +7121,7 @@ export type SpacePermissionCustomContentOperationsInnerKeyEnum = typeof SpacePer
 
 /**
  * This object represents the request for the single space permission. Permissions consist of
- * at least one operation object with an accompanying subjects object.
+ * one operation object with an accompanying subjects object.
  * 
  * The following combinations of `operation.key` and `operation.target` values are
  * valid for the `operation` object:
@@ -7213,7 +7171,7 @@ export interface SpacePermissionRequest {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpacePermissionRequest
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * The users and/or groups that the permission applies to.
@@ -7359,7 +7317,7 @@ export interface SpacePermissionV2 {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpacePermissionV2
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -7456,7 +7414,7 @@ export interface SpaceProperty {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpaceProperty
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
     /**
      * 
      * @type {SpacePropertyExpandable}
@@ -7798,7 +7756,7 @@ export interface SpaceWatchArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpaceWatchArray
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8037,7 +7995,7 @@ export interface Task {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Task
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8129,7 +8087,7 @@ export interface Theme {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Theme
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8369,7 +8327,7 @@ export interface User {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof User
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -8498,7 +8456,7 @@ export interface UserArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserArray
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8630,7 +8588,7 @@ export interface UserProperty {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserProperty
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8680,7 +8638,7 @@ export interface UserPropertyKeyArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserPropertyKeyArray
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8745,7 +8703,7 @@ export interface UsersUserKeys {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UsersUserKeys
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8814,7 +8772,7 @@ export interface Version {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Version
      */
-    _links?: { [key: string]: GenericLinksValue; };
+    ___links?: { [key: string]: GenericLinksValue; };
     /**
      * True if content type is modifed in this version (e.g. page to blog)
      * @type {boolean}

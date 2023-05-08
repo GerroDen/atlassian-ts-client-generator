@@ -1,4 +1,4 @@
-## confluence-cloud-api@1.0.0
+## confluence-cloud-api-v1@1.0.0
 
 This generator creates TypeScript/JavaScript client that utilizes [Fetch API](https://fetch.spec.whatwg.org/). The generated Node module can be used in the following environments:
 
@@ -36,7 +36,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install confluence-cloud-api@1.0.0 --save
+npm install confluence-cloud-api-v1@1.0.0 --save
 ```
 
 _unPublished (not recommended):_

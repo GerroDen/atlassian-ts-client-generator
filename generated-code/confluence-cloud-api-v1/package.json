@@ -1,7 +1,7 @@
 {
-  "name": "confluence-cloud-api",
+  "name": "confluence-cloud-api-v1",
   "version": "1.0.0",
-  "description": "OpenAPI client for confluence-cloud-api",
+  "description": "OpenAPI client for confluence-cloud-api-v1",
   "author": "OpenAPI-Generator",
   "private": true,
   "main": "src/index.ts"

@@ -91,6 +91,7 @@ export const DefaultConfig = new Configuration();
  */
 export class BaseAPI {
 
+	 private static readonly jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
     private middleware: Middleware[];
 
     constructor(protected configuration = DefaultConfig) {
@@ -111,6 +112,23 @@ export class BaseAPI {
     withPostMiddleware<T extends BaseAPI>(this: T, ...postMiddlewares: Array<Middleware['post']>) {
         const middlewares = postMiddlewares.map((post) => ({ post }));
         return this.withMiddleware<T>(...middlewares);
+    }
+
+    /**
+     * Check if the given MIME is a JSON MIME.
+     * JSON MIME examples:
+     *   application/json
+     *   application/json; charset=UTF8
+     *   APPLICATION/JSON
+     *   application/vnd.company+json
+     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+     * @return True if the given MIME is JSON, false otherwise.
+     */
+    protected isJsonMime(mime: string | null | undefined): boolean {
+        if (!mime) {
+            return false;
+        }
+        return BaseAPI.jsonRegex.test(mime);
     }
 
     protected async request(context: RequestOpts, initOverrides?: RequestInit | InitOverrideFunction): Promise<Response> {
@@ -146,7 +164,7 @@ export class BaseAPI {
             credentials: this.configuration.credentials,
         };
 
-        const overridedInit: RequestInit = {
+        const overriddenInit: RequestInit = {
             ...initParams,
             ...(await initOverrideFn({
                 init: initParams,
@@ -155,13 +173,13 @@ export class BaseAPI {
         };
 
         const init: RequestInit = {
-            ...overridedInit,
+            ...overriddenInit,
             body:
-                isFormData(overridedInit.body) ||
-                overridedInit.body instanceof URLSearchParams ||
-                isBlob(overridedInit.body)
-                    ? overridedInit.body
-                    : JSON.stringify(overridedInit.body),
+                isFormData(overriddenInit.body) ||
+                overriddenInit.body instanceof URLSearchParams ||
+                isBlob(overriddenInit.body)
+                    ? overriddenInit.body
+                    : JSON.stringify(overriddenInit.body),
         };
 
         return { url, init };
@@ -177,7 +195,7 @@ export class BaseAPI {
                 }) || fetchParams;
             }
         }
-        let response = undefined;
+        let response: Response | undefined = undefined;
         try {
             response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
         } catch (e) {

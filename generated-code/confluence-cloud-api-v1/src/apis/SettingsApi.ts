@@ -199,7 +199,11 @@ export class SettingsApi extends runtime.BaseAPI {
             body: requestParameters.body as any,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**

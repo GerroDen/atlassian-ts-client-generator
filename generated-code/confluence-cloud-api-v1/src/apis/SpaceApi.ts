@@ -208,7 +208,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content by type for space
      */
     async getContentByTypeForSpaceRaw(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -259,7 +259,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content by type for space
      */
     async getContentByTypeForSpace(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
@@ -268,7 +268,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content for space
      */
     async getContentForSpaceRaw(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetContentForSpace200Response>> {
@@ -315,7 +315,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content for space
      */
     async getContentForSpace(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetContentForSpace200Response> {
@@ -324,7 +324,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space
      */
     async getSpaceRaw(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
@@ -359,7 +359,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space
      */
     async getSpace(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Space> {
@@ -368,7 +368,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
      * Get spaces
      */
     async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceArray>> {
@@ -435,7 +435,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
      * Get spaces
      */
     async getSpaces(requestParameters: GetSpacesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceArray> {

@@ -653,7 +653,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
             body: requestParameters.requestBody,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**

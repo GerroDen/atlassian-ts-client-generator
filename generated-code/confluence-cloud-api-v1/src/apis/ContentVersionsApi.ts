@@ -93,7 +93,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content version
      */
     async getContentVersionRaw(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
@@ -132,7 +132,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content version
      */
     async getContentVersion(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Version> {
@@ -141,7 +141,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content versions
      */
     async getContentVersionsRaw(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionArray>> {
@@ -184,7 +184,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content versions
      */
     async getContentVersions(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VersionArray> {

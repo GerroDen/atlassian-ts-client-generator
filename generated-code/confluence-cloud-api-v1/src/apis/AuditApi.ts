@@ -301,7 +301,7 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 20 years.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 1 year.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
      * Set retention period
      */
     async setRetentionPeriodRaw(requestParameters: SetRetentionPeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
@@ -335,7 +335,7 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 20 years.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 1 year.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
      * Set retention period
      */
     async setRetentionPeriod(requestParameters: SetRetentionPeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RetentionPeriod> {

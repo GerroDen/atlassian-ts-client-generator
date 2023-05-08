@@ -287,7 +287,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get attachments
      */
     async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -338,7 +338,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get attachments
      */
     async getAttachments(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {

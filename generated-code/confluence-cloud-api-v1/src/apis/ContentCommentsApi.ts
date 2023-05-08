@@ -34,7 +34,7 @@ export interface GetContentCommentsRequest {
 export class ContentCommentsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content comments
      */
     async getContentCommentsRaw(requestParameters: GetContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -89,7 +89,7 @@ export class ContentCommentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content comments
      */
     async getContentComments(requestParameters: GetContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {

@@ -33,6 +33,7 @@ src/apis/SpacePropertiesApi.ts
 src/apis/SpaceSettingsApi.ts
 src/apis/TemplateApi.ts
 src/apis/ThemesApi.ts
+src/apis/UserPropertiesApi.ts
 src/apis/UsersApi.ts
 src/apis/index.ts
 src/index.ts

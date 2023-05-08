@@ -30,4 +30,5 @@ export * from './SpacePropertiesApi';
 export * from './SpaceSettingsApi';
 export * from './TemplateApi';
 export * from './ThemesApi';
+export * from './UserPropertiesApi';
 export * from './UsersApi';

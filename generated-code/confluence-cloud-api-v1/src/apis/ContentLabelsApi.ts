@@ -94,7 +94,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
      * Get labels for content
      */
     async getLabelsForContentRaw(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
@@ -137,7 +137,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
      * Get labels for content
      */
     async getLabelsForContent(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
@@ -146,7 +146,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Remove label from content
      */
     async removeLabelFromContentRaw(requestParameters: RemoveLabelFromContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -181,7 +181,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Remove label from content
      */
     async removeLabelFromContent(requestParameters: RemoveLabelFromContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -189,7 +189,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Remove label from content using query parameter
      */
     async removeLabelFromContentUsingQueryParameterRaw(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -228,7 +228,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Remove label from content using query parameter
      */
     async removeLabelFromContentUsingQueryParameter(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
