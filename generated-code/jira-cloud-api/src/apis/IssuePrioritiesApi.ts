@@ -44,8 +44,8 @@ export interface MovePrioritiesRequest {
 }
 
 export interface SearchPrioritiesRequest {
-    startAt?: number;
-    maxResults?: number;
+    startAt?: string;
+    maxResults?: string;
     id?: Array<string>;
     onlyDefault?: boolean;
 }

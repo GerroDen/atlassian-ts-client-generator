@@ -1910,7 +1910,7 @@ export interface DevInformation {
      */
     preventTransitions?: boolean;
     /**
-     * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during normal operation (e.g. a user pushing a branch). "BACKFILL" - Data received while backfilling existing data (e.g. indexing a newly connected account). Default is "NORMAL".
+     * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during normal operation (e.g. a user pushing a branch). "BACKFILL" - Data received while backfilling existing data (e.g. indexing a newly connected account). Default is "NORMAL". Please note that "BACKFILL" operations have a much higher rate-limiting threshold but are also processed slower in comparison to "NORMAL" operations.
      * @type {string}
      * @memberof DevInformation
      */
@@ -3645,6 +3645,25 @@ export interface GetReportsForBoard200Response {
     reports?: Array<object>;
 }
 /**
+ * Details of Vulnerabilities (in a page) and pagination info.
+ * @export
+ * @interface GetVulnerabilitiesByContainerIdResponse
+ */
+export interface GetVulnerabilitiesByContainerIdResponse {
+    /**
+     * 
+     * @type {Array<VulnerabilityDetails>}
+     * @memberof GetVulnerabilitiesByContainerIdResponse
+     */
+    vulnerabilities: Array<VulnerabilityDetails>;
+    /**
+     * 
+     * @type {PageInfo}
+     * @memberof GetVulnerabilitiesByContainerIdResponse
+     */
+    pageInfo: PageInfo;
+}
+/**
  * 
  * @export
  * @interface GroupBean
@@ -3780,6 +3799,25 @@ export interface HistoryMetadataParticipant {
      * @memberof HistoryMetadataParticipant
      */
     url?: string;
+}
+/**
+ * The identifiers object that contains public/private information identifying the Vulnerability.
+ * @export
+ * @interface Identifier
+ */
+export interface Identifier {
+    /**
+     * The display name of the Vulnerability identified.
+     * @type {string}
+     * @memberof Identifier
+     */
+    displayName: string;
+    /**
+     * A URL users can use to link to the definition of the Vulnerability identified.
+     * @type {string}
+     * @memberof Identifier
+     */
+    url: string;
 }
 /**
  * 
@@ -4963,6 +5001,25 @@ export interface PageBeanQuickFilterBean {
     values?: Array<GetAllQuickFilters200ResponseValuesInner>;
 }
 /**
+ * Pagination info
+ * @export
+ * @interface PageInfo
+ */
+export interface PageInfo {
+    /**
+     * Indicate if a next page is available.
+     * @type {boolean}
+     * @memberof PageInfo
+     */
+    hasNextPage?: boolean;
+    /**
+     * Token value for fetching the next page. Available if there is a next page.
+     * @type {string}
+     * @memberof PageInfo
+     */
+    nextPageToken?: string;
+}
+/**
  * A page of changelogs.
  * @export
  * @interface PageOfChangelogs
@@ -5169,6 +5226,20 @@ export interface ProviderMetadata4 {
      * An optional name of the source of the Remote Links data.
      * @type {string}
      * @memberof ProviderMetadata4
+     */
+    product?: string;
+}
+/**
+ * Information about the provider. This is useful for auditing, logging, debugging,
+ * and other internal uses. Information in this property is not considered private, so it should not contain personally identifiable information
+ * @export
+ * @interface ProviderMetadata5
+ */
+export interface ProviderMetadata5 {
+    /**
+     * An optional name of the source of the vulnerabilities.
+     * @type {string}
+     * @memberof ProviderMetadata5
      */
     product?: string;
 }
@@ -5814,6 +5885,38 @@ export interface SearchResults {
     readonly schema?: { [key: string]: FieldMetadataSchemaAllOf; };
 }
 /**
+ * The payload of linked Security Workspace IDs.
+ * @export
+ * @interface SecurityWorkspaceIds
+ */
+export interface SecurityWorkspaceIds {
+    /**
+     * The IDs of Security Workspaces that are linked to this Jira site.
+     * @type {Array<string>}
+     * @memberof SecurityWorkspaceIds
+     */
+    workspaceIds: Array<string>;
+}
+/**
+ * The Security Workspace information stored for the given ID.
+ * @export
+ * @interface SecurityWorkspaceResponse
+ */
+export interface SecurityWorkspaceResponse {
+    /**
+     * The Security Workspace ID
+     * @type {string}
+     * @memberof SecurityWorkspaceResponse
+     */
+    workspaceId: string;
+    /**
+     * Latest date and time that the Security Workspace was updated in Jira.
+     * @type {string}
+     * @memberof SecurityWorkspaceResponse
+     */
+    updatedAt: string;
+}
+/**
  * An association type referencing service id or keys.
  * @export
  * @interface ServiceIdOrKeysAssociation
@@ -5844,6 +5947,37 @@ export const ServiceIdOrKeysAssociationAssociationTypeEnum = {
     ServiceIdOrKeys: 'serviceIdOrKeys'
 } as const;
 export type ServiceIdOrKeysAssociationAssociationTypeEnum = typeof ServiceIdOrKeysAssociationAssociationTypeEnum[keyof typeof ServiceIdOrKeysAssociationAssociationTypeEnum];
+
+/**
+ * An association type referencing service id or keys.
+ * @export
+ * @interface ServiceIdOrKeysAssociation1
+ */
+export interface ServiceIdOrKeysAssociation1 {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof ServiceIdOrKeysAssociation1
+     */
+    associationType: ServiceIdOrKeysAssociation1AssociationTypeEnum;
+    /**
+     * The service id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof ServiceIdOrKeysAssociation1
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const ServiceIdOrKeysAssociation1AssociationTypeEnum = {
+    ServiceIdOrKeys: 'serviceIdOrKeys'
+} as const;
+export type ServiceIdOrKeysAssociation1AssociationTypeEnum = typeof ServiceIdOrKeysAssociation1AssociationTypeEnum[keyof typeof ServiceIdOrKeysAssociation1AssociationTypeEnum];
 
 /**
  * Details about the operations available in this version.
@@ -6612,6 +6746,99 @@ export interface SubmitRemoteLinksRequest {
     providerMetadata?: ProviderMetadata4;
 }
 /**
+ * The payload used to submit (update / insert) Security Workspace IDs.
+ * @export
+ * @interface SubmitSecurityWorkspacesRequest
+ */
+export interface SubmitSecurityWorkspacesRequest {
+    /**
+     * The IDs of Security Workspaces to link to this Jira site.
+     * @type {Array<string>}
+     * @memberof SubmitSecurityWorkspacesRequest
+     */
+    workspaceIds: Array<string>;
+}
+/**
+ * The payload used to submit (update / insert) Vulnerability data.
+ * @export
+ * @interface SubmitVulnerabilitiesRequest
+ */
+export interface SubmitVulnerabilitiesRequest {
+    /**
+     * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during normal operation (e.g. provider pushing new scanned vulnerabilities). "BACKFILL" - Data received while backfilling existing data (e.g. pushing historical vulnerabilities when re-connect a workspace). Default is "NORMAL". Please note that "BACKFILL" operations have a much higher rate-limit
+     * @type {string}
+     * @memberof SubmitVulnerabilitiesRequest
+     */
+    operationType?: SubmitVulnerabilitiesRequestOperationTypeEnum;
+    /**
+     * Properties assigned to vulnerability data that can then be used for delete / query operations.
+     * 
+     * Examples might be an account or user ID that can then be used to clean up data if an account is removed from the Provider system.
+     * 
+     * Properties are supplied as key/value pairs, and a maximum of 5 properties can be supplied, keys cannot contain ':' or start with '_'.
+     * @type {{ [key: string]: string; }}
+     * @memberof SubmitVulnerabilitiesRequest
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<VulnerabilityDetails>}
+     * @memberof SubmitVulnerabilitiesRequest
+     */
+    vulnerabilities: Array<VulnerabilityDetails>;
+    /**
+     * 
+     * @type {ProviderMetadata5}
+     * @memberof SubmitVulnerabilitiesRequest
+     */
+    providerMetadata?: ProviderMetadata5;
+}
+
+
+/**
+ * @export
+ */
+export const SubmitVulnerabilitiesRequestOperationTypeEnum = {
+    Normal: 'NORMAL',
+    Backfill: 'BACKFILL'
+} as const;
+export type SubmitVulnerabilitiesRequestOperationTypeEnum = typeof SubmitVulnerabilitiesRequestOperationTypeEnum[keyof typeof SubmitVulnerabilitiesRequestOperationTypeEnum];
+
+/**
+ * The result of a successful submitVulnerabilities request.
+ * @export
+ * @interface SubmitVulnerabilitiesResponse
+ */
+export interface SubmitVulnerabilitiesResponse {
+    /**
+     * The IDs of Vulnerabilities that have been accepted for submission.
+     * 
+     * A Vulnerability may be rejected if it was only associated with unknown project keys.
+     * 
+     * Note that a Vulnerability that isn't updated due to it's updateSequenceNumber being out of order is not considered a failed submission.
+     * @type {Array<string>}
+     * @memberof SubmitVulnerabilitiesResponse
+     */
+    acceptedVulnerabilities?: Array<string>;
+    /**
+     * Details of Vulnerabilities that have not been accepted for submission, usually due to a problem with the request data.
+     * 
+     * The object (if present) will be keyed by Vulnerability ID and include any errors associated with that Vulnerability that have prevented it being submitted.
+     * @type {{ [key: string]: Array<ErrorMessage1>; }}
+     * @memberof SubmitVulnerabilitiesResponse
+     */
+    failedVulnerabilities?: { [key: string]: Array<ErrorMessage1>; };
+    /**
+     * Associations (e.g. Service IDs) that are not known on this Jira instance (if any).
+     * 
+     * If a Vulnerability has been associated with any other association other than those in this array it will still be stored against those valid associations.
+     * If a Vulnerability was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
+     * @type {Array<VulnerabilityDetailsAssociationsInner>}
+     * @memberof SubmitVulnerabilitiesResponse
+     */
+    unknownAssociations?: Array<VulnerabilityDetailsAssociationsInner>;
+}
+/**
  * 
  * @export
  * @interface SubqueryBean
@@ -6913,3 +7140,225 @@ export interface UserDetails {
      */
     readonly accountType?: string;
 }
+/**
+ * Extra information (optional). This data will be shown in the security feature under the vulnerability displayName.
+ * @export
+ * @interface VulnerabilityAdditionalInfo
+ */
+export interface VulnerabilityAdditionalInfo {
+    /**
+     * The content of the additionalInfo.
+     * @type {string}
+     * @memberof VulnerabilityAdditionalInfo
+     */
+    content: string;
+    /**
+     * Optional URL linking to the information
+     * @type {string}
+     * @memberof VulnerabilityAdditionalInfo
+     */
+    url?: string;
+}
+/**
+ * Data related to a specific vulnerability in a specific workspace that the vulnerability is present in. Must specify at least one association.
+ * @export
+ * @interface VulnerabilityDetails
+ */
+export interface VulnerabilityDetails {
+    /**
+     * The VulnerabilityData schema version used for this vulnerability data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    schemaVersion: VulnerabilityDetailsSchemaVersionEnum;
+    /**
+     * The identifier for the Vulnerability. Must be unique for a given Provider.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Vulnerability in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Vulnerability and increment that on each update to Jira).
+     * 
+     * Updates for a Vulnerability that are received with an updateSequenceId lower than what is currently stored will be ignored.
+     * @type {number}
+     * @memberof VulnerabilityDetails
+     */
+    updateSequenceNumber: number;
+    /**
+     * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    containerId: string;
+    /**
+     * The human-readable name for the Vulnerability. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    displayName: string;
+    /**
+     * A description of the issue in markdown format that will be shown in the UI and used when creating Jira Issues. HTML tags are not supported in the markdown format. For creating a new line `\n` can be used. Read more about the accepted markdown transformations [here](https://atlaskit.atlassian.com/packages/editor/editor-markdown-transformer).
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this vulnerability, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the vulnerability in that project).
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    url: string;
+    /**
+     * The type of Vulnerability detected.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    type: VulnerabilityDetailsTypeEnum;
+    /**
+     * The timestamp to present to the user that shows when the Vulnerability was introduced.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    introducedDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Vulnerability was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    lastUpdated: string;
+    /**
+     * 
+     * @type {VulnerabilitySeverity}
+     * @memberof VulnerabilityDetails
+     */
+    severity: VulnerabilitySeverity;
+    /**
+     * The identifying information for the Vulnerability.
+     * @type {Array<Identifier>}
+     * @memberof VulnerabilityDetails
+     */
+    identifiers?: Array<Identifier>;
+    /**
+     * The current status of the Vulnerability.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    status: VulnerabilityDetailsStatusEnum;
+    /**
+     * 
+     * @type {VulnerabilityAdditionalInfo}
+     * @memberof VulnerabilityDetails
+     */
+    additionalInfo?: VulnerabilityAdditionalInfo;
+    /**
+     * The entities to associate the Security Vulnerability information with.
+     * @type {Array<VulnerabilityDetailsAssociationsInner>}
+     * @memberof VulnerabilityDetails
+     */
+    associations?: Array<VulnerabilityDetailsAssociationsInner>;
+}
+
+
+/**
+ * @export
+ */
+export const VulnerabilityDetailsSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type VulnerabilityDetailsSchemaVersionEnum = typeof VulnerabilityDetailsSchemaVersionEnum[keyof typeof VulnerabilityDetailsSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const VulnerabilityDetailsTypeEnum = {
+    Sca: 'sca',
+    Sast: 'sast',
+    Dast: 'dast',
+    Unknown: 'unknown'
+} as const;
+export type VulnerabilityDetailsTypeEnum = typeof VulnerabilityDetailsTypeEnum[keyof typeof VulnerabilityDetailsTypeEnum];
+
+/**
+ * @export
+ */
+export const VulnerabilityDetailsStatusEnum = {
+    Open: 'open',
+    Closed: 'closed',
+    Ignored: 'ignored',
+    Unknown: 'unknown'
+} as const;
+export type VulnerabilityDetailsStatusEnum = typeof VulnerabilityDetailsStatusEnum[keyof typeof VulnerabilityDetailsStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface VulnerabilityDetailsAssociationsInner
+ */
+export interface VulnerabilityDetailsAssociationsInner {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof VulnerabilityDetailsAssociationsInner
+     */
+    associationType: VulnerabilityDetailsAssociationsInnerAssociationTypeEnum;
+    /**
+     * The service id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof VulnerabilityDetailsAssociationsInner
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const VulnerabilityDetailsAssociationsInnerAssociationTypeEnum = {
+    ServiceIdOrKeys: 'serviceIdOrKeys'
+} as const;
+export type VulnerabilityDetailsAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsAssociationsInnerAssociationTypeEnum];
+
+/**
+ * Severity information for a single Vulnerability.
+ * 
+ * This is the severity information that will be presented to the user on e.g. the Jira Security screen.
+ * @export
+ * @interface VulnerabilitySeverity
+ */
+export interface VulnerabilitySeverity {
+    /**
+     * The severity level of the Vulnerability.
+     * @type {string}
+     * @memberof VulnerabilitySeverity
+     */
+    level: VulnerabilitySeverityLevelEnum;
+}
+
+
+/**
+ * @export
+ */
+export const VulnerabilitySeverityLevelEnum = {
+    Critical: 'critical',
+    High: 'high',
+    Medium: 'medium',
+    Low: 'low',
+    Unknown: 'unknown'
+} as const;
+export type VulnerabilitySeverityLevelEnum = typeof VulnerabilitySeverityLevelEnum[keyof typeof VulnerabilitySeverityLevelEnum];
+

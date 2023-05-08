@@ -56,10 +56,6 @@ export interface GetFilterRequest {
     overrideSharePermissions?: boolean;
 }
 
-export interface GetFiltersRequest {
-    expand?: string;
-}
-
 export interface GetFiltersPaginatedRequest {
     filterName?: string;
     accountId?: string;
@@ -412,46 +408,6 @@ export class FiltersApi extends runtime.BaseAPI {
      */
     async getFilter(requestParameters: GetFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Filter> {
         const response = await this.getFilterRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns all filters. Deprecated, use [ Search for filters](#api-rest-api-3-filter-search-get) that supports search and pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, only the following filters are returned:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Get filters
-     */
-    async getFiltersRaw(requestParameters: GetFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
-        const queryParameters: any = {};
-
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:jira-work"]);
-        }
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        const response = await this.request({
-            path: `/rest/api/3/filter`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns all filters. Deprecated, use [ Search for filters](#api-rest-api-3-filter-search-get) that supports search and pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None, however, only the following filters are returned:   *  filters owned by the user.  *  filters shared with a group that the user is a member of.  *  filters shared with a private project that the user has *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for.  *  filters shared with a public project.  *  filters shared with the public.
-     * Get filters
-     */
-    async getFilters(requestParameters: GetFiltersRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Filter>> {
-        const response = await this.getFiltersRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

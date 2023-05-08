@@ -15,18 +15,289 @@
 
 import * as runtime from '../runtime';
 import type {
+  AddSecuritySchemeLevelsRequestBean,
+  CreateIssueSecuritySchemeDetails,
+  ErrorCollection,
+  PageBeanIssueSecuritySchemeToProjectMapping,
+  PageBeanSecurityLevel,
+  PageBeanSecurityLevelMember,
+  PageBeanSecuritySchemeWithProjects,
   SecurityScheme,
+  SecuritySchemeId,
+  SecuritySchemeMembersRequest,
   SecuritySchemes,
+  SetDefaultLevelsRequest,
+  TaskProgressBeanObject,
+  UpdateIssueSecurityLevelDetails,
+  UpdateIssueSecuritySchemeRequestBean,
 } from '../models';
+
+export interface AddSecurityLevelRequest {
+    schemeId: string;
+    addSecuritySchemeLevelsRequestBean: AddSecuritySchemeLevelsRequestBean;
+}
+
+export interface AddSecurityLevelMembersRequest {
+    schemeId: string;
+    levelId: string;
+    securitySchemeMembersRequest: SecuritySchemeMembersRequest;
+}
+
+export interface CreateIssueSecuritySchemeRequest {
+    requestBody: { [key: string]: any; };
+}
+
+export interface DeleteSecuritySchemeRequest {
+    schemeId: string;
+}
 
 export interface GetIssueSecuritySchemeRequest {
     id: number;
+}
+
+export interface GetSecurityLevelMembersRequest {
+    startAt?: string;
+    maxResults?: string;
+    id?: string[];
+    schemeId?: string[];
+    levelId?: string[];
+    expand?: string;
+}
+
+export interface GetSecurityLevelsRequest {
+    startAt?: string;
+    maxResults?: string;
+    id?: string[];
+    schemeId?: string[];
+    onlyDefault?: boolean;
+}
+
+export interface RemoveLevelRequest {
+    schemeId: string;
+    levelId: string;
+    replaceWith?: string;
+}
+
+export interface RemoveMemberFromSecurityLevelRequest {
+    schemeId: string;
+    levelId: string;
+    memberId: string;
+}
+
+export interface SearchProjectsUsingSecuritySchemesRequest {
+    startAt?: string;
+    maxResults?: string;
+    issueSecuritySchemeId?: string[];
+    projectId?: string[];
+}
+
+export interface SearchSecuritySchemesRequest {
+    startAt?: string;
+    maxResults?: string;
+    id?: string[];
+    projectId?: string[];
+}
+
+export interface SetDefaultLevelsOperationRequest {
+    requestBody: { [key: string]: any; };
+}
+
+export interface UpdateIssueSecuritySchemeRequest {
+    id: string;
+    updateIssueSecuritySchemeRequestBean: UpdateIssueSecuritySchemeRequestBean;
+}
+
+export interface UpdateSecurityLevelRequest {
+    schemeId: string;
+    levelId: string;
+    requestBody: { [key: string]: any; };
 }
 
 /**
  * 
  */
 export class IssueSecuritySchemesApi extends runtime.BaseAPI {
+
+    /**
+     * Adds levels and levels\' members to the issue security scheme. You can add up to 100 levels per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue security levels
+     */
+    async addSecurityLevelRaw(requestParameters: AddSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling addSecurityLevel.');
+        }
+
+        if (requestParameters.addSecuritySchemeLevelsRequestBean === null || requestParameters.addSecuritySchemeLevelsRequestBean === undefined) {
+            throw new runtime.RequiredError('addSecuritySchemeLevelsRequestBean','Required parameter requestParameters.addSecuritySchemeLevelsRequestBean was null or undefined when calling addSecurityLevel.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.addSecuritySchemeLevelsRequestBean,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Adds levels and levels\' members to the issue security scheme. You can add up to 100 levels per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue security levels
+     */
+    async addSecurityLevel(requestParameters: AddSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.addSecurityLevelRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Adds members to the issue security level. You can add up to 100 members per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue security level members
+     */
+    async addSecurityLevelMembersRaw(requestParameters: AddSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling addSecurityLevelMembers.');
+        }
+
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling addSecurityLevelMembers.');
+        }
+
+        if (requestParameters.securitySchemeMembersRequest === null || requestParameters.securitySchemeMembersRequest === undefined) {
+            throw new runtime.RequiredError('securitySchemeMembersRequest','Required parameter requestParameters.securitySchemeMembersRequest was null or undefined when calling addSecurityLevelMembers.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.securitySchemeMembersRequest,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Adds members to the issue security level. You can add up to 100 members per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Add issue security level members
+     */
+    async addSecurityLevelMembers(requestParameters: AddSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.addSecurityLevelMembersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a security scheme with security scheme levels and levels\' members. You can create up to 100 security scheme levels and security scheme levels\' members per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue security scheme
+     */
+    async createIssueSecuritySchemeRaw(requestParameters: CreateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecuritySchemeId>> {
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createIssueSecurityScheme.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.requestBody,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a security scheme with security scheme levels and levels\' members. You can create up to 100 security scheme levels and security scheme levels\' members per request.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Create issue security scheme
+     */
+    async createIssueSecurityScheme(requestParameters: CreateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecuritySchemeId> {
+        const response = await this.createIssueSecuritySchemeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Deletes an issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue security scheme
+     */
+    async deleteSecuritySchemeRaw(requestParameters: DeleteSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling deleteSecurityScheme.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Deletes an issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Delete issue security scheme
+     */
+    async deleteSecurityScheme(requestParameters: DeleteSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteSecuritySchemeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Returns an issue security scheme along with its security levels.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for a project that uses the requested issue security scheme.
@@ -101,6 +372,462 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      */
     async getIssueSecuritySchemes(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecuritySchemes> {
         const response = await this.getIssueSecuritySchemesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security level members.  Only issue security level members in the context of classic projects are returned.  Filtering using parameters is inclusive: if you specify both security scheme IDs and level IDs, the result will include all issue security level members from the specified schemes and levels.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue security level members
+     */
+    async getSecurityLevelMembersRaw(requestParameters: GetSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecurityLevelMember>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
+        }
+
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
+        }
+
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
+        }
+
+        if (requestParameters.schemeId) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
+        }
+
+        if (requestParameters.levelId) {
+            queryParameters['levelId'] = requestParameters.levelId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/level/member`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security level members.  Only issue security level members in the context of classic projects are returned.  Filtering using parameters is inclusive: if you specify both security scheme IDs and level IDs, the result will include all issue security level members from the specified schemes and levels.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue security level members
+     */
+    async getSecurityLevelMembers(requestParameters: GetSecurityLevelMembersRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanSecurityLevelMember> {
+        const response = await this.getSecurityLevelMembersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security levels.  Only issue security levels in the context of classic projects are returned.  Filtering using IDs is inclusive: if you specify both security scheme IDs and level IDs, the result will include both specified issue security levels and all issue security levels from the specified schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue security levels
+     */
+    async getSecurityLevelsRaw(requestParameters: GetSecurityLevelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecurityLevel>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
+        }
+
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
+        }
+
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
+        }
+
+        if (requestParameters.schemeId) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
+        }
+
+        if (requestParameters.onlyDefault !== undefined) {
+            queryParameters['onlyDefault'] = requestParameters.onlyDefault;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/level`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security levels.  Only issue security levels in the context of classic projects are returned.  Filtering using IDs is inclusive: if you specify both security scheme IDs and level IDs, the result will include both specified issue security levels and all issue security levels from the specified schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get issue security levels
+     */
+    async getSecurityLevels(requestParameters: GetSecurityLevelsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanSecurityLevel> {
+        const response = await this.getSecurityLevelsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Deletes an issue security level.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove issue security level
+     */
+    async removeLevelRaw(requestParameters: RemoveLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling removeLevel.');
+        }
+
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling removeLevel.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.replaceWith !== undefined) {
+            queryParameters['replaceWith'] = requestParameters.replaceWith;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes an issue security level.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove issue security level
+     */
+    async removeLevel(requestParameters: RemoveLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeLevelRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Removes an issue security level member from an issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove member from issue security level
+     */
+    async removeMemberFromSecurityLevelRaw(requestParameters: RemoveMemberFromSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling removeMemberFromSecurityLevel.');
+        }
+
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling removeMemberFromSecurityLevel.');
+        }
+
+        if (requestParameters.memberId === null || requestParameters.memberId === undefined) {
+            throw new runtime.RequiredError('memberId','Required parameter requestParameters.memberId was null or undefined when calling removeMemberFromSecurityLevel.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member/{memberId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))).replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters.memberId))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Removes an issue security level member from an issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Remove member from issue security level
+     */
+    async removeMemberFromSecurityLevel(requestParameters: RemoveMemberFromSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.removeMemberFromSecurityLevelRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a [paginated](#pagination) mapping of projects that are using security schemes. You can provide either one or multiple security scheme IDs or project IDs to filter by. If you don\'t provide any, this will return a list of all mappings. Only issue security schemes in the context of classic projects are supported. **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get projects using issue security schemes
+     */
+    async searchProjectsUsingSecuritySchemesRaw(requestParameters: SearchProjectsUsingSecuritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueSecuritySchemeToProjectMapping>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
+        }
+
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
+        }
+
+        if (requestParameters.issueSecuritySchemeId) {
+            queryParameters['issueSecuritySchemeId'] = requestParameters.issueSecuritySchemeId;
+        }
+
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/project`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns a [paginated](#pagination) mapping of projects that are using security schemes. You can provide either one or multiple security scheme IDs or project IDs to filter by. If you don\'t provide any, this will return a list of all mappings. Only issue security schemes in the context of classic projects are supported. **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get projects using issue security schemes
+     */
+    async searchProjectsUsingSecuritySchemes(requestParameters: SearchProjectsUsingSecuritySchemesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanIssueSecuritySchemeToProjectMapping> {
+        const response = await this.searchProjectsUsingSecuritySchemesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security schemes.   If you specify the project ID parameter, the result will contain issue security schemes and related project IDs you filter by. Use \\{@link IssueSecuritySchemeResource\\#searchProjectsUsingSecuritySchemes(String, String, Set, Set)\\} to obtain all projects related to scheme.  Only issue security schemes in the context of classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Search issue security schemes
+     */
+    async searchSecuritySchemesRaw(requestParameters: SearchSecuritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecuritySchemeWithProjects>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
+        }
+
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
+        }
+
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
+        }
+
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/search`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns a [paginated](#pagination) list of issue security schemes.   If you specify the project ID parameter, the result will contain issue security schemes and related project IDs you filter by. Use \\{@link IssueSecuritySchemeResource\\#searchProjectsUsingSecuritySchemes(String, String, Set, Set)\\} to obtain all projects related to scheme.  Only issue security schemes in the context of classic projects are returned.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Search issue security schemes
+     */
+    async searchSecuritySchemes(requestParameters: SearchSecuritySchemesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanSecuritySchemeWithProjects> {
+        const response = await this.searchSecuritySchemesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Sets default issue security levels for schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set default issue security levels
+     */
+    async setDefaultLevelsRaw(requestParameters: SetDefaultLevelsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling setDefaultLevels.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/level/default`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.requestBody,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Sets default issue security levels for schemes.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Set default issue security levels
+     */
+    async setDefaultLevels(requestParameters: SetDefaultLevelsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setDefaultLevelsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue security scheme
+     */
+    async updateIssueSecuritySchemeRaw(requestParameters: UpdateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateIssueSecurityScheme.');
+        }
+
+        if (requestParameters.updateIssueSecuritySchemeRequestBean === null || requestParameters.updateIssueSecuritySchemeRequestBean === undefined) {
+            throw new runtime.RequiredError('updateIssueSecuritySchemeRequestBean','Required parameter requestParameters.updateIssueSecuritySchemeRequestBean was null or undefined when calling updateIssueSecurityScheme.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.updateIssueSecuritySchemeRequestBean,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Updates the issue security scheme.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue security scheme
+     */
+    async updateIssueSecurityScheme(requestParameters: UpdateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.updateIssueSecuritySchemeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the issue security level.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue security level
+     */
+    async updateSecurityLevelRaw(requestParameters: UpdateSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling updateSecurityLevel.');
+        }
+
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling updateSecurityLevel.');
+        }
+
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateSecurityLevel.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.requestBody,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Updates the issue security level.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Update issue security level
+     */
+    async updateSecurityLevel(requestParameters: UpdateSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.updateSecurityLevelRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

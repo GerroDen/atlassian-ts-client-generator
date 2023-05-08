@@ -48,6 +48,7 @@ export interface FindGroupsRequest {
     exclude?: Array<string>;
     excludeId?: Array<string>;
     maxResults?: number;
+    caseInsensitive?: boolean;
     userName?: string;
 }
 
@@ -263,6 +264,10 @@ export class GroupsApi extends runtime.BaseAPI {
 
         if (requestParameters.maxResults !== undefined) {
             queryParameters['maxResults'] = requestParameters.maxResults;
+        }
+
+        if (requestParameters.caseInsensitive !== undefined) {
+            queryParameters['caseInsensitive'] = requestParameters.caseInsensitive;
         }
 
         if (requestParameters.userName !== undefined) {

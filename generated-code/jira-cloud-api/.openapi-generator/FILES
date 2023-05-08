@@ -47,9 +47,11 @@ src/apis/IssueWorklogPropertiesApi.ts
 src/apis/IssueWorklogsApi.ts
 src/apis/IssuesApi.ts
 src/apis/JQLApi.ts
+src/apis/JQLFunctionsAppsApi.ts
 src/apis/JiraExpressionsApi.ts
 src/apis/JiraSettingsApi.ts
 src/apis/LabelsApi.ts
+src/apis/LicenseMetricsApi.ts
 src/apis/MyselfApi.ts
 src/apis/PermissionSchemesApi.ts
 src/apis/PermissionsApi.ts

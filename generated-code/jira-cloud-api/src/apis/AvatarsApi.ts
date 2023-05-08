@@ -161,7 +161,7 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Returns a project or issue type avatar image by ID.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  For system avatars, none.  *  For custom project avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the avatar belongs to.  *  For custom issue type avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the issue type is used in.
      * Get avatar image by ID
      */
-    async getAvatarImageByIDRaw(requestParameters: GetAvatarImageByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getAvatarImageByIDRaw(requestParameters: GetAvatarImageByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.type === null || requestParameters.type === undefined) {
             throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByID.');
         }
@@ -197,23 +197,22 @@ export class AvatarsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Returns a project or issue type avatar image by ID.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  For system avatars, none.  *  For custom project avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the avatar belongs to.  *  For custom issue type avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the issue type is used in.
      * Get avatar image by ID
      */
-    async getAvatarImageByID(requestParameters: GetAvatarImageByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getAvatarImageByIDRaw(requestParameters, initOverrides);
-        return await response.value();
+    async getAvatarImageByID(requestParameters: GetAvatarImageByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getAvatarImageByIDRaw(requestParameters, initOverrides);
     }
 
     /**
      * Returns the avatar image for a project or issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  For system avatars, none.  *  For custom project avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the avatar belongs to.  *  For custom issue type avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the issue type is used in.
      * Get avatar image by owner
      */
-    async getAvatarImageByOwnerRaw(requestParameters: GetAvatarImageByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getAvatarImageByOwnerRaw(requestParameters: GetAvatarImageByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.type === null || requestParameters.type === undefined) {
             throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByOwner.');
         }
@@ -249,23 +248,22 @@ export class AvatarsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Returns the avatar image for a project or issue type.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  For system avatars, none.  *  For custom project avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the avatar belongs to.  *  For custom issue type avatars, *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for at least one project the issue type is used in.
      * Get avatar image by owner
      */
-    async getAvatarImageByOwner(requestParameters: GetAvatarImageByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getAvatarImageByOwnerRaw(requestParameters, initOverrides);
-        return await response.value();
+    async getAvatarImageByOwner(requestParameters: GetAvatarImageByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getAvatarImageByOwnerRaw(requestParameters, initOverrides);
     }
 
     /**
      * Returns the default project or issue type avatar image.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
      * Get avatar image by type
      */
-    async getAvatarImageByTypeRaw(requestParameters: GetAvatarImageByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async getAvatarImageByTypeRaw(requestParameters: GetAvatarImageByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.type === null || requestParameters.type === undefined) {
             throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByType.');
         }
@@ -297,16 +295,15 @@ export class AvatarsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Returns the default project or issue type avatar image.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** None.
      * Get avatar image by type
      */
-    async getAvatarImageByType(requestParameters: GetAvatarImageByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.getAvatarImageByTypeRaw(requestParameters, initOverrides);
-        return await response.value();
+    async getAvatarImageByType(requestParameters: GetAvatarImageByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getAvatarImageByTypeRaw(requestParameters, initOverrides);
     }
 
     /**

@@ -7,11 +7,11 @@
  */
 export interface ActorInputBean {
     /**
-     * The account IDs of the users to add as default actors. This parameter accepts a comma-separated list. For example, `"user":["5b10a2844c20165700ede21g", "5b109f2e9729b51b54dc274d"]`.
+     * The name of the group to add as a default actor. This parameter cannot be used with the `groupId` parameter. As a group's name can change,use of `groupId` is recommended. This parameter accepts a comma-separated list. For example, `"group":["project-admin", "jira-developers"]`.
      * @type {Array<string>}
      * @memberof ActorInputBean
      */
-    user?: Array<string>;
+    group?: Array<string>;
     /**
      * The ID of the group to add as a default actor. This parameter cannot be used with the `group` parameter This parameter accepts a comma-separated list. For example, `"groupId":["77f6ab39-e755-4570-a6ae-2d7a8df0bcb8", "0c011f85-69ed-49c4-a801-3b18d0f771bc"]`.
      * @type {Array<string>}
@@ -19,11 +19,11 @@ export interface ActorInputBean {
      */
     groupId?: Array<string>;
     /**
-     * The name of the group to add as a default actor. This parameter cannot be used with the `groupId` parameter. As a group's name can change,use of `groupId` is recommended. This parameter accepts a comma-separated list. For example, `"group":["project-admin", "jira-developers"]`.
+     * The account IDs of the users to add as default actors. This parameter accepts a comma-separated list. For example, `"user":["5b10a2844c20165700ede21g", "5b109f2e9729b51b54dc274d"]`.
      * @type {Array<string>}
      * @memberof ActorInputBean
      */
-    group?: Array<string>;
+    user?: Array<string>;
 }
 /**
  * 
@@ -31,12 +31,6 @@ export interface ActorInputBean {
  * @interface ActorsMap
  */
 export interface ActorsMap {
-    /**
-     * The user account ID of the user to add.
-     * @type {Array<string>}
-     * @memberof ActorsMap
-     */
-    user?: Array<string>;
     /**
      * The name of the group to add. This parameter cannot be used with the `groupId` parameter. As a group's name can change, use of `groupId` is recommended.
      * @type {Array<string>}
@@ -49,6 +43,12 @@ export interface ActorsMap {
      * @memberof ActorsMap
      */
     groupId?: Array<string>;
+    /**
+     * The user account ID of the user to add.
+     * @type {Array<string>}
+     * @memberof ActorsMap
+     */
+    user?: Array<string>;
 }
 /**
  * 
@@ -78,17 +78,44 @@ export interface AddGroupBean {
     name: string;
 }
 /**
+ * Details of notifications which should be added to the notification scheme.
+ * @export
+ * @interface AddNotificationsDetails
+ */
+export interface AddNotificationsDetails {
+    [key: string]: any | any;
+    /**
+     * The list of notifications which should be added to the notification scheme.
+     * @type {Array<NotificationSchemeEventDetails>}
+     * @memberof AddNotificationsDetails
+     */
+    notificationSchemeEvents: Array<NotificationSchemeEventDetails>;
+}
+/**
+ * 
+ * @export
+ * @interface AddSecuritySchemeLevelsRequestBean
+ */
+export interface AddSecuritySchemeLevelsRequestBean {
+    /**
+     * The list of scheme levels which should be added to the security scheme.
+     * @type {Array<SecuritySchemeLevelBean>}
+     * @memberof AddSecuritySchemeLevelsRequestBean
+     */
+    levels?: Array<SecuritySchemeLevelBean>;
+}
+/**
  * Announcement banner configuration.
  * @export
  * @interface AnnouncementBannerConfiguration
  */
 export interface AnnouncementBannerConfiguration {
     /**
-     * The text on the announcement banner.
+     * Hash of the banner data. The client detects updates by comparing hash IDs.
      * @type {string}
      * @memberof AnnouncementBannerConfiguration
      */
-    readonly message?: string;
+    readonly hashId?: string;
     /**
      * Flag indicating if the announcement banner can be dismissed by the user.
      * @type {boolean}
@@ -102,11 +129,11 @@ export interface AnnouncementBannerConfiguration {
      */
     readonly isEnabled?: boolean;
     /**
-     * Hash of the banner data. The client detects updates by comparing hash IDs.
+     * The text on the announcement banner.
      * @type {string}
      * @memberof AnnouncementBannerConfiguration
      */
-    readonly hashId?: string;
+    readonly message?: string;
     /**
      * Visibility of the announcement banner.
      * @type {string}
@@ -132,12 +159,6 @@ export type AnnouncementBannerConfigurationVisibilityEnum = typeof AnnouncementB
  */
 export interface AnnouncementBannerConfigurationUpdate {
     /**
-     * The text on the announcement banner.
-     * @type {string}
-     * @memberof AnnouncementBannerConfigurationUpdate
-     */
-    message?: string;
-    /**
      * Flag indicating if the announcement banner can be dismissed by the user.
      * @type {boolean}
      * @memberof AnnouncementBannerConfigurationUpdate
@@ -150,11 +171,48 @@ export interface AnnouncementBannerConfigurationUpdate {
      */
     isEnabled?: boolean;
     /**
+     * The text on the announcement banner.
+     * @type {string}
+     * @memberof AnnouncementBannerConfigurationUpdate
+     */
+    message?: string;
+    /**
      * Visibility of the announcement banner. Can be public or private.
      * @type {string}
      * @memberof AnnouncementBannerConfigurationUpdate
      */
     visibility?: string;
+}
+/**
+ * A workflow transition rule.
+ * @export
+ * @interface AppWorkflowTransitionRule
+ */
+export interface AppWorkflowTransitionRule {
+    /**
+     * 
+     * @type {RuleConfiguration}
+     * @memberof AppWorkflowTransitionRule
+     */
+    _configuration: RuleConfiguration;
+    /**
+     * The ID of the transition rule.
+     * @type {string}
+     * @memberof AppWorkflowTransitionRule
+     */
+    id: string;
+    /**
+     * The key of the rule, as defined in the Connect or the Forge app descriptor.
+     * @type {string}
+     * @memberof AppWorkflowTransitionRule
+     */
+    readonly key: string;
+    /**
+     * 
+     * @type {WorkflowTransition}
+     * @memberof AppWorkflowTransitionRule
+     */
+    readonly transition?: WorkflowTransition;
 }
 /**
  * The application the linked item is in.
@@ -164,17 +222,17 @@ export interface AnnouncementBannerConfigurationUpdate {
 export interface Application {
     [key: string]: any | any;
     /**
-     * The name-spaced type of the application, used by registered rendering apps.
-     * @type {string}
-     * @memberof Application
-     */
-    type?: string;
-    /**
      * The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank items are excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link". Grouping and sorting of links may place links without an application name last.
      * @type {string}
      * @memberof Application
      */
     name?: string;
+    /**
+     * The name-spaced type of the application, used by registered rendering apps.
+     * @type {string}
+     * @memberof Application
+     */
+    type?: string;
 }
 /**
  * Details of an application property.
@@ -182,6 +240,30 @@ export interface Application {
  * @interface ApplicationProperty
  */
 export interface ApplicationProperty {
+    /**
+     * The allowed values, if applicable.
+     * @type {Array<string>}
+     * @memberof ApplicationProperty
+     */
+    allowedValues?: Array<string>;
+    /**
+     * The default value of the application property.
+     * @type {string}
+     * @memberof ApplicationProperty
+     */
+    defaultValue?: string;
+    /**
+     * The description of the application property.
+     * @type {string}
+     * @memberof ApplicationProperty
+     */
+    desc?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationProperty
+     */
+    example?: string;
     /**
      * The ID of the application property. The ID and key are the same.
      * @type {string}
@@ -195,23 +277,11 @@ export interface ApplicationProperty {
      */
     key?: string;
     /**
-     * The new value.
-     * @type {string}
-     * @memberof ApplicationProperty
-     */
-    value?: string;
-    /**
      * The name of the application property.
      * @type {string}
      * @memberof ApplicationProperty
      */
     name?: string;
-    /**
-     * The description of the application property.
-     * @type {string}
-     * @memberof ApplicationProperty
-     */
-    desc?: string;
     /**
      * The data type of the application property.
      * @type {string}
@@ -219,23 +289,11 @@ export interface ApplicationProperty {
      */
     type?: string;
     /**
-     * The default value of the application property.
+     * The new value.
      * @type {string}
      * @memberof ApplicationProperty
      */
-    defaultValue?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationProperty
-     */
-    example?: string;
-    /**
-     * The allowed values, if applicable.
-     * @type {Array<string>}
-     * @memberof ApplicationProperty
-     */
-    allowedValues?: Array<string>;
+    value?: string;
 }
 /**
  * Details of an application role.
@@ -243,30 +301,6 @@ export interface ApplicationProperty {
  * @interface ApplicationRole
  */
 export interface ApplicationRole {
-    /**
-     * The key of the application role.
-     * @type {string}
-     * @memberof ApplicationRole
-     */
-    key?: string;
-    /**
-     * The groups associated with the application role. As a group's name can change, use of `groupDetails` is recommended to identify a groups.
-     * @type {Set<string>}
-     * @memberof ApplicationRole
-     */
-    groups?: string[];
-    /**
-     * The groups associated with the application role.
-     * @type {Array<GroupName>}
-     * @memberof ApplicationRole
-     */
-    groupDetails?: Array<GroupName>;
-    /**
-     * The display name of the application role.
-     * @type {string}
-     * @memberof ApplicationRole
-     */
-    name?: string;
     /**
      * The groups that are granted default access for this application role. As a group's name can change, use of `defaultGroupsDetails` is recommended to identify a groups.
      * @type {Set<string>}
@@ -280,17 +314,41 @@ export interface ApplicationRole {
      */
     defaultGroupsDetails?: Array<GroupName>;
     /**
-     * Determines whether this application role should be selected by default on user creation.
-     * @type {boolean}
-     * @memberof ApplicationRole
-     */
-    selectedByDefault?: boolean;
-    /**
      * Deprecated.
      * @type {boolean}
      * @memberof ApplicationRole
      */
     defined?: boolean;
+    /**
+     * The groups associated with the application role.
+     * @type {Array<GroupName>}
+     * @memberof ApplicationRole
+     */
+    groupDetails?: Array<GroupName>;
+    /**
+     * The groups associated with the application role. As a group's name can change, use of `groupDetails` is recommended to identify a groups.
+     * @type {Set<string>}
+     * @memberof ApplicationRole
+     */
+    groups?: string[];
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApplicationRole
+     */
+    hasUnlimitedSeats?: boolean;
+    /**
+     * The key of the application role.
+     * @type {string}
+     * @memberof ApplicationRole
+     */
+    key?: string;
+    /**
+     * The display name of the application role.
+     * @type {string}
+     * @memberof ApplicationRole
+     */
+    name?: string;
     /**
      * The maximum count of users on your license.
      * @type {number}
@@ -298,11 +356,23 @@ export interface ApplicationRole {
      */
     numberOfSeats?: number;
     /**
+     * Indicates if the application role belongs to Jira platform (`jira-core`).
+     * @type {boolean}
+     * @memberof ApplicationRole
+     */
+    platform?: boolean;
+    /**
      * The count of users remaining on your license.
      * @type {number}
      * @memberof ApplicationRole
      */
     remainingSeats?: number;
+    /**
+     * Determines whether this application role should be selected by default on user creation.
+     * @type {boolean}
+     * @memberof ApplicationRole
+     */
+    selectedByDefault?: boolean;
     /**
      * The number of users counting against your license.
      * @type {number}
@@ -315,18 +385,6 @@ export interface ApplicationRole {
      * @memberof ApplicationRole
      */
     userCountDescription?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ApplicationRole
-     */
-    hasUnlimitedSeats?: boolean;
-    /**
-     * Indicates if the application role belongs to Jira platform (`jira-core`).
-     * @type {boolean}
-     * @memberof ApplicationRole
-     */
-    platform?: boolean;
 }
 /**
  * Details of a field configuration to issue type mappings.
@@ -360,12 +418,6 @@ export interface AssociatedItemBean {
      */
     readonly name?: string;
     /**
-     * The type of the associated record.
-     * @type {string}
-     * @memberof AssociatedItemBean
-     */
-    readonly typeName?: string;
-    /**
      * The ID of the associated parent record.
      * @type {string}
      * @memberof AssociatedItemBean
@@ -377,6 +429,12 @@ export interface AssociatedItemBean {
      * @memberof AssociatedItemBean
      */
     readonly parentName?: string;
+    /**
+     * The type of the associated record.
+     * @type {string}
+     * @memberof AssociatedItemBean
+     */
+    readonly typeName?: string;
 }
 /**
  * Details about an attachment.
@@ -386,29 +444,17 @@ export interface AssociatedItemBean {
 export interface Attachment {
     [key: string]: any | any;
     /**
-     * The URL of the attachment details response.
-     * @type {string}
-     * @memberof Attachment
-     */
-    readonly self?: string;
-    /**
-     * The ID of the attachment.
-     * @type {string}
-     * @memberof Attachment
-     */
-    readonly id?: string;
-    /**
-     * The file name of the attachment.
-     * @type {string}
-     * @memberof Attachment
-     */
-    readonly filename?: string;
-    /**
      * 
      * @type {AttachmentAuthor}
      * @memberof Attachment
      */
     author?: AttachmentAuthor;
+    /**
+     * The content of the attachment.
+     * @type {string}
+     * @memberof Attachment
+     */
+    readonly content?: string;
     /**
      * The datetime the attachment was created.
      * @type {string}
@@ -416,11 +462,17 @@ export interface Attachment {
      */
     readonly created?: string;
     /**
-     * The size of the attachment.
-     * @type {number}
+     * The file name of the attachment.
+     * @type {string}
      * @memberof Attachment
      */
-    readonly size?: number;
+    readonly filename?: string;
+    /**
+     * The ID of the attachment.
+     * @type {string}
+     * @memberof Attachment
+     */
+    readonly id?: string;
     /**
      * The MIME type of the attachment.
      * @type {string}
@@ -428,11 +480,17 @@ export interface Attachment {
      */
     readonly mimeType?: string;
     /**
-     * The content of the attachment.
+     * The URL of the attachment details response.
      * @type {string}
      * @memberof Attachment
      */
-    readonly content?: string;
+    readonly self?: string;
+    /**
+     * The size of the attachment.
+     * @type {number}
+     * @memberof Attachment
+     */
+    readonly size?: number;
     /**
      * The URL of a thumbnail representing the attachment.
      * @type {string}
@@ -448,6 +506,12 @@ export interface Attachment {
 export interface AttachmentArchive {
     /**
      * 
+     * @type {Array<AttachmentArchiveEntry>}
+     * @memberof AttachmentArchive
+     */
+    entries?: Array<AttachmentArchiveEntry>;
+    /**
+     * 
      * @type {boolean}
      * @memberof AttachmentArchive
      */
@@ -457,19 +521,13 @@ export interface AttachmentArchive {
      * @type {number}
      * @memberof AttachmentArchive
      */
-    totalNumberOfEntriesAvailable?: number;
+    totalEntryCount?: number;
     /**
      * 
      * @type {number}
      * @memberof AttachmentArchive
      */
-    totalEntryCount?: number;
-    /**
-     * 
-     * @type {Array<AttachmentArchiveEntry>}
-     * @memberof AttachmentArchive
-     */
-    entries?: Array<AttachmentArchiveEntry>;
+    totalNumberOfEntriesAvailable?: number;
 }
 /**
  * 
@@ -534,23 +592,17 @@ export interface AttachmentArchiveImpl {
  */
 export interface AttachmentArchiveItemReadable {
     /**
-     * The path of the archive item.
-     * @type {string}
-     * @memberof AttachmentArchiveItemReadable
-     */
-    readonly path?: string;
-    /**
      * The position of the item within the archive.
      * @type {number}
      * @memberof AttachmentArchiveItemReadable
      */
     readonly index?: number;
     /**
-     * The size of the archive item.
+     * The label for the archive item.
      * @type {string}
      * @memberof AttachmentArchiveItemReadable
      */
-    readonly size?: string;
+    readonly label?: string;
     /**
      * The MIME type of the archive item.
      * @type {string}
@@ -558,11 +610,17 @@ export interface AttachmentArchiveItemReadable {
      */
     readonly mediaType?: string;
     /**
-     * The label for the archive item.
+     * The path of the archive item.
      * @type {string}
      * @memberof AttachmentArchiveItemReadable
      */
-    readonly label?: string;
+    readonly path?: string;
+    /**
+     * The size of the archive item.
+     * @type {string}
+     * @memberof AttachmentArchiveItemReadable
+     */
+    readonly size?: string;
 }
 /**
  * Metadata for an archive (for example a zip) and its contents.
@@ -571,11 +629,23 @@ export interface AttachmentArchiveItemReadable {
  */
 export interface AttachmentArchiveMetadataReadable {
     /**
+     * The list of the items included in the archive.
+     * @type {Array<AttachmentArchiveItemReadable>}
+     * @memberof AttachmentArchiveMetadataReadable
+     */
+    readonly entries?: Array<AttachmentArchiveItemReadable>;
+    /**
      * The ID of the attachment.
      * @type {number}
      * @memberof AttachmentArchiveMetadataReadable
      */
     readonly id?: number;
+    /**
+     * The MIME type of the attachment.
+     * @type {string}
+     * @memberof AttachmentArchiveMetadataReadable
+     */
+    readonly mediaType?: string;
     /**
      * The name of the archive file.
      * @type {string}
@@ -583,23 +653,11 @@ export interface AttachmentArchiveMetadataReadable {
      */
     readonly name?: string;
     /**
-     * The list of the items included in the archive.
-     * @type {Array<AttachmentArchiveItemReadable>}
-     * @memberof AttachmentArchiveMetadataReadable
-     */
-    readonly entries?: Array<AttachmentArchiveItemReadable>;
-    /**
      * The number of items included in the archive.
      * @type {number}
      * @memberof AttachmentArchiveMetadataReadable
      */
     readonly totalEntryCount?: number;
-    /**
-     * The MIME type of the attachment.
-     * @type {string}
-     * @memberof AttachmentArchiveMetadataReadable
-     */
-    readonly mediaType?: string;
 }
 /**
  * Details of the user who added the attachment.
@@ -608,35 +666,23 @@ export interface AttachmentArchiveMetadataReadable {
  */
 export interface AttachmentAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof AttachmentAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof AttachmentAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof AttachmentAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -650,23 +696,35 @@ export interface AttachmentAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof AttachmentAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof AttachmentAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof AttachmentAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof AttachmentAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof AttachmentAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * Metadata for an issue attachment.
@@ -675,29 +733,17 @@ export interface AttachmentAuthor {
  */
 export interface AttachmentMetadata {
     /**
-     * The ID of the attachment.
-     * @type {number}
-     * @memberof AttachmentMetadata
-     */
-    readonly id?: number;
-    /**
-     * The URL of the attachment metadata details.
-     * @type {string}
-     * @memberof AttachmentMetadata
-     */
-    readonly self?: string;
-    /**
-     * The name of the attachment file.
-     * @type {string}
-     * @memberof AttachmentMetadata
-     */
-    readonly filename?: string;
-    /**
      * 
      * @type {AttachmentMetadataAuthor}
      * @memberof AttachmentMetadata
      */
     author?: AttachmentMetadataAuthor;
+    /**
+     * The URL of the attachment.
+     * @type {string}
+     * @memberof AttachmentMetadata
+     */
+    readonly content?: string;
     /**
      * The datetime the attachment was created.
      * @type {string}
@@ -705,11 +751,17 @@ export interface AttachmentMetadata {
      */
     readonly created?: string;
     /**
-     * The size of the attachment.
+     * The name of the attachment file.
+     * @type {string}
+     * @memberof AttachmentMetadata
+     */
+    readonly filename?: string;
+    /**
+     * The ID of the attachment.
      * @type {number}
      * @memberof AttachmentMetadata
      */
-    readonly size?: number;
+    readonly id?: number;
     /**
      * The MIME type of the attachment.
      * @type {string}
@@ -723,11 +775,17 @@ export interface AttachmentMetadata {
      */
     readonly properties?: { [key: string]: any; };
     /**
-     * The URL of the attachment.
+     * The URL of the attachment metadata details.
      * @type {string}
      * @memberof AttachmentMetadata
      */
-    readonly content?: string;
+    readonly self?: string;
+    /**
+     * The size of the attachment.
+     * @type {number}
+     * @memberof AttachmentMetadata
+     */
+    readonly size?: number;
     /**
      * The URL of a thumbnail representing the attachment.
      * @type {string}
@@ -741,18 +799,6 @@ export interface AttachmentMetadata {
  * @interface AttachmentMetadataAuthor
  */
 export interface AttachmentMetadataAuthor {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -770,17 +816,17 @@ export interface AttachmentMetadataAuthor {
      */
     readonly accountType?: AttachmentMetadataAuthorAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof AttachmentMetadataAuthor
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof AttachmentMetadataAuthor
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -794,23 +840,17 @@ export interface AttachmentMetadataAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof AttachmentMetadataAuthor
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof AttachmentMetadataAuthor
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -818,17 +858,35 @@ export interface AttachmentMetadataAuthor {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof AttachmentMetadataAuthor
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof AttachmentMetadataAuthor
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof AttachmentMetadataAuthor
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof AttachmentMetadataAuthor
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof AttachmentMetadataAuthor
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof AttachmentMetadataAuthor
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -869,23 +927,11 @@ export interface AttachmentSettings {
  */
 export interface AuditRecordBean {
     /**
-     * The ID of the audit record.
-     * @type {number}
+     * The list of items associated with the changed record.
+     * @type {Array<AssociatedItemBean>}
      * @memberof AuditRecordBean
      */
-    readonly id?: number;
-    /**
-     * The summary of the audit record.
-     * @type {string}
-     * @memberof AuditRecordBean
-     */
-    readonly summary?: string;
-    /**
-     * The URL of the computer where the creation of the audit record was initiated.
-     * @type {string}
-     * @memberof AuditRecordBean
-     */
-    readonly remoteAddress?: string;
+    readonly associatedItems?: Array<AssociatedItemBean>;
     /**
      * Deprecated, use `authorAccountId` instead. The key of the user who created the audit record.
      * @type {string}
@@ -893,35 +939,11 @@ export interface AuditRecordBean {
      */
     readonly authorKey?: string;
     /**
-     * The date and time on which the audit record was created.
-     * @type {string}
-     * @memberof AuditRecordBean
-     */
-    readonly created?: string;
-    /**
      * The category of the audit record. For a list of these categories, see the help article [Auditing in Jira applications](https://confluence.atlassian.com/x/noXKM).
      * @type {string}
      * @memberof AuditRecordBean
      */
     readonly category?: string;
-    /**
-     * The event the audit record originated from.
-     * @type {string}
-     * @memberof AuditRecordBean
-     */
-    readonly eventSource?: string;
-    /**
-     * The description of the audit record.
-     * @type {string}
-     * @memberof AuditRecordBean
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {AssociatedItemBean}
-     * @memberof AuditRecordBean
-     */
-    objectItem?: AssociatedItemBean;
     /**
      * The list of values changed in the record event.
      * @type {Array<ChangedValueBean>}
@@ -929,11 +951,47 @@ export interface AuditRecordBean {
      */
     readonly changedValues?: Array<ChangedValueBean>;
     /**
-     * The list of items associated with the changed record.
-     * @type {Array<AssociatedItemBean>}
+     * The date and time on which the audit record was created.
+     * @type {string}
      * @memberof AuditRecordBean
      */
-    readonly associatedItems?: Array<AssociatedItemBean>;
+    readonly created?: string;
+    /**
+     * The description of the audit record.
+     * @type {string}
+     * @memberof AuditRecordBean
+     */
+    readonly description?: string;
+    /**
+     * The event the audit record originated from.
+     * @type {string}
+     * @memberof AuditRecordBean
+     */
+    readonly eventSource?: string;
+    /**
+     * The ID of the audit record.
+     * @type {number}
+     * @memberof AuditRecordBean
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {AssociatedItemBean}
+     * @memberof AuditRecordBean
+     */
+    objectItem?: AssociatedItemBean;
+    /**
+     * The URL of the computer where the creation of the audit record was initiated.
+     * @type {string}
+     * @memberof AuditRecordBean
+     */
+    readonly remoteAddress?: string;
+    /**
+     * The summary of the audit record.
+     * @type {string}
+     * @memberof AuditRecordBean
+     */
+    readonly summary?: string;
 }
 /**
  * Container for a list of audit records.
@@ -942,29 +1000,29 @@ export interface AuditRecordBean {
  */
 export interface AuditRecords {
     /**
-     * The number of audit items skipped before the first item in this list.
-     * @type {number}
-     * @memberof AuditRecords
-     */
-    readonly offset?: number;
-    /**
      * The requested or default limit on the number of audit items to be returned.
      * @type {number}
      * @memberof AuditRecords
      */
     readonly limit?: number;
     /**
-     * The total number of audit items returned.
+     * The number of audit items skipped before the first item in this list.
      * @type {number}
      * @memberof AuditRecords
      */
-    readonly total?: number;
+    readonly offset?: number;
     /**
      * The list of audit items.
      * @type {Array<AuditRecordBean>}
      * @memberof AuditRecords
      */
     readonly records?: Array<AuditRecordBean>;
+    /**
+     * The total number of audit items returned.
+     * @type {number}
+     * @memberof AuditRecords
+     */
+    readonly total?: number;
 }
 /**
  * A field auto-complete suggestion.
@@ -973,17 +1031,17 @@ export interface AuditRecords {
  */
 export interface AutoCompleteSuggestion {
     /**
-     * The value of a suggested item.
-     * @type {string}
-     * @memberof AutoCompleteSuggestion
-     */
-    value?: string;
-    /**
      * The display name of a suggested item. If `fieldValue` or `predicateValue` are provided, the matching text is highlighted with the HTML bold tag.
      * @type {string}
      * @memberof AutoCompleteSuggestion
      */
     displayName?: string;
+    /**
+     * The value of a suggested item.
+     * @type {string}
+     * @memberof AutoCompleteSuggestion
+     */
+    value?: string;
 }
 /**
  * The results from a JQL query.
@@ -1011,17 +1069,17 @@ export interface AvailableDashboardGadget {
      */
     readonly moduleKey?: string;
     /**
-     * The URI of the gadget type.
-     * @type {string}
-     * @memberof AvailableDashboardGadget
-     */
-    readonly uri?: string;
-    /**
      * The title of the gadget.
      * @type {string}
      * @memberof AvailableDashboardGadget
      */
     readonly title: string;
+    /**
+     * The URI of the gadget type.
+     * @type {string}
+     * @memberof AvailableDashboardGadget
+     */
+    readonly uri?: string;
 }
 /**
  * The list of available gadgets.
@@ -1044,29 +1102,17 @@ export interface AvailableDashboardGadgetsResponse {
 export interface Avatar {
     [key: string]: any | any;
     /**
+     * The file name of the avatar icon. Returned for system avatars.
+     * @type {string}
+     * @memberof Avatar
+     */
+    readonly fileName?: string;
+    /**
      * The ID of the avatar.
      * @type {string}
      * @memberof Avatar
      */
     id: string;
-    /**
-     * The owner of the avatar. For a system avatar the owner is null (and nothing is returned). For non-system avatars this is the appropriate identifier, such as the ID for a project or the account ID for a user.
-     * @type {string}
-     * @memberof Avatar
-     */
-    readonly owner?: string;
-    /**
-     * Whether the avatar is a system avatar.
-     * @type {boolean}
-     * @memberof Avatar
-     */
-    readonly isSystemAvatar?: boolean;
-    /**
-     * Whether the avatar is used in Jira. For example, shown as a project's avatar.
-     * @type {boolean}
-     * @memberof Avatar
-     */
-    readonly isSelected?: boolean;
     /**
      * Whether the avatar can be deleted.
      * @type {boolean}
@@ -1074,11 +1120,23 @@ export interface Avatar {
      */
     readonly isDeletable?: boolean;
     /**
-     * The file name of the avatar icon. Returned for system avatars.
+     * Whether the avatar is used in Jira. For example, shown as a project's avatar.
+     * @type {boolean}
+     * @memberof Avatar
+     */
+    readonly isSelected?: boolean;
+    /**
+     * Whether the avatar is a system avatar.
+     * @type {boolean}
+     * @memberof Avatar
+     */
+    readonly isSystemAvatar?: boolean;
+    /**
+     * The owner of the avatar. For a system avatar the owner is null (and nothing is returned). For non-system avatars this is the appropriate identifier, such as the ID for a project or the account ID for a user.
      * @type {string}
      * @memberof Avatar
      */
-    readonly fileName?: string;
+    readonly owner?: string;
     /**
      * The list of avatar icon URLs.
      * @type {{ [key: string]: string; }}
@@ -1124,17 +1182,17 @@ export interface AvatarUrlsBean {
  */
 export interface Avatars {
     /**
-     * System avatars list.
-     * @type {Array<Avatar>}
-     * @memberof Avatars
-     */
-    readonly system?: Array<Avatar>;
-    /**
      * Custom avatars list.
      * @type {Array<Avatar>}
      * @memberof Avatars
      */
     readonly custom?: Array<Avatar>;
+    /**
+     * System avatars list.
+     * @type {Array<Avatar>}
+     * @memberof Avatars
+     */
+    readonly system?: Array<Avatar>;
 }
 /**
  * Details of the options to create for a custom field.
@@ -1182,12 +1240,6 @@ export interface BulkIssueIsWatching {
  */
 export interface BulkIssuePropertyUpdateRequest {
     /**
-     * The value of the property. The value must be a [valid](https://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.
-     * @type {any}
-     * @memberof BulkIssuePropertyUpdateRequest
-     */
-    value?: any | null;
-    /**
      * EXPERIMENTAL. The Jira expression to calculate the value of the property. The value of the expression must be an object that can be converted to JSON, such as a number, boolean, string, list, or map. The context variables available to the expression are `issue` and `user`. Issues for which the expression returns a value whose JSON representation is longer than 32768 characters are ignored.
      * @type {string}
      * @memberof BulkIssuePropertyUpdateRequest
@@ -1199,6 +1251,12 @@ export interface BulkIssuePropertyUpdateRequest {
      * @memberof BulkIssuePropertyUpdateRequest
      */
     filter?: BulkIssuePropertyUpdateRequestFilter;
+    /**
+     * The value of the property. The value must be a [valid](https://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.
+     * @type {any}
+     * @memberof BulkIssuePropertyUpdateRequest
+     */
+    value?: any | null;
 }
 /**
  * The bulk operation filter.
@@ -1207,17 +1265,17 @@ export interface BulkIssuePropertyUpdateRequest {
  */
 export interface BulkIssuePropertyUpdateRequestFilter {
     /**
-     * List of issues to perform the bulk operation on.
-     * @type {Set<number>}
-     * @memberof BulkIssuePropertyUpdateRequestFilter
-     */
-    entityIds?: number[];
-    /**
      * The value of properties to perform the bulk operation on.
      * @type {any}
      * @memberof BulkIssuePropertyUpdateRequestFilter
      */
     currentValue?: any | null;
+    /**
+     * List of issues to perform the bulk operation on.
+     * @type {Set<number>}
+     * @memberof BulkIssuePropertyUpdateRequestFilter
+     */
+    entityIds?: number[];
     /**
      * Whether the bulk operation occurs only when the property is present on or absent from an issue.
      * @type {boolean}
@@ -1233,12 +1291,6 @@ export interface BulkIssuePropertyUpdateRequestFilter {
 export interface BulkOperationErrorResult {
     /**
      * 
-     * @type {number}
-     * @memberof BulkOperationErrorResult
-     */
-    status?: number;
-    /**
-     * 
      * @type {ErrorCollection}
      * @memberof BulkOperationErrorResult
      */
@@ -1249,6 +1301,12 @@ export interface BulkOperationErrorResult {
      * @memberof BulkOperationErrorResult
      */
     failedElementNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BulkOperationErrorResult
+     */
+    status?: number;
 }
 /**
  * Details of global and project permissions granted to the user.
@@ -1257,17 +1315,17 @@ export interface BulkOperationErrorResult {
  */
 export interface BulkPermissionGrants {
     /**
-     * List of project permissions and the projects and issues those permissions provide access to.
-     * @type {Set<BulkProjectPermissionGrants>}
-     * @memberof BulkPermissionGrants
-     */
-    projectPermissions: BulkProjectPermissionGrants[];
-    /**
      * List of permissions granted to the user.
      * @type {Set<string>}
      * @memberof BulkPermissionGrants
      */
     globalPermissions: string[];
+    /**
+     * List of project permissions and the projects and issues those permissions provide access to.
+     * @type {Set<BulkProjectPermissionGrants>}
+     * @memberof BulkPermissionGrants
+     */
+    projectPermissions: BulkProjectPermissionGrants[];
 }
 /**
  * Details of global permissions to look up and project permissions with associated projects and issues to look up.
@@ -1276,11 +1334,11 @@ export interface BulkPermissionGrants {
  */
 export interface BulkPermissionsRequestBean {
     /**
-     * Project permissions with associated projects and issues to look up.
-     * @type {Set<BulkProjectPermissions>}
+     * The account ID of a user.
+     * @type {string}
      * @memberof BulkPermissionsRequestBean
      */
-    projectPermissions?: BulkProjectPermissions[];
+    accountId?: string;
     /**
      * Global permissions to look up.
      * @type {Set<string>}
@@ -1288,11 +1346,11 @@ export interface BulkPermissionsRequestBean {
      */
     globalPermissions?: string[];
     /**
-     * The account ID of a user.
-     * @type {string}
+     * Project permissions with associated projects and issues to look up.
+     * @type {Set<BulkProjectPermissions>}
      * @memberof BulkPermissionsRequestBean
      */
-    accountId?: string;
+    projectPermissions?: BulkProjectPermissions[];
 }
 /**
  * List of project permissions and the projects and issues those permissions grant access to.
@@ -1301,17 +1359,17 @@ export interface BulkPermissionsRequestBean {
  */
 export interface BulkProjectPermissionGrants {
     /**
-     * A project permission,
-     * @type {string}
-     * @memberof BulkProjectPermissionGrants
-     */
-    permission: string;
-    /**
      * IDs of the issues the user has the permission for.
      * @type {Set<number>}
      * @memberof BulkProjectPermissionGrants
      */
     issues: number[];
+    /**
+     * A project permission,
+     * @type {string}
+     * @memberof BulkProjectPermissionGrants
+     */
+    permission: string;
     /**
      * IDs of the projects the user has the permission for.
      * @type {Set<number>}
@@ -1332,17 +1390,17 @@ export interface BulkProjectPermissions {
      */
     issues?: number[];
     /**
-     * List of project IDs.
-     * @type {Set<number>}
-     * @memberof BulkProjectPermissions
-     */
-    projects?: number[];
-    /**
      * List of project permissions.
      * @type {Set<string>}
      * @memberof BulkProjectPermissions
      */
     permissions: string[];
+    /**
+     * List of project IDs.
+     * @type {Set<number>}
+     * @memberof BulkProjectPermissions
+     */
+    projects?: number[];
 }
 /**
  * A change item.
@@ -1357,17 +1415,17 @@ export interface ChangeDetails {
      */
     readonly field?: string;
     /**
-     * The type of the field changed.
-     * @type {string}
-     * @memberof ChangeDetails
-     */
-    readonly fieldtype?: string;
-    /**
      * The ID of the field changed.
      * @type {string}
      * @memberof ChangeDetails
      */
     readonly fieldId?: string;
+    /**
+     * The type of the field changed.
+     * @type {string}
+     * @memberof ChangeDetails
+     */
+    readonly fieldtype?: string;
     /**
      * The details of the original value.
      * @type {string}
@@ -1413,12 +1471,6 @@ export interface ChangeFilterOwner {
  */
 export interface ChangedValueBean {
     /**
-     * The name of the field changed.
-     * @type {string}
-     * @memberof ChangedValueBean
-     */
-    readonly fieldName?: string;
-    /**
      * The value of the field before the change.
      * @type {string}
      * @memberof ChangedValueBean
@@ -1430,6 +1482,12 @@ export interface ChangedValueBean {
      * @memberof ChangedValueBean
      */
     readonly changedTo?: string;
+    /**
+     * The name of the field changed.
+     * @type {string}
+     * @memberof ChangedValueBean
+     */
+    readonly fieldName?: string;
 }
 /**
  * Details of a changed worklog.
@@ -1438,11 +1496,11 @@ export interface ChangedValueBean {
  */
 export interface ChangedWorklog {
     /**
-     * The ID of the worklog.
-     * @type {number}
+     * Details of properties associated with the change.
+     * @type {Array<EntityProperty>}
      * @memberof ChangedWorklog
      */
-    readonly worklogId?: number;
+    readonly properties?: Array<EntityProperty>;
     /**
      * The datetime of the change.
      * @type {number}
@@ -1450,11 +1508,11 @@ export interface ChangedWorklog {
      */
     readonly updatedTime?: number;
     /**
-     * Details of properties associated with the change.
-     * @type {Array<EntityProperty>}
+     * The ID of the worklog.
+     * @type {number}
      * @memberof ChangedWorklog
      */
-    readonly properties?: Array<EntityProperty>;
+    readonly worklogId?: number;
 }
 /**
  * List of changed worklogs.
@@ -1463,11 +1521,23 @@ export interface ChangedWorklog {
  */
 export interface ChangedWorklogs {
     /**
-     * Changed worklog list.
-     * @type {Array<ChangedWorklog>}
+     * 
+     * @type {boolean}
      * @memberof ChangedWorklogs
      */
-    readonly values?: Array<ChangedWorklog>;
+    lastPage?: boolean;
+    /**
+     * The URL of the next list of changed worklogs.
+     * @type {string}
+     * @memberof ChangedWorklogs
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of this changed worklogs list.
+     * @type {string}
+     * @memberof ChangedWorklogs
+     */
+    readonly self?: string;
     /**
      * The datetime of the first worklog item in the list.
      * @type {number}
@@ -1481,36 +1551,18 @@ export interface ChangedWorklogs {
      */
     readonly until?: number;
     /**
-     * The URL of this changed worklogs list.
-     * @type {string}
+     * Changed worklog list.
+     * @type {Array<ChangedWorklog>}
      * @memberof ChangedWorklogs
      */
-    readonly self?: string;
-    /**
-     * The URL of the next list of changed worklogs.
-     * @type {string}
-     * @memberof ChangedWorklogs
-     */
-    readonly nextPage?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChangedWorklogs
-     */
-    lastPage?: boolean;
+    readonly values?: Array<ChangedWorklog>;
 }
 /**
- * A changelog.
+ * A log of changes made to issue fields. Changelogs related to workflow associations are currently being deprecated.
  * @export
  * @interface Changelog
  */
 export interface Changelog {
-    /**
-     * The ID of the changelog.
-     * @type {string}
-     * @memberof Changelog
-     */
-    readonly id?: string;
     /**
      * 
      * @type {ChangelogAuthor}
@@ -1524,17 +1576,23 @@ export interface Changelog {
      */
     readonly created?: string;
     /**
-     * The list of items changed.
-     * @type {Array<ChangeDetails>}
-     * @memberof Changelog
-     */
-    readonly items?: Array<ChangeDetails>;
-    /**
      * 
      * @type {ChangelogHistoryMetadata}
      * @memberof Changelog
      */
     historyMetadata?: ChangelogHistoryMetadata;
+    /**
+     * The ID of the changelog.
+     * @type {string}
+     * @memberof Changelog
+     */
+    readonly id?: string;
+    /**
+     * The list of items changed.
+     * @type {Array<ChangeDetails>}
+     * @memberof Changelog
+     */
+    readonly items?: Array<ChangeDetails>;
 }
 /**
  * The user who made the change.
@@ -1543,35 +1601,23 @@ export interface Changelog {
  */
 export interface ChangelogAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof ChangelogAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof ChangelogAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof ChangelogAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -1585,23 +1631,35 @@ export interface ChangelogAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof ChangelogAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ChangelogAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ChangelogAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ChangelogAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof ChangelogAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * The history metadata associated with the changed.
@@ -1609,24 +1667,6 @@ export interface ChangelogAuthor {
  * @interface ChangelogHistoryMetadata
  */
 export interface ChangelogHistoryMetadata {
-    /**
-     * The type of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    type?: string;
-    /**
-     * The description of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    description?: string;
-    /**
-     * The description key of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    descriptionKey?: string;
     /**
      * The activity described in the history record.
      * @type {string}
@@ -1640,6 +1680,30 @@ export interface ChangelogHistoryMetadata {
      */
     activityDescriptionKey?: string;
     /**
+     * 
+     * @type {HistoryMetadataActor}
+     * @memberof ChangelogHistoryMetadata
+     */
+    actor?: HistoryMetadataActor;
+    /**
+     * 
+     * @type {HistoryMetadataCause}
+     * @memberof ChangelogHistoryMetadata
+     */
+    cause?: HistoryMetadataCause;
+    /**
+     * The description of the history record.
+     * @type {string}
+     * @memberof ChangelogHistoryMetadata
+     */
+    description?: string;
+    /**
+     * The description key of the history record.
+     * @type {string}
+     * @memberof ChangelogHistoryMetadata
+     */
+    descriptionKey?: string;
+    /**
      * The description of the email address associated the history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadata
@@ -1652,11 +1716,11 @@ export interface ChangelogHistoryMetadata {
      */
     emailDescriptionKey?: string;
     /**
-     * 
-     * @type {HistoryMetadataActor}
+     * Additional arbitrary information about the history record.
+     * @type {{ [key: string]: string; }}
      * @memberof ChangelogHistoryMetadata
      */
-    actor?: HistoryMetadataActor;
+    extraData?: { [key: string]: string; };
     /**
      * 
      * @type {HistoryMetadataGenerator}
@@ -1664,17 +1728,11 @@ export interface ChangelogHistoryMetadata {
      */
     generator?: HistoryMetadataGenerator;
     /**
-     * 
-     * @type {HistoryMetadataCause}
+     * The type of the history record.
+     * @type {string}
      * @memberof ChangelogHistoryMetadata
      */
-    cause?: HistoryMetadataCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof ChangelogHistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
+    type?: string;
 }
 /**
  * Details of an issue navigator column item.
@@ -1703,18 +1761,6 @@ export interface ColumnItem {
 export interface Comment {
     [key: string]: any | any;
     /**
-     * The URL of the comment.
-     * @type {string}
-     * @memberof Comment
-     */
-    readonly self?: string;
-    /**
-     * The ID of the comment.
-     * @type {string}
-     * @memberof Comment
-     */
-    readonly id?: string;
-    /**
      * 
      * @type {CommentAuthor}
      * @memberof Comment
@@ -1727,23 +1773,53 @@ export interface Comment {
      */
     body?: any | null;
     /**
+     * The date and time at which the comment was created.
+     * @type {string}
+     * @memberof Comment
+     */
+    readonly created?: string;
+    /**
+     * The ID of the comment.
+     * @type {string}
+     * @memberof Comment
+     */
+    readonly id?: string;
+    /**
+     * Whether the comment was added from an email sent by a person who is not part of the issue. See [Allow external emails to be added as comments on issues](https://support.atlassian.com/jira-service-management-cloud/docs/allow-external-emails-to-be-added-as-comments-on-issues/)for information on setting up this feature.
+     * @type {boolean}
+     * @memberof Comment
+     */
+    readonly jsdAuthorCanSeeRequest?: boolean;
+    /**
+     * Whether the comment is visible in Jira Service Desk. Defaults to true when comments are created in the Jira Cloud Platform. This includes when the site doesn't use Jira Service Desk or the project isn't a Jira Service Desk project and, therefore, there is no Jira Service Desk for the issue to be visible on. To create a comment with its visibility in Jira Service Desk set to false, use the Jira Service Desk REST API [Create request comment](https://developer.atlassian.com/cloud/jira/service-desk/rest/#api-rest-servicedeskapi-request-issueIdOrKey-comment-post) operation.
+     * @type {boolean}
+     * @memberof Comment
+     */
+    readonly jsdPublic?: boolean;
+    /**
+     * A list of comment properties. Optional on create and update.
+     * @type {Array<EntityProperty>}
+     * @memberof Comment
+     */
+    properties?: Array<EntityProperty>;
+    /**
      * The rendered version of the comment.
      * @type {string}
      * @memberof Comment
      */
     readonly renderedBody?: string;
     /**
+     * The URL of the comment.
+     * @type {string}
+     * @memberof Comment
+     */
+    readonly self?: string;
+    /**
      * 
      * @type {CommentUpdateAuthor}
      * @memberof Comment
      */
     updateAuthor?: CommentUpdateAuthor;
-    /**
-     * The date and time at which the comment was created.
-     * @type {string}
-     * @memberof Comment
-     */
-    readonly created?: string;
     /**
      * The date and time at which the comment was updated last.
      * @type {string}
@@ -1756,24 +1832,6 @@ export interface Comment {
      * @memberof Comment
      */
     visibility?: CommentVisibility;
-    /**
-     * Whether the comment is visible in Jira Service Desk. Defaults to true when comments are created in the Jira Cloud Platform. This includes when the site doesn't use Jira Service Desk or the project isn't a Jira Service Desk project and, therefore, there is no Jira Service Desk for the issue to be visible on. To create a comment with its visibility in Jira Service Desk set to false, use the Jira Service Desk REST API [Create request comment](https://developer.atlassian.com/cloud/jira/service-desk/rest/#api-rest-servicedeskapi-request-issueIdOrKey-comment-post) operation.
-     * @type {boolean}
-     * @memberof Comment
-     */
-    readonly jsdPublic?: boolean;
-    /**
-     * Whether the comment was added from an email sent by a person who is not part of the issue. See [Allow external emails to be added as comments on issues](https://support.atlassian.com/jira-service-management-cloud/docs/allow-external-emails-to-be-added-as-comments-on-issues/)for information on setting up this feature.
-     * @type {boolean}
-     * @memberof Comment
-     */
-    readonly jsdAuthorCanSeeRequest?: boolean;
-    /**
-     * A list of comment properties. Optional on create and update.
-     * @type {Array<EntityProperty>}
-     * @memberof Comment
-     */
-    properties?: Array<EntityProperty>;
 }
 /**
  * The ID of the user who created the comment.
@@ -1782,35 +1840,23 @@ export interface Comment {
  */
 export interface CommentAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof CommentAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof CommentAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof CommentAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -1824,23 +1870,35 @@ export interface CommentAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof CommentAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof CommentAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof CommentAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof CommentAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof CommentAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * The ID of the user who updated the comment last.
@@ -1849,35 +1907,23 @@ export interface CommentAuthor {
  */
 export interface CommentUpdateAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof CommentUpdateAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof CommentUpdateAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof CommentUpdateAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -1891,23 +1937,35 @@ export interface CommentUpdateAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof CommentUpdateAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof CommentUpdateAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof CommentUpdateAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof CommentUpdateAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof CommentUpdateAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * The group or role to which this comment is visible. Optional on create and update.
@@ -1915,6 +1973,12 @@ export interface CommentUpdateAuthor {
  * @interface CommentVisibility
  */
 export interface CommentVisibility {
+    /**
+     * The ID of the group or the name of the role that visibility of this item is restricted to.
+     * @type {string}
+     * @memberof CommentVisibility
+     */
+    identifier?: string | null;
     /**
      * Whether visibility of this item is restricted to a group or role.
      * @type {string}
@@ -1927,12 +1991,6 @@ export interface CommentVisibility {
      * @memberof CommentVisibility
      */
     value?: string;
-    /**
-     * The ID of the group or the name of the role that visibility of this item is restricted to.
-     * @type {string}
-     * @memberof CommentVisibility
-     */
-    identifier?: string | null;
 }
 
 
@@ -1952,17 +2010,17 @@ export type CommentVisibilityTypeEnum = typeof CommentVisibilityTypeEnum[keyof t
  */
 export interface ComponentIssuesCount {
     /**
-     * The URL for this count of issues for a component.
-     * @type {string}
-     * @memberof ComponentIssuesCount
-     */
-    readonly self?: string;
-    /**
      * The count of issues assigned to a component.
      * @type {number}
      * @memberof ComponentIssuesCount
      */
     readonly issueCount?: number;
+    /**
+     * The URL for this count of issues for a component.
+     * @type {string}
+     * @memberof ComponentIssuesCount
+     */
+    readonly self?: string;
 }
 /**
  * Details about a component with a count of the issues it contains.
@@ -1971,64 +2029,11 @@ export interface ComponentIssuesCount {
  */
 export interface ComponentWithIssueCount {
     /**
-     * Count of issues for the component.
-     * @type {number}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly issueCount?: number;
-    /**
-     * The description for the component.
-     * @type {string}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly description?: string;
-    /**
-     * The URL for this count of the issues contained in the component.
-     * @type {string}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly self?: string;
-    /**
-     * Not used.
-     * @type {number}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly projectId?: number;
-    /**
      * 
      * @type {ComponentWithIssueCountAssignee}
      * @memberof ComponentWithIssueCount
      */
     assignee?: ComponentWithIssueCountAssignee;
-    /**
-     * The key of the project to which the component is assigned.
-     * @type {string}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly project?: string;
-    /**
-     * 
-     * @type {ComponentWithIssueCountRealAssignee}
-     * @memberof ComponentWithIssueCount
-     */
-    realAssignee?: ComponentWithIssueCountRealAssignee;
-    /**
-     * Whether a user is associated with `assigneeType`. For example, if the `assigneeType` is set to `COMPONENT_LEAD` but the component lead is not set, then `false` is returned.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly isAssigneeTypeValid?: boolean;
-    /**
-     * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
-     * 
-     *  *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in.
-     *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
-     *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
-     *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
-     * @type {string}
-     * @memberof ComponentWithIssueCount
-     */
-    readonly realAssigneeType?: ComponentWithIssueCountRealAssigneeTypeEnum;
     /**
      * The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values:
      * 
@@ -2040,6 +2045,30 @@ export interface ComponentWithIssueCount {
      * @memberof ComponentWithIssueCount
      */
     readonly assigneeType?: ComponentWithIssueCountAssigneeTypeEnum;
+    /**
+     * The description for the component.
+     * @type {string}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly description?: string;
+    /**
+     * The unique identifier for the component.
+     * @type {string}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly id?: string;
+    /**
+     * Whether a user is associated with `assigneeType`. For example, if the `assigneeType` is set to `COMPONENT_LEAD` but the component lead is not set, then `false` is returned.
+     * @type {boolean}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly isAssigneeTypeValid?: boolean;
+    /**
+     * Count of issues for the component.
+     * @type {number}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly issueCount?: number;
     /**
      * 
      * @type {ComponentWithIssueCountLead}
@@ -2053,24 +2082,42 @@ export interface ComponentWithIssueCount {
      */
     readonly name?: string;
     /**
-     * The unique identifier for the component.
+     * The key of the project to which the component is assigned.
      * @type {string}
      * @memberof ComponentWithIssueCount
      */
-    readonly id?: string;
+    readonly project?: string;
+    /**
+     * Not used.
+     * @type {number}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly projectId?: number;
+    /**
+     * 
+     * @type {ComponentWithIssueCountRealAssignee}
+     * @memberof ComponentWithIssueCount
+     */
+    realAssignee?: ComponentWithIssueCountRealAssignee;
+    /**
+     * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
+     * 
+     *  *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in.
+     *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
+     *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
+     *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
+     * @type {string}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly realAssigneeType?: ComponentWithIssueCountRealAssigneeTypeEnum;
+    /**
+     * The URL for this count of the issues contained in the component.
+     * @type {string}
+     * @memberof ComponentWithIssueCount
+     */
+    readonly self?: string;
 }
 
-
-/**
- * @export
- */
-export const ComponentWithIssueCountRealAssigneeTypeEnum = {
-    ProjectDefault: 'PROJECT_DEFAULT',
-    ComponentLead: 'COMPONENT_LEAD',
-    ProjectLead: 'PROJECT_LEAD',
-    Unassigned: 'UNASSIGNED'
-} as const;
-export type ComponentWithIssueCountRealAssigneeTypeEnum = typeof ComponentWithIssueCountRealAssigneeTypeEnum[keyof typeof ComponentWithIssueCountRealAssigneeTypeEnum];
 
 /**
  * @export
@@ -2084,23 +2131,22 @@ export const ComponentWithIssueCountAssigneeTypeEnum = {
 export type ComponentWithIssueCountAssigneeTypeEnum = typeof ComponentWithIssueCountAssigneeTypeEnum[keyof typeof ComponentWithIssueCountAssigneeTypeEnum];
 
 /**
+ * @export
+ */
+export const ComponentWithIssueCountRealAssigneeTypeEnum = {
+    ProjectDefault: 'PROJECT_DEFAULT',
+    ComponentLead: 'COMPONENT_LEAD',
+    ProjectLead: 'PROJECT_LEAD',
+    Unassigned: 'UNASSIGNED'
+} as const;
+export type ComponentWithIssueCountRealAssigneeTypeEnum = typeof ComponentWithIssueCountRealAssigneeTypeEnum[keyof typeof ComponentWithIssueCountRealAssigneeTypeEnum];
+
+/**
  * The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
  * @export
  * @interface ComponentWithIssueCountAssignee
  */
 export interface ComponentWithIssueCountAssignee {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -2118,17 +2164,17 @@ export interface ComponentWithIssueCountAssignee {
      */
     readonly accountType?: ComponentWithIssueCountAssigneeAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ComponentWithIssueCountAssignee
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ComponentWithIssueCountAssignee
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -2142,23 +2188,17 @@ export interface ComponentWithIssueCountAssignee {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ComponentWithIssueCountAssignee
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ComponentWithIssueCountAssignee
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -2166,17 +2206,35 @@ export interface ComponentWithIssueCountAssignee {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ComponentWithIssueCountAssignee
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountAssignee
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ComponentWithIssueCountAssignee
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ComponentWithIssueCountAssignee
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountAssignee
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -2198,18 +2256,6 @@ export type ComponentWithIssueCountAssigneeAccountTypeEnum = typeof ComponentWit
  */
 export interface ComponentWithIssueCountLead {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ComponentWithIssueCountLead
@@ -2226,17 +2272,17 @@ export interface ComponentWithIssueCountLead {
      */
     readonly accountType?: ComponentWithIssueCountLeadAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ComponentWithIssueCountLead
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ComponentWithIssueCountLead
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -2250,23 +2296,17 @@ export interface ComponentWithIssueCountLead {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ComponentWithIssueCountLead
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ComponentWithIssueCountLead
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -2274,17 +2314,35 @@ export interface ComponentWithIssueCountLead {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ComponentWithIssueCountLead
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountLead
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ComponentWithIssueCountLead
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ComponentWithIssueCountLead
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountLead
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -2306,18 +2364,6 @@ export type ComponentWithIssueCountLeadAccountTypeEnum = typeof ComponentWithIss
  */
 export interface ComponentWithIssueCountRealAssignee {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ComponentWithIssueCountRealAssignee
@@ -2334,17 +2380,17 @@ export interface ComponentWithIssueCountRealAssignee {
      */
     readonly accountType?: ComponentWithIssueCountRealAssigneeAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ComponentWithIssueCountRealAssignee
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ComponentWithIssueCountRealAssignee
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -2358,23 +2404,17 @@ export interface ComponentWithIssueCountRealAssignee {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ComponentWithIssueCountRealAssignee
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ComponentWithIssueCountRealAssignee
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -2382,17 +2422,35 @@ export interface ComponentWithIssueCountRealAssignee {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ComponentWithIssueCountRealAssignee
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountRealAssignee
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ComponentWithIssueCountRealAssignee
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ComponentWithIssueCountRealAssignee
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ComponentWithIssueCountRealAssignee
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -2445,17 +2503,11 @@ export type CompoundClauseOperatorEnum = typeof CompoundClauseOperatorEnum[keyof
  */
 export interface ConfigurationTimeTrackingConfiguration {
     /**
-     * The number of hours in a working day.
-     * @type {number}
+     * The default unit of time applied to logged time.
+     * @type {string}
      * @memberof ConfigurationTimeTrackingConfiguration
      */
-    workingHoursPerDay: number;
-    /**
-     * The number of days in a working week.
-     * @type {number}
-     * @memberof ConfigurationTimeTrackingConfiguration
-     */
-    workingDaysPerWeek: number;
+    defaultUnit: ConfigurationTimeTrackingConfigurationDefaultUnitEnum;
     /**
      * The format that will appear on an issue's *Time Spent* field.
      * @type {string}
@@ -2463,23 +2515,19 @@ export interface ConfigurationTimeTrackingConfiguration {
      */
     timeFormat: ConfigurationTimeTrackingConfigurationTimeFormatEnum;
     /**
-     * The default unit of time applied to logged time.
-     * @type {string}
+     * The number of days in a working week.
+     * @type {number}
      * @memberof ConfigurationTimeTrackingConfiguration
      */
-    defaultUnit: ConfigurationTimeTrackingConfigurationDefaultUnitEnum;
+    workingDaysPerWeek: number;
+    /**
+     * The number of hours in a working day.
+     * @type {number}
+     * @memberof ConfigurationTimeTrackingConfiguration
+     */
+    workingHoursPerDay: number;
 }
 
-
-/**
- * @export
- */
-export const ConfigurationTimeTrackingConfigurationTimeFormatEnum = {
-    Pretty: 'pretty',
-    Days: 'days',
-    Hours: 'hours'
-} as const;
-export type ConfigurationTimeTrackingConfigurationTimeFormatEnum = typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum[keyof typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum];
 
 /**
  * @export
@@ -2491,6 +2539,16 @@ export const ConfigurationTimeTrackingConfigurationDefaultUnitEnum = {
     Week: 'week'
 } as const;
 export type ConfigurationTimeTrackingConfigurationDefaultUnitEnum = typeof ConfigurationTimeTrackingConfigurationDefaultUnitEnum[keyof typeof ConfigurationTimeTrackingConfigurationDefaultUnitEnum];
+
+/**
+ * @export
+ */
+export const ConfigurationTimeTrackingConfigurationTimeFormatEnum = {
+    Pretty: 'pretty',
+    Days: 'days',
+    Hours: 'hours'
+} as const;
+export type ConfigurationTimeTrackingConfigurationTimeFormatEnum = typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum[keyof typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum];
 
 /**
  * A list of custom field details.
@@ -2505,23 +2563,17 @@ export interface ConnectCustomFieldValue {
      */
     type: ConnectCustomFieldValueTypeEnum;
     /**
-     * The issue ID.
-     * @type {number}
-     * @memberof ConnectCustomFieldValue
-     */
-    issueID: number;
-    /**
      * The custom field ID.
      * @type {number}
      * @memberof ConnectCustomFieldValue
      */
     fieldID: number;
     /**
-     * The value of string type custom field when `_type` is `StringIssueField`.
-     * @type {string}
+     * The issue ID.
+     * @type {number}
      * @memberof ConnectCustomFieldValue
      */
-    string?: string;
+    issueID: number;
     /**
      * The value of number type custom field when `_type` is `NumberIssueField`.
      * @type {number}
@@ -2529,17 +2581,23 @@ export interface ConnectCustomFieldValue {
      */
     number?: number;
     /**
+     * The value of single select and multiselect custom field type when `_type` is `SingleSelectIssueField` or `MultiSelectIssueField`.
+     * @type {string}
+     * @memberof ConnectCustomFieldValue
+     */
+    optionID?: string;
+    /**
      * The value of richText type custom field when `_type` is `RichTextIssueField`.
      * @type {string}
      * @memberof ConnectCustomFieldValue
      */
     richText?: string;
     /**
-     * The value of single select and multiselect custom field type when `_type` is `SingleSelectIssueField` or `MultiSelectIssueField`.
+     * The value of string type custom field when `_type` is `StringIssueField`.
      * @type {string}
      * @memberof ConnectCustomFieldValue
      */
-    optionID?: string;
+    string?: string;
     /**
      * The value of of text custom field type when `_type` is `TextIssueField`.
      * @type {string}
@@ -2596,6 +2654,12 @@ export interface ConnectModules {
  */
 export interface ConnectWorkflowTransitionRule {
     /**
+     * 
+     * @type {RuleConfiguration}
+     * @memberof ConnectWorkflowTransitionRule
+     */
+    _configuration: RuleConfiguration;
+    /**
      * The ID of the transition rule.
      * @type {string}
      * @memberof ConnectWorkflowTransitionRule
@@ -2606,19 +2670,13 @@ export interface ConnectWorkflowTransitionRule {
      * @type {string}
      * @memberof ConnectWorkflowTransitionRule
      */
-    readonly key: string;
-    /**
-     * 
-     * @type {RuleConfiguration}
-     * @memberof ConnectWorkflowTransitionRule
-     */
-    _configuration: RuleConfiguration;
+    key: string;
     /**
      * 
      * @type {WorkflowTransition}
      * @memberof ConnectWorkflowTransitionRule
      */
-    readonly transition?: WorkflowTransition;
+    transition?: WorkflowTransition;
 }
 /**
  * The list of features on a project.
@@ -2704,11 +2762,11 @@ export interface Context {
  */
 export interface ContextForProjectAndIssueType {
     /**
-     * The ID of the project.
+     * The ID of the custom field context.
      * @type {string}
      * @memberof ContextForProjectAndIssueType
      */
-    projectId: string;
+    contextId: string;
     /**
      * The ID of the issue type.
      * @type {string}
@@ -2716,11 +2774,11 @@ export interface ContextForProjectAndIssueType {
      */
     issueTypeId: string;
     /**
-     * The ID of the custom field context.
+     * The ID of the project.
      * @type {string}
      * @memberof ContextForProjectAndIssueType
      */
-    contextId: string;
+    projectId: string;
 }
 /**
  * The scope of the context.
@@ -2729,17 +2787,17 @@ export interface ContextForProjectAndIssueType {
  */
 export interface ContextScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ContextScope
-     */
-    readonly type?: ContextScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof ContextScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof ContextScope
+     */
+    readonly type?: ContextScopeTypeEnum;
 }
 
 
@@ -2759,11 +2817,11 @@ export type ContextScopeTypeEnum = typeof ContextScopeTypeEnum[keyof typeof Cont
  */
 export interface ContextualConfiguration {
     /**
-     * The ID of the configuration.
-     * @type {string}
+     * The field configuration.
+     * @type {any}
      * @memberof ContextualConfiguration
      */
-    id: string;
+    _configuration?: any | null;
     /**
      * The ID of the field context the configuration is associated with.
      * @type {string}
@@ -2771,11 +2829,11 @@ export interface ContextualConfiguration {
      */
     readonly fieldContextId: string;
     /**
-     * The field configuration.
-     * @type {any}
+     * The ID of the configuration.
+     * @type {string}
      * @memberof ContextualConfiguration
      */
-    _configuration?: any | null;
+    id: string;
     /**
      * The field value schema.
      * @type {any}
@@ -2790,17 +2848,17 @@ export interface ContextualConfiguration {
  */
 export interface ConvertedJQLQueries {
     /**
-     * The list of converted query strings with account IDs in place of user identifiers.
-     * @type {Array<string>}
-     * @memberof ConvertedJQLQueries
-     */
-    queryStrings?: Array<string>;
-    /**
      * List of queries containing user information that could not be mapped to an existing user
      * @type {Array<JQLQueryWithUnknownUsers>}
      * @memberof ConvertedJQLQueries
      */
     queriesWithUnknownUsers?: Array<JQLQueryWithUnknownUsers>;
+    /**
+     * The list of converted query strings with account IDs in place of user identifiers.
+     * @type {Array<string>}
+     * @memberof ConvertedJQLQueries
+     */
+    queryStrings?: Array<string>;
 }
 /**
  * The details of a created custom field context.
@@ -2809,11 +2867,23 @@ export interface ConvertedJQLQueries {
  */
 export interface CreateCustomFieldContext {
     /**
+     * The description of the context.
+     * @type {string}
+     * @memberof CreateCustomFieldContext
+     */
+    description?: string;
+    /**
      * The ID of the context.
      * @type {string}
      * @memberof CreateCustomFieldContext
      */
     readonly id?: string;
+    /**
+     * The list of issue types IDs for the context. If the list is empty, the context refers to all issue types.
+     * @type {Array<string>}
+     * @memberof CreateCustomFieldContext
+     */
+    issueTypeIds?: Array<string>;
     /**
      * The name of the context.
      * @type {string}
@@ -2821,23 +2891,63 @@ export interface CreateCustomFieldContext {
      */
     name: string;
     /**
-     * The description of the context.
-     * @type {string}
-     * @memberof CreateCustomFieldContext
-     */
-    description?: string;
-    /**
      * The list of project IDs associated with the context. If the list is empty, the context is global.
      * @type {Array<string>}
      * @memberof CreateCustomFieldContext
      */
     projectIds?: Array<string>;
+}
+/**
+ * Issue security scheme and it's details
+ * @export
+ * @interface CreateIssueSecuritySchemeDetails
+ */
+export interface CreateIssueSecuritySchemeDetails {
+    [key: string]: any | any;
     /**
-     * The list of issue types IDs for the context. If the list is empty, the context refers to all issue types.
-     * @type {Array<string>}
-     * @memberof CreateCustomFieldContext
+     * The description of the issue security scheme.
+     * @type {string}
+     * @memberof CreateIssueSecuritySchemeDetails
      */
-    issueTypeIds?: Array<string>;
+    description?: string;
+    /**
+     * The list of scheme levels which should be added to the security scheme.
+     * @type {Array<SecuritySchemeLevelBean>}
+     * @memberof CreateIssueSecuritySchemeDetails
+     */
+    levels?: Array<SecuritySchemeLevelBean>;
+    /**
+     * The name of the issue security scheme. Must be unique (case-insensitive).
+     * @type {string}
+     * @memberof CreateIssueSecuritySchemeDetails
+     */
+    name: string;
+}
+/**
+ * Details of an notification scheme.
+ * @export
+ * @interface CreateNotificationSchemeDetails
+ */
+export interface CreateNotificationSchemeDetails {
+    [key: string]: any | any;
+    /**
+     * The description of the notification scheme.
+     * @type {string}
+     * @memberof CreateNotificationSchemeDetails
+     */
+    description?: string;
+    /**
+     * The name of the notification scheme. Must be unique (case-insensitive).
+     * @type {string}
+     * @memberof CreateNotificationSchemeDetails
+     */
+    name: string;
+    /**
+     * The list of notifications which should be added to the notification scheme.
+     * @type {Array<NotificationSchemeEventDetails>}
+     * @memberof CreateNotificationSchemeDetails
+     */
+    notificationSchemeEvents?: Array<NotificationSchemeEventDetails>;
 }
 /**
  * Details of an issue priority.
@@ -2846,12 +2956,6 @@ export interface CreateCustomFieldContext {
  */
 export interface CreatePriorityDetails {
     [key: string]: any | any;
-    /**
-     * The name of the priority. Must be unique.
-     * @type {string}
-     * @memberof CreatePriorityDetails
-     */
-    name: string;
     /**
      * The description of the priority.
      * @type {string}
@@ -2864,6 +2968,12 @@ export interface CreatePriorityDetails {
      * @memberof CreatePriorityDetails
      */
     iconUrl?: CreatePriorityDetailsIconUrlEnum;
+    /**
+     * The name of the priority. Must be unique.
+     * @type {string}
+     * @memberof CreatePriorityDetails
+     */
+    name: string;
     /**
      * The status color of the priority in 3-digit or 6-digit hexadecimal format.
      * @type {string}
@@ -2897,23 +3007,59 @@ export type CreatePriorityDetailsIconUrlEnum = typeof CreatePriorityDetailsIconU
  */
 export interface CreateProjectDetails {
     /**
-     * Project keys must be unique and start with an uppercase letter followed by one or more uppercase alphanumeric characters. The maximum length is 10 characters.
+     * The default assignee when creating issues for this project.
      * @type {string}
      * @memberof CreateProjectDetails
      */
-    key: string;
+    assigneeType?: CreateProjectDetailsAssigneeTypeEnum;
     /**
-     * The name of the project.
-     * @type {string}
+     * An integer value for the project's avatar.
+     * @type {number}
      * @memberof CreateProjectDetails
      */
-    name: string;
+    avatarId?: number;
+    /**
+     * The ID of the project's category. A complete list of category IDs is found using the [Get all project categories](#api-rest-api-3-projectCategory-get) operation.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     */
+    categoryId?: number;
     /**
      * A brief description of the project.
      * @type {string}
      * @memberof CreateProjectDetails
      */
     description?: string;
+    /**
+     * The ID of the field configuration scheme for the project. Use the [Get all field configuration schemes](#api-rest-api-3-fieldconfigurationscheme-get) operation to get a list of field configuration scheme IDs. If you specify the field configuration scheme you cannot specify the project template key.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     */
+    fieldConfigurationScheme?: number;
+    /**
+     * The ID of the issue security scheme for the project, which enables you to control who can and cannot view issues. Use the [Get issue security schemes](#api-rest-api-3-issuesecurityschemes-get) resource to get all issue security scheme IDs.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     */
+    issueSecurityScheme?: number;
+    /**
+     * The ID of the issue type scheme for the project. Use the [Get all issue type schemes](#api-rest-api-3-issuetypescheme-get) operation to get a list of issue type scheme IDs. If you specify the issue type scheme you cannot specify the project template key.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     */
+    issueTypeScheme?: number;
+    /**
+     * The ID of the issue type screen scheme for the project. Use the [Get all issue type screen schemes](#api-rest-api-3-issuetypescreenscheme-get) operation to get a list of issue type screen scheme IDs. If you specify the issue type screen scheme you cannot specify the project template key.
+     * @type {number}
+     * @memberof CreateProjectDetails
+     */
+    issueTypeScreenScheme?: number;
+    /**
+     * Project keys must be unique and start with an uppercase letter followed by one or more uppercase alphanumeric characters. The maximum length is 10 characters.
+     * @type {string}
+     * @memberof CreateProjectDetails
+     */
+    key: string;
     /**
      * This parameter is deprecated because of privacy changes. Use `leadAccountId` instead. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details. The user name of the project lead. Either `lead` or `leadAccountId` must be set when creating a project. Cannot be provided with `leadAccountId`.
      * @type {string}
@@ -2927,35 +3073,11 @@ export interface CreateProjectDetails {
      */
     leadAccountId?: string;
     /**
-     * A link to information about this project, such as project documentation
+     * The name of the project.
      * @type {string}
      * @memberof CreateProjectDetails
      */
-    url?: string;
-    /**
-     * The default assignee when creating issues for this project.
-     * @type {string}
-     * @memberof CreateProjectDetails
-     */
-    assigneeType?: CreateProjectDetailsAssigneeTypeEnum;
-    /**
-     * An integer value for the project's avatar.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    avatarId?: number;
-    /**
-     * The ID of the issue security scheme for the project, which enables you to control who can and cannot view issues. Use the [Get issue security schemes](#api-rest-api-3-issuesecurityschemes-get) resource to get all issue security scheme IDs.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    issueSecurityScheme?: number;
-    /**
-     * The ID of the permission scheme for the project. Use the [Get all permission schemes](#api-rest-api-3-permissionscheme-get) resource to see a list of all permission scheme IDs.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    permissionScheme?: number;
+    name: string;
     /**
      * The ID of the notification scheme for the project. Use the [Get notification schemes](#api-rest-api-3-notificationscheme-get) resource to get a list of notification scheme IDs.
      * @type {number}
@@ -2963,17 +3085,11 @@ export interface CreateProjectDetails {
      */
     notificationScheme?: number;
     /**
-     * The ID of the project's category. A complete list of category IDs is found using the [Get all project categories](#api-rest-api-3-projectCategory-get) operation.
+     * The ID of the permission scheme for the project. Use the [Get all permission schemes](#api-rest-api-3-permissionscheme-get) resource to see a list of all permission scheme IDs.
      * @type {number}
      * @memberof CreateProjectDetails
      */
-    categoryId?: number;
-    /**
-     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes), which defines the application-specific feature set. If you don't specify the project template you have to specify the project type.
-     * @type {string}
-     * @memberof CreateProjectDetails
-     */
-    projectTypeKey?: CreateProjectDetailsProjectTypeKeyEnum;
+    permissionScheme?: number;
     /**
      * A predefined configuration for a project. The type of the `projectTemplateKey` must match with the type of the `projectTypeKey`.
      * @type {string}
@@ -2981,29 +3097,23 @@ export interface CreateProjectDetails {
      */
     projectTemplateKey?: CreateProjectDetailsProjectTemplateKeyEnum;
     /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes), which defines the application-specific feature set. If you don't specify the project template you have to specify the project type.
+     * @type {string}
+     * @memberof CreateProjectDetails
+     */
+    projectTypeKey?: CreateProjectDetailsProjectTypeKeyEnum;
+    /**
+     * A link to information about this project, such as project documentation
+     * @type {string}
+     * @memberof CreateProjectDetails
+     */
+    url?: string;
+    /**
      * The ID of the workflow scheme for the project. Use the [Get all workflow schemes](#api-rest-api-3-workflowscheme-get) operation to get a list of workflow scheme IDs. If you specify the workflow scheme you cannot specify the project template key.
      * @type {number}
      * @memberof CreateProjectDetails
      */
     workflowScheme?: number;
-    /**
-     * The ID of the issue type screen scheme for the project. Use the [Get all issue type screen schemes](#api-rest-api-3-issuetypescreenscheme-get) operation to get a list of issue type screen scheme IDs. If you specify the issue type screen scheme you cannot specify the project template key.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    issueTypeScreenScheme?: number;
-    /**
-     * The ID of the issue type scheme for the project. Use the [Get all issue type schemes](#api-rest-api-3-issuetypescheme-get) operation to get a list of issue type scheme IDs. If you specify the issue type scheme you cannot specify the project template key.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    issueTypeScheme?: number;
-    /**
-     * The ID of the field configuration scheme for the project. Use the [Get all field configuration schemes](#api-rest-api-3-fieldconfigurationscheme-get) operation to get a list of field configuration scheme IDs. If you specify the field configuration scheme you cannot specify the project template key.
-     * @type {number}
-     * @memberof CreateProjectDetails
-     */
-    fieldConfigurationScheme?: number;
 }
 
 
@@ -3019,22 +3129,13 @@ export type CreateProjectDetailsAssigneeTypeEnum = typeof CreateProjectDetailsAs
 /**
  * @export
  */
-export const CreateProjectDetailsProjectTypeKeyEnum = {
-    Software: 'software',
-    ServiceDesk: 'service_desk',
-    Business: 'business'
-} as const;
-export type CreateProjectDetailsProjectTypeKeyEnum = typeof CreateProjectDetailsProjectTypeKeyEnum[keyof typeof CreateProjectDetailsProjectTypeKeyEnum];
-
-/**
- * @export
- */
 export const CreateProjectDetailsProjectTemplateKeyEnum = {
     PyxisGreenhopperJiraghSimplifiedAgilityKanban: 'com.pyxis.greenhopper.jira:gh-simplified-agility-kanban',
     PyxisGreenhopperJiraghSimplifiedAgilityScrum: 'com.pyxis.greenhopper.jira:gh-simplified-agility-scrum',
     PyxisGreenhopperJiraghSimplifiedBasic: 'com.pyxis.greenhopper.jira:gh-simplified-basic',
     PyxisGreenhopperJiraghSimplifiedKanbanClassic: 'com.pyxis.greenhopper.jira:gh-simplified-kanban-classic',
     PyxisGreenhopperJiraghSimplifiedScrumClassic: 'com.pyxis.greenhopper.jira:gh-simplified-scrum-classic',
+    PyxisGreenhopperJiraghCrossTeamTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-template',
     AtlassianServicedesksimplifiedItServiceManagement: 'com.atlassian.servicedesk:simplified-it-service-management',
     AtlassianServicedesksimplifiedGeneralServiceDesk: 'com.atlassian.servicedesk:simplified-general-service-desk',
     AtlassianServicedesksimplifiedGeneralServiceDeskIt: 'com.atlassian.servicedesk:simplified-general-service-desk-it',
@@ -3047,7 +3148,11 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     AtlassianServicedesksimplifiedMarketingServiceDesk: 'com.atlassian.servicedesk:simplified-marketing-service-desk',
     AtlassianServicedesksimplifiedFinanceServiceDesk: 'com.atlassian.servicedesk:simplified-finance-service-desk',
     AtlassianServicedesksimplifiedAnalyticsServiceDesk: 'com.atlassian.servicedesk:simplified-analytics-service-desk',
+    AtlassianServicedesksimplifiedDesignServiceDesk: 'com.atlassian.servicedesk:simplified-design-service-desk',
+    AtlassianServicedesksimplifiedSalesServiceDesk: 'com.atlassian.servicedesk:simplified-sales-service-desk',
     AtlassianServicedesksimplifiedHalpServiceDesk: 'com.atlassian.servicedesk:simplified-halp-service-desk',
+    AtlassianServicedesksimplifiedBlankProjectIt: 'com.atlassian.servicedesk:simplified-blank-project-it',
+    AtlassianServicedesksimplifiedBlankProjectBusiness: 'com.atlassian.servicedesk:simplified-blank-project-business',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedContentManagement: 'com.atlassian.jira-core-project-templates:jira-core-simplified-content-management',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedDocumentApproval: 'com.atlassian.jira-core-project-templates:jira-core-simplified-document-approval',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedLeadTracking: 'com.atlassian.jira-core-project-templates:jira-core-simplified-lead-tracking',
@@ -3060,6 +3165,16 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
 export type CreateProjectDetailsProjectTemplateKeyEnum = typeof CreateProjectDetailsProjectTemplateKeyEnum[keyof typeof CreateProjectDetailsProjectTemplateKeyEnum];
 
 /**
+ * @export
+ */
+export const CreateProjectDetailsProjectTypeKeyEnum = {
+    Software: 'software',
+    ServiceDesk: 'service_desk',
+    Business: 'business'
+} as const;
+export type CreateProjectDetailsProjectTypeKeyEnum = typeof CreateProjectDetailsProjectTypeKeyEnum[keyof typeof CreateProjectDetailsProjectTypeKeyEnum];
+
+/**
  * Details of an issue resolution.
  * @export
  * @interface CreateResolutionDetails
@@ -3067,17 +3182,17 @@ export type CreateProjectDetailsProjectTemplateKeyEnum = typeof CreateProjectDet
 export interface CreateResolutionDetails {
     [key: string]: any | any;
     /**
-     * The name of the resolution. Must be unique (case-insensitive).
-     * @type {string}
-     * @memberof CreateResolutionDetails
-     */
-    name: string;
-    /**
      * The description of the resolution.
      * @type {string}
      * @memberof CreateResolutionDetails
      */
     description?: string;
+    /**
+     * The name of the resolution. Must be unique (case-insensitive).
+     * @type {string}
+     * @memberof CreateResolutionDetails
+     */
+    name: string;
 }
 /**
  * The details of a UI modification.
@@ -3086,17 +3201,11 @@ export interface CreateResolutionDetails {
  */
 export interface CreateUiModificationDetails {
     /**
-     * The name of the UI modification. The maximum length is 255 characters.
-     * @type {string}
+     * List of contexts of the UI modification. The maximum number of contexts is 1000.
+     * @type {Array<UiModificationContextDetails>}
      * @memberof CreateUiModificationDetails
      */
-    name: string;
-    /**
-     * The description of the UI modification. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof CreateUiModificationDetails
-     */
-    description?: string;
+    contexts?: Array<UiModificationContextDetails>;
     /**
      * The data of the UI modification. The maximum size of the data is 50000 characters.
      * @type {string}
@@ -3104,11 +3213,17 @@ export interface CreateUiModificationDetails {
      */
     data?: string;
     /**
-     * List of contexts of the UI modification. The maximum number of contexts is 1000.
-     * @type {Array<UiModificationContextDetails>}
+     * The description of the UI modification. The maximum length is 255 characters.
+     * @type {string}
      * @memberof CreateUiModificationDetails
      */
-    contexts?: Array<UiModificationContextDetails>;
+    description?: string;
+    /**
+     * The name of the UI modification. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof CreateUiModificationDetails
+     */
+    name: string;
 }
 /**
  * 
@@ -3117,17 +3232,17 @@ export interface CreateUiModificationDetails {
  */
 export interface CreateUpdateRoleRequestBean {
     /**
-     * The name of the project role. Must be unique. Cannot begin or end with whitespace. The maximum length is 255 characters. Required when creating a project role. Optional when partially updating a project role.
-     * @type {string}
-     * @memberof CreateUpdateRoleRequestBean
-     */
-    name?: string;
-    /**
      * A description of the project role. Required when fully updating a project role. Optional when creating or partially updating a project role.
      * @type {string}
      * @memberof CreateUpdateRoleRequestBean
      */
     description?: string;
+    /**
+     * The name of the project role. Must be unique. Cannot begin or end with whitespace. The maximum length is 255 characters. Required when creating a project role. Optional when partially updating a project role.
+     * @type {string}
+     * @memberof CreateUpdateRoleRequestBean
+     */
+    name?: string;
 }
 /**
  * A workflow transition condition.
@@ -3136,29 +3251,29 @@ export interface CreateUpdateRoleRequestBean {
  */
 export interface CreateWorkflowCondition {
     /**
-     * The compound condition operator.
-     * @type {string}
-     * @memberof CreateWorkflowCondition
-     */
-    operator?: CreateWorkflowConditionOperatorEnum;
-    /**
      * The list of workflow conditions.
      * @type {Array<CreateWorkflowCondition>}
      * @memberof CreateWorkflowCondition
      */
     conditions?: Array<CreateWorkflowCondition>;
     /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowCondition
-     */
-    type?: string;
-    /**
      * EXPERIMENTAL. The configuration of the transition rule.
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowCondition
      */
     _configuration?: { [key: string]: any; };
+    /**
+     * The compound condition operator.
+     * @type {string}
+     * @memberof CreateWorkflowCondition
+     */
+    operator?: CreateWorkflowConditionOperatorEnum;
+    /**
+     * The type of the transition rule.
+     * @type {string}
+     * @memberof CreateWorkflowCondition
+     */
+    type?: string;
 }
 
 
@@ -3178,17 +3293,23 @@ export type CreateWorkflowConditionOperatorEnum = typeof CreateWorkflowCondition
  */
 export interface CreateWorkflowDetails {
     /**
+     * The description of the workflow. The maximum length is 1000 characters.
+     * @type {string}
+     * @memberof CreateWorkflowDetails
+     */
+    description?: string;
+    /**
      * The name of the workflow. The name must be unique. The maximum length is 255 characters. Characters can be separated by a whitespace but the name cannot start or end with a whitespace.
      * @type {string}
      * @memberof CreateWorkflowDetails
      */
     name: string;
     /**
-     * The description of the workflow. The maximum length is 1000 characters.
-     * @type {string}
+     * The statuses of the workflow. Any status that does not include a transition is added to the workflow without a transition.
+     * @type {Set<CreateWorkflowStatusDetails>}
      * @memberof CreateWorkflowDetails
      */
-    description?: string;
+    statuses: CreateWorkflowStatusDetails[];
     /**
      * The transitions of the workflow. For the request to be valid, these transitions must:
      * 
@@ -3205,12 +3326,6 @@ export interface CreateWorkflowDetails {
      * @memberof CreateWorkflowDetails
      */
     transitions: Array<CreateWorkflowTransitionDetails>;
-    /**
-     * The statuses of the workflow. Any status that does not include a transition is added to the workflow without a transition.
-     * @type {Set<CreateWorkflowStatusDetails>}
-     * @memberof CreateWorkflowDetails
-     */
-    statuses: CreateWorkflowStatusDetails[];
 }
 /**
  * The details of a transition status.
@@ -3238,12 +3353,6 @@ export interface CreateWorkflowStatusDetails {
  */
 export interface CreateWorkflowTransitionDetails {
     /**
-     * The name of the transition. The maximum length is 60 characters.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionDetails
-     */
-    name: string;
-    /**
      * The description of the transition. The maximum length is 1000 characters.
      * @type {string}
      * @memberof CreateWorkflowTransitionDetails
@@ -3256,17 +3365,17 @@ export interface CreateWorkflowTransitionDetails {
      */
     from?: Array<string>;
     /**
-     * The status the transition goes to.
+     * The name of the transition. The maximum length is 60 characters.
      * @type {string}
      * @memberof CreateWorkflowTransitionDetails
      */
-    to: string;
+    name: string;
     /**
-     * The type of the transition.
-     * @type {string}
+     * The properties of the transition.
+     * @type {{ [key: string]: string; }}
      * @memberof CreateWorkflowTransitionDetails
      */
-    type: CreateWorkflowTransitionDetailsTypeEnum;
+    properties?: { [key: string]: string; };
     /**
      * 
      * @type {CreateWorkflowTransitionDetailsRules}
@@ -3280,11 +3389,17 @@ export interface CreateWorkflowTransitionDetails {
      */
     screen?: CreateWorkflowTransitionDetailsScreen;
     /**
-     * The properties of the transition.
-     * @type {{ [key: string]: string; }}
+     * The status the transition goes to.
+     * @type {string}
      * @memberof CreateWorkflowTransitionDetails
      */
-    properties?: { [key: string]: string; };
+    to: string;
+    /**
+     * The type of the transition.
+     * @type {string}
+     * @memberof CreateWorkflowTransitionDetails
+     */
+    type: CreateWorkflowTransitionDetailsTypeEnum;
 }
 
 
@@ -3311,23 +3426,6 @@ export interface CreateWorkflowTransitionDetailsRules {
      */
     conditions?: CreateWorkflowTransitionRulesDetailsConditions;
     /**
-     * The workflow validators.
-     * 
-     * **Note:** The default permission validator is always added to the *initial* transition, as in:
-     * 
-     *     "validators": [
-     *         {
-     *             "type": "PermissionValidator",
-     *             "configuration": {
-     *                 "permissionKey": "CREATE_ISSUES"
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionDetailsRules
-     */
-    validators?: Array<CreateWorkflowTransitionRule>;
-    /**
      * The workflow post functions.
      * 
      * **Note:** The default post functions are always added to the *initial* transition, as in:
@@ -3379,6 +3477,23 @@ export interface CreateWorkflowTransitionDetailsRules {
      * @memberof CreateWorkflowTransitionDetailsRules
      */
     postFunctions?: Array<CreateWorkflowTransitionRule>;
+    /**
+     * The workflow validators.
+     * 
+     * **Note:** The default permission validator is always added to the *initial* transition, as in:
+     * 
+     *     "validators": [
+     *         {
+     *             "type": "PermissionValidator",
+     *             "configuration": {
+     *                 "permissionKey": "CREATE_ISSUES"
+     *             }
+     *         }
+     *     ]
+     * @type {Array<CreateWorkflowTransitionRule>}
+     * @memberof CreateWorkflowTransitionDetailsRules
+     */
+    validators?: Array<CreateWorkflowTransitionRule>;
 }
 /**
  * The screen of the transition.
@@ -3400,17 +3515,17 @@ export interface CreateWorkflowTransitionDetailsScreen {
  */
 export interface CreateWorkflowTransitionRule {
     /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRule
-     */
-    type: string;
-    /**
      * EXPERIMENTAL. The configuration of the transition rule.
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowTransitionRule
      */
     _configuration?: { [key: string]: any; };
+    /**
+     * The type of the transition rule.
+     * @type {string}
+     * @memberof CreateWorkflowTransitionRule
+     */
+    type: string;
 }
 /**
  * The details of a workflow transition rules.
@@ -3424,23 +3539,6 @@ export interface CreateWorkflowTransitionRulesDetails {
      * @memberof CreateWorkflowTransitionRulesDetails
      */
     conditions?: CreateWorkflowTransitionRulesDetailsConditions;
-    /**
-     * The workflow validators.
-     * 
-     * **Note:** The default permission validator is always added to the *initial* transition, as in:
-     * 
-     *     "validators": [
-     *         {
-     *             "type": "PermissionValidator",
-     *             "configuration": {
-     *                 "permissionKey": "CREATE_ISSUES"
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionRulesDetails
-     */
-    validators?: Array<CreateWorkflowTransitionRule>;
     /**
      * The workflow post functions.
      * 
@@ -3493,6 +3591,23 @@ export interface CreateWorkflowTransitionRulesDetails {
      * @memberof CreateWorkflowTransitionRulesDetails
      */
     postFunctions?: Array<CreateWorkflowTransitionRule>;
+    /**
+     * The workflow validators.
+     * 
+     * **Note:** The default permission validator is always added to the *initial* transition, as in:
+     * 
+     *     "validators": [
+     *         {
+     *             "type": "PermissionValidator",
+     *             "configuration": {
+     *                 "permissionKey": "CREATE_ISSUES"
+     *             }
+     *         }
+     *     ]
+     * @type {Array<CreateWorkflowTransitionRule>}
+     * @memberof CreateWorkflowTransitionRulesDetails
+     */
+    validators?: Array<CreateWorkflowTransitionRule>;
 }
 /**
  * The workflow conditions.
@@ -3501,29 +3616,29 @@ export interface CreateWorkflowTransitionRulesDetails {
  */
 export interface CreateWorkflowTransitionRulesDetailsConditions {
     /**
-     * The compound condition operator.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    operator?: CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum;
-    /**
      * The list of workflow conditions.
      * @type {Array<CreateWorkflowCondition>}
      * @memberof CreateWorkflowTransitionRulesDetailsConditions
      */
     conditions?: Array<CreateWorkflowCondition>;
     /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    type?: string;
-    /**
      * EXPERIMENTAL. The configuration of the transition rule.
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowTransitionRulesDetailsConditions
      */
     _configuration?: { [key: string]: any; };
+    /**
+     * The compound condition operator.
+     * @type {string}
+     * @memberof CreateWorkflowTransitionRulesDetailsConditions
+     */
+    operator?: CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum;
+    /**
+     * The type of the transition rule.
+     * @type {string}
+     * @memberof CreateWorkflowTransitionRulesDetailsConditions
+     */
+    type?: string;
 }
 
 
@@ -3579,6 +3694,12 @@ export interface CreatedIssue {
      * @memberof CreatedIssue
      */
     transition?: CreatedIssueTransition;
+    /**
+     * 
+     * @type {CreatedIssueWatchers}
+     * @memberof CreatedIssue
+     */
+    watchers?: CreatedIssueWatchers;
 }
 /**
  * The response code and messages related to any requested transition.
@@ -3588,16 +3709,47 @@ export interface CreatedIssue {
 export interface CreatedIssueTransition {
     /**
      * 
+     * @type {ErrorCollection}
+     * @memberof CreatedIssueTransition
+     */
+    errorCollection?: ErrorCollection;
+    /**
+     * 
      * @type {number}
      * @memberof CreatedIssueTransition
      */
     status?: number;
     /**
      * 
-     * @type {ErrorCollection}
+     * @type {WarningCollection}
      * @memberof CreatedIssueTransition
      */
+    warningCollection?: WarningCollection;
+}
+/**
+ * The response code and messages related to any requested watchers.
+ * @export
+ * @interface CreatedIssueWatchers
+ */
+export interface CreatedIssueWatchers {
+    /**
+     * 
+     * @type {ErrorCollection}
+     * @memberof CreatedIssueWatchers
+     */
     errorCollection?: ErrorCollection;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreatedIssueWatchers
+     */
+    status?: number;
+    /**
+     * 
+     * @type {WarningCollection}
+     * @memberof CreatedIssueWatchers
+     */
+    warningCollection?: WarningCollection;
 }
 /**
  * Details about the issues created and the errors for requests that failed.
@@ -3606,17 +3758,17 @@ export interface CreatedIssueTransition {
  */
 export interface CreatedIssues {
     /**
-     * Details of the issues created.
-     * @type {Array<CreatedIssue>}
-     * @memberof CreatedIssues
-     */
-    readonly issues?: Array<CreatedIssue>;
-    /**
      * Error details for failed issue creation requests.
      * @type {Array<BulkOperationErrorResult>}
      * @memberof CreatedIssues
      */
     readonly errors?: Array<BulkOperationErrorResult>;
+    /**
+     * Details of the issues created.
+     * @type {Array<CreatedIssue>}
+     * @memberof CreatedIssues
+     */
+    readonly issues?: Array<CreatedIssue>;
 }
 /**
  * @type CustomContextVariable
@@ -3644,23 +3796,23 @@ export interface CustomFieldConfigurations {
  */
 export interface CustomFieldContext {
     /**
+     * The description of the context.
+     * @type {string}
+     * @memberof CustomFieldContext
+     */
+    description: string;
+    /**
      * The ID of the context.
      * @type {string}
      * @memberof CustomFieldContext
      */
     id: string;
     /**
-     * The name of the context.
-     * @type {string}
+     * Whether the context apply to all issue types.
+     * @type {boolean}
      * @memberof CustomFieldContext
      */
-    name: string;
-    /**
-     * The description of the context.
-     * @type {string}
-     * @memberof CustomFieldContext
-     */
-    description: string;
+    isAnyIssueType: boolean;
     /**
      * Whether the context is global.
      * @type {boolean}
@@ -3668,11 +3820,11 @@ export interface CustomFieldContext {
      */
     isGlobalContext: boolean;
     /**
-     * Whether the context apply to all issue types.
-     * @type {boolean}
+     * The name of the context.
+     * @type {string}
      * @memberof CustomFieldContext
      */
-    isAnyIssueType: boolean;
+    name: string;
 }
 /**
  * @type CustomFieldContextDefaultValue
@@ -3687,6 +3839,12 @@ export type CustomFieldContextDefaultValue = { type: 'datepicker' } & CustomFiel
  */
 export interface CustomFieldContextDefaultValueCascadingOption {
     /**
+     * The ID of the default cascading option.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueCascadingOption
+     */
+    cascadingOptionId?: string;
+    /**
      * The ID of the context.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueCascadingOption
@@ -3698,12 +3856,6 @@ export interface CustomFieldContextDefaultValueCascadingOption {
      * @memberof CustomFieldContextDefaultValueCascadingOption
      */
     optionId: string;
-    /**
-     * The ID of the default cascading option.
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueCascadingOption
-     */
-    cascadingOptionId?: string;
     /**
      * 
      * @type {string}
@@ -3724,17 +3876,17 @@ export interface CustomFieldContextDefaultValueDate {
      */
     date?: string;
     /**
-     * Whether to use the current date.
-     * @type {boolean}
-     * @memberof CustomFieldContextDefaultValueDate
-     */
-    useCurrent?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueDate
      */
     type: string;
+    /**
+     * Whether to use the current date.
+     * @type {boolean}
+     * @memberof CustomFieldContextDefaultValueDate
+     */
+    useCurrent?: boolean;
 }
 /**
  * The default value for a date time custom field.
@@ -3749,17 +3901,17 @@ export interface CustomFieldContextDefaultValueDateTime {
      */
     dateTime?: string;
     /**
-     * Whether to use the current date.
-     * @type {boolean}
-     * @memberof CustomFieldContextDefaultValueDateTime
-     */
-    useCurrent?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueDateTime
      */
     type: string;
+    /**
+     * Whether to use the current date.
+     * @type {boolean}
+     * @memberof CustomFieldContextDefaultValueDateTime
+     */
+    useCurrent?: boolean;
 }
 /**
  * Default value for a float (number) custom field.
@@ -3799,17 +3951,17 @@ export interface CustomFieldContextDefaultValueForgeDateTimeField {
      */
     dateTime?: string;
     /**
-     * Whether to use the current date.
-     * @type {boolean}
-     * @memberof CustomFieldContextDefaultValueForgeDateTimeField
-     */
-    useCurrent?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeDateTimeField
      */
     type: string;
+    /**
+     * Whether to use the current date.
+     * @type {boolean}
+     * @memberof CustomFieldContextDefaultValueForgeDateTimeField
+     */
+    useCurrent?: boolean;
 }
 /**
  * The default value for a Forge group custom field.
@@ -3868,17 +4020,17 @@ export interface CustomFieldContextDefaultValueForgeMultiGroupField {
  */
 export interface CustomFieldContextDefaultValueForgeMultiStringField {
     /**
-     * List of string values. The maximum length for a value is 254 characters.
-     * @type {Array<string>}
-     * @memberof CustomFieldContextDefaultValueForgeMultiStringField
-     */
-    values?: Array<string>;
-    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeMultiStringField
      */
     type: string;
+    /**
+     * List of string values. The maximum length for a value is 254 characters.
+     * @type {Array<string>}
+     * @memberof CustomFieldContextDefaultValueForgeMultiStringField
+     */
+    values?: Array<string>;
 }
 /**
  * Defaults for a Forge collection of users custom field.
@@ -3887,17 +4039,17 @@ export interface CustomFieldContextDefaultValueForgeMultiStringField {
  */
 export interface CustomFieldContextDefaultValueForgeMultiUserField {
     /**
-     * The ID of the context.
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueForgeMultiUserField
-     */
-    contextId: string;
-    /**
      * The IDs of the default users.
      * @type {Array<string>}
      * @memberof CustomFieldContextDefaultValueForgeMultiUserField
      */
     accountIds: Array<string>;
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueForgeMultiUserField
+     */
+    contextId: string;
     /**
      * 
      * @type {string}
@@ -3981,29 +4133,29 @@ export interface CustomFieldContextDefaultValueForgeStringField {
  */
 export interface CustomFieldContextDefaultValueForgeUserField {
     /**
-     * The ID of the context.
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueForgeUserField
-     */
-    contextId: string;
-    /**
      * The ID of the default user.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeUserField
      */
     accountId: string;
     /**
-     * 
-     * @type {UserFilter}
+     * The ID of the context.
+     * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeUserField
      */
-    userFilter: UserFilter;
+    contextId: string;
     /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueForgeUserField
      */
     type: string;
+    /**
+     * 
+     * @type {UserFilter}
+     * @memberof CustomFieldContextDefaultValueForgeUserField
+     */
+    userFilter: UserFilter;
 }
 /**
  * Default value for a labels custom field.
@@ -4031,17 +4183,17 @@ export interface CustomFieldContextDefaultValueLabels {
  */
 export interface CustomFieldContextDefaultValueMultiUserPicker {
     /**
-     * The ID of the context.
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueMultiUserPicker
-     */
-    contextId: string;
-    /**
      * The IDs of the default users.
      * @type {Array<string>}
      * @memberof CustomFieldContextDefaultValueMultiUserPicker
      */
     accountIds: Array<string>;
+    /**
+     * The ID of the context.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueMultiUserPicker
+     */
+    contextId: string;
     /**
      * 
      * @type {string}
@@ -4106,6 +4258,12 @@ export interface CustomFieldContextDefaultValueMultipleOption {
  */
 export interface CustomFieldContextDefaultValueMultipleVersionPicker {
     /**
+     * 
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
+     */
+    type: string;
+    /**
      * The IDs of the default versions.
      * @type {Set<string>}
      * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
@@ -4117,12 +4275,6 @@ export interface CustomFieldContextDefaultValueMultipleVersionPicker {
      * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
      */
     versionOrder?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
-     */
-    type: string;
 }
 /**
  * The default value for a project custom field.
@@ -4225,6 +4377,12 @@ export interface CustomFieldContextDefaultValueSingleOption {
  */
 export interface CustomFieldContextDefaultValueSingleVersionPicker {
     /**
+     * 
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueSingleVersionPicker
+     */
+    type: string;
+    /**
      * The ID of the default version.
      * @type {string}
      * @memberof CustomFieldContextDefaultValueSingleVersionPicker
@@ -4236,12 +4394,6 @@ export interface CustomFieldContextDefaultValueSingleVersionPicker {
      * @memberof CustomFieldContextDefaultValueSingleVersionPicker
      */
     versionOrder?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueSingleVersionPicker
-     */
-    type: string;
 }
 /**
  * The default text for a text area custom field.
@@ -4294,17 +4446,17 @@ export interface CustomFieldContextDefaultValueURL {
      */
     contextId: string;
     /**
-     * The default URL.
-     * @type {string}
-     * @memberof CustomFieldContextDefaultValueURL
-     */
-    url: string;
-    /**
      * 
      * @type {string}
      * @memberof CustomFieldContextDefaultValueURL
      */
     type: string;
+    /**
+     * The default URL.
+     * @type {string}
+     * @memberof CustomFieldContextDefaultValueURL
+     */
+    url: string;
 }
 /**
  * Default values to update.
@@ -4326,17 +4478,17 @@ export interface CustomFieldContextDefaultValueUpdate {
  */
 export interface CustomFieldContextOption {
     /**
+     * Whether the option is disabled.
+     * @type {boolean}
+     * @memberof CustomFieldContextOption
+     */
+    disabled: boolean;
+    /**
      * The ID of the custom field option.
      * @type {string}
      * @memberof CustomFieldContextOption
      */
     id: string;
-    /**
-     * The value of the custom field option.
-     * @type {string}
-     * @memberof CustomFieldContextOption
-     */
-    value: string;
     /**
      * For cascading options, the ID of the custom field option containing the cascading option.
      * @type {string}
@@ -4344,11 +4496,11 @@ export interface CustomFieldContextOption {
      */
     optionId?: string;
     /**
-     * Whether the option is disabled.
-     * @type {boolean}
+     * The value of the custom field option.
+     * @type {string}
      * @memberof CustomFieldContextOption
      */
-    disabled: boolean;
+    value: string;
 }
 /**
  * Details of a context to project association.
@@ -4363,17 +4515,17 @@ export interface CustomFieldContextProjectMapping {
      */
     readonly contextId: string;
     /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof CustomFieldContextProjectMapping
-     */
-    readonly projectId?: string;
-    /**
      * Whether context is global.
      * @type {boolean}
      * @memberof CustomFieldContextProjectMapping
      */
     readonly isGlobalContext?: boolean;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof CustomFieldContextProjectMapping
+     */
+    readonly projectId?: string;
 }
 /**
  * Defaults for a User Picker (single) custom field.
@@ -4382,29 +4534,29 @@ export interface CustomFieldContextProjectMapping {
  */
 export interface CustomFieldContextSingleUserPickerDefaults {
     /**
-     * The ID of the context.
-     * @type {string}
-     * @memberof CustomFieldContextSingleUserPickerDefaults
-     */
-    contextId: string;
-    /**
      * The ID of the default user.
      * @type {string}
      * @memberof CustomFieldContextSingleUserPickerDefaults
      */
     accountId: string;
     /**
-     * 
-     * @type {UserFilter}
+     * The ID of the context.
+     * @type {string}
      * @memberof CustomFieldContextSingleUserPickerDefaults
      */
-    userFilter: UserFilter;
+    contextId: string;
     /**
      * 
      * @type {string}
      * @memberof CustomFieldContextSingleUserPickerDefaults
      */
     type: string;
+    /**
+     * 
+     * @type {UserFilter}
+     * @memberof CustomFieldContextSingleUserPickerDefaults
+     */
+    userFilter: UserFilter;
 }
 /**
  * Details of a custom field context.
@@ -4413,17 +4565,17 @@ export interface CustomFieldContextSingleUserPickerDefaults {
  */
 export interface CustomFieldContextUpdateDetails {
     /**
-     * The name of the custom field context. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof CustomFieldContextUpdateDetails
-     */
-    name?: string;
-    /**
      * The description of the custom field context. The maximum length is 255 characters.
      * @type {string}
      * @memberof CustomFieldContextUpdateDetails
      */
     description?: string;
+    /**
+     * The name of the custom field context. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof CustomFieldContextUpdateDetails
+     */
+    name?: string;
 }
 /**
  * A list of custom field options for a context.
@@ -4445,47 +4597,17 @@ export interface CustomFieldCreatedContextOptionsList {
  */
 export interface CustomFieldDefinitionJsonBean {
     /**
-     * The name of the custom field, which is displayed in Jira. This is not the unique identifier.
-     * @type {string}
-     * @memberof CustomFieldDefinitionJsonBean
-     */
-    name: string;
-    /**
      * The description of the custom field, which is displayed in Jira.
      * @type {string}
      * @memberof CustomFieldDefinitionJsonBean
      */
     description?: string;
     /**
-     * The type of the custom field. These built-in custom field types are available:
-     * 
-     *  *  `cascadingselect`: Enables values to be selected from two levels of select lists (value: `com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect`)
-     *  *  `datepicker`: Stores a date using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:datepicker`)
-     *  *  `datetime`: Stores a date with a time component (value: `com.atlassian.jira.plugin.system.customfieldtypes:datetime`)
-     *  *  `float`: Stores and validates a numeric (floating point) input (value: `com.atlassian.jira.plugin.system.customfieldtypes:float`)
-     *  *  `grouppicker`: Stores a user group using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:grouppicker`)
-     *  *  `importid`: A read-only field that stores the ID the issue had in the system it was imported from (value: `com.atlassian.jira.plugin.system.customfieldtypes:importid`)
-     *  *  `labels`: Stores labels (value: `com.atlassian.jira.plugin.system.customfieldtypes:labels`)
-     *  *  `multicheckboxes`: Stores multiple values using checkboxes (value: ``)
-     *  *  `multigrouppicker`: Stores multiple user groups using a picker control (value: ``)
-     *  *  `multiselect`: Stores multiple values using a select list (value: `com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes`)
-     *  *  `multiuserpicker`: Stores multiple users using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker`)
-     *  *  `multiversion`: Stores multiple versions from the versions available in a project using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:multiversion`)
-     *  *  `project`: Stores a project from a list of projects that the user is permitted to view (value: `com.atlassian.jira.plugin.system.customfieldtypes:project`)
-     *  *  `radiobuttons`: Stores a value using radio buttons (value: `com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons`)
-     *  *  `readonlyfield`: Stores a read-only text value, which can only be populated via the API (value: `com.atlassian.jira.plugin.system.customfieldtypes:readonlyfield`)
-     *  *  `select`: Stores a value from a configurable list of options (value: `com.atlassian.jira.plugin.system.customfieldtypes:select`)
-     *  *  `textarea`: Stores a long text string using a multiline text area (value: `com.atlassian.jira.plugin.system.customfieldtypes:textarea`)
-     *  *  `textfield`: Stores a text string using a single-line text box (value: `com.atlassian.jira.plugin.system.customfieldtypes:textfield`)
-     *  *  `url`: Stores a URL (value: `com.atlassian.jira.plugin.system.customfieldtypes:url`)
-     *  *  `userpicker`: Stores a user using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:userpicker`)
-     *  *  `version`: Stores a version using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:version`)
-     * 
-     * To create a field based on a [Forge custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/#jira-custom-field-type--beta-), use the ID of the Forge custom field type as the value. For example, `ari:cloud:ecosystem::extension/e62f20a2-4b61-4dbe-bfb9-9a88b5e3ac84/548c5df1-24aa-4f7c-bbbb-3038d947cb05/static/my-cf-type-key`.
+     * The name of the custom field, which is displayed in Jira. This is not the unique identifier.
      * @type {string}
      * @memberof CustomFieldDefinitionJsonBean
      */
-    type: string;
+    name: string;
     /**
      * The searcher defines the way the field is searched in Jira. For example, *com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher*.  
      * The search UI (basic search and JQL search) will display different operations and values for the field, based on the field searcher. You must specify a searcher that is valid for the field type, as listed below (abbreviated values shown):
@@ -4517,6 +4639,36 @@ export interface CustomFieldDefinitionJsonBean {
      * @memberof CustomFieldDefinitionJsonBean
      */
     searcherKey?: CustomFieldDefinitionJsonBeanSearcherKeyEnum;
+    /**
+     * The type of the custom field. These built-in custom field types are available:
+     * 
+     *  *  `cascadingselect`: Enables values to be selected from two levels of select lists (value: `com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect`)
+     *  *  `datepicker`: Stores a date using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:datepicker`)
+     *  *  `datetime`: Stores a date with a time component (value: `com.atlassian.jira.plugin.system.customfieldtypes:datetime`)
+     *  *  `float`: Stores and validates a numeric (floating point) input (value: `com.atlassian.jira.plugin.system.customfieldtypes:float`)
+     *  *  `grouppicker`: Stores a user group using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:grouppicker`)
+     *  *  `importid`: A read-only field that stores the ID the issue had in the system it was imported from (value: `com.atlassian.jira.plugin.system.customfieldtypes:importid`)
+     *  *  `labels`: Stores labels (value: `com.atlassian.jira.plugin.system.customfieldtypes:labels`)
+     *  *  `multicheckboxes`: Stores multiple values using checkboxes (value: ``)
+     *  *  `multigrouppicker`: Stores multiple user groups using a picker control (value: ``)
+     *  *  `multiselect`: Stores multiple values using a select list (value: `com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes`)
+     *  *  `multiuserpicker`: Stores multiple users using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker`)
+     *  *  `multiversion`: Stores multiple versions from the versions available in a project using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:multiversion`)
+     *  *  `project`: Stores a project from a list of projects that the user is permitted to view (value: `com.atlassian.jira.plugin.system.customfieldtypes:project`)
+     *  *  `radiobuttons`: Stores a value using radio buttons (value: `com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons`)
+     *  *  `readonlyfield`: Stores a read-only text value, which can only be populated via the API (value: `com.atlassian.jira.plugin.system.customfieldtypes:readonlyfield`)
+     *  *  `select`: Stores a value from a configurable list of options (value: `com.atlassian.jira.plugin.system.customfieldtypes:select`)
+     *  *  `textarea`: Stores a long text string using a multiline text area (value: `com.atlassian.jira.plugin.system.customfieldtypes:textarea`)
+     *  *  `textfield`: Stores a text string using a single-line text box (value: `com.atlassian.jira.plugin.system.customfieldtypes:textfield`)
+     *  *  `url`: Stores a URL (value: `com.atlassian.jira.plugin.system.customfieldtypes:url`)
+     *  *  `userpicker`: Stores a user using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:userpicker`)
+     *  *  `version`: Stores a version using a picker control (value: `com.atlassian.jira.plugin.system.customfieldtypes:version`)
+     * 
+     * To create a field based on a [Forge custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/#jira-custom-field-type--beta-), use the ID of the Forge custom field type as the value. For example, `ari:cloud:ecosystem::extension/e62f20a2-4b61-4dbe-bfb9-9a88b5e3ac84/548c5df1-24aa-4f7c-bbbb-3038d947cb05/static/my-cf-type-key`.
+     * @type {string}
+     * @memberof CustomFieldDefinitionJsonBean
+     */
+    type: string;
 }
 
 
@@ -4566,11 +4718,11 @@ export interface CustomFieldOption {
  */
 export interface CustomFieldOptionCreate {
     /**
-     * The value of the custom field option.
-     * @type {string}
+     * Whether the option is disabled.
+     * @type {boolean}
      * @memberof CustomFieldOptionCreate
      */
-    value: string;
+    disabled?: boolean;
     /**
      * For cascading options, the ID of the custom field object containing the cascading option.
      * @type {string}
@@ -4578,11 +4730,11 @@ export interface CustomFieldOptionCreate {
      */
     optionId?: string;
     /**
-     * Whether the option is disabled.
-     * @type {boolean}
+     * The value of the custom field option.
+     * @type {string}
      * @memberof CustomFieldOptionCreate
      */
-    disabled?: boolean;
+    value: string;
 }
 /**
  * Details of a custom field option for a context.
@@ -4590,6 +4742,12 @@ export interface CustomFieldOptionCreate {
  * @interface CustomFieldOptionUpdate
  */
 export interface CustomFieldOptionUpdate {
+    /**
+     * Whether the option is disabled.
+     * @type {boolean}
+     * @memberof CustomFieldOptionUpdate
+     */
+    disabled?: boolean;
     /**
      * The ID of the custom field option.
      * @type {string}
@@ -4602,12 +4760,6 @@ export interface CustomFieldOptionUpdate {
      * @memberof CustomFieldOptionUpdate
      */
     value?: string;
-    /**
-     * Whether the option is disabled.
-     * @type {boolean}
-     * @memberof CustomFieldOptionUpdate
-     */
-    disabled?: boolean;
 }
 /**
  * Details about the replacement for a deleted version.
@@ -4688,11 +4840,23 @@ export interface CustomFieldValueUpdateDetails {
  */
 export interface Dashboard {
     /**
+     * The automatic refresh interval for the dashboard in milliseconds.
+     * @type {number}
+     * @memberof Dashboard
+     */
+    readonly automaticRefreshMs?: number;
+    /**
      * 
      * @type {string}
      * @memberof Dashboard
      */
     description?: string;
+    /**
+     * The details of any edit share permissions for the dashboard.
+     * @type {Array<SharePermission>}
+     * @memberof Dashboard
+     */
+    readonly editPermissions?: Array<SharePermission>;
     /**
      * The ID of the dashboard.
      * @type {string}
@@ -4705,6 +4869,12 @@ export interface Dashboard {
      * @memberof Dashboard
      */
     readonly isFavourite?: boolean;
+    /**
+     * Whether the current user has permission to edit the dashboard.
+     * @type {boolean}
+     * @memberof Dashboard
+     */
+    readonly isWritable?: boolean;
     /**
      * The name of the dashboard.
      * @type {string}
@@ -4742,35 +4912,17 @@ export interface Dashboard {
      */
     readonly sharePermissions?: Array<SharePermission>;
     /**
-     * The details of any edit share permissions for the dashboard.
-     * @type {Array<SharePermission>}
+     * Whether the current dashboard is system dashboard.
+     * @type {boolean}
      * @memberof Dashboard
      */
-    readonly editPermissions?: Array<SharePermission>;
-    /**
-     * The automatic refresh interval for the dashboard in milliseconds.
-     * @type {number}
-     * @memberof Dashboard
-     */
-    readonly automaticRefreshMs?: number;
+    readonly systemDashboard?: boolean;
     /**
      * The URL of the dashboard.
      * @type {string}
      * @memberof Dashboard
      */
     readonly view?: string;
-    /**
-     * Whether the current user has permission to edit the dashboard.
-     * @type {boolean}
-     * @memberof Dashboard
-     */
-    readonly isWritable?: boolean;
-    /**
-     * Whether the current dashboard is system dashboard.
-     * @type {boolean}
-     * @memberof Dashboard
-     */
-    readonly systemDashboard?: boolean;
 }
 /**
  * Details of a dashboard.
@@ -4779,29 +4931,29 @@ export interface Dashboard {
  */
 export interface DashboardDetails {
     /**
-     * The name of the dashboard.
-     * @type {string}
-     * @memberof DashboardDetails
-     */
-    name: string;
-    /**
      * The description of the dashboard.
      * @type {string}
      * @memberof DashboardDetails
      */
     description?: string;
     /**
-     * The share permissions for the dashboard.
-     * @type {Array<SharePermission>}
-     * @memberof DashboardDetails
-     */
-    sharePermissions: Array<SharePermission>;
-    /**
      * The edit permissions for the dashboard.
      * @type {Array<SharePermission>}
      * @memberof DashboardDetails
      */
     editPermissions: Array<SharePermission>;
+    /**
+     * The name of the dashboard.
+     * @type {string}
+     * @memberof DashboardDetails
+     */
+    name: string;
+    /**
+     * The share permissions for the dashboard.
+     * @type {Array<SharePermission>}
+     * @memberof DashboardDetails
+     */
+    sharePermissions: Array<SharePermission>;
 }
 /**
  * Details of a gadget.
@@ -4809,6 +4961,12 @@ export interface DashboardDetails {
  * @interface DashboardGadget
  */
 export interface DashboardGadget {
+    /**
+     * The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
+     * @type {string}
+     * @memberof DashboardGadget
+     */
+    readonly color: DashboardGadgetColorEnum;
     /**
      * The ID of the gadget instance.
      * @type {number}
@@ -4822,18 +4980,6 @@ export interface DashboardGadget {
      */
     readonly moduleKey?: string;
     /**
-     * The URI of the gadget type.
-     * @type {string}
-     * @memberof DashboardGadget
-     */
-    readonly uri?: string;
-    /**
-     * The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
-     * @type {string}
-     * @memberof DashboardGadget
-     */
-    readonly color: DashboardGadgetColorEnum;
-    /**
      * 
      * @type {DashboardGadgetPosition}
      * @memberof DashboardGadget
@@ -4845,6 +4991,12 @@ export interface DashboardGadget {
      * @memberof DashboardGadget
      */
     readonly title: string;
+    /**
+     * The URI of the gadget type.
+     * @type {string}
+     * @memberof DashboardGadget
+     */
+    readonly uri?: string;
 }
 
 
@@ -4874,13 +5026,13 @@ export interface DashboardGadgetPosition {
      * @type {number}
      * @memberof DashboardGadgetPosition
      */
-    theRowPositionOfTheGadget: number;
+    theColumnPositionOfTheGadget: number;
     /**
      * 
      * @type {number}
      * @memberof DashboardGadgetPosition
      */
-    theColumnPositionOfTheGadget: number;
+    theRowPositionOfTheGadget: number;
 }
 /**
  * The list of gadgets on the dashboard.
@@ -4902,23 +5054,23 @@ export interface DashboardGadgetResponse {
  */
 export interface DashboardGadgetSettings {
     /**
-     * The module key of the gadget type. Can't be provided with `uri`.
-     * @type {string}
-     * @memberof DashboardGadgetSettings
-     */
-    moduleKey?: string;
-    /**
-     * The URI of the gadget type. Can't be provided with `moduleKey`.
-     * @type {string}
-     * @memberof DashboardGadgetSettings
-     */
-    uri?: string;
-    /**
      * The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
      * @type {string}
      * @memberof DashboardGadgetSettings
      */
     color?: string;
+    /**
+     * Whether to ignore the validation of module key and URI. For example, when a gadget is created that is a part of an application that isn't installed.
+     * @type {boolean}
+     * @memberof DashboardGadgetSettings
+     */
+    ignoreUriAndModuleKeyValidation?: boolean;
+    /**
+     * The module key of the gadget type. Can't be provided with `uri`.
+     * @type {string}
+     * @memberof DashboardGadgetSettings
+     */
+    moduleKey?: string;
     /**
      * 
      * @type {DashboardGadgetSettingsPosition}
@@ -4932,11 +5084,11 @@ export interface DashboardGadgetSettings {
      */
     title?: string;
     /**
-     * Whether to ignore the validation of module key and URI. For example, when a gadget is created that is a part of an application that isn't installed.
-     * @type {boolean}
+     * The URI of the gadget type. Can't be provided with `moduleKey`.
+     * @type {string}
      * @memberof DashboardGadgetSettings
      */
-    ignoreUriAndModuleKeyValidation?: boolean;
+    uri?: string;
 }
 /**
  * The position of the gadget. When the gadget is placed into the position, other gadgets in the same column are moved down to accommodate it.
@@ -4949,13 +5101,13 @@ export interface DashboardGadgetSettingsPosition {
      * @type {number}
      * @memberof DashboardGadgetSettingsPosition
      */
-    theRowPositionOfTheGadget: number;
+    theColumnPositionOfTheGadget: number;
     /**
      * 
      * @type {number}
      * @memberof DashboardGadgetSettingsPosition
      */
-    theColumnPositionOfTheGadget: number;
+    theRowPositionOfTheGadget: number;
 }
 /**
  * The details of the gadget to update.
@@ -4963,12 +5115,6 @@ export interface DashboardGadgetSettingsPosition {
  * @interface DashboardGadgetUpdateRequest
  */
 export interface DashboardGadgetUpdateRequest {
-    /**
-     * The title of the gadget.
-     * @type {string}
-     * @memberof DashboardGadgetUpdateRequest
-     */
-    title?: string;
     /**
      * The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
      * @type {string}
@@ -4981,6 +5127,12 @@ export interface DashboardGadgetUpdateRequest {
      * @memberof DashboardGadgetUpdateRequest
      */
     position?: DashboardGadgetUpdateRequestPosition;
+    /**
+     * The title of the gadget.
+     * @type {string}
+     * @memberof DashboardGadgetUpdateRequest
+     */
+    title?: string;
 }
 /**
  * The position of the gadget.
@@ -4993,13 +5145,13 @@ export interface DashboardGadgetUpdateRequestPosition {
      * @type {number}
      * @memberof DashboardGadgetUpdateRequestPosition
      */
-    theRowPositionOfTheGadget: number;
+    theColumnPositionOfTheGadget: number;
     /**
      * 
      * @type {number}
      * @memberof DashboardGadgetUpdateRequestPosition
      */
-    theColumnPositionOfTheGadget: number;
+    theRowPositionOfTheGadget: number;
 }
 /**
  * The owner of the dashboard.
@@ -5008,18 +5160,36 @@ export interface DashboardGadgetUpdateRequestPosition {
  */
 export interface DashboardOwner {
     /**
+     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof DashboardOwner
+     */
+    accountId?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof DashboardOwner
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {UserBeanAvatarUrls}
+     * @memberof DashboardOwner
+     */
+    avatarUrls?: UserBeanAvatarUrls;
+    /**
+     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * @type {string}
+     * @memberof DashboardOwner
+     */
+    displayName?: string;
+    /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The key of the user.
      * @type {string}
      * @memberof DashboardOwner
      */
     key?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof DashboardOwner
-     */
-    self?: string;
     /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The username of the user.
@@ -5028,29 +5198,31 @@ export interface DashboardOwner {
      */
     name?: string;
     /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The URL of the user.
      * @type {string}
      * @memberof DashboardOwner
      */
-    displayName?: string;
+    self?: string;
+}
+/**
+ * Details of scheme and new default level.
+ * @export
+ * @interface DefaultLevelValue
+ */
+export interface DefaultLevelValue {
+    [key: string]: any | any;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof DashboardOwner
-     */
-    active?: boolean;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * The ID of the issue security level to set as default for the specified scheme. Providing null will reset the default level.
      * @type {string}
-     * @memberof DashboardOwner
+     * @memberof DefaultLevelValue
      */
-    accountId?: string;
+    defaultLevelId: string;
     /**
-     * 
-     * @type {UserBeanAvatarUrls}
-     * @memberof DashboardOwner
+     * The ID of the issue security scheme to set default level for.
+     * @type {string}
+     * @memberof DefaultLevelValue
      */
-    avatarUrls?: UserBeanAvatarUrls;
+    issueSecuritySchemeId: string;
 }
 /**
  * Details of the scope of the default sharing for new filters and dashboards.
@@ -5088,17 +5260,17 @@ export type DefaultShareScopeScopeEnum = typeof DefaultShareScopeScopeEnum[keyof
  */
 export interface DefaultWorkflow {
     /**
-     * The name of the workflow to set as the default workflow.
-     * @type {string}
-     * @memberof DefaultWorkflow
-     */
-    workflow: string;
-    /**
      * Whether a draft workflow scheme is created or updated when updating an active workflow scheme. The draft is updated with the new default workflow. Defaults to `false`.
      * @type {boolean}
      * @memberof DefaultWorkflow
      */
     updateDraftIfNeeded?: boolean;
+    /**
+     * The name of the workflow to set as the default workflow.
+     * @type {string}
+     * @memberof DefaultWorkflow
+     */
+    workflow: string;
 }
 /**
  * 
@@ -5107,11 +5279,11 @@ export interface DefaultWorkflow {
  */
 export interface DeleteAndReplaceVersionBean {
     /**
-     * The ID of the version to update `fixVersion` to when the field contains the deleted version.
-     * @type {number}
+     * An array of custom field IDs (`customFieldId`) and version IDs (`moveTo`) to update when the fields contain the deleted version.
+     * @type {Array<CustomFieldReplacement>}
      * @memberof DeleteAndReplaceVersionBean
      */
-    moveFixIssuesTo?: number;
+    customFieldReplacementList?: Array<CustomFieldReplacement>;
     /**
      * The ID of the version to update `affectedVersion` to when the field contains the deleted version.
      * @type {number}
@@ -5119,11 +5291,11 @@ export interface DeleteAndReplaceVersionBean {
      */
     moveAffectedIssuesTo?: number;
     /**
-     * An array of custom field IDs (`customFieldId`) and version IDs (`moveTo`) to update when the fields contain the deleted version.
-     * @type {Array<CustomFieldReplacement>}
+     * The ID of the version to update `fixVersion` to when the field contains the deleted version.
+     * @type {number}
      * @memberof DeleteAndReplaceVersionBean
      */
-    customFieldReplacementList?: Array<CustomFieldReplacement>;
+    moveFixIssuesTo?: number;
 }
 /**
  * Details about a workflow.
@@ -5132,11 +5304,11 @@ export interface DeleteAndReplaceVersionBean {
  */
 export interface DeprecatedWorkflow {
     /**
-     * The name of the workflow.
-     * @type {string}
+     * 
+     * @type {boolean}
      * @memberof DeprecatedWorkflow
      */
-    readonly name?: string;
+    _default?: boolean;
     /**
      * The description of the workflow.
      * @type {string}
@@ -5162,11 +5334,11 @@ export interface DeprecatedWorkflow {
      */
     readonly lastModifiedUserAccountId?: string;
     /**
-     * The number of steps included in the workflow.
-     * @type {number}
+     * The name of the workflow.
+     * @type {string}
      * @memberof DeprecatedWorkflow
      */
-    readonly steps?: number;
+    readonly name?: string;
     /**
      * 
      * @type {DeprecatedWorkflowScope}
@@ -5174,11 +5346,11 @@ export interface DeprecatedWorkflow {
      */
     scope?: DeprecatedWorkflowScope;
     /**
-     * 
-     * @type {boolean}
+     * The number of steps included in the workflow.
+     * @type {number}
      * @memberof DeprecatedWorkflow
      */
-    _default?: boolean;
+    readonly steps?: number;
 }
 /**
  * The scope where this workflow applies
@@ -5187,17 +5359,17 @@ export interface DeprecatedWorkflow {
  */
 export interface DeprecatedWorkflowScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof DeprecatedWorkflowScope
-     */
-    readonly type?: DeprecatedWorkflowScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof DeprecatedWorkflowScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof DeprecatedWorkflowScope
+     */
+    readonly type?: DeprecatedWorkflowScopeTypeEnum;
 }
 
 
@@ -5299,11 +5471,29 @@ export interface ErrorMessage {
  */
 export interface EventNotification {
     /**
+     * The email address.
+     * @type {string}
+     * @memberof EventNotification
+     */
+    emailAddress?: string;
+    /**
      * Expand options that include additional event notification details in the response.
      * @type {string}
      * @memberof EventNotification
      */
     expand?: string;
+    /**
+     * 
+     * @type {EventNotificationField}
+     * @memberof EventNotification
+     */
+    field?: EventNotificationField;
+    /**
+     * 
+     * @type {EventNotificationGroup}
+     * @memberof EventNotification
+     */
+    group?: EventNotificationGroup;
     /**
      * The ID of the notification.
      * @type {number}
@@ -5329,6 +5519,12 @@ export interface EventNotification {
      */
     parameter?: string;
     /**
+     * 
+     * @type {EventNotificationProjectRole}
+     * @memberof EventNotification
+     */
+    projectRole?: EventNotificationProjectRole;
+    /**
      * The identifier associated with the `notificationType` value that defines the receiver of the notification, where the receiver isn't implied by the `notificationType` value. So, when `notificationType` is:
      * 
      *  *  `User`, `recipient` is the user account ID.
@@ -5340,30 +5536,6 @@ export interface EventNotification {
      * @memberof EventNotification
      */
     recipient?: string;
-    /**
-     * 
-     * @type {EventNotificationGroup}
-     * @memberof EventNotification
-     */
-    group?: EventNotificationGroup;
-    /**
-     * 
-     * @type {EventNotificationField}
-     * @memberof EventNotification
-     */
-    field?: EventNotificationField;
-    /**
-     * The email address.
-     * @type {string}
-     * @memberof EventNotification
-     */
-    emailAddress?: string;
-    /**
-     * 
-     * @type {EventNotificationProjectRole}
-     * @memberof EventNotification
-     */
-    projectRole?: EventNotificationProjectRole;
     /**
      * 
      * @type {EventNotificationUser}
@@ -5399,6 +5571,18 @@ export type EventNotificationNotificationTypeEnum = typeof EventNotificationNoti
  */
 export interface EventNotificationField {
     /**
+     * The names that can be used to reference the field in an advanced search. For more information, see [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ).
+     * @type {Set<string>}
+     * @memberof EventNotificationField
+     */
+    clauseNames?: string[];
+    /**
+     * Whether the field is a custom field.
+     * @type {boolean}
+     * @memberof EventNotificationField
+     */
+    custom?: boolean;
+    /**
      * The ID of the field.
      * @type {string}
      * @memberof EventNotificationField
@@ -5417,11 +5601,11 @@ export interface EventNotificationField {
      */
     name?: string;
     /**
-     * Whether the field is a custom field.
+     * Whether the field can be used as a column on the issue navigator.
      * @type {boolean}
      * @memberof EventNotificationField
      */
-    custom?: boolean;
+    navigable?: boolean;
     /**
      * Whether the content of the field can be used to order lists.
      * @type {boolean}
@@ -5429,23 +5613,11 @@ export interface EventNotificationField {
      */
     orderable?: boolean;
     /**
-     * Whether the field can be used as a column on the issue navigator.
-     * @type {boolean}
+     * 
+     * @type {FieldDetailsSchema}
      * @memberof EventNotificationField
      */
-    navigable?: boolean;
-    /**
-     * Whether the content of the field can be searched.
-     * @type {boolean}
-     * @memberof EventNotificationField
-     */
-    searchable?: boolean;
-    /**
-     * The names that can be used to reference the field in an advanced search. For more information, see [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ).
-     * @type {Set<string>}
-     * @memberof EventNotificationField
-     */
-    clauseNames?: string[];
+    schema?: FieldDetailsSchema;
     /**
      * 
      * @type {FieldDetailsScope}
@@ -5453,11 +5625,11 @@ export interface EventNotificationField {
      */
     scope?: FieldDetailsScope;
     /**
-     * 
-     * @type {FieldDetailsSchema}
+     * Whether the content of the field can be searched.
+     * @type {boolean}
      * @memberof EventNotificationField
      */
-    schema?: FieldDetailsSchema;
+    searchable?: boolean;
 }
 /**
  * The specified group.
@@ -5466,17 +5638,17 @@ export interface EventNotificationField {
  */
 export interface EventNotificationGroup {
     /**
-     * The name of group.
-     * @type {string}
-     * @memberof EventNotificationGroup
-     */
-    name?: string;
-    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof EventNotificationGroup
      */
     groupId?: string | null;
+    /**
+     * The name of group.
+     * @type {string}
+     * @memberof EventNotificationGroup
+     */
+    name?: string;
     /**
      * The URL for these group details.
      * @type {string}
@@ -5491,59 +5663,11 @@ export interface EventNotificationGroup {
  */
 export interface EventNotificationProjectRole {
     /**
-     * The URL the project role details.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly self?: string;
-    /**
-     * The name of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    name?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly id?: number;
-    /**
-     * The description of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly description?: string;
-    /**
      * The list of users who act in this role.
      * @type {Array<RoleActor>}
      * @memberof EventNotificationProjectRole
      */
     readonly actors?: Array<RoleActor>;
-    /**
-     * 
-     * @type {ProjectRoleScope}
-     * @memberof EventNotificationProjectRole
-     */
-    scope?: ProjectRoleScope;
-    /**
-     * The translated name of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    translatedName?: string;
-    /**
-     * Whether the calling user is part of this role.
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    currentUserRole?: boolean;
-    /**
-     * Whether the roles are configurable for this project.
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly roleConfigurable?: boolean;
     /**
      * Whether this role is the admin role for the project.
      * @type {boolean}
@@ -5551,11 +5675,59 @@ export interface EventNotificationProjectRole {
      */
     readonly admin?: boolean;
     /**
+     * Whether the calling user is part of this role.
+     * @type {boolean}
+     * @memberof EventNotificationProjectRole
+     */
+    currentUserRole?: boolean;
+    /**
      * Whether this role is the default role for the project
      * @type {boolean}
      * @memberof EventNotificationProjectRole
      */
     readonly _default?: boolean;
+    /**
+     * The description of the project role.
+     * @type {string}
+     * @memberof EventNotificationProjectRole
+     */
+    readonly description?: string;
+    /**
+     * The ID of the project role.
+     * @type {number}
+     * @memberof EventNotificationProjectRole
+     */
+    readonly id?: number;
+    /**
+     * The name of the project role.
+     * @type {string}
+     * @memberof EventNotificationProjectRole
+     */
+    name?: string;
+    /**
+     * Whether the roles are configurable for this project.
+     * @type {boolean}
+     * @memberof EventNotificationProjectRole
+     */
+    readonly roleConfigurable?: boolean;
+    /**
+     * 
+     * @type {ProjectRoleScope}
+     * @memberof EventNotificationProjectRole
+     */
+    scope?: ProjectRoleScope;
+    /**
+     * The URL the project role details.
+     * @type {string}
+     * @memberof EventNotificationProjectRole
+     */
+    readonly self?: string;
+    /**
+     * The translated name of the project role.
+     * @type {string}
+     * @memberof EventNotificationProjectRole
+     */
+    translatedName?: string;
 }
 /**
  * The specified user.
@@ -5564,35 +5736,23 @@ export interface EventNotificationProjectRole {
  */
 export interface EventNotificationUser {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof EventNotificationUser
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof EventNotificationUser
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof EventNotificationUser
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -5606,23 +5766,35 @@ export interface EventNotificationUser {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof EventNotificationUser
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof EventNotificationUser
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof EventNotificationUser
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof EventNotificationUser
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof EventNotificationUser
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly accountType?: string;
 }
 /**
  * Details about a failed webhook.
@@ -5631,29 +5803,29 @@ export interface EventNotificationUser {
  */
 export interface FailedWebhook {
     /**
-     * The webhook ID, as sent in the `X-Atlassian-Webhook-Identifier` header with the webhook.
-     * @type {string}
-     * @memberof FailedWebhook
-     */
-    id: string;
-    /**
      * The webhook body.
      * @type {string}
      * @memberof FailedWebhook
      */
     body?: string;
     /**
-     * The original webhook destination.
-     * @type {string}
-     * @memberof FailedWebhook
-     */
-    url: string;
-    /**
      * The time the webhook was added to the list of failed webhooks (that is, the time of the last failed retry).
      * @type {number}
      * @memberof FailedWebhook
      */
     failureTime: number;
+    /**
+     * The webhook ID, as sent in the `X-Atlassian-Webhook-Identifier` header with the webhook.
+     * @type {string}
+     * @memberof FailedWebhook
+     */
+    id: string;
+    /**
+     * The original webhook destination.
+     * @type {string}
+     * @memberof FailedWebhook
+     */
+    url: string;
 }
 /**
  * A page of failed webhooks.
@@ -5661,12 +5833,6 @@ export interface FailedWebhook {
  * @interface FailedWebhooks
  */
 export interface FailedWebhooks {
-    /**
-     * The list of webhooks.
-     * @type {Array<FailedWebhook>}
-     * @memberof FailedWebhooks
-     */
-    values: Array<FailedWebhook>;
     /**
      * The maximum number of items on the page. If the list of values is shorter than this number, then there are no more pages.
      * @type {number}
@@ -5679,6 +5845,12 @@ export interface FailedWebhooks {
      * @memberof FailedWebhooks
      */
     next?: string;
+    /**
+     * The list of webhooks.
+     * @type {Array<FailedWebhook>}
+     * @memberof FailedWebhooks
+     */
+    values: Array<FailedWebhook>;
 }
 /**
  * Details of a field.
@@ -5687,23 +5859,11 @@ export interface FailedWebhooks {
  */
 export interface Field {
     /**
-     * The ID of the field.
-     * @type {string}
+     * Number of contexts where the field is used.
+     * @type {number}
      * @memberof Field
      */
-    id: string;
-    /**
-     * The name of the field.
-     * @type {string}
-     * @memberof Field
-     */
-    name: string;
-    /**
-     * 
-     * @type {JsonTypeBean}
-     * @memberof Field
-     */
-    schema: JsonTypeBean;
+    contextsCount?: number;
     /**
      * The description of the field.
      * @type {string}
@@ -5711,11 +5871,11 @@ export interface Field {
      */
     description?: string;
     /**
-     * The key of the field.
+     * The ID of the field.
      * @type {string}
      * @memberof Field
      */
-    key?: string;
+    id: string;
     /**
      * Whether the field is locked.
      * @type {boolean}
@@ -5729,23 +5889,23 @@ export interface Field {
      */
     isUnscreenable?: boolean;
     /**
-     * The searcher key of the field. Returned for custom fields.
+     * The key of the field.
      * @type {string}
      * @memberof Field
      */
-    searcherKey?: string;
+    key?: string;
     /**
-     * Number of screens where the field is used.
-     * @type {number}
+     * 
+     * @type {FieldLastUsed}
      * @memberof Field
      */
-    screensCount?: number;
+    lastUsed?: FieldLastUsed;
     /**
-     * Number of contexts where the field is used.
-     * @type {number}
+     * The name of the field.
+     * @type {string}
      * @memberof Field
      */
-    contextsCount?: number;
+    name: string;
     /**
      * Number of projects where the field is used.
      * @type {number}
@@ -5754,10 +5914,22 @@ export interface Field {
     projectsCount?: number;
     /**
      * 
-     * @type {FieldLastUsed}
+     * @type {JsonTypeBean}
      * @memberof Field
      */
-    lastUsed?: FieldLastUsed;
+    schema: JsonTypeBean;
+    /**
+     * Number of screens where the field is used.
+     * @type {number}
+     * @memberof Field
+     */
+    screensCount?: number;
+    /**
+     * The searcher key of the field. Returned for custom fields.
+     * @type {string}
+     * @memberof Field
+     */
+    searcherKey?: string;
 }
 /**
  * A clause that asserts whether a field was changed. For example, `status CHANGED AFTER startOfMonth(-1M)`.See [CHANGED](https://confluence.atlassian.com/x/dgiiLQ#Advancedsearching-operatorsreference-CHANGEDCHANGED) for more information about the CHANGED operator.
@@ -5801,29 +5973,29 @@ export type FieldChangedClauseOperatorEnum = typeof FieldChangedClauseOperatorEn
  */
 export interface FieldConfiguration {
     /**
-     * The ID of the field configuration.
-     * @type {number}
-     * @memberof FieldConfiguration
-     */
-    id: number;
-    /**
-     * The name of the field configuration.
-     * @type {string}
-     * @memberof FieldConfiguration
-     */
-    name: string;
-    /**
      * The description of the field configuration.
      * @type {string}
      * @memberof FieldConfiguration
      */
     description: string;
     /**
+     * The ID of the field configuration.
+     * @type {number}
+     * @memberof FieldConfiguration
+     */
+    id: number;
+    /**
      * Whether the field configuration is the default.
      * @type {boolean}
      * @memberof FieldConfiguration
      */
     isDefault?: boolean;
+    /**
+     * The name of the field configuration.
+     * @type {string}
+     * @memberof FieldConfiguration
+     */
+    name: string;
 }
 /**
  * Details of a field configuration.
@@ -5832,17 +6004,17 @@ export interface FieldConfiguration {
  */
 export interface FieldConfigurationDetails {
     /**
-     * The name of the field configuration. Must be unique.
-     * @type {string}
-     * @memberof FieldConfigurationDetails
-     */
-    name: string;
-    /**
      * The description of the field configuration.
      * @type {string}
      * @memberof FieldConfigurationDetails
      */
     description?: string;
+    /**
+     * The name of the field configuration. Must be unique.
+     * @type {string}
+     * @memberof FieldConfigurationDetails
+     */
+    name: string;
 }
 /**
  * The field configuration for an issue type.
@@ -5850,6 +6022,12 @@ export interface FieldConfigurationDetails {
  * @interface FieldConfigurationIssueTypeItem
  */
 export interface FieldConfigurationIssueTypeItem {
+    /**
+     * The ID of the field configuration.
+     * @type {string}
+     * @memberof FieldConfigurationIssueTypeItem
+     */
+    fieldConfigurationId: string;
     /**
      * The ID of the field configuration scheme.
      * @type {string}
@@ -5862,12 +6040,6 @@ export interface FieldConfigurationIssueTypeItem {
      * @memberof FieldConfigurationIssueTypeItem
      */
     issueTypeId: string;
-    /**
-     * The ID of the field configuration.
-     * @type {string}
-     * @memberof FieldConfigurationIssueTypeItem
-     */
-    fieldConfigurationId: string;
 }
 /**
  * A field within a field configuration.
@@ -5876,17 +6048,17 @@ export interface FieldConfigurationIssueTypeItem {
  */
 export interface FieldConfigurationItem {
     /**
-     * The ID of the field within the field configuration.
-     * @type {string}
-     * @memberof FieldConfigurationItem
-     */
-    id: string;
-    /**
      * The description of the field within the field configuration.
      * @type {string}
      * @memberof FieldConfigurationItem
      */
     description?: string;
+    /**
+     * The ID of the field within the field configuration.
+     * @type {string}
+     * @memberof FieldConfigurationItem
+     */
+    id: string;
     /**
      * Whether the field is hidden in the field configuration.
      * @type {boolean}
@@ -5926,6 +6098,12 @@ export interface FieldConfigurationItemsDetails {
  */
 export interface FieldConfigurationScheme {
     /**
+     * The description of the field configuration scheme.
+     * @type {string}
+     * @memberof FieldConfigurationScheme
+     */
+    description?: string;
+    /**
      * The ID of the field configuration scheme.
      * @type {string}
      * @memberof FieldConfigurationScheme
@@ -5937,12 +6115,6 @@ export interface FieldConfigurationScheme {
      * @memberof FieldConfigurationScheme
      */
     name: string;
-    /**
-     * The description of the field configuration scheme.
-     * @type {string}
-     * @memberof FieldConfigurationScheme
-     */
-    description?: string;
 }
 /**
  * Associated field configuration scheme and project.
@@ -5989,17 +6161,17 @@ export interface FieldConfigurationSchemeProjects {
  */
 export interface FieldConfigurationToIssueTypeMapping {
     /**
-     * The ID of the issue type or *default*. When set to *default* this field configuration issue type item applies to all issue types without a field configuration. An issue type can be included only once in a request.
-     * @type {string}
-     * @memberof FieldConfigurationToIssueTypeMapping
-     */
-    issueTypeId: string;
-    /**
      * The ID of the field configuration.
      * @type {string}
      * @memberof FieldConfigurationToIssueTypeMapping
      */
     fieldConfigurationId: string;
+    /**
+     * The ID of the issue type or *default*. When set to *default* this field configuration issue type item applies to all issue types without a field configuration. An issue type can be included only once in a request.
+     * @type {string}
+     * @memberof FieldConfigurationToIssueTypeMapping
+     */
+    issueTypeId: string;
 }
 /**
  * Details about a field.
@@ -6007,6 +6179,18 @@ export interface FieldConfigurationToIssueTypeMapping {
  * @interface FieldDetails
  */
 export interface FieldDetails {
+    /**
+     * The names that can be used to reference the field in an advanced search. For more information, see [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ).
+     * @type {Set<string>}
+     * @memberof FieldDetails
+     */
+    clauseNames?: string[];
+    /**
+     * Whether the field is a custom field.
+     * @type {boolean}
+     * @memberof FieldDetails
+     */
+    custom?: boolean;
     /**
      * The ID of the field.
      * @type {string}
@@ -6026,11 +6210,11 @@ export interface FieldDetails {
      */
     name?: string;
     /**
-     * Whether the field is a custom field.
+     * Whether the field can be used as a column on the issue navigator.
      * @type {boolean}
      * @memberof FieldDetails
      */
-    custom?: boolean;
+    navigable?: boolean;
     /**
      * Whether the content of the field can be used to order lists.
      * @type {boolean}
@@ -6038,23 +6222,11 @@ export interface FieldDetails {
      */
     orderable?: boolean;
     /**
-     * Whether the field can be used as a column on the issue navigator.
-     * @type {boolean}
+     * 
+     * @type {FieldDetailsSchema}
      * @memberof FieldDetails
      */
-    navigable?: boolean;
-    /**
-     * Whether the content of the field can be searched.
-     * @type {boolean}
-     * @memberof FieldDetails
-     */
-    searchable?: boolean;
-    /**
-     * The names that can be used to reference the field in an advanced search. For more information, see [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ).
-     * @type {Set<string>}
-     * @memberof FieldDetails
-     */
-    clauseNames?: string[];
+    schema?: FieldDetailsSchema;
     /**
      * 
      * @type {FieldDetailsScope}
@@ -6062,11 +6234,11 @@ export interface FieldDetails {
      */
     scope?: FieldDetailsScope;
     /**
-     * 
-     * @type {FieldDetailsSchema}
+     * Whether the content of the field can be searched.
+     * @type {boolean}
      * @memberof FieldDetails
      */
-    schema?: FieldDetailsSchema;
+    searchable?: boolean;
 }
 /**
  * The data schema for the field.
@@ -6075,23 +6247,11 @@ export interface FieldDetails {
  */
 export interface FieldDetailsSchema {
     /**
-     * The data type of the field.
-     * @type {string}
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
      * @memberof FieldDetailsSchema
      */
-    readonly type: string;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly system?: string;
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -6105,11 +6265,23 @@ export interface FieldDetailsSchema {
      */
     readonly customId?: number;
     /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
      * @memberof FieldDetailsSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof FieldDetailsSchema
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof FieldDetailsSchema
+     */
+    readonly type: string;
 }
 /**
  * The scope of the field.
@@ -6118,17 +6290,17 @@ export interface FieldDetailsSchema {
  */
 export interface FieldDetailsScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof FieldDetailsScope
-     */
-    readonly type?: FieldDetailsScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof FieldDetailsScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof FieldDetailsScope
+     */
+    readonly type?: FieldDetailsScopeTypeEnum;
 }
 
 
@@ -6183,6 +6355,54 @@ export type FieldLastUsedTypeEnum = typeof FieldLastUsedTypeEnum[keyof typeof Fi
  */
 export interface FieldMetadata {
     /**
+     * The list of values allowed in the field.
+     * @type {Array<any>}
+     * @memberof FieldMetadata
+     */
+    readonly allowedValues?: Array<any>;
+    /**
+     * The URL that can be used to automatically complete the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly autoCompleteUrl?: string;
+    /**
+     * The configuration properties.
+     * @type {{ [key: string]: any; }}
+     * @memberof FieldMetadata
+     */
+    readonly _configuration?: { [key: string]: any; };
+    /**
+     * The default value of the field.
+     * @type {any}
+     * @memberof FieldMetadata
+     */
+    readonly defaultValue?: any | null;
+    /**
+     * Whether the field has a default value.
+     * @type {boolean}
+     * @memberof FieldMetadata
+     */
+    readonly hasDefaultValue?: boolean;
+    /**
+     * The key of the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly key: string;
+    /**
+     * The name of the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly name: string;
+    /**
+     * The list of operations that can be performed on the field.
+     * @type {Array<string>}
+     * @memberof FieldMetadata
+     */
+    readonly operations: Array<string>;
+    /**
      * Whether the field is required.
      * @type {boolean}
      * @memberof FieldMetadata
@@ -6194,54 +6414,6 @@ export interface FieldMetadata {
      * @memberof FieldMetadata
      */
     schema: FieldMetadataSchema;
-    /**
-     * The name of the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly name: string;
-    /**
-     * The key of the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly key: string;
-    /**
-     * The URL that can be used to automatically complete the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly autoCompleteUrl?: string;
-    /**
-     * Whether the field has a default value.
-     * @type {boolean}
-     * @memberof FieldMetadata
-     */
-    readonly hasDefaultValue?: boolean;
-    /**
-     * The list of operations that can be performed on the field.
-     * @type {Array<string>}
-     * @memberof FieldMetadata
-     */
-    readonly operations: Array<string>;
-    /**
-     * The list of values allowed in the field.
-     * @type {Array<any>}
-     * @memberof FieldMetadata
-     */
-    readonly allowedValues?: Array<any>;
-    /**
-     * The default value of the field.
-     * @type {any}
-     * @memberof FieldMetadata
-     */
-    readonly defaultValue?: any | null;
-    /**
-     * The configuration properties.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldMetadata
-     */
-    readonly _configuration?: { [key: string]: any; };
 }
 /**
  * The data type of the field.
@@ -6250,23 +6422,11 @@ export interface FieldMetadata {
  */
 export interface FieldMetadataSchema {
     /**
-     * The data type of the field.
-     * @type {string}
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchema
      */
-    readonly type: string;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly system?: string;
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -6280,11 +6440,23 @@ export interface FieldMetadataSchema {
      */
     readonly customId?: number;
     /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
      * @memberof FieldMetadataSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof FieldMetadataSchema
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof FieldMetadataSchema
+     */
+    readonly type: string;
 }
 /**
  * Details of a field that can be used in advanced searches.
@@ -6292,46 +6464,6 @@ export interface FieldMetadataSchema {
  * @interface FieldReferenceData
  */
 export interface FieldReferenceData {
-    /**
-     * The field identifier.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    value?: string;
-    /**
-     * The display name contains the following:
-     * 
-     *  *  for system fields, the field name. For example, `Summary`.
-     *  *  for collapsed custom fields, the field name followed by a hyphen and then the field name and field type. For example, `Component - Component[Dropdown]`.
-     *  *  for other custom fields, the field name followed by a hyphen and then the custom field ID. For example, `Component - cf[10061]`.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    displayName?: string;
-    /**
-     * Whether the field can be used in a query's `ORDER BY` clause.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    orderable?: FieldReferenceDataOrderableEnum;
-    /**
-     * Whether the content of this field can be searched.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    searchable?: FieldReferenceDataSearchableEnum;
-    /**
-     * Whether this field has been deprecated.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    deprecated?: FieldReferenceDataDeprecatedEnum;
-    /**
-     * The searcher key of the field, only passed when the field is deprecated.
-     * @type {string}
-     * @memberof FieldReferenceData
-     */
-    deprecatedSearcherKey?: string;
     /**
      * Whether the field provide auto-complete suggestions.
      * @type {string}
@@ -6345,19 +6477,77 @@ export interface FieldReferenceData {
      */
     cfid?: string;
     /**
+     * Whether this field has been deprecated.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    deprecated?: FieldReferenceDataDeprecatedEnum;
+    /**
+     * The searcher key of the field, only passed when the field is deprecated.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    deprecatedSearcherKey?: string;
+    /**
+     * The display name contains the following:
+     * 
+     *  *  for system fields, the field name. For example, `Summary`.
+     *  *  for collapsed custom fields, the field name followed by a hyphen and then the field name and field type. For example, `Component - Component[Dropdown]`.
+     *  *  for other custom fields, the field name followed by a hyphen and then the custom field ID. For example, `Component - cf[10061]`.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    displayName?: string;
+    /**
      * The valid search operators for the field.
      * @type {Array<string>}
      * @memberof FieldReferenceData
      */
     operators?: Array<string>;
     /**
+     * Whether the field can be used in a query's `ORDER BY` clause.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    orderable?: FieldReferenceDataOrderableEnum;
+    /**
+     * Whether the content of this field can be searched.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    searchable?: FieldReferenceDataSearchableEnum;
+    /**
      * The data types of items in the field.
      * @type {Array<string>}
      * @memberof FieldReferenceData
      */
     types?: Array<string>;
+    /**
+     * The field identifier.
+     * @type {string}
+     * @memberof FieldReferenceData
+     */
+    value?: string;
 }
 
+
+/**
+ * @export
+ */
+export const FieldReferenceDataAutoEnum = {
+    True: 'true',
+    False: 'false'
+} as const;
+export type FieldReferenceDataAutoEnum = typeof FieldReferenceDataAutoEnum[keyof typeof FieldReferenceDataAutoEnum];
+
+/**
+ * @export
+ */
+export const FieldReferenceDataDeprecatedEnum = {
+    True: 'true',
+    False: 'false'
+} as const;
+export type FieldReferenceDataDeprecatedEnum = typeof FieldReferenceDataDeprecatedEnum[keyof typeof FieldReferenceDataDeprecatedEnum];
 
 /**
  * @export
@@ -6378,24 +6568,6 @@ export const FieldReferenceDataSearchableEnum = {
 export type FieldReferenceDataSearchableEnum = typeof FieldReferenceDataSearchableEnum[keyof typeof FieldReferenceDataSearchableEnum];
 
 /**
- * @export
- */
-export const FieldReferenceDataDeprecatedEnum = {
-    True: 'true',
-    False: 'false'
-} as const;
-export type FieldReferenceDataDeprecatedEnum = typeof FieldReferenceDataDeprecatedEnum[keyof typeof FieldReferenceDataDeprecatedEnum];
-
-/**
- * @export
- */
-export const FieldReferenceDataAutoEnum = {
-    True: 'true',
-    False: 'false'
-} as const;
-export type FieldReferenceDataAutoEnum = typeof FieldReferenceDataAutoEnum[keyof typeof FieldReferenceDataAutoEnum];
-
-/**
  * Details of an operation to perform on a field.
  * @export
  * @interface FieldUpdateOperation
@@ -6408,17 +6580,11 @@ export interface FieldUpdateOperation {
      */
     add?: any | null;
     /**
-     * The value to set in the field.
+     * The field value to copy from another issue.
      * @type {any}
      * @memberof FieldUpdateOperation
      */
-    set?: any | null;
-    /**
-     * The value to removed from the field.
-     * @type {any}
-     * @memberof FieldUpdateOperation
-     */
-    remove?: any | null;
+    copy?: any | null;
     /**
      * The value to edit in the field.
      * @type {any}
@@ -6426,11 +6592,17 @@ export interface FieldUpdateOperation {
      */
     edit?: any | null;
     /**
-     * The field value to copy from another issue.
+     * The value to removed from the field.
      * @type {any}
      * @memberof FieldUpdateOperation
      */
-    copy?: any | null;
+    remove?: any | null;
+    /**
+     * The value to set in the field.
+     * @type {any}
+     * @memberof FieldUpdateOperation
+     */
+    set?: any | null;
 }
 /**
  * A clause that asserts the current value of a field. For example, `summary ~ test`.
@@ -6445,17 +6617,17 @@ export interface FieldValueClause {
      */
     field: JqlQueryField;
     /**
-     * The operator between the field and operand.
-     * @type {string}
-     * @memberof FieldValueClause
-     */
-    operator: FieldValueClauseOperatorEnum;
-    /**
      * 
      * @type {JqlQueryClauseOperand}
      * @memberof FieldValueClause
      */
     operand: JqlQueryClauseOperand;
+    /**
+     * The operator between the field and operand.
+     * @type {string}
+     * @memberof FieldValueClause
+     */
+    operator: FieldValueClauseOperatorEnum;
 }
 
 
@@ -6491,17 +6663,17 @@ export interface FieldWasClause {
      */
     field: JqlQueryField;
     /**
-     * The operator between the field and operand.
-     * @type {string}
-     * @memberof FieldWasClause
-     */
-    operator: FieldWasClauseOperatorEnum;
-    /**
      * 
      * @type {JqlQueryClauseOperand}
      * @memberof FieldWasClause
      */
     operand: JqlQueryClauseOperand;
+    /**
+     * The operator between the field and operand.
+     * @type {string}
+     * @memberof FieldWasClause
+     */
+    operator: FieldWasClauseOperatorEnum;
     /**
      * The list of time predicates.
      * @type {Array<JqlQueryClauseTimePredicate>}
@@ -6529,24 +6701,6 @@ export type FieldWasClauseOperatorEnum = typeof FieldWasClauseOperatorEnum[keyof
  */
 export interface Fields {
     /**
-     * The summary description of the linked issue.
-     * @type {string}
-     * @memberof Fields
-     */
-    readonly summary?: string;
-    /**
-     * 
-     * @type {FieldsStatus}
-     * @memberof Fields
-     */
-    status?: FieldsStatus;
-    /**
-     * 
-     * @type {FieldsPriority}
-     * @memberof Fields
-     */
-    priority?: FieldsPriority;
-    /**
      * 
      * @type {FieldsAssignee}
      * @memberof Fields
@@ -6554,10 +6708,10 @@ export interface Fields {
     assignee?: FieldsAssignee;
     /**
      * 
-     * @type {FieldsTimetracking}
+     * @type {FieldsIssueType}
      * @memberof Fields
      */
-    timetracking?: FieldsTimetracking;
+    issueType?: FieldsIssueType;
     /**
      * 
      * @type {IssueTypeDetails}
@@ -6566,10 +6720,28 @@ export interface Fields {
     issuetype?: IssueTypeDetails;
     /**
      * 
-     * @type {FieldsIssueType}
+     * @type {FieldsPriority}
      * @memberof Fields
      */
-    issueType?: FieldsIssueType;
+    priority?: FieldsPriority;
+    /**
+     * 
+     * @type {FieldsStatus}
+     * @memberof Fields
+     */
+    status?: FieldsStatus;
+    /**
+     * The summary description of the linked issue.
+     * @type {string}
+     * @memberof Fields
+     */
+    readonly summary?: string;
+    /**
+     * 
+     * @type {FieldsTimetracking}
+     * @memberof Fields
+     */
+    timetracking?: FieldsTimetracking;
 }
 /**
  * The assignee of the linked issue.
@@ -6578,35 +6750,23 @@ export interface Fields {
  */
 export interface FieldsAssignee {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof FieldsAssignee
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof FieldsAssignee
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof FieldsAssignee
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -6620,23 +6780,35 @@ export interface FieldsAssignee {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof FieldsAssignee
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof FieldsAssignee
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof FieldsAssignee
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof FieldsAssignee
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof FieldsAssignee
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly accountType?: string;
 }
 /**
  * The type of the linked issue.
@@ -6645,47 +6817,17 @@ export interface FieldsAssignee {
  */
 export interface FieldsIssueType {
     /**
-     * The URL of these issue type details.
-     * @type {string}
+     * The ID of the issue type's avatar.
+     * @type {number}
      * @memberof FieldsIssueType
      */
-    readonly self?: string;
-    /**
-     * The ID of the issue type.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly id?: string;
+    readonly avatarId?: number;
     /**
      * The description of the issue type.
      * @type {string}
      * @memberof FieldsIssueType
      */
     readonly description?: string;
-    /**
-     * The URL of the issue type's avatar.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly iconUrl?: string;
-    /**
-     * The name of the issue type.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly name?: string;
-    /**
-     * Whether this issue type is used to create subtasks.
-     * @type {boolean}
-     * @memberof FieldsIssueType
-     */
-    readonly subtask?: boolean;
-    /**
-     * The ID of the issue type's avatar.
-     * @type {number}
-     * @memberof FieldsIssueType
-     */
-    readonly avatarId?: number;
     /**
      * Unique ID for next-gen projects.
      * @type {string}
@@ -6699,11 +6841,41 @@ export interface FieldsIssueType {
      */
     readonly hierarchyLevel?: number;
     /**
+     * The URL of the issue type's avatar.
+     * @type {string}
+     * @memberof FieldsIssueType
+     */
+    readonly iconUrl?: string;
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof FieldsIssueType
+     */
+    readonly id?: string;
+    /**
+     * The name of the issue type.
+     * @type {string}
+     * @memberof FieldsIssueType
+     */
+    readonly name?: string;
+    /**
      * 
      * @type {IssueTypeDetailsScope}
      * @memberof FieldsIssueType
      */
     scope?: IssueTypeDetailsScope;
+    /**
+     * The URL of these issue type details.
+     * @type {string}
+     * @memberof FieldsIssueType
+     */
+    readonly self?: string;
+    /**
+     * Whether this issue type is used to create subtasks.
+     * @type {boolean}
+     * @memberof FieldsIssueType
+     */
+    readonly subtask?: boolean;
 }
 /**
  * The priority of the linked issue.
@@ -6711,18 +6883,6 @@ export interface FieldsIssueType {
  * @interface FieldsPriority
  */
 export interface FieldsPriority {
-    /**
-     * The URL of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    self?: string;
-    /**
-     * The color used to indicate the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    statusColor?: string;
     /**
      * The description of the issue priority.
      * @type {string}
@@ -6736,12 +6896,6 @@ export interface FieldsPriority {
      */
     iconUrl?: string;
     /**
-     * The name of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    name?: string;
-    /**
      * The ID of the issue priority.
      * @type {string}
      * @memberof FieldsPriority
@@ -6753,6 +6907,24 @@ export interface FieldsPriority {
      * @memberof FieldsPriority
      */
     isDefault?: boolean;
+    /**
+     * The name of the issue priority.
+     * @type {string}
+     * @memberof FieldsPriority
+     */
+    name?: string;
+    /**
+     * The URL of the issue priority.
+     * @type {string}
+     * @memberof FieldsPriority
+     */
+    self?: string;
+    /**
+     * The color used to indicate the issue priority.
+     * @type {string}
+     * @memberof FieldsPriority
+     */
+    statusColor?: string;
 }
 /**
  * The status of the linked issue.
@@ -6760,12 +6932,6 @@ export interface FieldsPriority {
  * @interface FieldsStatus
  */
 export interface FieldsStatus {
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly self?: string;
     /**
      * The description of the status.
      * @type {string}
@@ -6779,17 +6945,23 @@ export interface FieldsStatus {
      */
     readonly iconUrl?: string;
     /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof FieldsStatus
+     */
+    readonly id?: string;
+    /**
      * The name of the status.
      * @type {string}
      * @memberof FieldsStatus
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * The URL of the status.
      * @type {string}
      * @memberof FieldsStatus
      */
-    readonly id?: string;
+    readonly self?: string;
     /**
      * 
      * @type {StatusDetailsStatusCategory}
@@ -6810,29 +6982,29 @@ export interface FieldsTimetracking {
      */
     readonly originalEstimate?: string;
     /**
-     * The remaining estimate of time needed for this issue in readable format.
-     * @type {string}
-     * @memberof FieldsTimetracking
-     */
-    readonly remainingEstimate?: string;
-    /**
-     * Time worked on this issue in readable format.
-     * @type {string}
-     * @memberof FieldsTimetracking
-     */
-    readonly timeSpent?: string;
-    /**
      * The original estimate of time needed for this issue in seconds.
      * @type {number}
      * @memberof FieldsTimetracking
      */
     readonly originalEstimateSeconds?: number;
     /**
+     * The remaining estimate of time needed for this issue in readable format.
+     * @type {string}
+     * @memberof FieldsTimetracking
+     */
+    readonly remainingEstimate?: string;
+    /**
      * The remaining estimate of time needed for this issue in seconds.
      * @type {number}
      * @memberof FieldsTimetracking
      */
     readonly remainingEstimateSeconds?: number;
+    /**
+     * Time worked on this issue in readable format.
+     * @type {string}
+     * @memberof FieldsTimetracking
+     */
+    readonly timeSpent?: string;
     /**
      * Time worked on this issue in seconds.
      * @type {number}
@@ -6847,53 +7019,17 @@ export interface FieldsTimetracking {
  */
 export interface Filter {
     /**
-     * The URL of the filter.
-     * @type {string}
-     * @memberof Filter
-     */
-    readonly self?: string;
-    /**
-     * The unique identifier for the filter.
-     * @type {string}
-     * @memberof Filter
-     */
-    readonly id?: string;
-    /**
-     * The name of the filter. Must be unique.
-     * @type {string}
-     * @memberof Filter
-     */
-    name: string;
-    /**
      * A description of the filter.
      * @type {string}
      * @memberof Filter
      */
     description?: string;
     /**
-     * 
-     * @type {FilterOwner}
+     * The groups and projects that can edit the filter.
+     * @type {Array<SharePermission>}
      * @memberof Filter
      */
-    owner?: FilterOwner;
-    /**
-     * The JQL query for the filter. For example, *project = SSP AND issuetype = Bug*.
-     * @type {string}
-     * @memberof Filter
-     */
-    jql?: string;
-    /**
-     * A URL to view the filter results in Jira, using the ID of the filter. For example, *https://your-domain.atlassian.net/issues/?filter=10100*.
-     * @type {string}
-     * @memberof Filter
-     */
-    readonly viewUrl?: string;
-    /**
-     * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
-     * @type {string}
-     * @memberof Filter
-     */
-    readonly searchUrl?: string;
+    editPermissions?: Array<SharePermission>;
     /**
      * Whether the filter is selected as a favorite.
      * @type {boolean}
@@ -6907,17 +7043,47 @@ export interface Filter {
      */
     readonly favouritedCount?: number;
     /**
+     * The unique identifier for the filter.
+     * @type {string}
+     * @memberof Filter
+     */
+    readonly id?: string;
+    /**
+     * The JQL query for the filter. For example, *project = SSP AND issuetype = Bug*.
+     * @type {string}
+     * @memberof Filter
+     */
+    jql?: string;
+    /**
+     * The name of the filter. Must be unique.
+     * @type {string}
+     * @memberof Filter
+     */
+    name: string;
+    /**
+     * 
+     * @type {FilterOwner}
+     * @memberof Filter
+     */
+    owner?: FilterOwner;
+    /**
+     * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
+     * @type {string}
+     * @memberof Filter
+     */
+    readonly searchUrl?: string;
+    /**
+     * The URL of the filter.
+     * @type {string}
+     * @memberof Filter
+     */
+    readonly self?: string;
+    /**
      * The groups and projects that the filter is shared with.
      * @type {Array<SharePermission>}
      * @memberof Filter
      */
     sharePermissions?: Array<SharePermission>;
-    /**
-     * The groups and projects that can edit the filter.
-     * @type {Array<SharePermission>}
-     * @memberof Filter
-     */
-    editPermissions?: Array<SharePermission>;
     /**
      * 
      * @type {FilterSharedUsers}
@@ -6930,6 +7096,12 @@ export interface Filter {
      * @memberof Filter
      */
     subscriptions?: FilterSubscriptions;
+    /**
+     * A URL to view the filter results in Jira, using the ID of the filter. For example, *https://your-domain.atlassian.net/issues/?filter=10100*.
+     * @type {string}
+     * @memberof Filter
+     */
+    readonly viewUrl?: string;
 }
 /**
  * Details of a filter.
@@ -6938,59 +7110,23 @@ export interface Filter {
  */
 export interface FilterDetails {
     /**
-     * Expand options that include additional filter details in the response.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    readonly expand?: string;
-    /**
-     * The URL of the filter.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    readonly self?: string;
-    /**
-     * The unique identifier for the filter.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    readonly id?: string;
-    /**
-     * The name of the filter.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    name: string;
-    /**
      * The description of the filter.
      * @type {string}
      * @memberof FilterDetails
      */
     description?: string;
     /**
-     * 
-     * @type {FilterDetailsOwner}
+     * The groups and projects that can edit the filter. This can be specified when updating a filter, but not when creating a filter.
+     * @type {Array<SharePermission>}
      * @memberof FilterDetails
      */
-    owner?: FilterDetailsOwner;
+    editPermissions?: Array<SharePermission>;
     /**
-     * The JQL query for the filter. For example, *project = SSP AND issuetype = Bug*.
+     * Expand options that include additional filter details in the response.
      * @type {string}
      * @memberof FilterDetails
      */
-    readonly jql?: string;
-    /**
-     * A URL to view the filter results in Jira, using the ID of the filter. For example, *https://your-domain.atlassian.net/issues/?filter=10100*.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    readonly viewUrl?: string;
-    /**
-     * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
-     * @type {string}
-     * @memberof FilterDetails
-     */
-    readonly searchUrl?: string;
+    readonly expand?: string;
     /**
      * Whether the filter is selected as a favorite by any users, not including the filter owner.
      * @type {boolean}
@@ -7004,23 +7140,59 @@ export interface FilterDetails {
      */
     readonly favouritedCount?: number;
     /**
+     * The unique identifier for the filter.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly id?: string;
+    /**
+     * The JQL query for the filter. For example, *project = SSP AND issuetype = Bug*.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly jql?: string;
+    /**
+     * The name of the filter.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    name: string;
+    /**
+     * 
+     * @type {FilterDetailsOwner}
+     * @memberof FilterDetails
+     */
+    owner?: FilterDetailsOwner;
+    /**
+     * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly searchUrl?: string;
+    /**
+     * The URL of the filter.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly self?: string;
+    /**
      * The groups and projects that the filter is shared with. This can be specified when updating a filter, but not when creating a filter.
      * @type {Array<SharePermission>}
      * @memberof FilterDetails
      */
     sharePermissions?: Array<SharePermission>;
     /**
-     * The groups and projects that can edit the filter. This can be specified when updating a filter, but not when creating a filter.
-     * @type {Array<SharePermission>}
-     * @memberof FilterDetails
-     */
-    editPermissions?: Array<SharePermission>;
-    /**
      * The users that are subscribed to the filter.
      * @type {Array<FilterSubscription>}
      * @memberof FilterDetails
      */
     readonly subscriptions?: Array<FilterSubscription>;
+    /**
+     * A URL to view the filter results in Jira, using the ID of the filter. For example, *https://your-domain.atlassian.net/issues/?filter=10100*.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly viewUrl?: string;
 }
 /**
  * The user who owns the filter. Defaults to the creator of the filter, however, Jira administrators can change the owner of a shared filter in the admin settings.
@@ -7028,18 +7200,6 @@ export interface FilterDetails {
  * @interface FilterDetailsOwner
  */
 export interface FilterDetailsOwner {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -7057,17 +7217,17 @@ export interface FilterDetailsOwner {
      */
     readonly accountType?: FilterDetailsOwnerAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof FilterDetailsOwner
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof FilterDetailsOwner
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -7081,23 +7241,17 @@ export interface FilterDetailsOwner {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterDetailsOwner
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof FilterDetailsOwner
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof FilterDetailsOwner
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -7105,17 +7259,35 @@ export interface FilterDetailsOwner {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterDetailsOwner
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof FilterDetailsOwner
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterDetailsOwner
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof FilterDetailsOwner
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof FilterDetailsOwner
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterDetailsOwner
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -7137,18 +7309,6 @@ export type FilterDetailsOwnerAccountTypeEnum = typeof FilterDetailsOwnerAccount
  */
 export interface FilterOwner {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof FilterOwner
@@ -7165,17 +7325,17 @@ export interface FilterOwner {
      */
     readonly accountType?: FilterOwnerAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof FilterOwner
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof FilterOwner
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -7189,23 +7349,17 @@ export interface FilterOwner {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterOwner
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof FilterOwner
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof FilterOwner
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -7213,17 +7367,35 @@ export interface FilterOwner {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterOwner
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof FilterOwner
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterOwner
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof FilterOwner
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof FilterOwner
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterOwner
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -7245,11 +7417,11 @@ export type FilterOwnerAccountTypeEnum = typeof FilterOwnerAccountTypeEnum[keyof
  */
 export interface FilterSharedUsers {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof FilterSharedUsers
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<User>}
@@ -7263,17 +7435,17 @@ export interface FilterSharedUsers {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof FilterSharedUsers
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof FilterSharedUsers
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof FilterSharedUsers
-     */
-    readonly endIndex?: number;
 }
 /**
  * Details of a user or group subscribing to a filter.
@@ -7281,6 +7453,12 @@ export interface FilterSharedUsers {
  * @interface FilterSubscription
  */
 export interface FilterSubscription {
+    /**
+     * 
+     * @type {FilterSubscriptionGroup}
+     * @memberof FilterSubscription
+     */
+    group?: FilterSubscriptionGroup;
     /**
      * The ID of the filter subscription.
      * @type {number}
@@ -7293,12 +7471,6 @@ export interface FilterSubscription {
      * @memberof FilterSubscription
      */
     user?: FilterSubscriptionUser;
-    /**
-     * 
-     * @type {FilterSubscriptionGroup}
-     * @memberof FilterSubscription
-     */
-    group?: FilterSubscriptionGroup;
 }
 /**
  * The group subscribing to filter.
@@ -7307,17 +7479,17 @@ export interface FilterSubscription {
  */
 export interface FilterSubscriptionGroup {
     /**
-     * The name of group.
-     * @type {string}
-     * @memberof FilterSubscriptionGroup
-     */
-    name?: string;
-    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof FilterSubscriptionGroup
      */
     groupId?: string | null;
+    /**
+     * The name of group.
+     * @type {string}
+     * @memberof FilterSubscriptionGroup
+     */
+    name?: string;
     /**
      * The URL for these group details.
      * @type {string}
@@ -7331,18 +7503,6 @@ export interface FilterSubscriptionGroup {
  * @interface FilterSubscriptionUser
  */
 export interface FilterSubscriptionUser {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -7360,17 +7520,17 @@ export interface FilterSubscriptionUser {
      */
     readonly accountType?: FilterSubscriptionUserAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof FilterSubscriptionUser
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof FilterSubscriptionUser
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -7384,23 +7544,17 @@ export interface FilterSubscriptionUser {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof FilterSubscriptionUser
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof FilterSubscriptionUser
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -7408,17 +7562,35 @@ export interface FilterSubscriptionUser {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterSubscriptionUser
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof FilterSubscriptionUser
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterSubscriptionUser
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof FilterSubscriptionUser
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof FilterSubscriptionUser
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof FilterSubscriptionUser
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -7440,11 +7612,11 @@ export type FilterSubscriptionUserAccountTypeEnum = typeof FilterSubscriptionUse
  */
 export interface FilterSubscriptions {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof FilterSubscriptions
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<FilterSubscription>}
@@ -7458,17 +7630,17 @@ export interface FilterSubscriptions {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof FilterSubscriptions
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof FilterSubscriptions
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof FilterSubscriptions
-     */
-    readonly endIndex?: number;
 }
 /**
  * A paginated list of subscriptions to a filter.
@@ -7477,11 +7649,11 @@ export interface FilterSubscriptions {
  */
 export interface FilterSubscriptionsList {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof FilterSubscriptionsList
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<FilterSubscription>}
@@ -7495,17 +7667,17 @@ export interface FilterSubscriptionsList {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof FilterSubscriptionsList
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof FilterSubscriptionsList
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof FilterSubscriptionsList
-     */
-    readonly endIndex?: number;
 }
 /**
  * A group found in a search.
@@ -7514,11 +7686,11 @@ export interface FilterSubscriptionsList {
  */
 export interface FoundGroup {
     /**
-     * The name of the group. The name of a group is mutable, to reliably identify a group use ``groupId`.`
+     * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof FoundGroup
      */
-    name?: string;
+    groupId?: string;
     /**
      * The group name with the matched query string highlighted with the HTML bold tag.
      * @type {string}
@@ -7532,11 +7704,11 @@ export interface FoundGroup {
      */
     labels?: Array<GroupLabel>;
     /**
-     * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
+     * The name of the group. The name of a group is mutable, to reliably identify a group use ``groupId`.`
      * @type {string}
      * @memberof FoundGroup
      */
-    groupId?: string;
+    name?: string;
 }
 /**
  * The list of groups found in a search, including header text (Showing X of Y matching groups) and total of matched groups.
@@ -7544,6 +7716,12 @@ export interface FoundGroup {
  * @interface FoundGroups
  */
 export interface FoundGroups {
+    /**
+     * 
+     * @type {Array<FoundGroup>}
+     * @memberof FoundGroups
+     */
+    groups?: Array<FoundGroup>;
     /**
      * Header text indicating the number of groups in the response and the total number of groups found in the search.
      * @type {string}
@@ -7556,12 +7734,6 @@ export interface FoundGroups {
      * @memberof FoundGroups
      */
     total?: number;
-    /**
-     * 
-     * @type {Array<FoundGroup>}
-     * @memberof FoundGroups
-     */
-    groups?: Array<FoundGroup>;
 }
 /**
  * The list of users found in a search, including header text (Showing X of Y matching users) and total of matched users.
@@ -7570,11 +7742,11 @@ export interface FoundGroups {
  */
 export interface FoundUsers {
     /**
-     * 
-     * @type {Array<UserPickerUser>}
+     * Header text indicating the number of users in the response and the total number of users found in the search.
+     * @type {string}
      * @memberof FoundUsers
      */
-    users?: Array<UserPickerUser>;
+    header?: string;
     /**
      * The total number of users found in the search.
      * @type {number}
@@ -7582,11 +7754,11 @@ export interface FoundUsers {
      */
     total?: number;
     /**
-     * Header text indicating the number of users in the response and the total number of users found in the search.
-     * @type {string}
+     * 
+     * @type {Array<UserPickerUser>}
      * @memberof FoundUsers
      */
-    header?: string;
+    users?: Array<UserPickerUser>;
 }
 /**
  * List of users and groups found in a search.
@@ -7596,16 +7768,16 @@ export interface FoundUsers {
 export interface FoundUsersAndGroups {
     /**
      * 
-     * @type {FoundUsers}
-     * @memberof FoundUsersAndGroups
-     */
-    users?: FoundUsers;
-    /**
-     * 
      * @type {FoundGroups}
      * @memberof FoundUsersAndGroups
      */
     groups?: FoundGroups;
+    /**
+     * 
+     * @type {FoundUsers}
+     * @memberof FoundUsersAndGroups
+     */
+    users?: FoundUsers;
 }
 /**
  * An operand that is a function. See [Advanced searching - functions reference](https://confluence.atlassian.com/x/dwiiLQ) for more information about JQL functions.
@@ -7614,17 +7786,23 @@ export interface FoundUsersAndGroups {
  */
 export interface FunctionOperand {
     /**
-     * The name of the function.
-     * @type {string}
-     * @memberof FunctionOperand
-     */
-    _function: string;
-    /**
      * The list of function arguments.
      * @type {Array<string>}
      * @memberof FunctionOperand
      */
     arguments: Array<string>;
+    /**
+     * Encoded operand, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof FunctionOperand
+     */
+    encodedOperand?: string;
+    /**
+     * The name of the function.
+     * @type {string}
+     * @memberof FunctionOperand
+     */
+    _function: string;
 }
 /**
  * Details of functions that can be used in advanced searches.
@@ -7632,12 +7810,6 @@ export interface FunctionOperand {
  * @interface FunctionReferenceData
  */
 export interface FunctionReferenceData {
-    /**
-     * The function identifier.
-     * @type {string}
-     * @memberof FunctionReferenceData
-     */
-    value?: string;
     /**
      * The display name of the function.
      * @type {string}
@@ -7656,6 +7828,12 @@ export interface FunctionReferenceData {
      * @memberof FunctionReferenceData
      */
     types?: Array<string>;
+    /**
+     * The function identifier.
+     * @type {string}
+     * @memberof FunctionReferenceData
+     */
+    value?: string;
 }
 
 
@@ -7699,17 +7877,23 @@ export type GlobalScopeBeanAttributesEnum = typeof GlobalScopeBeanAttributesEnum
  */
 export interface Group {
     /**
-     * The name of group.
+     * Expand options that include additional group details in the response.
      * @type {string}
      * @memberof Group
      */
-    name?: string;
+    readonly expand?: string;
     /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof Group
      */
     groupId?: string | null;
+    /**
+     * The name of group.
+     * @type {string}
+     * @memberof Group
+     */
+    name?: string;
     /**
      * The URL for these group details.
      * @type {string}
@@ -7722,12 +7906,6 @@ export interface Group {
      * @memberof Group
      */
     users?: GroupUsers;
-    /**
-     * Expand options that include additional group details in the response.
-     * @type {string}
-     * @memberof Group
-     */
-    readonly expand?: string;
 }
 /**
  * Details about a group.
@@ -7736,17 +7914,17 @@ export interface Group {
  */
 export interface GroupDetails {
     /**
-     * The name of the group.
-     * @type {string}
-     * @memberof GroupDetails
-     */
-    name?: string;
-    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof GroupDetails
      */
     groupId?: string | null;
+    /**
+     * The name of the group.
+     * @type {string}
+     * @memberof GroupDetails
+     */
+    name?: string;
 }
 /**
  * A group label.
@@ -7792,17 +7970,17 @@ export type GroupLabelTypeEnum = typeof GroupLabelTypeEnum[keyof typeof GroupLab
  */
 export interface GroupName {
     /**
-     * The name of group.
-     * @type {string}
-     * @memberof GroupName
-     */
-    name?: string;
-    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof GroupName
      */
     groupId?: string | null;
+    /**
+     * The name of group.
+     * @type {string}
+     * @memberof GroupName
+     */
+    name?: string;
     /**
      * The URL for these group details.
      * @type {string}
@@ -7817,11 +7995,11 @@ export interface GroupName {
  */
 export interface GroupUsers {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof GroupUsers
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<UserDetails>}
@@ -7835,17 +8013,17 @@ export interface GroupUsers {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof GroupUsers
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof GroupUsers
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof GroupUsers
-     */
-    readonly endIndex?: number;
 }
 /**
  * Jira instance health check results. Deprecated and no longer returned.
@@ -7854,17 +8032,17 @@ export interface GroupUsers {
  */
 export interface HealthCheckResult {
     /**
-     * The name of the Jira health check item.
-     * @type {string}
-     * @memberof HealthCheckResult
-     */
-    name?: string;
-    /**
      * The description of the Jira health check item.
      * @type {string}
      * @memberof HealthCheckResult
      */
     description?: string;
+    /**
+     * The name of the Jira health check item.
+     * @type {string}
+     * @memberof HealthCheckResult
+     */
+    name?: string;
     /**
      * Whether the Jira health check item passed or failed.
      * @type {boolean}
@@ -7899,11 +8077,29 @@ export interface Hierarchy {
 export interface HistoryMetadata {
     [key: string]: any | any;
     /**
-     * The type of the history record.
+     * The activity described in the history record.
      * @type {string}
      * @memberof HistoryMetadata
      */
-    type?: string;
+    activityDescription?: string;
+    /**
+     * The key of the activity described in the history record.
+     * @type {string}
+     * @memberof HistoryMetadata
+     */
+    activityDescriptionKey?: string;
+    /**
+     * 
+     * @type {HistoryMetadataActor}
+     * @memberof HistoryMetadata
+     */
+    actor?: HistoryMetadataActor;
+    /**
+     * 
+     * @type {HistoryMetadataCause}
+     * @memberof HistoryMetadata
+     */
+    cause?: HistoryMetadataCause;
     /**
      * The description of the history record.
      * @type {string}
@@ -7917,18 +8113,6 @@ export interface HistoryMetadata {
      */
     descriptionKey?: string;
     /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof HistoryMetadata
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof HistoryMetadata
-     */
-    activityDescriptionKey?: string;
-    /**
      * The description of the email address associated the history record.
      * @type {string}
      * @memberof HistoryMetadata
@@ -7941,11 +8125,11 @@ export interface HistoryMetadata {
      */
     emailDescriptionKey?: string;
     /**
-     * 
-     * @type {HistoryMetadataActor}
+     * Additional arbitrary information about the history record.
+     * @type {{ [key: string]: string; }}
      * @memberof HistoryMetadata
      */
-    actor?: HistoryMetadataActor;
+    extraData?: { [key: string]: string; };
     /**
      * 
      * @type {HistoryMetadataGenerator}
@@ -7953,17 +8137,11 @@ export interface HistoryMetadata {
      */
     generator?: HistoryMetadataGenerator;
     /**
-     * 
-     * @type {HistoryMetadataCause}
+     * The type of the history record.
+     * @type {string}
      * @memberof HistoryMetadata
      */
-    cause?: HistoryMetadataCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof HistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
+    type?: string;
 }
 /**
  * Details of the user whose action created the history record.
@@ -7972,11 +8150,11 @@ export interface HistoryMetadata {
  */
 export interface HistoryMetadataActor {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataActor
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -7990,17 +8168,17 @@ export interface HistoryMetadataActor {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof HistoryMetadataActor
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataActor
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -8015,11 +8193,11 @@ export interface HistoryMetadataActor {
  */
 export interface HistoryMetadataCause {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataCause
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -8033,17 +8211,17 @@ export interface HistoryMetadataCause {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof HistoryMetadataCause
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataCause
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -8058,11 +8236,11 @@ export interface HistoryMetadataCause {
  */
 export interface HistoryMetadataGenerator {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataGenerator
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -8076,17 +8254,17 @@ export interface HistoryMetadataGenerator {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof HistoryMetadataGenerator
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataGenerator
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -8102,11 +8280,11 @@ export interface HistoryMetadataGenerator {
 export interface HistoryMetadataParticipant {
     [key: string]: any | any;
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataParticipant
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -8120,17 +8298,17 @@ export interface HistoryMetadataParticipant {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof HistoryMetadataParticipant
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataParticipant
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataParticipant
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -8149,11 +8327,11 @@ export interface HistoryMetadataParticipant {
 export interface Icon {
     [key: string]: any | any;
     /**
-     * The URL of an icon that displays at 16x16 pixel in Jira.
+     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
      * @type {string}
      * @memberof Icon
      */
-    url16x16?: string;
+    link?: string;
     /**
      * The title of the icon. This is used as follows:
      * 
@@ -8164,11 +8342,11 @@ export interface Icon {
      */
     title?: string;
     /**
-     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
+     * The URL of an icon that displays at 16x16 pixel in Jira.
      * @type {string}
      * @memberof Icon
      */
-    link?: string;
+    url16x16?: string;
 }
 /**
  * An icon.
@@ -8177,11 +8355,11 @@ export interface Icon {
  */
 export interface IconBean {
     /**
-     * The URL of a 16x16 pixel icon.
+     * The URL of the tooltip, used only for a status icon.
      * @type {string}
      * @memberof IconBean
      */
-    url16x16?: string;
+    link?: string;
     /**
      * The title of the icon, for use as a tooltip on the icon.
      * @type {string}
@@ -8189,11 +8367,11 @@ export interface IconBean {
      */
     title?: string;
     /**
-     * The URL of the tooltip, used only for a status icon.
+     * The URL of a 16x16 pixel icon.
      * @type {string}
      * @memberof IconBean
      */
-    link?: string;
+    url16x16?: string;
 }
 /**
  * 
@@ -8238,6 +8416,12 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
+    actuallyIncluded?: string[];
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof IncludedFields
+     */
     excluded?: string[];
     /**
      * 
@@ -8245,12 +8429,6 @@ export interface IncludedFields {
      * @memberof IncludedFields
      */
     included?: string[];
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof IncludedFields
-     */
-    actuallyIncluded?: string[];
 }
 /**
  * Details about an issue.
@@ -8259,65 +8437,11 @@ export interface IncludedFields {
  */
 export interface IssueBean {
     /**
-     * Expand options that include additional issue details in the response.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly expand?: string;
-    /**
-     * The ID of the issue.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly id?: string;
-    /**
-     * The URL of the issue details.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly self?: string;
-    /**
-     * The key of the issue.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly key?: string;
-    /**
-     * The rendered value of each field present on the issue.
-     * @type {{ [key: string]: any; }}
-     * @memberof IssueBean
-     */
-    readonly renderedFields?: { [key: string]: any; };
-    /**
-     * Details of the issue properties identified in the request.
-     * @type {{ [key: string]: any; }}
-     * @memberof IssueBean
-     */
-    readonly properties?: { [key: string]: any; };
-    /**
-     * The ID and name of each field present on the issue.
-     * @type {{ [key: string]: string; }}
-     * @memberof IssueBean
-     */
-    readonly names?: { [key: string]: string; };
-    /**
-     * The schema describing each field present on the issue.
-     * @type {{ [key: string]: JsonTypeBean; }}
-     * @memberof IssueBean
-     */
-    readonly schema?: { [key: string]: JsonTypeBean; };
-    /**
-     * The transitions that can be performed on the issue.
-     * @type {Array<IssueTransition>}
-     * @memberof IssueBean
-     */
-    readonly transitions?: Array<IssueTransition>;
-    /**
      * 
-     * @type {IssueBeanOperations}
+     * @type {IssueBeanChangelog}
      * @memberof IssueBean
      */
-    operations?: IssueBeanOperations;
+    changelog?: IssueBeanChangelog;
     /**
      * 
      * @type {IssueBeanEditmeta}
@@ -8325,17 +8449,17 @@ export interface IssueBean {
      */
     editmeta?: IssueBeanEditmeta;
     /**
-     * 
-     * @type {IssueBeanChangelog}
+     * Expand options that include additional issue details in the response.
+     * @type {string}
      * @memberof IssueBean
      */
-    changelog?: IssueBeanChangelog;
+    readonly expand?: string;
     /**
-     * The versions of each field on the issue.
-     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * 
+     * @type {{ [key: string]: any; }}
      * @memberof IssueBean
      */
-    readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
+    fields?: { [key: string]: any; };
     /**
      * 
      * @type {IncludedFields}
@@ -8343,11 +8467,65 @@ export interface IssueBean {
      */
     fieldsToInclude?: IncludedFields;
     /**
+     * The ID of the issue.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly id?: string;
+    /**
+     * The key of the issue.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly key?: string;
+    /**
+     * The ID and name of each field present on the issue.
+     * @type {{ [key: string]: string; }}
+     * @memberof IssueBean
+     */
+    readonly names?: { [key: string]: string; };
+    /**
      * 
+     * @type {IssueBeanOperations}
+     * @memberof IssueBean
+     */
+    operations?: IssueBeanOperations;
+    /**
+     * Details of the issue properties identified in the request.
      * @type {{ [key: string]: any; }}
      * @memberof IssueBean
      */
-    fields?: { [key: string]: any; };
+    readonly properties?: { [key: string]: any; };
+    /**
+     * The rendered value of each field present on the issue.
+     * @type {{ [key: string]: any; }}
+     * @memberof IssueBean
+     */
+    readonly renderedFields?: { [key: string]: any; };
+    /**
+     * The schema describing each field present on the issue.
+     * @type {{ [key: string]: JsonTypeBean; }}
+     * @memberof IssueBean
+     */
+    readonly schema?: { [key: string]: JsonTypeBean; };
+    /**
+     * The URL of the issue details.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly self?: string;
+    /**
+     * The transitions that can be performed on the issue.
+     * @type {Array<IssueTransition>}
+     * @memberof IssueBean
+     */
+    readonly transitions?: Array<IssueTransition>;
+    /**
+     * The versions of each field on the issue.
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof IssueBean
+     */
+    readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
 }
 /**
  * Details of changelogs associated with the issue.
@@ -8356,11 +8534,11 @@ export interface IssueBean {
  */
 export interface IssueBeanChangelog {
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
+     * The list of changelogs.
+     * @type {Array<Changelog>}
      * @memberof IssueBeanChangelog
      */
-    readonly startAt?: number;
+    readonly histories?: Array<Changelog>;
     /**
      * The maximum number of results that could be on the page.
      * @type {number}
@@ -8368,17 +8546,17 @@ export interface IssueBeanChangelog {
      */
     readonly maxResults?: number;
     /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof IssueBeanChangelog
+     */
+    readonly startAt?: number;
+    /**
      * The number of results on the page.
      * @type {number}
      * @memberof IssueBeanChangelog
      */
     readonly total?: number;
-    /**
-     * The list of changelogs.
-     * @type {Array<Changelog>}
-     * @memberof IssueBeanChangelog
-     */
-    readonly histories?: Array<Changelog>;
 }
 /**
  * The metadata for the fields on the issue that can be amended.
@@ -8439,12 +8617,6 @@ export interface IssueCommentListRequestBean {
  */
 export interface IssueContextVariable {
     /**
-     * Type of custom context variable.
-     * @type {string}
-     * @memberof IssueContextVariable
-     */
-    type: string;
-    /**
      * The issue ID.
      * @type {number}
      * @memberof IssueContextVariable
@@ -8456,6 +8628,12 @@ export interface IssueContextVariable {
      * @memberof IssueContextVariable
      */
     key?: string;
+    /**
+     * Type of custom context variable.
+     * @type {string}
+     * @memberof IssueContextVariable
+     */
+    type: string;
 }
 /**
  * The wrapper for the issue creation metadata for a list of projects.
@@ -8540,17 +8718,17 @@ export interface IssueEvent {
  */
 export interface IssueFieldOption {
     /**
+     * 
+     * @type {IssueFieldOptionConfiguration}
+     * @memberof IssueFieldOption
+     */
+    config?: IssueFieldOptionConfiguration;
+    /**
      * The unique identifier for the option. This is only unique within the select field's set of options.
      * @type {number}
      * @memberof IssueFieldOption
      */
     id: number;
-    /**
-     * The option's name, which is displayed in Jira.
-     * @type {string}
-     * @memberof IssueFieldOption
-     */
-    value: string;
     /**
      * The properties of the object, as arbitrary key-value pairs. These properties can be searched using JQL, if the extractions (see [Issue Field Option Property Index](https://developer.atlassian.com/cloud/jira/platform/modules/issue-field-option-property-index/)) are defined in the descriptor for the issue field module.
      * @type {{ [key: string]: any; }}
@@ -8558,11 +8736,11 @@ export interface IssueFieldOption {
      */
     properties?: { [key: string]: any; };
     /**
-     * 
-     * @type {IssueFieldOptionConfiguration}
+     * The option's name, which is displayed in Jira.
+     * @type {string}
      * @memberof IssueFieldOption
      */
-    config?: IssueFieldOptionConfiguration;
+    value: string;
 }
 /**
  * Details of the projects the option is available in.
@@ -8571,17 +8749,17 @@ export interface IssueFieldOption {
  */
 export interface IssueFieldOptionConfiguration {
     /**
-     * 
-     * @type {IssueFieldOptionConfigurationScope}
-     * @memberof IssueFieldOptionConfiguration
-     */
-    scope?: IssueFieldOptionConfigurationScope;
-    /**
      * DEPRECATED
      * @type {Set<string>}
      * @memberof IssueFieldOptionConfiguration
      */
     attributes?: IssueFieldOptionConfigurationAttributesEnum[];
+    /**
+     * 
+     * @type {IssueFieldOptionConfigurationScope}
+     * @memberof IssueFieldOptionConfiguration
+     */
+    scope?: IssueFieldOptionConfigurationScope;
 }
 
 
@@ -8601,6 +8779,12 @@ export type IssueFieldOptionConfigurationAttributesEnum = typeof IssueFieldOptio
  */
 export interface IssueFieldOptionConfigurationScope {
     /**
+     * 
+     * @type {IssueFieldOptionScopeBeanGlobal}
+     * @memberof IssueFieldOptionConfigurationScope
+     */
+    global?: IssueFieldOptionScopeBeanGlobal;
+    /**
      * DEPRECATED
      * @type {Set<number>}
      * @memberof IssueFieldOptionConfigurationScope
@@ -8612,12 +8796,6 @@ export interface IssueFieldOptionConfigurationScope {
      * @memberof IssueFieldOptionConfigurationScope
      */
     projects2?: ProjectScopeBean[];
-    /**
-     * 
-     * @type {IssueFieldOptionScopeBeanGlobal}
-     * @memberof IssueFieldOptionConfigurationScope
-     */
-    global?: IssueFieldOptionScopeBeanGlobal;
 }
 /**
  * 
@@ -8627,11 +8805,11 @@ export interface IssueFieldOptionConfigurationScope {
 export interface IssueFieldOptionCreateBean {
     [key: string]: any | any;
     /**
-     * The option's name, which is displayed in Jira.
-     * @type {string}
+     * 
+     * @type {IssueFieldOptionConfiguration}
      * @memberof IssueFieldOptionCreateBean
      */
-    value: string;
+    config?: IssueFieldOptionConfiguration;
     /**
      * The properties of the option as arbitrary key-value pairs. These properties can be searched using JQL, if the extractions (see https://developer.atlassian.com/cloud/jira/platform/modules/issue-field-option-property-index/) are defined in the descriptor for the issue field module.
      * @type {{ [key: string]: any; }}
@@ -8639,11 +8817,11 @@ export interface IssueFieldOptionCreateBean {
      */
     properties?: { [key: string]: any; };
     /**
-     * 
-     * @type {IssueFieldOptionConfiguration}
+     * The option's name, which is displayed in Jira.
+     * @type {string}
      * @memberof IssueFieldOptionCreateBean
      */
-    config?: IssueFieldOptionConfiguration;
+    value: string;
 }
 /**
  * 
@@ -8651,6 +8829,12 @@ export interface IssueFieldOptionCreateBean {
  * @interface IssueFieldOptionScopeBean
  */
 export interface IssueFieldOptionScopeBean {
+    /**
+     * 
+     * @type {IssueFieldOptionScopeBeanGlobal}
+     * @memberof IssueFieldOptionScopeBean
+     */
+    global?: IssueFieldOptionScopeBeanGlobal;
     /**
      * DEPRECATED
      * @type {Set<number>}
@@ -8663,12 +8847,6 @@ export interface IssueFieldOptionScopeBean {
      * @memberof IssueFieldOptionScopeBean
      */
     projects2?: ProjectScopeBean[];
-    /**
-     * 
-     * @type {IssueFieldOptionScopeBeanGlobal}
-     * @memberof IssueFieldOptionScopeBean
-     */
-    global?: IssueFieldOptionScopeBeanGlobal;
 }
 /**
  * Defines the behavior of the option within the global context. If this property is set, even if set to an empty object, then the option is available in all projects.
@@ -8701,17 +8879,17 @@ export type IssueFieldOptionScopeBeanGlobalAttributesEnum = typeof IssueFieldOpt
  */
 export interface IssueFilterForBulkPropertyDelete {
     /**
-     * List of issues to perform the bulk delete operation on.
-     * @type {Set<number>}
-     * @memberof IssueFilterForBulkPropertyDelete
-     */
-    entityIds?: number[];
-    /**
      * The value of properties to perform the bulk operation on.
      * @type {any}
      * @memberof IssueFilterForBulkPropertyDelete
      */
     currentValue?: any | null;
+    /**
+     * List of issues to perform the bulk delete operation on.
+     * @type {Set<number>}
+     * @memberof IssueFilterForBulkPropertyDelete
+     */
+    entityIds?: number[];
 }
 /**
  * Bulk operation filter details.
@@ -8720,17 +8898,17 @@ export interface IssueFilterForBulkPropertyDelete {
  */
 export interface IssueFilterForBulkPropertySet {
     /**
-     * List of issues to perform the bulk operation on.
-     * @type {Set<number>}
-     * @memberof IssueFilterForBulkPropertySet
-     */
-    entityIds?: number[];
-    /**
      * The value of properties to perform the bulk operation on.
      * @type {any}
      * @memberof IssueFilterForBulkPropertySet
      */
     currentValue?: any | null;
+    /**
+     * List of issues to perform the bulk operation on.
+     * @type {Set<number>}
+     * @memberof IssueFilterForBulkPropertySet
+     */
+    entityIds?: number[];
     /**
      * Whether the bulk operation occurs only when the property is present on or absent from an issue.
      * @type {boolean}
@@ -8751,18 +8929,6 @@ export interface IssueLink {
      */
     readonly id?: string;
     /**
-     * The URL of the issue link.
-     * @type {string}
-     * @memberof IssueLink
-     */
-    readonly self?: string;
-    /**
-     * 
-     * @type {IssueLinkType}
-     * @memberof IssueLink
-     */
-    type: IssueLinkType;
-    /**
      * 
      * @type {IssueLinkInwardIssue}
      * @memberof IssueLink
@@ -8774,6 +8940,18 @@ export interface IssueLink {
      * @memberof IssueLink
      */
     outwardIssue: IssueLinkOutwardIssue;
+    /**
+     * The URL of the issue link.
+     * @type {string}
+     * @memberof IssueLink
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {IssueLinkType}
+     * @memberof IssueLink
+     */
+    type: IssueLinkType;
 }
 /**
  * Provides details about the linked issue. If presenting this link in a user interface, use the `inward` field of the issue link type to label the link.
@@ -8782,6 +8960,12 @@ export interface IssueLink {
  */
 export interface IssueLinkInwardIssue {
     /**
+     * 
+     * @type {LinkedIssueFields}
+     * @memberof IssueLinkInwardIssue
+     */
+    fields?: LinkedIssueFields;
+    /**
      * The ID of an issue. Required if `key` isn't provided.
      * @type {string}
      * @memberof IssueLinkInwardIssue
@@ -8799,12 +8983,6 @@ export interface IssueLinkInwardIssue {
      * @memberof IssueLinkInwardIssue
      */
     readonly self?: string;
-    /**
-     * 
-     * @type {LinkedIssueFields}
-     * @memberof IssueLinkInwardIssue
-     */
-    fields?: LinkedIssueFields;
 }
 /**
  * Provides details about the linked issue. If presenting this link in a user interface, use the `outward` field of the issue link type to label the link.
@@ -8813,6 +8991,12 @@ export interface IssueLinkInwardIssue {
  */
 export interface IssueLinkOutwardIssue {
     /**
+     * 
+     * @type {LinkedIssueFields}
+     * @memberof IssueLinkOutwardIssue
+     */
+    fields?: LinkedIssueFields;
+    /**
      * The ID of an issue. Required if `key` isn't provided.
      * @type {string}
      * @memberof IssueLinkOutwardIssue
@@ -8830,12 +9014,6 @@ export interface IssueLinkOutwardIssue {
      * @memberof IssueLinkOutwardIssue
      */
     readonly self?: string;
-    /**
-     * 
-     * @type {LinkedIssueFields}
-     * @memberof IssueLinkOutwardIssue
-     */
-    fields?: LinkedIssueFields;
 }
 /**
  * The type of link between the issues.
@@ -8853,15 +9031,6 @@ export interface IssueLinkType {
      */
     id?: string;
     /**
-     * The name of the issue link type and is used as follows:
-     * 
-     *  *  In the [ issueLink](#api-rest-api-3-issueLink-post) resource it is the type of issue link. Required on create when `id` isn't provided. Otherwise, read only.
-     *  *  In the [ issueLinkType](#api-rest-api-3-issueLinkType-post) resource it is required on create and optional on update. Otherwise, read only.
-     * @type {string}
-     * @memberof IssueLinkType
-     */
-    name?: string;
-    /**
      * The description of the issue link type inward link and is used as follows:
      * 
      *  *  In the [ issueLink](#api-rest-api-3-issueLink-post) resource it is read only.
@@ -8870,6 +9039,15 @@ export interface IssueLinkType {
      * @memberof IssueLinkType
      */
     inward?: string;
+    /**
+     * The name of the issue link type and is used as follows:
+     * 
+     *  *  In the [ issueLink](#api-rest-api-3-issueLink-post) resource it is the type of issue link. Required on create when `id` isn't provided. Otherwise, read only.
+     *  *  In the [ issueLinkType](#api-rest-api-3-issueLinkType-post) resource it is required on create and optional on update. Otherwise, read only.
+     * @type {string}
+     * @memberof IssueLinkType
+     */
+    name?: string;
     /**
      * The description of the issue link type outward link and is used as follows:
      * 
@@ -8932,17 +9110,17 @@ export interface IssueMatches {
  */
 export interface IssueMatchesForJQL {
     /**
-     * A list of issue IDs.
-     * @type {Set<number>}
-     * @memberof IssueMatchesForJQL
-     */
-    matchedIssues: number[];
-    /**
      * A list of errors.
      * @type {Set<string>}
      * @memberof IssueMatchesForJQL
      */
     errors: string[];
+    /**
+     * A list of issue IDs.
+     * @type {Set<number>}
+     * @memberof IssueMatchesForJQL
+     */
+    matchedIssues: number[];
 }
 /**
  * A list of issues suggested for use in auto-completion.
@@ -8964,23 +9142,23 @@ export interface IssuePickerSuggestions {
  */
 export interface IssuePickerSuggestionsIssueType {
     /**
-     * The label of the type of issues suggested for use in auto-completion.
-     * @type {string}
-     * @memberof IssuePickerSuggestionsIssueType
-     */
-    readonly label?: string;
-    /**
-     * If issue suggestions are found, returns a message indicating the number of issues suggestions found and returned.
-     * @type {string}
-     * @memberof IssuePickerSuggestionsIssueType
-     */
-    readonly sub?: string;
-    /**
      * The ID of the type of issues suggested for use in auto-completion.
      * @type {string}
      * @memberof IssuePickerSuggestionsIssueType
      */
     readonly id?: string;
+    /**
+     * A list of issues suggested for use in auto-completion.
+     * @type {Array<SuggestedIssue>}
+     * @memberof IssuePickerSuggestionsIssueType
+     */
+    readonly issues?: Array<SuggestedIssue>;
+    /**
+     * The label of the type of issues suggested for use in auto-completion.
+     * @type {string}
+     * @memberof IssuePickerSuggestionsIssueType
+     */
+    readonly label?: string;
     /**
      * If no issue suggestions are found, returns a message indicating no suggestions were found,
      * @type {string}
@@ -8988,11 +9166,11 @@ export interface IssuePickerSuggestionsIssueType {
      */
     readonly msg?: string;
     /**
-     * A list of issues suggested for use in auto-completion.
-     * @type {Array<SuggestedIssue>}
+     * If issue suggestions are found, returns a message indicating the number of issues suggestions found and returned.
+     * @type {string}
      * @memberof IssuePickerSuggestionsIssueType
      */
-    readonly issues?: Array<SuggestedIssue>;
+    readonly sub?: string;
 }
 /**
  * Issue security level member.
@@ -9000,6 +9178,12 @@ export interface IssuePickerSuggestionsIssueType {
  * @interface IssueSecurityLevelMember
  */
 export interface IssueSecurityLevelMember {
+    /**
+     * 
+     * @type {IssueSecurityLevelMemberHolder}
+     * @memberof IssueSecurityLevelMember
+     */
+    holder: IssueSecurityLevelMemberHolder;
     /**
      * The ID of the issue security level member.
      * @type {number}
@@ -9012,12 +9196,6 @@ export interface IssueSecurityLevelMember {
      * @memberof IssueSecurityLevelMember
      */
     issueSecurityLevelId: number;
-    /**
-     * 
-     * @type {IssueSecurityLevelMemberHolder}
-     * @memberof IssueSecurityLevelMember
-     */
-    holder: IssueSecurityLevelMemberHolder;
 }
 /**
  * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
@@ -9026,11 +9204,11 @@ export interface IssueSecurityLevelMember {
  */
 export interface IssueSecurityLevelMemberHolder {
     /**
-     * The type of permission holder.
+     * Expand options that include additional permission holder details in the response.
      * @type {string}
      * @memberof IssueSecurityLevelMemberHolder
      */
-    type: string;
+    readonly expand?: string;
     /**
      * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
      * @type {string}
@@ -9038,17 +9216,37 @@ export interface IssueSecurityLevelMemberHolder {
      */
     parameter?: string;
     /**
+     * The type of permission holder.
+     * @type {string}
+     * @memberof IssueSecurityLevelMemberHolder
+     */
+    type: string;
+    /**
      * The identifier associated with the `type` value that defines the holder of the permission.
      * @type {string}
      * @memberof IssueSecurityLevelMemberHolder
      */
     value?: string;
+}
+/**
+ * Details about an project using security scheme mapping.
+ * @export
+ * @interface IssueSecuritySchemeToProjectMapping
+ */
+export interface IssueSecuritySchemeToProjectMapping {
+    [key: string]: any | any;
     /**
-     * Expand options that include additional permission holder details in the response.
+     * 
      * @type {string}
-     * @memberof IssueSecurityLevelMemberHolder
+     * @memberof IssueSecuritySchemeToProjectMapping
      */
-    readonly expand?: string;
+    readonly issueSecuritySchemeId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IssueSecuritySchemeToProjectMapping
+     */
+    readonly projectId?: string;
 }
 /**
  * Details of an issue transition.
@@ -9058,23 +9256,17 @@ export interface IssueSecurityLevelMemberHolder {
 export interface IssueTransition {
     [key: string]: any | any;
     /**
-     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * Expand options that include additional transition details in the response.
      * @type {string}
      * @memberof IssueTransition
      */
-    id?: string;
+    readonly expand?: string;
     /**
-     * The name of the issue transition.
-     * @type {string}
+     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
+     * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueTransition
      */
-    readonly name?: string;
-    /**
-     * 
-     * @type {IssueTransitionTo}
-     * @memberof IssueTransition
-     */
-    to?: IssueTransitionTo;
+    readonly fields?: { [key: string]: FieldMetadata; };
     /**
      * Whether there is a screen associated with the issue transition.
      * @type {boolean}
@@ -9082,17 +9274,11 @@ export interface IssueTransition {
      */
     readonly hasScreen?: boolean;
     /**
-     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
-     * @type {boolean}
+     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * @type {string}
      * @memberof IssueTransition
      */
-    readonly isGlobal?: boolean;
-    /**
-     * Whether this is the initial issue transition for the workflow.
-     * @type {boolean}
-     * @memberof IssueTransition
-     */
-    readonly isInitial?: boolean;
+    id?: string;
     /**
      * Whether the transition is available to be performed.
      * @type {boolean}
@@ -9106,23 +9292,35 @@ export interface IssueTransition {
      */
     readonly isConditional?: boolean;
     /**
-     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
-     * @type {{ [key: string]: FieldMetadata; }}
+     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
+     * @type {boolean}
      * @memberof IssueTransition
      */
-    readonly fields?: { [key: string]: FieldMetadata; };
+    readonly isGlobal?: boolean;
     /**
-     * Expand options that include additional transition details in the response.
-     * @type {string}
+     * Whether this is the initial issue transition for the workflow.
+     * @type {boolean}
      * @memberof IssueTransition
      */
-    readonly expand?: string;
+    readonly isInitial?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof IssueTransition
      */
     looped?: boolean;
+    /**
+     * The name of the issue transition.
+     * @type {string}
+     * @memberof IssueTransition
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {IssueTransitionTo}
+     * @memberof IssueTransition
+     */
+    to?: IssueTransitionTo;
 }
 /**
  * Details of the issue status after the transition.
@@ -9130,12 +9328,6 @@ export interface IssueTransition {
  * @interface IssueTransitionTo
  */
 export interface IssueTransitionTo {
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly self?: string;
     /**
      * The description of the status.
      * @type {string}
@@ -9149,17 +9341,23 @@ export interface IssueTransitionTo {
      */
     readonly iconUrl?: string;
     /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof IssueTransitionTo
+     */
+    readonly id?: string;
+    /**
      * The name of the status.
      * @type {string}
      * @memberof IssueTransitionTo
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * The URL of the status.
      * @type {string}
      * @memberof IssueTransitionTo
      */
-    readonly id?: string;
+    readonly self?: string;
     /**
      * 
      * @type {StatusDetailsStatusCategory}
@@ -9174,25 +9372,11 @@ export interface IssueTransitionTo {
  */
 export interface IssueTypeCreateBean {
     /**
-     * The unique name for the issue type. The maximum length is 60 characters.
-     * @type {string}
-     * @memberof IssueTypeCreateBean
-     */
-    name: string;
-    /**
      * The description of the issue type.
      * @type {string}
      * @memberof IssueTypeCreateBean
      */
     description?: string;
-    /**
-     * Deprecated. Use `hierarchyLevel` instead. See the [deprecation notice](https://community.developer.atlassian.com/t/deprecation-of-the-epic-link-parent-link-and-other-related-fields-in-rest-apis-and-webhooks/54048) for details.
-     * 
-     * Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
-     * @type {string}
-     * @memberof IssueTypeCreateBean
-     */
-    type?: IssueTypeCreateBeanTypeEnum;
     /**
      * The hierarchy level of the issue type. Use:
      * 
@@ -9204,6 +9388,20 @@ export interface IssueTypeCreateBean {
      * @memberof IssueTypeCreateBean
      */
     hierarchyLevel?: number;
+    /**
+     * The unique name for the issue type. The maximum length is 60 characters.
+     * @type {string}
+     * @memberof IssueTypeCreateBean
+     */
+    name: string;
+    /**
+     * Deprecated. Use `hierarchyLevel` instead. See the [deprecation notice](https://community.developer.atlassian.com/t/deprecation-of-the-epic-link-parent-link-and-other-related-fields-in-rest-apis-and-webhooks/54048) for details.
+     * 
+     * Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
+     * @type {string}
+     * @memberof IssueTypeCreateBean
+     */
+    type?: IssueTypeCreateBeanTypeEnum;
 }
 
 
@@ -9223,47 +9421,17 @@ export type IssueTypeCreateBeanTypeEnum = typeof IssueTypeCreateBeanTypeEnum[key
  */
 export interface IssueTypeDetails {
     /**
-     * The URL of these issue type details.
-     * @type {string}
+     * The ID of the issue type's avatar.
+     * @type {number}
      * @memberof IssueTypeDetails
      */
-    readonly self?: string;
-    /**
-     * The ID of the issue type.
-     * @type {string}
-     * @memberof IssueTypeDetails
-     */
-    readonly id?: string;
+    readonly avatarId?: number;
     /**
      * The description of the issue type.
      * @type {string}
      * @memberof IssueTypeDetails
      */
     readonly description?: string;
-    /**
-     * The URL of the issue type's avatar.
-     * @type {string}
-     * @memberof IssueTypeDetails
-     */
-    readonly iconUrl?: string;
-    /**
-     * The name of the issue type.
-     * @type {string}
-     * @memberof IssueTypeDetails
-     */
-    readonly name?: string;
-    /**
-     * Whether this issue type is used to create subtasks.
-     * @type {boolean}
-     * @memberof IssueTypeDetails
-     */
-    readonly subtask?: boolean;
-    /**
-     * The ID of the issue type's avatar.
-     * @type {number}
-     * @memberof IssueTypeDetails
-     */
-    readonly avatarId?: number;
     /**
      * Unique ID for next-gen projects.
      * @type {string}
@@ -9277,11 +9445,41 @@ export interface IssueTypeDetails {
      */
     readonly hierarchyLevel?: number;
     /**
+     * The URL of the issue type's avatar.
+     * @type {string}
+     * @memberof IssueTypeDetails
+     */
+    readonly iconUrl?: string;
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof IssueTypeDetails
+     */
+    readonly id?: string;
+    /**
+     * The name of the issue type.
+     * @type {string}
+     * @memberof IssueTypeDetails
+     */
+    readonly name?: string;
+    /**
      * 
      * @type {IssueTypeDetailsScope}
      * @memberof IssueTypeDetails
      */
     scope?: IssueTypeDetailsScope;
+    /**
+     * The URL of these issue type details.
+     * @type {string}
+     * @memberof IssueTypeDetails
+     */
+    readonly self?: string;
+    /**
+     * Whether this issue type is used to create subtasks.
+     * @type {boolean}
+     * @memberof IssueTypeDetails
+     */
+    readonly subtask?: boolean;
 }
 /**
  * Details of the next-gen projects the issue type is available in.
@@ -9290,17 +9488,17 @@ export interface IssueTypeDetails {
  */
 export interface IssueTypeDetailsScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof IssueTypeDetailsScope
-     */
-    readonly type?: IssueTypeDetailsScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof IssueTypeDetailsScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof IssueTypeDetailsScope
+     */
+    readonly type?: IssueTypeDetailsScopeTypeEnum;
 }
 
 
@@ -9346,6 +9544,12 @@ export interface IssueTypeIdsToRemove {
  */
 export interface IssueTypeInfo {
     /**
+     * The avatar of the issue type.
+     * @type {number}
+     * @memberof IssueTypeInfo
+     */
+    readonly avatarId?: number;
+    /**
      * The ID of the issue type.
      * @type {number}
      * @memberof IssueTypeInfo
@@ -9357,12 +9561,6 @@ export interface IssueTypeInfo {
      * @memberof IssueTypeInfo
      */
     readonly name?: string;
-    /**
-     * The avatar of the issue type.
-     * @type {number}
-     * @memberof IssueTypeInfo
-     */
-    readonly avatarId?: number;
 }
 /**
  * Details of the issue creation metadata for an issue type.
@@ -9371,17 +9569,11 @@ export interface IssueTypeInfo {
  */
 export interface IssueTypeIssueCreateMetadata {
     /**
-     * The URL of these issue type details.
-     * @type {string}
+     * The ID of the issue type's avatar.
+     * @type {number}
      * @memberof IssueTypeIssueCreateMetadata
      */
-    readonly self?: string;
-    /**
-     * The ID of the issue type.
-     * @type {string}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly id?: string;
+    readonly avatarId?: number;
     /**
      * The description of the issue type.
      * @type {string}
@@ -9389,47 +9581,11 @@ export interface IssueTypeIssueCreateMetadata {
      */
     readonly description?: string;
     /**
-     * The URL of the issue type's avatar.
-     * @type {string}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly iconUrl?: string;
-    /**
-     * The name of the issue type.
-     * @type {string}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly name?: string;
-    /**
-     * Whether this issue type is used to create subtasks.
-     * @type {boolean}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly subtask?: boolean;
-    /**
-     * The ID of the issue type's avatar.
-     * @type {number}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly avatarId?: number;
-    /**
      * Unique ID for next-gen projects.
      * @type {string}
      * @memberof IssueTypeIssueCreateMetadata
      */
     readonly entityId?: string;
-    /**
-     * Hierarchy level of the issue type.
-     * @type {number}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    readonly hierarchyLevel?: number;
-    /**
-     * 
-     * @type {IssueTypeDetailsScope}
-     * @memberof IssueTypeIssueCreateMetadata
-     */
-    scope?: IssueTypeDetailsScope;
     /**
      * Expand options that include additional issue type metadata details in the response.
      * @type {string}
@@ -9442,6 +9598,48 @@ export interface IssueTypeIssueCreateMetadata {
      * @memberof IssueTypeIssueCreateMetadata
      */
     readonly fields?: { [key: string]: FieldMetadata; };
+    /**
+     * Hierarchy level of the issue type.
+     * @type {number}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly hierarchyLevel?: number;
+    /**
+     * The URL of the issue type's avatar.
+     * @type {string}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly iconUrl?: string;
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly id?: string;
+    /**
+     * The name of the issue type.
+     * @type {string}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {IssueTypeDetailsScope}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    scope?: IssueTypeDetailsScope;
+    /**
+     * The URL of these issue type details.
+     * @type {string}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly self?: string;
+    /**
+     * Whether this issue type is used to create subtasks.
+     * @type {boolean}
+     * @memberof IssueTypeIssueCreateMetadata
+     */
+    readonly subtask?: boolean;
 }
 /**
  * Details of an issue type scheme.
@@ -9450,17 +9648,11 @@ export interface IssueTypeIssueCreateMetadata {
  */
 export interface IssueTypeScheme {
     /**
-     * The ID of the issue type scheme.
+     * The ID of the default issue type of the issue type scheme.
      * @type {string}
      * @memberof IssueTypeScheme
      */
-    id: string;
-    /**
-     * The name of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeScheme
-     */
-    name: string;
+    defaultIssueTypeId?: string;
     /**
      * The description of the issue type scheme.
      * @type {string}
@@ -9468,17 +9660,23 @@ export interface IssueTypeScheme {
      */
     description?: string;
     /**
-     * The ID of the default issue type of the issue type scheme.
+     * The ID of the issue type scheme.
      * @type {string}
      * @memberof IssueTypeScheme
      */
-    defaultIssueTypeId?: string;
+    id: string;
     /**
      * Whether the issue type scheme is the default.
      * @type {boolean}
      * @memberof IssueTypeScheme
      */
     isDefault?: boolean;
+    /**
+     * The name of the issue type scheme.
+     * @type {string}
+     * @memberof IssueTypeScheme
+     */
+    name: string;
 }
 /**
  * Details of an issue type scheme and its associated issue types.
@@ -9487,11 +9685,11 @@ export interface IssueTypeScheme {
  */
 export interface IssueTypeSchemeDetails {
     /**
-     * The name of the issue type scheme. The name must be unique. The maximum length is 255 characters.
+     * The ID of the default issue type of the issue type scheme. This ID must be included in `issueTypeIds`.
      * @type {string}
      * @memberof IssueTypeSchemeDetails
      */
-    name: string;
+    defaultIssueTypeId?: string;
     /**
      * The description of the issue type scheme. The maximum length is 4000 characters.
      * @type {string}
@@ -9499,17 +9697,17 @@ export interface IssueTypeSchemeDetails {
      */
     description?: string;
     /**
-     * The ID of the default issue type of the issue type scheme. This ID must be included in `issueTypeIds`.
-     * @type {string}
-     * @memberof IssueTypeSchemeDetails
-     */
-    defaultIssueTypeId?: string;
-    /**
      * The list of issue types IDs of the issue type scheme. At least one standard issue type ID is required.
      * @type {Array<string>}
      * @memberof IssueTypeSchemeDetails
      */
     issueTypeIds: Array<string>;
+    /**
+     * The name of the issue type scheme. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof IssueTypeSchemeDetails
+     */
+    name: string;
 }
 /**
  * The ID of an issue type scheme.
@@ -9531,17 +9729,17 @@ export interface IssueTypeSchemeID {
  */
 export interface IssueTypeSchemeMapping {
     /**
-     * The ID of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeMapping
-     */
-    issueTypeSchemeId: string;
-    /**
      * The ID of the issue type.
      * @type {string}
      * @memberof IssueTypeSchemeMapping
      */
     issueTypeId: string;
+    /**
+     * The ID of the issue type scheme.
+     * @type {string}
+     * @memberof IssueTypeSchemeMapping
+     */
+    issueTypeSchemeId: string;
 }
 /**
  * Details of the association between an issue type scheme and project.
@@ -9588,17 +9786,11 @@ export interface IssueTypeSchemeProjects {
  */
 export interface IssueTypeSchemeProjectsIssueTypeScheme {
     /**
-     * The ID of the issue type scheme.
+     * The ID of the default issue type of the issue type scheme.
      * @type {string}
      * @memberof IssueTypeSchemeProjectsIssueTypeScheme
      */
-    id: string;
-    /**
-     * The name of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    name: string;
+    defaultIssueTypeId?: string;
     /**
      * The description of the issue type scheme.
      * @type {string}
@@ -9606,17 +9798,23 @@ export interface IssueTypeSchemeProjectsIssueTypeScheme {
      */
     description?: string;
     /**
-     * The ID of the default issue type of the issue type scheme.
+     * The ID of the issue type scheme.
      * @type {string}
      * @memberof IssueTypeSchemeProjectsIssueTypeScheme
      */
-    defaultIssueTypeId?: string;
+    id: string;
     /**
      * Whether the issue type scheme is the default.
      * @type {boolean}
      * @memberof IssueTypeSchemeProjectsIssueTypeScheme
      */
     isDefault?: boolean;
+    /**
+     * The name of the issue type scheme.
+     * @type {string}
+     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
+     */
+    name: string;
 }
 /**
  * Details of the name, description, and default issue type for an issue type scheme.
@@ -9625,11 +9823,11 @@ export interface IssueTypeSchemeProjectsIssueTypeScheme {
  */
 export interface IssueTypeSchemeUpdateDetails {
     /**
-     * The name of the issue type scheme. The name must be unique. The maximum length is 255 characters.
+     * The ID of the default issue type of the issue type scheme.
      * @type {string}
      * @memberof IssueTypeSchemeUpdateDetails
      */
-    name?: string;
+    defaultIssueTypeId?: string;
     /**
      * The description of the issue type scheme. The maximum length is 4000 characters.
      * @type {string}
@@ -9637,11 +9835,11 @@ export interface IssueTypeSchemeUpdateDetails {
      */
     description?: string;
     /**
-     * The ID of the default issue type of the issue type scheme.
+     * The name of the issue type scheme. The name must be unique. The maximum length is 255 characters.
      * @type {string}
      * @memberof IssueTypeSchemeUpdateDetails
      */
-    defaultIssueTypeId?: string;
+    name?: string;
 }
 /**
  * Details of an issue type screen scheme.
@@ -9649,6 +9847,12 @@ export interface IssueTypeSchemeUpdateDetails {
  * @interface IssueTypeScreenScheme
  */
 export interface IssueTypeScreenScheme {
+    /**
+     * The description of the issue type screen scheme.
+     * @type {string}
+     * @memberof IssueTypeScreenScheme
+     */
+    description?: string;
     /**
      * The ID of the issue type screen scheme.
      * @type {string}
@@ -9661,12 +9865,6 @@ export interface IssueTypeScreenScheme {
      * @memberof IssueTypeScreenScheme
      */
     name: string;
-    /**
-     * The description of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenScheme
-     */
-    description?: string;
 }
 /**
  * The details of an issue type screen scheme.
@@ -9674,12 +9872,6 @@ export interface IssueTypeScreenScheme {
  * @interface IssueTypeScreenSchemeDetails
  */
 export interface IssueTypeScreenSchemeDetails {
-    /**
-     * The name of the issue type screen scheme. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemeDetails
-     */
-    name: string;
     /**
      * The description of the issue type screen scheme. The maximum length is 255 characters.
      * @type {string}
@@ -9692,6 +9884,12 @@ export interface IssueTypeScreenSchemeDetails {
      * @memberof IssueTypeScreenSchemeDetails
      */
     issueTypeMappings: Array<IssueTypeScreenSchemeMapping>;
+    /**
+     * The name of the issue type screen scheme. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof IssueTypeScreenSchemeDetails
+     */
+    name: string;
 }
 /**
  * The ID of an issue type screen scheme.
@@ -9713,17 +9911,17 @@ export interface IssueTypeScreenSchemeId {
  */
 export interface IssueTypeScreenSchemeItem {
     /**
-     * The ID of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemeItem
-     */
-    issueTypeScreenSchemeId: string;
-    /**
      * The ID of the issue type or *default*. Only issue types used in classic projects are accepted. When creating an issue screen scheme, an entry for *default* must be provided and defines the mapping for all issue types without a screen scheme. Otherwise, a *default* entry can't be provided.
      * @type {string}
      * @memberof IssueTypeScreenSchemeItem
      */
     issueTypeId: string;
+    /**
+     * The ID of the issue type screen scheme.
+     * @type {string}
+     * @memberof IssueTypeScreenSchemeItem
+     */
+    issueTypeScreenSchemeId: string;
     /**
      * The ID of the screen scheme.
      * @type {string}
@@ -9789,17 +9987,17 @@ export interface IssueTypeScreenSchemeProjectAssociation {
  */
 export interface IssueTypeScreenSchemeUpdateDetails {
     /**
-     * The name of the issue type screen scheme. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemeUpdateDetails
-     */
-    name?: string;
-    /**
      * The description of the issue type screen scheme. The maximum length is 255 characters.
      * @type {string}
      * @memberof IssueTypeScreenSchemeUpdateDetails
      */
     description?: string;
+    /**
+     * The name of the issue type screen scheme. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof IssueTypeScreenSchemeUpdateDetails
+     */
+    name?: string;
 }
 /**
  * Issue type screen scheme with a list of the projects that use it.
@@ -9827,6 +10025,12 @@ export interface IssueTypeScreenSchemesProjects {
  */
 export interface IssueTypeScreenSchemesProjectsIssueTypeScreenScheme {
     /**
+     * The description of the issue type screen scheme.
+     * @type {string}
+     * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
+     */
+    description?: string;
+    /**
      * The ID of the issue type screen scheme.
      * @type {string}
      * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
@@ -9838,12 +10042,6 @@ export interface IssueTypeScreenSchemesProjectsIssueTypeScreenScheme {
      * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
      */
     name: string;
-    /**
-     * The description of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
-     */
-    description?: string;
 }
 /**
  * Mapping of an issue type to a context.
@@ -9858,17 +10056,17 @@ export interface IssueTypeToContextMapping {
      */
     contextId: string;
     /**
-     * The ID of the issue type.
-     * @type {string}
-     * @memberof IssueTypeToContextMapping
-     */
-    issueTypeId?: string;
-    /**
      * Whether the context is mapped to any issue type.
      * @type {boolean}
      * @memberof IssueTypeToContextMapping
      */
     isAnyIssueType?: boolean;
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof IssueTypeToContextMapping
+     */
+    issueTypeId?: string;
 }
 /**
  * 
@@ -9877,11 +10075,11 @@ export interface IssueTypeToContextMapping {
  */
 export interface IssueTypeUpdateBean {
     /**
-     * The unique name for the issue type. The maximum length is 60 characters.
-     * @type {string}
+     * The ID of an issue type avatar.
+     * @type {number}
      * @memberof IssueTypeUpdateBean
      */
-    name?: string;
+    avatarId?: number;
     /**
      * The description of the issue type.
      * @type {string}
@@ -9889,11 +10087,11 @@ export interface IssueTypeUpdateBean {
      */
     description?: string;
     /**
-     * The ID of an issue type avatar.
-     * @type {number}
+     * The unique name for the issue type. The maximum length is 60 characters.
+     * @type {string}
      * @memberof IssueTypeUpdateBean
      */
-    avatarId?: number;
+    name?: string;
 }
 /**
  * Status details for an issue type.
@@ -9901,12 +10099,6 @@ export interface IssueTypeUpdateBean {
  * @interface IssueTypeWithStatus
  */
 export interface IssueTypeWithStatus {
-    /**
-     * The URL of the issue type's status details.
-     * @type {string}
-     * @memberof IssueTypeWithStatus
-     */
-    readonly self: string;
     /**
      * The ID of the issue type.
      * @type {string}
@@ -9920,17 +10112,23 @@ export interface IssueTypeWithStatus {
      */
     readonly name: string;
     /**
-     * Whether this issue type represents subtasks.
-     * @type {boolean}
+     * The URL of the issue type's status details.
+     * @type {string}
      * @memberof IssueTypeWithStatus
      */
-    readonly subtask: boolean;
+    readonly self: string;
     /**
      * List of status details for the issue type.
      * @type {Array<StatusDetails>}
      * @memberof IssueTypeWithStatus
      */
     readonly statuses: Array<StatusDetails>;
+    /**
+     * Whether this issue type represents subtasks.
+     * @type {boolean}
+     * @memberof IssueTypeWithStatus
+     */
+    readonly subtask: boolean;
 }
 /**
  * Details about the mapping between an issue type and a workflow.
@@ -9945,17 +10143,17 @@ export interface IssueTypeWorkflowMapping {
      */
     issueType?: string;
     /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof IssueTypeWorkflowMapping
-     */
-    workflow?: string;
-    /**
      * Set to true to create or update the draft of a workflow scheme and update the mapping in the draft, when the workflow scheme cannot be edited. Defaults to `false`. Only applicable when updating the workflow-issue types mapping.
      * @type {boolean}
      * @memberof IssueTypeWorkflowMapping
      */
     updateDraftIfNeeded?: boolean;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof IssueTypeWorkflowMapping
+     */
+    workflow?: string;
 }
 /**
  * Details about the mapping between issue types and a workflow.
@@ -9964,11 +10162,11 @@ export interface IssueTypeWorkflowMapping {
  */
 export interface IssueTypesWorkflowMapping {
     /**
-     * The name of the workflow. Optional if updating the workflow-issue types mapping.
-     * @type {string}
+     * Whether the workflow is the default workflow for the workflow scheme.
+     * @type {boolean}
      * @memberof IssueTypesWorkflowMapping
      */
-    workflow?: string;
+    defaultMapping?: boolean;
     /**
      * The list of issue type IDs.
      * @type {Array<string>}
@@ -9976,17 +10174,17 @@ export interface IssueTypesWorkflowMapping {
      */
     issueTypes?: Array<string>;
     /**
-     * Whether the workflow is the default workflow for the workflow scheme.
-     * @type {boolean}
-     * @memberof IssueTypesWorkflowMapping
-     */
-    defaultMapping?: boolean;
-    /**
      * Whether a draft workflow scheme is created or updated when updating an active workflow scheme. The draft is updated with the new workflow-issue types mapping. Defaults to `false`.
      * @type {boolean}
      * @memberof IssueTypesWorkflowMapping
      */
     updateDraftIfNeeded?: boolean;
+    /**
+     * The name of the workflow. Optional if updating the workflow-issue types mapping.
+     * @type {string}
+     * @memberof IssueTypesWorkflowMapping
+     */
+    workflow?: string;
 }
 /**
  * Details of an issue update request.
@@ -9996,23 +10194,11 @@ export interface IssueTypesWorkflowMapping {
 export interface IssueUpdateDetails {
     [key: string]: any | any;
     /**
-     * 
-     * @type {IssueUpdateDetailsTransition}
-     * @memberof IssueUpdateDetails
-     */
-    transition?: IssueUpdateDetailsTransition;
-    /**
      * List of issue screen fields to update, specifying the sub-field to update and its value for each field. This field provides a straightforward option when setting a sub-field. When multiple sub-fields or other operations are required, use `update`. Fields included in here cannot be included in `update`.
      * @type {{ [key: string]: any; }}
      * @memberof IssueUpdateDetails
      */
     fields?: { [key: string]: any; };
-    /**
-     * A Map containing the field field name and a list of operations to perform on the issue screen field. Note that fields included in here cannot be included in `fields`.
-     * @type {{ [key: string]: Array<FieldUpdateOperation>; }}
-     * @memberof IssueUpdateDetails
-     */
-    update?: { [key: string]: Array<FieldUpdateOperation>; };
     /**
      * 
      * @type {IssueUpdateDetailsHistoryMetadata}
@@ -10025,6 +10211,18 @@ export interface IssueUpdateDetails {
      * @memberof IssueUpdateDetails
      */
     properties?: Array<EntityProperty>;
+    /**
+     * 
+     * @type {IssueUpdateDetailsTransition}
+     * @memberof IssueUpdateDetails
+     */
+    transition?: IssueUpdateDetailsTransition;
+    /**
+     * A Map containing the field field name and a list of operations to perform on the issue screen field. Note that fields included in here cannot be included in `fields`.
+     * @type {{ [key: string]: Array<FieldUpdateOperation>; }}
+     * @memberof IssueUpdateDetails
+     */
+    update?: { [key: string]: Array<FieldUpdateOperation>; };
 }
 /**
  * Additional issue history details.
@@ -10032,24 +10230,6 @@ export interface IssueUpdateDetails {
  * @interface IssueUpdateDetailsHistoryMetadata
  */
 export interface IssueUpdateDetailsHistoryMetadata {
-    /**
-     * The type of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    type?: string;
-    /**
-     * The description of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    description?: string;
-    /**
-     * The description key of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    descriptionKey?: string;
     /**
      * The activity described in the history record.
      * @type {string}
@@ -10063,6 +10243,30 @@ export interface IssueUpdateDetailsHistoryMetadata {
      */
     activityDescriptionKey?: string;
     /**
+     * 
+     * @type {HistoryMetadataActor}
+     * @memberof IssueUpdateDetailsHistoryMetadata
+     */
+    actor?: HistoryMetadataActor;
+    /**
+     * 
+     * @type {HistoryMetadataCause}
+     * @memberof IssueUpdateDetailsHistoryMetadata
+     */
+    cause?: HistoryMetadataCause;
+    /**
+     * The description of the history record.
+     * @type {string}
+     * @memberof IssueUpdateDetailsHistoryMetadata
+     */
+    description?: string;
+    /**
+     * The description key of the history record.
+     * @type {string}
+     * @memberof IssueUpdateDetailsHistoryMetadata
+     */
+    descriptionKey?: string;
+    /**
      * The description of the email address associated the history record.
      * @type {string}
      * @memberof IssueUpdateDetailsHistoryMetadata
@@ -10075,11 +10279,11 @@ export interface IssueUpdateDetailsHistoryMetadata {
      */
     emailDescriptionKey?: string;
     /**
-     * 
-     * @type {HistoryMetadataActor}
+     * Additional arbitrary information about the history record.
+     * @type {{ [key: string]: string; }}
      * @memberof IssueUpdateDetailsHistoryMetadata
      */
-    actor?: HistoryMetadataActor;
+    extraData?: { [key: string]: string; };
     /**
      * 
      * @type {HistoryMetadataGenerator}
@@ -10087,17 +10291,11 @@ export interface IssueUpdateDetailsHistoryMetadata {
      */
     generator?: HistoryMetadataGenerator;
     /**
-     * 
-     * @type {HistoryMetadataCause}
+     * The type of the history record.
+     * @type {string}
      * @memberof IssueUpdateDetailsHistoryMetadata
      */
-    cause?: HistoryMetadataCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
+    type?: string;
 }
 /**
  * Details of a transition. Required when performing a transition, optional when creating or editing an issue.
@@ -10106,23 +10304,17 @@ export interface IssueUpdateDetailsHistoryMetadata {
  */
 export interface IssueUpdateDetailsTransition {
     /**
-     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * Expand options that include additional transition details in the response.
      * @type {string}
      * @memberof IssueUpdateDetailsTransition
      */
-    id?: string;
+    readonly expand?: string;
     /**
-     * The name of the issue transition.
-     * @type {string}
+     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
+     * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueUpdateDetailsTransition
      */
-    readonly name?: string;
-    /**
-     * 
-     * @type {IssueTransitionTo}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    to?: IssueTransitionTo;
+    readonly fields?: { [key: string]: FieldMetadata; };
     /**
      * Whether there is a screen associated with the issue transition.
      * @type {boolean}
@@ -10130,17 +10322,11 @@ export interface IssueUpdateDetailsTransition {
      */
     readonly hasScreen?: boolean;
     /**
-     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
-     * @type {boolean}
+     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * @type {string}
      * @memberof IssueUpdateDetailsTransition
      */
-    readonly isGlobal?: boolean;
-    /**
-     * Whether this is the initial issue transition for the workflow.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly isInitial?: boolean;
+    id?: string;
     /**
      * Whether the transition is available to be performed.
      * @type {boolean}
@@ -10154,23 +10340,35 @@ export interface IssueUpdateDetailsTransition {
      */
     readonly isConditional?: boolean;
     /**
-     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
-     * @type {{ [key: string]: FieldMetadata; }}
+     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
+     * @type {boolean}
      * @memberof IssueUpdateDetailsTransition
      */
-    readonly fields?: { [key: string]: FieldMetadata; };
+    readonly isGlobal?: boolean;
     /**
-     * Expand options that include additional transition details in the response.
-     * @type {string}
+     * Whether this is the initial issue transition for the workflow.
+     * @type {boolean}
      * @memberof IssueUpdateDetailsTransition
      */
-    readonly expand?: string;
+    readonly isInitial?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof IssueUpdateDetailsTransition
      */
     looped?: boolean;
+    /**
+     * The name of the issue transition.
+     * @type {string}
+     * @memberof IssueUpdateDetailsTransition
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {IssueTransitionTo}
+     * @memberof IssueUpdateDetailsTransition
+     */
+    to?: IssueTransitionTo;
 }
 /**
  * A list of editable field details.
@@ -10192,17 +10390,17 @@ export interface IssueUpdateMetadata {
  */
 export interface IssuesAndJQLQueries {
     /**
-     * A list of JQL queries.
-     * @type {Array<string>}
-     * @memberof IssuesAndJQLQueries
-     */
-    jqls: Array<string>;
-    /**
      * A list of issue IDs.
      * @type {Set<number>}
      * @memberof IssuesAndJQLQueries
      */
     issueIds: number[];
+    /**
+     * A list of JQL queries.
+     * @type {Array<string>}
+     * @memberof IssuesAndJQLQueries
+     */
+    jqls: Array<string>;
 }
 /**
  * The description of the page of issues loaded by the provided JQL query.
@@ -10211,11 +10409,11 @@ export interface IssuesAndJQLQueries {
  */
 export interface IssuesJqlMetaDataBean {
     /**
-     * The index of the first issue.
+     * The number of issues that were loaded in this evaluation.
      * @type {number}
      * @memberof IssuesJqlMetaDataBean
      */
-    startAt: number;
+    count: number;
     /**
      * The maximum number of issues that could be loaded in this evaluation.
      * @type {number}
@@ -10223,11 +10421,11 @@ export interface IssuesJqlMetaDataBean {
      */
     maxResults: number;
     /**
-     * The number of issues that were loaded in this evaluation.
+     * The index of the first issue.
      * @type {number}
      * @memberof IssuesJqlMetaDataBean
      */
-    count: number;
+    startAt: number;
     /**
      * The total number of issues the JQL returned.
      * @type {number}
@@ -10288,17 +10486,17 @@ export interface JQLPersonalDataMigrationRequest {
  */
 export interface JQLQueryWithUnknownUsers {
     /**
-     * The original query, for reference
-     * @type {string}
-     * @memberof JQLQueryWithUnknownUsers
-     */
-    originalQuery?: string;
-    /**
      * The converted query, with accountIDs instead of user identifiers, or 'unknown' for users that could not be found
      * @type {string}
      * @memberof JQLQueryWithUnknownUsers
      */
     convertedQuery?: string;
+    /**
+     * The original query, for reference
+     * @type {string}
+     * @memberof JQLQueryWithUnknownUsers
+     */
+    originalQuery?: string;
 }
 /**
  * Lists of JQL reference data.
@@ -10306,6 +10504,12 @@ export interface JQLQueryWithUnknownUsers {
  * @interface JQLReferenceData
  */
 export interface JQLReferenceData {
+    /**
+     * List of JQL query reserved words.
+     * @type {Array<string>}
+     * @memberof JQLReferenceData
+     */
+    jqlReservedWords?: Array<string>;
     /**
      * List of fields usable in JQL queries.
      * @type {Array<FieldReferenceData>}
@@ -10318,12 +10522,6 @@ export interface JQLReferenceData {
      * @memberof JQLReferenceData
      */
     visibleFunctionNames?: Array<FunctionReferenceData>;
-    /**
-     * List of JQL query reserved words.
-     * @type {Array<string>}
-     * @memberof JQLReferenceData
-     */
-    jqlReservedWords?: Array<string>;
 }
 /**
  * The JQL specifying the issues available in the evaluated Jira expression under the `issues` context variable.
@@ -10345,6 +10543,12 @@ export interface JexpIssues {
  */
 export interface JexpIssuesJql {
     /**
+     * The maximum number of issues to return from the JQL query. Inspect `meta.issues.jql.maxResults` in the response to ensure the maximum value has not been exceeded.
+     * @type {number}
+     * @memberof JexpIssuesJql
+     */
+    maxResults?: number;
+    /**
      * The JQL query.
      * @type {string}
      * @memberof JexpIssuesJql
@@ -10356,12 +10560,6 @@ export interface JexpIssuesJql {
      * @memberof JexpIssuesJql
      */
     startAt?: number;
-    /**
-     * The maximum number of issues to return from the JQL query. Inspect `meta.issues.jql.maxResults` in the response to ensure the maximum value has not been exceeded.
-     * @type {number}
-     * @memberof JexpIssuesJql
-     */
-    maxResults?: number;
     /**
      * Determines how to validate the JQL query and treat the validation results.
      * @type {string}
@@ -10388,6 +10586,12 @@ export type JexpIssuesJqlValidationEnum = typeof JexpIssuesJqlValidationEnum[key
  */
 export interface JexpJqlIssues {
     /**
+     * The maximum number of issues to return from the JQL query. Inspect `meta.issues.jql.maxResults` in the response to ensure the maximum value has not been exceeded.
+     * @type {number}
+     * @memberof JexpJqlIssues
+     */
+    maxResults?: number;
+    /**
      * The JQL query.
      * @type {string}
      * @memberof JexpJqlIssues
@@ -10399,12 +10603,6 @@ export interface JexpJqlIssues {
      * @memberof JexpJqlIssues
      */
     startAt?: number;
-    /**
-     * The maximum number of issues to return from the JQL query. Inspect `meta.issues.jql.maxResults` in the response to ensure the maximum value has not been exceeded.
-     * @type {number}
-     * @memberof JexpJqlIssues
-     */
-    maxResults?: number;
     /**
      * Determines how to validate the JQL query and treat the validation results.
      * @type {string}
@@ -10431,11 +10629,11 @@ export type JexpJqlIssuesValidationEnum = typeof JexpJqlIssuesValidationEnum[key
  */
 export interface JiraExpressionAnalysis {
     /**
-     * The analysed expression.
-     * @type {string}
+     * 
+     * @type {JiraExpressionComplexity}
      * @memberof JiraExpressionAnalysis
      */
-    expression: string;
+    complexity?: JiraExpressionComplexity;
     /**
      * A list of validation errors. Not included if the expression is valid.
      * @type {Array<JiraExpressionValidationError>}
@@ -10443,11 +10641,11 @@ export interface JiraExpressionAnalysis {
      */
     errors?: Array<JiraExpressionValidationError>;
     /**
-     * Whether the expression is valid and the interpreter will evaluate it. Note that the expression may fail at runtime (for example, if it executes too many expensive operations).
-     * @type {boolean}
+     * The analysed expression.
+     * @type {string}
      * @memberof JiraExpressionAnalysis
      */
-    valid: boolean;
+    expression: string;
     /**
      * EXPERIMENTAL. The inferred type of the expression.
      * @type {string}
@@ -10455,11 +10653,11 @@ export interface JiraExpressionAnalysis {
      */
     type?: string;
     /**
-     * 
-     * @type {JiraExpressionComplexity}
+     * Whether the expression is valid and the interpreter will evaluate it. Note that the expression may fail at runtime (for example, if it executes too many expensive operations).
+     * @type {boolean}
      * @memberof JiraExpressionAnalysis
      */
-    complexity?: JiraExpressionComplexity;
+    valid: boolean;
 }
 /**
  * Details about the complexity of the analysed Jira expression.
@@ -10490,6 +10688,29 @@ export interface JiraExpressionComplexity {
  */
 export interface JiraExpressionEvalContextBean {
     /**
+     * The ID of the board that is available under the `board` variable when evaluating the expression.
+     * @type {number}
+     * @memberof JiraExpressionEvalContextBean
+     */
+    board?: number;
+    /**
+     * Custom context variables and their types. These variable types are available for use in a custom context:
+     * 
+     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
+     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
+     *  *  `json`: A JSON object containing custom content.
+     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
+     * @type {Array<CustomContextVariable>}
+     * @memberof JiraExpressionEvalContextBean
+     */
+    custom?: Array<CustomContextVariable>;
+    /**
+     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
+     * @type {number}
+     * @memberof JiraExpressionEvalContextBean
+     */
+    customerRequest?: number;
+    /**
      * 
      * @type {JiraExpressionEvalContextBeanIssue}
      * @memberof JiraExpressionEvalContextBean
@@ -10508,40 +10729,17 @@ export interface JiraExpressionEvalContextBean {
      */
     project?: JiraExpressionEvalContextBeanProject;
     /**
-     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalContextBean
-     */
-    sprint?: number;
-    /**
-     * The ID of the board that is available under the `board` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalContextBean
-     */
-    board?: number;
-    /**
      * The ID of the service desk that is available under the `serviceDesk` variable when evaluating the expression.
      * @type {number}
      * @memberof JiraExpressionEvalContextBean
      */
     serviceDesk?: number;
     /**
-     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
+     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
      * @type {number}
      * @memberof JiraExpressionEvalContextBean
      */
-    customerRequest?: number;
-    /**
-     * Custom context variables and their types. These variable types are available for use in a custom context:
-     * 
-     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
-     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
-     *  *  `json`: A JSON object containing custom content.
-     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
-     * @type {Array<CustomContextVariable>}
-     * @memberof JiraExpressionEvalContextBean
-     */
-    custom?: Array<CustomContextVariable>;
+    sprint?: number;
 }
 /**
  * The issue that is available under the `issue` variable when evaluating the expression.
@@ -10601,17 +10799,17 @@ export interface JiraExpressionEvalContextBeanProject {
  */
 export interface JiraExpressionEvalRequestBean {
     /**
-     * The Jira expression to evaluate.
-     * @type {string}
-     * @memberof JiraExpressionEvalRequestBean
-     */
-    expression: string;
-    /**
      * 
      * @type {JiraExpressionEvalRequestBeanContext}
      * @memberof JiraExpressionEvalRequestBean
      */
     context?: JiraExpressionEvalRequestBeanContext;
+    /**
+     * The Jira expression to evaluate.
+     * @type {string}
+     * @memberof JiraExpressionEvalRequestBean
+     */
+    expression: string;
 }
 /**
  * The context in which the Jira expression is evaluated.
@@ -10619,6 +10817,29 @@ export interface JiraExpressionEvalRequestBean {
  * @interface JiraExpressionEvalRequestBeanContext
  */
 export interface JiraExpressionEvalRequestBeanContext {
+    /**
+     * The ID of the board that is available under the `board` variable when evaluating the expression.
+     * @type {number}
+     * @memberof JiraExpressionEvalRequestBeanContext
+     */
+    board?: number;
+    /**
+     * Custom context variables and their types. These variable types are available for use in a custom context:
+     * 
+     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
+     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
+     *  *  `json`: A JSON object containing custom content.
+     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
+     * @type {Array<CustomContextVariable>}
+     * @memberof JiraExpressionEvalRequestBeanContext
+     */
+    custom?: Array<CustomContextVariable>;
+    /**
+     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
+     * @type {number}
+     * @memberof JiraExpressionEvalRequestBeanContext
+     */
+    customerRequest?: number;
     /**
      * 
      * @type {JiraExpressionEvalContextBeanIssue}
@@ -10638,40 +10859,17 @@ export interface JiraExpressionEvalRequestBeanContext {
      */
     project?: JiraExpressionEvalContextBeanProject;
     /**
-     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    sprint?: number;
-    /**
-     * The ID of the board that is available under the `board` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    board?: number;
-    /**
      * The ID of the service desk that is available under the `serviceDesk` variable when evaluating the expression.
      * @type {number}
      * @memberof JiraExpressionEvalRequestBeanContext
      */
     serviceDesk?: number;
     /**
-     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
+     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
      * @type {number}
      * @memberof JiraExpressionEvalRequestBeanContext
      */
-    customerRequest?: number;
-    /**
-     * Custom context variables and their types. These variable types are available for use in a custom context:
-     * 
-     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
-     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
-     *  *  `json`: A JSON object containing custom content.
-     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
-     * @type {Array<CustomContextVariable>}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    custom?: Array<CustomContextVariable>;
+    sprint?: number;
 }
 /**
  * 
@@ -10700,10 +10898,10 @@ export interface JiraExpressionEvaluationMetaDataBean {
 export interface JiraExpressionEvaluationMetaDataBeanComplexity {
     /**
      * 
-     * @type {JiraExpressionsComplexityBeanSteps}
+     * @type {JiraExpressionsComplexityBeanBeans}
      * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
      */
-    steps: JiraExpressionsComplexityBeanSteps;
+    beans: JiraExpressionsComplexityBeanBeans;
     /**
      * 
      * @type {JiraExpressionsComplexityBeanExpensiveOperations}
@@ -10712,16 +10910,16 @@ export interface JiraExpressionEvaluationMetaDataBeanComplexity {
     expensiveOperations: JiraExpressionsComplexityBeanExpensiveOperations;
     /**
      * 
-     * @type {JiraExpressionsComplexityBeanBeans}
-     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
-     */
-    beans: JiraExpressionsComplexityBeanBeans;
-    /**
-     * 
      * @type {JiraExpressionsComplexityBeanPrimitiveValues}
      * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
      */
     primitiveValues: JiraExpressionsComplexityBeanPrimitiveValues;
+    /**
+     * 
+     * @type {JiraExpressionsComplexityBeanSteps}
+     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
+     */
+    steps: JiraExpressionsComplexityBeanSteps;
 }
 /**
  * Contains information about the `issues` variable in the context. For example, is the issues were loaded with JQL, information about the page will be included here.
@@ -10743,17 +10941,17 @@ export interface JiraExpressionEvaluationMetaDataBeanIssues {
  */
 export interface JiraExpressionForAnalysis {
     /**
-     * The list of Jira expressions to analyse.
-     * @type {Array<string>}
-     * @memberof JiraExpressionForAnalysis
-     */
-    expressions: Array<string>;
-    /**
      * Context variables and their types. The type checker assumes that [common context variables](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/#context-variables), such as `issue` or `project`, are available in context and sets their type. Use this property to override the default types or provide details of new variables.
      * @type {{ [key: string]: string; }}
      * @memberof JiraExpressionForAnalysis
      */
     contextVariables?: { [key: string]: string; };
+    /**
+     * The list of Jira expressions to analyse.
+     * @type {Array<string>}
+     * @memberof JiraExpressionForAnalysis
+     */
+    expressions: Array<string>;
 }
 /**
  * The result of evaluating a Jira expression.
@@ -10762,17 +10960,17 @@ export interface JiraExpressionForAnalysis {
  */
 export interface JiraExpressionResult {
     /**
-     * The value of the evaluated expression. It may be a primitive JSON value or a Jira REST API object. (Some expressions do not produce any meaningful results—for example, an expression that returns a lambda function—if that's the case a simple string representation is returned. These string representations should not be relied upon and may change without notice.)
-     * @type {any}
-     * @memberof JiraExpressionResult
-     */
-    value: any | null;
-    /**
      * 
      * @type {JiraExpressionResultMeta}
      * @memberof JiraExpressionResult
      */
     meta?: JiraExpressionResultMeta;
+    /**
+     * The value of the evaluated expression. It may be a primitive JSON value or a Jira REST API object. (Some expressions do not produce any meaningful results—for example, an expression that returns a lambda function—if that's the case a simple string representation is returned. These string representations should not be relied upon and may change without notice.)
+     * @type {any}
+     * @memberof JiraExpressionResult
+     */
+    value: any | null;
 }
 /**
  * Contains various characteristics of the performed expression evaluation.
@@ -10803,12 +11001,6 @@ export interface JiraExpressionResultMeta {
  */
 export interface JiraExpressionValidationError {
     /**
-     * The text line in which the error occurred.
-     * @type {number}
-     * @memberof JiraExpressionValidationError
-     */
-    line?: number;
-    /**
      * The text column in which the error occurred.
      * @type {number}
      * @memberof JiraExpressionValidationError
@@ -10820,6 +11012,12 @@ export interface JiraExpressionValidationError {
      * @memberof JiraExpressionValidationError
      */
     expression?: string;
+    /**
+     * The text line in which the error occurred.
+     * @type {number}
+     * @memberof JiraExpressionValidationError
+     */
+    line?: number;
     /**
      * Details about the error.
      * @type {string}
@@ -10866,10 +11064,10 @@ export interface JiraExpressionsAnalysis {
 export interface JiraExpressionsComplexityBean {
     /**
      * 
-     * @type {JiraExpressionsComplexityBeanSteps}
+     * @type {JiraExpressionsComplexityBeanBeans}
      * @memberof JiraExpressionsComplexityBean
      */
-    steps: JiraExpressionsComplexityBeanSteps;
+    beans: JiraExpressionsComplexityBeanBeans;
     /**
      * 
      * @type {JiraExpressionsComplexityBeanExpensiveOperations}
@@ -10878,16 +11076,16 @@ export interface JiraExpressionsComplexityBean {
     expensiveOperations: JiraExpressionsComplexityBeanExpensiveOperations;
     /**
      * 
-     * @type {JiraExpressionsComplexityBeanBeans}
-     * @memberof JiraExpressionsComplexityBean
-     */
-    beans: JiraExpressionsComplexityBeanBeans;
-    /**
-     * 
      * @type {JiraExpressionsComplexityBeanPrimitiveValues}
      * @memberof JiraExpressionsComplexityBean
      */
     primitiveValues: JiraExpressionsComplexityBeanPrimitiveValues;
+    /**
+     * 
+     * @type {JiraExpressionsComplexityBeanSteps}
+     * @memberof JiraExpressionsComplexityBean
+     */
+    steps: JiraExpressionsComplexityBeanSteps;
 }
 /**
  * The number of Jira REST API beans returned in the response.
@@ -10896,17 +11094,17 @@ export interface JiraExpressionsComplexityBean {
  */
 export interface JiraExpressionsComplexityBeanBeans {
     /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanBeans
-     */
-    value: number;
-    /**
      * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
      * @type {number}
      * @memberof JiraExpressionsComplexityBeanBeans
      */
     limit: number;
+    /**
+     * The complexity value of the current expression.
+     * @type {number}
+     * @memberof JiraExpressionsComplexityBeanBeans
+     */
+    value: number;
 }
 /**
  * The number of expensive operations executed while evaluating the expression. Expensive operations are those that load additional data, such as entity properties, comments, or custom fields.
@@ -10915,17 +11113,17 @@ export interface JiraExpressionsComplexityBeanBeans {
  */
 export interface JiraExpressionsComplexityBeanExpensiveOperations {
     /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanExpensiveOperations
-     */
-    value: number;
-    /**
      * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
      * @type {number}
      * @memberof JiraExpressionsComplexityBeanExpensiveOperations
      */
     limit: number;
+    /**
+     * The complexity value of the current expression.
+     * @type {number}
+     * @memberof JiraExpressionsComplexityBeanExpensiveOperations
+     */
+    value: number;
 }
 /**
  * The number of primitive values returned in the response.
@@ -10934,17 +11132,17 @@ export interface JiraExpressionsComplexityBeanExpensiveOperations {
  */
 export interface JiraExpressionsComplexityBeanPrimitiveValues {
     /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanPrimitiveValues
-     */
-    value: number;
-    /**
      * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
      * @type {number}
      * @memberof JiraExpressionsComplexityBeanPrimitiveValues
      */
     limit: number;
+    /**
+     * The complexity value of the current expression.
+     * @type {number}
+     * @memberof JiraExpressionsComplexityBeanPrimitiveValues
+     */
+    value: number;
 }
 /**
  * The number of steps it took to evaluate the expression, where a step is a high-level operation performed by the expression. A step is an operation such as arithmetic, accessing a property, accessing a context variable, or calling a function.
@@ -10953,17 +11151,17 @@ export interface JiraExpressionsComplexityBeanPrimitiveValues {
  */
 export interface JiraExpressionsComplexityBeanSteps {
     /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanSteps
-     */
-    value: number;
-    /**
      * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
      * @type {number}
      * @memberof JiraExpressionsComplexityBeanSteps
      */
     limit: number;
+    /**
+     * The complexity value of the current expression.
+     * @type {number}
+     * @memberof JiraExpressionsComplexityBeanSteps
+     */
+    value: number;
 }
 /**
  * 
@@ -10972,17 +11170,17 @@ export interface JiraExpressionsComplexityBeanSteps {
  */
 export interface JiraExpressionsComplexityValueBean {
     /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityValueBean
-     */
-    value: number;
-    /**
      * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
      * @type {number}
      * @memberof JiraExpressionsComplexityValueBean
      */
     limit: number;
+    /**
+     * The complexity value of the current expression.
+     * @type {number}
+     * @memberof JiraExpressionsComplexityValueBean
+     */
+    value: number;
 }
 /**
  * Details of a status.
@@ -10990,6 +11188,12 @@ export interface JiraExpressionsComplexityValueBean {
  * @interface JiraStatus
  */
 export interface JiraStatus {
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof JiraStatus
+     */
+    description?: string;
     /**
      * The ID of the status.
      * @type {string}
@@ -11003,23 +11207,17 @@ export interface JiraStatus {
      */
     name?: string;
     /**
-     * The category of the status.
-     * @type {string}
-     * @memberof JiraStatus
-     */
-    statusCategory?: JiraStatusStatusCategoryEnum;
-    /**
      * 
      * @type {StatusScope}
      * @memberof JiraStatus
      */
     scope?: StatusScope;
     /**
-     * The description of the status.
+     * The category of the status.
      * @type {string}
      * @memberof JiraStatus
      */
-    description?: string;
+    statusCategory?: JiraStatusStatusCategoryEnum;
     /**
      * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
      * @type {Set<ProjectIssueTypes>}
@@ -11039,6 +11237,105 @@ export const JiraStatusStatusCategoryEnum = {
 } as const;
 export type JiraStatusStatusCategoryEnum = typeof JiraStatusStatusCategoryEnum[keyof typeof JiraStatusStatusCategoryEnum];
 
+/**
+ * Jql function precomputation.
+ * @export
+ * @interface JqlFunctionPrecomputationBean
+ */
+export interface JqlFunctionPrecomputationBean {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly arguments?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly created?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly field?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly functionKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly functionName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly operator?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly updated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly used?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly value?: string;
+}
+/**
+ * Precomputation id and its new value.
+ * @export
+ * @interface JqlFunctionPrecomputationUpdateBean
+ */
+export interface JqlFunctionPrecomputationUpdateBean {
+    /**
+     * 
+     * @type {number}
+     * @memberof JqlFunctionPrecomputationUpdateBean
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationUpdateBean
+     */
+    value: string;
+}
+/**
+ * List of pairs (id and value) for precomputation updates.
+ * @export
+ * @interface JqlFunctionPrecomputationUpdateRequestBean
+ */
+export interface JqlFunctionPrecomputationUpdateRequestBean {
+    /**
+     * 
+     * @type {Array<JqlFunctionPrecomputationUpdateBean>}
+     * @memberof JqlFunctionPrecomputationUpdateRequestBean
+     */
+    values?: Array<JqlFunctionPrecomputationUpdateBean>;
+}
 /**
  * A list of JQL queries to parse.
  * @export
@@ -11073,16 +11370,16 @@ export interface JqlQueriesToSanitize {
 export interface JqlQuery {
     /**
      * 
-     * @type {JqlQueryClause}
-     * @memberof JqlQuery
-     */
-    where?: JqlQueryClause;
-    /**
-     * 
      * @type {JqlQueryOrderByClause}
      * @memberof JqlQuery
      */
     orderBy?: JqlQueryOrderByClause;
+    /**
+     * 
+     * @type {JqlQueryClause}
+     * @memberof JqlQuery
+     */
+    where?: JqlQueryClause;
 }
 /**
  * A JQL query clause.
@@ -11138,11 +11435,23 @@ export type JqlQueryClauseOperatorEnum = typeof JqlQueryClauseOperatorEnum[keyof
  */
 export interface JqlQueryClauseOperand {
     /**
+     * Encoded operand, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof JqlQueryClauseOperand
+     */
+    encodedOperand?: string;
+    /**
      * The list of operand values.
      * @type {Array<JqlQueryUnitaryOperand>}
      * @memberof JqlQueryClauseOperand
      */
     values: Array<JqlQueryUnitaryOperand>;
+    /**
+     * Encoded value, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof JqlQueryClauseOperand
+     */
+    encodedValue?: string;
     /**
      * The operand value.
      * @type {string}
@@ -11150,17 +11459,17 @@ export interface JqlQueryClauseOperand {
      */
     value: string;
     /**
-     * The name of the function.
-     * @type {string}
-     * @memberof JqlQueryClauseOperand
-     */
-    _function: string;
-    /**
      * The list of function arguments.
      * @type {Array<string>}
      * @memberof JqlQueryClauseOperand
      */
     arguments: Array<string>;
+    /**
+     * The name of the function.
+     * @type {string}
+     * @memberof JqlQueryClauseOperand
+     */
+    _function: string;
     /**
      * The keyword that is the operand value.
      * @type {string}
@@ -11185,17 +11494,17 @@ export type JqlQueryClauseOperandKeywordEnum = typeof JqlQueryClauseOperandKeywo
  */
 export interface JqlQueryClauseTimePredicate {
     /**
-     * The operator between the field and the operand.
-     * @type {string}
-     * @memberof JqlQueryClauseTimePredicate
-     */
-    operator: JqlQueryClauseTimePredicateOperatorEnum;
-    /**
      * 
      * @type {JqlQueryClauseOperand}
      * @memberof JqlQueryClauseTimePredicate
      */
     operand: JqlQueryClauseOperand;
+    /**
+     * The operator between the field and the operand.
+     * @type {string}
+     * @memberof JqlQueryClauseTimePredicate
+     */
+    operator: JqlQueryClauseTimePredicateOperatorEnum;
 }
 
 
@@ -11219,6 +11528,12 @@ export type JqlQueryClauseTimePredicateOperatorEnum = typeof JqlQueryClauseTimeP
  * @interface JqlQueryField
  */
 export interface JqlQueryField {
+    /**
+     * The encoded name of the field, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof JqlQueryField
+     */
+    encodedName?: string;
     /**
      * The name of the field.
      * @type {string}
@@ -11297,17 +11612,17 @@ export interface JqlQueryOrderByClause {
  */
 export interface JqlQueryOrderByClauseElement {
     /**
-     * 
-     * @type {JqlQueryField}
-     * @memberof JqlQueryOrderByClauseElement
-     */
-    field: JqlQueryField;
-    /**
      * The direction in which to order the results.
      * @type {string}
      * @memberof JqlQueryOrderByClauseElement
      */
     direction?: JqlQueryOrderByClauseElementDirectionEnum;
+    /**
+     * 
+     * @type {JqlQueryField}
+     * @memberof JqlQueryOrderByClauseElement
+     */
+    field: JqlQueryField;
 }
 
 
@@ -11346,23 +11661,35 @@ export interface JqlQueryToSanitize {
  */
 export interface JqlQueryUnitaryOperand {
     /**
+     * Encoded value, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof JqlQueryUnitaryOperand
+     */
+    encodedValue?: string;
+    /**
      * The operand value.
      * @type {string}
      * @memberof JqlQueryUnitaryOperand
      */
     value: string;
     /**
-     * The name of the function.
-     * @type {string}
-     * @memberof JqlQueryUnitaryOperand
-     */
-    _function: string;
-    /**
      * The list of function arguments.
      * @type {Array<string>}
      * @memberof JqlQueryUnitaryOperand
      */
     arguments: Array<string>;
+    /**
+     * Encoded operand, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof JqlQueryUnitaryOperand
+     */
+    encodedOperand?: string;
+    /**
+     * The name of the function.
+     * @type {string}
+     * @memberof JqlQueryUnitaryOperand
+     */
+    _function: string;
     /**
      * The keyword that is the operand value.
      * @type {string}
@@ -11407,52 +11734,10 @@ export interface JsonContextVariable {
 export interface JsonNode {
     /**
      * 
-     * @type {object}
-     * @memberof JsonNode
-     */
-    elements?: object;
-    /**
-     * 
      * @type {boolean}
      * @memberof JsonNode
      */
-    pojo?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    number?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    integralNumber?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    floatingPointNumber?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    _int?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    _long?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    _double?: boolean;
+    array?: boolean;
     /**
      * 
      * @type {boolean}
@@ -11467,10 +11752,22 @@ export interface JsonNode {
     bigInteger?: boolean;
     /**
      * 
+     * @type {number}
+     * @memberof JsonNode
+     */
+    bigIntegerValue?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof JsonNode
      */
-    textual?: boolean;
+    binary?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JsonNode
+     */
+    binaryValue?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -11482,67 +11779,13 @@ export interface JsonNode {
      * @type {boolean}
      * @memberof JsonNode
      */
-    binary?: boolean;
+    booleanValue?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof JsonNode
      */
     containerNode?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    missingNode?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    object?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    valueNode?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    numberValue?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonNode
-     */
-    numberType?: JsonNodeNumberTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    intValue?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    longValue?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    bigIntegerValue?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    doubleValue?: number;
     /**
      * 
      * @type {number}
@@ -11554,13 +11797,133 @@ export interface JsonNode {
      * @type {boolean}
      * @memberof JsonNode
      */
-    booleanValue?: boolean;
+    _double?: boolean;
     /**
      * 
-     * @type {Array<string>}
+     * @type {number}
      * @memberof JsonNode
      */
-    binaryValue?: Array<string>;
+    doubleValue?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof JsonNode
+     */
+    elements?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof JsonNode
+     */
+    fieldNames?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof JsonNode
+     */
+    fields?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    floatingPointNumber?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    _int?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNode
+     */
+    intValue?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    integralNumber?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    _long?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNode
+     */
+    longValue?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    missingNode?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    _null?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    number?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonNode
+     */
+    numberType?: JsonNodeNumberTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNode
+     */
+    numberValue?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    object?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    pojo?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonNode
+     */
+    textValue?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    textual?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNode
+     */
+    valueAsBoolean?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNode
+     */
+    valueAsDouble?: number;
     /**
      * 
      * @type {number}
@@ -11575,52 +11938,16 @@ export interface JsonNode {
     valueAsLong?: number;
     /**
      * 
-     * @type {number}
-     * @memberof JsonNode
-     */
-    valueAsDouble?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    valueAsBoolean?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonNode
-     */
-    textValue?: string;
-    /**
-     * 
      * @type {string}
      * @memberof JsonNode
      */
     valueAsText?: string;
     /**
      * 
-     * @type {object}
-     * @memberof JsonNode
-     */
-    fieldNames?: object;
-    /**
-     * 
      * @type {boolean}
      * @memberof JsonNode
      */
-    array?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof JsonNode
-     */
-    fields?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNode
-     */
-    _null?: boolean;
+    valueNode?: boolean;
 }
 
 
@@ -11644,23 +11971,11 @@ export type JsonNodeNumberTypeEnum = typeof JsonNodeNumberTypeEnum[keyof typeof 
  */
 export interface JsonTypeBean {
     /**
-     * The data type of the field.
-     * @type {string}
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly type: string;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof JsonTypeBean
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof JsonTypeBean
-     */
-    readonly system?: string;
+    readonly _configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -11674,11 +11989,23 @@ export interface JsonTypeBean {
      */
     readonly customId?: number;
     /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
      * @memberof JsonTypeBean
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof JsonTypeBean
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof JsonTypeBean
+     */
+    readonly type: string;
 }
 /**
  * An operand that is a JQL keyword. See [Advanced searching - keywords reference](https://confluence.atlassian.com/jiracorecloud/advanced-searching-keywords-reference-765593717.html#Advancedsearching-keywordsreference-EMPTYEMPTY) for more information about operand keywords.
@@ -11715,6 +12042,25 @@ export interface License {
      * @memberof License
      */
     readonly applications: Array<LicensedApplication>;
+}
+/**
+ * A license metric
+ * @export
+ * @interface LicenseMetric
+ */
+export interface LicenseMetric {
+    /**
+     * The key of the license metric.
+     * @type {string}
+     * @memberof LicenseMetric
+     */
+    key?: string;
+    /**
+     * The value for the license metric.
+     * @type {string}
+     * @memberof LicenseMetric
+     */
+    value?: string;
 }
 /**
  * Details about a licensed Jira application.
@@ -11755,16 +12101,10 @@ export type LicensedApplicationPlanEnum = typeof LicensedApplicationPlanEnum[key
 export interface LinkGroup {
     /**
      * 
-     * @type {string}
+     * @type {Array<LinkGroup>}
      * @memberof LinkGroup
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LinkGroup
-     */
-    styleClass?: string;
+    groups?: Array<LinkGroup>;
     /**
      * 
      * @type {SimpleLink}
@@ -11773,10 +12113,10 @@ export interface LinkGroup {
     header?: SimpleLink;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof LinkGroup
      */
-    weight?: number;
+    id?: string;
     /**
      * 
      * @type {Array<SimpleLink>}
@@ -11785,10 +12125,16 @@ export interface LinkGroup {
     links?: Array<SimpleLink>;
     /**
      * 
-     * @type {Array<LinkGroup>}
+     * @type {string}
      * @memberof LinkGroup
      */
-    groups?: Array<LinkGroup>;
+    styleClass?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LinkGroup
+     */
+    weight?: number;
 }
 /**
  * 
@@ -11798,10 +12144,10 @@ export interface LinkGroup {
 export interface LinkIssueRequestJsonBean {
     /**
      * 
-     * @type {IssueLinkType}
+     * @type {Comment}
      * @memberof LinkIssueRequestJsonBean
      */
-    type: IssueLinkType;
+    comment?: Comment;
     /**
      * 
      * @type {LinkedIssue}
@@ -11816,10 +12162,10 @@ export interface LinkIssueRequestJsonBean {
     outwardIssue: LinkedIssue;
     /**
      * 
-     * @type {Comment}
+     * @type {IssueLinkType}
      * @memberof LinkIssueRequestJsonBean
      */
-    comment?: Comment;
+    type: IssueLinkType;
 }
 /**
  * The ID or key of a linked issue.
@@ -11827,6 +12173,12 @@ export interface LinkIssueRequestJsonBean {
  * @interface LinkedIssue
  */
 export interface LinkedIssue {
+    /**
+     * 
+     * @type {LinkedIssueFields}
+     * @memberof LinkedIssue
+     */
+    fields?: LinkedIssueFields;
     /**
      * The ID of an issue. Required if `key` isn't provided.
      * @type {string}
@@ -11845,12 +12197,6 @@ export interface LinkedIssue {
      * @memberof LinkedIssue
      */
     readonly self?: string;
-    /**
-     * 
-     * @type {LinkedIssueFields}
-     * @memberof LinkedIssue
-     */
-    fields?: LinkedIssueFields;
 }
 /**
  * The fields associated with the issue.
@@ -11859,24 +12205,6 @@ export interface LinkedIssue {
  */
 export interface LinkedIssueFields {
     /**
-     * The summary description of the linked issue.
-     * @type {string}
-     * @memberof LinkedIssueFields
-     */
-    readonly summary?: string;
-    /**
-     * 
-     * @type {FieldsStatus}
-     * @memberof LinkedIssueFields
-     */
-    status?: FieldsStatus;
-    /**
-     * 
-     * @type {FieldsPriority}
-     * @memberof LinkedIssueFields
-     */
-    priority?: FieldsPriority;
-    /**
      * 
      * @type {FieldsAssignee}
      * @memberof LinkedIssueFields
@@ -11884,10 +12212,10 @@ export interface LinkedIssueFields {
     assignee?: FieldsAssignee;
     /**
      * 
-     * @type {FieldsTimetracking}
+     * @type {FieldsIssueType}
      * @memberof LinkedIssueFields
      */
-    timetracking?: FieldsTimetracking;
+    issueType?: FieldsIssueType;
     /**
      * 
      * @type {IssueTypeDetails}
@@ -11896,10 +12224,28 @@ export interface LinkedIssueFields {
     issuetype?: IssueTypeDetails;
     /**
      * 
-     * @type {FieldsIssueType}
+     * @type {FieldsPriority}
      * @memberof LinkedIssueFields
      */
-    issueType?: FieldsIssueType;
+    priority?: FieldsPriority;
+    /**
+     * 
+     * @type {FieldsStatus}
+     * @memberof LinkedIssueFields
+     */
+    status?: FieldsStatus;
+    /**
+     * The summary description of the linked issue.
+     * @type {string}
+     * @memberof LinkedIssueFields
+     */
+    readonly summary?: string;
+    /**
+     * 
+     * @type {FieldsTimetracking}
+     * @memberof LinkedIssueFields
+     */
+    timetracking?: FieldsTimetracking;
 }
 /**
  * An operand that is a list of values.
@@ -11907,6 +12253,12 @@ export interface LinkedIssueFields {
  * @interface ListOperand
  */
 export interface ListOperand {
+    /**
+     * Encoded operand, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof ListOperand
+     */
+    encodedOperand?: string;
     /**
      * The list of operand values.
      * @type {Array<JqlQueryUnitaryOperand>}
@@ -11934,6 +12286,42 @@ export interface Locale {
  */
 export interface ModelConfiguration {
     /**
+     * Whether the ability to add attachments to issues is enabled.
+     * @type {boolean}
+     * @memberof ModelConfiguration
+     */
+    readonly attachmentsEnabled?: boolean;
+    /**
+     * Whether the ability to link issues is enabled.
+     * @type {boolean}
+     * @memberof ModelConfiguration
+     */
+    readonly issueLinkingEnabled?: boolean;
+    /**
+     * Whether the ability to create subtasks for issues is enabled.
+     * @type {boolean}
+     * @memberof ModelConfiguration
+     */
+    readonly subTasksEnabled?: boolean;
+    /**
+     * 
+     * @type {ConfigurationTimeTrackingConfiguration}
+     * @memberof ModelConfiguration
+     */
+    timeTrackingConfiguration?: ConfigurationTimeTrackingConfiguration;
+    /**
+     * Whether the ability to track time is enabled. This property is deprecated.
+     * @type {boolean}
+     * @memberof ModelConfiguration
+     */
+    readonly timeTrackingEnabled?: boolean;
+    /**
+     * Whether the ability to create unassigned issues is enabled. See [Configuring Jira application options](https://confluence.atlassian.com/x/uYXKM) for details.
+     * @type {boolean}
+     * @memberof ModelConfiguration
+     */
+    readonly unassignedIssuesAllowed?: boolean;
+    /**
      * Whether the ability for users to vote on issues is enabled. See [Configuring Jira application options](https://confluence.atlassian.com/x/uYXKM) for details.
      * @type {boolean}
      * @memberof ModelConfiguration
@@ -11945,42 +12333,6 @@ export interface ModelConfiguration {
      * @memberof ModelConfiguration
      */
     readonly watchingEnabled?: boolean;
-    /**
-     * Whether the ability to create unassigned issues is enabled. See [Configuring Jira application options](https://confluence.atlassian.com/x/uYXKM) for details.
-     * @type {boolean}
-     * @memberof ModelConfiguration
-     */
-    readonly unassignedIssuesAllowed?: boolean;
-    /**
-     * Whether the ability to create subtasks for issues is enabled.
-     * @type {boolean}
-     * @memberof ModelConfiguration
-     */
-    readonly subTasksEnabled?: boolean;
-    /**
-     * Whether the ability to link issues is enabled.
-     * @type {boolean}
-     * @memberof ModelConfiguration
-     */
-    readonly issueLinkingEnabled?: boolean;
-    /**
-     * Whether the ability to track time is enabled. This property is deprecated.
-     * @type {boolean}
-     * @memberof ModelConfiguration
-     */
-    readonly timeTrackingEnabled?: boolean;
-    /**
-     * Whether the ability to add attachments to issues is enabled.
-     * @type {boolean}
-     * @memberof ModelConfiguration
-     */
-    readonly attachmentsEnabled?: boolean;
-    /**
-     * 
-     * @type {ConfigurationTimeTrackingConfiguration}
-     * @memberof ModelConfiguration
-     */
-    timeTrackingConfiguration?: ConfigurationTimeTrackingConfiguration;
 }
 /**
  * 
@@ -12081,16 +12433,22 @@ export interface MultipleCustomFieldValuesUpdateDetails {
 export interface NestedResponse {
     /**
      * 
+     * @type {ErrorCollection}
+     * @memberof NestedResponse
+     */
+    errorCollection?: ErrorCollection;
+    /**
+     * 
      * @type {number}
      * @memberof NestedResponse
      */
     status?: number;
     /**
      * 
-     * @type {ErrorCollection}
+     * @type {WarningCollection}
      * @memberof NestedResponse
      */
-    errorCollection?: ErrorCollection;
+    warningCollection?: WarningCollection;
 }
 /**
  * The user details.
@@ -12100,11 +12458,23 @@ export interface NestedResponse {
 export interface NewUserDetails {
     [key: string]: any | any;
     /**
-     * The URL of the user.
+     * Deprecated, do not use.
+     * @type {Array<string>}
+     * @memberof NewUserDetails
+     */
+    applicationKeys?: Array<string>;
+    /**
+     * This property is no longer available. If the user has an Atlassian account, their display name is not changed. If the user does not have an Atlassian account, they are sent an email asking them set up an account.
      * @type {string}
      * @memberof NewUserDetails
      */
-    readonly self?: string;
+    displayName?: string;
+    /**
+     * The email address for the user.
+     * @type {string}
+     * @memberof NewUserDetails
+     */
+    emailAddress: string;
     /**
      * This property is no longer available. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
@@ -12124,23 +12494,17 @@ export interface NewUserDetails {
      */
     password?: string;
     /**
-     * The email address for the user.
+     * Products the new user has access to. Valid products are: jira-core, jira-servicedesk, jira-product-discovery, jira-software. If left empty, the user will get default product access. To create a user without product access, set this field to be an empty array.
+     * @type {Set<string>}
+     * @memberof NewUserDetails
+     */
+    products?: string[];
+    /**
+     * The URL of the user.
      * @type {string}
      * @memberof NewUserDetails
      */
-    emailAddress: string;
-    /**
-     * This property is no longer available. If the user has an Atlassian account, their display name is not changed. If the user does not have an Atlassian account, they are sent an email asking them set up an account.
-     * @type {string}
-     * @memberof NewUserDetails
-     */
-    displayName?: string;
-    /**
-     * Deprecated, do not use.
-     * @type {Array<string>}
-     * @memberof NewUserDetails
-     */
-    applicationKeys?: Array<string>;
+    readonly self?: string;
 }
 /**
  * Details about a notification.
@@ -12149,6 +12513,18 @@ export interface NewUserDetails {
  */
 export interface Notification {
     [key: string]: any | any;
+    /**
+     * The HTML body of the email notification for the issue.
+     * @type {string}
+     * @memberof Notification
+     */
+    htmlBody?: string;
+    /**
+     * 
+     * @type {NotificationRestrict}
+     * @memberof Notification
+     */
+    restrict?: NotificationRestrict;
     /**
      * The subject of the email notification for the issue. If this is not specified, then the subject is set to the issue key and summary.
      * @type {string}
@@ -12162,23 +12538,11 @@ export interface Notification {
      */
     textBody?: string;
     /**
-     * The HTML body of the email notification for the issue.
-     * @type {string}
-     * @memberof Notification
-     */
-    htmlBody?: string;
-    /**
      * 
      * @type {NotificationTo}
      * @memberof Notification
      */
     to?: NotificationTo;
-    /**
-     * 
-     * @type {NotificationRestrict}
-     * @memberof Notification
-     */
-    restrict?: NotificationRestrict;
 }
 /**
  * Details about a notification event.
@@ -12186,6 +12550,12 @@ export interface Notification {
  * @interface NotificationEvent
  */
 export interface NotificationEvent {
+    /**
+     * The description of the event.
+     * @type {string}
+     * @memberof NotificationEvent
+     */
+    description?: string;
     /**
      * The ID of the event. The event can be a [Jira system event](https://confluence.atlassian.com/x/8YdKLg#Creatinganotificationscheme-eventsEvents) or a [custom event](https://confluence.atlassian.com/x/AIlKLg).
      * @type {number}
@@ -12198,12 +12568,6 @@ export interface NotificationEvent {
      * @memberof NotificationEvent
      */
     name?: string;
-    /**
-     * The description of the event.
-     * @type {string}
-     * @memberof NotificationEvent
-     */
-    description?: string;
     /**
      * 
      * @type {NotificationEventTemplateEvent}
@@ -12218,6 +12582,12 @@ export interface NotificationEvent {
  */
 export interface NotificationEventTemplateEvent {
     /**
+     * The description of the event.
+     * @type {string}
+     * @memberof NotificationEventTemplateEvent
+     */
+    description?: string;
+    /**
      * The ID of the event. The event can be a [Jira system event](https://confluence.atlassian.com/x/8YdKLg#Creatinganotificationscheme-eventsEvents) or a [custom event](https://confluence.atlassian.com/x/AIlKLg).
      * @type {number}
      * @memberof NotificationEventTemplateEvent
@@ -12229,12 +12599,6 @@ export interface NotificationEventTemplateEvent {
      * @memberof NotificationEventTemplateEvent
      */
     name?: string;
-    /**
-     * The description of the event.
-     * @type {string}
-     * @memberof NotificationEventTemplateEvent
-     */
-    description?: string;
     /**
      * 
      * @type {NotificationEventTemplateEvent}
@@ -12250,35 +12614,17 @@ export interface NotificationEventTemplateEvent {
 export interface NotificationRecipients {
     [key: string]: any | any;
     /**
-     * Whether the notification should be sent to the issue's reporter.
-     * @type {boolean}
-     * @memberof NotificationRecipients
-     */
-    reporter?: boolean;
-    /**
      * Whether the notification should be sent to the issue's assignees.
      * @type {boolean}
      * @memberof NotificationRecipients
      */
     assignee?: boolean;
     /**
-     * Whether the notification should be sent to the issue's watchers.
-     * @type {boolean}
+     * List of groupIds to receive the notification.
+     * @type {Array<string>}
      * @memberof NotificationRecipients
      */
-    watchers?: boolean;
-    /**
-     * Whether the notification should be sent to the issue's voters.
-     * @type {boolean}
-     * @memberof NotificationRecipients
-     */
-    voters?: boolean;
-    /**
-     * List of users to receive the notification.
-     * @type {Array<UserDetails>}
-     * @memberof NotificationRecipients
-     */
-    users?: Array<UserDetails>;
+    groupIds?: Array<string>;
     /**
      * List of groups to receive the notification.
      * @type {Array<GroupName>}
@@ -12286,11 +12632,29 @@ export interface NotificationRecipients {
      */
     groups?: Array<GroupName>;
     /**
-     * List of groupIds to receive the notification.
-     * @type {Array<string>}
+     * Whether the notification should be sent to the issue's reporter.
+     * @type {boolean}
      * @memberof NotificationRecipients
      */
-    groupIds?: Array<string>;
+    reporter?: boolean;
+    /**
+     * List of users to receive the notification.
+     * @type {Array<UserDetails>}
+     * @memberof NotificationRecipients
+     */
+    users?: Array<UserDetails>;
+    /**
+     * Whether the notification should be sent to the issue's voters.
+     * @type {boolean}
+     * @memberof NotificationRecipients
+     */
+    voters?: boolean;
+    /**
+     * Whether the notification should be sent to the issue's watchers.
+     * @type {boolean}
+     * @memberof NotificationRecipients
+     */
+    watchers?: boolean;
 }
 /**
  * Details of the group membership or permissions needed to receive the notification.
@@ -12299,17 +12663,17 @@ export interface NotificationRecipients {
  */
 export interface NotificationRecipientsRestrictions {
     /**
-     * List of group memberships required to receive the notification.
-     * @type {Array<GroupName>}
-     * @memberof NotificationRecipientsRestrictions
-     */
-    groups?: Array<GroupName>;
-    /**
      * List of groupId memberships required to receive the notification.
      * @type {Array<string>}
      * @memberof NotificationRecipientsRestrictions
      */
     groupIds?: Array<string>;
+    /**
+     * List of group memberships required to receive the notification.
+     * @type {Array<GroupName>}
+     * @memberof NotificationRecipientsRestrictions
+     */
+    groups?: Array<GroupName>;
     /**
      * List of permissions required to receive the notification.
      * @type {Array<RestrictedPermission>}
@@ -12324,17 +12688,17 @@ export interface NotificationRecipientsRestrictions {
  */
 export interface NotificationRestrict {
     /**
-     * List of group memberships required to receive the notification.
-     * @type {Array<GroupName>}
-     * @memberof NotificationRestrict
-     */
-    groups?: Array<GroupName>;
-    /**
      * List of groupId memberships required to receive the notification.
      * @type {Array<string>}
      * @memberof NotificationRestrict
      */
     groupIds?: Array<string>;
+    /**
+     * List of group memberships required to receive the notification.
+     * @type {Array<GroupName>}
+     * @memberof NotificationRestrict
+     */
+    groups?: Array<GroupName>;
     /**
      * List of permissions required to receive the notification.
      * @type {Array<RestrictedPermission>}
@@ -12349,6 +12713,12 @@ export interface NotificationRestrict {
  */
 export interface NotificationScheme {
     /**
+     * The description of the notification scheme.
+     * @type {string}
+     * @memberof NotificationScheme
+     */
+    description?: string;
+    /**
      * Expand options that include additional notification scheme details in the response.
      * @type {string}
      * @memberof NotificationScheme
@@ -12361,23 +12731,11 @@ export interface NotificationScheme {
      */
     id?: number;
     /**
-     * 
-     * @type {string}
-     * @memberof NotificationScheme
-     */
-    self?: string;
-    /**
      * The name of the notification scheme.
      * @type {string}
      * @memberof NotificationScheme
      */
     name?: string;
-    /**
-     * The description of the notification scheme.
-     * @type {string}
-     * @memberof NotificationScheme
-     */
-    description?: string;
     /**
      * The notification events and associated recipients.
      * @type {Array<NotificationSchemeEvent>}
@@ -12385,11 +12743,42 @@ export interface NotificationScheme {
      */
     notificationSchemeEvents?: Array<NotificationSchemeEvent>;
     /**
+     * The list of project IDs associated with the notification scheme.
+     * @type {Array<number>}
+     * @memberof NotificationScheme
+     */
+    projects?: Array<number>;
+    /**
      * 
      * @type {NotificationSchemeScope}
      * @memberof NotificationScheme
      */
     scope?: NotificationSchemeScope;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationScheme
+     */
+    self?: string;
+}
+/**
+ * 
+ * @export
+ * @interface NotificationSchemeAndProjectMappingJsonBean
+ */
+export interface NotificationSchemeAndProjectMappingJsonBean {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationSchemeAndProjectMappingJsonBean
+     */
+    notificationSchemeId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationSchemeAndProjectMappingJsonBean
+     */
+    projectId?: string;
 }
 /**
  * Details about a notification scheme event.
@@ -12411,23 +12800,104 @@ export interface NotificationSchemeEvent {
     notifications?: Array<EventNotification>;
 }
 /**
+ * Details of a notification scheme event.
+ * @export
+ * @interface NotificationSchemeEventDetails
+ */
+export interface NotificationSchemeEventDetails {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {NotificationSchemeEventDetailsEvent}
+     * @memberof NotificationSchemeEventDetails
+     */
+    event: NotificationSchemeEventDetailsEvent;
+    /**
+     * The list of notifications mapped to a specified event.
+     * @type {Array<NotificationSchemeNotificationDetails>}
+     * @memberof NotificationSchemeEventDetails
+     */
+    notifications: Array<NotificationSchemeNotificationDetails>;
+}
+/**
+ * The ID of the event.
+ * @export
+ * @interface NotificationSchemeEventDetailsEvent
+ */
+export interface NotificationSchemeEventDetailsEvent {
+    /**
+     * The ID of the notification scheme event.
+     * @type {string}
+     * @memberof NotificationSchemeEventDetailsEvent
+     */
+    id: string;
+}
+/**
+ * The ID of an event that is being mapped to notifications.
+ * @export
+ * @interface NotificationSchemeEventTypeId
+ */
+export interface NotificationSchemeEventTypeId {
+    [key: string]: any | any;
+    /**
+     * The ID of the notification scheme event.
+     * @type {string}
+     * @memberof NotificationSchemeEventTypeId
+     */
+    id: string;
+}
+/**
+ * The ID of a notification scheme.
+ * @export
+ * @interface NotificationSchemeId
+ */
+export interface NotificationSchemeId {
+    [key: string]: any | any;
+    /**
+     * The ID of a notification scheme.
+     * @type {string}
+     * @memberof NotificationSchemeId
+     */
+    readonly id: string;
+}
+/**
+ * Details of a notification within a notification scheme.
+ * @export
+ * @interface NotificationSchemeNotificationDetails
+ */
+export interface NotificationSchemeNotificationDetails {
+    [key: string]: any | any;
+    /**
+     * The notification type, e.g `CurrentAssignee`, `Group`, `EmailAddress`.
+     * @type {string}
+     * @memberof NotificationSchemeNotificationDetails
+     */
+    notificationType: string;
+    /**
+     * The value corresponding to the specified notification type.
+     * @type {string}
+     * @memberof NotificationSchemeNotificationDetails
+     */
+    parameter?: string;
+}
+/**
  * The scope of the notification scheme.
  * @export
  * @interface NotificationSchemeScope
  */
 export interface NotificationSchemeScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof NotificationSchemeScope
-     */
-    readonly type?: NotificationSchemeScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof NotificationSchemeScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof NotificationSchemeScope
+     */
+    readonly type?: NotificationSchemeScopeTypeEnum;
 }
 
 
@@ -12447,35 +12917,17 @@ export type NotificationSchemeScopeTypeEnum = typeof NotificationSchemeScopeType
  */
 export interface NotificationTo {
     /**
-     * Whether the notification should be sent to the issue's reporter.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    reporter?: boolean;
-    /**
      * Whether the notification should be sent to the issue's assignees.
      * @type {boolean}
      * @memberof NotificationTo
      */
     assignee?: boolean;
     /**
-     * Whether the notification should be sent to the issue's watchers.
-     * @type {boolean}
+     * List of groupIds to receive the notification.
+     * @type {Array<string>}
      * @memberof NotificationTo
      */
-    watchers?: boolean;
-    /**
-     * Whether the notification should be sent to the issue's voters.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    voters?: boolean;
-    /**
-     * List of users to receive the notification.
-     * @type {Array<UserDetails>}
-     * @memberof NotificationTo
-     */
-    users?: Array<UserDetails>;
+    groupIds?: Array<string>;
     /**
      * List of groups to receive the notification.
      * @type {Array<GroupName>}
@@ -12483,11 +12935,29 @@ export interface NotificationTo {
      */
     groups?: Array<GroupName>;
     /**
-     * List of groupIds to receive the notification.
-     * @type {Array<string>}
+     * Whether the notification should be sent to the issue's reporter.
+     * @type {boolean}
      * @memberof NotificationTo
      */
-    groupIds?: Array<string>;
+    reporter?: boolean;
+    /**
+     * List of users to receive the notification.
+     * @type {Array<UserDetails>}
+     * @memberof NotificationTo
+     */
+    users?: Array<UserDetails>;
+    /**
+     * Whether the notification should be sent to the issue's voters.
+     * @type {boolean}
+     * @memberof NotificationTo
+     */
+    voters?: boolean;
+    /**
+     * Whether the notification should be sent to the issue's watchers.
+     * @type {boolean}
+     * @memberof NotificationTo
+     */
+    watchers?: boolean;
 }
 /**
  * 
@@ -12529,17 +12999,17 @@ export interface Operations {
  */
 export interface OrderOfCustomFieldOptions {
     /**
-     * A list of IDs of custom field options to move. The order of the custom field option IDs in the list is the order they are given after the move. The list must contain custom field options or cascading options, but not both.
-     * @type {Array<string>}
-     * @memberof OrderOfCustomFieldOptions
-     */
-    customFieldOptionIds: Array<string>;
-    /**
      * The ID of the custom field option or cascading option to place the moved options after. Required if `position` isn't provided.
      * @type {string}
      * @memberof OrderOfCustomFieldOptions
      */
     after?: string;
+    /**
+     * A list of IDs of custom field options to move. The order of the custom field option IDs in the list is the order they are given after the move. The list must contain custom field options or cascading options, but not both.
+     * @type {Array<string>}
+     * @memberof OrderOfCustomFieldOptions
+     */
+    customFieldOptionIds: Array<string>;
     /**
      * The position the custom field options should be moved to. Required if `after` isn't provided.
      * @type {string}
@@ -12565,17 +13035,17 @@ export type OrderOfCustomFieldOptionsPositionEnum = typeof OrderOfCustomFieldOpt
  */
 export interface OrderOfIssueTypes {
     /**
-     * A list of the issue type IDs to move. The order of the issue type IDs in the list is the order they are given after the move.
-     * @type {Array<string>}
-     * @memberof OrderOfIssueTypes
-     */
-    issueTypeIds: Array<string>;
-    /**
      * The ID of the issue type to place the moved issue types after. Required if `position` isn't provided.
      * @type {string}
      * @memberof OrderOfIssueTypes
      */
     after?: string;
+    /**
+     * A list of the issue type IDs to move. The order of the issue type IDs in the list is the order they are given after the move.
+     * @type {Array<string>}
+     * @memberof OrderOfIssueTypes
+     */
+    issueTypeIds: Array<string>;
     /**
      * The position the issue types should be moved to. Required if `after` isn't provided.
      * @type {string}
@@ -12601,11 +13071,17 @@ export type OrderOfIssueTypesPositionEnum = typeof OrderOfIssueTypesPositionEnum
  */
 export interface PageBeanChangelog {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanChangelog
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanChangelog
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12613,11 +13089,11 @@ export interface PageBeanChangelog {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanChangelog
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12630,12 +13106,6 @@ export interface PageBeanChangelog {
      * @memberof PageBeanChangelog
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanChangelog
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Changelog>}
@@ -12650,11 +13120,17 @@ export interface PageBeanChangelog {
  */
 export interface PageBeanComment {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanComment
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanComment
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12662,11 +13138,11 @@ export interface PageBeanComment {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanComment
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12679,12 +13155,6 @@ export interface PageBeanComment {
      * @memberof PageBeanComment
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanComment
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Comment>}
@@ -12699,11 +13169,17 @@ export interface PageBeanComment {
  */
 export interface PageBeanComponentWithIssueCount {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanComponentWithIssueCount
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanComponentWithIssueCount
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12711,11 +13187,11 @@ export interface PageBeanComponentWithIssueCount {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanComponentWithIssueCount
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12728,12 +13204,6 @@ export interface PageBeanComponentWithIssueCount {
      * @memberof PageBeanComponentWithIssueCount
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanComponentWithIssueCount
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ComponentWithIssueCount>}
@@ -12748,11 +13218,17 @@ export interface PageBeanComponentWithIssueCount {
  */
 export interface PageBeanContext {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanContext
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanContext
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12760,11 +13236,11 @@ export interface PageBeanContext {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanContext
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12777,12 +13253,6 @@ export interface PageBeanContext {
      * @memberof PageBeanContext
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanContext
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Context>}
@@ -12797,11 +13267,17 @@ export interface PageBeanContext {
  */
 export interface PageBeanContextForProjectAndIssueType {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanContextForProjectAndIssueType
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanContextForProjectAndIssueType
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12809,11 +13285,11 @@ export interface PageBeanContextForProjectAndIssueType {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanContextForProjectAndIssueType
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12826,12 +13302,6 @@ export interface PageBeanContextForProjectAndIssueType {
      * @memberof PageBeanContextForProjectAndIssueType
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanContextForProjectAndIssueType
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ContextForProjectAndIssueType>}
@@ -12846,11 +13316,17 @@ export interface PageBeanContextForProjectAndIssueType {
  */
 export interface PageBeanContextualConfiguration {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanContextualConfiguration
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanContextualConfiguration
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12858,11 +13334,11 @@ export interface PageBeanContextualConfiguration {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanContextualConfiguration
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12875,12 +13351,6 @@ export interface PageBeanContextualConfiguration {
      * @memberof PageBeanContextualConfiguration
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanContextualConfiguration
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ContextualConfiguration>}
@@ -12895,11 +13365,17 @@ export interface PageBeanContextualConfiguration {
  */
 export interface PageBeanCustomFieldContext {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanCustomFieldContext
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanCustomFieldContext
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12907,11 +13383,11 @@ export interface PageBeanCustomFieldContext {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanCustomFieldContext
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12924,12 +13400,6 @@ export interface PageBeanCustomFieldContext {
      * @memberof PageBeanCustomFieldContext
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanCustomFieldContext
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<CustomFieldContext>}
@@ -12944,11 +13414,17 @@ export interface PageBeanCustomFieldContext {
  */
 export interface PageBeanCustomFieldContextDefaultValue {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanCustomFieldContextDefaultValue
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanCustomFieldContextDefaultValue
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -12956,11 +13432,11 @@ export interface PageBeanCustomFieldContextDefaultValue {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanCustomFieldContextDefaultValue
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -12973,12 +13449,6 @@ export interface PageBeanCustomFieldContextDefaultValue {
      * @memberof PageBeanCustomFieldContextDefaultValue
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanCustomFieldContextDefaultValue
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<CustomFieldContextDefaultValue>}
@@ -12993,11 +13463,17 @@ export interface PageBeanCustomFieldContextDefaultValue {
  */
 export interface PageBeanCustomFieldContextOption {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanCustomFieldContextOption
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanCustomFieldContextOption
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13005,11 +13481,11 @@ export interface PageBeanCustomFieldContextOption {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanCustomFieldContextOption
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13022,12 +13498,6 @@ export interface PageBeanCustomFieldContextOption {
      * @memberof PageBeanCustomFieldContextOption
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanCustomFieldContextOption
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<CustomFieldContextOption>}
@@ -13042,11 +13512,17 @@ export interface PageBeanCustomFieldContextOption {
  */
 export interface PageBeanCustomFieldContextProjectMapping {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanCustomFieldContextProjectMapping
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanCustomFieldContextProjectMapping
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13054,11 +13530,11 @@ export interface PageBeanCustomFieldContextProjectMapping {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanCustomFieldContextProjectMapping
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13071,12 +13547,6 @@ export interface PageBeanCustomFieldContextProjectMapping {
      * @memberof PageBeanCustomFieldContextProjectMapping
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanCustomFieldContextProjectMapping
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<CustomFieldContextProjectMapping>}
@@ -13091,11 +13561,17 @@ export interface PageBeanCustomFieldContextProjectMapping {
  */
 export interface PageBeanDashboard {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanDashboard
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanDashboard
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13103,11 +13579,11 @@ export interface PageBeanDashboard {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanDashboard
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13120,12 +13596,6 @@ export interface PageBeanDashboard {
      * @memberof PageBeanDashboard
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanDashboard
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Dashboard>}
@@ -13140,11 +13610,17 @@ export interface PageBeanDashboard {
  */
 export interface PageBeanField {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanField
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanField
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13152,11 +13628,11 @@ export interface PageBeanField {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanField
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13169,12 +13645,6 @@ export interface PageBeanField {
      * @memberof PageBeanField
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanField
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Field>}
@@ -13189,11 +13659,17 @@ export interface PageBeanField {
  */
 export interface PageBeanFieldConfigurationDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFieldConfigurationDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldConfigurationDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13201,11 +13677,11 @@ export interface PageBeanFieldConfigurationDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFieldConfigurationDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13218,12 +13694,6 @@ export interface PageBeanFieldConfigurationDetails {
      * @memberof PageBeanFieldConfigurationDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFieldConfigurationDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FieldConfigurationDetails>}
@@ -13238,11 +13708,17 @@ export interface PageBeanFieldConfigurationDetails {
  */
 export interface PageBeanFieldConfigurationIssueTypeItem {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFieldConfigurationIssueTypeItem
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldConfigurationIssueTypeItem
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13250,11 +13726,11 @@ export interface PageBeanFieldConfigurationIssueTypeItem {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFieldConfigurationIssueTypeItem
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13267,12 +13743,6 @@ export interface PageBeanFieldConfigurationIssueTypeItem {
      * @memberof PageBeanFieldConfigurationIssueTypeItem
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFieldConfigurationIssueTypeItem
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FieldConfigurationIssueTypeItem>}
@@ -13287,11 +13757,17 @@ export interface PageBeanFieldConfigurationIssueTypeItem {
  */
 export interface PageBeanFieldConfigurationItem {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFieldConfigurationItem
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldConfigurationItem
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13299,11 +13775,11 @@ export interface PageBeanFieldConfigurationItem {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFieldConfigurationItem
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13316,12 +13792,6 @@ export interface PageBeanFieldConfigurationItem {
      * @memberof PageBeanFieldConfigurationItem
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFieldConfigurationItem
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FieldConfigurationItem>}
@@ -13336,11 +13806,17 @@ export interface PageBeanFieldConfigurationItem {
  */
 export interface PageBeanFieldConfigurationScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFieldConfigurationScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldConfigurationScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13348,11 +13824,11 @@ export interface PageBeanFieldConfigurationScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFieldConfigurationScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13365,12 +13841,6 @@ export interface PageBeanFieldConfigurationScheme {
      * @memberof PageBeanFieldConfigurationScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFieldConfigurationScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FieldConfigurationScheme>}
@@ -13385,11 +13855,17 @@ export interface PageBeanFieldConfigurationScheme {
  */
 export interface PageBeanFieldConfigurationSchemeProjects {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFieldConfigurationSchemeProjects
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFieldConfigurationSchemeProjects
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13397,11 +13873,11 @@ export interface PageBeanFieldConfigurationSchemeProjects {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFieldConfigurationSchemeProjects
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13414,12 +13890,6 @@ export interface PageBeanFieldConfigurationSchemeProjects {
      * @memberof PageBeanFieldConfigurationSchemeProjects
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFieldConfigurationSchemeProjects
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FieldConfigurationSchemeProjects>}
@@ -13434,11 +13904,17 @@ export interface PageBeanFieldConfigurationSchemeProjects {
  */
 export interface PageBeanFilterDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanFilterDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanFilterDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13446,11 +13922,11 @@ export interface PageBeanFilterDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanFilterDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13463,12 +13939,6 @@ export interface PageBeanFilterDetails {
      * @memberof PageBeanFilterDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanFilterDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<FilterDetails>}
@@ -13483,11 +13953,17 @@ export interface PageBeanFilterDetails {
  */
 export interface PageBeanGroupDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanGroupDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanGroupDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13495,11 +13971,11 @@ export interface PageBeanGroupDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanGroupDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13512,12 +13988,6 @@ export interface PageBeanGroupDetails {
      * @memberof PageBeanGroupDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanGroupDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<GroupDetails>}
@@ -13532,11 +14002,17 @@ export interface PageBeanGroupDetails {
  */
 export interface PageBeanIssueFieldOption {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueFieldOption
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueFieldOption
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13544,11 +14020,11 @@ export interface PageBeanIssueFieldOption {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueFieldOption
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13561,12 +14037,6 @@ export interface PageBeanIssueFieldOption {
      * @memberof PageBeanIssueFieldOption
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueFieldOption
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueFieldOption>}
@@ -13581,11 +14051,17 @@ export interface PageBeanIssueFieldOption {
  */
 export interface PageBeanIssueSecurityLevelMember {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueSecurityLevelMember
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueSecurityLevelMember
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13593,11 +14069,11 @@ export interface PageBeanIssueSecurityLevelMember {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueSecurityLevelMember
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13610,12 +14086,6 @@ export interface PageBeanIssueSecurityLevelMember {
      * @memberof PageBeanIssueSecurityLevelMember
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueSecurityLevelMember
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueSecurityLevelMember>}
@@ -13626,15 +14096,70 @@ export interface PageBeanIssueSecurityLevelMember {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanIssueSecuritySchemeToProjectMapping
+ */
+export interface PageBeanIssueSecuritySchemeToProjectMapping {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<IssueSecuritySchemeToProjectMapping>}
+     * @memberof PageBeanIssueSecuritySchemeToProjectMapping
+     */
+    readonly values?: Array<IssueSecuritySchemeToProjectMapping>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanIssueTypeScheme
  */
 export interface PageBeanIssueTypeScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13642,11 +14167,11 @@ export interface PageBeanIssueTypeScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13659,12 +14184,6 @@ export interface PageBeanIssueTypeScheme {
      * @memberof PageBeanIssueTypeScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeScheme>}
@@ -13679,11 +14198,17 @@ export interface PageBeanIssueTypeScheme {
  */
 export interface PageBeanIssueTypeSchemeMapping {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeSchemeMapping
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeSchemeMapping
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13691,11 +14216,11 @@ export interface PageBeanIssueTypeSchemeMapping {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeSchemeMapping
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13708,12 +14233,6 @@ export interface PageBeanIssueTypeSchemeMapping {
      * @memberof PageBeanIssueTypeSchemeMapping
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeSchemeMapping
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeSchemeMapping>}
@@ -13728,11 +14247,17 @@ export interface PageBeanIssueTypeSchemeMapping {
  */
 export interface PageBeanIssueTypeSchemeProjects {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeSchemeProjects
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeSchemeProjects
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13740,11 +14265,11 @@ export interface PageBeanIssueTypeSchemeProjects {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeSchemeProjects
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13757,12 +14282,6 @@ export interface PageBeanIssueTypeSchemeProjects {
      * @memberof PageBeanIssueTypeSchemeProjects
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeSchemeProjects
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeSchemeProjects>}
@@ -13777,11 +14296,17 @@ export interface PageBeanIssueTypeSchemeProjects {
  */
 export interface PageBeanIssueTypeScreenScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeScreenScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeScreenScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13789,11 +14314,11 @@ export interface PageBeanIssueTypeScreenScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeScreenScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13806,12 +14331,6 @@ export interface PageBeanIssueTypeScreenScheme {
      * @memberof PageBeanIssueTypeScreenScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeScreenScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeScreenScheme>}
@@ -13826,11 +14345,17 @@ export interface PageBeanIssueTypeScreenScheme {
  */
 export interface PageBeanIssueTypeScreenSchemeItem {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeScreenSchemeItem
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeScreenSchemeItem
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13838,11 +14363,11 @@ export interface PageBeanIssueTypeScreenSchemeItem {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeScreenSchemeItem
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13855,12 +14380,6 @@ export interface PageBeanIssueTypeScreenSchemeItem {
      * @memberof PageBeanIssueTypeScreenSchemeItem
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeScreenSchemeItem
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeScreenSchemeItem>}
@@ -13875,11 +14394,17 @@ export interface PageBeanIssueTypeScreenSchemeItem {
  */
 export interface PageBeanIssueTypeScreenSchemesProjects {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeScreenSchemesProjects
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeScreenSchemesProjects
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13887,11 +14412,11 @@ export interface PageBeanIssueTypeScreenSchemesProjects {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeScreenSchemesProjects
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13904,12 +14429,6 @@ export interface PageBeanIssueTypeScreenSchemesProjects {
      * @memberof PageBeanIssueTypeScreenSchemesProjects
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeScreenSchemesProjects
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeScreenSchemesProjects>}
@@ -13924,11 +14443,17 @@ export interface PageBeanIssueTypeScreenSchemesProjects {
  */
 export interface PageBeanIssueTypeToContextMapping {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanIssueTypeToContextMapping
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanIssueTypeToContextMapping
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13936,11 +14461,11 @@ export interface PageBeanIssueTypeToContextMapping {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanIssueTypeToContextMapping
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -13953,12 +14478,6 @@ export interface PageBeanIssueTypeToContextMapping {
      * @memberof PageBeanIssueTypeToContextMapping
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanIssueTypeToContextMapping
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeToContextMapping>}
@@ -13969,15 +14488,70 @@ export interface PageBeanIssueTypeToContextMapping {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanJqlFunctionPrecomputationBean
+ */
+export interface PageBeanJqlFunctionPrecomputationBean {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<JqlFunctionPrecomputationBean>}
+     * @memberof PageBeanJqlFunctionPrecomputationBean
+     */
+    readonly values?: Array<JqlFunctionPrecomputationBean>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanNotificationScheme
  */
 export interface PageBeanNotificationScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanNotificationScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanNotificationScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -13985,11 +14559,11 @@ export interface PageBeanNotificationScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanNotificationScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14002,12 +14576,6 @@ export interface PageBeanNotificationScheme {
      * @memberof PageBeanNotificationScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanNotificationScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<NotificationScheme>}
@@ -14018,15 +14586,70 @@ export interface PageBeanNotificationScheme {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanNotificationSchemeAndProjectMappingJsonBean
+ */
+export interface PageBeanNotificationSchemeAndProjectMappingJsonBean {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<NotificationSchemeAndProjectMappingJsonBean>}
+     * @memberof PageBeanNotificationSchemeAndProjectMappingJsonBean
+     */
+    readonly values?: Array<NotificationSchemeAndProjectMappingJsonBean>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanPriority
  */
 export interface PageBeanPriority {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanPriority
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanPriority
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14034,11 +14657,11 @@ export interface PageBeanPriority {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanPriority
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14051,12 +14674,6 @@ export interface PageBeanPriority {
      * @memberof PageBeanPriority
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanPriority
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Priority>}
@@ -14071,11 +14688,17 @@ export interface PageBeanPriority {
  */
 export interface PageBeanProject {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanProject
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanProject
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14083,11 +14706,11 @@ export interface PageBeanProject {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanProject
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14100,12 +14723,6 @@ export interface PageBeanProject {
      * @memberof PageBeanProject
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanProject
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Project>}
@@ -14120,11 +14737,17 @@ export interface PageBeanProject {
  */
 export interface PageBeanProjectDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanProjectDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanProjectDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14132,11 +14755,11 @@ export interface PageBeanProjectDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanProjectDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14149,12 +14772,6 @@ export interface PageBeanProjectDetails {
      * @memberof PageBeanProjectDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanProjectDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ProjectDetails>}
@@ -14169,11 +14786,17 @@ export interface PageBeanProjectDetails {
  */
 export interface PageBeanResolutionJsonBean {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanResolutionJsonBean
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanResolutionJsonBean
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14181,11 +14804,11 @@ export interface PageBeanResolutionJsonBean {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanResolutionJsonBean
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14198,12 +14821,6 @@ export interface PageBeanResolutionJsonBean {
      * @memberof PageBeanResolutionJsonBean
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanResolutionJsonBean
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ResolutionJsonBean>}
@@ -14218,11 +14835,17 @@ export interface PageBeanResolutionJsonBean {
  */
 export interface PageBeanScreen {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanScreen
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanScreen
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14230,11 +14853,11 @@ export interface PageBeanScreen {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanScreen
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14247,12 +14870,6 @@ export interface PageBeanScreen {
      * @memberof PageBeanScreen
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanScreen
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Screen>}
@@ -14267,11 +14884,17 @@ export interface PageBeanScreen {
  */
 export interface PageBeanScreenScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanScreenScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanScreenScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14279,11 +14902,11 @@ export interface PageBeanScreenScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanScreenScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14296,12 +14919,6 @@ export interface PageBeanScreenScheme {
      * @memberof PageBeanScreenScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanScreenScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ScreenScheme>}
@@ -14316,11 +14933,17 @@ export interface PageBeanScreenScheme {
  */
 export interface PageBeanScreenWithTab {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanScreenWithTab
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanScreenWithTab
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14328,11 +14951,11 @@ export interface PageBeanScreenWithTab {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanScreenWithTab
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14345,12 +14968,6 @@ export interface PageBeanScreenWithTab {
      * @memberof PageBeanScreenWithTab
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanScreenWithTab
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<ScreenWithTab>}
@@ -14361,15 +14978,168 @@ export interface PageBeanScreenWithTab {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanSecurityLevel
+ */
+export interface PageBeanSecurityLevel {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<SecurityLevel>}
+     * @memberof PageBeanSecurityLevel
+     */
+    readonly values?: Array<SecurityLevel>;
+}
+/**
+ * A page of items.
+ * @export
+ * @interface PageBeanSecurityLevelMember
+ */
+export interface PageBeanSecurityLevelMember {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<SecurityLevelMember>}
+     * @memberof PageBeanSecurityLevelMember
+     */
+    readonly values?: Array<SecurityLevelMember>;
+}
+/**
+ * A page of items.
+ * @export
+ * @interface PageBeanSecuritySchemeWithProjects
+ */
+export interface PageBeanSecuritySchemeWithProjects {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<SecuritySchemeWithProjects>}
+     * @memberof PageBeanSecuritySchemeWithProjects
+     */
+    readonly values?: Array<SecuritySchemeWithProjects>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanString
  */
 export interface PageBeanString {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanString
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanString
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14377,11 +15147,11 @@ export interface PageBeanString {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanString
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14394,12 +15164,6 @@ export interface PageBeanString {
      * @memberof PageBeanString
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanString
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<string>}
@@ -14414,11 +15178,17 @@ export interface PageBeanString {
  */
 export interface PageBeanUiModificationDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanUiModificationDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanUiModificationDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14426,11 +15196,11 @@ export interface PageBeanUiModificationDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanUiModificationDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14443,12 +15213,6 @@ export interface PageBeanUiModificationDetails {
      * @memberof PageBeanUiModificationDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanUiModificationDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<UiModificationDetails>}
@@ -14463,11 +15227,17 @@ export interface PageBeanUiModificationDetails {
  */
 export interface PageBeanUser {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanUser
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanUser
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14475,11 +15245,11 @@ export interface PageBeanUser {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanUser
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14492,12 +15262,6 @@ export interface PageBeanUser {
      * @memberof PageBeanUser
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanUser
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<User>}
@@ -14512,11 +15276,17 @@ export interface PageBeanUser {
  */
 export interface PageBeanUserDetails {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanUserDetails
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanUserDetails
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14524,11 +15294,11 @@ export interface PageBeanUserDetails {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanUserDetails
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14541,12 +15311,6 @@ export interface PageBeanUserDetails {
      * @memberof PageBeanUserDetails
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanUserDetails
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<UserDetails>}
@@ -14561,11 +15325,17 @@ export interface PageBeanUserDetails {
  */
 export interface PageBeanUserKey {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanUserKey
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanUserKey
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14573,11 +15343,11 @@ export interface PageBeanUserKey {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanUserKey
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14590,12 +15360,6 @@ export interface PageBeanUserKey {
      * @memberof PageBeanUserKey
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanUserKey
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<UserKey>}
@@ -14610,11 +15374,17 @@ export interface PageBeanUserKey {
  */
 export interface PageBeanVersion {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanVersion
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanVersion
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14622,11 +15392,11 @@ export interface PageBeanVersion {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanVersion
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14639,12 +15409,6 @@ export interface PageBeanVersion {
      * @memberof PageBeanVersion
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanVersion
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Version>}
@@ -14659,11 +15423,17 @@ export interface PageBeanVersion {
  */
 export interface PageBeanWebhook {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanWebhook
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanWebhook
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14671,11 +15441,11 @@ export interface PageBeanWebhook {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanWebhook
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14688,12 +15458,6 @@ export interface PageBeanWebhook {
      * @memberof PageBeanWebhook
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanWebhook
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Webhook>}
@@ -14708,11 +15472,17 @@ export interface PageBeanWebhook {
  */
 export interface PageBeanWorkflow {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanWorkflow
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanWorkflow
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14720,11 +15490,11 @@ export interface PageBeanWorkflow {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanWorkflow
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14737,12 +15507,6 @@ export interface PageBeanWorkflow {
      * @memberof PageBeanWorkflow
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanWorkflow
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<Workflow>}
@@ -14757,11 +15521,17 @@ export interface PageBeanWorkflow {
  */
 export interface PageBeanWorkflowScheme {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanWorkflowScheme
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanWorkflowScheme
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14769,11 +15539,11 @@ export interface PageBeanWorkflowScheme {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanWorkflowScheme
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14786,12 +15556,6 @@ export interface PageBeanWorkflowScheme {
      * @memberof PageBeanWorkflowScheme
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanWorkflowScheme
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<WorkflowScheme>}
@@ -14806,11 +15570,17 @@ export interface PageBeanWorkflowScheme {
  */
 export interface PageBeanWorkflowTransitionRules {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof PageBeanWorkflowTransitionRules
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanWorkflowTransitionRules
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -14818,11 +15588,11 @@ export interface PageBeanWorkflowTransitionRules {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof PageBeanWorkflowTransitionRules
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -14835,12 +15605,6 @@ export interface PageBeanWorkflowTransitionRules {
      * @memberof PageBeanWorkflowTransitionRules
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanWorkflowTransitionRules
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<WorkflowTransitionRules>}
@@ -14855,11 +15619,11 @@ export interface PageBeanWorkflowTransitionRules {
  */
 export interface PageOfChangelogs {
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
+     * The list of changelogs.
+     * @type {Array<Changelog>}
      * @memberof PageOfChangelogs
      */
-    readonly startAt?: number;
+    readonly histories?: Array<Changelog>;
     /**
      * The maximum number of results that could be on the page.
      * @type {number}
@@ -14867,17 +15631,17 @@ export interface PageOfChangelogs {
      */
     readonly maxResults?: number;
     /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof PageOfChangelogs
+     */
+    readonly startAt?: number;
+    /**
      * The number of results on the page.
      * @type {number}
      * @memberof PageOfChangelogs
      */
     readonly total?: number;
-    /**
-     * The list of changelogs.
-     * @type {Array<Changelog>}
-     * @memberof PageOfChangelogs
-     */
-    readonly histories?: Array<Changelog>;
 }
 /**
  * A page of comments.
@@ -14887,11 +15651,11 @@ export interface PageOfChangelogs {
 export interface PageOfComments {
     [key: string]: any | any;
     /**
-     * The index of the first item returned.
-     * @type {number}
+     * The list of comments.
+     * @type {Array<Comment>}
      * @memberof PageOfComments
      */
-    readonly startAt?: number;
+    readonly comments?: Array<Comment>;
     /**
      * The maximum number of items that could be returned.
      * @type {number}
@@ -14899,17 +15663,17 @@ export interface PageOfComments {
      */
     readonly maxResults?: number;
     /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageOfComments
+     */
+    readonly startAt?: number;
+    /**
      * The number of items returned.
      * @type {number}
      * @memberof PageOfComments
      */
     readonly total?: number;
-    /**
-     * The list of comments.
-     * @type {Array<Comment>}
-     * @memberof PageOfComments
-     */
-    readonly comments?: Array<Comment>;
 }
 /**
  * A page containing dashboard details.
@@ -14918,11 +15682,11 @@ export interface PageOfComments {
  */
 export interface PageOfDashboards {
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
+     * List of dashboards.
+     * @type {Array<Dashboard>}
      * @memberof PageOfDashboards
      */
-    readonly startAt?: number;
+    readonly dashboards?: Array<Dashboard>;
     /**
      * The maximum number of results that could be on the page.
      * @type {number}
@@ -14930,11 +15694,11 @@ export interface PageOfDashboards {
      */
     readonly maxResults?: number;
     /**
-     * The number of results on the page.
-     * @type {number}
+     * The URL of the next page of results, if any.
+     * @type {string}
      * @memberof PageOfDashboards
      */
-    readonly total?: number;
+    readonly next?: string;
     /**
      * The URL of the previous page of results, if any.
      * @type {string}
@@ -14942,17 +15706,17 @@ export interface PageOfDashboards {
      */
     readonly prev?: string;
     /**
-     * The URL of the next page of results, if any.
-     * @type {string}
+     * The index of the first item returned on the page.
+     * @type {number}
      * @memberof PageOfDashboards
      */
-    readonly next?: string;
+    readonly startAt?: number;
     /**
-     * List of dashboards.
-     * @type {Array<Dashboard>}
+     * The number of results on the page.
+     * @type {number}
      * @memberof PageOfDashboards
      */
-    readonly dashboards?: Array<Dashboard>;
+    readonly total?: number;
 }
 /**
  * 
@@ -14960,18 +15724,6 @@ export interface PageOfDashboards {
  * @interface PageOfStatuses
  */
 export interface PageOfStatuses {
-    /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof PageOfStatuses
-     */
-    startAt?: number;
-    /**
-     * Number of items that satisfy the search.
-     * @type {number}
-     * @memberof PageOfStatuses
-     */
-    total?: number;
     /**
      * Whether this is the last page.
      * @type {boolean}
@@ -14985,11 +15737,11 @@ export interface PageOfStatuses {
      */
     maxResults?: number;
     /**
-     * The list of items.
-     * @type {Array<JiraStatus>}
+     * The URL of the next page of results, if any.
+     * @type {string}
      * @memberof PageOfStatuses
      */
-    values?: Array<JiraStatus>;
+    nextPage?: string;
     /**
      * The URL of this page.
      * @type {string}
@@ -14997,11 +15749,23 @@ export interface PageOfStatuses {
      */
     self?: string;
     /**
-     * The URL of the next page of results, if any.
-     * @type {string}
+     * The index of the first item returned on the page.
+     * @type {number}
      * @memberof PageOfStatuses
      */
-    nextPage?: string;
+    startAt?: number;
+    /**
+     * Number of items that satisfy the search.
+     * @type {number}
+     * @memberof PageOfStatuses
+     */
+    total?: number;
+    /**
+     * The list of items.
+     * @type {Array<JiraStatus>}
+     * @memberof PageOfStatuses
+     */
+    values?: Array<JiraStatus>;
 }
 /**
  * Paginated list of worklog details
@@ -15011,17 +15775,17 @@ export interface PageOfStatuses {
 export interface PageOfWorklogs {
     [key: string]: any | any;
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof PageOfWorklogs
-     */
-    readonly startAt?: number;
-    /**
      * The maximum number of results that could be on the page.
      * @type {number}
      * @memberof PageOfWorklogs
      */
     readonly maxResults?: number;
+    /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof PageOfWorklogs
+     */
+    readonly startAt?: number;
     /**
      * The number of results on the page.
      * @type {number}
@@ -15042,11 +15806,11 @@ export interface PageOfWorklogs {
  */
 export interface PagedListUserDetailsApplicationUser {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof PagedListUserDetailsApplicationUser
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<UserDetails>}
@@ -15060,17 +15824,17 @@ export interface PagedListUserDetailsApplicationUser {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof PagedListUserDetailsApplicationUser
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof PagedListUserDetailsApplicationUser
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof PagedListUserDetailsApplicationUser
-     */
-    readonly endIndex?: number;
 }
 /**
  * 
@@ -15083,13 +15847,13 @@ export interface PaginatedResponseComment {
      * @type {number}
      * @memberof PaginatedResponseComment
      */
-    total?: number;
+    maxResults?: number;
     /**
      * 
-     * @type {number}
+     * @type {Array<Comment>}
      * @memberof PaginatedResponseComment
      */
-    maxResults?: number;
+    results?: Array<Comment>;
     /**
      * 
      * @type {number}
@@ -15098,10 +15862,10 @@ export interface PaginatedResponseComment {
     startAt?: number;
     /**
      * 
-     * @type {Array<Comment>}
+     * @type {number}
      * @memberof PaginatedResponseComment
      */
-    results?: Array<Comment>;
+    total?: number;
 }
 /**
  * A list of parsed JQL queries.
@@ -15123,6 +15887,12 @@ export interface ParsedJqlQueries {
  */
 export interface ParsedJqlQuery {
     /**
+     * The list of syntax or validation errors.
+     * @type {Set<string>}
+     * @memberof ParsedJqlQuery
+     */
+    errors?: string[];
+    /**
      * The JQL query that was parsed and validated.
      * @type {string}
      * @memberof ParsedJqlQuery
@@ -15134,12 +15904,6 @@ export interface ParsedJqlQuery {
      * @memberof ParsedJqlQuery
      */
     structure?: ParsedJqlQueryStructure;
-    /**
-     * The list of syntax or validation errors.
-     * @type {Set<string>}
-     * @memberof ParsedJqlQuery
-     */
-    errors?: string[];
 }
 /**
  * The syntax tree of the query. Empty if the query was invalid.
@@ -15149,16 +15913,16 @@ export interface ParsedJqlQuery {
 export interface ParsedJqlQueryStructure {
     /**
      * 
-     * @type {JqlQueryClause}
-     * @memberof ParsedJqlQueryStructure
-     */
-    where?: JqlQueryClause;
-    /**
-     * 
      * @type {JqlQueryOrderByClause}
      * @memberof ParsedJqlQueryStructure
      */
     orderBy?: JqlQueryOrderByClause;
+    /**
+     * 
+     * @type {JqlQueryClause}
+     * @memberof ParsedJqlQueryStructure
+     */
+    where?: JqlQueryClause;
 }
 /**
  * Details about a permission granted to a user or group.
@@ -15167,29 +15931,29 @@ export interface ParsedJqlQueryStructure {
  */
 export interface PermissionGrant {
     /**
-     * The ID of the permission granted details.
-     * @type {number}
-     * @memberof PermissionGrant
-     */
-    readonly id?: number;
-    /**
-     * The URL of the permission granted details.
-     * @type {string}
-     * @memberof PermissionGrant
-     */
-    readonly self?: string;
-    /**
      * 
      * @type {PermissionGrantHolder}
      * @memberof PermissionGrant
      */
     holder?: PermissionGrantHolder;
     /**
+     * The ID of the permission granted details.
+     * @type {number}
+     * @memberof PermissionGrant
+     */
+    readonly id?: number;
+    /**
      * The permission to grant. This permission can be one of the built-in permissions or a custom permission added by an app. See [Built-in permissions](../api-group-permission-schemes/#built-in-permissions) in *Get all permission schemes* for more information about the built-in permissions. See the [project permission](https://developer.atlassian.com/cloud/jira/platform/modules/project-permission/) and [global permission](https://developer.atlassian.com/cloud/jira/platform/modules/global-permission/) module documentation for more information about custom permissions.
      * @type {string}
      * @memberof PermissionGrant
      */
     permission?: string;
+    /**
+     * The URL of the permission granted details.
+     * @type {string}
+     * @memberof PermissionGrant
+     */
+    readonly self?: string;
 }
 /**
  * The user or group being granted the permission. It consists of a `type`, a type-dependent `parameter` and a type-dependent `value`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
@@ -15198,11 +15962,11 @@ export interface PermissionGrant {
  */
 export interface PermissionGrantHolder {
     /**
-     * The type of permission holder.
+     * Expand options that include additional permission holder details in the response.
      * @type {string}
      * @memberof PermissionGrantHolder
      */
-    type: string;
+    readonly expand?: string;
     /**
      * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
      * @type {string}
@@ -15210,17 +15974,17 @@ export interface PermissionGrantHolder {
      */
     parameter?: string;
     /**
+     * The type of permission holder.
+     * @type {string}
+     * @memberof PermissionGrantHolder
+     */
+    type: string;
+    /**
      * The identifier associated with the `type` value that defines the holder of the permission.
      * @type {string}
      * @memberof PermissionGrantHolder
      */
     value?: string;
-    /**
-     * Expand options that include additional permission holder details in the response.
-     * @type {string}
-     * @memberof PermissionGrantHolder
-     */
-    readonly expand?: string;
 }
 /**
  * List of permission grants.
@@ -15229,17 +15993,17 @@ export interface PermissionGrantHolder {
  */
 export interface PermissionGrants {
     /**
-     * Permission grants list.
-     * @type {Array<PermissionGrant>}
-     * @memberof PermissionGrants
-     */
-    readonly permissions?: Array<PermissionGrant>;
-    /**
      * Expand options that include additional permission grant details in the response.
      * @type {string}
      * @memberof PermissionGrants
      */
     readonly expand?: string;
+    /**
+     * Permission grants list.
+     * @type {Array<PermissionGrant>}
+     * @memberof PermissionGrants
+     */
+    readonly permissions?: Array<PermissionGrant>;
 }
 /**
  * Details of a user, group, field, or project role that holds a permission. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
@@ -15248,11 +16012,11 @@ export interface PermissionGrants {
  */
 export interface PermissionHolder {
     /**
-     * The type of permission holder.
+     * Expand options that include additional permission holder details in the response.
      * @type {string}
      * @memberof PermissionHolder
      */
-    type: string;
+    readonly expand?: string;
     /**
      * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
      * @type {string}
@@ -15260,17 +16024,17 @@ export interface PermissionHolder {
      */
     parameter?: string;
     /**
+     * The type of permission holder.
+     * @type {string}
+     * @memberof PermissionHolder
+     */
+    type: string;
+    /**
      * The identifier associated with the `type` value that defines the holder of the permission.
      * @type {string}
      * @memberof PermissionHolder
      */
     value?: string;
-    /**
-     * Expand options that include additional permission holder details in the response.
-     * @type {string}
-     * @memberof PermissionHolder
-     */
-    readonly expand?: string;
 }
 /**
  * Details of a permission scheme.
@@ -15279,6 +16043,12 @@ export interface PermissionHolder {
  */
 export interface PermissionScheme {
     [key: string]: any | any;
+    /**
+     * A description for the permission scheme.
+     * @type {string}
+     * @memberof PermissionScheme
+     */
+    description?: string;
     /**
      * The expand options available for the permission scheme.
      * @type {string}
@@ -15292,23 +16062,17 @@ export interface PermissionScheme {
      */
     readonly id?: number;
     /**
-     * The URL of the permission scheme.
-     * @type {string}
-     * @memberof PermissionScheme
-     */
-    readonly self?: string;
-    /**
      * The name of the permission scheme. Must be unique.
      * @type {string}
      * @memberof PermissionScheme
      */
     name: string;
     /**
-     * A description for the permission scheme.
-     * @type {string}
+     * The permission scheme to create or update. See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more information.
+     * @type {Array<PermissionGrant>}
      * @memberof PermissionScheme
      */
-    description?: string;
+    permissions?: Array<PermissionGrant>;
     /**
      * 
      * @type {PermissionSchemeScope}
@@ -15316,11 +16080,11 @@ export interface PermissionScheme {
      */
     scope?: PermissionSchemeScope;
     /**
-     * The permission scheme to create or update. See [About permission schemes and grants](../api-group-permission-schemes/#about-permission-schemes-and-grants) for more information.
-     * @type {Array<PermissionGrant>}
+     * The URL of the permission scheme.
+     * @type {string}
      * @memberof PermissionScheme
      */
-    permissions?: Array<PermissionGrant>;
+    readonly self?: string;
 }
 /**
  * The scope of the permission scheme.
@@ -15329,17 +16093,17 @@ export interface PermissionScheme {
  */
 export interface PermissionSchemeScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof PermissionSchemeScope
-     */
-    readonly type?: PermissionSchemeScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof PermissionSchemeScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof PermissionSchemeScope
+     */
+    readonly type?: PermissionSchemeScopeTypeEnum;
 }
 
 
@@ -15412,18 +16176,6 @@ export interface PermittedProjects {
 export interface Priority {
     [key: string]: any | any;
     /**
-     * The URL of the issue priority.
-     * @type {string}
-     * @memberof Priority
-     */
-    self?: string;
-    /**
-     * The color used to indicate the issue priority.
-     * @type {string}
-     * @memberof Priority
-     */
-    statusColor?: string;
-    /**
      * The description of the issue priority.
      * @type {string}
      * @memberof Priority
@@ -15436,12 +16188,6 @@ export interface Priority {
      */
     iconUrl?: string;
     /**
-     * The name of the issue priority.
-     * @type {string}
-     * @memberof Priority
-     */
-    name?: string;
-    /**
      * The ID of the issue priority.
      * @type {string}
      * @memberof Priority
@@ -15453,6 +16199,24 @@ export interface Priority {
      * @memberof Priority
      */
     isDefault?: boolean;
+    /**
+     * The name of the issue priority.
+     * @type {string}
+     * @memberof Priority
+     */
+    name?: string;
+    /**
+     * The URL of the issue priority.
+     * @type {string}
+     * @memberof Priority
+     */
+    self?: string;
+    /**
+     * The color used to indicate the issue priority.
+     * @type {string}
+     * @memberof Priority
+     */
+    statusColor?: string;
 }
 /**
  * The ID of an issue priority.
@@ -15475,65 +16239,23 @@ export interface PriorityId {
  */
 export interface Project {
     /**
-     * Expand options that include additional project details in the response.
-     * @type {string}
+     * Whether the project is archived.
+     * @type {boolean}
      * @memberof Project
      */
-    readonly expand?: string;
-    /**
-     * The URL of the project details.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly self?: string;
-    /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof Project
-     */
-    id?: string;
-    /**
-     * The key of the project.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly key?: string;
-    /**
-     * A brief description of the project.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly description?: string;
+    readonly archived?: boolean;
     /**
      * 
-     * @type {ProjectLead}
+     * @type {ProjectArchivedBy}
      * @memberof Project
      */
-    lead?: ProjectLead;
+    archivedBy?: ProjectArchivedBy;
     /**
-     * List of the components contained in the project.
-     * @type {Array<ProjectComponent>}
-     * @memberof Project
-     */
-    readonly components?: Array<ProjectComponent>;
-    /**
-     * List of the issue types available in the project.
-     * @type {Array<IssueTypeDetails>}
-     * @memberof Project
-     */
-    readonly issueTypes?: Array<IssueTypeDetails>;
-    /**
-     * A link to information about this project, such as project documentation.
+     * The date when the project was archived.
      * @type {string}
      * @memberof Project
      */
-    readonly url?: string;
-    /**
-     * An email address associated with the project.
-     * @type {string}
-     * @memberof Project
-     */
-    email?: string;
+    readonly archivedDate?: string;
     /**
      * The default assignee when creating issues for this project.
      * @type {string}
@@ -15541,59 +16263,71 @@ export interface Project {
      */
     readonly assigneeType?: ProjectAssigneeTypeEnum;
     /**
-     * The versions defined in the project. For more information, see [Create version](#api-rest-api-3-version-post).
-     * @type {Array<Version>}
-     * @memberof Project
-     */
-    readonly versions?: Array<Version>;
-    /**
-     * The name of the project.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly name?: string;
-    /**
-     * The name and self URL for each role defined in the project. For more information, see [Create project role](#api-rest-api-3-role-post).
-     * @type {{ [key: string]: string; }}
-     * @memberof Project
-     */
-    readonly roles?: { [key: string]: string; };
-    /**
      * 
      * @type {ProjectAvatarUrls}
      * @memberof Project
      */
     avatarUrls?: ProjectAvatarUrls;
     /**
-     * 
-     * @type {ProjectProjectCategory}
+     * List of the components contained in the project.
+     * @type {Array<ProjectComponent>}
      * @memberof Project
      */
-    projectCategory?: ProjectProjectCategory;
+    readonly components?: Array<ProjectComponent>;
     /**
-     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly projectTypeKey?: ProjectProjectTypeKeyEnum;
-    /**
-     * Whether the project is simplified.
+     * Whether the project is marked as deleted.
      * @type {boolean}
      * @memberof Project
      */
-    readonly simplified?: boolean;
+    readonly deleted?: boolean;
     /**
-     * The type of the project.
+     * 
+     * @type {ProjectDeletedBy}
+     * @memberof Project
+     */
+    deletedBy?: ProjectDeletedBy;
+    /**
+     * The date when the project was marked as deleted.
      * @type {string}
      * @memberof Project
      */
-    readonly style?: ProjectStyleEnum;
+    readonly deletedDate?: string;
+    /**
+     * A brief description of the project.
+     * @type {string}
+     * @memberof Project
+     */
+    readonly description?: string;
+    /**
+     * An email address associated with the project.
+     * @type {string}
+     * @memberof Project
+     */
+    email?: string;
+    /**
+     * Expand options that include additional project details in the response.
+     * @type {string}
+     * @memberof Project
+     */
+    readonly expand?: string;
     /**
      * Whether the project is selected as a favorite.
      * @type {boolean}
      * @memberof Project
      */
     favourite?: boolean;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof Project
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ProjectInsight}
+     * @memberof Project
+     */
+    insight?: ProjectInsight;
     /**
      * Whether the project is private.
      * @type {boolean}
@@ -15607,11 +16341,53 @@ export interface Project {
      */
     issueTypeHierarchy?: ProjectIssueTypeHierarchy;
     /**
+     * List of the issue types available in the project.
+     * @type {Array<IssueTypeDetails>}
+     * @memberof Project
+     */
+    readonly issueTypes?: Array<IssueTypeDetails>;
+    /**
+     * The key of the project.
+     * @type {string}
+     * @memberof Project
+     */
+    readonly key?: string;
+    /**
+     * 
+     * @type {ProjectLandingPageInfo}
+     * @memberof Project
+     */
+    landingPageInfo?: ProjectLandingPageInfo;
+    /**
+     * 
+     * @type {ProjectLead}
+     * @memberof Project
+     */
+    lead?: ProjectLead;
+    /**
+     * The name of the project.
+     * @type {string}
+     * @memberof Project
+     */
+    readonly name?: string;
+    /**
      * 
      * @type {ProjectPermissions}
      * @memberof Project
      */
     permissions?: ProjectPermissions;
+    /**
+     * 
+     * @type {ProjectProjectCategory}
+     * @memberof Project
+     */
+    projectCategory?: ProjectProjectCategory;
+    /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
+     * @type {string}
+     * @memberof Project
+     */
+    readonly projectTypeKey?: ProjectProjectTypeKeyEnum;
     /**
      * Map of project properties
      * @type {{ [key: string]: any; }}
@@ -15619,65 +16395,53 @@ export interface Project {
      */
     readonly properties?: { [key: string]: any; };
     /**
-     * Unique ID for next-gen projects.
-     * @type {string}
-     * @memberof Project
-     */
-    readonly uuid?: string;
-    /**
-     * 
-     * @type {ProjectInsight}
-     * @memberof Project
-     */
-    insight?: ProjectInsight;
-    /**
-     * Whether the project is marked as deleted.
-     * @type {boolean}
-     * @memberof Project
-     */
-    readonly deleted?: boolean;
-    /**
      * The date when the project is deleted permanently.
      * @type {string}
      * @memberof Project
      */
     readonly retentionTillDate?: string;
     /**
-     * The date when the project was marked as deleted.
+     * The name and self URL for each role defined in the project. For more information, see [Create project role](#api-rest-api-3-role-post).
+     * @type {{ [key: string]: string; }}
+     * @memberof Project
+     */
+    readonly roles?: { [key: string]: string; };
+    /**
+     * The URL of the project details.
      * @type {string}
      * @memberof Project
      */
-    readonly deletedDate?: string;
+    readonly self?: string;
     /**
-     * 
-     * @type {ProjectDeletedBy}
-     * @memberof Project
-     */
-    deletedBy?: ProjectDeletedBy;
-    /**
-     * Whether the project is archived.
+     * Whether the project is simplified.
      * @type {boolean}
      * @memberof Project
      */
-    readonly archived?: boolean;
+    readonly simplified?: boolean;
     /**
-     * The date when the project was archived.
+     * The type of the project.
      * @type {string}
      * @memberof Project
      */
-    readonly archivedDate?: string;
+    readonly style?: ProjectStyleEnum;
     /**
-     * 
-     * @type {ProjectArchivedBy}
+     * A link to information about this project, such as project documentation.
+     * @type {string}
      * @memberof Project
      */
-    archivedBy?: ProjectArchivedBy;
+    readonly url?: string;
     /**
-     * 
-     * @type {ProjectLandingPageInfo}
+     * Unique ID for next-gen projects.
+     * @type {string}
      * @memberof Project
      */
-    landingPageInfo?: ProjectLandingPageInfo;
+    readonly uuid?: string;
+    /**
+     * The versions defined in the project. For more information, see [Create version](#api-rest-api-3-version-post).
+     * @type {Array<Version>}
+     * @memberof Project
+     */
+    readonly versions?: Array<Version>;
 }
 
 
@@ -15716,18 +16480,6 @@ export type ProjectStyleEnum = typeof ProjectStyleEnum[keyof typeof ProjectStyle
  */
 export interface ProjectArchivedBy {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ProjectArchivedBy
@@ -15744,17 +16496,17 @@ export interface ProjectArchivedBy {
      */
     readonly accountType?: ProjectArchivedByAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectArchivedBy
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectArchivedBy
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -15768,23 +16520,17 @@ export interface ProjectArchivedBy {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectArchivedBy
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectArchivedBy
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectArchivedBy
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -15792,17 +16538,35 @@ export interface ProjectArchivedBy {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectArchivedBy
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectArchivedBy
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectArchivedBy
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectArchivedBy
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectArchivedBy
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectArchivedBy
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -15855,17 +16619,17 @@ export interface ProjectAvatarUrls {
  */
 export interface ProjectAvatars {
     /**
-     * List of avatars included with Jira. These avatars cannot be deleted.
-     * @type {Array<Avatar>}
-     * @memberof ProjectAvatars
-     */
-    readonly system?: Array<Avatar>;
-    /**
      * List of avatars added to Jira. These avatars may be deleted.
      * @type {Array<Avatar>}
      * @memberof ProjectAvatars
      */
     readonly custom?: Array<Avatar>;
+    /**
+     * List of avatars included with Jira. These avatars cannot be deleted.
+     * @type {Array<Avatar>}
+     * @memberof ProjectAvatars
+     */
+    readonly system?: Array<Avatar>;
 }
 /**
  * A project category.
@@ -15874,11 +16638,11 @@ export interface ProjectAvatars {
  */
 export interface ProjectCategory {
     /**
-     * The URL of the project category.
+     * The description of the project category.
      * @type {string}
      * @memberof ProjectCategory
      */
-    readonly self?: string;
+    description?: string;
     /**
      * The ID of the project category.
      * @type {string}
@@ -15892,11 +16656,11 @@ export interface ProjectCategory {
      */
     name?: string;
     /**
-     * The description of the project category.
+     * The URL of the project category.
      * @type {string}
      * @memberof ProjectCategory
      */
-    description?: string;
+    readonly self?: string;
 }
 /**
  * Details about a project component.
@@ -15905,47 +16669,11 @@ export interface ProjectCategory {
  */
 export interface ProjectComponent {
     /**
-     * The URL of the component.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    readonly self?: string;
-    /**
-     * The unique identifier for the component.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    readonly id?: string;
-    /**
-     * The unique name for the component in the project. Required when creating a component. Optional when updating a component. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    name?: string;
-    /**
-     * The description for the component. Optional when creating or updating a component.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    description?: string;
-    /**
      * 
-     * @type {ProjectComponentLead}
+     * @type {ProjectComponentAssignee}
      * @memberof ProjectComponent
      */
-    lead?: ProjectComponentLead;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    leadUserName?: string;
-    /**
-     * The accountId of the component's lead user. The accountId uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof ProjectComponent
-     */
-    leadAccountId?: string;
+    assignee?: ProjectComponentAssignee;
     /**
      * The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Can take the following values:
      * 
@@ -15961,34 +16689,47 @@ export interface ProjectComponent {
      */
     assigneeType?: ProjectComponentAssigneeTypeEnum;
     /**
-     * 
-     * @type {ProjectComponentAssignee}
-     * @memberof ProjectComponent
-     */
-    assignee?: ProjectComponentAssignee;
-    /**
-     * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
-     * 
-     *  *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in.
-     *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
-     *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
-     *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
+     * The description for the component. Optional when creating or updating a component.
      * @type {string}
      * @memberof ProjectComponent
      */
-    readonly realAssigneeType?: ProjectComponentRealAssigneeTypeEnum;
+    description?: string;
     /**
-     * 
-     * @type {ProjectComponentRealAssignee}
+     * The unique identifier for the component.
+     * @type {string}
      * @memberof ProjectComponent
      */
-    realAssignee?: ProjectComponentRealAssignee;
+    readonly id?: string;
     /**
      * Whether a user is associated with `assigneeType`. For example, if the `assigneeType` is set to `COMPONENT_LEAD` but the component lead is not set, then `false` is returned.
      * @type {boolean}
      * @memberof ProjectComponent
      */
     readonly isAssigneeTypeValid?: boolean;
+    /**
+     * 
+     * @type {ProjectComponentLead}
+     * @memberof ProjectComponent
+     */
+    lead?: ProjectComponentLead;
+    /**
+     * The accountId of the component's lead user. The accountId uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    leadAccountId?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    leadUserName?: string;
+    /**
+     * The unique name for the component in the project. Required when creating a component. Optional when updating a component. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    name?: string;
     /**
      * The key of the project the component is assigned to. Required when creating a component. Can't be updated.
      * @type {string}
@@ -16001,6 +16742,29 @@ export interface ProjectComponent {
      * @memberof ProjectComponent
      */
     readonly projectId?: number;
+    /**
+     * 
+     * @type {ProjectComponentRealAssignee}
+     * @memberof ProjectComponent
+     */
+    realAssignee?: ProjectComponentRealAssignee;
+    /**
+     * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
+     * 
+     *  *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in.
+     *  *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in.
+     *  *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues.
+     *  *  `PROJECT_DEFAULT` when none of the preceding cases are true.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    readonly realAssigneeType?: ProjectComponentRealAssigneeTypeEnum;
+    /**
+     * The URL of the component.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    readonly self?: string;
 }
 
 
@@ -16033,18 +16797,6 @@ export type ProjectComponentRealAssigneeTypeEnum = typeof ProjectComponentRealAs
  */
 export interface ProjectComponentAssignee {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ProjectComponentAssignee
@@ -16061,17 +16813,17 @@ export interface ProjectComponentAssignee {
      */
     readonly accountType?: ProjectComponentAssigneeAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectComponentAssignee
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectComponentAssignee
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -16085,23 +16837,17 @@ export interface ProjectComponentAssignee {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectComponentAssignee
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectComponentAssignee
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -16109,17 +16855,35 @@ export interface ProjectComponentAssignee {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectComponentAssignee
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentAssignee
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectComponentAssignee
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectComponentAssignee
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentAssignee
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -16141,18 +16905,6 @@ export type ProjectComponentAssigneeAccountTypeEnum = typeof ProjectComponentAss
  */
 export interface ProjectComponentLead {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ProjectComponentLead
@@ -16169,17 +16921,17 @@ export interface ProjectComponentLead {
      */
     readonly accountType?: ProjectComponentLeadAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectComponentLead
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectComponentLead
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -16193,23 +16945,17 @@ export interface ProjectComponentLead {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectComponentLead
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectComponentLead
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectComponentLead
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -16217,17 +16963,35 @@ export interface ProjectComponentLead {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectComponentLead
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentLead
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectComponentLead
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectComponentLead
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentLead
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -16249,18 +17013,6 @@ export type ProjectComponentLeadAccountTypeEnum = typeof ProjectComponentLeadAcc
  */
 export interface ProjectComponentRealAssignee {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ProjectComponentRealAssignee
@@ -16277,17 +17029,17 @@ export interface ProjectComponentRealAssignee {
      */
     readonly accountType?: ProjectComponentRealAssigneeAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectComponentRealAssignee
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectComponentRealAssignee
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -16301,23 +17053,17 @@ export interface ProjectComponentRealAssignee {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectComponentRealAssignee
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectComponentRealAssignee
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -16325,17 +17071,35 @@ export interface ProjectComponentRealAssignee {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentRealAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectComponentRealAssignee
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentRealAssignee
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectComponentRealAssignee
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectComponentRealAssignee
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectComponentRealAssignee
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -16357,18 +17121,6 @@ export type ProjectComponentRealAssigneeAccountTypeEnum = typeof ProjectComponen
  */
 export interface ProjectDeletedBy {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof ProjectDeletedBy
@@ -16385,17 +17137,17 @@ export interface ProjectDeletedBy {
      */
     readonly accountType?: ProjectDeletedByAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectDeletedBy
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectDeletedBy
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -16409,23 +17161,17 @@ export interface ProjectDeletedBy {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectDeletedBy
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectDeletedBy
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectDeletedBy
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -16433,17 +17179,35 @@ export interface ProjectDeletedBy {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectDeletedBy
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectDeletedBy
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectDeletedBy
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectDeletedBy
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectDeletedBy
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectDeletedBy
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -16465,11 +17229,11 @@ export type ProjectDeletedByAccountTypeEnum = typeof ProjectDeletedByAccountType
  */
 export interface ProjectDetails {
     /**
-     * The URL of the project details.
-     * @type {string}
+     * 
+     * @type {ProjectAvatarUrls}
      * @memberof ProjectDetails
      */
-    readonly self?: string;
+    avatarUrls?: ProjectAvatarUrls;
     /**
      * The ID of the project.
      * @type {string}
@@ -16489,29 +17253,29 @@ export interface ProjectDetails {
      */
     readonly name?: string;
     /**
+     * 
+     * @type {ProjectDetailsProjectCategory}
+     * @memberof ProjectDetails
+     */
+    projectCategory?: ProjectDetailsProjectCategory;
+    /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
      * @type {string}
      * @memberof ProjectDetails
      */
     readonly projectTypeKey?: ProjectDetailsProjectTypeKeyEnum;
     /**
+     * The URL of the project details.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    readonly self?: string;
+    /**
      * Whether or not the project is simplified.
      * @type {boolean}
      * @memberof ProjectDetails
      */
     readonly simplified?: boolean;
-    /**
-     * 
-     * @type {ProjectAvatarUrls}
-     * @memberof ProjectDetails
-     */
-    avatarUrls?: ProjectAvatarUrls;
-    /**
-     * 
-     * @type {ProjectDetailsProjectCategory}
-     * @memberof ProjectDetails
-     */
-    projectCategory?: ProjectDetailsProjectCategory;
 }
 
 
@@ -16532,11 +17296,11 @@ export type ProjectDetailsProjectTypeKeyEnum = typeof ProjectDetailsProjectTypeK
  */
 export interface ProjectDetailsProjectCategory {
     /**
-     * The URL of the project category.
+     * The name of the project category.
      * @type {string}
      * @memberof ProjectDetailsProjectCategory
      */
-    readonly self?: string;
+    readonly description?: string;
     /**
      * The ID of the project category.
      * @type {string}
@@ -16544,17 +17308,17 @@ export interface ProjectDetailsProjectCategory {
      */
     readonly id?: string;
     /**
-     * The name of the project category.
-     * @type {string}
-     * @memberof ProjectDetailsProjectCategory
-     */
-    readonly description?: string;
-    /**
      * The description of the project category.
      * @type {string}
      * @memberof ProjectDetailsProjectCategory
      */
     readonly name?: string;
+    /**
+     * The URL of the project category.
+     * @type {string}
+     * @memberof ProjectDetailsProjectCategory
+     */
+    readonly self?: string;
 }
 /**
  * A project's sender email address.
@@ -16582,6 +17346,36 @@ export interface ProjectEmailAddress {
  */
 export interface ProjectFeature {
     /**
+     * The key of the feature.
+     * @type {string}
+     * @memberof ProjectFeature
+     */
+    feature?: string;
+    /**
+     * URI for the image representing the feature.
+     * @type {string}
+     * @memberof ProjectFeature
+     */
+    imageUri?: string;
+    /**
+     * Localized display description for the feature.
+     * @type {string}
+     * @memberof ProjectFeature
+     */
+    localisedDescription?: string;
+    /**
+     * Localized display name for the feature.
+     * @type {string}
+     * @memberof ProjectFeature
+     */
+    localisedName?: string;
+    /**
+     * List of keys of the features required to enable the feature.
+     * @type {Array<string>}
+     * @memberof ProjectFeature
+     */
+    prerequisites?: Array<string>;
+    /**
      * The ID of the project.
      * @type {number}
      * @memberof ProjectFeature
@@ -16599,36 +17393,6 @@ export interface ProjectFeature {
      * @memberof ProjectFeature
      */
     toggleLocked?: boolean;
-    /**
-     * The key of the feature.
-     * @type {string}
-     * @memberof ProjectFeature
-     */
-    feature?: string;
-    /**
-     * List of keys of the features required to enable the feature.
-     * @type {Array<string>}
-     * @memberof ProjectFeature
-     */
-    prerequisites?: Array<string>;
-    /**
-     * Localized display name for the feature.
-     * @type {string}
-     * @memberof ProjectFeature
-     */
-    localisedName?: string;
-    /**
-     * Localized display description for the feature.
-     * @type {string}
-     * @memberof ProjectFeature
-     */
-    localisedDescription?: string;
-    /**
-     * URI for the image representing the feature.
-     * @type {string}
-     * @memberof ProjectFeature
-     */
-    imageUri?: string;
 }
 
 
@@ -16706,12 +17470,6 @@ export interface ProjectIdentifierBean {
  */
 export interface ProjectIdentifiers {
     /**
-     * The URL of the created project.
-     * @type {string}
-     * @memberof ProjectIdentifiers
-     */
-    readonly self: string;
-    /**
      * The ID of the created project.
      * @type {number}
      * @memberof ProjectIdentifiers
@@ -16723,6 +17481,12 @@ export interface ProjectIdentifiers {
      * @memberof ProjectIdentifiers
      */
     readonly key: string;
+    /**
+     * The URL of the created project.
+     * @type {string}
+     * @memberof ProjectIdentifiers
+     */
+    readonly self: string;
 }
 /**
  * A list of project IDs.
@@ -16744,17 +17508,17 @@ export interface ProjectIds {
  */
 export interface ProjectInsight {
     /**
-     * Total issue count.
-     * @type {number}
-     * @memberof ProjectInsight
-     */
-    readonly totalIssueCount?: number;
-    /**
      * The last issue update time.
      * @type {string}
      * @memberof ProjectInsight
      */
     readonly lastIssueUpdateTime?: string;
+    /**
+     * Total issue count.
+     * @type {number}
+     * @memberof ProjectInsight
+     */
+    readonly totalIssueCount?: number;
 }
 /**
  * Details of the issue creation metadata for a project.
@@ -16763,23 +17527,29 @@ export interface ProjectInsight {
  */
 export interface ProjectIssueCreateMetadata {
     /**
+     * 
+     * @type {ProjectIssueCreateMetadataAvatarUrls}
+     * @memberof ProjectIssueCreateMetadata
+     */
+    avatarUrls?: ProjectIssueCreateMetadataAvatarUrls;
+    /**
      * Expand options that include additional project issue create metadata details in the response.
      * @type {string}
      * @memberof ProjectIssueCreateMetadata
      */
     readonly expand?: string;
     /**
-     * The URL of the project.
-     * @type {string}
-     * @memberof ProjectIssueCreateMetadata
-     */
-    readonly self?: string;
-    /**
      * The ID of the project.
      * @type {string}
      * @memberof ProjectIssueCreateMetadata
      */
     readonly id?: string;
+    /**
+     * List of the issue types supported by the project.
+     * @type {Array<IssueTypeIssueCreateMetadata>}
+     * @memberof ProjectIssueCreateMetadata
+     */
+    readonly issuetypes?: Array<IssueTypeIssueCreateMetadata>;
     /**
      * The key of the project.
      * @type {string}
@@ -16793,17 +17563,11 @@ export interface ProjectIssueCreateMetadata {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {ProjectIssueCreateMetadataAvatarUrls}
+     * The URL of the project.
+     * @type {string}
      * @memberof ProjectIssueCreateMetadata
      */
-    avatarUrls?: ProjectIssueCreateMetadataAvatarUrls;
-    /**
-     * List of the issue types supported by the project.
-     * @type {Array<IssueTypeIssueCreateMetadata>}
-     * @memberof ProjectIssueCreateMetadata
-     */
-    readonly issuetypes?: Array<IssueTypeIssueCreateMetadata>;
+    readonly self?: string;
 }
 /**
  * List of the project's avatars, returning the avatar size and associated URL.
@@ -16875,17 +17639,17 @@ export interface ProjectIssueTypeHierarchy {
  */
 export interface ProjectIssueTypeMapping {
     /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof ProjectIssueTypeMapping
-     */
-    projectId: string;
-    /**
      * The ID of the issue type.
      * @type {string}
      * @memberof ProjectIssueTypeMapping
      */
     issueTypeId: string;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof ProjectIssueTypeMapping
+     */
+    projectId: string;
 }
 /**
  * The project and issue type mappings.
@@ -16907,17 +17671,17 @@ export interface ProjectIssueTypeMappings {
  */
 export interface ProjectIssueTypes {
     /**
-     * 
-     * @type {ProjectId}
-     * @memberof ProjectIssueTypes
-     */
-    project?: ProjectId;
-    /**
      * IDs of the issue types
      * @type {Set<string>}
      * @memberof ProjectIssueTypes
      */
-    issueTypes?: string[];
+    issueTypes?: Set<string> | null;
+    /**
+     * 
+     * @type {ProjectId}
+     * @memberof ProjectIssueTypes
+     */
+    project?: ProjectId | null;
 }
 /**
  * Details of an issue type hierarchy level.
@@ -16932,6 +17696,12 @@ export interface ProjectIssueTypesHierarchyLevel {
      */
     readonly entityId?: string;
     /**
+     * The list of issue types in the hierarchy level.
+     * @type {Array<IssueTypeInfo>}
+     * @memberof ProjectIssueTypesHierarchyLevel
+     */
+    readonly issueTypes?: Array<IssueTypeInfo>;
+    /**
      * The level of the issue type hierarchy level.
      * @type {number}
      * @memberof ProjectIssueTypesHierarchyLevel
@@ -16943,12 +17713,6 @@ export interface ProjectIssueTypesHierarchyLevel {
      * @memberof ProjectIssueTypesHierarchyLevel
      */
     readonly name?: string;
-    /**
-     * The list of issue types in the hierarchy level.
-     * @type {Array<IssueTypeInfo>}
-     * @memberof ProjectIssueTypesHierarchyLevel
-     */
-    readonly issueTypes?: Array<IssueTypeInfo>;
 }
 /**
  * The project landing page info.
@@ -16958,10 +17722,22 @@ export interface ProjectIssueTypesHierarchyLevel {
 export interface ProjectLandingPageInfo {
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ProjectLandingPageInfo
+     */
+    attributes?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectLandingPageInfo
+     */
+    boardId?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ProjectLandingPageInfo
      */
-    url?: string;
+    boardName?: string;
     /**
      * 
      * @type {string}
@@ -16976,28 +17752,10 @@ export interface ProjectLandingPageInfo {
     projectType?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ProjectLandingPageInfo
-     */
-    boardId?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectLandingPageInfo
-     */
-    simplified?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof ProjectLandingPageInfo
      */
-    boardName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectLandingPageInfo
-     */
-    simpleBoard?: boolean;
+    queueCategory?: string;
     /**
      * 
      * @type {number}
@@ -17012,16 +17770,22 @@ export interface ProjectLandingPageInfo {
     queueName?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof ProjectLandingPageInfo
+     */
+    simpleBoard?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectLandingPageInfo
+     */
+    simplified?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ProjectLandingPageInfo
      */
-    queueCategory?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof ProjectLandingPageInfo
-     */
-    attributes?: { [key: string]: string; };
+    url?: string;
 }
 /**
  * The username of the project lead.
@@ -17029,18 +17793,6 @@ export interface ProjectLandingPageInfo {
  * @interface ProjectLead
  */
 export interface ProjectLead {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -17058,17 +17810,17 @@ export interface ProjectLead {
      */
     readonly accountType?: ProjectLeadAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof ProjectLead
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof ProjectLead
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -17082,23 +17834,17 @@ export interface ProjectLead {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectLead
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof ProjectLead
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof ProjectLead
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -17106,17 +17852,35 @@ export interface ProjectLead {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof ProjectLead
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectLead
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ProjectLead
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ProjectLead
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof ProjectLead
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -17151,11 +17915,11 @@ export interface ProjectPermissions {
  */
 export interface ProjectProjectCategory {
     /**
-     * The URL of the project category.
+     * The description of the project category.
      * @type {string}
      * @memberof ProjectProjectCategory
      */
-    readonly self?: string;
+    description?: string;
     /**
      * The ID of the project category.
      * @type {string}
@@ -17169,11 +17933,11 @@ export interface ProjectProjectCategory {
      */
     name?: string;
     /**
-     * The description of the project category.
+     * The URL of the project category.
      * @type {string}
      * @memberof ProjectProjectCategory
      */
-    description?: string;
+    readonly self?: string;
 }
 /**
  * Details about the roles in a project.
@@ -17182,59 +17946,11 @@ export interface ProjectProjectCategory {
  */
 export interface ProjectRole {
     /**
-     * The URL the project role details.
-     * @type {string}
-     * @memberof ProjectRole
-     */
-    readonly self?: string;
-    /**
-     * The name of the project role.
-     * @type {string}
-     * @memberof ProjectRole
-     */
-    name?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof ProjectRole
-     */
-    readonly id?: number;
-    /**
-     * The description of the project role.
-     * @type {string}
-     * @memberof ProjectRole
-     */
-    readonly description?: string;
-    /**
      * The list of users who act in this role.
      * @type {Array<RoleActor>}
      * @memberof ProjectRole
      */
     readonly actors?: Array<RoleActor>;
-    /**
-     * 
-     * @type {ProjectRoleScope}
-     * @memberof ProjectRole
-     */
-    scope?: ProjectRoleScope;
-    /**
-     * The translated name of the project role.
-     * @type {string}
-     * @memberof ProjectRole
-     */
-    translatedName?: string;
-    /**
-     * Whether the calling user is part of this role.
-     * @type {boolean}
-     * @memberof ProjectRole
-     */
-    currentUserRole?: boolean;
-    /**
-     * Whether the roles are configurable for this project.
-     * @type {boolean}
-     * @memberof ProjectRole
-     */
-    readonly roleConfigurable?: boolean;
     /**
      * Whether this role is the admin role for the project.
      * @type {boolean}
@@ -17242,11 +17958,59 @@ export interface ProjectRole {
      */
     readonly admin?: boolean;
     /**
+     * Whether the calling user is part of this role.
+     * @type {boolean}
+     * @memberof ProjectRole
+     */
+    currentUserRole?: boolean;
+    /**
      * Whether this role is the default role for the project
      * @type {boolean}
      * @memberof ProjectRole
      */
     readonly _default?: boolean;
+    /**
+     * The description of the project role.
+     * @type {string}
+     * @memberof ProjectRole
+     */
+    readonly description?: string;
+    /**
+     * The ID of the project role.
+     * @type {number}
+     * @memberof ProjectRole
+     */
+    readonly id?: number;
+    /**
+     * The name of the project role.
+     * @type {string}
+     * @memberof ProjectRole
+     */
+    name?: string;
+    /**
+     * Whether the roles are configurable for this project.
+     * @type {boolean}
+     * @memberof ProjectRole
+     */
+    readonly roleConfigurable?: boolean;
+    /**
+     * 
+     * @type {ProjectRoleScope}
+     * @memberof ProjectRole
+     */
+    scope?: ProjectRoleScope;
+    /**
+     * The URL the project role details.
+     * @type {string}
+     * @memberof ProjectRole
+     */
+    readonly self?: string;
+    /**
+     * The translated name of the project role.
+     * @type {string}
+     * @memberof ProjectRole
+     */
+    translatedName?: string;
 }
 /**
  * 
@@ -17254,12 +18018,6 @@ export interface ProjectRole {
  * @interface ProjectRoleActorsUpdateBean
  */
 export interface ProjectRoleActorsUpdateBean {
-    /**
-     * The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.
-     * @type {number}
-     * @memberof ProjectRoleActorsUpdateBean
-     */
-    readonly id?: number;
     /**
      * The actors to add to the project role.
      * 
@@ -17275,6 +18033,12 @@ export interface ProjectRoleActorsUpdateBean {
      * @memberof ProjectRoleActorsUpdateBean
      */
     categorisedActors?: { [key: string]: Array<string>; };
+    /**
+     * The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.
+     * @type {number}
+     * @memberof ProjectRoleActorsUpdateBean
+     */
+    readonly id?: number;
 }
 /**
  * Details about a project role.
@@ -17283,23 +18047,17 @@ export interface ProjectRoleActorsUpdateBean {
  */
 export interface ProjectRoleDetails {
     /**
-     * The URL the project role details.
-     * @type {string}
+     * Whether this role is the admin role for the project.
+     * @type {boolean}
      * @memberof ProjectRoleDetails
      */
-    readonly self?: string;
+    readonly admin?: boolean;
     /**
-     * The name of the project role.
-     * @type {string}
+     * Whether this role is the default role for the project.
+     * @type {boolean}
      * @memberof ProjectRoleDetails
      */
-    name?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof ProjectRoleDetails
-     */
-    readonly id?: number;
+    readonly _default?: boolean;
     /**
      * The description of the project role.
      * @type {string}
@@ -17307,17 +18065,17 @@ export interface ProjectRoleDetails {
      */
     readonly description?: string;
     /**
-     * Whether this role is the admin role for the project.
-     * @type {boolean}
+     * The ID of the project role.
+     * @type {number}
      * @memberof ProjectRoleDetails
      */
-    readonly admin?: boolean;
+    readonly id?: number;
     /**
-     * 
-     * @type {ProjectRoleScope}
+     * The name of the project role.
+     * @type {string}
      * @memberof ProjectRoleDetails
      */
-    scope?: ProjectRoleScope;
+    name?: string;
     /**
      * Whether the roles are configurable for this project.
      * @type {boolean}
@@ -17325,17 +18083,23 @@ export interface ProjectRoleDetails {
      */
     readonly roleConfigurable?: boolean;
     /**
+     * 
+     * @type {ProjectRoleScope}
+     * @memberof ProjectRoleDetails
+     */
+    scope?: ProjectRoleScope;
+    /**
+     * The URL the project role details.
+     * @type {string}
+     * @memberof ProjectRoleDetails
+     */
+    readonly self?: string;
+    /**
      * The translated name of the project role.
      * @type {string}
      * @memberof ProjectRoleDetails
      */
     translatedName?: string;
-    /**
-     * Whether this role is the default role for the project.
-     * @type {boolean}
-     * @memberof ProjectRoleDetails
-     */
-    readonly _default?: boolean;
 }
 /**
  * Details of the group associated with the role.
@@ -17350,17 +18114,17 @@ export interface ProjectRoleGroup {
      */
     displayName?: string;
     /**
-     * The name of the group. As a group's name can change, use of `groupId` is recommended to identify the group.
-     * @type {string}
-     * @memberof ProjectRoleGroup
-     */
-    name?: string;
-    /**
      * The ID of the group.
      * @type {string}
      * @memberof ProjectRoleGroup
      */
     groupId?: string;
+    /**
+     * The name of the group. As a group's name can change, use of `groupId` is recommended to identify the group.
+     * @type {string}
+     * @memberof ProjectRoleGroup
+     */
+    name?: string;
 }
 /**
  * The scope of the role. Indicated for roles associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
@@ -17369,17 +18133,17 @@ export interface ProjectRoleGroup {
  */
 export interface ProjectRoleScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ProjectRoleScope
-     */
-    readonly type?: ProjectRoleScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof ProjectRoleScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof ProjectRoleScope
+     */
+    readonly type?: ProjectRoleScopeTypeEnum;
 }
 
 
@@ -17412,17 +18176,17 @@ export interface ProjectRoleUser {
  */
 export interface ProjectScopeBean {
     /**
-     * The ID of the project that the option's behavior applies to.
-     * @type {number}
-     * @memberof ProjectScopeBean
-     */
-    id?: number;
-    /**
      * Defines the behavior of the option in the project.If notSelectable is set, the option cannot be set as the field's value. This is useful for archiving an option that has previously been selected but shouldn't be used anymore.If defaultValue is set, the option is selected by default.
      * @type {Set<string>}
      * @memberof ProjectScopeBean
      */
     attributes?: ProjectScopeBeanAttributesEnum[];
+    /**
+     * The ID of the project that the option's behavior applies to.
+     * @type {number}
+     * @memberof ProjectScopeBean
+     */
+    id?: number;
 }
 
 
@@ -17442,17 +18206,11 @@ export type ProjectScopeBeanAttributesEnum = typeof ProjectScopeBeanAttributesEn
  */
 export interface ProjectType {
     /**
-     * The key of the project type.
+     * The color of the project type.
      * @type {string}
      * @memberof ProjectType
      */
-    readonly key?: string;
-    /**
-     * The formatted key of the project type.
-     * @type {string}
-     * @memberof ProjectType
-     */
-    readonly formattedKey?: string;
+    readonly color?: string;
     /**
      * The key of the project type's description.
      * @type {string}
@@ -17460,17 +18218,23 @@ export interface ProjectType {
      */
     readonly descriptionI18nKey?: string;
     /**
+     * The formatted key of the project type.
+     * @type {string}
+     * @memberof ProjectType
+     */
+    readonly formattedKey?: string;
+    /**
      * The icon of the project type.
      * @type {string}
      * @memberof ProjectType
      */
     readonly icon?: string;
     /**
-     * The color of the project type.
+     * The key of the project type.
      * @type {string}
      * @memberof ProjectType
      */
-    readonly color?: string;
+    readonly key?: string;
 }
 /**
  * Property key details.
@@ -17479,17 +18243,17 @@ export interface ProjectType {
  */
 export interface PropertyKey {
     /**
-     * The URL of the property.
-     * @type {string}
-     * @memberof PropertyKey
-     */
-    readonly self?: string;
-    /**
      * The key of the property.
      * @type {string}
      * @memberof PropertyKey
      */
     readonly key?: string;
+    /**
+     * The URL of the property.
+     * @type {string}
+     * @memberof PropertyKey
+     */
+    readonly self?: string;
 }
 /**
  * List of property keys.
@@ -17524,17 +18288,17 @@ export interface PublishDraftWorkflowScheme {
  */
 export interface PublishedWorkflowId {
     /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof PublishedWorkflowId
-     */
-    name: string;
-    /**
      * The entity ID of the workflow.
      * @type {string}
      * @memberof PublishedWorkflowId
      */
     entityId?: string;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof PublishedWorkflowId
+     */
+    name: string;
 }
 /**
  * ID of a registered webhook or error messages explaining why a webhook wasn't registered.
@@ -17562,17 +18326,11 @@ export interface RegisteredWebhook {
  */
 export interface RemoteIssueLink {
     /**
-     * The ID of the link.
-     * @type {number}
+     * 
+     * @type {RemoteIssueLinkApplication}
      * @memberof RemoteIssueLink
      */
-    id?: number;
-    /**
-     * The URL of the link.
-     * @type {string}
-     * @memberof RemoteIssueLink
-     */
-    self?: string;
+    application?: RemoteIssueLinkApplication;
     /**
      * The global ID of the link, such as the ID of the item on the remote system.
      * @type {string}
@@ -17580,11 +18338,17 @@ export interface RemoteIssueLink {
      */
     globalId?: string;
     /**
-     * 
-     * @type {RemoteIssueLinkApplication}
+     * The ID of the link.
+     * @type {number}
      * @memberof RemoteIssueLink
      */
-    application?: RemoteIssueLinkApplication;
+    id?: number;
+    /**
+     * 
+     * @type {RemoteIssueLinkObject}
+     * @memberof RemoteIssueLink
+     */
+    object?: RemoteIssueLinkObject;
     /**
      * Description of the relationship between the issue and the linked item.
      * @type {string}
@@ -17592,11 +18356,11 @@ export interface RemoteIssueLink {
      */
     relationship?: string;
     /**
-     * 
-     * @type {RemoteIssueLinkObject}
+     * The URL of the link.
+     * @type {string}
      * @memberof RemoteIssueLink
      */
-    object?: RemoteIssueLinkObject;
+    self?: string;
 }
 /**
  * Details of the remote application the linked item is in.
@@ -17605,17 +18369,17 @@ export interface RemoteIssueLink {
  */
 export interface RemoteIssueLinkApplication {
     /**
-     * The name-spaced type of the application, used by registered rendering apps.
-     * @type {string}
-     * @memberof RemoteIssueLinkApplication
-     */
-    type?: string;
-    /**
      * The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank items are excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link". Grouping and sorting of links may place links without an application name last.
      * @type {string}
      * @memberof RemoteIssueLinkApplication
      */
     name?: string;
+    /**
+     * The name-spaced type of the application, used by registered rendering apps.
+     * @type {string}
+     * @memberof RemoteIssueLinkApplication
+     */
+    type?: string;
 }
 /**
  * Details of the identifiers for a created or updated remote issue link.
@@ -17643,24 +18407,6 @@ export interface RemoteIssueLinkIdentifies {
  */
 export interface RemoteIssueLinkObject {
     /**
-     * The URL of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    url: string;
-    /**
-     * The title of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    title: string;
-    /**
-     * The summary details of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    summary?: string;
-    /**
      * 
      * @type {RemoteObjectIcon}
      * @memberof RemoteIssueLinkObject
@@ -17672,6 +18418,24 @@ export interface RemoteIssueLinkObject {
      * @memberof RemoteIssueLinkObject
      */
     status?: RemoteObjectStatus;
+    /**
+     * The summary details of the item.
+     * @type {string}
+     * @memberof RemoteIssueLinkObject
+     */
+    summary?: string;
+    /**
+     * The title of the item.
+     * @type {string}
+     * @memberof RemoteIssueLinkObject
+     */
+    title: string;
+    /**
+     * The URL of the item.
+     * @type {string}
+     * @memberof RemoteIssueLinkObject
+     */
+    url: string;
 }
 /**
  * Details of a remote issue link.
@@ -17680,6 +18444,12 @@ export interface RemoteIssueLinkObject {
  */
 export interface RemoteIssueLinkRequest {
     [key: string]: any | any;
+    /**
+     * 
+     * @type {RemoteIssueLinkRequestApplication}
+     * @memberof RemoteIssueLinkRequest
+     */
+    application?: RemoteIssueLinkRequestApplication;
     /**
      * An identifier for the remote item in the remote system. For example, the global ID for a remote item in Confluence would consist of the app ID and page ID, like this: `appId=456&pageId=123`.
      * 
@@ -17692,22 +18462,16 @@ export interface RemoteIssueLinkRequest {
     globalId?: string;
     /**
      * 
-     * @type {RemoteIssueLinkRequestApplication}
+     * @type {RemoteIssueLinkObject}
      * @memberof RemoteIssueLinkRequest
      */
-    application?: RemoteIssueLinkRequestApplication;
+    object: RemoteIssueLinkObject;
     /**
      * Description of the relationship between the issue and the linked item. If not set, the relationship description "links to" is used in Jira.
      * @type {string}
      * @memberof RemoteIssueLinkRequest
      */
     relationship?: string;
-    /**
-     * 
-     * @type {RemoteIssueLinkObject}
-     * @memberof RemoteIssueLinkRequest
-     */
-    object: RemoteIssueLinkObject;
 }
 /**
  * Details of the remote application the linked item is in. For example, trello.
@@ -17716,17 +18480,17 @@ export interface RemoteIssueLinkRequest {
  */
 export interface RemoteIssueLinkRequestApplication {
     /**
-     * The name-spaced type of the application, used by registered rendering apps.
-     * @type {string}
-     * @memberof RemoteIssueLinkRequestApplication
-     */
-    type?: string;
-    /**
      * The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank items are excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link". Grouping and sorting of links may place links without an application name last.
      * @type {string}
      * @memberof RemoteIssueLinkRequestApplication
      */
     name?: string;
+    /**
+     * The name-spaced type of the application, used by registered rendering apps.
+     * @type {string}
+     * @memberof RemoteIssueLinkRequestApplication
+     */
+    type?: string;
 }
 /**
  * The linked item.
@@ -17735,24 +18499,6 @@ export interface RemoteIssueLinkRequestApplication {
  */
 export interface RemoteObject {
     [key: string]: any | any;
-    /**
-     * The URL of the item.
-     * @type {string}
-     * @memberof RemoteObject
-     */
-    url: string;
-    /**
-     * The title of the item.
-     * @type {string}
-     * @memberof RemoteObject
-     */
-    title: string;
-    /**
-     * The summary details of the item.
-     * @type {string}
-     * @memberof RemoteObject
-     */
-    summary?: string;
     /**
      * 
      * @type {RemoteObjectIcon}
@@ -17765,6 +18511,24 @@ export interface RemoteObject {
      * @memberof RemoteObject
      */
     status?: RemoteObjectStatus;
+    /**
+     * The summary details of the item.
+     * @type {string}
+     * @memberof RemoteObject
+     */
+    summary?: string;
+    /**
+     * The title of the item.
+     * @type {string}
+     * @memberof RemoteObject
+     */
+    title: string;
+    /**
+     * The URL of the item.
+     * @type {string}
+     * @memberof RemoteObject
+     */
+    url: string;
 }
 /**
  * Details of the icon for the item. If no icon is defined, the default link icon is used in Jira.
@@ -17773,11 +18537,11 @@ export interface RemoteObject {
  */
 export interface RemoteObjectIcon {
     /**
-     * The URL of an icon that displays at 16x16 pixel in Jira.
+     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
      * @type {string}
      * @memberof RemoteObjectIcon
      */
-    url16x16?: string;
+    link?: string;
     /**
      * The title of the icon. This is used as follows:
      * 
@@ -17788,11 +18552,11 @@ export interface RemoteObjectIcon {
      */
     title?: string;
     /**
-     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
+     * The URL of an icon that displays at 16x16 pixel in Jira.
      * @type {string}
      * @memberof RemoteObjectIcon
      */
-    link?: string;
+    url16x16?: string;
 }
 /**
  * The status of the item.
@@ -17801,17 +18565,17 @@ export interface RemoteObjectIcon {
  */
 export interface RemoteObjectStatus {
     /**
-     * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
-     * @type {boolean}
-     * @memberof RemoteObjectStatus
-     */
-    resolved?: boolean;
-    /**
      * 
      * @type {StatusIcon}
      * @memberof RemoteObjectStatus
      */
     icon?: StatusIcon;
+    /**
+     * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
+     * @type {boolean}
+     * @memberof RemoteObjectStatus
+     */
+    resolved?: boolean;
 }
 /**
  * 
@@ -17819,6 +18583,12 @@ export interface RemoteObjectStatus {
  * @interface RemoveOptionFromIssuesResult
  */
 export interface RemoveOptionFromIssuesResult {
+    /**
+     * 
+     * @type {RemoveOptionFromIssuesResultErrors}
+     * @memberof RemoveOptionFromIssuesResult
+     */
+    errors?: RemoveOptionFromIssuesResultErrors;
     /**
      * The IDs of the modified issues.
      * @type {Array<number>}
@@ -17831,12 +18601,6 @@ export interface RemoveOptionFromIssuesResult {
      * @memberof RemoveOptionFromIssuesResult
      */
     unmodifiedIssues?: Array<number>;
-    /**
-     * 
-     * @type {RemoveOptionFromIssuesResultErrors}
-     * @memberof RemoveOptionFromIssuesResult
-     */
-    errors?: RemoveOptionFromIssuesResultErrors;
 }
 /**
  * A collection of errors related to unchanged issues. The collection size is limited, which means not all errors may be returned.
@@ -17845,17 +18609,17 @@ export interface RemoveOptionFromIssuesResult {
  */
 export interface RemoveOptionFromIssuesResultErrors {
     /**
-     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
-     * @type {{ [key: string]: string; }}
-     * @memberof RemoveOptionFromIssuesResultErrors
-     */
-    errors?: { [key: string]: string; };
-    /**
      * The list of error messages produced by this operation. For example, "input parameter 'key' must be provided"
      * @type {Array<string>}
      * @memberof RemoveOptionFromIssuesResultErrors
      */
     errorMessages?: Array<string>;
+    /**
+     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
+     * @type {{ [key: string]: string; }}
+     * @memberof RemoveOptionFromIssuesResultErrors
+     */
+    errors?: { [key: string]: string; };
     /**
      * 
      * @type {number}
@@ -17870,17 +18634,17 @@ export interface RemoveOptionFromIssuesResultErrors {
  */
 export interface ReorderIssuePriorities {
     /**
-     * The list of issue IDs to be reordered. Cannot contain duplicates nor after ID.
-     * @type {Array<string>}
-     * @memberof ReorderIssuePriorities
-     */
-    ids: Array<string>;
-    /**
      * The ID of the priority. Required if `position` isn't provided.
      * @type {string}
      * @memberof ReorderIssuePriorities
      */
     after?: string;
+    /**
+     * The list of issue IDs to be reordered. Cannot contain duplicates nor after ID.
+     * @type {Array<string>}
+     * @memberof ReorderIssuePriorities
+     */
+    ids: Array<string>;
     /**
      * The position for issue priorities to be moved to. Required if `after` isn't provided.
      * @type {string}
@@ -17895,17 +18659,17 @@ export interface ReorderIssuePriorities {
  */
 export interface ReorderIssueResolutionsRequest {
     /**
-     * The list of resolution IDs to be reordered. Cannot contain duplicates nor after ID.
-     * @type {Array<string>}
-     * @memberof ReorderIssueResolutionsRequest
-     */
-    ids: Array<string>;
-    /**
      * The ID of the resolution. Required if `position` isn't provided.
      * @type {string}
      * @memberof ReorderIssueResolutionsRequest
      */
     after?: string;
+    /**
+     * The list of resolution IDs to be reordered. Cannot contain duplicates nor after ID.
+     * @type {Array<string>}
+     * @memberof ReorderIssueResolutionsRequest
+     */
+    ids: Array<string>;
     /**
      * The position for issue resolutions to be moved to. Required if `after` isn't provided.
      * @type {string}
@@ -17920,11 +18684,11 @@ export interface ReorderIssueResolutionsRequest {
  */
 export interface Resolution {
     /**
-     * The URL of the issue resolution.
+     * The description of the issue resolution.
      * @type {string}
      * @memberof Resolution
      */
-    self?: string;
+    description?: string;
     /**
      * The ID of the issue resolution.
      * @type {string}
@@ -17932,17 +18696,17 @@ export interface Resolution {
      */
     id?: string;
     /**
-     * The description of the issue resolution.
-     * @type {string}
-     * @memberof Resolution
-     */
-    description?: string;
-    /**
      * The name of the issue resolution.
      * @type {string}
      * @memberof Resolution
      */
     name?: string;
+    /**
+     * The URL of the issue resolution.
+     * @type {string}
+     * @memberof Resolution
+     */
+    self?: string;
 }
 /**
  * The ID of an issue resolution.
@@ -17966,16 +18730,10 @@ export interface ResolutionId {
 export interface ResolutionJsonBean {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof ResolutionJsonBean
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResolutionJsonBean
-     */
-    id?: string;
+    _default?: boolean;
     /**
      * 
      * @type {string}
@@ -17993,13 +18751,19 @@ export interface ResolutionJsonBean {
      * @type {string}
      * @memberof ResolutionJsonBean
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResolutionJsonBean
+     */
     name?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof ResolutionJsonBean
      */
-    _default?: boolean;
+    self?: string;
 }
 /**
  * Details of the permission.
@@ -18032,13 +18796,13 @@ export interface RichText {
      * @type {boolean}
      * @memberof RichText
      */
-    emptyAdf?: boolean;
+    empty?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof RichText
      */
-    valueSet?: boolean;
+    emptyAdf?: boolean;
     /**
      * 
      * @type {boolean}
@@ -18050,7 +18814,7 @@ export interface RichText {
      * @type {boolean}
      * @memberof RichText
      */
-    empty?: boolean;
+    valueSet?: boolean;
 }
 /**
  * Details about a user assigned to a project role.
@@ -18059,35 +18823,11 @@ export interface RichText {
  */
 export interface RoleActor {
     /**
-     * The ID of the role actor.
-     * @type {number}
+     * 
+     * @type {ProjectRoleGroup}
      * @memberof RoleActor
      */
-    readonly id?: number;
-    /**
-     * The display name of the role actor. For users, depending on the user’s privacy setting, this may return an alternative value for the user's name.
-     * @type {string}
-     * @memberof RoleActor
-     */
-    readonly displayName?: string;
-    /**
-     * The type of role actor.
-     * @type {string}
-     * @memberof RoleActor
-     */
-    readonly type?: RoleActorTypeEnum;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof RoleActor
-     */
-    readonly name?: string;
-    /**
-     * The avatar of the role actor.
-     * @type {string}
-     * @memberof RoleActor
-     */
-    readonly avatarUrl?: string;
+    readonly actorGroup?: ProjectRoleGroup;
     /**
      * 
      * @type {ProjectRoleUser}
@@ -18095,11 +18835,35 @@ export interface RoleActor {
      */
     readonly actorUser?: ProjectRoleUser;
     /**
-     * 
-     * @type {ProjectRoleGroup}
+     * The avatar of the role actor.
+     * @type {string}
      * @memberof RoleActor
      */
-    readonly actorGroup?: ProjectRoleGroup;
+    readonly avatarUrl?: string;
+    /**
+     * The display name of the role actor. For users, depending on the user’s privacy setting, this may return an alternative value for the user's name.
+     * @type {string}
+     * @memberof RoleActor
+     */
+    readonly displayName?: string;
+    /**
+     * The ID of the role actor.
+     * @type {number}
+     * @memberof RoleActor
+     */
+    readonly id?: number;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof RoleActor
+     */
+    readonly name?: string;
+    /**
+     * The type of role actor.
+     * @type {string}
+     * @memberof RoleActor
+     */
+    readonly type?: RoleActorTypeEnum;
 }
 
 
@@ -18119,12 +18883,6 @@ export type RoleActorTypeEnum = typeof RoleActorTypeEnum[keyof typeof RoleActorT
  */
 export interface RuleConfiguration {
     /**
-     * Configuration of the rule, as it is stored by the Connect app on the rule configuration page.
-     * @type {string}
-     * @memberof RuleConfiguration
-     */
-    value: string;
-    /**
      * EXPERIMENTAL: Whether the rule is disabled.
      * @type {boolean}
      * @memberof RuleConfiguration
@@ -18136,6 +18894,12 @@ export interface RuleConfiguration {
      * @memberof RuleConfiguration
      */
     tag?: string;
+    /**
+     * Configuration of the rule, as it is stored by the Connect or the Forge app on the rule configuration page.
+     * @type {string}
+     * @memberof RuleConfiguration
+     */
+    value: string;
 }
 /**
  * The sanitized JQL queries for the given account IDs.
@@ -18157,6 +18921,18 @@ export interface SanitizedJqlQueries {
  */
 export interface SanitizedJqlQuery {
     /**
+     * The account ID of the user for whom sanitization was performed.
+     * @type {string}
+     * @memberof SanitizedJqlQuery
+     */
+    accountId?: string | null;
+    /**
+     * 
+     * @type {SanitizedJqlQueryErrors}
+     * @memberof SanitizedJqlQuery
+     */
+    errors?: SanitizedJqlQueryErrors;
+    /**
      * The initial query.
      * @type {string}
      * @memberof SanitizedJqlQuery
@@ -18168,18 +18944,6 @@ export interface SanitizedJqlQuery {
      * @memberof SanitizedJqlQuery
      */
     sanitizedQuery?: string | null;
-    /**
-     * 
-     * @type {SanitizedJqlQueryErrors}
-     * @memberof SanitizedJqlQuery
-     */
-    errors?: SanitizedJqlQueryErrors;
-    /**
-     * The account ID of the user for whom sanitization was performed.
-     * @type {string}
-     * @memberof SanitizedJqlQuery
-     */
-    accountId?: string | null;
 }
 /**
  * The list of errors.
@@ -18214,17 +18978,17 @@ export interface SanitizedJqlQueryErrors {
 export interface Scope {
     [key: string]: any | any;
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof Scope
-     */
-    readonly type?: ScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof Scope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof Scope
+     */
+    readonly type?: ScopeTypeEnum;
 }
 
 
@@ -18244,11 +19008,11 @@ export type ScopeTypeEnum = typeof ScopeTypeEnum[keyof typeof ScopeTypeEnum];
  */
 export interface ScopeProject {
     /**
-     * The URL of the project details.
-     * @type {string}
+     * 
+     * @type {ProjectAvatarUrls}
      * @memberof ScopeProject
      */
-    readonly self?: string;
+    avatarUrls?: ProjectAvatarUrls;
     /**
      * The ID of the project.
      * @type {string}
@@ -18268,29 +19032,29 @@ export interface ScopeProject {
      */
     readonly name?: string;
     /**
+     * 
+     * @type {ProjectDetailsProjectCategory}
+     * @memberof ScopeProject
+     */
+    projectCategory?: ProjectDetailsProjectCategory;
+    /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
      * @type {string}
      * @memberof ScopeProject
      */
     readonly projectTypeKey?: ScopeProjectProjectTypeKeyEnum;
     /**
+     * The URL of the project details.
+     * @type {string}
+     * @memberof ScopeProject
+     */
+    readonly self?: string;
+    /**
      * Whether or not the project is simplified.
      * @type {boolean}
      * @memberof ScopeProject
      */
     readonly simplified?: boolean;
-    /**
-     * 
-     * @type {ProjectAvatarUrls}
-     * @memberof ScopeProject
-     */
-    avatarUrls?: ProjectAvatarUrls;
-    /**
-     * 
-     * @type {ProjectDetailsProjectCategory}
-     * @memberof ScopeProject
-     */
-    projectCategory?: ProjectDetailsProjectCategory;
 }
 
 
@@ -18311,6 +19075,12 @@ export type ScopeProjectProjectTypeKeyEnum = typeof ScopeProjectProjectTypeKeyEn
  */
 export interface Screen {
     /**
+     * The description of the screen.
+     * @type {string}
+     * @memberof Screen
+     */
+    readonly description?: string;
+    /**
      * The ID of the screen.
      * @type {number}
      * @memberof Screen
@@ -18322,12 +19092,6 @@ export interface Screen {
      * @memberof Screen
      */
     readonly name?: string;
-    /**
-     * The description of the screen.
-     * @type {string}
-     * @memberof Screen
-     */
-    readonly description?: string;
     /**
      * 
      * @type {ScreenScope}
@@ -18342,17 +19106,17 @@ export interface Screen {
  */
 export interface ScreenDetails {
     /**
-     * The name of the screen. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof ScreenDetails
-     */
-    name: string;
-    /**
      * The description of the screen. The maximum length is 255 characters.
      * @type {string}
      * @memberof ScreenDetails
      */
     description?: string;
+    /**
+     * The name of the screen. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof ScreenDetails
+     */
+    name: string;
 }
 /**
  * A screen scheme.
@@ -18361,11 +19125,23 @@ export interface ScreenDetails {
  */
 export interface ScreenScheme {
     /**
+     * The description of the screen scheme.
+     * @type {string}
+     * @memberof ScreenScheme
+     */
+    description?: string;
+    /**
      * The ID of the screen scheme.
      * @type {number}
      * @memberof ScreenScheme
      */
     id?: number;
+    /**
+     * 
+     * @type {ScreenSchemeIssueTypeScreenSchemes}
+     * @memberof ScreenScheme
+     */
+    issueTypeScreenSchemes?: ScreenSchemeIssueTypeScreenSchemes;
     /**
      * The name of the screen scheme.
      * @type {string}
@@ -18373,23 +19149,11 @@ export interface ScreenScheme {
      */
     name?: string;
     /**
-     * The description of the screen scheme.
-     * @type {string}
-     * @memberof ScreenScheme
-     */
-    description?: string;
-    /**
      * 
      * @type {ScreenSchemeScreens}
      * @memberof ScreenScheme
      */
     screens?: ScreenSchemeScreens;
-    /**
-     * 
-     * @type {ScreenSchemeIssueTypeScreenSchemes}
-     * @memberof ScreenScheme
-     */
-    issueTypeScreenSchemes?: ScreenSchemeIssueTypeScreenSchemes;
 }
 /**
  * Details of a screen scheme.
@@ -18398,17 +19162,17 @@ export interface ScreenScheme {
  */
 export interface ScreenSchemeDetails {
     /**
-     * The name of the screen scheme. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof ScreenSchemeDetails
-     */
-    name: string;
-    /**
      * The description of the screen scheme. The maximum length is 255 characters.
      * @type {string}
      * @memberof ScreenSchemeDetails
      */
     description?: string;
+    /**
+     * The name of the screen scheme. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof ScreenSchemeDetails
+     */
+    name: string;
     /**
      * 
      * @type {ScreenSchemeDetailsScreens}
@@ -18423,29 +19187,29 @@ export interface ScreenSchemeDetails {
  */
 export interface ScreenSchemeDetailsScreens {
     /**
-     * The ID of the edit screen.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    edit?: number;
-    /**
      * The ID of the create screen.
      * @type {number}
      * @memberof ScreenSchemeDetailsScreens
      */
     create?: number;
     /**
-     * The ID of the view screen.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    view?: number;
-    /**
      * The ID of the default screen. Required when creating a screen scheme.
      * @type {number}
      * @memberof ScreenSchemeDetailsScreens
      */
     _default?: number;
+    /**
+     * The ID of the edit screen.
+     * @type {number}
+     * @memberof ScreenSchemeDetailsScreens
+     */
+    edit?: number;
+    /**
+     * The ID of the view screen.
+     * @type {number}
+     * @memberof ScreenSchemeDetailsScreens
+     */
+    view?: number;
 }
 /**
  * The ID of a screen scheme.
@@ -18467,11 +19231,17 @@ export interface ScreenSchemeId {
  */
 export interface ScreenSchemeIssueTypeScreenSchemes {
     /**
-     * The URL of the page.
-     * @type {string}
+     * Whether this is the last page.
+     * @type {boolean}
      * @memberof ScreenSchemeIssueTypeScreenSchemes
      */
-    readonly self?: string;
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof ScreenSchemeIssueTypeScreenSchemes
+     */
+    readonly maxResults?: number;
     /**
      * If there is another page of results, the URL of the next page.
      * @type {string}
@@ -18479,11 +19249,11 @@ export interface ScreenSchemeIssueTypeScreenSchemes {
      */
     readonly nextPage?: string;
     /**
-     * The maximum number of items that could be returned.
-     * @type {number}
+     * The URL of the page.
+     * @type {string}
      * @memberof ScreenSchemeIssueTypeScreenSchemes
      */
-    readonly maxResults?: number;
+    readonly self?: string;
     /**
      * The index of the first item returned.
      * @type {number}
@@ -18496,12 +19266,6 @@ export interface ScreenSchemeIssueTypeScreenSchemes {
      * @memberof ScreenSchemeIssueTypeScreenSchemes
      */
     readonly total?: number;
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly isLast?: boolean;
     /**
      * The list of items.
      * @type {Array<IssueTypeScreenScheme>}
@@ -18516,29 +19280,29 @@ export interface ScreenSchemeIssueTypeScreenSchemes {
  */
 export interface ScreenSchemeScreens {
     /**
-     * The ID of the edit screen.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    edit?: number;
-    /**
      * The ID of the create screen.
      * @type {number}
      * @memberof ScreenSchemeScreens
      */
     create?: number;
     /**
-     * The ID of the view screen.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    view?: number;
-    /**
      * The ID of the default screen. Required when creating a screen scheme.
      * @type {number}
      * @memberof ScreenSchemeScreens
      */
     _default?: number;
+    /**
+     * The ID of the edit screen.
+     * @type {number}
+     * @memberof ScreenSchemeScreens
+     */
+    edit?: number;
+    /**
+     * The ID of the view screen.
+     * @type {number}
+     * @memberof ScreenSchemeScreens
+     */
+    view?: number;
 }
 /**
  * The scope of the screen.
@@ -18547,17 +19311,17 @@ export interface ScreenSchemeScreens {
  */
 export interface ScreenScope {
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ScreenScope
-     */
-    readonly type?: ScreenScopeTypeEnum;
-    /**
      * 
      * @type {ScopeProject}
      * @memberof ScreenScope
      */
     project?: ScopeProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof ScreenScope
+     */
+    readonly type?: ScreenScopeTypeEnum;
 }
 
 
@@ -18577,29 +19341,29 @@ export type ScreenScopeTypeEnum = typeof ScreenScopeTypeEnum[keyof typeof Screen
  */
 export interface ScreenTypes {
     /**
-     * The ID of the edit screen.
-     * @type {number}
-     * @memberof ScreenTypes
-     */
-    edit?: number;
-    /**
      * The ID of the create screen.
      * @type {number}
      * @memberof ScreenTypes
      */
     create?: number;
     /**
-     * The ID of the view screen.
-     * @type {number}
-     * @memberof ScreenTypes
-     */
-    view?: number;
-    /**
      * The ID of the default screen. Required when creating a screen scheme.
      * @type {number}
      * @memberof ScreenTypes
      */
     _default?: number;
+    /**
+     * The ID of the edit screen.
+     * @type {number}
+     * @memberof ScreenTypes
+     */
+    edit?: number;
+    /**
+     * The ID of the view screen.
+     * @type {number}
+     * @memberof ScreenTypes
+     */
+    view?: number;
 }
 /**
  * A screen with tab details.
@@ -18607,6 +19371,12 @@ export interface ScreenTypes {
  * @interface ScreenWithTab
  */
 export interface ScreenWithTab {
+    /**
+     * The description of the screen.
+     * @type {string}
+     * @memberof ScreenWithTab
+     */
+    readonly description?: string;
     /**
      * The ID of the screen.
      * @type {number}
@@ -18619,12 +19389,6 @@ export interface ScreenWithTab {
      * @memberof ScreenWithTab
      */
     readonly name?: string;
-    /**
-     * The description of the screen.
-     * @type {string}
-     * @memberof ScreenWithTab
-     */
-    readonly description?: string;
     /**
      * 
      * @type {ScreenScope}
@@ -18702,17 +19466,17 @@ export interface ScreenableTab {
  */
 export interface SearchAutoCompleteFilter {
     /**
-     * List of project IDs used to filter the visible field details returned.
-     * @type {Array<number>}
-     * @memberof SearchAutoCompleteFilter
-     */
-    projectIds?: Array<number>;
-    /**
      * Include collapsed fields for fields that have non-unique names.
      * @type {boolean}
      * @memberof SearchAutoCompleteFilter
      */
     includeCollapsedFields?: boolean;
+    /**
+     * List of project IDs used to filter the visible field details returned.
+     * @type {Array<number>}
+     * @memberof SearchAutoCompleteFilter
+     */
+    projectIds?: Array<number>;
 }
 /**
  * 
@@ -18721,23 +19485,20 @@ export interface SearchAutoCompleteFilter {
  */
 export interface SearchRequestBean {
     /**
-     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression.
-     * @type {string}
+     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * 
+     *  *  `renderedFields` Returns field values rendered in HTML format.
+     *  *  `names` Returns the display name of each field.
+     *  *  `schema` Returns the schema describing a field type.
+     *  *  `transitions` Returns all possible transitions for the issue.
+     *  *  `operations` Returns all possible operations for the issue.
+     *  *  `editmeta` Returns information about how each field can be edited.
+     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
+     * @type {Array<string>}
      * @memberof SearchRequestBean
      */
-    jql?: string;
-    /**
-     * The index of the first item to return in the page of results (page offset). The base index is `0`.
-     * @type {number}
-     * @memberof SearchRequestBean
-     */
-    startAt?: number;
-    /**
-     * The maximum number of items to return per page.
-     * @type {number}
-     * @memberof SearchRequestBean
-     */
-    maxResults?: number;
+    expand?: Array<string>;
     /**
      * A list of fields to return for each issue, use it to retrieve a subset of fields. This parameter accepts a comma-separated list. Expand options include:
      * 
@@ -18761,6 +19522,36 @@ export interface SearchRequestBean {
      */
     fields?: Array<string>;
     /**
+     * Reference fields by their key (rather than ID). The default is `false`.
+     * @type {boolean}
+     * @memberof SearchRequestBean
+     */
+    fieldsByKeys?: boolean;
+    /**
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression.
+     * @type {string}
+     * @memberof SearchRequestBean
+     */
+    jql?: string;
+    /**
+     * The maximum number of items to return per page.
+     * @type {number}
+     * @memberof SearchRequestBean
+     */
+    maxResults?: number;
+    /**
+     * A list of up to 5 issue properties to include in the results. This parameter accepts a comma-separated list.
+     * @type {Array<string>}
+     * @memberof SearchRequestBean
+     */
+    properties?: Array<string>;
+    /**
+     * The index of the first item to return in the page of results (page offset). The base index is `0`.
+     * @type {number}
+     * @memberof SearchRequestBean
+     */
+    startAt?: number;
+    /**
      * Determines how to validate the JQL query and treat the validation results. Supported values:
      * 
      *  *  `strict` Returns a 400 response code if any errors are found, along with a list of all errors (and warnings).
@@ -18776,33 +19567,6 @@ export interface SearchRequestBean {
      * @memberof SearchRequestBean
      */
     validateQuery?: SearchRequestBeanValidateQueryEnum;
-    /**
-     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
-     * 
-     *  *  `renderedFields` Returns field values rendered in HTML format.
-     *  *  `names` Returns the display name of each field.
-     *  *  `schema` Returns the schema describing a field type.
-     *  *  `transitions` Returns all possible transitions for the issue.
-     *  *  `operations` Returns all possible operations for the issue.
-     *  *  `editmeta` Returns information about how each field can be edited.
-     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
-     *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
-     * @type {Array<string>}
-     * @memberof SearchRequestBean
-     */
-    expand?: Array<string>;
-    /**
-     * A list of up to 5 issue properties to include in the results. This parameter accepts a comma-separated list.
-     * @type {Array<string>}
-     * @memberof SearchRequestBean
-     */
-    properties?: Array<string>;
-    /**
-     * Reference fields by their key (rather than ID). The default is `false`.
-     * @type {boolean}
-     * @memberof SearchRequestBean
-     */
-    fieldsByKeys?: boolean;
 }
 
 
@@ -18831,35 +19595,17 @@ export interface SearchResults {
      */
     readonly expand?: string;
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly startAt?: number;
-    /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly maxResults?: number;
-    /**
-     * The number of results on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly total?: number;
-    /**
      * The list of issues found by the search.
      * @type {Array<IssueBean>}
      * @memberof SearchResults
      */
     readonly issues?: Array<IssueBean>;
     /**
-     * Any warnings related to the JQL query.
-     * @type {Array<string>}
+     * The maximum number of results that could be on the page.
+     * @type {number}
      * @memberof SearchResults
      */
-    readonly warningMessages?: Array<string>;
+    readonly maxResults?: number;
     /**
      * The ID and name of each field in the search results.
      * @type {{ [key: string]: string; }}
@@ -18872,6 +19618,24 @@ export interface SearchResults {
      * @memberof SearchResults
      */
     readonly schema?: { [key: string]: JsonTypeBean; };
+    /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof SearchResults
+     */
+    readonly startAt?: number;
+    /**
+     * The number of results on the page.
+     * @type {number}
+     * @memberof SearchResults
+     */
+    readonly total?: number;
+    /**
+     * Any warnings related to the JQL query.
+     * @type {Array<string>}
+     * @memberof SearchResults
+     */
+    readonly warningMessages?: Array<string>;
 }
 /**
  * Details of an issue level security item.
@@ -18880,11 +19644,11 @@ export interface SearchResults {
  */
 export interface SecurityLevel {
     /**
-     * The URL of the issue level security item.
+     * The description of the issue level security item.
      * @type {string}
      * @memberof SecurityLevel
      */
-    readonly self?: string;
+    readonly description?: string;
     /**
      * The ID of the issue level security item.
      * @type {string}
@@ -18892,17 +19656,92 @@ export interface SecurityLevel {
      */
     readonly id?: string;
     /**
-     * The description of the issue level security item.
+     * Whether the issue level security item is the default.
+     * @type {boolean}
+     * @memberof SecurityLevel
+     */
+    readonly isDefault?: boolean;
+    /**
+     * The ID of the issue level security scheme.
      * @type {string}
      * @memberof SecurityLevel
      */
-    readonly description?: string;
+    readonly issueSecuritySchemeId?: string;
     /**
      * The name of the issue level security item.
      * @type {string}
      * @memberof SecurityLevel
      */
     readonly name?: string;
+    /**
+     * The URL of the issue level security item.
+     * @type {string}
+     * @memberof SecurityLevel
+     */
+    readonly self?: string;
+}
+/**
+ * Issue security level member.
+ * @export
+ * @interface SecurityLevelMember
+ */
+export interface SecurityLevelMember {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {SecurityLevelMemberHolder}
+     * @memberof SecurityLevelMember
+     */
+    holder: SecurityLevelMemberHolder;
+    /**
+     * The ID of the issue security level member.
+     * @type {string}
+     * @memberof SecurityLevelMember
+     */
+    readonly id: string;
+    /**
+     * The ID of the issue security level.
+     * @type {string}
+     * @memberof SecurityLevelMember
+     */
+    readonly issueSecurityLevelId: string;
+    /**
+     * The ID of the issue security scheme.
+     * @type {string}
+     * @memberof SecurityLevelMember
+     */
+    readonly issueSecuritySchemeId: string;
+}
+/**
+ * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+ * @export
+ * @interface SecurityLevelMemberHolder
+ */
+export interface SecurityLevelMemberHolder {
+    /**
+     * Expand options that include additional permission holder details in the response.
+     * @type {string}
+     * @memberof SecurityLevelMemberHolder
+     */
+    readonly expand?: string;
+    /**
+     * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
+     * @type {string}
+     * @memberof SecurityLevelMemberHolder
+     */
+    parameter?: string;
+    /**
+     * The type of permission holder.
+     * @type {string}
+     * @memberof SecurityLevelMemberHolder
+     */
+    type: string;
+    /**
+     * The identifier associated with the `type` value that defines the holder of the permission.
+     * @type {string}
+     * @memberof SecurityLevelMemberHolder
+     */
+    value?: string;
 }
 /**
  * Details about a security scheme.
@@ -18911,23 +19750,11 @@ export interface SecurityLevel {
  */
 export interface SecurityScheme {
     /**
-     * The URL of the issue security scheme.
-     * @type {string}
-     * @memberof SecurityScheme
-     */
-    readonly self?: string;
-    /**
-     * The ID of the issue security scheme.
+     * The ID of the default security level.
      * @type {number}
      * @memberof SecurityScheme
      */
-    readonly id?: number;
-    /**
-     * The name of the issue security scheme.
-     * @type {string}
-     * @memberof SecurityScheme
-     */
-    readonly name?: string;
+    readonly defaultSecurityLevelId?: number;
     /**
      * The description of the issue security scheme.
      * @type {string}
@@ -18935,17 +19762,150 @@ export interface SecurityScheme {
      */
     readonly description?: string;
     /**
-     * The ID of the default security level.
+     * The ID of the issue security scheme.
      * @type {number}
      * @memberof SecurityScheme
      */
-    readonly defaultSecurityLevelId?: number;
+    readonly id?: number;
     /**
      * 
      * @type {Array<SecurityLevel>}
      * @memberof SecurityScheme
      */
     levels?: Array<SecurityLevel>;
+    /**
+     * The name of the issue security scheme.
+     * @type {string}
+     * @memberof SecurityScheme
+     */
+    readonly name?: string;
+    /**
+     * The URL of the issue security scheme.
+     * @type {string}
+     * @memberof SecurityScheme
+     */
+    readonly self?: string;
+}
+/**
+ * The ID of the issue security scheme.
+ * @export
+ * @interface SecuritySchemeId
+ */
+export interface SecuritySchemeId {
+    [key: string]: any | any;
+    /**
+     * The ID of the issue security scheme.
+     * @type {string}
+     * @memberof SecuritySchemeId
+     */
+    readonly id: string;
+}
+/**
+ * 
+ * @export
+ * @interface SecuritySchemeLevelBean
+ */
+export interface SecuritySchemeLevelBean {
+    /**
+     * The description of the issue security scheme level.
+     * @type {string}
+     * @memberof SecuritySchemeLevelBean
+     */
+    description?: string;
+    /**
+     * Specifies whether the level is the default level. False by default.
+     * @type {boolean}
+     * @memberof SecuritySchemeLevelBean
+     */
+    isDefault?: boolean;
+    /**
+     * The list of level members which should be added to the issue security scheme level.
+     * @type {Array<SecuritySchemeLevelMemberBean>}
+     * @memberof SecuritySchemeLevelBean
+     */
+    members?: Array<SecuritySchemeLevelMemberBean>;
+    /**
+     * The name of the issue security scheme level. Must be unique.
+     * @type {string}
+     * @memberof SecuritySchemeLevelBean
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface SecuritySchemeLevelMemberBean
+ */
+export interface SecuritySchemeLevelMemberBean {
+    /**
+     * The value corresponding to the specified member type.
+     * @type {string}
+     * @memberof SecuritySchemeLevelMemberBean
+     */
+    parameter?: string;
+    /**
+     * The issue security level member type, e.g `reporter`, `group`, `user`.
+     * @type {string}
+     * @memberof SecuritySchemeLevelMemberBean
+     */
+    type: string;
+}
+/**
+ * Details of issue security scheme level new members.
+ * @export
+ * @interface SecuritySchemeMembersRequest
+ */
+export interface SecuritySchemeMembersRequest {
+    /**
+     * The list of level members which should be added to the issue security scheme level.
+     * @type {Array<SecuritySchemeLevelMemberBean>}
+     * @memberof SecuritySchemeMembersRequest
+     */
+    members?: Array<SecuritySchemeLevelMemberBean>;
+}
+/**
+ * Details about an issue security scheme.
+ * @export
+ * @interface SecuritySchemeWithProjects
+ */
+export interface SecuritySchemeWithProjects {
+    [key: string]: any | any;
+    /**
+     * The default level ID of the issue security scheme.
+     * @type {number}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly defaultLevel?: number;
+    /**
+     * The description of the issue security scheme.
+     * @type {string}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly description?: string;
+    /**
+     * The ID of the issue security scheme.
+     * @type {number}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly id: number;
+    /**
+     * The name of the issue security scheme.
+     * @type {string}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly name: string;
+    /**
+     * The list of project IDs associated with the issue security scheme.
+     * @type {Set<number>}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly projectIds?: number[];
+    /**
+     * The URL of the issue security scheme.
+     * @type {string}
+     * @memberof SecuritySchemeWithProjects
+     */
+    readonly self: string;
 }
 /**
  * List of security schemes.
@@ -18973,6 +19933,48 @@ export interface ServerInformation {
      */
     baseUrl?: string;
     /**
+     * The timestamp when the Jira version was built.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    buildDate?: string;
+    /**
+     * The build number of the Jira version.
+     * @type {number}
+     * @memberof ServerInformation
+     */
+    buildNumber?: number;
+    /**
+     * The type of server deployment. This is always returned as *Cloud*.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    deploymentType?: string;
+    /**
+     * Jira instance health check results. Deprecated and no longer returned.
+     * @type {Array<HealthCheckResult>}
+     * @memberof ServerInformation
+     */
+    healthChecks?: Array<HealthCheckResult>;
+    /**
+     * The unique identifier of the Jira version.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    scmInfo?: string;
+    /**
+     * The time in Jira when this request was responded to.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    serverTime?: string;
+    /**
+     * The name of the Jira instance.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    serverTitle?: string;
+    /**
      * The version of Jira.
      * @type {string}
      * @memberof ServerInformation
@@ -18984,48 +19986,6 @@ export interface ServerInformation {
      * @memberof ServerInformation
      */
     versionNumbers?: Array<number>;
-    /**
-     * The type of server deployment. This is always returned as *Cloud*.
-     * @type {string}
-     * @memberof ServerInformation
-     */
-    deploymentType?: string;
-    /**
-     * The build number of the Jira version.
-     * @type {number}
-     * @memberof ServerInformation
-     */
-    buildNumber?: number;
-    /**
-     * The timestamp when the Jira version was built.
-     * @type {string}
-     * @memberof ServerInformation
-     */
-    buildDate?: string;
-    /**
-     * The time in Jira when this request was responded to.
-     * @type {string}
-     * @memberof ServerInformation
-     */
-    serverTime?: string;
-    /**
-     * The unique identifier of the Jira version.
-     * @type {string}
-     * @memberof ServerInformation
-     */
-    scmInfo?: string;
-    /**
-     * The name of the Jira instance.
-     * @type {string}
-     * @memberof ServerInformation
-     */
-    serverTitle?: string;
-    /**
-     * Jira instance health check results. Deprecated and no longer returned.
-     * @type {Array<HealthCheckResult>}
-     * @memberof ServerInformation
-     */
-    healthChecks?: Array<HealthCheckResult>;
 }
 /**
  * 
@@ -19033,6 +19993,12 @@ export interface ServerInformation {
  * @interface ServiceManagementNavigationInfo
  */
 export interface ServiceManagementNavigationInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceManagementNavigationInfo
+     */
+    queueCategory?: string;
     /**
      * 
      * @type {number}
@@ -19045,12 +20011,20 @@ export interface ServiceManagementNavigationInfo {
      * @memberof ServiceManagementNavigationInfo
      */
     queueName?: string;
+}
+/**
+ * Details of new default levels.
+ * @export
+ * @interface SetDefaultLevelsRequest
+ */
+export interface SetDefaultLevelsRequest {
+    [key: string]: any | any;
     /**
-     * 
-     * @type {string}
-     * @memberof ServiceManagementNavigationInfo
+     * List of objects with issue security scheme ID and new default level ID.
+     * @type {Array<DefaultLevelValue>}
+     * @memberof SetDefaultLevelsRequest
      */
-    queueCategory?: string;
+    defaultValues: Array<DefaultLevelValue>;
 }
 /**
  * The new default issue priority.
@@ -19085,11 +20059,29 @@ export interface SetDefaultResolutionRequest {
  */
 export interface SharePermission {
     /**
+     * 
+     * @type {SharePermissionGroup}
+     * @memberof SharePermission
+     */
+    group?: SharePermissionGroup;
+    /**
      * The unique identifier of the share permission.
      * @type {number}
      * @memberof SharePermission
      */
     readonly id?: number;
+    /**
+     * 
+     * @type {SharePermissionProject}
+     * @memberof SharePermission
+     */
+    project?: SharePermissionProject;
+    /**
+     * 
+     * @type {SharePermissionRole}
+     * @memberof SharePermission
+     */
+    role?: SharePermissionRole;
     /**
      * The type of share permission:
      * 
@@ -19104,24 +20096,6 @@ export interface SharePermission {
      * @memberof SharePermission
      */
     type: SharePermissionTypeEnum;
-    /**
-     * 
-     * @type {SharePermissionProject}
-     * @memberof SharePermission
-     */
-    project?: SharePermissionProject;
-    /**
-     * 
-     * @type {SharePermissionRole}
-     * @memberof SharePermission
-     */
-    role?: SharePermissionRole;
-    /**
-     * 
-     * @type {SharePermissionGroup}
-     * @memberof SharePermission
-     */
-    group?: SharePermissionGroup;
     /**
      * 
      * @type {SharePermissionUser}
@@ -19153,17 +20127,17 @@ export type SharePermissionTypeEnum = typeof SharePermissionTypeEnum[keyof typeo
  */
 export interface SharePermissionGroup {
     /**
-     * The name of group.
-     * @type {string}
-     * @memberof SharePermissionGroup
-     */
-    name?: string;
-    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof SharePermissionGroup
      */
     groupId?: string | null;
+    /**
+     * The name of group.
+     * @type {string}
+     * @memberof SharePermissionGroup
+     */
+    name?: string;
     /**
      * The URL for these group details.
      * @type {string}
@@ -19178,6 +20152,42 @@ export interface SharePermissionGroup {
  */
 export interface SharePermissionInputBean {
     /**
+     * The user account ID that the filter is shared with. For a request, specify the `accountId` property for the user.
+     * @type {string}
+     * @memberof SharePermissionInputBean
+     */
+    accountId?: string;
+    /**
+     * The ID of the group, which uniquely identifies the group across all Atlassian products.For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*. Cannot be provided with `groupname`.
+     * @type {string}
+     * @memberof SharePermissionInputBean
+     */
+    groupId?: string;
+    /**
+     * The name of the group to share the filter with. Set `type` to `group`. Please note that the name of a group is mutable, to reliably identify a group use `groupId`.
+     * @type {string}
+     * @memberof SharePermissionInputBean
+     */
+    groupname?: string;
+    /**
+     * The ID of the project to share the filter with. Set `type` to `project`.
+     * @type {string}
+     * @memberof SharePermissionInputBean
+     */
+    projectId?: string;
+    /**
+     * The ID of the project role to share the filter with. Set `type` to `projectRole` and the `projectId` for the project that the role is in.
+     * @type {string}
+     * @memberof SharePermissionInputBean
+     */
+    projectRoleId?: string;
+    /**
+     * The rights for the share permission.
+     * @type {number}
+     * @memberof SharePermissionInputBean
+     */
+    rights?: number;
+    /**
      * The type of the share permission.Specify the type as follows:
      * 
      *  *  `user` Share with a user.
@@ -19190,42 +20200,6 @@ export interface SharePermissionInputBean {
      * @memberof SharePermissionInputBean
      */
     type: SharePermissionInputBeanTypeEnum;
-    /**
-     * The ID of the project to share the filter with. Set `type` to `project`.
-     * @type {string}
-     * @memberof SharePermissionInputBean
-     */
-    projectId?: string;
-    /**
-     * The name of the group to share the filter with. Set `type` to `group`. Please note that the name of a group is mutable, to reliably identify a group use `groupId`.
-     * @type {string}
-     * @memberof SharePermissionInputBean
-     */
-    groupname?: string;
-    /**
-     * The ID of the project role to share the filter with. Set `type` to `projectRole` and the `projectId` for the project that the role is in.
-     * @type {string}
-     * @memberof SharePermissionInputBean
-     */
-    projectRoleId?: string;
-    /**
-     * The user account ID that the filter is shared with. For a request, specify the `accountId` property for the user.
-     * @type {string}
-     * @memberof SharePermissionInputBean
-     */
-    accountId?: string;
-    /**
-     * The rights for the share permission.
-     * @type {number}
-     * @memberof SharePermissionInputBean
-     */
-    rights?: number;
-    /**
-     * The ID of the group, which uniquely identifies the group across all Atlassian products.For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*. Cannot be provided with `groupname`.
-     * @type {string}
-     * @memberof SharePermissionInputBean
-     */
-    groupId?: string;
 }
 
 
@@ -19250,65 +20224,23 @@ export type SharePermissionInputBeanTypeEnum = typeof SharePermissionInputBeanTy
  */
 export interface SharePermissionProject {
     /**
-     * Expand options that include additional project details in the response.
-     * @type {string}
+     * Whether the project is archived.
+     * @type {boolean}
      * @memberof SharePermissionProject
      */
-    readonly expand?: string;
-    /**
-     * The URL of the project details.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly self?: string;
-    /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    id?: string;
-    /**
-     * The key of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly key?: string;
-    /**
-     * A brief description of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly description?: string;
+    readonly archived?: boolean;
     /**
      * 
-     * @type {ProjectLead}
+     * @type {ProjectArchivedBy}
      * @memberof SharePermissionProject
      */
-    lead?: ProjectLead;
+    archivedBy?: ProjectArchivedBy;
     /**
-     * List of the components contained in the project.
-     * @type {Array<ProjectComponent>}
-     * @memberof SharePermissionProject
-     */
-    readonly components?: Array<ProjectComponent>;
-    /**
-     * List of the issue types available in the project.
-     * @type {Array<IssueTypeDetails>}
-     * @memberof SharePermissionProject
-     */
-    readonly issueTypes?: Array<IssueTypeDetails>;
-    /**
-     * A link to information about this project, such as project documentation.
+     * The date when the project was archived.
      * @type {string}
      * @memberof SharePermissionProject
      */
-    readonly url?: string;
-    /**
-     * An email address associated with the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    email?: string;
+    readonly archivedDate?: string;
     /**
      * The default assignee when creating issues for this project.
      * @type {string}
@@ -19316,59 +20248,71 @@ export interface SharePermissionProject {
      */
     readonly assigneeType?: SharePermissionProjectAssigneeTypeEnum;
     /**
-     * The versions defined in the project. For more information, see [Create version](#api-rest-api-3-version-post).
-     * @type {Array<Version>}
-     * @memberof SharePermissionProject
-     */
-    readonly versions?: Array<Version>;
-    /**
-     * The name of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly name?: string;
-    /**
-     * The name and self URL for each role defined in the project. For more information, see [Create project role](#api-rest-api-3-role-post).
-     * @type {{ [key: string]: string; }}
-     * @memberof SharePermissionProject
-     */
-    readonly roles?: { [key: string]: string; };
-    /**
      * 
      * @type {ProjectAvatarUrls}
      * @memberof SharePermissionProject
      */
     avatarUrls?: ProjectAvatarUrls;
     /**
-     * 
-     * @type {ProjectProjectCategory}
+     * List of the components contained in the project.
+     * @type {Array<ProjectComponent>}
      * @memberof SharePermissionProject
      */
-    projectCategory?: ProjectProjectCategory;
+    readonly components?: Array<ProjectComponent>;
     /**
-     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly projectTypeKey?: SharePermissionProjectProjectTypeKeyEnum;
-    /**
-     * Whether the project is simplified.
+     * Whether the project is marked as deleted.
      * @type {boolean}
      * @memberof SharePermissionProject
      */
-    readonly simplified?: boolean;
+    readonly deleted?: boolean;
     /**
-     * The type of the project.
+     * 
+     * @type {ProjectDeletedBy}
+     * @memberof SharePermissionProject
+     */
+    deletedBy?: ProjectDeletedBy;
+    /**
+     * The date when the project was marked as deleted.
      * @type {string}
      * @memberof SharePermissionProject
      */
-    readonly style?: SharePermissionProjectStyleEnum;
+    readonly deletedDate?: string;
+    /**
+     * A brief description of the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    readonly description?: string;
+    /**
+     * An email address associated with the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    email?: string;
+    /**
+     * Expand options that include additional project details in the response.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    readonly expand?: string;
     /**
      * Whether the project is selected as a favorite.
      * @type {boolean}
      * @memberof SharePermissionProject
      */
     favourite?: boolean;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ProjectInsight}
+     * @memberof SharePermissionProject
+     */
+    insight?: ProjectInsight;
     /**
      * Whether the project is private.
      * @type {boolean}
@@ -19382,11 +20326,53 @@ export interface SharePermissionProject {
      */
     issueTypeHierarchy?: ProjectIssueTypeHierarchy;
     /**
+     * List of the issue types available in the project.
+     * @type {Array<IssueTypeDetails>}
+     * @memberof SharePermissionProject
+     */
+    readonly issueTypes?: Array<IssueTypeDetails>;
+    /**
+     * The key of the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    readonly key?: string;
+    /**
+     * 
+     * @type {ProjectLandingPageInfo}
+     * @memberof SharePermissionProject
+     */
+    landingPageInfo?: ProjectLandingPageInfo;
+    /**
+     * 
+     * @type {ProjectLead}
+     * @memberof SharePermissionProject
+     */
+    lead?: ProjectLead;
+    /**
+     * The name of the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    readonly name?: string;
+    /**
      * 
      * @type {ProjectPermissions}
      * @memberof SharePermissionProject
      */
     permissions?: ProjectPermissions;
+    /**
+     * 
+     * @type {ProjectProjectCategory}
+     * @memberof SharePermissionProject
+     */
+    projectCategory?: ProjectProjectCategory;
+    /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
+     * @type {string}
+     * @memberof SharePermissionProject
+     */
+    readonly projectTypeKey?: SharePermissionProjectProjectTypeKeyEnum;
     /**
      * Map of project properties
      * @type {{ [key: string]: any; }}
@@ -19394,65 +20380,53 @@ export interface SharePermissionProject {
      */
     readonly properties?: { [key: string]: any; };
     /**
-     * Unique ID for next-gen projects.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly uuid?: string;
-    /**
-     * 
-     * @type {ProjectInsight}
-     * @memberof SharePermissionProject
-     */
-    insight?: ProjectInsight;
-    /**
-     * Whether the project is marked as deleted.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    readonly deleted?: boolean;
-    /**
      * The date when the project is deleted permanently.
      * @type {string}
      * @memberof SharePermissionProject
      */
     readonly retentionTillDate?: string;
     /**
-     * The date when the project was marked as deleted.
+     * The name and self URL for each role defined in the project. For more information, see [Create project role](#api-rest-api-3-role-post).
+     * @type {{ [key: string]: string; }}
+     * @memberof SharePermissionProject
+     */
+    readonly roles?: { [key: string]: string; };
+    /**
+     * The URL of the project details.
      * @type {string}
      * @memberof SharePermissionProject
      */
-    readonly deletedDate?: string;
+    readonly self?: string;
     /**
-     * 
-     * @type {ProjectDeletedBy}
-     * @memberof SharePermissionProject
-     */
-    deletedBy?: ProjectDeletedBy;
-    /**
-     * Whether the project is archived.
+     * Whether the project is simplified.
      * @type {boolean}
      * @memberof SharePermissionProject
      */
-    readonly archived?: boolean;
+    readonly simplified?: boolean;
     /**
-     * The date when the project was archived.
+     * The type of the project.
      * @type {string}
      * @memberof SharePermissionProject
      */
-    readonly archivedDate?: string;
+    readonly style?: SharePermissionProjectStyleEnum;
     /**
-     * 
-     * @type {ProjectArchivedBy}
+     * A link to information about this project, such as project documentation.
+     * @type {string}
      * @memberof SharePermissionProject
      */
-    archivedBy?: ProjectArchivedBy;
+    readonly url?: string;
     /**
-     * 
-     * @type {ProjectLandingPageInfo}
+     * Unique ID for next-gen projects.
+     * @type {string}
      * @memberof SharePermissionProject
      */
-    landingPageInfo?: ProjectLandingPageInfo;
+    readonly uuid?: string;
+    /**
+     * The versions defined in the project. For more information, see [Create version](#api-rest-api-3-version-post).
+     * @type {Array<Version>}
+     * @memberof SharePermissionProject
+     */
+    readonly versions?: Array<Version>;
 }
 
 
@@ -19492,59 +20466,11 @@ export type SharePermissionProjectStyleEnum = typeof SharePermissionProjectStyle
  */
 export interface SharePermissionRole {
     /**
-     * The URL the project role details.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    readonly self?: string;
-    /**
-     * The name of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    name?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof SharePermissionRole
-     */
-    readonly id?: number;
-    /**
-     * The description of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    readonly description?: string;
-    /**
      * The list of users who act in this role.
      * @type {Array<RoleActor>}
      * @memberof SharePermissionRole
      */
     readonly actors?: Array<RoleActor>;
-    /**
-     * 
-     * @type {ProjectRoleScope}
-     * @memberof SharePermissionRole
-     */
-    scope?: ProjectRoleScope;
-    /**
-     * The translated name of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    translatedName?: string;
-    /**
-     * Whether the calling user is part of this role.
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    currentUserRole?: boolean;
-    /**
-     * Whether the roles are configurable for this project.
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    readonly roleConfigurable?: boolean;
     /**
      * Whether this role is the admin role for the project.
      * @type {boolean}
@@ -19552,11 +20478,59 @@ export interface SharePermissionRole {
      */
     readonly admin?: boolean;
     /**
+     * Whether the calling user is part of this role.
+     * @type {boolean}
+     * @memberof SharePermissionRole
+     */
+    currentUserRole?: boolean;
+    /**
      * Whether this role is the default role for the project
      * @type {boolean}
      * @memberof SharePermissionRole
      */
     readonly _default?: boolean;
+    /**
+     * The description of the project role.
+     * @type {string}
+     * @memberof SharePermissionRole
+     */
+    readonly description?: string;
+    /**
+     * The ID of the project role.
+     * @type {number}
+     * @memberof SharePermissionRole
+     */
+    readonly id?: number;
+    /**
+     * The name of the project role.
+     * @type {string}
+     * @memberof SharePermissionRole
+     */
+    name?: string;
+    /**
+     * Whether the roles are configurable for this project.
+     * @type {boolean}
+     * @memberof SharePermissionRole
+     */
+    readonly roleConfigurable?: boolean;
+    /**
+     * 
+     * @type {ProjectRoleScope}
+     * @memberof SharePermissionRole
+     */
+    scope?: ProjectRoleScope;
+    /**
+     * The URL the project role details.
+     * @type {string}
+     * @memberof SharePermissionRole
+     */
+    readonly self?: string;
+    /**
+     * The translated name of the project role.
+     * @type {string}
+     * @memberof SharePermissionRole
+     */
+    translatedName?: string;
 }
 /**
  * The user account ID that the filter is shared with. For a request, specify the `accountId` property for the user.
@@ -19565,18 +20539,36 @@ export interface SharePermissionRole {
  */
 export interface SharePermissionUser {
     /**
+     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof SharePermissionUser
+     */
+    accountId?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof SharePermissionUser
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {UserBeanAvatarUrls}
+     * @memberof SharePermissionUser
+     */
+    avatarUrls?: UserBeanAvatarUrls;
+    /**
+     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * @type {string}
+     * @memberof SharePermissionUser
+     */
+    displayName?: string;
+    /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The key of the user.
      * @type {string}
      * @memberof SharePermissionUser
      */
     key?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    self?: string;
     /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The username of the user.
@@ -19585,29 +20577,11 @@ export interface SharePermissionUser {
      */
     name?: string;
     /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The URL of the user.
      * @type {string}
      * @memberof SharePermissionUser
      */
-    displayName?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof SharePermissionUser
-     */
-    active?: boolean;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    accountId?: string;
-    /**
-     * 
-     * @type {UserBeanAvatarUrls}
-     * @memberof SharePermissionUser
-     */
-    avatarUrls?: UserBeanAvatarUrls;
+    self?: string;
 }
 /**
  * 
@@ -19635,17 +20609,17 @@ export interface SimpleApplicationPropertyBean {
  */
 export interface SimpleErrorCollection {
     /**
-     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
-     * @type {{ [key: string]: string; }}
-     * @memberof SimpleErrorCollection
-     */
-    errors?: { [key: string]: string; };
-    /**
      * The list of error messages produced by this operation. For example, "input parameter 'key' must be provided"
      * @type {Array<string>}
      * @memberof SimpleErrorCollection
      */
     errorMessages?: Array<string>;
+    /**
+     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
+     * @type {{ [key: string]: string; }}
+     * @memberof SimpleErrorCollection
+     */
+    errors?: { [key: string]: string; };
     /**
      * 
      * @type {number}
@@ -19664,13 +20638,7 @@ export interface SimpleLink {
      * @type {string}
      * @memberof SimpleLink
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimpleLink
-     */
-    styleClass?: string;
+    href?: string;
     /**
      * 
      * @type {string}
@@ -19682,19 +20650,25 @@ export interface SimpleLink {
      * @type {string}
      * @memberof SimpleLink
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimpleLink
+     */
     label?: string;
     /**
      * 
      * @type {string}
      * @memberof SimpleLink
      */
-    title?: string;
+    styleClass?: string;
     /**
      * 
      * @type {string}
      * @memberof SimpleLink
      */
-    href?: string;
+    title?: string;
     /**
      * 
      * @type {number}
@@ -19710,10 +20684,10 @@ export interface SimpleLink {
 export interface SimpleListWrapperApplicationRole {
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof SimpleListWrapperApplicationRole
      */
-    size?: number;
+    callback?: object;
     /**
      * 
      * @type {Array<ApplicationRole>}
@@ -19722,22 +20696,22 @@ export interface SimpleListWrapperApplicationRole {
     items?: Array<ApplicationRole>;
     /**
      * 
+     * @type {number}
+     * @memberof SimpleListWrapperApplicationRole
+     */
+    maxResults?: number;
+    /**
+     * 
      * @type {object}
      * @memberof SimpleListWrapperApplicationRole
      */
     pagingCallback?: object;
     /**
      * 
-     * @type {object}
-     * @memberof SimpleListWrapperApplicationRole
-     */
-    callback?: object;
-    /**
-     * 
      * @type {number}
      * @memberof SimpleListWrapperApplicationRole
      */
-    maxResults?: number;
+    size?: number;
 }
 /**
  * 
@@ -19747,10 +20721,10 @@ export interface SimpleListWrapperApplicationRole {
 export interface SimpleListWrapperGroupName {
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof SimpleListWrapperGroupName
      */
-    size?: number;
+    callback?: object;
     /**
      * 
      * @type {Array<GroupName>}
@@ -19759,22 +20733,22 @@ export interface SimpleListWrapperGroupName {
     items?: Array<GroupName>;
     /**
      * 
+     * @type {number}
+     * @memberof SimpleListWrapperGroupName
+     */
+    maxResults?: number;
+    /**
+     * 
      * @type {object}
      * @memberof SimpleListWrapperGroupName
      */
     pagingCallback?: object;
     /**
      * 
-     * @type {object}
-     * @memberof SimpleListWrapperGroupName
-     */
-    callback?: object;
-    /**
-     * 
      * @type {number}
      * @memberof SimpleListWrapperGroupName
      */
-    maxResults?: number;
+    size?: number;
 }
 /**
  * 
@@ -19782,18 +20756,6 @@ export interface SimpleListWrapperGroupName {
  * @interface SimplifiedHierarchyLevel
  */
 export interface SimplifiedHierarchyLevel {
-    /**
-     * The ID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-     * @type {number}
-     * @memberof SimplifiedHierarchyLevel
-     */
-    id?: number;
-    /**
-     * The name of this hierarchy level.
-     * @type {string}
-     * @memberof SimplifiedHierarchyLevel
-     */
-    name?: string;
     /**
      * The ID of the level above this one in the hierarchy. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
      * @type {number}
@@ -19807,24 +20769,6 @@ export interface SimplifiedHierarchyLevel {
      */
     belowLevelId?: number;
     /**
-     * The ID of the project configuration. This property is deprecated, see [Change oticen: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-     * @type {number}
-     * @memberof SimplifiedHierarchyLevel
-     */
-    projectConfigurationId?: number;
-    /**
-     * The level of this item in the hierarchy.
-     * @type {number}
-     * @memberof SimplifiedHierarchyLevel
-     */
-    level?: number;
-    /**
-     * The issue types available in this hierarchy level.
-     * @type {Array<number>}
-     * @memberof SimplifiedHierarchyLevel
-     */
-    issueTypeIds?: Array<number>;
-    /**
      * The external UUID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
      * @type {string}
      * @memberof SimplifiedHierarchyLevel
@@ -19836,6 +20780,36 @@ export interface SimplifiedHierarchyLevel {
      * @memberof SimplifiedHierarchyLevel
      */
     hierarchyLevelNumber?: number;
+    /**
+     * The ID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+     * @type {number}
+     * @memberof SimplifiedHierarchyLevel
+     */
+    id?: number;
+    /**
+     * The issue types available in this hierarchy level.
+     * @type {Array<number>}
+     * @memberof SimplifiedHierarchyLevel
+     */
+    issueTypeIds?: Array<number>;
+    /**
+     * The level of this item in the hierarchy.
+     * @type {number}
+     * @memberof SimplifiedHierarchyLevel
+     */
+    level?: number;
+    /**
+     * The name of this hierarchy level.
+     * @type {string}
+     * @memberof SimplifiedHierarchyLevel
+     */
+    name?: string;
+    /**
+     * The ID of the project configuration. This property is deprecated, see [Change oticen: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+     * @type {number}
+     * @memberof SimplifiedHierarchyLevel
+     */
+    projectConfigurationId?: number;
 }
 /**
  * 
@@ -19857,16 +20831,16 @@ export interface SoftwareNavigationInfo {
     boardName?: string;
     /**
      * 
-     * @type {number}
-     * @memberof SoftwareNavigationInfo
-     */
-    totalBoardsInProject?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof SoftwareNavigationInfo
      */
     simpleBoard?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof SoftwareNavigationInfo
+     */
+    totalBoardsInProject?: number;
 }
 /**
  * The status of the item.
@@ -19876,17 +20850,17 @@ export interface SoftwareNavigationInfo {
 export interface Status {
     [key: string]: any | any;
     /**
-     * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
-     * @type {boolean}
-     * @memberof Status
-     */
-    resolved?: boolean;
-    /**
      * 
      * @type {StatusIcon}
      * @memberof Status
      */
     icon?: StatusIcon;
+    /**
+     * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
+     * @type {boolean}
+     * @memberof Status
+     */
+    resolved?: boolean;
 }
 /**
  * A status category.
@@ -19896,11 +20870,11 @@ export interface Status {
 export interface StatusCategory {
     [key: string]: any | any;
     /**
-     * The URL of the status category.
+     * The name of the color used to represent the status category.
      * @type {string}
      * @memberof StatusCategory
      */
-    readonly self?: string;
+    readonly colorName?: string;
     /**
      * The ID of the status category.
      * @type {number}
@@ -19914,17 +20888,17 @@ export interface StatusCategory {
      */
     readonly key?: string;
     /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof StatusCategory
-     */
-    readonly colorName?: string;
-    /**
      * The name of the status category.
      * @type {string}
      * @memberof StatusCategory
      */
     readonly name?: string;
+    /**
+     * The URL of the status category.
+     * @type {string}
+     * @memberof StatusCategory
+     */
+    readonly self?: string;
 }
 /**
  * Details of the status being created.
@@ -19932,6 +20906,12 @@ export interface StatusCategory {
  * @interface StatusCreate
  */
 export interface StatusCreate {
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof StatusCreate
+     */
+    description?: string;
     /**
      * The name of the status.
      * @type {string}
@@ -19944,12 +20924,6 @@ export interface StatusCreate {
      * @memberof StatusCreate
      */
     statusCategory: StatusCreateStatusCategoryEnum;
-    /**
-     * The description of the status.
-     * @type {string}
-     * @memberof StatusCreate
-     */
-    description?: string;
 }
 
 
@@ -19970,17 +20944,17 @@ export type StatusCreateStatusCategoryEnum = typeof StatusCreateStatusCategoryEn
  */
 export interface StatusCreateRequest {
     /**
-     * Details of the statuses being created.
-     * @type {Array<StatusCreate>}
-     * @memberof StatusCreateRequest
-     */
-    statuses: Array<StatusCreate>;
-    /**
      * 
      * @type {StatusScope}
      * @memberof StatusCreateRequest
      */
     scope: StatusScope;
+    /**
+     * Details of the statuses being created.
+     * @type {Array<StatusCreate>}
+     * @memberof StatusCreateRequest
+     */
+    statuses: Array<StatusCreate>;
 }
 /**
  * A status.
@@ -19989,12 +20963,6 @@ export interface StatusCreateRequest {
  */
 export interface StatusDetails {
     [key: string]: any | any;
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof StatusDetails
-     */
-    readonly self?: string;
     /**
      * The description of the status.
      * @type {string}
@@ -20008,17 +20976,23 @@ export interface StatusDetails {
      */
     readonly iconUrl?: string;
     /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof StatusDetails
+     */
+    readonly id?: string;
+    /**
      * The name of the status.
      * @type {string}
      * @memberof StatusDetails
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * The URL of the status.
      * @type {string}
      * @memberof StatusDetails
      */
-    readonly id?: string;
+    readonly self?: string;
     /**
      * 
      * @type {StatusDetailsStatusCategory}
@@ -20033,11 +21007,11 @@ export interface StatusDetails {
  */
 export interface StatusDetailsStatusCategory {
     /**
-     * The URL of the status category.
+     * The name of the color used to represent the status category.
      * @type {string}
      * @memberof StatusDetailsStatusCategory
      */
-    readonly self?: string;
+    readonly colorName?: string;
     /**
      * The ID of the status category.
      * @type {number}
@@ -20051,17 +21025,17 @@ export interface StatusDetailsStatusCategory {
      */
     readonly key?: string;
     /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly colorName?: string;
-    /**
      * The name of the status category.
      * @type {string}
      * @memberof StatusDetailsStatusCategory
      */
     readonly name?: string;
+    /**
+     * The URL of the status category.
+     * @type {string}
+     * @memberof StatusDetailsStatusCategory
+     */
+    readonly self?: string;
 }
 /**
  * Details of the icon representing the status. If not provided, no status icon displays in Jira.
@@ -20070,11 +21044,11 @@ export interface StatusDetailsStatusCategory {
  */
 export interface StatusIcon {
     /**
-     * The URL of an icon that displays at 16x16 pixel in Jira.
+     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
      * @type {string}
      * @memberof StatusIcon
      */
-    url16x16?: string;
+    link?: string;
     /**
      * The title of the icon. This is used as follows:
      * 
@@ -20085,11 +21059,11 @@ export interface StatusIcon {
      */
     title?: string;
     /**
-     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
+     * The URL of an icon that displays at 16x16 pixel in Jira.
      * @type {string}
      * @memberof StatusIcon
      */
-    link?: string;
+    url16x16?: string;
 }
 /**
  * Details about the mapping from a status to a new status for an issue type.
@@ -20104,17 +21078,17 @@ export interface StatusMapping {
      */
     issueTypeId: string;
     /**
-     * The ID of the status.
-     * @type {string}
-     * @memberof StatusMapping
-     */
-    statusId: string;
-    /**
      * The ID of the new status.
      * @type {string}
      * @memberof StatusMapping
      */
     newStatusId: string;
+    /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof StatusMapping
+     */
+    statusId: string;
 }
 /**
  * The scope of the status.
@@ -20123,17 +21097,17 @@ export interface StatusMapping {
  */
 export interface StatusScope {
     /**
+     * 
+     * @type {ProjectId}
+     * @memberof StatusScope
+     */
+    project?: ProjectId | null;
+    /**
      * The scope of the status. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
      * @type {string}
      * @memberof StatusScope
      */
     type: StatusScopeTypeEnum;
-    /**
-     * 
-     * @type {ProjectId}
-     * @memberof StatusScope
-     */
-    project?: ProjectId;
 }
 
 
@@ -20152,6 +21126,13 @@ export type StatusScopeTypeEnum = typeof StatusScopeTypeEnum[keyof typeof Status
  * @interface StatusUpdate
  */
 export interface StatusUpdate {
+    [key: string]: any | any;
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof StatusUpdate
+     */
+    description?: string;
     /**
      * The ID of the status.
      * @type {string}
@@ -20170,12 +21151,6 @@ export interface StatusUpdate {
      * @memberof StatusUpdate
      */
     statusCategory: StatusUpdateStatusCategoryEnum;
-    /**
-     * The description of the status.
-     * @type {string}
-     * @memberof StatusUpdate
-     */
-    description?: string;
 }
 
 
@@ -20215,6 +21190,12 @@ export interface SuggestedIssue {
      */
     readonly id?: number;
     /**
+     * The URL of the issue type's avatar.
+     * @type {string}
+     * @memberof SuggestedIssue
+     */
+    readonly img?: string;
+    /**
      * The key of the issue.
      * @type {string}
      * @memberof SuggestedIssue
@@ -20226,12 +21207,6 @@ export interface SuggestedIssue {
      * @memberof SuggestedIssue
      */
     readonly keyHtml?: string;
-    /**
-     * The URL of the issue type's avatar.
-     * @type {string}
-     * @memberof SuggestedIssue
-     */
-    readonly img?: string;
     /**
      * The phrase containing the query string in HTML format, with the string highlighted with HTML bold tags.
      * @type {string}
@@ -20265,53 +21240,11 @@ export interface SystemAvatars {
  */
 export interface TaskProgressBeanObject {
     /**
-     * The URL of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanObject
-     */
-    self: string;
-    /**
-     * The ID of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanObject
-     */
-    id: string;
-    /**
      * The description of the task.
      * @type {string}
      * @memberof TaskProgressBeanObject
      */
     description?: string;
-    /**
-     * The status of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanObject
-     */
-    status: TaskProgressBeanObjectStatusEnum;
-    /**
-     * Information about the progress of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanObject
-     */
-    message?: string;
-    /**
-     * The result of the task execution.
-     * @type {any}
-     * @memberof TaskProgressBeanObject
-     */
-    result?: any | null;
-    /**
-     * The ID of the user who submitted the task.
-     * @type {number}
-     * @memberof TaskProgressBeanObject
-     */
-    submittedBy: number;
-    /**
-     * The progress of the task, as a percentage complete.
-     * @type {number}
-     * @memberof TaskProgressBeanObject
-     */
-    progress: number;
     /**
      * The execution time of the task, in milliseconds.
      * @type {number}
@@ -20319,11 +21252,47 @@ export interface TaskProgressBeanObject {
      */
     elapsedRuntime: number;
     /**
-     * A timestamp recording when the task was submitted.
+     * A timestamp recording when the task was finished.
      * @type {number}
      * @memberof TaskProgressBeanObject
      */
-    submitted: number;
+    finished?: number;
+    /**
+     * The ID of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanObject
+     */
+    id: string;
+    /**
+     * A timestamp recording when the task progress was last updated.
+     * @type {number}
+     * @memberof TaskProgressBeanObject
+     */
+    lastUpdate: number;
+    /**
+     * Information about the progress of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanObject
+     */
+    message?: string;
+    /**
+     * The progress of the task, as a percentage complete.
+     * @type {number}
+     * @memberof TaskProgressBeanObject
+     */
+    progress: number;
+    /**
+     * The result of the task execution.
+     * @type {any}
+     * @memberof TaskProgressBeanObject
+     */
+    result?: any | null;
+    /**
+     * The URL of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanObject
+     */
+    self: string;
     /**
      * A timestamp recording when the task was started.
      * @type {number}
@@ -20331,17 +21300,23 @@ export interface TaskProgressBeanObject {
      */
     started?: number;
     /**
-     * A timestamp recording when the task was finished.
-     * @type {number}
+     * The status of the task.
+     * @type {string}
      * @memberof TaskProgressBeanObject
      */
-    finished?: number;
+    status: TaskProgressBeanObjectStatusEnum;
     /**
-     * A timestamp recording when the task progress was last updated.
+     * A timestamp recording when the task was submitted.
      * @type {number}
      * @memberof TaskProgressBeanObject
      */
-    lastUpdate: number;
+    submitted: number;
+    /**
+     * The ID of the user who submitted the task.
+     * @type {number}
+     * @memberof TaskProgressBeanObject
+     */
+    submittedBy: number;
 }
 
 
@@ -20366,53 +21341,11 @@ export type TaskProgressBeanObjectStatusEnum = typeof TaskProgressBeanObjectStat
  */
 export interface TaskProgressBeanRemoveOptionFromIssuesResult {
     /**
-     * The URL of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    self: string;
-    /**
-     * The ID of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    id: string;
-    /**
      * The description of the task.
      * @type {string}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
     description?: string;
-    /**
-     * The status of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    status: TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum;
-    /**
-     * Information about the progress of the task.
-     * @type {string}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    message?: string;
-    /**
-     * 
-     * @type {TaskProgressBeanRemoveOptionFromIssuesResultResult}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    result?: TaskProgressBeanRemoveOptionFromIssuesResultResult;
-    /**
-     * The ID of the user who submitted the task.
-     * @type {number}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    submittedBy: number;
-    /**
-     * The progress of the task, as a percentage complete.
-     * @type {number}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
-     */
-    progress: number;
     /**
      * The execution time of the task, in milliseconds.
      * @type {number}
@@ -20420,11 +21353,47 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResult {
      */
     elapsedRuntime: number;
     /**
-     * A timestamp recording when the task was submitted.
+     * A timestamp recording when the task was finished.
      * @type {number}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
-    submitted: number;
+    finished?: number;
+    /**
+     * The ID of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    id: string;
+    /**
+     * A timestamp recording when the task progress was last updated.
+     * @type {number}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    lastUpdate: number;
+    /**
+     * Information about the progress of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    message?: string;
+    /**
+     * The progress of the task, as a percentage complete.
+     * @type {number}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    progress: number;
+    /**
+     * 
+     * @type {TaskProgressBeanRemoveOptionFromIssuesResultResult}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    result?: TaskProgressBeanRemoveOptionFromIssuesResultResult;
+    /**
+     * The URL of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    self: string;
     /**
      * A timestamp recording when the task was started.
      * @type {number}
@@ -20432,17 +21401,23 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResult {
      */
     started?: number;
     /**
-     * A timestamp recording when the task was finished.
-     * @type {number}
+     * The status of the task.
+     * @type {string}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
-    finished?: number;
+    status: TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum;
     /**
-     * A timestamp recording when the task progress was last updated.
+     * A timestamp recording when the task was submitted.
      * @type {number}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
-    lastUpdate: number;
+    submitted: number;
+    /**
+     * The ID of the user who submitted the task.
+     * @type {number}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
+     */
+    submittedBy: number;
 }
 
 
@@ -20467,6 +21442,12 @@ export type TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum = typeof Task
  */
 export interface TaskProgressBeanRemoveOptionFromIssuesResultResult {
     /**
+     * 
+     * @type {RemoveOptionFromIssuesResultErrors}
+     * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
+     */
+    errors?: RemoveOptionFromIssuesResultErrors;
+    /**
      * The IDs of the modified issues.
      * @type {Array<number>}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
@@ -20478,12 +21459,6 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResultResult {
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
      */
     unmodifiedIssues?: Array<number>;
-    /**
-     * 
-     * @type {RemoveOptionFromIssuesResultErrors}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
-     */
-    errors?: RemoveOptionFromIssuesResultErrors;
 }
 /**
  * Details of the time tracking configuration.
@@ -20492,17 +21467,11 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResultResult {
  */
 export interface TimeTrackingConfiguration {
     /**
-     * The number of hours in a working day.
-     * @type {number}
+     * The default unit of time applied to logged time.
+     * @type {string}
      * @memberof TimeTrackingConfiguration
      */
-    workingHoursPerDay: number;
-    /**
-     * The number of days in a working week.
-     * @type {number}
-     * @memberof TimeTrackingConfiguration
-     */
-    workingDaysPerWeek: number;
+    defaultUnit: TimeTrackingConfigurationDefaultUnitEnum;
     /**
      * The format that will appear on an issue's *Time Spent* field.
      * @type {string}
@@ -20510,23 +21479,19 @@ export interface TimeTrackingConfiguration {
      */
     timeFormat: TimeTrackingConfigurationTimeFormatEnum;
     /**
-     * The default unit of time applied to logged time.
-     * @type {string}
+     * The number of days in a working week.
+     * @type {number}
      * @memberof TimeTrackingConfiguration
      */
-    defaultUnit: TimeTrackingConfigurationDefaultUnitEnum;
+    workingDaysPerWeek: number;
+    /**
+     * The number of hours in a working day.
+     * @type {number}
+     * @memberof TimeTrackingConfiguration
+     */
+    workingHoursPerDay: number;
 }
 
-
-/**
- * @export
- */
-export const TimeTrackingConfigurationTimeFormatEnum = {
-    Pretty: 'pretty',
-    Days: 'days',
-    Hours: 'hours'
-} as const;
-export type TimeTrackingConfigurationTimeFormatEnum = typeof TimeTrackingConfigurationTimeFormatEnum[keyof typeof TimeTrackingConfigurationTimeFormatEnum];
 
 /**
  * @export
@@ -20538,6 +21503,16 @@ export const TimeTrackingConfigurationDefaultUnitEnum = {
     Week: 'week'
 } as const;
 export type TimeTrackingConfigurationDefaultUnitEnum = typeof TimeTrackingConfigurationDefaultUnitEnum[keyof typeof TimeTrackingConfigurationDefaultUnitEnum];
+
+/**
+ * @export
+ */
+export const TimeTrackingConfigurationTimeFormatEnum = {
+    Pretty: 'pretty',
+    Days: 'days',
+    Hours: 'hours'
+} as const;
+export type TimeTrackingConfigurationTimeFormatEnum = typeof TimeTrackingConfigurationTimeFormatEnum[keyof typeof TimeTrackingConfigurationTimeFormatEnum];
 
 /**
  * Time tracking details.
@@ -20552,29 +21527,29 @@ export interface TimeTrackingDetails {
      */
     readonly originalEstimate?: string;
     /**
-     * The remaining estimate of time needed for this issue in readable format.
-     * @type {string}
-     * @memberof TimeTrackingDetails
-     */
-    readonly remainingEstimate?: string;
-    /**
-     * Time worked on this issue in readable format.
-     * @type {string}
-     * @memberof TimeTrackingDetails
-     */
-    readonly timeSpent?: string;
-    /**
      * The original estimate of time needed for this issue in seconds.
      * @type {number}
      * @memberof TimeTrackingDetails
      */
     readonly originalEstimateSeconds?: number;
     /**
+     * The remaining estimate of time needed for this issue in readable format.
+     * @type {string}
+     * @memberof TimeTrackingDetails
+     */
+    readonly remainingEstimate?: string;
+    /**
      * The remaining estimate of time needed for this issue in seconds.
      * @type {number}
      * @memberof TimeTrackingDetails
      */
     readonly remainingEstimateSeconds?: number;
+    /**
+     * Time worked on this issue in readable format.
+     * @type {string}
+     * @memberof TimeTrackingDetails
+     */
+    readonly timeSpent?: string;
     /**
      * Time worked on this issue in seconds.
      * @type {number}
@@ -20614,18 +21589,6 @@ export interface TimeTrackingProvider {
  */
 export interface Transition {
     /**
-     * The ID of the transition.
-     * @type {string}
-     * @memberof Transition
-     */
-    id: string;
-    /**
-     * The name of the transition.
-     * @type {string}
-     * @memberof Transition
-     */
-    name: string;
-    /**
      * The description of the transition.
      * @type {string}
      * @memberof Transition
@@ -20638,6 +21601,36 @@ export interface Transition {
      */
     from: Array<string>;
     /**
+     * The ID of the transition.
+     * @type {string}
+     * @memberof Transition
+     */
+    id: string;
+    /**
+     * The name of the transition.
+     * @type {string}
+     * @memberof Transition
+     */
+    name: string;
+    /**
+     * The properties of the transition.
+     * @type {{ [key: string]: any; }}
+     * @memberof Transition
+     */
+    properties?: { [key: string]: any; };
+    /**
+     * 
+     * @type {WorkflowRules}
+     * @memberof Transition
+     */
+    rules?: WorkflowRules;
+    /**
+     * 
+     * @type {TransitionScreenDetails}
+     * @memberof Transition
+     */
+    screen?: TransitionScreenDetails;
+    /**
      * The status the transition goes to.
      * @type {string}
      * @memberof Transition
@@ -20649,24 +21642,6 @@ export interface Transition {
      * @memberof Transition
      */
     type: TransitionTypeEnum;
-    /**
-     * 
-     * @type {TransitionScreenDetails}
-     * @memberof Transition
-     */
-    screen?: TransitionScreenDetails;
-    /**
-     * 
-     * @type {WorkflowRules}
-     * @memberof Transition
-     */
-    rules?: WorkflowRules;
-    /**
-     * The properties of the transition.
-     * @type {{ [key: string]: any; }}
-     * @memberof Transition
-     */
-    properties?: { [key: string]: any; };
 }
 
 
@@ -20731,11 +21706,11 @@ export interface UiModificationContextDetails {
      */
     readonly id?: string;
     /**
-     * The project ID of the context.
-     * @type {string}
+     * Whether a context is available. For example, when a project is deleted the context becomes unavailable.
+     * @type {boolean}
      * @memberof UiModificationContextDetails
      */
-    projectId: string;
+    readonly isAvailable?: boolean;
     /**
      * The issue type ID of the context.
      * @type {string}
@@ -20743,17 +21718,17 @@ export interface UiModificationContextDetails {
      */
     issueTypeId: string;
     /**
+     * The project ID of the context.
+     * @type {string}
+     * @memberof UiModificationContextDetails
+     */
+    projectId: string;
+    /**
      * The view type of the context. Only `GIC` (Global Issue Create) is supported.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
     viewType: string;
-    /**
-     * Whether a context is available. For example, when a project is deleted the context becomes unavailable.
-     * @type {boolean}
-     * @memberof UiModificationContextDetails
-     */
-    readonly isAvailable?: boolean;
 }
 /**
  * The details of a UI modification.
@@ -20761,6 +21736,24 @@ export interface UiModificationContextDetails {
  * @interface UiModificationDetails
  */
 export interface UiModificationDetails {
+    /**
+     * List of contexts of the UI modification. The maximum number of contexts is 1000.
+     * @type {Array<UiModificationContextDetails>}
+     * @memberof UiModificationDetails
+     */
+    readonly contexts?: Array<UiModificationContextDetails>;
+    /**
+     * The data of the UI modification. The maximum size of the data is 50000 characters.
+     * @type {string}
+     * @memberof UiModificationDetails
+     */
+    readonly data?: string;
+    /**
+     * The description of the UI modification. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof UiModificationDetails
+     */
+    readonly description?: string;
     /**
      * The ID of the UI modification.
      * @type {string}
@@ -20774,29 +21767,11 @@ export interface UiModificationDetails {
      */
     readonly name: string;
     /**
-     * The description of the UI modification. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof UiModificationDetails
-     */
-    readonly description?: string;
-    /**
      * The URL of the UI modification.
      * @type {string}
      * @memberof UiModificationDetails
      */
     readonly self: string;
-    /**
-     * The data of the UI modification. The maximum size of the data is 50000 characters.
-     * @type {string}
-     * @memberof UiModificationDetails
-     */
-    readonly data?: string;
-    /**
-     * List of contexts of the UI modification. The maximum number of contexts is 1000.
-     * @type {Array<UiModificationContextDetails>}
-     * @memberof UiModificationDetails
-     */
-    readonly contexts?: Array<UiModificationContextDetails>;
 }
 /**
  * Identifiers for a UI modification.
@@ -20844,17 +21819,17 @@ export interface UnrestrictedUserEmail {
  */
 export interface UpdateCustomFieldDetails {
     /**
-     * The name of the custom field. It doesn't have to be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof UpdateCustomFieldDetails
-     */
-    name?: string;
-    /**
      * The description of the custom field. The maximum length is 40000 characters.
      * @type {string}
      * @memberof UpdateCustomFieldDetails
      */
     description?: string;
+    /**
+     * The name of the custom field. It doesn't have to be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof UpdateCustomFieldDetails
+     */
+    name?: string;
     /**
      * The searcher that defines the way the field is searched in Jira. It can be set to `null`, otherwise you must specify the valid searcher for the field type, as listed below (abbreviated values shown):
      * 
@@ -20926,17 +21901,76 @@ export interface UpdateDefaultScreenScheme {
  */
 export interface UpdateFieldConfigurationSchemeDetails {
     /**
-     * The name of the field configuration scheme. The name must be unique.
-     * @type {string}
-     * @memberof UpdateFieldConfigurationSchemeDetails
-     */
-    name: string;
-    /**
      * The description of the field configuration scheme.
      * @type {string}
      * @memberof UpdateFieldConfigurationSchemeDetails
      */
     description?: string;
+    /**
+     * The name of the field configuration scheme. The name must be unique.
+     * @type {string}
+     * @memberof UpdateFieldConfigurationSchemeDetails
+     */
+    name: string;
+}
+/**
+ * Details of issue security scheme level.
+ * @export
+ * @interface UpdateIssueSecurityLevelDetails
+ */
+export interface UpdateIssueSecurityLevelDetails {
+    [key: string]: any | any;
+    /**
+     * The description of the issue security scheme level.
+     * @type {string}
+     * @memberof UpdateIssueSecurityLevelDetails
+     */
+    description?: string;
+    /**
+     * The name of the issue security scheme level. Must be unique.
+     * @type {string}
+     * @memberof UpdateIssueSecurityLevelDetails
+     */
+    name?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateIssueSecuritySchemeRequestBean
+ */
+export interface UpdateIssueSecuritySchemeRequestBean {
+    /**
+     * The description of the security scheme scheme.
+     * @type {string}
+     * @memberof UpdateIssueSecuritySchemeRequestBean
+     */
+    description?: string;
+    /**
+     * The name of the security scheme scheme. Must be unique.
+     * @type {string}
+     * @memberof UpdateIssueSecuritySchemeRequestBean
+     */
+    name?: string;
+}
+/**
+ * Details of a notification scheme.
+ * @export
+ * @interface UpdateNotificationSchemeDetails
+ */
+export interface UpdateNotificationSchemeDetails {
+    [key: string]: any | any;
+    /**
+     * The description of the notification scheme.
+     * @type {string}
+     * @memberof UpdateNotificationSchemeDetails
+     */
+    description?: string;
+    /**
+     * The name of the notification scheme. Must be unique.
+     * @type {string}
+     * @memberof UpdateNotificationSchemeDetails
+     */
+    name?: string;
 }
 /**
  * Details of an issue priority.
@@ -20945,12 +21979,6 @@ export interface UpdateFieldConfigurationSchemeDetails {
  */
 export interface UpdatePriorityDetails {
     [key: string]: any | any;
-    /**
-     * The name of the priority. Must be unique.
-     * @type {string}
-     * @memberof UpdatePriorityDetails
-     */
-    name?: string;
     /**
      * The description of the priority.
      * @type {string}
@@ -20963,6 +21991,12 @@ export interface UpdatePriorityDetails {
      * @memberof UpdatePriorityDetails
      */
     iconUrl?: UpdatePriorityDetailsIconUrlEnum;
+    /**
+     * The name of the priority. Must be unique.
+     * @type {string}
+     * @memberof UpdatePriorityDetails
+     */
+    name?: string;
     /**
      * The status color of the priority in 3-digit or 6-digit hexadecimal format.
      * @type {string}
@@ -20996,23 +22030,41 @@ export type UpdatePriorityDetailsIconUrlEnum = typeof UpdatePriorityDetailsIconU
  */
 export interface UpdateProjectDetails {
     /**
-     * Project keys must be unique and start with an uppercase letter followed by one or more uppercase alphanumeric characters. The maximum length is 10 characters.
+     * The default assignee when creating issues for this project.
      * @type {string}
      * @memberof UpdateProjectDetails
      */
-    key?: string;
+    assigneeType?: UpdateProjectDetailsAssigneeTypeEnum;
     /**
-     * The name of the project.
-     * @type {string}
+     * An integer value for the project's avatar.
+     * @type {number}
      * @memberof UpdateProjectDetails
      */
-    name?: string;
+    avatarId?: number;
+    /**
+     * The ID of the project's category. A complete list of category IDs is found using the [Get all project categories](#api-rest-api-3-projectCategory-get) operation. To remove the project category from the project, set the value to `-1.`
+     * @type {number}
+     * @memberof UpdateProjectDetails
+     */
+    categoryId?: number;
     /**
      * A brief description of the project.
      * @type {string}
      * @memberof UpdateProjectDetails
      */
     description?: string;
+    /**
+     * The ID of the issue security scheme for the project, which enables you to control who can and cannot view issues. Use the [Get issue security schemes](#api-rest-api-3-issuesecurityschemes-get) resource to get all issue security scheme IDs.
+     * @type {number}
+     * @memberof UpdateProjectDetails
+     */
+    issueSecurityScheme?: number;
+    /**
+     * Project keys must be unique and start with an uppercase letter followed by one or more uppercase alphanumeric characters. The maximum length is 10 characters.
+     * @type {string}
+     * @memberof UpdateProjectDetails
+     */
+    key?: string;
     /**
      * This parameter is deprecated because of privacy changes. Use `leadAccountId` instead. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details. The user name of the project lead. Cannot be provided with `leadAccountId`.
      * @type {string}
@@ -21026,35 +22078,11 @@ export interface UpdateProjectDetails {
      */
     leadAccountId?: string;
     /**
-     * A link to information about this project, such as project documentation
+     * The name of the project.
      * @type {string}
      * @memberof UpdateProjectDetails
      */
-    url?: string;
-    /**
-     * The default assignee when creating issues for this project.
-     * @type {string}
-     * @memberof UpdateProjectDetails
-     */
-    assigneeType?: UpdateProjectDetailsAssigneeTypeEnum;
-    /**
-     * An integer value for the project's avatar.
-     * @type {number}
-     * @memberof UpdateProjectDetails
-     */
-    avatarId?: number;
-    /**
-     * The ID of the issue security scheme for the project, which enables you to control who can and cannot view issues. Use the [Get issue security schemes](#api-rest-api-3-issuesecurityschemes-get) resource to get all issue security scheme IDs.
-     * @type {number}
-     * @memberof UpdateProjectDetails
-     */
-    issueSecurityScheme?: number;
-    /**
-     * The ID of the permission scheme for the project. Use the [Get all permission schemes](#api-rest-api-3-permissionscheme-get) resource to see a list of all permission scheme IDs.
-     * @type {number}
-     * @memberof UpdateProjectDetails
-     */
-    permissionScheme?: number;
+    name?: string;
     /**
      * The ID of the notification scheme for the project. Use the [Get notification schemes](#api-rest-api-3-notificationscheme-get) resource to get a list of notification scheme IDs.
      * @type {number}
@@ -21062,11 +22090,17 @@ export interface UpdateProjectDetails {
      */
     notificationScheme?: number;
     /**
-     * The ID of the project's category. A complete list of category IDs is found using the [Get all project categories](#api-rest-api-3-projectCategory-get) operation. To remove the project category from the project, set the value to `-1.`
+     * The ID of the permission scheme for the project. Use the [Get all permission schemes](#api-rest-api-3-permissionscheme-get) resource to see a list of all permission scheme IDs.
      * @type {number}
      * @memberof UpdateProjectDetails
      */
-    categoryId?: number;
+    permissionScheme?: number;
+    /**
+     * A link to information about this project, such as project documentation
+     * @type {string}
+     * @memberof UpdateProjectDetails
+     */
+    url?: string;
 }
 
 
@@ -21087,17 +22121,17 @@ export type UpdateProjectDetailsAssigneeTypeEnum = typeof UpdateProjectDetailsAs
 export interface UpdateResolutionDetails {
     [key: string]: any | any;
     /**
-     * The name of the resolution. Must be unique.
-     * @type {string}
-     * @memberof UpdateResolutionDetails
-     */
-    name: string;
-    /**
      * The description of the resolution.
      * @type {string}
      * @memberof UpdateResolutionDetails
      */
     description?: string;
+    /**
+     * The name of the resolution. Must be unique.
+     * @type {string}
+     * @memberof UpdateResolutionDetails
+     */
+    name: string;
 }
 /**
  * Details of a screen.
@@ -21106,17 +22140,17 @@ export interface UpdateResolutionDetails {
  */
 export interface UpdateScreenDetails {
     /**
-     * The name of the screen. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof UpdateScreenDetails
-     */
-    name?: string;
-    /**
      * The description of the screen. The maximum length is 255 characters.
      * @type {string}
      * @memberof UpdateScreenDetails
      */
     description?: string;
+    /**
+     * The name of the screen. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof UpdateScreenDetails
+     */
+    name?: string;
 }
 /**
  * Details of a screen scheme.
@@ -21125,17 +22159,17 @@ export interface UpdateScreenDetails {
  */
 export interface UpdateScreenSchemeDetails {
     /**
-     * The name of the screen scheme. The name must be unique. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetails
-     */
-    name?: string;
-    /**
      * The description of the screen scheme. The maximum length is 255 characters.
      * @type {string}
      * @memberof UpdateScreenSchemeDetails
      */
     description?: string;
+    /**
+     * The name of the screen scheme. The name must be unique. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof UpdateScreenSchemeDetails
+     */
+    name?: string;
     /**
      * 
      * @type {UpdateScreenSchemeDetailsScreens}
@@ -21150,29 +22184,29 @@ export interface UpdateScreenSchemeDetails {
  */
 export interface UpdateScreenSchemeDetailsScreens {
     /**
-     * The ID of the edit screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    edit?: string;
-    /**
      * The ID of the create screen. To remove the screen association, pass a null.
      * @type {string}
      * @memberof UpdateScreenSchemeDetailsScreens
      */
     create?: string;
     /**
-     * The ID of the view screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    view?: string;
-    /**
      * The ID of the default screen. When specified, must include a screen ID as a default screen is required.
      * @type {string}
      * @memberof UpdateScreenSchemeDetailsScreens
      */
     _default?: string;
+    /**
+     * The ID of the edit screen. To remove the screen association, pass a null.
+     * @type {string}
+     * @memberof UpdateScreenSchemeDetailsScreens
+     */
+    edit?: string;
+    /**
+     * The ID of the view screen. To remove the screen association, pass a null.
+     * @type {string}
+     * @memberof UpdateScreenSchemeDetailsScreens
+     */
+    view?: string;
 }
 /**
  * The IDs of the screens for the screen types of the screen scheme.
@@ -21181,29 +22215,29 @@ export interface UpdateScreenSchemeDetailsScreens {
  */
 export interface UpdateScreenTypes {
     /**
-     * The ID of the edit screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenTypes
-     */
-    edit?: string;
-    /**
      * The ID of the create screen. To remove the screen association, pass a null.
      * @type {string}
      * @memberof UpdateScreenTypes
      */
     create?: string;
     /**
-     * The ID of the view screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenTypes
-     */
-    view?: string;
-    /**
      * The ID of the default screen. When specified, must include a screen ID as a default screen is required.
      * @type {string}
      * @memberof UpdateScreenTypes
      */
     _default?: string;
+    /**
+     * The ID of the edit screen. To remove the screen association, pass a null.
+     * @type {string}
+     * @memberof UpdateScreenTypes
+     */
+    edit?: string;
+    /**
+     * The ID of the view screen. To remove the screen association, pass a null.
+     * @type {string}
+     * @memberof UpdateScreenTypes
+     */
+    view?: string;
 }
 /**
  * The details of a UI modification.
@@ -21212,17 +22246,11 @@ export interface UpdateScreenTypes {
  */
 export interface UpdateUiModificationDetails {
     /**
-     * The name of the UI modification. The maximum length is 255 characters.
-     * @type {string}
+     * List of contexts of the UI modification. The maximum number of contexts is 1000. If provided, replaces all existing contexts.
+     * @type {Array<UiModificationContextDetails>}
      * @memberof UpdateUiModificationDetails
      */
-    name?: string;
-    /**
-     * The description of the UI modification. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof UpdateUiModificationDetails
-     */
-    description?: string;
+    contexts?: Array<UiModificationContextDetails>;
     /**
      * The data of the UI modification. The maximum size of the data is 50000 characters.
      * @type {string}
@@ -21230,11 +22258,17 @@ export interface UpdateUiModificationDetails {
      */
     data?: string;
     /**
-     * List of contexts of the UI modification. The maximum number of contexts is 1000. If provided, replaces all existing contexts.
-     * @type {Array<UiModificationContextDetails>}
+     * The description of the UI modification. The maximum length is 255 characters.
+     * @type {string}
      * @memberof UpdateUiModificationDetails
      */
-    contexts?: Array<UiModificationContextDetails>;
+    description?: string;
+    /**
+     * The name of the UI modification. The maximum length is 255 characters.
+     * @type {string}
+     * @memberof UpdateUiModificationDetails
+     */
+    name?: string;
 }
 /**
  * 
@@ -21244,17 +22278,17 @@ export interface UpdateUiModificationDetails {
 export interface UpdateUserToGroupBean {
     [key: string]: any | any;
     /**
-     * This property is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UpdateUserToGroupBean
-     */
-    name?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof UpdateUserToGroupBean
      */
     accountId?: string;
+    /**
+     * This property is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UpdateUserToGroupBean
+     */
+    name?: string;
 }
 /**
  * A project category.
@@ -21263,11 +22297,11 @@ export interface UpdateUserToGroupBean {
  */
 export interface UpdatedProjectCategory {
     /**
-     * The URL of the project category.
+     * The name of the project category.
      * @type {string}
      * @memberof UpdatedProjectCategory
      */
-    readonly self?: string;
+    readonly description?: string;
     /**
      * The ID of the project category.
      * @type {string}
@@ -21275,17 +22309,17 @@ export interface UpdatedProjectCategory {
      */
     readonly id?: string;
     /**
-     * The name of the project category.
-     * @type {string}
-     * @memberof UpdatedProjectCategory
-     */
-    readonly description?: string;
-    /**
      * The description of the project category.
      * @type {string}
      * @memberof UpdatedProjectCategory
      */
     readonly name?: string;
+    /**
+     * The URL of the project category.
+     * @type {string}
+     * @memberof UpdatedProjectCategory
+     */
+    readonly self?: string;
 }
 /**
  * A user with details as permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:
@@ -21297,18 +22331,6 @@ export interface UpdatedProjectCategory {
  * @interface User
  */
 export interface User {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof User
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof User
-     */
-    key?: string;
     /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
@@ -21326,17 +22348,17 @@ export interface User {
      */
     readonly accountType?: UserAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof User
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof User
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -21350,23 +22372,17 @@ export interface User {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof User
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof User
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof User
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -21374,17 +22390,35 @@ export interface User {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof User
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof User
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof User
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof User
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof User
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof User
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -21407,10 +22441,10 @@ export type UserAccountTypeEnum = typeof UserAccountTypeEnum[keyof typeof UserAc
 export interface UserApplicationRoles {
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof UserApplicationRoles
      */
-    size?: number;
+    callback?: object;
     /**
      * 
      * @type {Array<ApplicationRole>}
@@ -21419,22 +22453,22 @@ export interface UserApplicationRoles {
     items?: Array<ApplicationRole>;
     /**
      * 
+     * @type {number}
+     * @memberof UserApplicationRoles
+     */
+    maxResults?: number;
+    /**
+     * 
      * @type {object}
      * @memberof UserApplicationRoles
      */
     pagingCallback?: object;
     /**
      * 
-     * @type {object}
-     * @memberof UserApplicationRoles
-     */
-    callback?: object;
-    /**
-     * 
      * @type {number}
      * @memberof UserApplicationRoles
      */
-    maxResults?: number;
+    size?: number;
 }
 /**
  * The avatars of the user.
@@ -21474,18 +22508,36 @@ export interface UserAvatarUrls {
  */
 export interface UserBean {
     /**
+     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof UserBean
+     */
+    accountId?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof UserBean
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {UserBeanAvatarUrls}
+     * @memberof UserBean
+     */
+    avatarUrls?: UserBeanAvatarUrls;
+    /**
+     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * @type {string}
+     * @memberof UserBean
+     */
+    displayName?: string;
+    /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The key of the user.
      * @type {string}
      * @memberof UserBean
      */
     key?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof UserBean
-     */
-    self?: string;
     /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The username of the user.
@@ -21494,29 +22546,11 @@ export interface UserBean {
      */
     name?: string;
     /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The URL of the user.
      * @type {string}
      * @memberof UserBean
      */
-    displayName?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof UserBean
-     */
-    active?: boolean;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof UserBean
-     */
-    accountId?: string;
-    /**
-     * 
-     * @type {UserBeanAvatarUrls}
-     * @memberof UserBean
-     */
-    avatarUrls?: UserBeanAvatarUrls;
+    self?: string;
 }
 /**
  * The avatars of the user.
@@ -21525,29 +22559,29 @@ export interface UserBean {
  */
 export interface UserBeanAvatarUrls {
     /**
-     * The URL of the user's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof UserBeanAvatarUrls
-     */
-    ["32x32"]?: string;
-    /**
      * The URL of the user's 16x16 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
     ["16x16"]?: string;
     /**
-     * The URL of the user's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof UserBeanAvatarUrls
-     */
-    ["48x48"]?: string;
-    /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof UserBeanAvatarUrls
      */
     ["24x24"]?: string;
+    /**
+     * The URL of the user's 32x32 pixel avatar.
+     * @type {string}
+     * @memberof UserBeanAvatarUrls
+     */
+    ["32x32"]?: string;
+    /**
+     * The URL of the user's 48x48 pixel avatar.
+     * @type {string}
+     * @memberof UserBeanAvatarUrls
+     */
+    ["48x48"]?: string;
 }
 /**
  * A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
@@ -21556,17 +22590,17 @@ export interface UserBeanAvatarUrls {
  */
 export interface UserContextVariable {
     /**
-     * Type of custom context variable.
-     * @type {string}
-     * @memberof UserContextVariable
-     */
-    type: string;
-    /**
      * The account ID of the user.
      * @type {string}
      * @memberof UserContextVariable
      */
     accountId: string;
+    /**
+     * Type of custom context variable.
+     * @type {string}
+     * @memberof UserContextVariable
+     */
+    type: string;
 }
 /**
  * User details permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:
@@ -21579,35 +22613,23 @@ export interface UserContextVariable {
  */
 export interface UserDetails {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof UserDetails
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof UserDetails
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof UserDetails
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -21621,23 +22643,35 @@ export interface UserDetails {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof UserDetails
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof UserDetails
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly accountType?: string;
 }
 /**
  * Filter for a User Picker (single) custom field.
@@ -21672,10 +22706,10 @@ export interface UserFilter {
 export interface UserGroups {
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof UserGroups
      */
-    size?: number;
+    callback?: object;
     /**
      * 
      * @type {Array<GroupName>}
@@ -21684,22 +22718,22 @@ export interface UserGroups {
     items?: Array<GroupName>;
     /**
      * 
+     * @type {number}
+     * @memberof UserGroups
+     */
+    maxResults?: number;
+    /**
+     * 
      * @type {object}
      * @memberof UserGroups
      */
     pagingCallback?: object;
     /**
      * 
-     * @type {object}
-     * @memberof UserGroups
-     */
-    callback?: object;
-    /**
-     * 
      * @type {number}
      * @memberof UserGroups
      */
-    maxResults?: number;
+    size?: number;
 }
 /**
  * List of user account IDs.
@@ -21708,17 +22742,17 @@ export interface UserGroups {
  */
 export interface UserKey {
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserKey
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Returns *unknown* if the record is deleted and corrupted, for example, as the result of a server import.
      * @type {string}
      * @memberof UserKey
      */
     accountId?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserKey
+     */
+    key?: string;
 }
 /**
  * A paginated list of users sharing the filter. This includes users that are members of the groups or can browse the projects that the filter is shared with.
@@ -21727,11 +22761,11 @@ export interface UserKey {
  */
 export interface UserList {
     /**
-     * The number of items on the page.
+     * The index of the last item returned on the page.
      * @type {number}
      * @memberof UserList
      */
-    readonly size?: number;
+    readonly endIndex?: number;
     /**
      * The list of items.
      * @type {Array<User>}
@@ -21745,17 +22779,17 @@ export interface UserList {
      */
     readonly maxResults?: number;
     /**
+     * The number of items on the page.
+     * @type {number}
+     * @memberof UserList
+     */
+    readonly size?: number;
+    /**
      * The index of the first item returned on the page.
      * @type {number}
      * @memberof UserList
      */
     readonly startIndex?: number;
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof UserList
-     */
-    readonly endIndex?: number;
 }
 /**
  * 
@@ -21768,6 +22802,12 @@ export interface UserMigrationBean {
      * @type {string}
      * @memberof UserMigrationBean
      */
+    accountId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserMigrationBean
+     */
     key?: string;
     /**
      * 
@@ -21775,12 +22815,6 @@ export interface UserMigrationBean {
      * @memberof UserMigrationBean
      */
     username?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserMigrationBean
-     */
-    accountId?: string;
 }
 /**
  * Details of a permission and its availability to a user.
@@ -21789,6 +22823,24 @@ export interface UserMigrationBean {
  */
 export interface UserPermission {
     [key: string]: any | any;
+    /**
+     * Indicate whether the permission key is deprecated. Note that deprecated keys cannot be used in the `permissions parameter of Get my permissions. Deprecated keys are not returned by Get all permissions.`
+     * @type {boolean}
+     * @memberof UserPermission
+     */
+    deprecatedKey?: boolean;
+    /**
+     * The description of the permission.
+     * @type {string}
+     * @memberof UserPermission
+     */
+    description?: string;
+    /**
+     * Whether the permission is available to the user in the queried context.
+     * @type {boolean}
+     * @memberof UserPermission
+     */
+    havePermission?: boolean;
     /**
      * The ID of the permission. Either `id` or `key` must be specified. Use [Get all permissions](#api-rest-api-3-permissions-get) to get the list of permissions.
      * @type {string}
@@ -21813,24 +22865,6 @@ export interface UserPermission {
      * @memberof UserPermission
      */
     type?: UserPermissionTypeEnum;
-    /**
-     * The description of the permission.
-     * @type {string}
-     * @memberof UserPermission
-     */
-    description?: string;
-    /**
-     * Whether the permission is available to the user in the queried context.
-     * @type {boolean}
-     * @memberof UserPermission
-     */
-    havePermission?: boolean;
-    /**
-     * Indicate whether the permission key is deprecated. Note that deprecated keys cannot be used in the `permissions parameter of Get my permissions. Deprecated keys are not returned by Get all permissions.`
-     * @type {boolean}
-     * @memberof UserPermission
-     */
-    deprecatedKey?: boolean;
 }
 
 
@@ -21856,23 +22890,11 @@ export interface UserPickerUser {
      */
     accountId?: string;
     /**
-     * This property is no longer available . See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * The avatar URL of the user.
      * @type {string}
      * @memberof UserPickerUser
      */
-    name?: string;
-    /**
-     * This property is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserPickerUser
-     */
-    key?: string;
-    /**
-     * The display name, email address, and key of the user with the matched query string highlighted with the HTML bold tag.
-     * @type {string}
-     * @memberof UserPickerUser
-     */
-    html?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
@@ -21880,11 +22902,23 @@ export interface UserPickerUser {
      */
     displayName?: string;
     /**
-     * The avatar URL of the user.
+     * The display name, email address, and key of the user with the matched query string highlighted with the HTML bold tag.
      * @type {string}
      * @memberof UserPickerUser
      */
-    avatarUrl?: string;
+    html?: string;
+    /**
+     * This property is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserPickerUser
+     */
+    key?: string;
+    /**
+     * This property is no longer available . See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserPickerUser
+     */
+    name?: string;
 }
 /**
  * An operand that is a user-provided value.
@@ -21892,6 +22926,12 @@ export interface UserPickerUser {
  * @interface ValueOperand
  */
 export interface ValueOperand {
+    /**
+     * Encoded value, which can be used directly in a JQL query.
+     * @type {string}
+     * @memberof ValueOperand
+     */
+    encodedValue?: string;
     /**
      * The operand value.
      * @type {string}
@@ -21906,6 +22946,18 @@ export interface ValueOperand {
  */
 export interface Version {
     /**
+     * Indicates that the version is archived. Optional when creating or updating a version.
+     * @type {boolean}
+     * @memberof Version
+     */
+    archived?: boolean;
+    /**
+     * The description of the version. Optional when creating or updating a version.
+     * @type {string}
+     * @memberof Version
+     */
+    description?: string;
+    /**
      * Use [expand](em>#expansion) to include additional information about version in the response. This parameter accepts a comma-separated list. Expand options include:
      * 
      *  *  `operations` Returns the list of operations available for this version.
@@ -21917,23 +22969,23 @@ export interface Version {
      */
     expand?: string;
     /**
-     * The URL of the version.
-     * @type {string}
-     * @memberof Version
-     */
-    readonly self?: string;
-    /**
      * The ID of the version.
      * @type {string}
      * @memberof Version
      */
     readonly id?: string;
     /**
-     * The description of the version. Optional when creating or updating a version.
+     * 
+     * @type {VersionIssuesStatusForFixVersion}
+     * @memberof Version
+     */
+    issuesStatusForFixVersion?: VersionIssuesStatusForFixVersion;
+    /**
+     * The URL of the self link to the version to which all unfixed issues are moved when a version is released. Not applicable when creating a version. Optional when updating a version.
      * @type {string}
      * @memberof Version
      */
-    description?: string;
+    moveUnfixedIssuesTo?: string;
     /**
      * The unique name of the version. Required when creating a version. Optional when updating a version. The maximum length is 255 characters.
      * @type {string}
@@ -21941,47 +22993,17 @@ export interface Version {
      */
     name?: string;
     /**
-     * Indicates that the version is archived. Optional when creating or updating a version.
-     * @type {boolean}
+     * If the expand option `operations` is used, returns the list of operations available for this version.
+     * @type {Array<SimpleLink>}
      * @memberof Version
      */
-    archived?: boolean;
-    /**
-     * Indicates that the version is released. If the version is released a request to release again is ignored. Not applicable when creating a version. Optional when updating a version.
-     * @type {boolean}
-     * @memberof Version
-     */
-    released?: boolean;
-    /**
-     * The start date of the version. Expressed in ISO 8601 format (yyyy-mm-dd). Optional when creating or updating a version.
-     * @type {string}
-     * @memberof Version
-     */
-    startDate?: string;
-    /**
-     * The release date of the version. Expressed in ISO 8601 format (yyyy-mm-dd). Optional when creating or updating a version.
-     * @type {string}
-     * @memberof Version
-     */
-    releaseDate?: string;
+    readonly operations?: Array<SimpleLink>;
     /**
      * Indicates that the version is overdue.
      * @type {boolean}
      * @memberof Version
      */
     readonly overdue?: boolean;
-    /**
-     * The date on which work on this version is expected to start, expressed in the instance's *Day/Month/Year Format* date format.
-     * @type {string}
-     * @memberof Version
-     */
-    readonly userStartDate?: string;
-    /**
-     * The date on which work on this version is expected to finish, expressed in the instance's *Day/Month/Year Format* date format.
-     * @type {string}
-     * @memberof Version
-     */
-    readonly userReleaseDate?: string;
     /**
      * Deprecated. Use `projectId`.
      * @type {string}
@@ -21995,23 +23017,41 @@ export interface Version {
      */
     projectId?: number;
     /**
-     * The URL of the self link to the version to which all unfixed issues are moved when a version is released. Not applicable when creating a version. Optional when updating a version.
+     * The release date of the version. Expressed in ISO 8601 format (yyyy-mm-dd). Optional when creating or updating a version.
      * @type {string}
      * @memberof Version
      */
-    moveUnfixedIssuesTo?: string;
+    releaseDate?: string;
     /**
-     * If the expand option `operations` is used, returns the list of operations available for this version.
-     * @type {Array<SimpleLink>}
+     * Indicates that the version is released. If the version is released a request to release again is ignored. Not applicable when creating a version. Optional when updating a version.
+     * @type {boolean}
      * @memberof Version
      */
-    readonly operations?: Array<SimpleLink>;
+    released?: boolean;
     /**
-     * 
-     * @type {VersionIssuesStatusForFixVersion}
+     * The URL of the version.
+     * @type {string}
      * @memberof Version
      */
-    issuesStatusForFixVersion?: VersionIssuesStatusForFixVersion;
+    readonly self?: string;
+    /**
+     * The start date of the version. Expressed in ISO 8601 format (yyyy-mm-dd). Optional when creating or updating a version.
+     * @type {string}
+     * @memberof Version
+     */
+    startDate?: string;
+    /**
+     * The date on which work on this version is expected to finish, expressed in the instance's *Day/Month/Year Format* date format.
+     * @type {string}
+     * @memberof Version
+     */
+    readonly userReleaseDate?: string;
+    /**
+     * The date on which work on this version is expected to start, expressed in the instance's *Day/Month/Year Format* date format.
+     * @type {string}
+     * @memberof Version
+     */
+    readonly userStartDate?: string;
 }
 /**
  * Various counts of issues within a version.
@@ -22020,23 +23060,11 @@ export interface Version {
  */
 export interface VersionIssueCounts {
     /**
-     * The URL of these count details.
-     * @type {string}
+     * List of custom fields using the version.
+     * @type {Array<VersionUsageInCustomField>}
      * @memberof VersionIssueCounts
      */
-    readonly self?: string;
-    /**
-     * Count of issues where the `fixVersion` is set to the version.
-     * @type {number}
-     * @memberof VersionIssueCounts
-     */
-    readonly issuesFixedCount?: number;
-    /**
-     * Count of issues where the `affectedVersion` is set to the version.
-     * @type {number}
-     * @memberof VersionIssueCounts
-     */
-    readonly issuesAffectedCount?: number;
+    readonly customFieldUsage?: Array<VersionUsageInCustomField>;
     /**
      * Count of issues where a version custom field is set to the version.
      * @type {number}
@@ -22044,11 +23072,23 @@ export interface VersionIssueCounts {
      */
     readonly issueCountWithCustomFieldsShowingVersion?: number;
     /**
-     * List of custom fields using the version.
-     * @type {Array<VersionUsageInCustomField>}
+     * Count of issues where the `affectedVersion` is set to the version.
+     * @type {number}
      * @memberof VersionIssueCounts
      */
-    readonly customFieldUsage?: Array<VersionUsageInCustomField>;
+    readonly issuesAffectedCount?: number;
+    /**
+     * Count of issues where the `fixVersion` is set to the version.
+     * @type {number}
+     * @memberof VersionIssueCounts
+     */
+    readonly issuesFixedCount?: number;
+    /**
+     * The URL of these count details.
+     * @type {string}
+     * @memberof VersionIssueCounts
+     */
+    readonly self?: string;
 }
 /**
  * Counts of the number of issues in various statuses.
@@ -22058,17 +23098,11 @@ export interface VersionIssueCounts {
 export interface VersionIssuesStatus {
     [key: string]: any | any;
     /**
-     * Count of issues with a status other than *to do*, *in progress*, and *done*.
+     * Count of issues with status *done*.
      * @type {number}
      * @memberof VersionIssuesStatus
      */
-    readonly unmapped?: number;
-    /**
-     * Count of issues with status *to do*.
-     * @type {number}
-     * @memberof VersionIssuesStatus
-     */
-    readonly toDo?: number;
+    readonly done?: number;
     /**
      * Count of issues with status *in progress*.
      * @type {number}
@@ -22076,11 +23110,17 @@ export interface VersionIssuesStatus {
      */
     readonly inProgress?: number;
     /**
-     * Count of issues with status *done*.
+     * Count of issues with status *to do*.
      * @type {number}
      * @memberof VersionIssuesStatus
      */
-    readonly done?: number;
+    readonly toDo?: number;
+    /**
+     * Count of issues with a status other than *to do*, *in progress*, and *done*.
+     * @type {number}
+     * @memberof VersionIssuesStatus
+     */
+    readonly unmapped?: number;
 }
 /**
  * If the expand option `issuesstatus` is used, returns the count of issues in this version for each of the status categories *to do*, *in progress*, *done*, and *unmapped*. The *unmapped* property contains a count of issues with a status other than *to do*, *in progress*, and *done*.
@@ -22089,17 +23129,11 @@ export interface VersionIssuesStatus {
  */
 export interface VersionIssuesStatusForFixVersion {
     /**
-     * Count of issues with a status other than *to do*, *in progress*, and *done*.
+     * Count of issues with status *done*.
      * @type {number}
      * @memberof VersionIssuesStatusForFixVersion
      */
-    readonly unmapped?: number;
-    /**
-     * Count of issues with status *to do*.
-     * @type {number}
-     * @memberof VersionIssuesStatusForFixVersion
-     */
-    readonly toDo?: number;
+    readonly done?: number;
     /**
      * Count of issues with status *in progress*.
      * @type {number}
@@ -22107,11 +23141,17 @@ export interface VersionIssuesStatusForFixVersion {
      */
     readonly inProgress?: number;
     /**
-     * Count of issues with status *done*.
+     * Count of issues with status *to do*.
      * @type {number}
      * @memberof VersionIssuesStatusForFixVersion
      */
-    readonly done?: number;
+    readonly toDo?: number;
+    /**
+     * Count of issues with a status other than *to do*, *in progress*, and *done*.
+     * @type {number}
+     * @memberof VersionIssuesStatusForFixVersion
+     */
+    readonly unmapped?: number;
 }
 /**
  * 
@@ -22152,11 +23192,11 @@ export type VersionMoveBeanPositionEnum = typeof VersionMoveBeanPositionEnum[key
  */
 export interface VersionUnresolvedIssuesCount {
     /**
-     * The URL of these count details.
-     * @type {string}
+     * Count of issues.
+     * @type {number}
      * @memberof VersionUnresolvedIssuesCount
      */
-    readonly self?: string;
+    readonly issuesCount?: number;
     /**
      * Count of unresolved issues.
      * @type {number}
@@ -22164,11 +23204,11 @@ export interface VersionUnresolvedIssuesCount {
      */
     readonly issuesUnresolvedCount?: number;
     /**
-     * Count of issues.
-     * @type {number}
+     * The URL of these count details.
+     * @type {string}
      * @memberof VersionUnresolvedIssuesCount
      */
-    readonly issuesCount?: number;
+    readonly self?: string;
 }
 /**
  * List of custom fields using the version.
@@ -22177,17 +23217,17 @@ export interface VersionUnresolvedIssuesCount {
  */
 export interface VersionUsageInCustomField {
     /**
-     * The name of the custom field.
-     * @type {string}
-     * @memberof VersionUsageInCustomField
-     */
-    readonly fieldName?: string;
-    /**
      * The ID of the custom field.
      * @type {number}
      * @memberof VersionUsageInCustomField
      */
     readonly customFieldId?: number;
+    /**
+     * The name of the custom field.
+     * @type {string}
+     * @memberof VersionUsageInCustomField
+     */
+    readonly fieldName?: string;
     /**
      * Count of the issues where the custom field contains the version.
      * @type {number}
@@ -22203,6 +23243,12 @@ export interface VersionUsageInCustomField {
 export interface Visibility {
     [key: string]: any | any;
     /**
+     * The ID of the group or the name of the role that visibility of this item is restricted to.
+     * @type {string}
+     * @memberof Visibility
+     */
+    identifier?: string | null;
+    /**
      * Whether visibility of this item is restricted to a group or role.
      * @type {string}
      * @memberof Visibility
@@ -22214,12 +23260,6 @@ export interface Visibility {
      * @memberof Visibility
      */
     value?: string;
-    /**
-     * The ID of the group or the name of the role that visibility of this item is restricted to.
-     * @type {string}
-     * @memberof Visibility
-     */
-    identifier?: string | null;
 }
 
 
@@ -22239,29 +23279,42 @@ export type VisibilityTypeEnum = typeof VisibilityTypeEnum[keyof typeof Visibili
  */
 export interface Votes {
     /**
-     * The URL of these issue vote details.
-     * @type {string}
-     * @memberof Votes
-     */
-    readonly self?: string;
-    /**
-     * The number of votes on the issue.
-     * @type {number}
-     * @memberof Votes
-     */
-    readonly votes?: number;
-    /**
      * Whether the user making this request has voted on the issue.
      * @type {boolean}
      * @memberof Votes
      */
     readonly hasVoted?: boolean;
     /**
+     * The URL of these issue vote details.
+     * @type {string}
+     * @memberof Votes
+     */
+    readonly self?: string;
+    /**
      * List of the users who have voted on this issue. An empty list is returned when the calling user doesn't have the *View voters and watchers* project permission.
      * @type {Array<User>}
      * @memberof Votes
      */
     readonly voters?: Array<User>;
+    /**
+     * The number of votes on the issue.
+     * @type {number}
+     * @memberof Votes
+     */
+    readonly votes?: number;
+}
+/**
+ * 
+ * @export
+ * @interface WarningCollection
+ */
+export interface WarningCollection {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WarningCollection
+     */
+    warnings?: Array<string>;
 }
 /**
  * The details of watchers on an issue.
@@ -22270,17 +23323,17 @@ export interface Votes {
  */
 export interface Watchers {
     /**
-     * The URL of these issue watcher details.
-     * @type {string}
-     * @memberof Watchers
-     */
-    readonly self?: string;
-    /**
      * Whether the calling user is watching this issue.
      * @type {boolean}
      * @memberof Watchers
      */
     readonly isWatching?: boolean;
+    /**
+     * The URL of these issue watcher details.
+     * @type {string}
+     * @memberof Watchers
+     */
+    readonly self?: string;
     /**
      * The number of users watching this issue.
      * @type {number}
@@ -22301,30 +23354,6 @@ export interface Watchers {
  */
 export interface Webhook {
     /**
-     * The ID of the webhook.
-     * @type {number}
-     * @memberof Webhook
-     */
-    id: number;
-    /**
-     * The JQL filter that specifies which issues the webhook is sent for.
-     * @type {string}
-     * @memberof Webhook
-     */
-    jqlFilter: string;
-    /**
-     * A list of field IDs. When the issue changelog contains any of the fields, the webhook `jira:issue_updated` is sent. If this parameter is not present, the app is notified about all field updates.
-     * @type {Array<string>}
-     * @memberof Webhook
-     */
-    fieldIdsFilter?: Array<string>;
-    /**
-     * A list of issue property keys. A change of those issue properties triggers the `issue_property_set` or `issue_property_deleted` webhooks. If this parameter is not present, the app is notified about all issue property updates.
-     * @type {Array<string>}
-     * @memberof Webhook
-     */
-    issuePropertyKeysFilter?: Array<string>;
-    /**
      * The Jira events that trigger the webhook.
      * @type {Array<string>}
      * @memberof Webhook
@@ -22336,6 +23365,30 @@ export interface Webhook {
      * @memberof Webhook
      */
     readonly expirationDate?: number;
+    /**
+     * A list of field IDs. When the issue changelog contains any of the fields, the webhook `jira:issue_updated` is sent. If this parameter is not present, the app is notified about all field updates.
+     * @type {Array<string>}
+     * @memberof Webhook
+     */
+    fieldIdsFilter?: Array<string>;
+    /**
+     * The ID of the webhook.
+     * @type {number}
+     * @memberof Webhook
+     */
+    id: number;
+    /**
+     * A list of issue property keys. A change of those issue properties triggers the `issue_property_set` or `issue_property_deleted` webhooks. If this parameter is not present, the app is notified about all issue property updates.
+     * @type {Array<string>}
+     * @memberof Webhook
+     */
+    issuePropertyKeysFilter?: Array<string>;
+    /**
+     * The JQL filter that specifies which issues the webhook is sent for.
+     * @type {string}
+     * @memberof Webhook
+     */
+    jqlFilter: string;
 }
 
 
@@ -22361,14 +23414,11 @@ export type WebhookEventsEnum = typeof WebhookEventsEnum[keyof typeof WebhookEve
  */
 export interface WebhookDetails {
     /**
-     * The JQL filter that specifies which issues the webhook is sent for. Only a subset of JQL can be used. The supported elements are:
-     * 
-     *  *  Fields: `issueKey`, `project`, `issuetype`, `status`, `assignee`, `reporter`, `issue.property`, and `cf[id]`. For custom fields (`cf[id]`), only the epic label custom field is supported.".
-     *  *  Operators: `=`, `!=`, `IN`, and `NOT IN`.
-     * @type {string}
+     * The Jira events that trigger the webhook.
+     * @type {Array<string>}
      * @memberof WebhookDetails
      */
-    jqlFilter: string;
+    events: Array<WebhookDetailsEventsEnum>;
     /**
      * A list of field IDs. When the issue changelog contains any of the fields, the webhook `jira:issue_updated` is sent. If this parameter is not present, the app is notified about all field updates.
      * @type {Array<string>}
@@ -22382,11 +23432,14 @@ export interface WebhookDetails {
      */
     issuePropertyKeysFilter?: Array<string>;
     /**
-     * The Jira events that trigger the webhook.
-     * @type {Array<string>}
+     * The JQL filter that specifies which issues the webhook is sent for. Only a subset of JQL can be used. The supported elements are:
+     * 
+     *  *  Fields: `issueKey`, `project`, `issuetype`, `status`, `assignee`, `reporter`, `issue.property`, and `cf[id]`. For custom fields (`cf[id]`), only the epic label custom field is supported.".
+     *  *  Operators: `=`, `!=`, `IN`, and `NOT IN`.
+     * @type {string}
      * @memberof WebhookDetails
      */
-    events: Array<WebhookDetailsEventsEnum>;
+    jqlFilter: string;
 }
 
 
@@ -22412,17 +23465,17 @@ export type WebhookDetailsEventsEnum = typeof WebhookDetailsEventsEnum[keyof typ
  */
 export interface WebhookRegistrationDetails {
     /**
-     * A list of webhooks.
-     * @type {Array<WebhookDetails>}
-     * @memberof WebhookRegistrationDetails
-     */
-    webhooks: Array<WebhookDetails>;
-    /**
      * The URL that specifies where to send the webhooks. This URL must use the same base URL as the Connect app. Only a single URL per app is allowed to be registered.
      * @type {string}
      * @memberof WebhookRegistrationDetails
      */
     url: string;
+    /**
+     * A list of webhooks.
+     * @type {Array<WebhookDetails>}
+     * @memberof WebhookRegistrationDetails
+     */
+    webhooks: Array<WebhookDetails>;
 }
 /**
  * The date the refreshed webhooks expire.
@@ -22457,47 +23510,17 @@ export interface WorkManagementNavigationInfo {
  */
 export interface Workflow {
     /**
-     * 
-     * @type {PublishedWorkflowId}
+     * The creation date of the workflow.
+     * @type {string}
      * @memberof Workflow
      */
-    id: PublishedWorkflowId;
+    created?: string;
     /**
      * The description of the workflow.
      * @type {string}
      * @memberof Workflow
      */
     description: string;
-    /**
-     * The transitions of the workflow.
-     * @type {Array<Transition>}
-     * @memberof Workflow
-     */
-    transitions?: Array<Transition>;
-    /**
-     * The statuses of the workflow.
-     * @type {Array<WorkflowStatus>}
-     * @memberof Workflow
-     */
-    statuses?: Array<WorkflowStatus>;
-    /**
-     * Whether this is the default workflow.
-     * @type {boolean}
-     * @memberof Workflow
-     */
-    isDefault?: boolean;
-    /**
-     * The workflow schemes the workflow is assigned to.
-     * @type {Array<WorkflowSchemeIdName>}
-     * @memberof Workflow
-     */
-    schemes?: Array<WorkflowSchemeIdName>;
-    /**
-     * The projects the workflow is assigned to, through workflow schemes.
-     * @type {Array<ProjectDetails>}
-     * @memberof Workflow
-     */
-    projects?: Array<ProjectDetails>;
     /**
      * Whether the workflow has a draft version.
      * @type {boolean}
@@ -22506,16 +23529,46 @@ export interface Workflow {
     hasDraftWorkflow?: boolean;
     /**
      * 
+     * @type {PublishedWorkflowId}
+     * @memberof Workflow
+     */
+    id: PublishedWorkflowId;
+    /**
+     * Whether this is the default workflow.
+     * @type {boolean}
+     * @memberof Workflow
+     */
+    isDefault?: boolean;
+    /**
+     * 
      * @type {WorkflowOperations}
      * @memberof Workflow
      */
     operations?: WorkflowOperations;
     /**
-     * The creation date of the workflow.
-     * @type {string}
+     * The projects the workflow is assigned to, through workflow schemes.
+     * @type {Array<ProjectDetails>}
      * @memberof Workflow
      */
-    created?: string;
+    projects?: Array<ProjectDetails>;
+    /**
+     * The workflow schemes the workflow is assigned to.
+     * @type {Array<WorkflowSchemeIdName>}
+     * @memberof Workflow
+     */
+    schemes?: Array<WorkflowSchemeIdName>;
+    /**
+     * The statuses of the workflow.
+     * @type {Array<WorkflowStatus>}
+     * @memberof Workflow
+     */
+    statuses?: Array<WorkflowStatus>;
+    /**
+     * The transitions of the workflow.
+     * @type {Array<Transition>}
+     * @memberof Workflow
+     */
+    transitions?: Array<Transition>;
     /**
      * The last edited date of the workflow.
      * @type {string}
@@ -22530,12 +23583,6 @@ export interface Workflow {
  */
 export interface WorkflowCompoundCondition {
     /**
-     * The compound condition operator.
-     * @type {string}
-     * @memberof WorkflowCompoundCondition
-     */
-    operator: WorkflowCompoundConditionOperatorEnum;
-    /**
      * The list of workflow conditions.
      * @type {Array<WorkflowCondition>}
      * @memberof WorkflowCompoundCondition
@@ -22547,6 +23594,12 @@ export interface WorkflowCompoundCondition {
      * @memberof WorkflowCompoundCondition
      */
     nodeType: string;
+    /**
+     * The compound condition operator.
+     * @type {string}
+     * @memberof WorkflowCompoundCondition
+     */
+    operator: WorkflowCompoundConditionOperatorEnum;
 }
 
 
@@ -22572,17 +23625,17 @@ export type WorkflowCondition = { nodeType: 'compound' } & WorkflowCompoundCondi
  */
 export interface WorkflowIDs {
     /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof WorkflowIDs
-     */
-    name: string;
-    /**
      * The entity ID of the workflow.
      * @type {string}
      * @memberof WorkflowIDs
      */
     entityId?: string;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof WorkflowIDs
+     */
+    name: string;
 }
 /**
  * Properties that identify a workflow.
@@ -22591,17 +23644,17 @@ export interface WorkflowIDs {
  */
 export interface WorkflowId {
     /**
-     * The name of the workflow.
-     * @type {string}
-     * @memberof WorkflowId
-     */
-    name: string;
-    /**
      * Whether the workflow is in the draft state.
      * @type {boolean}
      * @memberof WorkflowId
      */
     draft: boolean;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof WorkflowId
+     */
+    name: string;
 }
 /**
  * Operations allowed on a workflow
@@ -22610,17 +23663,17 @@ export interface WorkflowId {
  */
 export interface WorkflowOperations {
     /**
-     * Whether the workflow can be updated.
-     * @type {boolean}
-     * @memberof WorkflowOperations
-     */
-    canEdit: boolean;
-    /**
      * Whether the workflow can be deleted.
      * @type {boolean}
      * @memberof WorkflowOperations
      */
     canDelete: boolean;
+    /**
+     * Whether the workflow can be updated.
+     * @type {boolean}
+     * @memberof WorkflowOperations
+     */
+    canEdit: boolean;
 }
 /**
  * A collection of transition rules.
@@ -22635,17 +23688,17 @@ export interface WorkflowRules {
      */
     conditionsTree?: WorkflowCondition;
     /**
-     * The workflow validators.
-     * @type {Array<WorkflowTransitionRule>}
-     * @memberof WorkflowRules
-     */
-    validators?: Array<WorkflowTransitionRule>;
-    /**
      * The workflow post functions.
      * @type {Array<WorkflowTransitionRule>}
      * @memberof WorkflowRules
      */
     postFunctions?: Array<WorkflowTransitionRule>;
+    /**
+     * The workflow validators.
+     * @type {Array<WorkflowTransitionRule>}
+     * @memberof WorkflowRules
+     */
+    validators?: Array<WorkflowTransitionRule>;
 }
 /**
  * Details of the workflow and its transition rules.
@@ -22654,11 +23707,11 @@ export interface WorkflowRules {
  */
 export interface WorkflowRulesSearch {
     /**
-     * The workflow ID.
+     * Use expand to include additional information in the response. This parameter accepts `transition` which, for each rule, returns information about the transition the rule is assigned to.
      * @type {string}
      * @memberof WorkflowRulesSearch
      */
-    workflowEntityId: string;
+    expand?: string;
     /**
      * The list of workflow rule IDs.
      * @type {Array<string>}
@@ -22666,11 +23719,11 @@ export interface WorkflowRulesSearch {
      */
     ruleIds: Array<string>;
     /**
-     * Use expand to include additional information in the response. This parameter accepts `transition` which, for each rule, returns information about the transition the rule is assigned to.
+     * The workflow ID.
      * @type {string}
      * @memberof WorkflowRulesSearch
      */
-    expand?: string;
+    workflowEntityId: string;
 }
 /**
  * Details of workflow transition rules.
@@ -22678,12 +23731,6 @@ export interface WorkflowRulesSearch {
  * @interface WorkflowRulesSearchDetails
  */
 export interface WorkflowRulesSearchDetails {
-    /**
-     * The workflow ID.
-     * @type {string}
-     * @memberof WorkflowRulesSearchDetails
-     */
-    workflowEntityId?: string;
     /**
      * List of workflow rule IDs that do not belong to the workflow or can not be found.
      * @type {Array<string>}
@@ -22696,6 +23743,12 @@ export interface WorkflowRulesSearchDetails {
      * @memberof WorkflowRulesSearchDetails
      */
     validRules?: Array<WorkflowTransitionRules>;
+    /**
+     * The workflow ID.
+     * @type {string}
+     * @memberof WorkflowRulesSearchDetails
+     */
+    workflowEntityId?: string;
 }
 /**
  * Details about a workflow scheme.
@@ -22704,17 +23757,11 @@ export interface WorkflowRulesSearchDetails {
  */
 export interface WorkflowScheme {
     /**
-     * The ID of the workflow scheme.
-     * @type {number}
-     * @memberof WorkflowScheme
-     */
-    readonly id?: number;
-    /**
-     * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
+     * The name of the default workflow for the workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira. If `defaultWorkflow` is not specified when creating a workflow scheme, it is set to *Jira Workflow (jira)*.
      * @type {string}
      * @memberof WorkflowScheme
      */
-    name?: string;
+    defaultWorkflow?: string;
     /**
      * The description of the workflow scheme.
      * @type {string}
@@ -22722,17 +23769,47 @@ export interface WorkflowScheme {
      */
     description?: string;
     /**
-     * The name of the default workflow for the workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira. If `defaultWorkflow` is not specified when creating a workflow scheme, it is set to *Jira Workflow (jira)*.
-     * @type {string}
+     * Whether the workflow scheme is a draft or not.
+     * @type {boolean}
      * @memberof WorkflowScheme
      */
-    defaultWorkflow?: string;
+    readonly draft?: boolean;
+    /**
+     * The ID of the workflow scheme.
+     * @type {number}
+     * @memberof WorkflowScheme
+     */
+    readonly id?: number;
     /**
      * The issue type to workflow mappings, where each mapping is an issue type ID and workflow name pair. Note that an issue type can only be mapped to one workflow in a workflow scheme.
      * @type {{ [key: string]: string; }}
      * @memberof WorkflowScheme
      */
     issueTypeMappings?: { [key: string]: string; };
+    /**
+     * The issue types available in Jira.
+     * @type {{ [key: string]: IssueTypeDetails; }}
+     * @memberof WorkflowScheme
+     */
+    readonly issueTypes?: { [key: string]: IssueTypeDetails; };
+    /**
+     * The date-time that the draft workflow scheme was last modified. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
+     * @type {string}
+     * @memberof WorkflowScheme
+     */
+    readonly lastModified?: string;
+    /**
+     * 
+     * @type {WorkflowSchemeLastModifiedUser}
+     * @memberof WorkflowScheme
+     */
+    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
+    /**
+     * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
+     * @type {string}
+     * @memberof WorkflowScheme
+     */
+    name?: string;
     /**
      * For draft workflow schemes, this property is the name of the default workflow for the original workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira.
      * @type {string}
@@ -22745,24 +23822,6 @@ export interface WorkflowScheme {
      * @memberof WorkflowScheme
      */
     readonly originalIssueTypeMappings?: { [key: string]: string; };
-    /**
-     * Whether the workflow scheme is a draft or not.
-     * @type {boolean}
-     * @memberof WorkflowScheme
-     */
-    readonly draft?: boolean;
-    /**
-     * 
-     * @type {WorkflowSchemeLastModifiedUser}
-     * @memberof WorkflowScheme
-     */
-    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
-    /**
-     * The date-time that the draft workflow scheme was last modified. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
-     * @type {string}
-     * @memberof WorkflowScheme
-     */
-    readonly lastModified?: string;
     /**
      * 
      * @type {string}
@@ -22781,12 +23840,6 @@ export interface WorkflowScheme {
      * @memberof WorkflowScheme
      */
     updateDraftIfNeeded?: boolean;
-    /**
-     * The issue types available in Jira.
-     * @type {{ [key: string]: IssueTypeDetails; }}
-     * @memberof WorkflowScheme
-     */
-    readonly issueTypes?: { [key: string]: IssueTypeDetails; };
 }
 /**
  * A workflow scheme along with a list of projects that use it.
@@ -22814,17 +23867,11 @@ export interface WorkflowSchemeAssociations {
  */
 export interface WorkflowSchemeAssociationsWorkflowScheme {
     /**
-     * The ID of the workflow scheme.
-     * @type {number}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly id?: number;
-    /**
-     * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
+     * The name of the default workflow for the workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira. If `defaultWorkflow` is not specified when creating a workflow scheme, it is set to *Jira Workflow (jira)*.
      * @type {string}
      * @memberof WorkflowSchemeAssociationsWorkflowScheme
      */
-    name?: string;
+    defaultWorkflow?: string;
     /**
      * The description of the workflow scheme.
      * @type {string}
@@ -22832,17 +23879,47 @@ export interface WorkflowSchemeAssociationsWorkflowScheme {
      */
     description?: string;
     /**
-     * The name of the default workflow for the workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira. If `defaultWorkflow` is not specified when creating a workflow scheme, it is set to *Jira Workflow (jira)*.
-     * @type {string}
+     * Whether the workflow scheme is a draft or not.
+     * @type {boolean}
      * @memberof WorkflowSchemeAssociationsWorkflowScheme
      */
-    defaultWorkflow?: string;
+    readonly draft?: boolean;
+    /**
+     * The ID of the workflow scheme.
+     * @type {number}
+     * @memberof WorkflowSchemeAssociationsWorkflowScheme
+     */
+    readonly id?: number;
     /**
      * The issue type to workflow mappings, where each mapping is an issue type ID and workflow name pair. Note that an issue type can only be mapped to one workflow in a workflow scheme.
      * @type {{ [key: string]: string; }}
      * @memberof WorkflowSchemeAssociationsWorkflowScheme
      */
     issueTypeMappings?: { [key: string]: string; };
+    /**
+     * The issue types available in Jira.
+     * @type {{ [key: string]: IssueTypeDetails; }}
+     * @memberof WorkflowSchemeAssociationsWorkflowScheme
+     */
+    readonly issueTypes?: { [key: string]: IssueTypeDetails; };
+    /**
+     * The date-time that the draft workflow scheme was last modified. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
+     * @type {string}
+     * @memberof WorkflowSchemeAssociationsWorkflowScheme
+     */
+    readonly lastModified?: string;
+    /**
+     * 
+     * @type {WorkflowSchemeLastModifiedUser}
+     * @memberof WorkflowSchemeAssociationsWorkflowScheme
+     */
+    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
+    /**
+     * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeAssociationsWorkflowScheme
+     */
+    name?: string;
     /**
      * For draft workflow schemes, this property is the name of the default workflow for the original workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira.
      * @type {string}
@@ -22855,24 +23932,6 @@ export interface WorkflowSchemeAssociationsWorkflowScheme {
      * @memberof WorkflowSchemeAssociationsWorkflowScheme
      */
     readonly originalIssueTypeMappings?: { [key: string]: string; };
-    /**
-     * Whether the workflow scheme is a draft or not.
-     * @type {boolean}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly draft?: boolean;
-    /**
-     * 
-     * @type {WorkflowSchemeLastModifiedUser}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
-    /**
-     * The date-time that the draft workflow scheme was last modified. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly lastModified?: string;
     /**
      * 
      * @type {string}
@@ -22891,12 +23950,6 @@ export interface WorkflowSchemeAssociationsWorkflowScheme {
      * @memberof WorkflowSchemeAssociationsWorkflowScheme
      */
     updateDraftIfNeeded?: boolean;
-    /**
-     * The issue types available in Jira.
-     * @type {{ [key: string]: IssueTypeDetails; }}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly issueTypes?: { [key: string]: IssueTypeDetails; };
 }
 /**
  * The ID and the name of the workflow scheme.
@@ -22924,18 +23977,6 @@ export interface WorkflowSchemeIdName {
  */
 export interface WorkflowSchemeLastModifiedUser {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
      * @type {string}
      * @memberof WorkflowSchemeLastModifiedUser
@@ -22952,17 +23993,17 @@ export interface WorkflowSchemeLastModifiedUser {
      */
     readonly accountType?: WorkflowSchemeLastModifiedUserAccountTypeEnum;
     /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
+     * Whether the user is active.
+     * @type {boolean}
      * @memberof WorkflowSchemeLastModifiedUser
      */
-    name?: string;
+    readonly active?: boolean;
     /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
+     * 
+     * @type {UserApplicationRoles}
      * @memberof WorkflowSchemeLastModifiedUser
      */
-    readonly emailAddress?: string;
+    applicationRoles?: UserApplicationRoles;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -22976,23 +24017,17 @@ export interface WorkflowSchemeLastModifiedUser {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
      * @type {string}
      * @memberof WorkflowSchemeLastModifiedUser
      */
-    readonly timeZone?: string;
+    readonly emailAddress?: string;
     /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * Expand options that include additional user details in the response.
      * @type {string}
      * @memberof WorkflowSchemeLastModifiedUser
      */
-    readonly locale?: string;
+    readonly expand?: string;
     /**
      * 
      * @type {UserGroups}
@@ -23000,17 +24035,35 @@ export interface WorkflowSchemeLastModifiedUser {
      */
     groups?: UserGroups;
     /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * Expand options that include additional user details in the response.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
      * @memberof WorkflowSchemeLastModifiedUser
      */
-    readonly expand?: string;
+    key?: string;
+    /**
+     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof WorkflowSchemeLastModifiedUser
+     */
+    readonly locale?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof WorkflowSchemeLastModifiedUser
+     */
+    name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof WorkflowSchemeLastModifiedUser
+     */
+    readonly self?: string;
+    /**
+     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * @type {string}
+     * @memberof WorkflowSchemeLastModifiedUser
+     */
+    readonly timeZone?: string;
 }
 
 
@@ -23032,17 +24085,17 @@ export type WorkflowSchemeLastModifiedUserAccountTypeEnum = typeof WorkflowSchem
  */
 export interface WorkflowSchemeProjectAssociation {
     /**
-     * The ID of the workflow scheme. If the workflow scheme ID is `null`, the operation assigns the default workflow scheme.
-     * @type {string}
-     * @memberof WorkflowSchemeProjectAssociation
-     */
-    workflowSchemeId?: string;
-    /**
      * The ID of the project.
      * @type {string}
      * @memberof WorkflowSchemeProjectAssociation
      */
     projectId: string;
+    /**
+     * The ID of the workflow scheme. If the workflow scheme ID is `null`, the operation assigns the default workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeProjectAssociation
+     */
+    workflowSchemeId?: string;
 }
 /**
  * A workflow transition rule condition. This object returns `nodeType` as `simple`.
@@ -23050,12 +24103,6 @@ export interface WorkflowSchemeProjectAssociation {
  * @interface WorkflowSimpleCondition
  */
 export interface WorkflowSimpleCondition {
-    /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof WorkflowSimpleCondition
-     */
-    type: string;
     /**
      * EXPERIMENTAL. The configuration of the transition rule.
      * @type {object}
@@ -23068,6 +24115,12 @@ export interface WorkflowSimpleCondition {
      * @memberof WorkflowSimpleCondition
      */
     nodeType: string;
+    /**
+     * The type of the transition rule.
+     * @type {string}
+     * @memberof WorkflowSimpleCondition
+     */
+    type: string;
 }
 /**
  * Details of a workflow status.
@@ -23121,6 +24174,12 @@ export interface WorkflowTransition {
 export interface WorkflowTransitionProperty {
     [key: string]: any | any;
     /**
+     * The ID of the transition property.
+     * @type {string}
+     * @memberof WorkflowTransitionProperty
+     */
+    readonly id?: string;
+    /**
      * The key of the transition property. Also known as the name of the transition property.
      * @type {string}
      * @memberof WorkflowTransitionProperty
@@ -23132,12 +24191,6 @@ export interface WorkflowTransitionProperty {
      * @memberof WorkflowTransitionProperty
      */
     value: string;
-    /**
-     * The ID of the transition property.
-     * @type {string}
-     * @memberof WorkflowTransitionProperty
-     */
-    readonly id?: string;
 }
 /**
  * A workflow transition rule.
@@ -23146,17 +24199,17 @@ export interface WorkflowTransitionProperty {
  */
 export interface WorkflowTransitionRule {
     /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof WorkflowTransitionRule
-     */
-    type: string;
-    /**
      * EXPERIMENTAL. The configuration of the transition rule.
      * @type {any}
      * @memberof WorkflowTransitionRule
      */
     _configuration?: any | null;
+    /**
+     * The type of the transition rule.
+     * @type {string}
+     * @memberof WorkflowTransitionRule
+     */
+    type: string;
 }
 /**
  * A workflow with transition rules.
@@ -23165,29 +24218,29 @@ export interface WorkflowTransitionRule {
  */
 export interface WorkflowTransitionRules {
     /**
+     * The list of conditions within the workflow.
+     * @type {Array<AppWorkflowTransitionRule>}
+     * @memberof WorkflowTransitionRules
+     */
+    conditions?: Array<AppWorkflowTransitionRule>;
+    /**
+     * The list of post functions within the workflow.
+     * @type {Array<AppWorkflowTransitionRule>}
+     * @memberof WorkflowTransitionRules
+     */
+    postFunctions?: Array<AppWorkflowTransitionRule>;
+    /**
+     * The list of validators within the workflow.
+     * @type {Array<AppWorkflowTransitionRule>}
+     * @memberof WorkflowTransitionRules
+     */
+    validators?: Array<AppWorkflowTransitionRule>;
+    /**
      * 
      * @type {WorkflowId}
      * @memberof WorkflowTransitionRules
      */
     workflowId: WorkflowId;
-    /**
-     * The list of post functions within the workflow.
-     * @type {Array<ConnectWorkflowTransitionRule>}
-     * @memberof WorkflowTransitionRules
-     */
-    postFunctions?: Array<ConnectWorkflowTransitionRule>;
-    /**
-     * The list of conditions within the workflow.
-     * @type {Array<ConnectWorkflowTransitionRule>}
-     * @memberof WorkflowTransitionRules
-     */
-    conditions?: Array<ConnectWorkflowTransitionRule>;
-    /**
-     * The list of validators within the workflow.
-     * @type {Array<ConnectWorkflowTransitionRule>}
-     * @memberof WorkflowTransitionRules
-     */
-    validators?: Array<ConnectWorkflowTransitionRule>;
 }
 /**
  * Details about a workflow configuration update request.
@@ -23228,12 +24281,6 @@ export interface WorkflowTransitionRulesUpdate {
  */
 export interface WorkflowTransitionRulesUpdateErrorDetails {
     /**
-     * 
-     * @type {WorkflowId}
-     * @memberof WorkflowTransitionRulesUpdateErrorDetails
-     */
-    workflowId: WorkflowId;
-    /**
      * A list of transition rule update errors, indexed by the transition rule ID. Any transition rule that appears here wasn't updated.
      * @type {{ [key: string]: string[]; }}
      * @memberof WorkflowTransitionRulesUpdateErrorDetails
@@ -23245,6 +24292,12 @@ export interface WorkflowTransitionRulesUpdateErrorDetails {
      * @memberof WorkflowTransitionRulesUpdateErrorDetails
      */
     updateErrors: string[];
+    /**
+     * 
+     * @type {WorkflowId}
+     * @memberof WorkflowTransitionRulesUpdateErrorDetails
+     */
+    workflowId: WorkflowId;
 }
 /**
  * Details of any errors encountered while updating workflow transition rules.
@@ -23280,23 +24333,11 @@ export interface WorkflowsWithTransitionRulesDetails {
 export interface Worklog {
     [key: string]: any | any;
     /**
-     * The URL of the worklog item.
-     * @type {string}
-     * @memberof Worklog
-     */
-    readonly self?: string;
-    /**
      * 
      * @type {WorklogAuthor}
      * @memberof Worklog
      */
     author?: WorklogAuthor;
-    /**
-     * 
-     * @type {WorklogUpdateAuthor}
-     * @memberof Worklog
-     */
-    updateAuthor?: WorklogUpdateAuthor;
     /**
      * A comment about the worklog in [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/). Optional when creating or updating a worklog.
      * @type {any}
@@ -23310,17 +24351,29 @@ export interface Worklog {
      */
     readonly created?: string;
     /**
-     * The datetime on which the worklog was last updated.
+     * The ID of the worklog record.
      * @type {string}
      * @memberof Worklog
      */
-    readonly updated?: string;
+    readonly id?: string;
     /**
-     * 
-     * @type {WorklogVisibility}
+     * The ID of the issue this worklog is for.
+     * @type {string}
      * @memberof Worklog
      */
-    visibility?: WorklogVisibility;
+    readonly issueId?: string;
+    /**
+     * Details of properties for the worklog. Optional when creating or updating a worklog.
+     * @type {Array<EntityProperty>}
+     * @memberof Worklog
+     */
+    properties?: Array<EntityProperty>;
+    /**
+     * The URL of the worklog item.
+     * @type {string}
+     * @memberof Worklog
+     */
+    readonly self?: string;
     /**
      * The datetime on which the worklog effort was started. Required when creating a worklog. Optional when updating a worklog.
      * @type {string}
@@ -23340,23 +24393,23 @@ export interface Worklog {
      */
     timeSpentSeconds?: number;
     /**
-     * The ID of the worklog record.
+     * 
+     * @type {WorklogUpdateAuthor}
+     * @memberof Worklog
+     */
+    updateAuthor?: WorklogUpdateAuthor;
+    /**
+     * The datetime on which the worklog was last updated.
      * @type {string}
      * @memberof Worklog
      */
-    readonly id?: string;
+    readonly updated?: string;
     /**
-     * The ID of the issue this worklog is for.
-     * @type {string}
+     * 
+     * @type {WorklogVisibility}
      * @memberof Worklog
      */
-    readonly issueId?: string;
-    /**
-     * Details of properties for the worklog. Optional when creating or updating a worklog.
-     * @type {Array<EntityProperty>}
-     * @memberof Worklog
-     */
-    properties?: Array<EntityProperty>;
+    visibility?: WorklogVisibility;
 }
 /**
  * Details of the user who created the worklog.
@@ -23365,35 +24418,23 @@ export interface Worklog {
  */
 export interface WorklogAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof WorklogAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof WorklogAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof WorklogAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -23407,23 +24448,35 @@ export interface WorklogAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof WorklogAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof WorklogAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof WorklogAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof WorklogAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof WorklogAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * 
@@ -23445,35 +24498,23 @@ export interface WorklogIdsRequestBean {
  */
 export interface WorklogUpdateAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof WorklogUpdateAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof WorklogUpdateAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof WorklogUpdateAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {UserAvatarUrls}
@@ -23487,23 +24528,35 @@ export interface WorklogUpdateAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof WorklogUpdateAuthor
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof WorklogUpdateAuthor
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof WorklogUpdateAuthor
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof WorklogUpdateAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof WorklogUpdateAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly accountType?: string;
 }
 /**
  * Details about any restrictions in the visibility of the worklog. Optional when creating or updating a worklog.
@@ -23511,6 +24564,12 @@ export interface WorklogUpdateAuthor {
  * @interface WorklogVisibility
  */
 export interface WorklogVisibility {
+    /**
+     * The ID of the group or the name of the role that visibility of this item is restricted to.
+     * @type {string}
+     * @memberof WorklogVisibility
+     */
+    identifier?: string | null;
     /**
      * Whether visibility of this item is restricted to a group or role.
      * @type {string}
@@ -23523,12 +24582,6 @@ export interface WorklogVisibility {
      * @memberof WorklogVisibility
      */
     value?: string;
-    /**
-     * The ID of the group or the name of the role that visibility of this item is restricted to.
-     * @type {string}
-     * @memberof WorklogVisibility
-     */
-    identifier?: string | null;
 }
 
 

@@ -53,7 +53,8 @@ export interface GetTrashedFieldsPaginatedRequest {
     maxResults?: number;
     id?: string[];
     query?: string;
-    orderBy?: GetTrashedFieldsPaginatedOrderByEnum;
+    expand?: GetTrashedFieldsPaginatedExpandEnum;
+    orderBy?: string;
 }
 
 export interface RestoreCustomFieldRequest {
@@ -327,6 +328,10 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             queryParameters['query'] = requestParameters.query;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.orderBy !== undefined) {
             queryParameters['orderBy'] = requestParameters.orderBy;
         }
@@ -521,7 +526,7 @@ export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum
 /**
  * @export
  */
-export const GetTrashedFieldsPaginatedOrderByEnum = {
+export const GetTrashedFieldsPaginatedExpandEnum = {
     Name: 'name',
     NameDesc: '-name',
     NameAsc: '+name',
@@ -530,6 +535,9 @@ export const GetTrashedFieldsPaginatedOrderByEnum = {
     TrashDateAsc: '+trashDate',
     PlannedDeletionDate: 'plannedDeletionDate',
     PlannedDeletionDateDesc: '-plannedDeletionDate',
-    PlannedDeletionDateAsc: '+plannedDeletionDate'
+    PlannedDeletionDateAsc: '+plannedDeletionDate',
+    ProjectsCount: 'projectsCount',
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
-export type GetTrashedFieldsPaginatedOrderByEnum = typeof GetTrashedFieldsPaginatedOrderByEnum[keyof typeof GetTrashedFieldsPaginatedOrderByEnum];
+export type GetTrashedFieldsPaginatedExpandEnum = typeof GetTrashedFieldsPaginatedExpandEnum[keyof typeof GetTrashedFieldsPaginatedExpandEnum];

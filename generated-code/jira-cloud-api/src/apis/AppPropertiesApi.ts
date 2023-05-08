@@ -25,6 +25,10 @@ export interface AddonPropertiesResourceDeleteAddonPropertyDeleteRequest {
     propertyKey: string;
 }
 
+export interface AddonPropertiesResourceDeleteAppPropertyDeleteRequest {
+    propertyKey: string;
+}
+
 export interface AddonPropertiesResourceGetAddonPropertiesGetRequest {
     addonKey: string;
 }
@@ -36,6 +40,11 @@ export interface AddonPropertiesResourceGetAddonPropertyGetRequest {
 
 export interface AddonPropertiesResourcePutAddonPropertyPutRequest {
     addonKey: string;
+    propertyKey: string;
+    body: any | null;
+}
+
+export interface AddonPropertiesResourcePutAppPropertyPutRequest {
     propertyKey: string;
     body: any | null;
 }
@@ -81,7 +90,46 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request.
+     * Deletes a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request.
+     * Delete app property (Forge)
+     */
+    async addonPropertiesResourceDeleteAppPropertyDeleteRaw(requestParameters: AddonPropertiesResourceDeleteAppPropertyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling addonPropertiesResourceDeleteAppPropertyDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a Forge app\'s property.  **[Permissions](#permissions) required:** Only Forge apps can make this request.
+     * Delete app property (Forge)
+     */
+    async addonPropertiesResourceDeleteAppPropertyDelete(requestParameters: AddonPropertiesResourceDeleteAppPropertyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.addonPropertiesResourceDeleteAppPropertyDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps published on the Marketplace can access properties of Connect apps they were [migrated from](https://developer.atlassian.com/platform/forge/build-a-connect-on-forge-app/).
      * Get app properties
      */
     async addonPropertiesResourceGetAddonPropertiesGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
@@ -93,6 +141,14 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
         const response = await this.request({
             path: `/rest/atlassian-connect/1/addons/{addonKey}/properties`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))),
             method: 'GET',
@@ -104,7 +160,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request.
+     * Gets all the properties of an app.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps published on the Marketplace can access properties of Connect apps they were [migrated from](https://developer.atlassian.com/platform/forge/build-a-connect-on-forge-app/).
      * Get app properties
      */
     async addonPropertiesResourceGetAddonPropertiesGet(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PropertyKeys> {
@@ -113,7 +169,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request.
+     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps published on the Marketplace can access properties of Connect apps they were [migrated from](https://developer.atlassian.com/platform/forge/build-a-connect-on-forge-app/).
      * Get app property
      */
     async addonPropertiesResourceGetAddonPropertyGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
@@ -129,6 +185,14 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
         const response = await this.request({
             path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
@@ -140,7 +204,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request.
+     * Returns the key and value of an app\'s property.  **[Permissions](#permissions) required:** Only a Connect app whose key matches `addonKey` can make this request. Additionally, Forge apps published on the Marketplace can access properties of Connect apps they were [migrated from](https://developer.atlassian.com/platform/forge/build-a-connect-on-forge-app/).
      * Get app property
      */
     async addonPropertiesResourceGetAddonPropertyGet(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EntityProperty> {
@@ -188,6 +252,53 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      */
     async addonPropertiesResourcePutAddonPropertyPut(requestParameters: AddonPropertiesResourcePutAddonPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OperationMessage> {
         const response = await this.addonPropertiesResourcePutAddonPropertyPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Sets the value of a Forge app\'s property. These values can be retrieved in [Jira expressions](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/) through the `app` [context variable](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/#context-variables).  For other use cases, use the [Storage API](https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/).  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only Forge apps can make this request.
+     * Set app property (Forge)
+     */
+    async addonPropertiesResourcePutAppPropertyPutRaw(requestParameters: AddonPropertiesResourcePutAppPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling addonPropertiesResourcePutAppPropertyPut.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addonPropertiesResourcePutAppPropertyPut.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.body as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Sets the value of a Forge app\'s property. These values can be retrieved in [Jira expressions](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/) through the `app` [context variable](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/#context-variables).  For other use cases, use the [Storage API](https://developer.atlassian.com/platform/forge/runtime-reference/storage-api/).  The value of the request body must be a [valid](http://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.  **[Permissions](#permissions) required:** Only Forge apps can make this request.
+     * Set app property (Forge)
+     */
+    async addonPropertiesResourcePutAppPropertyPut(requestParameters: AddonPropertiesResourcePutAppPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OperationMessage> {
+        const response = await this.addonPropertiesResourcePutAppPropertyPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

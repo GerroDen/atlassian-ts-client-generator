@@ -9,4 +9,5 @@ export * from './EpicApi';
 export * from './FeatureFlagsApi';
 export * from './IssueApi';
 export * from './RemoteLinksApi';
+export * from './SecurityInformationApi';
 export * from './SprintApi';

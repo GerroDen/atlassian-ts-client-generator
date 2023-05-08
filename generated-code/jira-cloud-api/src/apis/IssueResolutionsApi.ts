@@ -44,8 +44,8 @@ export interface MoveResolutionsRequest {
 }
 
 export interface SearchResolutionsRequest {
-    startAt?: number;
-    maxResults?: number;
+    startAt?: string;
+    maxResults?: string;
     id?: Array<string>;
     onlyDefault?: boolean;
 }

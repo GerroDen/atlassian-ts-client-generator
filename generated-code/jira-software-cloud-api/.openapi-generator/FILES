@@ -13,6 +13,7 @@ src/apis/EpicApi.ts
 src/apis/FeatureFlagsApi.ts
 src/apis/IssueApi.ts
 src/apis/RemoteLinksApi.ts
+src/apis/SecurityInformationApi.ts
 src/apis/SprintApi.ts
 src/apis/index.ts
 src/index.ts
