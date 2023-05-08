@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import glob from "glob";
-import { promises as fs } from "fs";
+import glob from "fast-glob";
+import fs from "fs/promises";
 
 try {
   const files = glob.sync("generated-code/confluence-cloud-api/**/*.ts", {

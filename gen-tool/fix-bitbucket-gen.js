@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import glob from "glob";
+import glob from "fast-glob";
 import { promises as fs } from "fs";
 
 try {

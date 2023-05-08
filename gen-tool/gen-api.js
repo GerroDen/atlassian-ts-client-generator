@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import execSh from "exec-sh";
-import { promises as fs } from "fs";
+import fs from "fs/promises";
 
 const [, scriptName, dir] = process.argv;
 if (!dir) {

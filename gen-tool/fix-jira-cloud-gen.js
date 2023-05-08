@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import glob from "glob";
-import { promises as fs } from "fs";
+import glob from "fast-glob";
+import fs from "fs/promises";
 
 const [, scriptName, dir] = process.argv;
 if (!dir) {
