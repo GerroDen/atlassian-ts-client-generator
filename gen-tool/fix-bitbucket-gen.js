@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 import glob from "fast-glob";
 import { promises as fs } from "fs";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 try {
   /** @type string[] */
   const files = glob.sync("generated-code/bitbucket-api/**/*.ts", {
+    cwd: rootDir,
     absolute: true,
   });
   for (let file of files) {

@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import glob from "fast-glob";
 import fs from "fs/promises";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const [, scriptName, dir] = process.argv;
 if (!dir) {
@@ -9,7 +13,7 @@ if (!dir) {
 }
 
 try {
-  const files = glob.sync(`${dir}/**/*.ts`, { absolute: true });
+  const files = glob.sync(`${dir}/**/*.ts`, { absolute: true, cwd: rootDir });
   for (let file of files) {
     /** @type string */
     let content = await fs.readFile(file, { encoding: "utf8" });
