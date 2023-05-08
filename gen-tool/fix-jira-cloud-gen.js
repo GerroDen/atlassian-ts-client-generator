@@ -26,8 +26,8 @@ try {
     content = content.replace(/_24x24/g, `["24x24"]`);
     content = content.replace(/_32x32/g, `["32x32"]`);
     content = content.replace(/_48x48/g, `["48x48"]`);
-    content = content.replace(/(.*): ('\+.*?')/g, "$1Asc: $2");
-    content = content.replace(/(.*): ('-.*?')/g, "$1Desc: $2");
+    content = content.replace(/(.+): ('\+.+')/g, "$1Asc: $2");
+    content = content.replace(/(.+): ('-.+')/g, "$1Desc: $2");
     content = content.replace(
       /\{ \[key: string]: JsonNode; }/g,
       "{ [key: string]: any; }"

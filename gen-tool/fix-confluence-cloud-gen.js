@@ -22,6 +22,7 @@ try {
       "status: BulkRemoveContentStatesStatusEnum;",
       "status: BulkRemoveContentStatesOperationStatusEnum;"
     );
+    content = content.replace(/(.+): ('-.+')/g, "$1Desc: $2");
     await fs.writeFile(file, content);
   }
 } catch (e) {
