@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.7.0",
+    "@types/jscodeshift": "^0.11.6",
     "eslint-config-prettier": "^9.0.0",
     "exec-sh": "^0.4.0",
     "fast-glob": "^3.3.1",
