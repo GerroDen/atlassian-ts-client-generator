@@ -20,15 +20,15 @@ try {
     content = content.replace(/\*\/example/g, "*\\/example");
     content = content.replace(
       /properties\?: Array<object>;/g,
-      "properties?: Array<string>;"
+      "properties?: Array<string>;",
     );
     content = content.replace(
       /type\?: object;/g,
-      `type?: "scrum" | "kanban" | "simple";`
+      `type?: "scrum" | "kanban" | "simple";`,
     );
     content = content.replace(
       /typeKey\?: string;/g,
-      `typeKey?: "business" | "service_desk" | "software";`
+      `typeKey?: "business" | "service_desk" | "software";`,
     );
     content = content.replace(/_16x16/g, `["16x16"]`);
     content = content.replace(/_24x24/g, `["24x24"]`);
@@ -38,7 +38,7 @@ try {
     content = content.replace(/(.+): ('-.+')/g, "$1Desc: $2");
     content = content.replace(
       /\{ \[key: string]: JsonNode; }/g,
-      "{ [key: string]: any; }"
+      "{ [key: string]: any; }",
     );
     content = content.replace(/Set<(.*?)>;/g, "$1[];");
     content = content.replace(/export \* from '\.\/BoardsApi';\n/g, "");

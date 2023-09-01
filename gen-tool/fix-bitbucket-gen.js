@@ -17,16 +17,16 @@ try {
     let content = await fs.readFile(file, { encoding: "utf8" });
     content = content.replace(
       "async streamRaw(requestParameters: StreamRequest,",
-      "async _streamRaw(requestParameters: StreamRequest,"
+      "async _streamRaw(requestParameters: StreamRequest,",
     );
     content = content.replace(
       "await this.streamRaw(requestParameters,",
-      "await this._streamRaw(requestParameters,"
+      "await this._streamRaw(requestParameters,",
     );
     if (!file.endsWith("/src/models/index.ts")) {
       content = content.replaceAll(
         /export interface (.+)Request {/g,
-        "interface $1Request {"
+        "interface $1Request {",
       );
     }
     await fs.writeFile(file, content);

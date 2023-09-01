@@ -22,13 +22,13 @@ const generatorParameter = additionalProperties({
 await fs.rm(`generated-code/${dir}`, { recursive: true, force: true });
 try {
   await execSh.promise(
-    `npx @openapitools/openapi-generator-cli generate -i ${dir}/swagger.json -g ${generator} -o generated-code/${dir} -p ${generatorParameter} --skip-validate-spec`
+    `npx @openapitools/openapi-generator-cli generate -i ${dir}/swagger.json -g ${generator} -o generated-code/${dir} -p ${generatorParameter} --skip-validate-spec`,
   );
   const fileContent = await fs.readFile(`generated-code/${dir}/package.json`, {
     encoding: "utf8",
   });
   const { name, version, description, author } = JSON.parse(
-    fileContent.toString()
+    fileContent.toString(),
   );
   const packageJson = {
     name,
@@ -40,7 +40,7 @@ try {
   };
   await fs.writeFile(
     `generated-code/${dir}/package.json`,
-    JSON.stringify(packageJson, null, 2) + "\n"
+    JSON.stringify(packageJson, null, 2) + "\n",
   );
 } catch (e) {
   console.error("=======================");
