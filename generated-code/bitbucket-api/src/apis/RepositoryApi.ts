@@ -3004,11 +3004,7 @@ export class RepositoryApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
@@ -3048,11 +3044,7 @@ export class RepositoryApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
@@ -4464,11 +4456,7 @@ export class RepositoryApi extends runtime.BaseAPI {
             body: requestParameters.restWebhookCredentials,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**

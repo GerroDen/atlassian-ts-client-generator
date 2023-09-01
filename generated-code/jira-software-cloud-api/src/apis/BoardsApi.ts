@@ -21,7 +21,7 @@ import type {
 export interface GetAllBoardsRequest {
     startAt?: number;
     maxResults?: number;
-    type?: object;
+    type?: "scrum" | "kanban" | "simple";
     name?: string;
     projectKeyOrId?: string;
     accountIdLocation?: string;

@@ -250,7 +250,7 @@ export interface AsyncContentBody {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof AsyncContentBody
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -1524,7 +1524,7 @@ export interface Content {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Content
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -2170,7 +2170,7 @@ export interface ContentChildren {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentChildren
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -2756,7 +2756,7 @@ export interface ContentHistory {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentHistory
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -3435,7 +3435,7 @@ export interface ContentRestrictionAddOrUpdateArrayOneOf {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentRestrictionAddOrUpdateArrayOneOf
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -3675,7 +3675,7 @@ export interface ContentRestrictions {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof ContentRestrictions
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4727,7 +4727,7 @@ export interface GetContentForSpace200Response {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof GetContentForSpace200Response
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4746,7 +4746,7 @@ export interface GetRestrictionsByOperation200ResponseValue {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof GetRestrictionsByOperation200ResponseValue
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -4828,7 +4828,7 @@ export interface Group {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Group
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -5129,7 +5129,7 @@ export interface LabelArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LabelArray
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5791,7 +5791,7 @@ export interface LookAndFeelWithLinks {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LookAndFeelWithLinks
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5804,7 +5804,7 @@ export interface LookAndFeelWithLinksAllOf {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof LookAndFeelWithLinksAllOf
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -5835,7 +5835,7 @@ export interface MacroInstance {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof MacroInstance
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -6029,7 +6029,7 @@ export interface PermissionCheckResponse {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof PermissionCheckResponse
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * The user or group that the permission applies to.
@@ -7171,7 +7171,7 @@ export interface SpacePermissionRequest {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpacePermissionRequest
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * The users and/or groups that the permission applies to.
@@ -7317,7 +7317,7 @@ export interface SpacePermissionV2 {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpacePermissionV2
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -7414,7 +7414,7 @@ export interface SpaceProperty {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpaceProperty
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
     /**
      * 
      * @type {SpacePropertyExpandable}
@@ -7756,7 +7756,7 @@ export interface SpaceWatchArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof SpaceWatchArray
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -7995,7 +7995,7 @@ export interface Task {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Task
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8087,7 +8087,7 @@ export interface Theme {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Theme
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8327,7 +8327,7 @@ export interface User {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof User
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 
 
@@ -8456,7 +8456,7 @@ export interface UserArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserArray
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8588,7 +8588,7 @@ export interface UserProperty {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserProperty
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8638,7 +8638,7 @@ export interface UserPropertyKeyArray {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UserPropertyKeyArray
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8703,7 +8703,7 @@ export interface UsersUserKeys {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof UsersUserKeys
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
 }
 /**
  * 
@@ -8772,7 +8772,7 @@ export interface Version {
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Version
      */
-    ___links?: { [key: string]: GenericLinksValue; };
+    __links?: { [key: string]: GenericLinksValue; };
     /**
      * True if content type is modifed in this version (e.g. page to blog)
      * @type {boolean}

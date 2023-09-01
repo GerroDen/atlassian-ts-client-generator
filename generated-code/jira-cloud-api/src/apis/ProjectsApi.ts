@@ -84,7 +84,7 @@ export interface SearchProjectsRequest {
     id?: number[];
     keys?: string[];
     query?: string;
-    typeKey?: string;
+    typeKey?: "business" | "service_desk" | "software";
     categoryId?: number;
     action?: SearchProjectsActionEnum;
     expand?: string;
