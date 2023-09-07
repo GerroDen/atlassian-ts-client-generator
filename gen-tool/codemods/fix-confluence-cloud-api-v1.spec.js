@@ -5,13 +5,13 @@ const transformer = await import("./fix-confluence-cloud-api-v1.cjs");
 describe("fix-confluence-cloud-api-v1", () => {
   const options = Object.freeze({ parser: "ts" });
 
-  it("escapes link property declarations in interfaces", () => {
+  it("fix link property declarations in interfaces", () => {
     const result = applyTransform(
       transformer,
       options,
       {
         source: `export interface GetRestrictionsByOperation200ResponseValue {
-  operationType?: ContentRestriction;
+  links: LookAndFeelHeadings;
   links?: { [key: string]: GenericLinksValue; };
 }`,
       },
@@ -20,7 +20,7 @@ describe("fix-confluence-cloud-api-v1", () => {
 
     expect(result)
       .toBe(`export interface GetRestrictionsByOperation200ResponseValue {
-  operationType?: ContentRestriction;
+  links: LookAndFeelHeadings;
   _links?: { [key: string]: GenericLinksValue; };
 }`);
   });

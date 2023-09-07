@@ -4,6 +4,11 @@ const transformer = (file, { j }) => {
   source
     .find(j.TSPropertySignature)
     .filter((path) => path.value.key?.name === "links")
+    .filter(
+      (path) =>
+        path.value.typeAnnotation?.typeAnnotation?.members?.[0]?.typeAnnotation
+          ?.typeAnnotation?.typeName?.name === "GenericLinksValue",
+    )
     .forEach((path) => {
       path.node.key.name = "_links";
     });
