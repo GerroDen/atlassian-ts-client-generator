@@ -28,7 +28,7 @@
     "gen:confluence-cloud-api-v1:lint": "tsc -p generated-code/confluence-cloud-api-v1 --noEmit",
     "gen:confluence-cloud-api-v2": "run-s 'gen:confluence-cloud-api-v2:*'",
     "gen:confluence-cloud-api-v2:gen": "gen-tool/gen-api.js confluence-cloud-api-v2",
-    "gen:confluence-cloud-api-v2:fix": "gen-tool/fix-confluence-cloud-gen.js",
+    "gen:confluence-cloud-api-v2:fix": "jscodeshift -t gen-tool/codemods/fix-confluence-cloud-api-v2.cjs --parser=ts --extensions=ts generated-code/confluence-cloud-api-v2/src",
     "gen:confluence-cloud-api-v2:lint": "tsc -p generated-code/confluence-cloud-api-v2 --noEmit",
     "gen:jira-cloud-api": "run-s 'gen:jira-cloud-api:*'",
     "gen:jira-cloud-api:gen": "gen-tool/gen-api.js jira-cloud-api",
