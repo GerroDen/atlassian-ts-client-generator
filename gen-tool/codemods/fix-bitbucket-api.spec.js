@@ -69,4 +69,51 @@ describe("fix-bitbucket-api", () => {
   }
 }`);
   });
+
+  it("removes export from request interfaces", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface AddForProjectRequest {
+    projectKey: string;
+    restSshAccessKey?: RestSshAccessKey;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`interface AddForProjectRequest {
+    projectKey: string;
+    restSshAccessKey?: RestSshAccessKey;
+}`);
+  });
+
+  it("", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        path: "foo/models/index.ts",
+        source: `interface SetDefaultBranchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SetDefaultBranchRequest
+     */
+    id?: string;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`interface SetDefaultBranchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SetDefaultBranchRequest
+     */
+    id?: string;
+}`);
+  });
 });
