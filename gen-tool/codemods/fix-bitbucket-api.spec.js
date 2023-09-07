@@ -89,7 +89,7 @@ describe("fix-bitbucket-api", () => {
 }`);
   });
 
-  it("", () => {
+  it("skips model definitions", () => {
     const result = applyTransform(
       transformer,
       options,
