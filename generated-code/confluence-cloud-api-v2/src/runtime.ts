@@ -171,10 +171,10 @@ export class BaseAPI {
         let fetchParams = { url, init };
         for (const middleware of this.middleware) {
             if (middleware.pre) {
-                fetchParams = await middleware.pre({
+                fetchParams = (await middleware.pre({
                     fetch: this.fetchApi,
                     ...fetchParams,
-                }) || fetchParams;
+                })) || fetchParams;
             }
         }
         let response: Response | undefined = undefined;
@@ -183,13 +183,13 @@ export class BaseAPI {
         } catch (e) {
             for (const middleware of this.middleware) {
                 if (middleware.onError) {
-                    response = await middleware.onError({
+                    response = (await middleware.onError({
                         fetch: this.fetchApi,
                         url: fetchParams.url,
                         init: fetchParams.init,
                         error: e,
                         response: response ? response.clone() : undefined,
-                    }) || response;
+                    })) || response;
                 }
             }
             if (response === undefined) {
@@ -202,12 +202,12 @@ export class BaseAPI {
         }
         for (const middleware of this.middleware) {
             if (middleware.post) {
-                response = await middleware.post({
+                response = (await middleware.post({
                     fetch: this.fetchApi,
                     url: fetchParams.url,
                     init: fetchParams.init,
                     response: response.clone(),
-                }) || response;
+                })) || response;
             }
         }
         return response;
