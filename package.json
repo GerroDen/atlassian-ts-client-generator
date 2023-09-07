@@ -20,7 +20,7 @@
     "gen:bamboo-api:lint": "tsc -p generated-code/bamboo-api --noEmit",
     "gen:bitbucket-api": "run-s 'gen:bitbucket-api:*'",
     "gen:bitbucket-api:gen": "gen-tool/gen-api.js bitbucket-api",
-    "gen:bitbucket-api:fix": "gen-tool/fix-bitbucket-gen.js",
+    "gen:bitbucket-api:fix": "jscodeshift -t gen-tool/codemods/fix-bitbucket-api.cjs --parser=ts --extensions=ts generated-code/bitbucket-api/src",
     "gen:bitbucket-api:lint": "tsc -p generated-code/bitbucket-api --noEmit",
     "gen:confluence-cloud-api-v1": "run-s 'gen:confluence-cloud-api-v1:*'",
     "gen:confluence-cloud-api-v1:gen": "gen-tool/gen-api.js confluence-cloud-api-v1",
