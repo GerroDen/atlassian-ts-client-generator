@@ -1,8 +1,8 @@
 import { applyTransform } from "jscodeshift/src/testUtils.js";
 
-const transformer = await import("./fix-confluence-cloud-api.cjs");
+const transformer = await import("./fix-confluence-cloud-api-v1.cjs");
 
-describe("fix-confluence-cloud-api", () => {
+describe("fix-confluence-cloud-api-v1", () => {
   const options = Object.freeze({ parser: "ts" });
 
   it("escapes link property declarations in interfaces", () => {

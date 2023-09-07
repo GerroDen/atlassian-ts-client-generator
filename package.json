@@ -24,7 +24,7 @@
     "gen:bitbucket-api:lint": "tsc -p generated-code/bitbucket-api --noEmit",
     "gen:confluence-cloud-api-v1": "run-s 'gen:confluence-cloud-api-v1:*'",
     "gen:confluence-cloud-api-v1:gen": "gen-tool/gen-api.js confluence-cloud-api-v1",
-    "gen:confluence-cloud-api-v1:fix": "gen-tool/fix-confluence-cloud-gen.js",
+    "gen:confluence-cloud-api-v1:fix": "jscodeshift -t gen-tool/codemods/fix-confluence-cloud-api-v1.cjs --parser=ts --extensions=ts generated-code/confluence-cloud-api-v1/src",
     "gen:confluence-cloud-api-v1:lint": "tsc -p generated-code/confluence-cloud-api-v1 --noEmit",
     "gen:confluence-cloud-api-v2": "run-s 'gen:confluence-cloud-api-v2:*'",
     "gen:confluence-cloud-api-v2:gen": "gen-tool/gen-api.js confluence-cloud-api-v2",
