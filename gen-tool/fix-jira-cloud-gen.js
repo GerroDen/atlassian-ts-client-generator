@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/*
+ * Some code modifications that cannot be done by code transformations, like file deletion or fixing comments to enable valid parsing.
+ */
 import glob from "fast-glob";
 import fs from "fs/promises";
 import { dirname, resolve } from "path";
@@ -18,30 +21,6 @@ try {
     /** @type string */
     let content = await fs.readFile(file, { encoding: "utf8" });
     content = content.replace(/\*\/example/g, "*\\/example");
-    content = content.replace(
-      /properties\?: Array<object>;/g,
-      "properties?: Array<string>;",
-    );
-    content = content.replace(
-      /type\?: object;/g,
-      `type?: "scrum" | "kanban" | "simple";`,
-    );
-    content = content.replace(
-      /typeKey\?: string;/g,
-      `typeKey?: "business" | "service_desk" | "software";`,
-    );
-    content = content.replace(/_16x16/g, `["16x16"]`);
-    content = content.replace(/_24x24/g, `["24x24"]`);
-    content = content.replace(/_32x32/g, `["32x32"]`);
-    content = content.replace(/_48x48/g, `["48x48"]`);
-    content = content.replace(/(.+): ('\+.+')/g, "$1Asc: $2");
-    content = content.replace(/(.+): ('-.+')/g, "$1Desc: $2");
-    content = content.replace(
-      /\{ \[key: string]: JsonNode; }/g,
-      "{ [key: string]: any; }",
-    );
-    content = content.replace(/Set<(.*?)>;/g, "$1[];");
-    content = content.replace(/export \* from '\.\/BoardsApi';\n/g, "");
     await fs.writeFile(file, content);
   }
 } catch (e) {
