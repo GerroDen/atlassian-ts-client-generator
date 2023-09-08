@@ -12,7 +12,6 @@ export * from './FilterSharingApi';
 export * from './FiltersApi';
 export * from './GroupAndUserPickerApi';
 export * from './GroupsApi';
-export * from './InstanceInformationApi';
 export * from './IssueAttachmentsApi';
 export * from './IssueCommentPropertiesApi';
 export * from './IssueCommentsApi';

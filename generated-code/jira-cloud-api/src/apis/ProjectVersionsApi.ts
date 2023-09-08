@@ -20,8 +20,14 @@ import type {
   Version,
   VersionIssueCounts,
   VersionMoveBean,
+  VersionRelatedWork,
   VersionUnresolvedIssuesCount,
 } from '../models';
+
+export interface CreateRelatedWorkRequest {
+    id: string;
+    versionRelatedWork: VersionRelatedWork;
+}
 
 export interface CreateVersionRequest {
     version: Version;
@@ -30,6 +36,11 @@ export interface CreateVersionRequest {
 export interface DeleteAndReplaceVersionRequest {
     id: string;
     deleteAndReplaceVersionBean: DeleteAndReplaceVersionBean;
+}
+
+export interface DeleteRelatedWorkRequest {
+    versionId: string;
+    relatedWorkId: string;
 }
 
 export interface DeleteVersionRequest {
@@ -51,6 +62,10 @@ export interface GetProjectVersionsPaginatedRequest {
     query?: string;
     status?: string;
     expand?: string;
+}
+
+export interface GetRelatedWorkRequest {
+    id: string;
 }
 
 export interface GetVersionRequest {
@@ -76,6 +91,11 @@ export interface MoveVersionRequest {
     versionMoveBean: VersionMoveBean;
 }
 
+export interface UpdateRelatedWorkRequest {
+    id: string;
+    versionRelatedWork: VersionRelatedWork;
+}
+
 export interface UpdateVersionRequest {
     id: string;
     version: Version;
@@ -85,6 +105,53 @@ export interface UpdateVersionRequest {
  * 
  */
 export class ProjectVersionsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a related work for the given version. You can only create a generic link type of related works via this API. relatedWorkId will be auto-generated UUID, that does not need to be provided.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Create related work
+     */
+    async createRelatedWorkRaw(requestParameters: CreateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createRelatedWork.');
+        }
+
+        if (requestParameters.versionRelatedWork === null || requestParameters.versionRelatedWork === undefined) {
+            throw new runtime.RequiredError('versionRelatedWork','Required parameter requestParameters.versionRelatedWork was null or undefined when calling createRelatedWork.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.versionRelatedWork,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a related work for the given version. You can only create a generic link type of related works via this API. relatedWorkId will be auto-generated UUID, that does not need to be provided.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Create related work
+     */
+    async createRelatedWork(requestParameters: CreateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VersionRelatedWork> {
+        const response = await this.createRelatedWorkRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates a project version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project the version is added to.
@@ -174,6 +241,49 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     async deleteAndReplaceVersion(requestParameters: DeleteAndReplaceVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.deleteAndReplaceVersionRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Deletes the given related work for the given version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Delete related work
+     */
+    async deleteRelatedWorkRaw(requestParameters: DeleteRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.versionId === null || requestParameters.versionId === undefined) {
+            throw new runtime.RequiredError('versionId','Required parameter requestParameters.versionId was null or undefined when calling deleteRelatedWork.');
+        }
+
+        if (requestParameters.relatedWorkId === null || requestParameters.relatedWorkId === undefined) {
+            throw new runtime.RequiredError('relatedWorkId','Required parameter requestParameters.relatedWorkId was null or undefined when calling deleteRelatedWork.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/version/{versionId}/relatedwork/{relatedWorkId}`.replace(`{${"versionId"}}`, encodeURIComponent(String(requestParameters.versionId))).replace(`{${"relatedWorkId"}}`, encodeURIComponent(String(requestParameters.relatedWorkId))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes the given related work for the given version.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Delete related work
+     */
+    async deleteRelatedWork(requestParameters: DeleteRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteRelatedWorkRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -328,6 +438,46 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      */
     async getProjectVersionsPaginated(requestParameters: GetProjectVersionsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanVersion> {
         const response = await this.getProjectVersionsPaginatedRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns related work items for the given version id.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
+     * Get related work
+     */
+    async getRelatedWorkRaw(requestParameters: GetRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VersionRelatedWork>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRelatedWork.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns related work items for the given version id.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the version.
+     * Get related work
+     */
+    async getRelatedWork(requestParameters: GetRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VersionRelatedWork>> {
+        const response = await this.getRelatedWorkRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -543,6 +693,53 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      */
     async moveVersion(requestParameters: MoveVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Version> {
         const response = await this.moveVersionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the given related work. You can only update generic link related works via Rest APIs. Any archived version related works can\'t be edited.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Update related work
+     */
+    async updateRelatedWorkRaw(requestParameters: UpdateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateRelatedWork.');
+        }
+
+        if (requestParameters.versionRelatedWork === null || requestParameters.versionRelatedWork === undefined) {
+            throw new runtime.RequiredError('versionRelatedWork','Required parameter requestParameters.versionRelatedWork was null or undefined when calling updateRelatedWork.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.versionRelatedWork,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Updates the given related work. You can only update generic link related works via Rest APIs. Any archived version related works can\'t be edited.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Resolve issues:* and *Edit issues* [Managing project permissions](https://confluence.atlassian.com/adminjiraserver/managing-project-permissions-938847145.html) for the project that contains the version.
+     * Update related work
+     */
+    async updateRelatedWork(requestParameters: UpdateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VersionRelatedWork> {
+        const response = await this.updateRelatedWorkRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

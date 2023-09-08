@@ -15,7 +15,6 @@ src/apis/FilterSharingApi.ts
 src/apis/FiltersApi.ts
 src/apis/GroupAndUserPickerApi.ts
 src/apis/GroupsApi.ts
-src/apis/InstanceInformationApi.ts
 src/apis/IssueAttachmentsApi.ts
 src/apis/IssueCommentPropertiesApi.ts
 src/apis/IssueCommentsApi.ts

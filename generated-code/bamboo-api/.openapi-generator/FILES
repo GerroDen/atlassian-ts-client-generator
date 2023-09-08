@@ -9,6 +9,7 @@ src/apis/DefaultApi.ts
 src/apis/DeploymentApi.ts
 src/apis/PermissionsApi.ts
 src/apis/ResourceApi.ts
+src/apis/SessionApi.ts
 src/apis/StorageConfigurationApi.ts
 src/apis/TriggersApi.ts
 src/apis/TrustedKeysManagementApi.ts

@@ -59,6 +59,7 @@ export interface GetGroupMembersByGroupIdRequest {
     start?: number;
     limit?: number;
     shouldReturnTotalSize?: boolean;
+    expand?: Array<GetGroupMembersByGroupIdExpandEnum>;
 }
 
 export interface GetGroupsRequest {
@@ -72,6 +73,7 @@ export interface GetMembersByQueryParamRequest {
     start?: number;
     limit?: number;
     shouldReturnTotalSize?: boolean;
+    expand?: Array<GetMembersByQueryParamExpandEnum>;
 }
 
 export interface RemoveGroupRequest {
@@ -434,6 +436,10 @@ export class GroupApi extends runtime.BaseAPI {
             queryParameters['shouldReturnTotalSize'] = requestParameters.shouldReturnTotalSize;
         }
 
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -536,6 +542,10 @@ export class GroupApi extends runtime.BaseAPI {
 
         if (requestParameters.shouldReturnTotalSize !== undefined) {
             queryParameters['shouldReturnTotalSize'] = requestParameters.shouldReturnTotalSize;
+        }
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -824,9 +834,27 @@ export class GroupApi extends runtime.BaseAPI {
 /**
  * @export
  */
+export const GetGroupMembersByGroupIdExpandEnum = {
+    Operations: 'operations',
+    PersonalSpace: 'personalSpace',
+    IsExternalCollaborator: 'isExternalCollaborator'
+} as const;
+export type GetGroupMembersByGroupIdExpandEnum = typeof GetGroupMembersByGroupIdExpandEnum[keyof typeof GetGroupMembersByGroupIdExpandEnum];
+/**
+ * @export
+ */
 export const GetGroupsAccessTypeEnum = {
     User: 'user',
     Admin: 'admin',
     SiteAdmin: 'site-admin'
 } as const;
 export type GetGroupsAccessTypeEnum = typeof GetGroupsAccessTypeEnum[keyof typeof GetGroupsAccessTypeEnum];
+/**
+ * @export
+ */
+export const GetMembersByQueryParamExpandEnum = {
+    Operations: 'operations',
+    PersonalSpace: 'personalSpace',
+    IsExternalCollaborator: 'isExternalCollaborator'
+} as const;
+export type GetMembersByQueryParamExpandEnum = typeof GetMembersByQueryParamExpandEnum[keyof typeof GetMembersByQueryParamExpandEnum];

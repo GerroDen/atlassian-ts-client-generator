@@ -79,11 +79,40 @@ export interface AddContentRestrictionRestrictions {
     /**
      * The groups that the restrictions will be applied to. This array must
      * have at least one item, otherwise it should be omitted.
-     * @type {Array<ContentRestrictionUpdateRestrictionsGroupInner>}
+     * @type {Array<AddContentRestrictionRestrictionsGroupInner>}
      * @memberof AddContentRestrictionRestrictions
      */
-    group?: Array<ContentRestrictionUpdateRestrictionsGroupInner>;
+    group?: Array<AddContentRestrictionRestrictionsGroupInner>;
 }
+/**
+ * A group that the restriction will be applied to.
+ * @export
+ * @interface AddContentRestrictionRestrictionsGroupInner
+ */
+export interface AddContentRestrictionRestrictionsGroupInner {
+    /**
+     * Set to 'group'.
+     * @type {string}
+     * @memberof AddContentRestrictionRestrictionsGroupInner
+     */
+    type: AddContentRestrictionRestrictionsGroupInnerTypeEnum;
+    /**
+     * The name of the group.
+     * @type {string}
+     * @memberof AddContentRestrictionRestrictionsGroupInner
+     */
+    name: string;
+}
+
+
+/**
+ * @export
+ */
+export const AddContentRestrictionRestrictionsGroupInnerTypeEnum = {
+    Group: 'group'
+} as const;
+export type AddContentRestrictionRestrictionsGroupInnerTypeEnum = typeof AddContentRestrictionRestrictionsGroupInnerTypeEnum[keyof typeof AddContentRestrictionRestrictionsGroupInnerTypeEnum];
+
 /**
  * A user that the restriction will be applied to. Either the `username`
  * or the `userKey` must be specified to identify the user.
@@ -362,6 +391,76 @@ export interface AsyncId {
      * @memberof AsyncId
      */
     asyncId: string;
+}
+/**
+ * 
+ * @export
+ * @interface AttachmentPropertiesUpdateBody
+ */
+export interface AttachmentPropertiesUpdateBody {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    id: string;
+    /**
+     * Set this to "attachment"
+     * @type {string}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    type: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    title?: string;
+    /**
+     * Container for content. This can be either a space (containing a page or blogpost)
+     * or a page/blog post (containing an attachment or comment)
+     * @type {{ [key: string]: any; }}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    container?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {AttachmentPropertiesUpdateBodyMetadata}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    metadata?: AttachmentPropertiesUpdateBodyMetadata;
+    /**
+     * 
+     * @type {object}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    extensions?: object;
+    /**
+     * 
+     * @type {Version}
+     * @memberof AttachmentPropertiesUpdateBody
+     */
+    version: Version | null;
+}
+/**
+ * 
+ * @export
+ * @interface AttachmentPropertiesUpdateBodyMetadata
+ */
+export interface AttachmentPropertiesUpdateBodyMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof AttachmentPropertiesUpdateBodyMetadata
+     */
+    mediaType?: string;
 }
 /**
  * 
@@ -2052,7 +2151,7 @@ export interface ContentBodyExpandable {
     raw?: string;
 }
 /**
- * Shows whether a piece of content has attachments, comments, or child pages.
+ * Shows whether a piece of content has attachments, comments, or child pages/whiteboards.
  * Note, this doesn't actually contain the child objects.
  * @export
  * @interface ContentChildType
@@ -2111,28 +2210,34 @@ export interface ContentChildTypeAttachment {
 export interface ContentChildTypeExpandable {
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof ContentChildTypeExpandable
      */
-    all?: object;
+    all?: string;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof ContentChildTypeExpandable
      */
-    attachment?: object;
+    attachment?: string;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof ContentChildTypeExpandable
      */
-    comment?: object;
+    comment?: string;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof ContentChildTypeExpandable
      */
-    page?: object;
+    page?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildTypeExpandable
+     */
+    whiteboard?: string;
 }
 /**
  * 
@@ -3599,7 +3704,8 @@ export type ContentRestrictionUpdateOperationEnum = typeof ContentRestrictionUpd
 export interface ContentRestrictionUpdateRestrictions {
     /**
      * The groups that the restrictions will be applied to. This array must
-     * have at least one item, otherwise it should be omitted.
+     * have at least one item, otherwise it should be omitted. At least one of `name` or `id` is required,
+     * and `id` should be used where possible in advance of the `name` deprecation.
      * @type {Array<ContentRestrictionUpdateRestrictionsGroupInner>}
      * @memberof ContentRestrictionUpdateRestrictions
      */
@@ -3627,8 +3733,15 @@ export interface ContentRestrictionUpdateRestrictionsGroupInner {
      * The name of the group.
      * @type {string}
      * @memberof ContentRestrictionUpdateRestrictionsGroupInner
+     * @deprecated
      */
-    name: string;
+    name?: string;
+    /**
+     * The id of the group.
+     * @type {string}
+     * @memberof ContentRestrictionUpdateRestrictionsGroupInner
+     */
+    id?: string;
 }
 
 
@@ -4822,7 +4935,7 @@ export interface Group {
      * @type {string}
      * @memberof Group
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {{ [key: string]: GenericLinksValue; }}
@@ -4916,7 +5029,7 @@ export interface GroupArrayWithLinks {
     _links: { [key: string]: GenericLinksValue; };
 }
 /**
- * 
+ * The name property will soon be deprecated in favor of using id.
  * @export
  * @interface GroupCreate
  */
@@ -4932,8 +5045,15 @@ export interface GroupCreate {
      * 
      * @type {string}
      * @memberof GroupCreate
+     * @deprecated
      */
-    name: string;
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupCreate
+     */
+    id?: string;
 }
 
 
@@ -6046,7 +6166,8 @@ export interface PermissionSubject {
     /**
      * for `type=user`, identifier should be user's accountId or `anonymous` for anonymous users
      * 
-     * for `type=group`, identifier should be name of the group or groupId
+     * for `type=group`, identifier should be the groupId. We are deprecating groupName support in mid-2024 
+     * for this field but still accept it in the interim.
      * @type {string}
      * @memberof PermissionSubject
      */

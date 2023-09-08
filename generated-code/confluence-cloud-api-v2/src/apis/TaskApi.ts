@@ -24,7 +24,6 @@ import type {
 export interface GetTaskByIdRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentation;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetTasksRequest {
@@ -46,13 +45,11 @@ export interface GetTasksRequest {
     completedAtTo?: number;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateTaskOperationRequest {
     id: number;
     updateTaskRequest: UpdateTaskRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -73,10 +70,6 @@ export class TaskApi extends runtime.BaseAPI {
 
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -187,10 +180,6 @@ export class TaskApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -234,10 +223,6 @@ export class TaskApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

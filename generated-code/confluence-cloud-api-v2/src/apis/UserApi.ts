@@ -17,7 +17,6 @@ import * as runtime from '../runtime';
 import type {
   CheckAccessByEmail200Response,
   CheckAccessByEmailRequest,
-  InviteByEmail200Response,
 } from '../models';
 
 export interface CheckAccessByEmailOperationRequest {
@@ -77,10 +76,10 @@ export class UserApi extends runtime.BaseAPI {
     }
 
     /**
-     * Invite a list of emails to the site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Invite a list of emails to the site.  Ignores all invalid emails and no action is taken for the emails that already have access to the site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Invite a list of emails to the site
      */
-    async inviteByEmailRaw(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InviteByEmail200Response>> {
+    async inviteByEmailRaw(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.checkAccessByEmailRequest === null || requestParameters.checkAccessByEmailRequest === undefined) {
             throw new runtime.RequiredError('checkAccessByEmailRequest','Required parameter requestParameters.checkAccessByEmailRequest was null or undefined when calling inviteByEmail.');
         }
@@ -107,16 +106,15 @@ export class UserApi extends runtime.BaseAPI {
             body: requestParameters.checkAccessByEmailRequest,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Invite a list of emails to the site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Invite a list of emails to the site.  Ignores all invalid emails and no action is taken for the emails that already have access to the site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Invite a list of emails to the site
      */
-    async inviteByEmail(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InviteByEmail200Response> {
-        const response = await this.inviteByEmailRaw(requestParameters, initOverrides);
-        return await response.value();
+    async inviteByEmail(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.inviteByEmailRaw(requestParameters, initOverrides);
     }
 
 }

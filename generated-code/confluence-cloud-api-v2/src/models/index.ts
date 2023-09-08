@@ -3,6 +3,60 @@
 /**
  * 
  * @export
+ * @interface AbstractPageLinks
+ */
+export interface AbstractPageLinks {
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof AbstractPageLinks
+     */
+    webui?: string;
+    /**
+     * Edit UI link of the content.
+     * @type {string}
+     * @memberof AbstractPageLinks
+     */
+    editui?: string;
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof AbstractPageLinks
+     */
+    tinyui?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Ancestor
+ */
+export interface Ancestor {
+    /**
+     * ID of the ancestor
+     * @type {string}
+     * @memberof Ancestor
+     */
+    id?: string;
+    /**
+     * 
+     * @type {AncestorType}
+     * @memberof Ancestor
+     */
+    type?: AncestorType;
+}
+
+/**
+ * The type of ancestor.
+ * @export
+ */
+export const AncestorType = {
+    Page: 'page'
+} as const;
+export type AncestorType = typeof AncestorType[keyof typeof AncestorType];
+
+/**
+ * 
+ * @export
  * @interface Attachment
  */
 export interface Attachment {
@@ -25,23 +79,35 @@ export interface Attachment {
      */
     title?: string;
     /**
-     * 
-     * @type {AttachmentPageId}
+     * Date and time when the attachment was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
      * @memberof Attachment
      */
-    pageId?: AttachmentPageId;
+    createdAt?: string;
     /**
+     * ID of the containing page.
      * 
-     * @type {AttachmentBlogPostId}
+     * Note: This is only returned if the attachment has a container that is a page.
+     * @type {string}
      * @memberof Attachment
      */
-    blogPostId?: AttachmentBlogPostId;
+    pageId?: string;
     /**
+     * ID of the containing blog post.
      * 
-     * @type {AttachmentCustomContentId}
+     * Note: This is only returned if the attachment has a container that is a blog post.
+     * @type {string}
      * @memberof Attachment
      */
-    customContentId?: AttachmentCustomContentId;
+    blogPostId?: string;
+    /**
+     * ID of the containing custom content.
+     * 
+     * Note: This is only returned if the attachment has a container that is custom content.
+     * @type {string}
+     * @memberof Attachment
+     */
+    customContentId?: string;
     /**
      * Media Type for the attachment.
      * @type {string}
@@ -60,6 +126,12 @@ export interface Attachment {
      * @memberof Attachment
      */
     comment?: string;
+    /**
+     * File ID of the attachment. This is the ID referenced in `atlas_doc_format` bodies and is distinct from the attachment ID.
+     * @type {string}
+     * @memberof Attachment
+     */
+    fileId?: string;
     /**
      * File size of the attachment.
      * @type {number}
@@ -84,37 +156,32 @@ export interface Attachment {
      * @memberof Attachment
      */
     version?: Version;
+    /**
+     * 
+     * @type {AttachmentLinks}
+     * @memberof Attachment
+     */
+    links?: AttachmentLinks;
 }
 /**
- * @type AttachmentBlogPostId
- * ID of the containing blog post.
  * 
- * Note: This is only returned if the attachment has a container that is a blog post.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
  * @export
+ * @interface AttachmentLinks
  */
-export type AttachmentBlogPostId = number | string;
-/**
- * @type AttachmentCustomContentId
- * ID of the containing custom content.
- * 
- * Note: This is only returned if the attachment has a container that is custom content.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type AttachmentCustomContentId = number | string;
-/**
- * @type AttachmentPageId
- * ID of the containing page.
- * 
- * Note: This is only returned if the attachment has a container that is a page.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type AttachmentPageId = number | string;
+export interface AttachmentLinks {
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof AttachmentLinks
+     */
+    webui?: string;
+    /**
+     * Download link of the content.
+     * @type {string}
+     * @memberof AttachmentLinks
+     */
+    download?: string;
+}
 
 /**
  * The sort fields for attachments. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -174,61 +241,6 @@ export interface AttachmentVersion {
 /**
  * 
  * @export
- * @interface BlogPost
- */
-export interface BlogPost {
-    /**
-     * 
-     * @type {BlogPostId}
-     * @memberof BlogPost
-     */
-    id?: BlogPostId;
-    /**
-     * 
-     * @type {ContentStatus}
-     * @memberof BlogPost
-     */
-    status?: ContentStatus;
-    /**
-     * Title of the blog post.
-     * @type {string}
-     * @memberof BlogPost
-     */
-    title?: string;
-    /**
-     * 
-     * @type {BlogPostSpaceId}
-     * @memberof BlogPost
-     */
-    spaceId?: BlogPostSpaceId;
-    /**
-     * The account ID of the user who created this blog post originally.
-     * @type {string}
-     * @memberof BlogPost
-     */
-    authorId?: string;
-    /**
-     * Date and time when the blog post was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
-     * @type {string}
-     * @memberof BlogPost
-     */
-    createdAt?: string;
-    /**
-     * 
-     * @type {Version}
-     * @memberof BlogPost
-     */
-    version?: Version;
-    /**
-     * 
-     * @type {Body}
-     * @memberof BlogPost
-     */
-    body?: Body;
-}
-/**
- * 
- * @export
  * @interface BlogPostBodyWrite
  */
 export interface BlogPostBodyWrite {
@@ -260,15 +272,76 @@ export type BlogPostBodyWriteRepresentationEnum = typeof BlogPostBodyWriteRepres
 /**
  * 
  * @export
+ * @interface BlogPostBulk
+ */
+export interface BlogPostBulk {
+    /**
+     * ID of the blog post.
+     * @type {string}
+     * @memberof BlogPostBulk
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof BlogPostBulk
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the blog post.
+     * @type {string}
+     * @memberof BlogPostBulk
+     */
+    title?: string;
+    /**
+     * ID of the space the blog post is in.
+     * @type {string}
+     * @memberof BlogPostBulk
+     */
+    spaceId?: string;
+    /**
+     * The account ID of the user who created this blog post originally.
+     * @type {string}
+     * @memberof BlogPostBulk
+     */
+    authorId?: string;
+    /**
+     * Date and time when the blog post was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof BlogPostBulk
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof BlogPostBulk
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {BodyBulk}
+     * @memberof BlogPostBulk
+     */
+    body?: BodyBulk;
+    /**
+     * 
+     * @type {AbstractPageLinks}
+     * @memberof BlogPostBulk
+     */
+    links?: AbstractPageLinks;
+}
+/**
+ * 
+ * @export
  * @interface BlogPostCommentModel
  */
 export interface BlogPostCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof BlogPostCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -282,11 +355,11 @@ export interface BlogPostCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {BlogPostCommentModelBlogPostId}
+     * ID of the blog post the comment is in.
+     * @type {string}
      * @memberof BlogPostCommentModel
      */
-    blogPostId?: BlogPostCommentModelBlogPostId;
+    blogPostId?: string;
     /**
      * 
      * @type {Version}
@@ -295,27 +368,17 @@ export interface BlogPostCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof BlogPostCommentModel
      */
-    body?: Body;
+    body?: BodyBulk;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof BlogPostCommentModel
+     */
+    links?: CommentLinks;
 }
-/**
- * @type BlogPostCommentModelBlogPostId
- * ID of the blog post the comment is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type BlogPostCommentModelBlogPostId = number | string;
-/**
- * @type BlogPostId
- * ID of the blog post.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type BlogPostId = number | string;
 /**
  * 
  * @export
@@ -323,11 +386,11 @@ export type BlogPostId = number | string;
  */
 export interface BlogPostInlineCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof BlogPostInlineCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -341,11 +404,11 @@ export interface BlogPostInlineCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {BlogPostCommentModelBlogPostId}
+     * ID of the blog post the comment is in.
+     * @type {string}
      * @memberof BlogPostInlineCommentModel
      */
-    blogPostId?: BlogPostCommentModelBlogPostId;
+    blogPostId?: string;
     /**
      * 
      * @type {Version}
@@ -354,10 +417,10 @@ export interface BlogPostInlineCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof BlogPostInlineCommentModel
      */
-    body?: Body;
+    body?: BodyBulk;
     /**
      * 
      * @type {InlineCommentResolutionStatus}
@@ -370,6 +433,12 @@ export interface BlogPostInlineCommentModel {
      * @memberof BlogPostInlineCommentModel
      */
     properties?: InlineCommentProperties;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof BlogPostInlineCommentModel
+     */
+    links?: CommentLinks;
 }
 /**
  * Body of the blog post. Only one body format should be specified as the property
@@ -397,6 +466,67 @@ export interface BlogPostNestedBodyWrite {
      */
     wiki?: BlogPostBodyWrite;
 }
+/**
+ * 
+ * @export
+ * @interface BlogPostSingle
+ */
+export interface BlogPostSingle {
+    /**
+     * ID of the blog post.
+     * @type {string}
+     * @memberof BlogPostSingle
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof BlogPostSingle
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the blog post.
+     * @type {string}
+     * @memberof BlogPostSingle
+     */
+    title?: string;
+    /**
+     * ID of the space the blog post is in.
+     * @type {string}
+     * @memberof BlogPostSingle
+     */
+    spaceId?: string;
+    /**
+     * The account ID of the user who created this blog post originally.
+     * @type {string}
+     * @memberof BlogPostSingle
+     */
+    authorId?: string;
+    /**
+     * Date and time when the blog post was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof BlogPostSingle
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof BlogPostSingle
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {BodySingle}
+     * @memberof BlogPostSingle
+     */
+    body?: BodySingle;
+    /**
+     * 
+     * @type {AbstractPageLinks}
+     * @memberof BlogPostSingle
+     */
+    links?: AbstractPageLinks;
+}
 
 /**
  * The sort fields for blog posts. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -412,14 +542,6 @@ export const BlogPostSortOrder = {
 } as const;
 export type BlogPostSortOrder = typeof BlogPostSortOrder[keyof typeof BlogPostSortOrder];
 
-/**
- * @type BlogPostSpaceId
- * ID of the space the blog post is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type BlogPostSpaceId = number | string;
 /**
  * 
  * @export
@@ -466,42 +588,47 @@ export interface BlogPostVersion {
 /**
  * Contains fields for each representation type requested.
  * @export
- * @interface Body
+ * @interface BodyBulk
  */
-export interface Body {
+export interface BodyBulk {
     /**
      * 
      * @type {BodyType}
-     * @memberof Body
+     * @memberof BodyBulk
      */
     storage?: BodyType;
     /**
      * 
      * @type {BodyType}
-     * @memberof Body
+     * @memberof BodyBulk
      */
     atlasDocFormat?: BodyType;
 }
-
 /**
- * The formats a body can be represented as.
+ * Contains fields for each representation type requested.
  * @export
+ * @interface BodySingle
  */
-export const BodyRepresentation = {
-    AnonymousExportView: 'anonymous_export_view',
-    AtlasDocFormat: 'atlas_doc_format',
-    Dynamic: 'dynamic',
-    Editor: 'editor',
-    Editor2: 'editor2',
-    ExportView: 'export_view',
-    Plain: 'plain',
-    Raw: 'raw',
-    Storage: 'storage',
-    StyledView: 'styled_view',
-    View: 'view'
-} as const;
-export type BodyRepresentation = typeof BodyRepresentation[keyof typeof BodyRepresentation];
-
+export interface BodySingle {
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof BodySingle
+     */
+    storage?: BodyType;
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof BodySingle
+     */
+    atlasDocFormat?: BodyType;
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof BodySingle
+     */
+    view?: BodyType;
+}
 /**
  * 
  * @export
@@ -560,11 +687,11 @@ export interface CheckAccessByEmailRequest {
  */
 export interface ChildCustomContent {
     /**
-     * 
-     * @type {ChildCustomContentId}
+     * ID of the child custom content.
+     * @type {string}
      * @memberof ChildCustomContent
      */
-    id?: ChildCustomContentId;
+    id?: string;
     /**
      * 
      * @type {OnlyArchivedAndCurrentContentStatus}
@@ -584,20 +711,12 @@ export interface ChildCustomContent {
      */
     type?: string;
     /**
-     * 
-     * @type {ChildCustomContentSpaceId}
+     * ID of the space the custom content is in.
+     * @type {string}
      * @memberof ChildCustomContent
      */
-    spaceId?: ChildCustomContentSpaceId;
+    spaceId?: string;
 }
-/**
- * @type ChildCustomContentId
- * ID of the child custom content.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type ChildCustomContentId = number | string;
 
 /**
  * The sort fields for child custom content. The default sort direction is ascending by id. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -614,25 +733,17 @@ export const ChildCustomContentSortOrder = {
 export type ChildCustomContentSortOrder = typeof ChildCustomContentSortOrder[keyof typeof ChildCustomContentSortOrder];
 
 /**
- * @type ChildCustomContentSpaceId
- * ID of the space the custom content is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type ChildCustomContentSpaceId = number | string;
-/**
  * 
  * @export
  * @interface ChildPage
  */
 export interface ChildPage {
     /**
-     * 
-     * @type {PageId}
+     * ID of the page.
+     * @type {string}
      * @memberof ChildPage
      */
-    id?: PageId;
+    id?: string;
     /**
      * 
      * @type {OnlyArchivedAndCurrentContentStatus}
@@ -646,17 +757,17 @@ export interface ChildPage {
      */
     title?: string;
     /**
-     * 
-     * @type {PageSpaceId}
+     * ID of the space the page is in.
+     * @type {string}
      * @memberof ChildPage
      */
-    spaceId?: PageSpaceId;
+    spaceId?: string;
     /**
      * Position of child page within the given parent page tree.
      * @type {number}
      * @memberof ChildPage
      */
-    childPosition?: number;
+    childPosition?: number | null;
 }
 
 /**
@@ -682,11 +793,11 @@ export type ChildPageSortOrder = typeof ChildPageSortOrder[keyof typeof ChildPag
  */
 export interface ChildrenCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof ChildrenCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -700,11 +811,11 @@ export interface ChildrenCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {ChildrenCommentModelParentCommentId}
+     * ID of the parent comment the child comment is in.
+     * @type {string}
      * @memberof ChildrenCommentModel
      */
-    parentCommentId?: ChildrenCommentModelParentCommentId;
+    parentCommentId?: string;
     /**
      * 
      * @type {Version}
@@ -713,19 +824,17 @@ export interface ChildrenCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof ChildrenCommentModel
      */
-    body?: Body;
+    body?: BodyBulk;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof ChildrenCommentModel
+     */
+    links?: CommentLinks;
 }
-/**
- * @type ChildrenCommentModelParentCommentId
- * ID of the parent comment the child comment is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type ChildrenCommentModelParentCommentId = number | string;
 /**
  * 
  * @export
@@ -757,6 +866,19 @@ export const CommentBodyWriteRepresentationEnum = {
 } as const;
 export type CommentBodyWriteRepresentationEnum = typeof CommentBodyWriteRepresentationEnum[keyof typeof CommentBodyWriteRepresentationEnum];
 
+/**
+ * 
+ * @export
+ * @interface CommentLinks
+ */
+export interface CommentLinks {
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof CommentLinks
+     */
+    webui?: string;
+}
 /**
  * Body of the comment. Only one body format should be specified as the property
  * for this object, e.g. `storage`.
@@ -868,11 +990,11 @@ export interface ContentIdToContentTypeResponseResultsValue {
  */
 export interface ContentProperty {
     /**
-     * 
-     * @type {ContentPropertyId}
+     * ID of the property
+     * @type {string}
      * @memberof ContentProperty
      */
-    id?: ContentPropertyId;
+    id?: string;
     /**
      * Key of the property
      * @type {string}
@@ -911,14 +1033,6 @@ export interface ContentPropertyCreateRequest {
      */
     value?: any | null;
 }
-/**
- * @type ContentPropertyId
- * ID of the property
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type ContentPropertyId = number | string;
 
 /**
  * The sort fields for content properties. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -989,6 +1103,16 @@ export const ContentStatus = {
     Archived: 'archived'
 } as const;
 export type ContentStatus = typeof ContentStatus[keyof typeof ContentStatus];
+
+
+/**
+ * Content type of the parent, or null if there is no parent.
+ * @export
+ */
+export const ContentType = {
+    Page: 'page'
+} as const;
+export type ContentType = typeof ContentType[keyof typeof ContentType];
 
 /**
  * 
@@ -1284,116 +1408,27 @@ export type CreatePageRequestStatusEnum = typeof CreatePageRequestStatusEnum[key
  */
 export type CreatePageRequestBody = PageBodyWrite | PageNestedBodyWrite;
 /**
- * 
- * @export
- * @interface CustomContent
- */
-export interface CustomContent {
-    /**
-     * 
-     * @type {CustomContentId}
-     * @memberof CustomContent
-     */
-    id?: CustomContentId;
-    /**
-     * The type of custom content.
-     * @type {string}
-     * @memberof CustomContent
-     */
-    type?: string;
-    /**
-     * 
-     * @type {ContentStatus}
-     * @memberof CustomContent
-     */
-    status?: ContentStatus;
-    /**
-     * Title of the custom content.
-     * @type {string}
-     * @memberof CustomContent
-     */
-    title?: string;
-    /**
-     * 
-     * @type {CustomContentSpaceId}
-     * @memberof CustomContent
-     */
-    spaceId?: CustomContentSpaceId;
-    /**
-     * 
-     * @type {CustomContentPageId}
-     * @memberof CustomContent
-     */
-    pageId?: CustomContentPageId;
-    /**
-     * 
-     * @type {CustomContentBlogPostId}
-     * @memberof CustomContent
-     */
-    blogPostId?: CustomContentBlogPostId;
-    /**
-     * 
-     * @type {CustomContentCustomContentId}
-     * @memberof CustomContent
-     */
-    customContentId?: CustomContentCustomContentId;
-    /**
-     * The account ID of the user who created this custom content originally.
-     * @type {string}
-     * @memberof CustomContent
-     */
-    authorId?: string;
-    /**
-     * Date and time when the custom content was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
-     * @type {string}
-     * @memberof CustomContent
-     */
-    createdAt?: string;
-    /**
-     * 
-     * @type {CustomContentBody}
-     * @memberof CustomContent
-     */
-    body?: CustomContentBody;
-    /**
-     * 
-     * @type {Version}
-     * @memberof CustomContent
-     */
-    version?: Version;
-}
-/**
- * @type CustomContentBlogPostId
- * ID of the containing blog post.
- * 
- * Note: This is only returned if the custom content has a container that is a blog post.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type CustomContentBlogPostId = number | string;
-/**
  * Contains fields for each representation type requested.
  * @export
- * @interface CustomContentBody
+ * @interface CustomContentBodyBulk
  */
-export interface CustomContentBody {
+export interface CustomContentBodyBulk {
     /**
      * 
      * @type {BodyType}
-     * @memberof CustomContentBody
+     * @memberof CustomContentBodyBulk
      */
     raw?: BodyType;
     /**
      * 
      * @type {BodyType}
-     * @memberof CustomContentBody
+     * @memberof CustomContentBodyBulk
      */
     storage?: BodyType;
     /**
      * 
      * @type {BodyType}
-     * @memberof CustomContentBody
+     * @memberof CustomContentBodyBulk
      */
     atlasDocFormat?: BodyType;
 }
@@ -1409,6 +1444,52 @@ export const CustomContentBodyRepresentation = {
 } as const;
 export type CustomContentBodyRepresentation = typeof CustomContentBodyRepresentation[keyof typeof CustomContentBodyRepresentation];
 
+
+/**
+ * The formats a custom content body can be represented as. A subset of BodyRepresentation.
+ * @export
+ */
+export const CustomContentBodyRepresentationSingle = {
+    Raw: 'raw',
+    Storage: 'storage',
+    AtlasDocFormat: 'atlas_doc_format',
+    View: 'view',
+    ExportView: 'export_view',
+    AnonymousExportView: 'anonymous_export_view'
+} as const;
+export type CustomContentBodyRepresentationSingle = typeof CustomContentBodyRepresentationSingle[keyof typeof CustomContentBodyRepresentationSingle];
+
+/**
+ * Contains fields for each representation type requested.
+ * @export
+ * @interface CustomContentBodySingle
+ */
+export interface CustomContentBodySingle {
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof CustomContentBodySingle
+     */
+    raw?: BodyType;
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof CustomContentBodySingle
+     */
+    storage?: BodyType;
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof CustomContentBodySingle
+     */
+    atlasDocFormat?: BodyType;
+    /**
+     * 
+     * @type {BodyType}
+     * @memberof CustomContentBodySingle
+     */
+    view?: BodyType;
+}
 /**
  * 
  * @export
@@ -1441,23 +1522,111 @@ export const CustomContentBodyWriteRepresentationEnum = {
 export type CustomContentBodyWriteRepresentationEnum = typeof CustomContentBodyWriteRepresentationEnum[keyof typeof CustomContentBodyWriteRepresentationEnum];
 
 /**
- * @type CustomContentCustomContentId
- * ID of the containing custom content.
  * 
- * Note: This is only returned if the custom content has a container that is custom content.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
  * @export
+ * @interface CustomContentBulk
  */
-export type CustomContentCustomContentId = number | string;
+export interface CustomContentBulk {
+    /**
+     * ID of the custom content.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    id?: string;
+    /**
+     * The type of custom content.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    type?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof CustomContentBulk
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the custom content.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    title?: string;
+    /**
+     * ID of the space the custom content is in.
+     * 
+     * Note: This is always returned, regardless of if the custom content has a container that is a space.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    spaceId?: string;
+    /**
+     * ID of the containing page.
+     * 
+     * Note: This is only returned if the custom content has a container that is a page.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    pageId?: string;
+    /**
+     * ID of the containing blog post.
+     * 
+     * Note: This is only returned if the custom content has a container that is a blog post.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    blogPostId?: string;
+    /**
+     * ID of the containing custom content.
+     * 
+     * Note: This is only returned if the custom content has a container that is custom content.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    customContentId?: string;
+    /**
+     * The account ID of the user who created this custom content originally.
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    authorId?: string;
+    /**
+     * Date and time when the custom content was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof CustomContentBulk
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof CustomContentBulk
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {CustomContentBodyBulk}
+     * @memberof CustomContentBulk
+     */
+    body?: CustomContentBodyBulk;
+    /**
+     * 
+     * @type {CustomContentLinks}
+     * @memberof CustomContentBulk
+     */
+    links?: CustomContentLinks;
+}
 /**
- * @type CustomContentId
- * ID of the custom content.
  * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
  * @export
+ * @interface CustomContentLinks
  */
-export type CustomContentId = number | string;
+export interface CustomContentLinks {
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof CustomContentLinks
+     */
+    webui?: string;
+}
 /**
  * Body of the custom content. Only one body format should be specified as the property
  * for this object, e.g. `storage`.
@@ -1485,25 +1654,115 @@ export interface CustomContentNestedBodyWrite {
     raw?: CustomContentBodyWrite;
 }
 /**
- * @type CustomContentPageId
- * ID of the containing page.
  * 
- * Note: This is only returned if the custom content has a container that is a page.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
  * @export
+ * @interface CustomContentSingle
  */
-export type CustomContentPageId = number | string;
+export interface CustomContentSingle {
+    /**
+     * ID of the custom content.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    id?: string;
+    /**
+     * The type of custom content.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    type?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof CustomContentSingle
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the custom content.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    title?: string;
+    /**
+     * ID of the space the custom content is in.
+     * 
+     * Note: This is always returned, regardless of if the custom content has a container that is a space.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    spaceId?: string;
+    /**
+     * ID of the containing page.
+     * 
+     * Note: This is only returned if the custom content has a container that is a page.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    pageId?: string;
+    /**
+     * ID of the containing blog post.
+     * 
+     * Note: This is only returned if the custom content has a container that is a blog post.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    blogPostId?: string;
+    /**
+     * ID of the containing custom content.
+     * 
+     * Note: This is only returned if the custom content has a container that is custom content.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    customContentId?: string;
+    /**
+     * The account ID of the user who created this custom content originally.
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    authorId?: string;
+    /**
+     * Date and time when the custom content was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof CustomContentSingle
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof CustomContentSingle
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {CustomContentBodySingle}
+     * @memberof CustomContentSingle
+     */
+    body?: CustomContentBodySingle;
+    /**
+     * 
+     * @type {CustomContentLinks}
+     * @memberof CustomContentSingle
+     */
+    links?: CustomContentLinks;
+}
+
 /**
- * @type CustomContentSpaceId
- * ID of the space the custom content is in.
- * 
- * Note: This is always returned, regardless of if the custom content has a container that is a space.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
+ * The sort fields for custom content. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
  * @export
  */
-export type CustomContentSpaceId = number | string;
+export const CustomContentSortOrder = {
+    Id: 'id',
+    IdDesc: '-id',
+    CreatedDate: 'created-date',
+    CreatedDateDesc: '-created-date',
+    ModifiedDate: 'modified-date',
+    ModifiedDateDesc: '-modified-date',
+    Title: 'title',
+    TitleDesc: '-title'
+} as const;
+export type CustomContentSortOrder = typeof CustomContentSortOrder[keyof typeof CustomContentSortOrder];
+
 /**
  * 
  * @export
@@ -1615,11 +1874,11 @@ export interface DetailedVersion {
  */
 export interface FooterCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof FooterCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -1633,23 +1892,23 @@ export interface FooterCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {FooterCommentModelBlogPostId}
+     * ID of the blog post containing the comment if the comment is on a blog post.
+     * @type {string}
      * @memberof FooterCommentModel
      */
-    blogPostId?: FooterCommentModelBlogPostId;
+    blogPostId?: string;
     /**
-     * 
-     * @type {FooterCommentModelPageId}
+     * ID of the page containing the comment if the comment is on a page.
+     * @type {string}
      * @memberof FooterCommentModel
      */
-    pageId?: FooterCommentModelPageId;
+    pageId?: string;
     /**
-     * 
-     * @type {FooterCommentModelParentCommentId}
+     * ID of the parent comment if the comment is a reply.
+     * @type {string}
      * @memberof FooterCommentModel
      */
-    parentCommentId?: FooterCommentModelParentCommentId;
+    parentCommentId?: string;
     /**
      * 
      * @type {Version}
@@ -1658,35 +1917,17 @@ export interface FooterCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodySingle}
      * @memberof FooterCommentModel
      */
-    body?: Body;
+    body?: BodySingle;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof FooterCommentModel
+     */
+    links?: CommentLinks;
 }
-/**
- * @type FooterCommentModelBlogPostId
- * ID of the blog post containing the comment if the comment is on a blog post.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type FooterCommentModelBlogPostId = number | string;
-/**
- * @type FooterCommentModelPageId
- * ID of the page containing the comment if the comment is on a page.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type FooterCommentModelPageId = number | string;
-/**
- * @type FooterCommentModelParentCommentId
- * ID of the parent comment if the comment is a reply.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type FooterCommentModelParentCommentId = number | string;
 /**
  * 
  * @export
@@ -1694,11 +1935,11 @@ export type FooterCommentModelParentCommentId = number | string;
  */
 export interface InlineCommentChildrenModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof InlineCommentChildrenModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -1712,11 +1953,11 @@ export interface InlineCommentChildrenModel {
      */
     title?: string;
     /**
-     * 
-     * @type {ChildrenCommentModelParentCommentId}
+     * ID of the parent comment the child comment is in.
+     * @type {string}
      * @memberof InlineCommentChildrenModel
      */
-    parentCommentId?: ChildrenCommentModelParentCommentId;
+    parentCommentId?: string;
     /**
      * 
      * @type {Version}
@@ -1725,10 +1966,10 @@ export interface InlineCommentChildrenModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof InlineCommentChildrenModel
      */
-    body?: Body;
+    body?: BodyBulk;
     /**
      * 
      * @type {InlineCommentResolutionStatus}
@@ -1741,6 +1982,12 @@ export interface InlineCommentChildrenModel {
      * @memberof InlineCommentChildrenModel
      */
     properties?: InlineCommentProperties;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof InlineCommentChildrenModel
+     */
+    links?: CommentLinks;
 }
 /**
  * 
@@ -1749,11 +1996,11 @@ export interface InlineCommentChildrenModel {
  */
 export interface InlineCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof InlineCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -1767,23 +2014,23 @@ export interface InlineCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {FooterCommentModelBlogPostId}
+     * ID of the blog post containing the comment if the comment is on a blog post.
+     * @type {string}
      * @memberof InlineCommentModel
      */
-    blogPostId?: FooterCommentModelBlogPostId;
+    blogPostId?: string;
     /**
-     * 
-     * @type {FooterCommentModelPageId}
+     * ID of the page containing the comment if the comment is on a page.
+     * @type {string}
      * @memberof InlineCommentModel
      */
-    pageId?: FooterCommentModelPageId;
+    pageId?: string;
     /**
-     * 
-     * @type {FooterCommentModelParentCommentId}
+     * ID of the parent comment if the comment is a reply.
+     * @type {string}
      * @memberof InlineCommentModel
      */
-    parentCommentId?: FooterCommentModelParentCommentId;
+    parentCommentId?: string;
     /**
      * 
      * @type {Version}
@@ -1792,10 +2039,10 @@ export interface InlineCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodySingle}
      * @memberof InlineCommentModel
      */
-    body?: Body;
+    body?: BodySingle;
     /**
      * Atlassian Account ID of last person who modified the resolve state of the comment. Null until comment is resolved or reopened.
      * @type {string}
@@ -1820,6 +2067,12 @@ export interface InlineCommentModel {
      * @memberof InlineCommentModel
      */
     properties?: InlineCommentProperties;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof InlineCommentModel
+     */
+    links?: CommentLinks;
 }
 /**
  * 
@@ -1856,53 +2109,15 @@ export type InlineCommentResolutionStatus = typeof InlineCommentResolutionStatus
 /**
  * 
  * @export
- * @interface InviteByEmail200Response
- */
-export interface InviteByEmail200Response {
-    /**
-     * List of emails invited to site.
-     * @type {Array<string>}
-     * @memberof InviteByEmail200Response
-     */
-    emailsInvited?: Array<string>;
-    /**
-     * 
-     * @type {InviteByEmail200ResponseEmailsNotInvited}
-     * @memberof InviteByEmail200Response
-     */
-    emailsNotInvited?: InviteByEmail200ResponseEmailsNotInvited;
-}
-/**
- * List of invalid emails provided in the request.
- * @export
- * @interface InviteByEmail200ResponseEmailsNotInvited
- */
-export interface InviteByEmail200ResponseEmailsNotInvited {
-    /**
-     * Email that was not invited.
-     * @type {string}
-     * @memberof InviteByEmail200ResponseEmailsNotInvited
-     */
-    key?: string;
-    /**
-     * Reason why the email was not invited.
-     * @type {string}
-     * @memberof InviteByEmail200ResponseEmailsNotInvited
-     */
-    value?: string;
-}
-/**
- * 
- * @export
  * @interface Label
  */
 export interface Label {
     /**
-     * 
-     * @type {LabelId}
+     * ID of the label.
+     * @type {string}
      * @memberof Label
      */
-    id?: LabelId;
+    id?: string;
     /**
      * Name of the label.
      * @type {string}
@@ -1916,14 +2131,6 @@ export interface Label {
      */
     prefix?: string;
 }
-/**
- * @type LabelId
- * ID of the label.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type LabelId = number | string;
 
 /**
  * The sort fields for labels. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -1942,6 +2149,45 @@ export type LabelSortOrder = typeof LabelSortOrder[keyof typeof LabelSortOrder];
 /**
  * 
  * @export
+ * @interface Like
+ */
+export interface Like {
+    /**
+     * Account ID.
+     * @type {string}
+     * @memberof Like
+     */
+    accountId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModelInteger
+ */
+export interface ModelInteger {
+    /**
+     * The count number
+     * @type {number}
+     * @memberof ModelInteger
+     */
+    count?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultAncestor
+ */
+export interface MultiEntityResultAncestor {
+    /**
+     * 
+     * @type {Array<Ancestor>}
+     * @memberof MultiEntityResultAncestor
+     */
+    results?: Array<Ancestor>;
+}
+/**
+ * 
+ * @export
  * @interface MultiEntityResultAttachment
  */
 export interface MultiEntityResultAttachment {
@@ -1953,10 +2199,10 @@ export interface MultiEntityResultAttachment {
     results?: Array<Attachment>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultAttachment
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -1974,21 +2220,35 @@ export interface MultiEntityResultAttachment1 {
 /**
  * 
  * @export
+ * @interface MultiEntityResultAttachmentLinks
+ */
+export interface MultiEntityResultAttachmentLinks {
+    /**
+     * Used for pagination. Contains the relative URL for the next set of results, using a cursor query parameter.
+     * This property will not be present if there is no additional data available.
+     * @type {string}
+     * @memberof MultiEntityResultAttachmentLinks
+     */
+    next?: string;
+}
+/**
+ * 
+ * @export
  * @interface MultiEntityResultBlogPost
  */
 export interface MultiEntityResultBlogPost {
     /**
      * 
-     * @type {Array<BlogPost>}
+     * @type {Array<BlogPostBulk>}
      * @memberof MultiEntityResultBlogPost
      */
-    results?: Array<BlogPost>;
+    results?: Array<BlogPostBulk>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultBlogPost
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2004,10 +2264,10 @@ export interface MultiEntityResultBlogPostCommentModel {
     results?: Array<BlogPostCommentModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultBlogPostCommentModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2023,10 +2283,10 @@ export interface MultiEntityResultBlogPostInlineCommentModel {
     results?: Array<BlogPostInlineCommentModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultBlogPostInlineCommentModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2042,10 +2302,10 @@ export interface MultiEntityResultChildCustomContent {
     results?: Array<ChildCustomContent>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultChildCustomContent
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2061,10 +2321,10 @@ export interface MultiEntityResultChildPage {
     results?: Array<ChildPage>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultChildPage
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2080,10 +2340,10 @@ export interface MultiEntityResultChildrenCommentModel {
     results?: Array<ChildrenCommentModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultChildrenCommentModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2099,10 +2359,10 @@ export interface MultiEntityResultContentProperty {
     results?: Array<ContentProperty>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultContentProperty
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2112,16 +2372,35 @@ export interface MultiEntityResultContentProperty {
 export interface MultiEntityResultCustomContent {
     /**
      * 
-     * @type {Array<CustomContent>}
+     * @type {Array<CustomContentBulk>}
      * @memberof MultiEntityResultCustomContent
      */
-    results?: Array<CustomContent>;
+    results?: Array<CustomContentBulk>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultCustomContent
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultFooterCommentModel
+ */
+export interface MultiEntityResultFooterCommentModel {
+    /**
+     * 
+     * @type {Array<InlineCommentModel>}
+     * @memberof MultiEntityResultFooterCommentModel
+     */
+    results?: Array<InlineCommentModel>;
+    /**
+     * 
+     * @type {MultiEntityResultAttachmentLinks}
+     * @memberof MultiEntityResultFooterCommentModel
+     */
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2137,10 +2416,29 @@ export interface MultiEntityResultInlineCommentChildrenModel {
     results?: Array<InlineCommentChildrenModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultInlineCommentChildrenModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultInlineCommentModel
+ */
+export interface MultiEntityResultInlineCommentModel {
+    /**
+     * 
+     * @type {Array<InlineCommentModel>}
+     * @memberof MultiEntityResultInlineCommentModel
+     */
+    results?: Array<InlineCommentModel>;
+    /**
+     * 
+     * @type {MultiEntityResultAttachmentLinks}
+     * @memberof MultiEntityResultInlineCommentModel
+     */
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2156,24 +2454,10 @@ export interface MultiEntityResultLabel {
     results?: Array<Label>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultLabel
      */
-    links?: MultiEntityResultLabelLinks;
-}
-/**
- * 
- * @export
- * @interface MultiEntityResultLabelLinks
- */
-export interface MultiEntityResultLabelLinks {
-    /**
-     * Used for pagination. Contains the relative URL for the next set of results, using a cursor query parameter.
-     * This property will not be present if there is no additional data available.
-     * @type {string}
-     * @memberof MultiEntityResultLabelLinks
-     */
-    next?: string;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2183,16 +2467,16 @@ export interface MultiEntityResultLabelLinks {
 export interface MultiEntityResultPage {
     /**
      * 
-     * @type {Array<Page>}
+     * @type {Array<PageBulk>}
      * @memberof MultiEntityResultPage
      */
-    results?: Array<Page>;
+    results?: Array<PageBulk>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultPage
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2208,10 +2492,10 @@ export interface MultiEntityResultPageCommentModel {
     results?: Array<PageCommentModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultPageCommentModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2227,10 +2511,10 @@ export interface MultiEntityResultPageInlineCommentModel {
     results?: Array<PageInlineCommentModel>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultPageInlineCommentModel
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2246,10 +2530,29 @@ export interface MultiEntityResultSpace {
     results?: Array<Space>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultSpace
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultSpacePermission
+ */
+export interface MultiEntityResultSpacePermission {
+    /**
+     * 
+     * @type {Array<SpacePermission>}
+     * @memberof MultiEntityResultSpacePermission
+     */
+    results?: Array<SpacePermission>;
+    /**
+     * 
+     * @type {MultiEntityResultAttachmentLinks}
+     * @memberof MultiEntityResultSpacePermission
+     */
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2267,6 +2570,25 @@ export interface MultiEntityResultSpaceProperty {
 /**
  * 
  * @export
+ * @interface MultiEntityResultString
+ */
+export interface MultiEntityResultString {
+    /**
+     * 
+     * @type {Array<Like>}
+     * @memberof MultiEntityResultString
+     */
+    results?: Array<Like>;
+    /**
+     * 
+     * @type {MultiEntityResultAttachmentLinks}
+     * @memberof MultiEntityResultString
+     */
+    links?: MultiEntityResultAttachmentLinks;
+}
+/**
+ * 
+ * @export
  * @interface MultiEntityResultTask
  */
 export interface MultiEntityResultTask {
@@ -2278,10 +2600,10 @@ export interface MultiEntityResultTask {
     results?: Array<Task>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultTask
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2297,10 +2619,10 @@ export interface MultiEntityResultVersion {
     results?: Array<AttachmentVersion>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultVersion
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2316,10 +2638,10 @@ export interface MultiEntityResultVersion1 {
     results?: Array<BlogPostVersion>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultVersion1
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2335,10 +2657,10 @@ export interface MultiEntityResultVersion2 {
     results?: Array<PageVersion>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultVersion2
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2354,10 +2676,10 @@ export interface MultiEntityResultVersion3 {
     results?: Array<CustomContentVersion>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultVersion3
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 /**
  * 
@@ -2373,10 +2695,10 @@ export interface MultiEntityResultVersion4 {
     results?: Array<CommentVersion>;
     /**
      * 
-     * @type {MultiEntityResultLabelLinks}
+     * @type {MultiEntityResultAttachmentLinks}
      * @memberof MultiEntityResultVersion4
      */
-    links?: MultiEntityResultLabelLinks;
+    links?: MultiEntityResultAttachmentLinks;
 }
 
 /**
@@ -2389,67 +2711,6 @@ export const OnlyArchivedAndCurrentContentStatus = {
 } as const;
 export type OnlyArchivedAndCurrentContentStatus = typeof OnlyArchivedAndCurrentContentStatus[keyof typeof OnlyArchivedAndCurrentContentStatus];
 
-/**
- * 
- * @export
- * @interface Page
- */
-export interface Page {
-    /**
-     * 
-     * @type {PageId}
-     * @memberof Page
-     */
-    id?: PageId;
-    /**
-     * 
-     * @type {ContentStatus}
-     * @memberof Page
-     */
-    status?: ContentStatus;
-    /**
-     * Title of the page.
-     * @type {string}
-     * @memberof Page
-     */
-    title?: string;
-    /**
-     * 
-     * @type {PageSpaceId}
-     * @memberof Page
-     */
-    spaceId?: PageSpaceId;
-    /**
-     * 
-     * @type {PageParentId}
-     * @memberof Page
-     */
-    parentId?: PageParentId;
-    /**
-     * The account ID of the user who created this page originally.
-     * @type {string}
-     * @memberof Page
-     */
-    authorId?: string;
-    /**
-     * Date and time when the page was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
-     * @type {string}
-     * @memberof Page
-     */
-    createdAt?: string;
-    /**
-     * 
-     * @type {Version}
-     * @memberof Page
-     */
-    version?: Version;
-    /**
-     * 
-     * @type {Body}
-     * @memberof Page
-     */
-    body?: Body;
-}
 /**
  * 
  * @export
@@ -2484,15 +2745,94 @@ export type PageBodyWriteRepresentationEnum = typeof PageBodyWriteRepresentation
 /**
  * 
  * @export
+ * @interface PageBulk
+ */
+export interface PageBulk {
+    /**
+     * ID of the page.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof PageBulk
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the page.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    title?: string;
+    /**
+     * ID of the space the page is in.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    spaceId?: string;
+    /**
+     * ID of the parent page, or null if there is no parent page.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    parentId?: string;
+    /**
+     * 
+     * @type {ContentType}
+     * @memberof PageBulk
+     */
+    parentType?: ContentType;
+    /**
+     * Position of child page within the given parent page tree.
+     * @type {number}
+     * @memberof PageBulk
+     */
+    position?: number | null;
+    /**
+     * The account ID of the user who created this page originally.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    authorId?: string;
+    /**
+     * Date and time when the page was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof PageBulk
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof PageBulk
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {BodyBulk}
+     * @memberof PageBulk
+     */
+    body?: BodyBulk;
+    /**
+     * 
+     * @type {AbstractPageLinks}
+     * @memberof PageBulk
+     */
+    links?: AbstractPageLinks;
+}
+/**
+ * 
+ * @export
  * @interface PageCommentModel
  */
 export interface PageCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof PageCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -2506,11 +2846,11 @@ export interface PageCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {PageCommentModelPageId}
+     * ID of the page the comment is in.
+     * @type {string}
      * @memberof PageCommentModel
      */
-    pageId?: PageCommentModelPageId;
+    pageId?: string;
     /**
      * 
      * @type {Version}
@@ -2519,35 +2859,17 @@ export interface PageCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof PageCommentModel
      */
-    body?: Body;
+    body?: BodyBulk;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof PageCommentModel
+     */
+    links?: CommentLinks;
 }
-/**
- * @type PageCommentModelId
- * ID of the comment.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type PageCommentModelId = number | string;
-/**
- * @type PageCommentModelPageId
- * ID of the page the comment is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type PageCommentModelPageId = number | string;
-/**
- * @type PageId
- * ID of the page.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type PageId = number | string;
 /**
  * 
  * @export
@@ -2555,11 +2877,11 @@ export type PageId = number | string;
  */
 export interface PageInlineCommentModel {
     /**
-     * 
-     * @type {PageCommentModelId}
+     * ID of the comment.
+     * @type {string}
      * @memberof PageInlineCommentModel
      */
-    id?: PageCommentModelId;
+    id?: string;
     /**
      * 
      * @type {ContentStatus}
@@ -2573,11 +2895,11 @@ export interface PageInlineCommentModel {
      */
     title?: string;
     /**
-     * 
-     * @type {PageCommentModelPageId}
+     * ID of the page the comment is in.
+     * @type {string}
      * @memberof PageInlineCommentModel
      */
-    pageId?: PageCommentModelPageId;
+    pageId?: string;
     /**
      * 
      * @type {Version}
@@ -2586,10 +2908,10 @@ export interface PageInlineCommentModel {
     version?: Version;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof PageInlineCommentModel
      */
-    body?: Body;
+    body?: BodyBulk;
     /**
      * 
      * @type {InlineCommentResolutionStatus}
@@ -2602,6 +2924,12 @@ export interface PageInlineCommentModel {
      * @memberof PageInlineCommentModel
      */
     properties?: InlineCommentProperties;
+    /**
+     * 
+     * @type {CommentLinks}
+     * @memberof PageInlineCommentModel
+     */
+    links?: CommentLinks;
 }
 /**
  * Body of the page. Only one body format should be specified as the property
@@ -2630,13 +2958,84 @@ export interface PageNestedBodyWrite {
     wiki?: PageBodyWrite;
 }
 /**
- * @type PageParentId
- * ID of the parent page, or null if there is no parent page.
  * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
  * @export
+ * @interface PageSingle
  */
-export type PageParentId = number | string;
+export interface PageSingle {
+    /**
+     * ID of the page.
+     * @type {string}
+     * @memberof PageSingle
+     */
+    id?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof PageSingle
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the page.
+     * @type {string}
+     * @memberof PageSingle
+     */
+    title?: string;
+    /**
+     * ID of the space the page is in.
+     * @type {string}
+     * @memberof PageSingle
+     */
+    spaceId?: string;
+    /**
+     * ID of the parent page, or null if there is no parent page.
+     * @type {string}
+     * @memberof PageSingle
+     */
+    parentId?: string;
+    /**
+     * 
+     * @type {ContentType}
+     * @memberof PageSingle
+     */
+    parentType?: ContentType;
+    /**
+     * Position of child page within the given parent page tree.
+     * @type {number}
+     * @memberof PageSingle
+     */
+    position?: number | null;
+    /**
+     * The account ID of the user who created this page originally.
+     * @type {string}
+     * @memberof PageSingle
+     */
+    authorId?: string;
+    /**
+     * Date and time when the page was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof PageSingle
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof PageSingle
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {BodySingle}
+     * @memberof PageSingle
+     */
+    body?: BodySingle;
+    /**
+     * 
+     * @type {AbstractPageLinks}
+     * @memberof PageSingle
+     */
+    links?: AbstractPageLinks;
+}
 
 /**
  * The sort fields for pages. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
@@ -2648,18 +3047,12 @@ export const PageSortOrder = {
     CreatedDate: 'created-date',
     CreatedDateDesc: '-created-date',
     ModifiedDate: 'modified-date',
-    ModifiedDateDesc: '-modified-date'
+    ModifiedDateDesc: '-modified-date',
+    Title: 'title',
+    TitleDesc: '-title'
 } as const;
 export type PageSortOrder = typeof PageSortOrder[keyof typeof PageSortOrder];
 
-/**
- * @type PageSpaceId
- * ID of the space the page is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type PageSpaceId = number | string;
 /**
  * 
  * @export
@@ -2703,6 +3096,38 @@ export interface PageVersion {
      */
     page?: VersionedEntity;
 }
+/**
+ * The list of operations permitted on entity.
+ * @export
+ * @interface PermittedOperationsResponse
+ */
+export interface PermittedOperationsResponse {
+    /**
+     * 
+     * @type {Array<PermittedOperationsResponseOperationsInner>}
+     * @memberof PermittedOperationsResponse
+     */
+    operations?: Array<PermittedOperationsResponseOperationsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface PermittedOperationsResponseOperationsInner
+ */
+export interface PermittedOperationsResponseOperationsInner {
+    /**
+     * The type of operation.
+     * @type {string}
+     * @memberof PermittedOperationsResponseOperationsInner
+     */
+    operation?: string;
+    /**
+     * The type of entity the operation type targets.
+     * @type {string}
+     * @memberof PermittedOperationsResponseOperationsInner
+     */
+    targetType?: string;
+}
 
 /**
  * The primary formats a body can be represented as. A subset of BodyRepresentation. These formats are the only allowed formats in certain use cases.
@@ -2714,6 +3139,20 @@ export const PrimaryBodyRepresentation = {
 } as const;
 export type PrimaryBodyRepresentation = typeof PrimaryBodyRepresentation[keyof typeof PrimaryBodyRepresentation];
 
+
+/**
+ * The primary formats a body can be represented as. A subset of BodyRepresentation. These formats are the only allowed formats in certain use cases.
+ * @export
+ */
+export const PrimaryBodyRepresentationSingle = {
+    Storage: 'storage',
+    AtlasDocFormat: 'atlas_doc_format',
+    View: 'view',
+    ExportView: 'export_view',
+    AnonymousExportView: 'anonymous_export_view'
+} as const;
+export type PrimaryBodyRepresentationSingle = typeof PrimaryBodyRepresentationSingle[keyof typeof PrimaryBodyRepresentationSingle];
+
 /**
  * 
  * @export
@@ -2721,11 +3160,11 @@ export type PrimaryBodyRepresentation = typeof PrimaryBodyRepresentation[keyof t
  */
 export interface Space {
     /**
-     * 
-     * @type {SpaceId}
+     * ID of the space.
+     * @type {string}
      * @memberof Space
      */
-    id?: SpaceId;
+    id?: string;
     /**
      * Key of the space.
      * @type {string}
@@ -2751,17 +3190,35 @@ export interface Space {
      */
     status?: SpaceStatus;
     /**
-     * 
-     * @type {SpaceHomepageId}
+     * The account ID of the user who created this space originally.
+     * @type {string}
      * @memberof Space
      */
-    homepageId?: SpaceHomepageId;
+    authorId?: string;
+    /**
+     * Date and time when the space was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof Space
+     */
+    createdAt?: string;
+    /**
+     * ID of the space's homepage.
+     * @type {string}
+     * @memberof Space
+     */
+    homepageId?: string;
     /**
      * 
      * @type {SpaceDescription}
      * @memberof Space
      */
     description?: SpaceDescription;
+    /**
+     * 
+     * @type {SpaceIcon}
+     * @memberof Space
+     */
+    icon?: SpaceIcon;
 }
 /**
  * Contains fields for each representation type requested.
@@ -2794,21 +3251,132 @@ export const SpaceDescriptionBodyRepresentation = {
 export type SpaceDescriptionBodyRepresentation = typeof SpaceDescriptionBodyRepresentation[keyof typeof SpaceDescriptionBodyRepresentation];
 
 /**
- * @type SpaceHomepageId
- * ID of the space's homepage.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
+ * The icon of the space
  * @export
+ * @interface SpaceIcon
  */
-export type SpaceHomepageId = number | string;
+export interface SpaceIcon {
+    /**
+     * The path (relative to base URL) at which the space's icon can be retrieved. The format should be like `/wiki/download/...` or `/wiki/aa-avatar/...`
+     * @type {string}
+     * @memberof SpaceIcon
+     */
+    path?: string;
+}
 /**
- * @type SpaceId
- * ID of the space.
  * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
+ * @export
+ * @interface SpacePermission
+ */
+export interface SpacePermission {
+    /**
+     * ID of the space permission.
+     * @type {string}
+     * @memberof SpacePermission
+     */
+    id?: string;
+    /**
+     * 
+     * @type {SpacePermissionPrincipal}
+     * @memberof SpacePermission
+     */
+    principal?: SpacePermissionPrincipal;
+    /**
+     * 
+     * @type {SpacePermissionOperation}
+     * @memberof SpacePermission
+     */
+    operation?: SpacePermissionOperation;
+}
+/**
+ * The operation the space permission corresponds to.
+ * @export
+ * @interface SpacePermissionOperation
+ */
+export interface SpacePermissionOperation {
+    /**
+     * The type of operation.
+     * @type {string}
+     * @memberof SpacePermissionOperation
+     */
+    key?: SpacePermissionOperationKeyEnum;
+    /**
+     * The type of entity the operation type targets.
+     * @type {string}
+     * @memberof SpacePermissionOperation
+     */
+    targetType?: SpacePermissionOperationTargetTypeEnum;
+}
+
+
+/**
  * @export
  */
-export type SpaceId = number | string;
+export const SpacePermissionOperationKeyEnum = {
+    Use: 'use',
+    Create: 'create',
+    Read: 'read',
+    Update: 'update',
+    Delete: 'delete',
+    Copy: 'copy',
+    Move: 'move',
+    Export: 'export',
+    Purge: 'purge',
+    PurgeVersion: 'purge_version',
+    Administer: 'administer',
+    Restore: 'restore',
+    CreateSpace: 'create_space',
+    RestrictContent: 'restrict_content',
+    Archive: 'archive'
+} as const;
+export type SpacePermissionOperationKeyEnum = typeof SpacePermissionOperationKeyEnum[keyof typeof SpacePermissionOperationKeyEnum];
+
+/**
+ * @export
+ */
+export const SpacePermissionOperationTargetTypeEnum = {
+    Page: 'page',
+    Blogpost: 'blogpost',
+    Comment: 'comment',
+    Attachment: 'attachment',
+    Whiteboard: 'whiteboard',
+    Space: 'space',
+    Application: 'application',
+    UserProfile: 'userProfile'
+} as const;
+export type SpacePermissionOperationTargetTypeEnum = typeof SpacePermissionOperationTargetTypeEnum[keyof typeof SpacePermissionOperationTargetTypeEnum];
+
+/**
+ * The entity the space permissions corresponds to.
+ * @export
+ * @interface SpacePermissionPrincipal
+ */
+export interface SpacePermissionPrincipal {
+    /**
+     * 
+     * @type {string}
+     * @memberof SpacePermissionPrincipal
+     */
+    type?: SpacePermissionPrincipalTypeEnum;
+    /**
+     * ID of the entity.
+     * @type {string}
+     * @memberof SpacePermissionPrincipal
+     */
+    id?: string;
+}
+
+
+/**
+ * @export
+ */
+export const SpacePermissionPrincipalTypeEnum = {
+    User: 'user',
+    Group: 'group',
+    Role: 'role'
+} as const;
+export type SpacePermissionPrincipalTypeEnum = typeof SpacePermissionPrincipalTypeEnum[keyof typeof SpacePermissionPrincipalTypeEnum];
+
 /**
  * 
  * @export
@@ -2816,11 +3384,11 @@ export type SpaceId = number | string;
  */
 export interface SpaceProperty {
     /**
-     * 
-     * @type {SpacePropertyId}
+     * ID of the space property.
+     * @type {string}
      * @memberof SpaceProperty
      */
-    id?: SpacePropertyId;
+    id?: string;
     /**
      * Key of the space property.
      * @type {string}
@@ -2871,14 +3439,6 @@ export interface SpacePropertyCreateRequest {
      */
     value?: any | null;
 }
-/**
- * @type SpacePropertyId
- * ID of the space property.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type SpacePropertyId = number | string;
 /**
  * 
  * @export
@@ -2979,35 +3539,35 @@ export type SpaceType = typeof SpaceType[keyof typeof SpaceType];
  */
 export interface Task {
     /**
-     * 
-     * @type {TaskId}
+     * ID of the task.
+     * @type {string}
      * @memberof Task
      */
-    id?: TaskId;
+    id?: string;
     /**
-     * 
-     * @type {TaskLocalId}
+     * Local ID of the task. This ID is local to the corresponding page or blog post.
+     * @type {string}
      * @memberof Task
      */
-    localId?: TaskLocalId;
+    localId?: string;
     /**
-     * 
-     * @type {TaskSpaceId}
+     * ID of the space the task is in.
+     * @type {string}
      * @memberof Task
      */
-    spaceId?: TaskSpaceId;
+    spaceId?: string;
     /**
-     * 
-     * @type {TaskPageId}
+     * ID of the page the task is in.
+     * @type {string}
      * @memberof Task
      */
-    pageId?: TaskPageId;
+    pageId?: string;
     /**
-     * 
-     * @type {TaskBlogPostId}
+     * ID of the blog post the task is in.
+     * @type {string}
      * @memberof Task
      */
-    blogPostId?: TaskBlogPostId;
+    blogPostId?: string;
     /**
      * Status of the task.
      * @type {string}
@@ -3016,10 +3576,10 @@ export interface Task {
     status?: TaskStatusEnum;
     /**
      * 
-     * @type {Body}
+     * @type {BodySingle}
      * @memberof Task
      */
-    body?: Body;
+    body?: BodySingle;
     /**
      * Account ID of the user who created this task.
      * @type {string}
@@ -3075,46 +3635,6 @@ export const TaskStatusEnum = {
 export type TaskStatusEnum = typeof TaskStatusEnum[keyof typeof TaskStatusEnum];
 
 /**
- * @type TaskBlogPostId
- * ID of the blog post the task is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type TaskBlogPostId = number | string;
-/**
- * @type TaskId
- * ID of the task.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type TaskId = number | string;
-/**
- * @type TaskLocalId
- * Local ID of the task. This ID is local to the corresponding page or blog post.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type TaskLocalId = number | string;
-/**
- * @type TaskPageId
- * ID of the page the task is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type TaskPageId = number | string;
-/**
- * @type TaskSpaceId
- * ID of the space the task is in.
- * 
- * Due to JavaScript's max integer representation of 2^53-1, the type of this field will be changed from a numeric type to a string type at the end of the deprecation period. In the meantime, `serialize-ids-as-strings=true` can be passed as a query param to any v2 endpoint to opt-in to this change now. See this [changelog](https://developer.atlassian.com/cloud/confluence/changelog/#CHANGE-905) for more detail.
- * @export
- */
-export type TaskSpaceId = number | string;
-/**
  * 
  * @export
  * @interface UpdateBlogPostRequest
@@ -3140,10 +3660,12 @@ export interface UpdateBlogPostRequest {
     title: string;
     /**
      * ID of the containing space.
+     * 
+     * This currently **does not support moving the blog post to a different space**.
      * @type {string}
      * @memberof UpdateBlogPostRequest
      */
-    spaceId: string;
+    spaceId?: string;
     /**
      * 
      * @type {CreateBlogPostRequestBody}
@@ -3165,7 +3687,6 @@ export interface UpdateBlogPostRequest {
 export const UpdateBlogPostRequestStatusEnum = {
     Current: 'current',
     Draft: 'draft',
-    Archived: 'archived',
     Deleted: 'deleted'
 } as const;
 export type UpdateBlogPostRequestStatusEnum = typeof UpdateBlogPostRequestStatusEnum[keyof typeof UpdateBlogPostRequestStatusEnum];
@@ -3357,10 +3878,20 @@ export interface UpdatePageRequest {
     title: string;
     /**
      * ID of the containing space.
-     * @type {string}
+     * 
+     * This currently **does not support moving the page to a different space**.
+     * @type {any}
      * @memberof UpdatePageRequest
      */
-    spaceId: string;
+    spaceId?: any | null;
+    /**
+     * ID of the parent page.
+     * 
+     * This allows the page to be moved under a different parent within the same space.
+     * @type {any}
+     * @memberof UpdatePageRequest
+     */
+    parentId?: any | null;
     /**
      * 
      * @type {CreatePageRequestBody}
@@ -3551,8 +4082,8 @@ export interface VersionedEntity {
     id?: string;
     /**
      * 
-     * @type {Body}
+     * @type {BodyBulk}
      * @memberof VersionedEntity
      */
-    body?: Body;
+    body?: BodyBulk;
 }

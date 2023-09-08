@@ -387,6 +387,57 @@ export interface ApplicationRole {
     userCountDescription?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ArchiveIssueAsyncRequest
+ */
+export interface ArchiveIssueAsyncRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArchiveIssueAsyncRequest
+     */
+    jql?: string;
+}
+/**
+ * Details of a filter for exporting archived issues.
+ * @export
+ * @interface ArchivedIssuesFilterRequest
+ */
+export interface ArchivedIssuesFilterRequest {
+    [key: string]: any | any;
+    /**
+     * List archived issues archived by a specified account ID.
+     * @type {Array<string>}
+     * @memberof ArchivedIssuesFilterRequest
+     */
+    archivedBy?: Array<string>;
+    /**
+     * 
+     * @type {DateRangeFilterRequest}
+     * @memberof ArchivedIssuesFilterRequest
+     */
+    archivedDateRange?: DateRangeFilterRequest;
+    /**
+     * List archived issues with a specified issue type ID.
+     * @type {Array<string>}
+     * @memberof ArchivedIssuesFilterRequest
+     */
+    issueTypes?: Array<string>;
+    /**
+     * List archived issues with a specified project key.
+     * @type {Array<string>}
+     * @memberof ArchivedIssuesFilterRequest
+     */
+    projects?: Array<string>;
+    /**
+     * List archived issues where the reporter is a specified account ID.
+     * @type {Array<string>}
+     * @memberof ArchivedIssuesFilterRequest
+     */
+    reporters?: Array<string>;
+}
+/**
  * Details of a field configuration to issue type mappings.
  * @export
  * @interface AssociateFieldConfigurationsWithIssueTypesRequest
@@ -398,6 +449,31 @@ export interface AssociateFieldConfigurationsWithIssueTypesRequest {
      * @memberof AssociateFieldConfigurationsWithIssueTypesRequest
      */
     mappings: Array<FieldConfigurationToIssueTypeMapping>;
+}
+/**
+ * Issue security scheme, project, and remapping details.
+ * @export
+ * @interface AssociateSecuritySchemeWithProjectDetails
+ */
+export interface AssociateSecuritySchemeWithProjectDetails {
+    /**
+     * The list of scheme levels which should be remapped to new levels of the issue security scheme.
+     * @type {Array<OldToNewSecurityLevelMappingsBean>}
+     * @memberof AssociateSecuritySchemeWithProjectDetails
+     */
+    oldToNewSecurityLevelMappings?: Array<OldToNewSecurityLevelMappingsBean>;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof AssociateSecuritySchemeWithProjectDetails
+     */
+    projectId: string;
+    /**
+     * The ID of the issue security scheme. Providing null will clear the association with the issue security scheme.
+     * @type {string}
+     * @memberof AssociateSecuritySchemeWithProjectDetails
+     */
+    schemeId: string;
 }
 /**
  * Details of an item associated with the changed record.
@@ -1095,6 +1171,236 @@ export interface AvailableDashboardGadgetsResponse {
     readonly gadgets: Array<AvailableDashboardGadget>;
 }
 /**
+ * The Connect provided ecosystem rules available.
+ * @export
+ * @interface AvailableWorkflowConnectRule
+ */
+export interface AvailableWorkflowConnectRule {
+    /**
+     * The add-on providing the rule.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    addonKey?: string;
+    /**
+     * The URL creation path segment defined in the Connect module.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    createUrl?: string;
+    /**
+     * The rule description.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    description?: string;
+    /**
+     * The URL edit path segment defined in the Connect module.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    editUrl?: string;
+    /**
+     * The module providing the rule.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    moduleKey?: string;
+    /**
+     * The rule name.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    name?: string;
+    /**
+     * The rule key.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    ruleKey?: string;
+    /**
+     * The rule type.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    ruleType?: AvailableWorkflowConnectRuleRuleTypeEnum;
+    /**
+     * The URL view path segment defined in the Connect module.
+     * @type {string}
+     * @memberof AvailableWorkflowConnectRule
+     */
+    viewUrl?: string;
+}
+
+
+/**
+ * @export
+ */
+export const AvailableWorkflowConnectRuleRuleTypeEnum = {
+    Condition: 'Condition',
+    Validator: 'Validator',
+    Function: 'Function',
+    Screen: 'Screen'
+} as const;
+export type AvailableWorkflowConnectRuleRuleTypeEnum = typeof AvailableWorkflowConnectRuleRuleTypeEnum[keyof typeof AvailableWorkflowConnectRuleRuleTypeEnum];
+
+/**
+ * The Forge provided ecosystem rules available.
+ * @export
+ * @interface AvailableWorkflowForgeRule
+ */
+export interface AvailableWorkflowForgeRule {
+    /**
+     * The rule description.
+     * @type {string}
+     * @memberof AvailableWorkflowForgeRule
+     */
+    description?: string;
+    /**
+     * The unique ARI of the forge rule type.
+     * @type {string}
+     * @memberof AvailableWorkflowForgeRule
+     */
+    id?: string;
+    /**
+     * The rule name.
+     * @type {string}
+     * @memberof AvailableWorkflowForgeRule
+     */
+    name?: string;
+    /**
+     * The rule key.
+     * @type {string}
+     * @memberof AvailableWorkflowForgeRule
+     */
+    ruleKey?: string;
+    /**
+     * The rule type.
+     * @type {string}
+     * @memberof AvailableWorkflowForgeRule
+     */
+    ruleType?: AvailableWorkflowForgeRuleRuleTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const AvailableWorkflowForgeRuleRuleTypeEnum = {
+    Condition: 'Condition',
+    Validator: 'Validator',
+    Function: 'Function',
+    Screen: 'Screen'
+} as const;
+export type AvailableWorkflowForgeRuleRuleTypeEnum = typeof AvailableWorkflowForgeRuleRuleTypeEnum[keyof typeof AvailableWorkflowForgeRuleRuleTypeEnum];
+
+/**
+ * The Atlassian provided system rules available.
+ * @export
+ * @interface AvailableWorkflowSystemRule
+ */
+export interface AvailableWorkflowSystemRule {
+    /**
+     * The rule description.
+     * @type {string}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    description: string;
+    /**
+     * List of rules that conflict with this one.
+     * @type {Array<string>}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    incompatibleRuleKeys: Array<string>;
+    /**
+     * Whether the rule can be added added to an initial transition.
+     * @type {boolean}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    isAvailableForInitialTransition: boolean;
+    /**
+     * Whether the rule is visible.
+     * @type {boolean}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    isVisible: boolean;
+    /**
+     * The rule name.
+     * @type {string}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    name: string;
+    /**
+     * The rule key.
+     * @type {string}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    ruleKey: string;
+    /**
+     * The rule type.
+     * @type {string}
+     * @memberof AvailableWorkflowSystemRule
+     */
+    ruleType: AvailableWorkflowSystemRuleRuleTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const AvailableWorkflowSystemRuleRuleTypeEnum = {
+    Condition: 'Condition',
+    Validator: 'Validator',
+    Function: 'Function',
+    Screen: 'Screen'
+} as const;
+export type AvailableWorkflowSystemRuleRuleTypeEnum = typeof AvailableWorkflowSystemRuleRuleTypeEnum[keyof typeof AvailableWorkflowSystemRuleRuleTypeEnum];
+
+/**
+ * The list of available trigger types.
+ * @export
+ * @interface AvailableWorkflowTriggerTypes
+ */
+export interface AvailableWorkflowTriggerTypes {
+    /**
+     * The description of the trigger rule.
+     * @type {string}
+     * @memberof AvailableWorkflowTriggerTypes
+     */
+    description?: string;
+    /**
+     * The name of the trigger rule.
+     * @type {string}
+     * @memberof AvailableWorkflowTriggerTypes
+     */
+    name?: string;
+    /**
+     * The type identifier of trigger rule.
+     * @type {string}
+     * @memberof AvailableWorkflowTriggerTypes
+     */
+    type?: string;
+}
+/**
+ * The trigger rules available.
+ * @export
+ * @interface AvailableWorkflowTriggers
+ */
+export interface AvailableWorkflowTriggers {
+    /**
+     * The list of available trigger types.
+     * @type {Array<AvailableWorkflowTriggerTypes>}
+     * @memberof AvailableWorkflowTriggers
+     */
+    availableTypes: Array<AvailableWorkflowTriggerTypes>;
+    /**
+     * The rule key of the rule.
+     * @type {string}
+     * @memberof AvailableWorkflowTriggers
+     */
+    ruleKey: string;
+}
+/**
  * Details of an avatar.
  * @export
  * @interface Avatar
@@ -1195,6 +1501,25 @@ export interface Avatars {
     readonly system?: Array<Avatar>;
 }
 /**
+ * Details for changing owners of shareable entities
+ * @export
+ * @interface BulkChangeOwnerDetails
+ */
+export interface BulkChangeOwnerDetails {
+    /**
+     * Whether the name is fixed automatically if it's duplicated after changing owner.
+     * @type {boolean}
+     * @memberof BulkChangeOwnerDetails
+     */
+    autofixName: boolean;
+    /**
+     * The account id of the new owner.
+     * @type {string}
+     * @memberof BulkChangeOwnerDetails
+     */
+    newOwner: string;
+}
+/**
  * Details of the options to create for a custom field.
  * @export
  * @interface BulkCustomFieldOptionCreateRequest
@@ -1220,6 +1545,145 @@ export interface BulkCustomFieldOptionUpdateRequest {
      */
     options?: Array<CustomFieldOptionUpdate>;
 }
+/**
+ * Errors of bulk edit action.
+ * @export
+ * @interface BulkEditActionError
+ */
+export interface BulkEditActionError {
+    /**
+     * The error messages.
+     * @type {Array<string>}
+     * @memberof BulkEditActionError
+     */
+    errorMessages: Array<string>;
+    /**
+     * The errors.
+     * @type {{ [key: string]: string; }}
+     * @memberof BulkEditActionError
+     */
+    errors: { [key: string]: string; };
+}
+/**
+ * Details of a request to bulk edit shareable entity.
+ * @export
+ * @interface BulkEditShareableEntityRequest
+ */
+export interface BulkEditShareableEntityRequest {
+    /**
+     * Allowed action for bulk edit shareable entity
+     * @type {string}
+     * @memberof BulkEditShareableEntityRequest
+     */
+    action: BulkEditShareableEntityRequestActionEnum;
+    /**
+     * 
+     * @type {BulkEditShareableEntityRequestChangeOwnerDetails}
+     * @memberof BulkEditShareableEntityRequest
+     */
+    changeOwnerDetails?: BulkEditShareableEntityRequestChangeOwnerDetails;
+    /**
+     * The id list of shareable entities to be changed.
+     * @type {Set<number>}
+     * @memberof BulkEditShareableEntityRequest
+     */
+    entityIds: Array<number>;
+    /**
+     * Whether the actions are executed by users with Administer Jira global permission.
+     * @type {boolean}
+     * @memberof BulkEditShareableEntityRequest
+     */
+    extendAdminPermissions?: boolean;
+    /**
+     * 
+     * @type {BulkEditShareableEntityRequestPermissionDetails}
+     * @memberof BulkEditShareableEntityRequest
+     */
+    permissionDetails?: BulkEditShareableEntityRequestPermissionDetails;
+}
+
+
+/**
+ * @export
+ */
+export const BulkEditShareableEntityRequestActionEnum = {
+    ChangeOwner: 'changeOwner',
+    ChangePermission: 'changePermission',
+    AddPermission: 'addPermission',
+    RemovePermission: 'removePermission'
+} as const;
+export type BulkEditShareableEntityRequestActionEnum = typeof BulkEditShareableEntityRequestActionEnum[keyof typeof BulkEditShareableEntityRequestActionEnum];
+
+/**
+ * The details of change owner action.
+ * @export
+ * @interface BulkEditShareableEntityRequestChangeOwnerDetails
+ */
+export interface BulkEditShareableEntityRequestChangeOwnerDetails {
+    /**
+     * Whether the name is fixed automatically if it's duplicated after changing owner.
+     * @type {boolean}
+     * @memberof BulkEditShareableEntityRequestChangeOwnerDetails
+     */
+    autofixName: boolean;
+    /**
+     * The account id of the new owner.
+     * @type {string}
+     * @memberof BulkEditShareableEntityRequestChangeOwnerDetails
+     */
+    newOwner: string;
+}
+/**
+ * The permission details to be changed.
+ * @export
+ * @interface BulkEditShareableEntityRequestPermissionDetails
+ */
+export interface BulkEditShareableEntityRequestPermissionDetails {
+    /**
+     * The edit permissions for the shareable entities.
+     * @type {Array<SharePermission>}
+     * @memberof BulkEditShareableEntityRequestPermissionDetails
+     */
+    editPermissions: Array<SharePermission>;
+    /**
+     * The share permissions for the shareable entities.
+     * @type {Array<SharePermission>}
+     * @memberof BulkEditShareableEntityRequestPermissionDetails
+     */
+    sharePermissions: Array<SharePermission>;
+}
+/**
+ * Details of a request to bulk edit shareable entity.
+ * @export
+ * @interface BulkEditShareableEntityResponse
+ */
+export interface BulkEditShareableEntityResponse {
+    /**
+     * Allowed action for bulk edit shareable entity
+     * @type {string}
+     * @memberof BulkEditShareableEntityResponse
+     */
+    action: BulkEditShareableEntityResponseActionEnum;
+    /**
+     * The mapping dashboard id to errors if any.
+     * @type {{ [key: string]: BulkEditActionError; }}
+     * @memberof BulkEditShareableEntityResponse
+     */
+    entityErrors?: { [key: string]: BulkEditActionError; };
+}
+
+
+/**
+ * @export
+ */
+export const BulkEditShareableEntityResponseActionEnum = {
+    ChangeOwner: 'changeOwner',
+    ChangePermission: 'changePermission',
+    AddPermission: 'addPermission',
+    RemovePermission: 'removePermission'
+} as const;
+export type BulkEditShareableEntityResponseActionEnum = typeof BulkEditShareableEntityResponseActionEnum[keyof typeof BulkEditShareableEntityResponseActionEnum];
+
 /**
  * A container for the watch status of a list of issues.
  * @export
@@ -2497,6 +2961,78 @@ export const CompoundClauseOperatorEnum = {
 export type CompoundClauseOperatorEnum = typeof CompoundClauseOperatorEnum[keyof typeof CompoundClauseOperatorEnum];
 
 /**
+ * The conditions group associated with the transition.
+ * @export
+ * @interface ConditionGroupConfiguration
+ */
+export interface ConditionGroupConfiguration {
+    /**
+     * The nested conditions of the condition group.
+     * @type {Array<ConditionGroupConfiguration>}
+     * @memberof ConditionGroupConfiguration
+     */
+    conditionGroups?: Array<ConditionGroupConfiguration>;
+    /**
+     * The rules for this condition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof ConditionGroupConfiguration
+     */
+    conditions?: Array<WorkflowRuleConfiguration>;
+    /**
+     * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
+     * @type {string}
+     * @memberof ConditionGroupConfiguration
+     */
+    operation?: ConditionGroupConfigurationOperationEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ConditionGroupConfigurationOperationEnum = {
+    Any: 'ANY',
+    All: 'ALL'
+} as const;
+export type ConditionGroupConfigurationOperationEnum = typeof ConditionGroupConfigurationOperationEnum[keyof typeof ConditionGroupConfigurationOperationEnum];
+
+/**
+ * The conditions group associated with the transition.
+ * @export
+ * @interface ConditionGroupUpdate
+ */
+export interface ConditionGroupUpdate {
+    /**
+     * The nested conditions of the condition group.
+     * @type {Array<ConditionGroupUpdate>}
+     * @memberof ConditionGroupUpdate
+     */
+    conditionGroups?: Array<ConditionGroupUpdate>;
+    /**
+     * The rules for this condition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof ConditionGroupUpdate
+     */
+    conditions?: Array<WorkflowRuleConfiguration>;
+    /**
+     * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
+     * @type {string}
+     * @memberof ConditionGroupUpdate
+     */
+    operation: ConditionGroupUpdateOperationEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ConditionGroupUpdateOperationEnum = {
+    Any: 'ANY',
+    All: 'ALL'
+} as const;
+export type ConditionGroupUpdateOperationEnum = typeof ConditionGroupUpdateOperationEnum[keyof typeof ConditionGroupUpdateOperationEnum];
+
+/**
  * The configuration of time tracking.
  * @export
  * @interface ConfigurationTimeTrackingConfiguration
@@ -3153,6 +3689,18 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     AtlassianServicedesksimplifiedHalpServiceDesk: 'com.atlassian.servicedesk:simplified-halp-service-desk',
     AtlassianServicedesksimplifiedBlankProjectIt: 'com.atlassian.servicedesk:simplified-blank-project-it',
     AtlassianServicedesksimplifiedBlankProjectBusiness: 'com.atlassian.servicedesk:simplified-blank-project-business',
+    AtlassianServicedesknextGenItServiceDesk: 'com.atlassian.servicedesk:next-gen-it-service-desk',
+    AtlassianServicedesknextGenHrServiceDesk: 'com.atlassian.servicedesk:next-gen-hr-service-desk',
+    AtlassianServicedesknextGenLegalServiceDesk: 'com.atlassian.servicedesk:next-gen-legal-service-desk',
+    AtlassianServicedesknextGenMarketingServiceDesk: 'com.atlassian.servicedesk:next-gen-marketing-service-desk',
+    AtlassianServicedesknextGenFacilitiesServiceDesk: 'com.atlassian.servicedesk:next-gen-facilities-service-desk',
+    AtlassianServicedesknextGenGeneralServiceDesk: 'com.atlassian.servicedesk:next-gen-general-service-desk',
+    AtlassianServicedesknextGenGeneralItServiceDesk: 'com.atlassian.servicedesk:next-gen-general-it-service-desk',
+    AtlassianServicedesknextGenGeneralBusinessServiceDesk: 'com.atlassian.servicedesk:next-gen-general-business-service-desk',
+    AtlassianServicedesknextGenAnalyticsServiceDesk: 'com.atlassian.servicedesk:next-gen-analytics-service-desk',
+    AtlassianServicedesknextGenFinanceServiceDesk: 'com.atlassian.servicedesk:next-gen-finance-service-desk',
+    AtlassianServicedesknextGenDesignServiceDesk: 'com.atlassian.servicedesk:next-gen-design-service-desk',
+    AtlassianServicedesknextGenSalesServiceDesk: 'com.atlassian.servicedesk:next-gen-sales-service-desk',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedContentManagement: 'com.atlassian.jira-core-project-templates:jira-core-simplified-content-management',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedDocumentApproval: 'com.atlassian.jira-core-project-templates:jira-core-simplified-document-approval',
     AtlassianJiraCoreProjectTemplatesjiraCoreSimplifiedLeadTracking: 'com.atlassian.jira-core-project-templates:jira-core-simplified-lead-tracking',
@@ -5205,6 +5753,25 @@ export interface DashboardOwner {
     self?: string;
 }
 /**
+ * List issues archived within a specified date range.
+ * @export
+ * @interface DateRangeFilterRequest
+ */
+export interface DateRangeFilterRequest {
+    /**
+     * List issues archived after a specified date, passed in the YYYY-MM-DD format.
+     * @type {string}
+     * @memberof DateRangeFilterRequest
+     */
+    dateAfter: string;
+    /**
+     * List issues archived before a specified date provided in the YYYY-MM-DD format.
+     * @type {string}
+     * @memberof DateRangeFilterRequest
+     */
+    dateBefore: string;
+}
+/**
  * Details of scheme and new default level.
  * @export
  * @interface DefaultLevelValue
@@ -5383,6 +5950,25 @@ export const DeprecatedWorkflowScopeTypeEnum = {
 export type DeprecatedWorkflowScopeTypeEnum = typeof DeprecatedWorkflowScopeTypeEnum[keyof typeof DeprecatedWorkflowScopeTypeEnum];
 
 /**
+ * The version details of the workflow.
+ * @export
+ * @interface DocumentVersion
+ */
+export interface DocumentVersion {
+    /**
+     * The version UUID.
+     * @type {string}
+     * @memberof DocumentVersion
+     */
+    id?: string;
+    /**
+     * The version number.
+     * @type {number}
+     * @memberof DocumentVersion
+     */
+    versionNumber?: number;
+}
+/**
  * An entity property, for more information see [Entity properties](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).
  * @export
  * @interface EntityProperty
@@ -5463,6 +6049,37 @@ export interface ErrorMessage {
      * @memberof ErrorMessage
      */
     message: string;
+}
+/**
+ * 
+ * @export
+ * @interface Errors
+ */
+export interface Errors {
+    /**
+     * 
+     * @type {Error}
+     * @memberof Errors
+     */
+    issueIsSubtask?: Error;
+    /**
+     * 
+     * @type {Error}
+     * @memberof Errors
+     */
+    issuesInArchivedProjects?: Error;
+    /**
+     * 
+     * @type {Error}
+     * @memberof Errors
+     */
+    issuesInUnlicensedProjects?: Error;
+    /**
+     * 
+     * @type {Error}
+     * @memberof Errors
+     */
+    issuesNotFound?: Error;
 }
 /**
  * Details about a notification associated with an event.
@@ -5795,6 +6412,49 @@ export interface EventNotificationUser {
      * @memberof EventNotificationUser
      */
     readonly timeZone?: string;
+}
+/**
+ * The response for status request for a running/completed export task.
+ * @export
+ * @interface ExportArchivedIssuesTaskProgressResponse
+ */
+export interface ExportArchivedIssuesTaskProgressResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    fileUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    payload?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    progress?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    submittedTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportArchivedIssuesTaskProgressResponse
+     */
+    taskId?: string;
 }
 /**
  * Details about a failed webhook.
@@ -8431,6 +9091,38 @@ export interface IncludedFields {
     included?: Array<string>;
 }
 /**
+ * List of Issue Ids Or Keys that are to be archived or unarchived
+ * @export
+ * @interface IssueArchivalSyncRequest
+ */
+export interface IssueArchivalSyncRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IssueArchivalSyncRequest
+     */
+    issueIdsOrKeys?: Array<string>;
+}
+/**
+ * Number of archived/unarchived issues and list of errors that occurred during the action, if any.
+ * @export
+ * @interface IssueArchivalSyncResponse
+ */
+export interface IssueArchivalSyncResponse {
+    /**
+     * 
+     * @type {Errors}
+     * @memberof IssueArchivalSyncResponse
+     */
+    errors?: Errors;
+    /**
+     * 
+     * @type {number}
+     * @memberof IssueArchivalSyncResponse
+     */
+    numberOfIssuesUpdated?: number;
+}
+/**
  * Details about an issue.
  * @export
  * @interface IssueBean
@@ -8565,7 +9257,7 @@ export interface IssueBeanChangelog {
  */
 export interface IssueBeanEditmeta {
     /**
-     * A list of editable field details.
+     * 
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueBeanEditmeta
      */
@@ -10377,7 +11069,7 @@ export interface IssueUpdateDetailsTransition {
  */
 export interface IssueUpdateMetadata {
     /**
-     * A list of editable field details.
+     * 
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueUpdateMetadata
      */
@@ -11224,6 +11916,12 @@ export interface JiraStatus {
      * @memberof JiraStatus
      */
     usages?: Array<ProjectIssueTypes>;
+    /**
+     * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
+     * @type {Set<WorkflowUsages>}
+     * @memberof JiraStatus
+     */
+    workflowUsages?: Array<WorkflowUsages>;
 }
 
 
@@ -11236,6 +11934,140 @@ export const JiraStatusStatusCategoryEnum = {
     Done: 'DONE'
 } as const;
 export type JiraStatusStatusCategoryEnum = typeof JiraStatusStatusCategoryEnum[keyof typeof JiraStatusStatusCategoryEnum];
+
+/**
+ * Details of a workflow.
+ * @export
+ * @interface JiraWorkflow
+ */
+export interface JiraWorkflow {
+    /**
+     * The description of the workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    description?: string;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    id?: string;
+    /**
+     * Indicates if the workflow can be edited.
+     * @type {boolean}
+     * @memberof JiraWorkflow
+     */
+    isEditable?: boolean;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    name?: string;
+    /**
+     * 
+     * @type {WorkflowScope}
+     * @memberof JiraWorkflow
+     */
+    scope?: WorkflowScope;
+    /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof JiraWorkflow
+     */
+    startPointLayout?: WorkflowLayout | null;
+    /**
+     * The statuses referenced in this workflow.
+     * @type {Set<WorkflowReferenceStatus>}
+     * @memberof JiraWorkflow
+     */
+    statuses?: Array<WorkflowReferenceStatus>;
+    /**
+     * If there is a current [asynchronous task](#async-operations) operation for this workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    taskId?: string | null;
+    /**
+     * The transitions of the workflow.
+     * @type {Set<WorkflowTransitions>}
+     * @memberof JiraWorkflow
+     */
+    transitions?: Array<WorkflowTransitions>;
+    /**
+     * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
+     * @type {Set<ProjectIssueTypes>}
+     * @memberof JiraWorkflow
+     */
+    usages?: Array<ProjectIssueTypes>;
+    /**
+     * 
+     * @type {DocumentVersion}
+     * @memberof JiraWorkflow
+     */
+    version?: DocumentVersion;
+}
+/**
+ * Details of a status.
+ * @export
+ * @interface JiraWorkflowStatus
+ */
+export interface JiraWorkflowStatus {
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof JiraWorkflowStatus
+     */
+    description?: string;
+    /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof JiraWorkflowStatus
+     */
+    id?: string;
+    /**
+     * The name of the status.
+     * @type {string}
+     * @memberof JiraWorkflowStatus
+     */
+    name?: string;
+    /**
+     * 
+     * @type {WorkflowScope}
+     * @memberof JiraWorkflowStatus
+     */
+    scope?: WorkflowScope;
+    /**
+     * The category of the status.
+     * @type {string}
+     * @memberof JiraWorkflowStatus
+     */
+    statusCategory?: JiraWorkflowStatusStatusCategoryEnum;
+    /**
+     * The reference of the status.
+     * @type {string}
+     * @memberof JiraWorkflowStatus
+     */
+    statusReference?: string;
+    /**
+     * The `statuses.usages` expand is an optional parameter that can be used when reading and updating statuses in Jira. It provides additional information about the projects and issue types associated with the requested statuses.
+     * @type {Set<ProjectIssueTypes>}
+     * @memberof JiraWorkflowStatus
+     */
+    usages?: Array<ProjectIssueTypes>;
+}
+
+
+/**
+ * @export
+ */
+export const JiraWorkflowStatusStatusCategoryEnum = {
+    Todo: 'TODO',
+    InProgress: 'IN_PROGRESS',
+    Done: 'DONE'
+} as const;
+export type JiraWorkflowStatusStatusCategoryEnum = typeof JiraWorkflowStatusStatusCategoryEnum[keyof typeof JiraWorkflowStatusStatusCategoryEnum];
 
 /**
  * Jql function precomputation.
@@ -11255,6 +12087,12 @@ export interface JqlFunctionPrecomputationBean {
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly created?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationBean
+     */
+    readonly error?: string;
     /**
      * 
      * @type {string}
@@ -11312,10 +12150,16 @@ export interface JqlFunctionPrecomputationBean {
 export interface JqlFunctionPrecomputationUpdateBean {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof JqlFunctionPrecomputationUpdateBean
      */
-    id: number;
+    error: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JqlFunctionPrecomputationUpdateBean
+     */
+    id: string;
     /**
      * 
      * @type {string}
@@ -12044,19 +12888,19 @@ export interface License {
     readonly applications: Array<LicensedApplication>;
 }
 /**
- * A license metric
+ * A metric that provides insight into the active licence details
  * @export
  * @interface LicenseMetric
  */
 export interface LicenseMetric {
     /**
-     * The key of the license metric.
+     * The key of a specific license metric.
      * @type {string}
      * @memberof LicenseMetric
      */
     key?: string;
     /**
-     * The value for the license metric.
+     * The calculated value of a licence metric linked to the key. An example licence metric is the approximate number of user accounts.
      * @type {string}
      * @memberof LicenseMetric
      */
@@ -12280,6 +13124,50 @@ export interface Locale {
     locale?: string;
 }
 /**
+ * Overrides, for the selected issue types, any status mappings provided in `statusMappingsByWorkflows`. Status mappings are required when the new workflow for an issue type doesn't contain all statuses that the old workflow has. Status mappings can be provided by a combination of `statusMappingsByWorkflows` and `statusMappingsByIssueTypeOverride`.
+ * @export
+ * @interface MappingsByIssueTypeOverride
+ */
+export interface MappingsByIssueTypeOverride {
+    /**
+     * The ID of the issue type for this mapping.
+     * @type {string}
+     * @memberof MappingsByIssueTypeOverride
+     */
+    issueTypeId: string;
+    /**
+     * The list of status mappings.
+     * @type {Array<WorkflowAssociationStatusMapping>}
+     * @memberof MappingsByIssueTypeOverride
+     */
+    statusMappings: Array<WorkflowAssociationStatusMapping>;
+}
+/**
+ * The status mappings by workflows. Status mappings are required when the new workflow for an issue type doesn't contain all statuses that the old workflow has. Status mappings can be provided by a combination of `statusMappingsByWorkflows` and `statusMappingsByIssueTypeOverride`.
+ * @export
+ * @interface MappingsByWorkflow
+ */
+export interface MappingsByWorkflow {
+    /**
+     * The ID of the new workflow.
+     * @type {string}
+     * @memberof MappingsByWorkflow
+     */
+    newWorkflowId: string;
+    /**
+     * The ID of the old workflow.
+     * @type {string}
+     * @memberof MappingsByWorkflow
+     */
+    oldWorkflowId: string;
+    /**
+     * The list of status mappings.
+     * @type {Array<WorkflowAssociationStatusMapping>}
+     * @memberof MappingsByWorkflow
+     */
+    statusMappings: Array<WorkflowAssociationStatusMapping>;
+}
+/**
  * Details about the configuration of Jira.
  * @export
  * @interface ModelConfiguration
@@ -12333,6 +13221,31 @@ export interface ModelConfiguration {
      * @memberof ModelConfiguration
      */
     readonly watchingEnabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ModelError
+ */
+export interface ModelError {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelError
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof ModelError
+     */
+    issueIdsOrKeys?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelError
+     */
+    message?: string;
 }
 /**
  * 
@@ -12958,6 +13871,25 @@ export interface NotificationTo {
      * @memberof NotificationTo
      */
     watchers?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface OldToNewSecurityLevelMappingsBean
+ */
+export interface OldToNewSecurityLevelMappingsBean {
+    /**
+     * The new issue security level ID. Providing null will clear the assigned old level from issues.
+     * @type {string}
+     * @memberof OldToNewSecurityLevelMappingsBean
+     */
+    newLevelId: string;
+    /**
+     * The old issue security level ID. Providing null will remap all issues without any assigned levels.
+     * @type {string}
+     * @memberof OldToNewSecurityLevelMappingsBean
+     */
+    oldLevelId: string;
 }
 /**
  * 
@@ -15925,6 +16857,25 @@ export interface ParsedJqlQueryStructure {
     where?: JqlQueryClause;
 }
 /**
+ * Details for permissions of shareable entities
+ * @export
+ * @interface PermissionDetails
+ */
+export interface PermissionDetails {
+    /**
+     * The edit permissions for the shareable entities.
+     * @type {Array<SharePermission>}
+     * @memberof PermissionDetails
+     */
+    editPermissions: Array<SharePermission>;
+    /**
+     * The share permissions for the shareable entities.
+     * @type {Array<SharePermission>}
+     * @memberof PermissionDetails
+     */
+    sharePermissions: Array<SharePermission>;
+}
+/**
  * Details about a permission granted to a user or group.
  * @export
  * @interface PermissionGrant
@@ -16473,6 +17424,25 @@ export const ProjectStyleEnum = {
 } as const;
 export type ProjectStyleEnum = typeof ProjectStyleEnum[keyof typeof ProjectStyleEnum];
 
+/**
+ * A project and issueType ID pair that identifies a status mapping.
+ * @export
+ * @interface ProjectAndIssueTypePair
+ */
+export interface ProjectAndIssueTypePair {
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof ProjectAndIssueTypePair
+     */
+    issueTypeId: string;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof ProjectAndIssueTypePair
+     */
+    projectId: string;
+}
 /**
  * The user who archived the project.
  * @export
@@ -17665,7 +18635,7 @@ export interface ProjectIssueTypeMappings {
     mappings: Array<ProjectIssueTypeMapping>;
 }
 /**
- * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
+ * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
  * @export
  * @interface ProjectIssueTypes
  */
@@ -18678,6 +19648,50 @@ export interface ReorderIssueResolutionsRequest {
     position?: string;
 }
 /**
+ * The list of required status mappings by issue type.
+ * @export
+ * @interface RequiredMappingByIssueType
+ */
+export interface RequiredMappingByIssueType {
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof RequiredMappingByIssueType
+     */
+    issueTypeId?: string;
+    /**
+     * The status IDs requiring mapping.
+     * @type {Set<string>}
+     * @memberof RequiredMappingByIssueType
+     */
+    statusIds?: Array<string>;
+}
+/**
+ * The list of required status mappings by workflow.
+ * @export
+ * @interface RequiredMappingByWorkflows
+ */
+export interface RequiredMappingByWorkflows {
+    /**
+     * The ID of the source workflow.
+     * @type {string}
+     * @memberof RequiredMappingByWorkflows
+     */
+    sourceWorkflowId?: string;
+    /**
+     * The status IDs requiring mapping.
+     * @type {Set<string>}
+     * @memberof RequiredMappingByWorkflows
+     */
+    statusIds?: Array<string>;
+    /**
+     * The ID of the target workflow.
+     * @type {string}
+     * @memberof RequiredMappingByWorkflows
+     */
+    targetWorkflowId?: string;
+}
+/**
  * Details of an issue resolution.
  * @export
  * @interface Resolution
@@ -18883,13 +19897,13 @@ export type RoleActorTypeEnum = typeof RoleActorTypeEnum[keyof typeof RoleActorT
  */
 export interface RuleConfiguration {
     /**
-     * EXPERIMENTAL: Whether the rule is disabled.
+     * Whether the rule is disabled.
      * @type {boolean}
      * @memberof RuleConfiguration
      */
     disabled?: boolean;
     /**
-     * EXPERIMENTAL: A tag used to filter rules in [Get workflow transition rule configurations](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflow-transition-rules/#api-rest-api-3-workflow-rule-config-get).
+     * A tag used to filter rules in [Get workflow transition rule configurations](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflow-transition-rules/#api-rest-api-3-workflow-rule-config-get).
      * @type {string}
      * @memberof RuleConfiguration
      */
@@ -20751,6 +21765,25 @@ export interface SimpleListWrapperGroupName {
     size?: number;
 }
 /**
+ * Represents a usage of an entity by a project ID and related issue type IDs.
+ * @export
+ * @interface SimpleUsage
+ */
+export interface SimpleUsage {
+    /**
+     * The issue type IDs for the usage.
+     * @type {Array<string>}
+     * @memberof SimpleUsage
+     */
+    issueTypeIds: Array<string>;
+    /**
+     * The project ID for the usage.
+     * @type {string}
+     * @memberof SimpleUsage
+     */
+    projectId: string;
+}
+/**
  * 
  * @export
  * @interface SimplifiedHierarchyLevel
@@ -21066,6 +22099,32 @@ export interface StatusIcon {
     url16x16?: string;
 }
 /**
+ * The statuses associated with this workflow.
+ * @export
+ * @interface StatusLayoutUpdate
+ */
+export interface StatusLayoutUpdate {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof StatusLayoutUpdate
+     */
+    layout?: WorkflowLayout | null;
+    /**
+     * The properties for this status layout.
+     * @type {{ [key: string]: string; }}
+     * @memberof StatusLayoutUpdate
+     */
+    properties: { [key: string]: string; };
+    /**
+     * A unique ID which the status will use to refer to this layout configuration.
+     * @type {string}
+     * @memberof StatusLayoutUpdate
+     */
+    statusReference: string;
+}
+/**
  * Details about the mapping from a status to a new status for an issue type.
  * @export
  * @interface StatusMapping
@@ -21089,6 +22148,108 @@ export interface StatusMapping {
      * @memberof StatusMapping
      */
     statusId: string;
+}
+/**
+ * The mapping of old to new status ID for a specific project and issue type.
+ * @export
+ * @interface StatusMappingDTO
+ */
+export interface StatusMappingDTO {
+    [key: string]: any | any;
+    /**
+     * The issue type for the status mapping.
+     * @type {string}
+     * @memberof StatusMappingDTO
+     */
+    issueTypeId: string;
+    /**
+     * The project for the status mapping.
+     * @type {string}
+     * @memberof StatusMappingDTO
+     */
+    projectId: string;
+    /**
+     * The list of old and new status ID mappings for the specified project and issue type.
+     * @type {Array<StatusMigration>}
+     * @memberof StatusMappingDTO
+     */
+    statusMigrations: Array<StatusMigration>;
+}
+/**
+ * The details of the statuses in the associated workflows.
+ * @export
+ * @interface StatusMetadata
+ */
+export interface StatusMetadata {
+    /**
+     * The category of the status.
+     * @type {string}
+     * @memberof StatusMetadata
+     */
+    category?: StatusMetadataCategoryEnum;
+    /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof StatusMetadata
+     */
+    id?: string;
+    /**
+     * The name of the status.
+     * @type {string}
+     * @memberof StatusMetadata
+     */
+    name?: string;
+}
+
+
+/**
+ * @export
+ */
+export const StatusMetadataCategoryEnum = {
+    Todo: 'TODO',
+    InProgress: 'IN_PROGRESS',
+    Done: 'DONE'
+} as const;
+export type StatusMetadataCategoryEnum = typeof StatusMetadataCategoryEnum[keyof typeof StatusMetadataCategoryEnum];
+
+/**
+ * The mapping of old to new status ID.
+ * @export
+ * @interface StatusMigration
+ */
+export interface StatusMigration {
+    [key: string]: any | any;
+    /**
+     * The new status ID.
+     * @type {string}
+     * @memberof StatusMigration
+     */
+    newStatusReference: string;
+    /**
+     * The old status ID.
+     * @type {string}
+     * @memberof StatusMigration
+     */
+    oldStatusReference: string;
+}
+/**
+ * The status reference and port that a transition is connected to.
+ * @export
+ * @interface StatusReferenceAndPort
+ */
+export interface StatusReferenceAndPort {
+    /**
+     * The port this transition uses to connect to this status.
+     * @type {number}
+     * @memberof StatusReferenceAndPort
+     */
+    port?: number;
+    /**
+     * The reference of this status.
+     * @type {string}
+     * @memberof StatusReferenceAndPort
+     */
+    statusReference: string;
 }
 /**
  * The scope of the status.
@@ -21176,6 +22337,31 @@ export interface StatusUpdateRequest {
      * @memberof StatusUpdateRequest
      */
     statuses?: Array<StatusUpdate>;
+}
+/**
+ * The statuses associated with each workflow.
+ * @export
+ * @interface StatusesPerWorkflow
+ */
+export interface StatusesPerWorkflow {
+    /**
+     * The ID of the initial status for the workflow.
+     * @type {string}
+     * @memberof StatusesPerWorkflow
+     */
+    initialStatusId?: string;
+    /**
+     * The status IDs associated with the workflow.
+     * @type {Set<string>}
+     * @memberof StatusesPerWorkflow
+     */
+    statuses?: Array<string>;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof StatusesPerWorkflow
+     */
+    workflowId?: string;
 }
 /**
  * An issue suggested for use in the issue picker auto-completion.
@@ -21675,6 +22861,104 @@ export interface TransitionScreenDetails {
     name?: string;
 }
 /**
+ * The transitions of this workflow.
+ * @export
+ * @interface TransitionUpdateDTO
+ */
+export interface TransitionUpdateDTO {
+    [key: string]: any | any;
+    /**
+     * The post-functions of the transition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof TransitionUpdateDTO
+     */
+    actions?: Array<WorkflowRuleConfiguration>;
+    /**
+     * 
+     * @type {ConditionGroupUpdate}
+     * @memberof TransitionUpdateDTO
+     */
+    conditions?: ConditionGroupUpdate | null;
+    /**
+     * The custom event ID of the transition.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    customIssueEventId?: string;
+    /**
+     * The description of the transition.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    description?: string;
+    /**
+     * The statuses the transition can start from.
+     * @type {Array<StatusReferenceAndPort>}
+     * @memberof TransitionUpdateDTO
+     */
+    from?: Array<StatusReferenceAndPort>;
+    /**
+     * The ID of the transition.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    id: string;
+    /**
+     * The name of the transition.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    name: string;
+    /**
+     * The properties of the transition.
+     * @type {{ [key: string]: string; }}
+     * @memberof TransitionUpdateDTO
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {StatusReferenceAndPort}
+     * @memberof TransitionUpdateDTO
+     */
+    to?: StatusReferenceAndPort | null;
+    /**
+     * 
+     * @type {WorkflowRuleConfiguration}
+     * @memberof TransitionUpdateDTO
+     */
+    transitionScreen?: WorkflowRuleConfiguration | null;
+    /**
+     * The triggers of the transition.
+     * @type {Array<WorkflowTrigger>}
+     * @memberof TransitionUpdateDTO
+     */
+    triggers?: Array<WorkflowTrigger>;
+    /**
+     * The transition type.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    type: TransitionUpdateDTOTypeEnum;
+    /**
+     * The validators of the transition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof TransitionUpdateDTO
+     */
+    validators?: Array<WorkflowRuleConfiguration>;
+}
+
+
+/**
+ * @export
+ */
+export const TransitionUpdateDTOTypeEnum = {
+    Initial: 'INITIAL',
+    Global: 'GLOBAL',
+    Directed: 'DIRECTED'
+} as const;
+export type TransitionUpdateDTOTypeEnum = typeof TransitionUpdateDTOTypeEnum[keyof typeof TransitionUpdateDTOTypeEnum];
+
+/**
  * List of issue transitions.
  * @export
  * @interface Transitions
@@ -21724,12 +23008,23 @@ export interface UiModificationContextDetails {
      */
     projectId: string;
     /**
-     * The view type of the context. Only `GIC` (Global Issue Create) is supported.
+     * The view type of the context. Only `GIC`(Global Issue Create) and `IssueView` are supported.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
-    viewType: string;
+    viewType: UiModificationContextDetailsViewTypeEnum;
 }
+
+
+/**
+ * @export
+ */
+export const UiModificationContextDetailsViewTypeEnum = {
+    Gic: 'GIC',
+    IssueView: 'IssueView'
+} as const;
+export type UiModificationContextDetailsViewTypeEnum = typeof UiModificationContextDetailsViewTypeEnum[keyof typeof UiModificationContextDetailsViewTypeEnum];
+
 /**
  * The details of a UI modification.
  * @export
@@ -22921,6 +24216,54 @@ export interface UserPickerUser {
     name?: string;
 }
 /**
+ * The level of validation to return from the API. If no values are provided, the default would return `WARNING` and `ERROR` level validation results.
+ * @export
+ * @interface ValidationOptionsForCreate
+ */
+export interface ValidationOptionsForCreate {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ValidationOptionsForCreate
+     */
+    levels?: Array<ValidationOptionsForCreateLevelsEnum>;
+}
+
+
+/**
+ * @export
+ */
+export const ValidationOptionsForCreateLevelsEnum = {
+    Warning: 'WARNING',
+    Error: 'ERROR'
+} as const;
+export type ValidationOptionsForCreateLevelsEnum = typeof ValidationOptionsForCreateLevelsEnum[keyof typeof ValidationOptionsForCreateLevelsEnum];
+
+/**
+ * The level of validation to return from the API. If no values are provided, the default would return `WARNING` and `ERROR` level validation results.
+ * @export
+ * @interface ValidationOptionsForUpdate
+ */
+export interface ValidationOptionsForUpdate {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ValidationOptionsForUpdate
+     */
+    levels?: Array<ValidationOptionsForUpdateLevelsEnum>;
+}
+
+
+/**
+ * @export
+ */
+export const ValidationOptionsForUpdateLevelsEnum = {
+    Warning: 'WARNING',
+    Error: 'ERROR'
+} as const;
+export type ValidationOptionsForUpdateLevelsEnum = typeof ValidationOptionsForUpdateLevelsEnum[keyof typeof ValidationOptionsForUpdateLevelsEnum];
+
+/**
  * An operand that is a user-provided value.
  * @export
  * @interface ValueOperand
@@ -23185,6 +24528,43 @@ export const VersionMoveBeanPositionEnum = {
 } as const;
 export type VersionMoveBeanPositionEnum = typeof VersionMoveBeanPositionEnum[keyof typeof VersionMoveBeanPositionEnum];
 
+/**
+ * Associated related work to a version
+ * @export
+ * @interface VersionRelatedWork
+ */
+export interface VersionRelatedWork {
+    /**
+     * The category of the related work
+     * @type {string}
+     * @memberof VersionRelatedWork
+     */
+    readonly category: string;
+    /**
+     * The title of the related work
+     * @type {number}
+     * @memberof VersionRelatedWork
+     */
+    readonly issueId?: number;
+    /**
+     * The id of the related work. For the native release note related work item, this will be null, and Rest API does not support updating it.
+     * @type {string}
+     * @memberof VersionRelatedWork
+     */
+    readonly relatedWorkId?: string;
+    /**
+     * The title of the related work
+     * @type {string}
+     * @memberof VersionRelatedWork
+     */
+    readonly title?: string;
+    /**
+     * The URL of the related work
+     * @type {string}
+     * @memberof VersionRelatedWork
+     */
+    readonly url?: string;
+}
 /**
  * Count of a version's unresolved issues.
  * @export
@@ -23577,6 +24957,91 @@ export interface Workflow {
     updated?: string;
 }
 /**
+ * The list of status mappings.
+ * @export
+ * @interface WorkflowAssociationStatusMapping
+ */
+export interface WorkflowAssociationStatusMapping {
+    /**
+     * The ID of the status in the new workflow.
+     * @type {string}
+     * @memberof WorkflowAssociationStatusMapping
+     */
+    newStatusId: string;
+    /**
+     * The ID of the status in the old workflow that isn't present in the new workflow.
+     * @type {string}
+     * @memberof WorkflowAssociationStatusMapping
+     */
+    oldStatusId: string;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowCapabilities
+ */
+export interface WorkflowCapabilities {
+    /**
+     * The Connect provided ecosystem rules available.
+     * @type {Array<AvailableWorkflowConnectRule>}
+     * @memberof WorkflowCapabilities
+     */
+    connectRules?: Array<AvailableWorkflowConnectRule>;
+    /**
+     * The scope of the workflow capabilities. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
+     * @type {string}
+     * @memberof WorkflowCapabilities
+     */
+    editorScope?: WorkflowCapabilitiesEditorScopeEnum;
+    /**
+     * The Forge provided ecosystem rules available.
+     * @type {Array<AvailableWorkflowForgeRule>}
+     * @memberof WorkflowCapabilities
+     */
+    forgeRules?: Array<AvailableWorkflowForgeRule>;
+    /**
+     * The types of projects that this capability set is available for.
+     * @type {Array<string>}
+     * @memberof WorkflowCapabilities
+     */
+    projectTypes?: WorkflowCapabilitiesProjectTypesEnum;
+    /**
+     * The Atlassian provided system rules available.
+     * @type {Array<AvailableWorkflowSystemRule>}
+     * @memberof WorkflowCapabilities
+     */
+    systemRules?: Array<AvailableWorkflowSystemRule>;
+    /**
+     * The trigger rules available.
+     * @type {Array<AvailableWorkflowTriggers>}
+     * @memberof WorkflowCapabilities
+     */
+    triggerRules?: Array<AvailableWorkflowTriggers>;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowCapabilitiesEditorScopeEnum = {
+    Project: 'PROJECT',
+    Global: 'GLOBAL'
+} as const;
+export type WorkflowCapabilitiesEditorScopeEnum = typeof WorkflowCapabilitiesEditorScopeEnum[keyof typeof WorkflowCapabilitiesEditorScopeEnum];
+
+/**
+ * @export
+ */
+export const WorkflowCapabilitiesProjectTypesEnum = {
+    Software: 'software',
+    ServiceDesk: 'service_desk',
+    ProductDiscovery: 'product_discovery',
+    Business: 'business',
+    Unknown: 'unknown'
+} as const;
+export type WorkflowCapabilitiesProjectTypesEnum = typeof WorkflowCapabilitiesProjectTypesEnum[keyof typeof WorkflowCapabilitiesProjectTypesEnum];
+
+/**
  * A compound workflow transition rule condition. This object returns `nodeType` as `compound`.
  * @export
  * @interface WorkflowCompoundCondition
@@ -23619,6 +25084,143 @@ export type WorkflowCompoundConditionOperatorEnum = typeof WorkflowCompoundCondi
  */
 export type WorkflowCondition = { nodeType: 'compound' } & WorkflowCompoundCondition | { nodeType: 'simple' } & WorkflowSimpleCondition;
 /**
+ * The details of the workflows to create.
+ * @export
+ * @interface WorkflowCreate
+ */
+export interface WorkflowCreate {
+    /**
+     * The description of the workflow to create.
+     * @type {string}
+     * @memberof WorkflowCreate
+     */
+    description?: string;
+    /**
+     * The name of the workflow to create.
+     * @type {string}
+     * @memberof WorkflowCreate
+     */
+    name: string;
+    /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof WorkflowCreate
+     */
+    startPointLayout?: WorkflowLayout | null;
+    /**
+     * The statuses associated with this workflow.
+     * @type {Array<StatusLayoutUpdate>}
+     * @memberof WorkflowCreate
+     */
+    statuses: Array<StatusLayoutUpdate>;
+    /**
+     * The transitions of this workflow.
+     * @type {Array<TransitionUpdateDTO>}
+     * @memberof WorkflowCreate
+     */
+    transitions: Array<TransitionUpdateDTO>;
+}
+/**
+ * The create workflows payload.
+ * @export
+ * @interface WorkflowCreateRequest
+ */
+export interface WorkflowCreateRequest {
+    /**
+     * 
+     * @type {WorkflowScope}
+     * @memberof WorkflowCreateRequest
+     */
+    scope: WorkflowScope;
+    /**
+     * The statuses to associate with the workflows.
+     * @type {Array<WorkflowStatusUpdate>}
+     * @memberof WorkflowCreateRequest
+     */
+    statuses: Array<WorkflowStatusUpdate>;
+    /**
+     * The details of the workflows to create.
+     * @type {Array<WorkflowCreate>}
+     * @memberof WorkflowCreateRequest
+     */
+    workflows: Array<WorkflowCreate>;
+}
+/**
+ * Details of the created workflows and statuses.
+ * @export
+ * @interface WorkflowCreateResponse
+ */
+export interface WorkflowCreateResponse {
+    /**
+     * List of created statuses.
+     * @type {Set<JiraWorkflowStatus>}
+     * @memberof WorkflowCreateResponse
+     */
+    statuses?: Array<JiraWorkflowStatus>;
+    /**
+     * List of created workflows.
+     * @type {Set<JiraWorkflow>}
+     * @memberof WorkflowCreateResponse
+     */
+    workflows?: Array<JiraWorkflow>;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowCreateValidateRequest
+ */
+export interface WorkflowCreateValidateRequest {
+    /**
+     * 
+     * @type {WorkflowCreateRequest}
+     * @memberof WorkflowCreateValidateRequest
+     */
+    payload: WorkflowCreateRequest;
+    /**
+     * 
+     * @type {ValidationOptionsForCreate}
+     * @memberof WorkflowCreateValidateRequest
+     */
+    validationOptions?: ValidationOptionsForCreate;
+}
+/**
+ * A reference to the location of the error. This will be null if the error does not refer to a specific element.
+ * @export
+ * @interface WorkflowElementReference
+ */
+export interface WorkflowElementReference {
+    /**
+     * A property key.
+     * @type {string}
+     * @memberof WorkflowElementReference
+     */
+    propertyKey?: string;
+    /**
+     * A rule ID.
+     * @type {string}
+     * @memberof WorkflowElementReference
+     */
+    ruleId?: string;
+    /**
+     * 
+     * @type {ProjectAndIssueTypePair}
+     * @memberof WorkflowElementReference
+     */
+    statusMappingReference?: ProjectAndIssueTypePair;
+    /**
+     * A status reference.
+     * @type {string}
+     * @memberof WorkflowElementReference
+     */
+    statusReference?: string;
+    /**
+     * A transition ID.
+     * @type {string}
+     * @memberof WorkflowElementReference
+     */
+    transitionId?: string;
+}
+/**
  * The classic workflow identifiers.
  * @export
  * @interface WorkflowIDs
@@ -23657,6 +25259,81 @@ export interface WorkflowId {
     name: string;
 }
 /**
+ * The starting point for the statuses in the workflow.
+ * @export
+ * @interface WorkflowLayout
+ */
+export interface WorkflowLayout {
+    /**
+     * The x axis location.
+     * @type {number}
+     * @memberof WorkflowLayout
+     */
+    x?: number;
+    /**
+     * The y axis location.
+     * @type {number}
+     * @memberof WorkflowLayout
+     */
+    y?: number;
+}
+/**
+ * The workflow metadata and issue type IDs which use this workflow.
+ * @export
+ * @interface WorkflowMetadataAndIssueTypeRestModel
+ */
+export interface WorkflowMetadataAndIssueTypeRestModel {
+    /**
+     * The list of issue type IDs for the mapping.
+     * @type {Array<string>}
+     * @memberof WorkflowMetadataAndIssueTypeRestModel
+     */
+    issueTypeIds: Array<string>;
+    /**
+     * 
+     * @type {WorkflowMetadataRestModel}
+     * @memberof WorkflowMetadataAndIssueTypeRestModel
+     */
+    workflow: WorkflowMetadataRestModel;
+}
+/**
+ * Workflow metadata and usage detail.
+ * @export
+ * @interface WorkflowMetadataRestModel
+ */
+export interface WorkflowMetadataRestModel {
+    /**
+     * The description of the workflow.
+     * @type {string}
+     * @memberof WorkflowMetadataRestModel
+     */
+    description: string;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof WorkflowMetadataRestModel
+     */
+    id: string;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof WorkflowMetadataRestModel
+     */
+    name: string;
+    /**
+     * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the workflows in the workflow scheme.
+     * @type {Array<SimpleUsage>}
+     * @memberof WorkflowMetadataRestModel
+     */
+    usage: Array<SimpleUsage>;
+    /**
+     * 
+     * @type {DocumentVersion}
+     * @memberof WorkflowMetadataRestModel
+     */
+    version: DocumentVersion;
+}
+/**
  * Operations allowed on a workflow
  * @export
  * @interface WorkflowOperations
@@ -23674,6 +25351,106 @@ export interface WorkflowOperations {
      * @memberof WorkflowOperations
      */
     canEdit: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowReadRequest
+ */
+export interface WorkflowReadRequest {
+    /**
+     * The list of projects and issue types to query.
+     * @type {Array<ProjectAndIssueTypePair>}
+     * @memberof WorkflowReadRequest
+     */
+    projectAndIssueTypes?: Array<ProjectAndIssueTypePair>;
+    /**
+     * The list of workflow IDs to query.
+     * @type {Array<string>}
+     * @memberof WorkflowReadRequest
+     */
+    workflowIds?: Array<string>;
+    /**
+     * The list of workflow names to query.
+     * @type {Array<string>}
+     * @memberof WorkflowReadRequest
+     */
+    workflowNames?: Array<string>;
+}
+/**
+ * Details of workflows and related statuses.
+ * @export
+ * @interface WorkflowReadResponse
+ */
+export interface WorkflowReadResponse {
+    /**
+     * List of statuses.
+     * @type {Set<JiraWorkflowStatus>}
+     * @memberof WorkflowReadResponse
+     */
+    statuses?: Array<JiraWorkflowStatus>;
+    /**
+     * List of workflows.
+     * @type {Set<JiraWorkflow>}
+     * @memberof WorkflowReadResponse
+     */
+    workflows?: Array<JiraWorkflow>;
+}
+/**
+ * The statuses referenced in the workflow.
+ * @export
+ * @interface WorkflowReferenceStatus
+ */
+export interface WorkflowReferenceStatus {
+    /**
+     * Indicates if the status is deprecated.
+     * @type {boolean}
+     * @memberof WorkflowReferenceStatus
+     */
+    deprecated?: boolean;
+    /**
+     * 
+     * @type {WorkflowStatusLayout}
+     * @memberof WorkflowReferenceStatus
+     */
+    layout?: WorkflowStatusLayout | null;
+    /**
+     * The properties associated with the status.
+     * @type {{ [key: string]: string; }}
+     * @memberof WorkflowReferenceStatus
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * The reference of the status.
+     * @type {string}
+     * @memberof WorkflowReferenceStatus
+     */
+    statusReference?: string;
+}
+/**
+ * The configuration of the rule.
+ * @export
+ * @interface WorkflowRuleConfiguration
+ */
+export interface WorkflowRuleConfiguration {
+    /**
+     * The ID of the rule.
+     * @type {string}
+     * @memberof WorkflowRuleConfiguration
+     */
+    id?: string | null;
+    /**
+     * The parameters related to the rule.
+     * @type {{ [key: string]: string; }}
+     * @memberof WorkflowRuleConfiguration
+     */
+    parameters?: { [key: string]: string; };
+    /**
+     * The rule key of the rule.
+     * @type {string}
+     * @memberof WorkflowRuleConfiguration
+     */
+    ruleKey: string;
 }
 /**
  * A collection of transition rules.
@@ -23840,6 +25617,25 @@ export interface WorkflowScheme {
      * @memberof WorkflowScheme
      */
     updateDraftIfNeeded?: boolean;
+}
+/**
+ * The explicit association between issue types and a workflow in a workflow scheme.
+ * @export
+ * @interface WorkflowSchemeAssociation
+ */
+export interface WorkflowSchemeAssociation {
+    /**
+     * The issue types assigned to the workflow.
+     * @type {Set<string>}
+     * @memberof WorkflowSchemeAssociation
+     */
+    issueTypeIds: Array<string>;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof WorkflowSchemeAssociation
+     */
+    workflowId: string;
 }
 /**
  * A workflow scheme along with a list of projects that use it.
@@ -24098,6 +25894,228 @@ export interface WorkflowSchemeProjectAssociation {
     workflowSchemeId?: string;
 }
 /**
+ * The workflow scheme read request body.
+ * @export
+ * @interface WorkflowSchemeReadRequest
+ */
+export interface WorkflowSchemeReadRequest {
+    /**
+     * The list of project IDs to query.
+     * @type {Array<string>}
+     * @memberof WorkflowSchemeReadRequest
+     */
+    projectIds?: Array<string> | null;
+    /**
+     * The list of workflow scheme IDs to query.
+     * @type {Array<string>}
+     * @memberof WorkflowSchemeReadRequest
+     */
+    workflowSchemeIds?: Array<string> | null;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowSchemeReadResponse
+ */
+export interface WorkflowSchemeReadResponse {
+    /**
+     * 
+     * @type {WorkflowMetadataRestModel}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    defaultWorkflow?: WorkflowMetadataRestModel;
+    /**
+     * The description of the workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    description?: string | null;
+    /**
+     * The ID of the workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    id: string;
+    /**
+     * The name of the workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    name: string;
+    /**
+     * The IDs of projects using the workflow scheme.
+     * @type {Array<string>}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    projectIdsUsingScheme: Array<string>;
+    /**
+     * 
+     * @type {WorkflowScope}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    scope: WorkflowScope;
+    /**
+     * Indicates if there's an [asynchronous task](#async-operations) for this workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    taskId?: string | null;
+    /**
+     * 
+     * @type {DocumentVersion}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    version: DocumentVersion;
+    /**
+     * Mappings from workflows to issue types.
+     * @type {Array<WorkflowMetadataAndIssueTypeRestModel>}
+     * @memberof WorkflowSchemeReadResponse
+     */
+    workflowsForIssueTypes: Array<WorkflowMetadataAndIssueTypeRestModel>;
+}
+/**
+ * The update workflow scheme payload.
+ * @export
+ * @interface WorkflowSchemeUpdateRequest
+ */
+export interface WorkflowSchemeUpdateRequest {
+    [key: string]: any | any;
+    /**
+     * The ID of the workflow for issue types without having a mapping defined in this workflow scheme. Only used in global-scoped workflow schemes. If the `defaultWorkflowId` isn't specified, this is set to *Jira Workflow (jira)*.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    defaultWorkflowId?: string;
+    /**
+     * The new description for this workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    description: string;
+    /**
+     * The ID of this workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    id: string;
+    /**
+     * The new name for this workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    name: string;
+    /**
+     * Overrides, for the selected issue types, any status mappings provided in `statusMappingsByWorkflows`. Status mappings are required when the new workflow for an issue type doesn't contain all statuses that the old workflow has. Status mappings can be provided by a combination of `statusMappingsByWorkflows` and `statusMappingsByIssueTypeOverride`.
+     * @type {Array<MappingsByIssueTypeOverride>}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    statusMappingsByIssueTypeOverride?: Array<MappingsByIssueTypeOverride>;
+    /**
+     * The status mappings by workflows. Status mappings are required when the new workflow for an issue type doesn't contain all statuses that the old workflow has. Status mappings can be provided by a combination of `statusMappingsByWorkflows` and `statusMappingsByIssueTypeOverride`.
+     * @type {Array<MappingsByWorkflow>}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    statusMappingsByWorkflows?: Array<MappingsByWorkflow>;
+    /**
+     * 
+     * @type {DocumentVersion}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    version: DocumentVersion;
+    /**
+     * Mappings from workflows to issue types.
+     * @type {Array<WorkflowSchemeAssociation>}
+     * @memberof WorkflowSchemeUpdateRequest
+     */
+    workflowsForIssueTypes?: Array<WorkflowSchemeAssociation>;
+}
+/**
+ * The request payload to get the required mappings for updating a workflow scheme.
+ * @export
+ * @interface WorkflowSchemeUpdateRequiredMappingsRequest
+ */
+export interface WorkflowSchemeUpdateRequiredMappingsRequest {
+    /**
+     * The ID of the new default workflow for this workflow scheme. Only used in global-scoped workflow schemes. If it isn't specified, is set to *Jira Workflow (jira)*.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsRequest
+     */
+    defaultWorkflowId?: string | null;
+    /**
+     * The ID of the workflow scheme.
+     * @type {string}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsRequest
+     */
+    id: string;
+    /**
+     * The new workflow to issue type mappings for this workflow scheme.
+     * @type {Array<WorkflowSchemeAssociation>}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsRequest
+     */
+    workflowsForIssueTypes: Array<WorkflowSchemeAssociation>;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowSchemeUpdateRequiredMappingsResponse
+ */
+export interface WorkflowSchemeUpdateRequiredMappingsResponse {
+    /**
+     * The list of required status mappings by issue type.
+     * @type {Set<RequiredMappingByIssueType>}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsResponse
+     */
+    statusMappingsByIssueTypes?: Array<RequiredMappingByIssueType>;
+    /**
+     * The list of required status mappings by workflow.
+     * @type {Set<RequiredMappingByWorkflows>}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsResponse
+     */
+    statusMappingsByWorkflows?: Array<RequiredMappingByWorkflows>;
+    /**
+     * The details of the statuses in the associated workflows.
+     * @type {Set<StatusMetadata>}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsResponse
+     */
+    statuses?: Array<StatusMetadata>;
+    /**
+     * The statuses associated with each workflow.
+     * @type {Set<StatusesPerWorkflow>}
+     * @memberof WorkflowSchemeUpdateRequiredMappingsResponse
+     */
+    statusesPerWorkflow?: Array<StatusesPerWorkflow>;
+}
+/**
+ * The scope of the workflow.
+ * @export
+ * @interface WorkflowScope
+ */
+export interface WorkflowScope {
+    /**
+     * 
+     * @type {ProjectId}
+     * @memberof WorkflowScope
+     */
+    project?: ProjectId | null;
+    /**
+     * The scope of the workflow. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
+     * @type {string}
+     * @memberof WorkflowScope
+     */
+    type: WorkflowScopeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowScopeTypeEnum = {
+    Project: 'PROJECT',
+    Global: 'GLOBAL'
+} as const;
+export type WorkflowScopeTypeEnum = typeof WorkflowScopeTypeEnum[keyof typeof WorkflowScopeTypeEnum];
+
+/**
  * A workflow transition rule condition. This object returns `nodeType` as `simple`.
  * @export
  * @interface WorkflowSimpleCondition
@@ -24147,6 +26165,94 @@ export interface WorkflowStatus {
      */
     properties?: { [key: string]: any; };
 }
+/**
+ * The status reference and port that a transition is connected to.
+ * @export
+ * @interface WorkflowStatusAndPort
+ */
+export interface WorkflowStatusAndPort {
+    /**
+     * The port the transition is connected to this status.
+     * @type {number}
+     * @memberof WorkflowStatusAndPort
+     */
+    port?: number | null;
+    /**
+     * The reference of this status.
+     * @type {string}
+     * @memberof WorkflowStatusAndPort
+     */
+    statusReference?: string;
+}
+/**
+ * The x and y location of the status in the workflow.
+ * @export
+ * @interface WorkflowStatusLayout
+ */
+export interface WorkflowStatusLayout {
+    /**
+     * The x axis location.
+     * @type {number}
+     * @memberof WorkflowStatusLayout
+     */
+    x?: number | null;
+    /**
+     * The y axis location.
+     * @type {number}
+     * @memberof WorkflowStatusLayout
+     */
+    y?: number | null;
+}
+/**
+ * Details of the status being updated.
+ * @export
+ * @interface WorkflowStatusUpdate
+ */
+export interface WorkflowStatusUpdate {
+    [key: string]: any | any;
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof WorkflowStatusUpdate
+     */
+    description?: string;
+    /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof WorkflowStatusUpdate
+     */
+    id?: string;
+    /**
+     * The name of the status.
+     * @type {string}
+     * @memberof WorkflowStatusUpdate
+     */
+    name: string;
+    /**
+     * The category of the status.
+     * @type {string}
+     * @memberof WorkflowStatusUpdate
+     */
+    statusCategory: WorkflowStatusUpdateStatusCategoryEnum;
+    /**
+     * The reference of the status.
+     * @type {string}
+     * @memberof WorkflowStatusUpdate
+     */
+    statusReference: string;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowStatusUpdateStatusCategoryEnum = {
+    Todo: 'TODO',
+    InProgress: 'IN_PROGRESS',
+    Done: 'DONE'
+} as const;
+export type WorkflowStatusUpdateStatusCategoryEnum = typeof WorkflowStatusUpdateStatusCategoryEnum[keyof typeof WorkflowStatusUpdateStatusCategoryEnum];
+
 /**
  * A workflow transition.
  * @export
@@ -24311,6 +26417,344 @@ export interface WorkflowTransitionRulesUpdateErrors {
      * @memberof WorkflowTransitionRulesUpdateErrors
      */
     updateResults: Array<WorkflowTransitionRulesUpdateErrorDetails>;
+}
+/**
+ * The transitions of the workflow.
+ * @export
+ * @interface WorkflowTransitions
+ */
+export interface WorkflowTransitions {
+    /**
+     * The post-functions of the transition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof WorkflowTransitions
+     */
+    actions?: Array<WorkflowRuleConfiguration>;
+    /**
+     * 
+     * @type {ConditionGroupConfiguration}
+     * @memberof WorkflowTransitions
+     */
+    conditions?: ConditionGroupConfiguration | null;
+    /**
+     * The custom event ID of the transition.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    customIssueEventId?: string | null;
+    /**
+     * The description of the transition.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    description?: string;
+    /**
+     * The statuses the transition can start from.
+     * @type {Array<WorkflowStatusAndPort>}
+     * @memberof WorkflowTransitions
+     */
+    from?: Array<WorkflowStatusAndPort>;
+    /**
+     * The ID of the transition.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    id?: string;
+    /**
+     * The name of the transition.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    name?: string;
+    /**
+     * The properties of the transition.
+     * @type {{ [key: string]: string; }}
+     * @memberof WorkflowTransitions
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {WorkflowStatusAndPort}
+     * @memberof WorkflowTransitions
+     */
+    to?: WorkflowStatusAndPort | null;
+    /**
+     * 
+     * @type {WorkflowRuleConfiguration}
+     * @memberof WorkflowTransitions
+     */
+    transitionScreen?: WorkflowRuleConfiguration | null;
+    /**
+     * The triggers of the transition.
+     * @type {Array<WorkflowTrigger>}
+     * @memberof WorkflowTransitions
+     */
+    triggers?: Array<WorkflowTrigger>;
+    /**
+     * The transition type.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    type?: WorkflowTransitionsTypeEnum;
+    /**
+     * The validators of the transition.
+     * @type {Array<WorkflowRuleConfiguration>}
+     * @memberof WorkflowTransitions
+     */
+    validators?: Array<WorkflowRuleConfiguration>;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowTransitionsTypeEnum = {
+    Initial: 'INITIAL',
+    Global: 'GLOBAL',
+    Directed: 'DIRECTED'
+} as const;
+export type WorkflowTransitionsTypeEnum = typeof WorkflowTransitionsTypeEnum[keyof typeof WorkflowTransitionsTypeEnum];
+
+/**
+ * The trigger configuration associated with a workflow.
+ * @export
+ * @interface WorkflowTrigger
+ */
+export interface WorkflowTrigger {
+    /**
+     * The ID of the trigger.
+     * @type {string}
+     * @memberof WorkflowTrigger
+     */
+    id?: string;
+    /**
+     * The parameters of the trigger.
+     * @type {{ [key: string]: string; }}
+     * @memberof WorkflowTrigger
+     */
+    parameters: { [key: string]: string; };
+    /**
+     * The rule key of the trigger.
+     * @type {string}
+     * @memberof WorkflowTrigger
+     */
+    ruleKey: string;
+}
+/**
+ * The details of the workflows to update.
+ * @export
+ * @interface WorkflowUpdate
+ */
+export interface WorkflowUpdate {
+    [key: string]: any | any;
+    /**
+     * The mapping of old to new status ID.
+     * @type {Array<StatusMigration>}
+     * @memberof WorkflowUpdate
+     */
+    defaultStatusMappings?: Array<StatusMigration>;
+    /**
+     * The new description for this workflow.
+     * @type {string}
+     * @memberof WorkflowUpdate
+     */
+    description?: string;
+    /**
+     * The ID of this workflow.
+     * @type {string}
+     * @memberof WorkflowUpdate
+     */
+    id: string;
+    /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof WorkflowUpdate
+     */
+    startPointLayout?: WorkflowLayout | null;
+    /**
+     * The mapping of old to new status ID for a specific project and issue type.
+     * @type {Array<StatusMappingDTO>}
+     * @memberof WorkflowUpdate
+     */
+    statusMappings?: Array<StatusMappingDTO>;
+    /**
+     * The statuses associated with this workflow.
+     * @type {Array<StatusLayoutUpdate>}
+     * @memberof WorkflowUpdate
+     */
+    statuses: Array<StatusLayoutUpdate>;
+    /**
+     * The transitions of this workflow.
+     * @type {Array<TransitionUpdateDTO>}
+     * @memberof WorkflowUpdate
+     */
+    transitions: Array<TransitionUpdateDTO>;
+    /**
+     * 
+     * @type {DocumentVersion}
+     * @memberof WorkflowUpdate
+     */
+    version: DocumentVersion;
+}
+/**
+ * The update workflows payload.
+ * @export
+ * @interface WorkflowUpdateRequest
+ */
+export interface WorkflowUpdateRequest {
+    /**
+     * The statuses to associate with the workflows.
+     * @type {Array<WorkflowStatusUpdate>}
+     * @memberof WorkflowUpdateRequest
+     */
+    statuses: Array<WorkflowStatusUpdate>;
+    /**
+     * The details of the workflows to update.
+     * @type {Array<WorkflowUpdate>}
+     * @memberof WorkflowUpdateRequest
+     */
+    workflows: Array<WorkflowUpdate>;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowUpdateResponse
+ */
+export interface WorkflowUpdateResponse {
+    /**
+     * List of updated statuses.
+     * @type {Set<JiraWorkflowStatus>}
+     * @memberof WorkflowUpdateResponse
+     */
+    statuses?: Array<JiraWorkflowStatus>;
+    /**
+     * If there is a [asynchronous task](#async-operations) operation, as a result of this update.
+     * @type {string}
+     * @memberof WorkflowUpdateResponse
+     */
+    taskId?: string | null;
+    /**
+     * List of updated workflows.
+     * @type {Set<JiraWorkflow>}
+     * @memberof WorkflowUpdateResponse
+     */
+    workflows?: Array<JiraWorkflow>;
+}
+/**
+ * 
+ * @export
+ * @interface WorkflowUpdateValidateRequestBean
+ */
+export interface WorkflowUpdateValidateRequestBean {
+    /**
+     * 
+     * @type {WorkflowUpdateRequest}
+     * @memberof WorkflowUpdateValidateRequestBean
+     */
+    payload: WorkflowUpdateRequest;
+    /**
+     * 
+     * @type {ValidationOptionsForUpdate}
+     * @memberof WorkflowUpdateValidateRequestBean
+     */
+    validationOptions?: ValidationOptionsForUpdate;
+}
+/**
+ * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
+ * @export
+ * @interface WorkflowUsages
+ */
+export interface WorkflowUsages {
+    /**
+     * Workflow ID.
+     * @type {string}
+     * @memberof WorkflowUsages
+     */
+    workflowId?: string;
+    /**
+     * Workflow name.
+     * @type {string}
+     * @memberof WorkflowUsages
+     */
+    workflowName?: string;
+}
+/**
+ * The details about a workflow validation error.
+ * @export
+ * @interface WorkflowValidationError
+ */
+export interface WorkflowValidationError {
+    /**
+     * An error code.
+     * @type {string}
+     * @memberof WorkflowValidationError
+     */
+    code?: string;
+    /**
+     * 
+     * @type {WorkflowElementReference}
+     * @memberof WorkflowValidationError
+     */
+    elementReference?: WorkflowElementReference;
+    /**
+     * The validation error level.
+     * @type {string}
+     * @memberof WorkflowValidationError
+     */
+    level?: WorkflowValidationErrorLevelEnum;
+    /**
+     * An error message.
+     * @type {string}
+     * @memberof WorkflowValidationError
+     */
+    message?: string;
+    /**
+     * The type of element the error or warning references.
+     * @type {string}
+     * @memberof WorkflowValidationError
+     */
+    type?: WorkflowValidationErrorTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowValidationErrorLevelEnum = {
+    Warning: 'WARNING',
+    Error: 'ERROR'
+} as const;
+export type WorkflowValidationErrorLevelEnum = typeof WorkflowValidationErrorLevelEnum[keyof typeof WorkflowValidationErrorLevelEnum];
+
+/**
+ * @export
+ */
+export const WorkflowValidationErrorTypeEnum = {
+    Rule: 'RULE',
+    Status: 'STATUS',
+    StatusLayout: 'STATUS_LAYOUT',
+    StatusProperty: 'STATUS_PROPERTY',
+    Workflow: 'WORKFLOW',
+    Transition: 'TRANSITION',
+    TransitionProperty: 'TRANSITION_PROPERTY',
+    Scope: 'SCOPE',
+    StatusMapping: 'STATUS_MAPPING',
+    Trigger: 'TRIGGER'
+} as const;
+export type WorkflowValidationErrorTypeEnum = typeof WorkflowValidationErrorTypeEnum[keyof typeof WorkflowValidationErrorTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface WorkflowValidationErrorList
+ */
+export interface WorkflowValidationErrorList {
+    /**
+     * The list of validation errors.
+     * @type {Array<WorkflowValidationError>}
+     * @memberof WorkflowValidationErrorList
+     */
+    errors?: Array<WorkflowValidationError>;
 }
 /**
  * Details of workflows and their transition rules to delete.

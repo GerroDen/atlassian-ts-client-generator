@@ -24,7 +24,6 @@ import type {
 export interface CreateSpacePropertyRequest {
     spaceId: number;
     spacePropertyCreateRequest: SpacePropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface DeleteSpacePropertyByIdRequest {
@@ -37,20 +36,17 @@ export interface GetSpacePropertiesRequest {
     key?: string;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetSpacePropertyByIdRequest {
     spaceId: number;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateSpacePropertyByIdRequest {
     spaceId: number;
     propertyId: number;
     spacePropertyUpdateRequest: SpacePropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -72,10 +68,6 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -175,10 +167,6 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -222,10 +210,6 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -274,10 +258,6 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  CustomContentBodyRepresentation,
   DetailedVersion,
   MultiEntityResultVersion,
   MultiEntityResultVersion1,
@@ -57,7 +58,7 @@ export interface GetCustomContentVersionDetailsRequest {
 
 export interface GetCustomContentVersionsRequest {
     customContentId: number;
-    bodyFormat?: PrimaryBodyRepresentation;
+    bodyFormat?: CustomContentBodyRepresentation;
     cursor?: string;
     limit?: number;
     sort?: VersionSortOrder;

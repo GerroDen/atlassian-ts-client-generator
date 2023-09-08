@@ -124,7 +124,7 @@ export interface UpdateRestrictionsRequest {
 export class ContentRestrictionsApi extends runtime.BaseAPI {
 
     /**
-     * Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Deprecated, use [Add group to content restriction via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-put). Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Add group to content restriction
      */
     async addGroupToContentRestrictionRaw(requestParameters: AddGroupToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -163,7 +163,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Deprecated, use [Add group to content restriction via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-put). Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Add group to content restriction
      */
     async addGroupToContentRestriction(requestParameters: AddGroupToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -368,7 +368,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Deprecated, use [Get content restriction status for group via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-get). Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
      * Get content restriction status for group
      */
     async getContentRestrictionStatusForGroupRaw(requestParameters: GetContentRestrictionStatusForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -407,7 +407,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Deprecated, use [Get content restriction status for group via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-get). Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
      * Get content restriction status for group
      */
     async getContentRestrictionStatusForGroup(requestParameters: GetContentRestrictionStatusForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -716,7 +716,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Deprecated, use [Remove group from content restriction by groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-user-delete). Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Remove group from content restriction
      */
     async removeGroupFromContentRestrictionByIdRaw(requestParameters: RemoveGroupFromContentRestrictionByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -755,7 +755,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Deprecated, use [Remove group from content restriction by groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-user-delete). Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Remove group from content restriction
      */
     async removeGroupFromContentRestrictionById(requestParameters: RemoveGroupFromContentRestrictionByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

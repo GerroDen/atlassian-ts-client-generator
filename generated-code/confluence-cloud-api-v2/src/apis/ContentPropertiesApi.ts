@@ -25,31 +25,26 @@ import type {
 export interface CreateAttachmentPropertyRequest {
     attachmentId: string;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface CreateBlogpostPropertyRequest {
     blogpostId: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface CreateCommentPropertyRequest {
     commentId: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface CreateCustomContentPropertyRequest {
     customContentId: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface CreatePagePropertyRequest {
     pageId: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface DeleteAttachmentPropertyByIdRequest {
@@ -83,13 +78,11 @@ export interface GetAttachmentContentPropertiesRequest {
     sort?: ContentPropertySortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetAttachmentContentPropertiesByIdRequest {
     attachmentId: string;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetBlogpostContentPropertiesRequest {
@@ -98,13 +91,11 @@ export interface GetBlogpostContentPropertiesRequest {
     sort?: ContentPropertySortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetBlogpostContentPropertiesByIdRequest {
     blogpostId: number;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCommentContentPropertiesRequest {
@@ -113,13 +104,11 @@ export interface GetCommentContentPropertiesRequest {
     sort?: ContentPropertySortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCommentContentPropertiesByIdRequest {
     commentId: number;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentContentPropertiesRequest {
@@ -128,13 +117,11 @@ export interface GetCustomContentContentPropertiesRequest {
     sort?: ContentPropertySortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentContentPropertiesByIdRequest {
     customContentId: number;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPageContentPropertiesRequest {
@@ -143,48 +130,41 @@ export interface GetPageContentPropertiesRequest {
     sort?: ContentPropertySortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPageContentPropertiesByIdRequest {
     pageId: number;
     propertyId: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateAttachmentPropertyByIdRequest {
     attachmentId: string;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateBlogpostPropertyByIdRequest {
     blogpostId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateCommentPropertyByIdRequest {
     commentId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateCustomContentPropertyByIdRequest {
     customContentId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdatePagePropertyByIdRequest {
     pageId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -193,8 +173,8 @@ export interface UpdatePagePropertyByIdRequest {
 export class ContentPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new attachment property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
-     * Create attachment property
+     * Creates a new content property for an attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
+     * Create content property for attachment
      */
     async createAttachmentPropertyRaw(requestParameters: CreateAttachmentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
@@ -206,10 +186,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -235,8 +211,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new attachment property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
-     * Create attachment property
+     * Creates a new content property for an attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
+     * Create content property for attachment
      */
     async createAttachmentProperty(requestParameters: CreateAttachmentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createAttachmentPropertyRaw(requestParameters, initOverrides);
@@ -244,8 +220,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new blog post property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
-     * Create blog post property
+     * Creates a new property for a blogpost.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
+     * Create content property for blog post
      */
     async createBlogpostPropertyRaw(requestParameters: CreateBlogpostPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
@@ -257,10 +233,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -286,8 +258,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new blog post property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
-     * Create blog post property
+     * Creates a new property for a blogpost.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
+     * Create content property for blog post
      */
     async createBlogpostProperty(requestParameters: CreateBlogpostPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createBlogpostPropertyRaw(requestParameters, initOverrides);
@@ -295,8 +267,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new comment property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
-     * Create comment property
+     * Creates a new content property for a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
+     * Create content property for comment
      */
     async createCommentPropertyRaw(requestParameters: CreateCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
@@ -308,10 +280,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -337,8 +305,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new comment property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
-     * Create comment property
+     * Creates a new content property for a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
+     * Create content property for comment
      */
     async createCommentProperty(requestParameters: CreateCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createCommentPropertyRaw(requestParameters, initOverrides);
@@ -346,8 +314,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new custom content property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
-     * Create custom content property
+     * Creates a new content property for a piece of custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
+     * Create content property for custom content
      */
     async createCustomContentPropertyRaw(requestParameters: CreateCustomContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
@@ -359,10 +327,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -388,8 +352,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new custom content property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
-     * Create custom content property
+     * Creates a new content property for a piece of custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
+     * Create content property for custom content
      */
     async createCustomContentProperty(requestParameters: CreateCustomContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createCustomContentPropertyRaw(requestParameters, initOverrides);
@@ -397,8 +361,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new page property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
-     * Create page property
+     * Creates a new content property for a page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
+     * Create content property for page
      */
     async createPagePropertyRaw(requestParameters: CreatePagePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
@@ -410,10 +374,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -439,8 +399,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new page property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
-     * Create page property
+     * Creates a new content property for a page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
+     * Create content property for page
      */
     async createPageProperty(requestParameters: CreatePagePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createPagePropertyRaw(requestParameters, initOverrides);
@@ -448,8 +408,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a attachment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
-     * Delete attachment property by id
+     * Deletes a content property for an attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
+     * Delete content property for attachment by id
      */
     async deleteAttachmentPropertyByIdRaw(requestParameters: DeleteAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
@@ -483,16 +443,16 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a attachment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
-     * Delete attachment property by id
+     * Deletes a content property for an attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
+     * Delete content property for attachment by id
      */
     async deleteAttachmentPropertyById(requestParameters: DeleteAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteAttachmentPropertyByIdRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Deletes a blog post property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Delete blog post property by id
+     * Deletes a content property for a blogpost by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Delete content property for blogpost by id
      */
     async deleteBlogpostPropertyByIdRaw(requestParameters: DeleteBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
@@ -526,16 +486,16 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a blog post property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Delete blog post property by id
+     * Deletes a content property for a blogpost by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Delete content property for blogpost by id
      */
     async deleteBlogpostPropertyById(requestParameters: DeleteBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteBlogpostPropertyByIdRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Deletes a comment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Delete comment property by id
+     * Deletes a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Delete content property for comment by id
      */
     async deleteCommentPropertyByIdRaw(requestParameters: DeleteCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
@@ -569,16 +529,16 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a comment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Delete comment property by id
+     * Deletes a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Delete content property for comment by id
      */
     async deleteCommentPropertyById(requestParameters: DeleteCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteCommentPropertyByIdRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Deletes a custom content property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Delete custom content property by id
+     * Deletes a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Delete content property for custom content by id
      */
     async deleteCustomContentPropertyByIdRaw(requestParameters: DeleteCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
@@ -612,16 +572,16 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a custom content property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Delete custom content property by id
+     * Deletes a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Delete content property for custom content by id
      */
     async deleteCustomContentPropertyById(requestParameters: DeleteCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteCustomContentPropertyByIdRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Deletes a page property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Delete page property by id
+     * Deletes a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Delete content property for page by id
      */
     async deletePagePropertyByIdRaw(requestParameters: DeletePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
@@ -655,8 +615,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a page property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Delete page property by id
+     * Deletes a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Delete content property for page by id
      */
     async deletePagePropertyById(requestParameters: DeletePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deletePagePropertyByIdRaw(requestParameters, initOverrides);
@@ -687,10 +647,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -736,10 +692,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -797,10 +749,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -844,10 +792,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -905,10 +849,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -952,10 +892,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1013,10 +949,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -1060,10 +992,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1121,10 +1049,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -1169,10 +1093,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -1203,8 +1123,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an attachment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
-     * Update attachment property by id
+     * Update a content property for attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
+     * Update content property for attachment by id
      */
     async updateAttachmentPropertyByIdRaw(requestParameters: UpdateAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
@@ -1220,10 +1140,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1249,8 +1165,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an attachment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
-     * Update attachment property by id
+     * Update a content property for attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
+     * Update content property for attachment by id
      */
     async updateAttachmentPropertyById(requestParameters: UpdateAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateAttachmentPropertyByIdRaw(requestParameters, initOverrides);
@@ -1258,8 +1174,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a blog post property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Update blog post property by id
+     * Update a content property for blog post by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Update content property for blog post by id
      */
     async updateBlogpostPropertyByIdRaw(requestParameters: UpdateBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
@@ -1275,10 +1191,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1304,8 +1216,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a blog post property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Update blog post property by id
+     * Update a content property for blog post by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Update content property for blog post by id
      */
     async updateBlogpostPropertyById(requestParameters: UpdateBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateBlogpostPropertyByIdRaw(requestParameters, initOverrides);
@@ -1313,8 +1225,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a comment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Update comment property by id
+     * Update a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Update content property for comment by id
      */
     async updateCommentPropertyByIdRaw(requestParameters: UpdateCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
@@ -1330,10 +1242,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1359,8 +1267,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a comment property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Update comment property by id
+     * Update a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Update content property for comment by id
      */
     async updateCommentPropertyById(requestParameters: UpdateCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateCommentPropertyByIdRaw(requestParameters, initOverrides);
@@ -1368,8 +1276,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a custom content property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Update custom content property by id
+     * Update a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Update content property for custom content by id
      */
     async updateCustomContentPropertyByIdRaw(requestParameters: UpdateCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
@@ -1385,10 +1293,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1414,8 +1318,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a custom content property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Update custom content property by id
+     * Update a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Update content property for custom content by id
      */
     async updateCustomContentPropertyById(requestParameters: UpdateCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateCustomContentPropertyByIdRaw(requestParameters, initOverrides);
@@ -1423,8 +1327,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a page property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Update page property by id
+     * Update a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Update content property for page by id
      */
     async updatePagePropertyByIdRaw(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
         if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
@@ -1440,10 +1344,6 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -1469,8 +1369,8 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a page property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Update page property by id
+     * Update a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Update content property for page by id
      */
     async updatePagePropertyById(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updatePagePropertyByIdRaw(requestParameters, initOverrides);

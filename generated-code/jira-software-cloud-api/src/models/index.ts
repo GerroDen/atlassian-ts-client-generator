@@ -1678,6 +1678,12 @@ export interface DeploymentData {
      * @memberof DeploymentData
      */
     schemaVersion?: DeploymentDataSchemaVersionEnum;
+    /**
+     * 
+     * @type {TriggeredBy}
+     * @memberof DeploymentData
+     */
+    triggeredBy?: TriggeredBy;
 }
 
 
@@ -1702,6 +1708,127 @@ export const DeploymentDataSchemaVersionEnum = {
     _10: '1.0'
 } as const;
 export type DeploymentDataSchemaVersionEnum = typeof DeploymentDataSchemaVersionEnum[keyof typeof DeploymentDataSchemaVersionEnum];
+
+/**
+ * Data related to a specific deployment in a specific environment that the deployment is present in.
+ * Must specify one of `issueKeys` or `associations`.
+ * @export
+ * @interface DeploymentData1
+ */
+export interface DeploymentData1 {
+    /**
+     * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
+     * @type {number}
+     * @memberof DeploymentData1
+     */
+    deploymentSequenceNumber: number;
+    /**
+     * A number used to apply an order to the updates to the deployment, as identified by the deploymentSequenceNumber, in the case of out-of-order receipt of update requests. It must be a monotonically increasing number. For example, epoch time could be one way to generate the updateSequenceNumber.
+     * @type {number}
+     * @memberof DeploymentData1
+     */
+    updateSequenceNumber: number;
+    /**
+     * Deprecated. The Jira issue keys to associate the Deployment information with.
+     * Should replace this field with the "associations" field to associate Deployment information with issueKeys or other types of associations.
+     * @type {Array<string>}
+     * @memberof DeploymentData1
+     * @deprecated
+     */
+    issueKeys?: Array<string>;
+    /**
+     * The entities to associate the Deployment information with.
+     * It must contain at least one of IssueIdOrKeysAssociation or ServiceIdOrKeysAssociation.
+     * @type {Array<DeploymentDataAssociationsInner>}
+     * @memberof DeploymentData1
+     */
+    associations?: Array<DeploymentDataAssociationsInner>;
+    /**
+     * The human-readable name for the deployment. Will be shown in the UI.
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    displayName: string;
+    /**
+     * A URL users can use to link to this deployment, in this environment.
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    url: string;
+    /**
+     * A short description of the deployment
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    description: string;
+    /**
+     * The last-updated timestamp to present to the user as a summary of the state of the deployment.
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    lastUpdated: string;
+    /**
+     * An (optional) additional label that may be displayed with deployment information. Can be used to display version information etc. for the deployment.
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    label?: string;
+    /**
+     * The state of the deployment
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    state: DeploymentData1StateEnum;
+    /**
+     * 
+     * @type {Pipeline}
+     * @memberof DeploymentData1
+     */
+    pipeline: Pipeline;
+    /**
+     * 
+     * @type {Environment}
+     * @memberof DeploymentData1
+     */
+    environment: Environment;
+    /**
+     * A list of commands to be actioned for this Deployment
+     * @type {Array<Command>}
+     * @memberof DeploymentData1
+     */
+    commands?: Array<Command>;
+    /**
+     * The DeploymentData schema version used for this deployment data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    schemaVersion?: DeploymentData1SchemaVersionEnum;
+}
+
+
+/**
+ * @export
+ */
+export const DeploymentData1StateEnum = {
+    Unknown: 'unknown',
+    Pending: 'pending',
+    InProgress: 'in_progress',
+    Cancelled: 'cancelled',
+    Failed: 'failed',
+    RolledBack: 'rolled_back',
+    Successful: 'successful'
+} as const;
+export type DeploymentData1StateEnum = typeof DeploymentData1StateEnum[keyof typeof DeploymentData1StateEnum];
+
+/**
+ * @export
+ */
+export const DeploymentData1SchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type DeploymentData1SchemaVersionEnum = typeof DeploymentData1SchemaVersionEnum[keyof typeof DeploymentData1SchemaVersionEnum];
 
 /**
  * 
@@ -3645,25 +3772,6 @@ export interface GetReportsForBoard200Response {
     reports?: Array<object>;
 }
 /**
- * Details of Vulnerabilities (in a page) and pagination info.
- * @export
- * @interface GetVulnerabilitiesByContainerIdResponse
- */
-export interface GetVulnerabilitiesByContainerIdResponse {
-    /**
-     * 
-     * @type {Array<VulnerabilityDetails>}
-     * @memberof GetVulnerabilitiesByContainerIdResponse
-     */
-    vulnerabilities: Array<VulnerabilityDetails>;
-    /**
-     * 
-     * @type {PageInfo}
-     * @memberof GetVulnerabilitiesByContainerIdResponse
-     */
-    pageInfo: PageInfo;
-}
-/**
  * 
  * @export
  * @interface GroupBean
@@ -5001,25 +5109,6 @@ export interface PageBeanQuickFilterBean {
     values?: Array<GetAllQuickFilters200ResponseValuesInner>;
 }
 /**
- * Pagination info
- * @export
- * @interface PageInfo
- */
-export interface PageInfo {
-    /**
-     * Indicate if a next page is available.
-     * @type {boolean}
-     * @memberof PageInfo
-     */
-    hasNextPage?: boolean;
-    /**
-     * Token value for fetching the next page. Available if there is a next page.
-     * @type {string}
-     * @memberof PageInfo
-     */
-    nextPageToken?: string;
-}
-/**
  * A page of changelogs.
  * @export
  * @interface PageOfChangelogs
@@ -5268,7 +5357,7 @@ export interface PullRequest {
      */
     updateSequenceId: number;
     /**
-     * The status of the pull request. In the case of concurrent updates, priority is given in the order OPEN, MERGED, DECLINED, UNKNOWN
+     * The status of the pull request. In the case of concurrent updates, priority is given in the order OPEN, MERGED, DECLINED, DRAFT, UNKNOWN
      * @type {string}
      * @memberof PullRequest
      */
@@ -5339,6 +5428,12 @@ export interface PullRequest {
      * @memberof PullRequest
      */
     displayId: string;
+    /**
+     * The number of tasks on the pull request
+     * @type {number}
+     * @memberof PullRequest
+     */
+    taskCount?: number;
 }
 
 
@@ -5349,6 +5444,7 @@ export const PullRequestStatusEnum = {
     Open: 'OPEN',
     Merged: 'MERGED',
     Declined: 'DECLINED',
+    Draft: 'DRAFT',
     Unknown: 'UNKNOWN'
 } as const;
 export type PullRequestStatusEnum = typeof PullRequestStatusEnum[keyof typeof PullRequestStatusEnum];
@@ -5825,6 +5921,7 @@ export interface Reviewer {
  */
 export const ReviewerApprovalStatusEnum = {
     Approved: 'APPROVED',
+    Needswork: 'NEEDSWORK',
     Unapproved: 'UNAPPROVED'
 } as const;
 export type ReviewerApprovalStatusEnum = typeof ReviewerApprovalStatusEnum[keyof typeof ReviewerApprovalStatusEnum];
@@ -6752,7 +6849,7 @@ export interface SubmitRemoteLinksRequest {
  */
 export interface SubmitSecurityWorkspacesRequest {
     /**
-     * The IDs of Security Workspaces to link to this Jira site.
+     * The IDs of Security Workspaces to link to this Jira site. These must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(\/[a-zA-Z0-9\\-_.~@:{}=]+)*`
      * @type {Array<string>}
      * @memberof SubmitSecurityWorkspacesRequest
      */
@@ -6765,7 +6862,7 @@ export interface SubmitSecurityWorkspacesRequest {
  */
 export interface SubmitVulnerabilitiesRequest {
     /**
-     * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during normal operation (e.g. provider pushing new scanned vulnerabilities). "BACKFILL" - Data received while backfilling existing data (e.g. pushing historical vulnerabilities when re-connect a workspace). Default is "NORMAL". Please note that "BACKFILL" operations have a much higher rate-limit
+     * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during real-time, user-triggered actions (e.g. user closed or updated a vulnerability). "SCAN" - Data sent through some automated process (e.g. some periodically scheduled repository scan). "BACKFILL" - Data received while backfilling existing data (e.g. pushing historical vulnerabilities when re-connect a workspace). Default is "NORMAL". "NORMAL" traffic has higher priority but tighter rate limits, "SCAN" traffic has medium priority and looser limits, "BACKFILL" has lower priority and much looser limits
      * @type {string}
      * @memberof SubmitVulnerabilitiesRequest
      */
@@ -6800,6 +6897,7 @@ export interface SubmitVulnerabilitiesRequest {
  */
 export const SubmitVulnerabilitiesRequestOperationTypeEnum = {
     Normal: 'NORMAL',
+    Scan: 'SCAN',
     Backfill: 'BACKFILL'
 } as const;
 export type SubmitVulnerabilitiesRequestOperationTypeEnum = typeof SubmitVulnerabilitiesRequestOperationTypeEnum[keyof typeof SubmitVulnerabilitiesRequestOperationTypeEnum];
@@ -6919,6 +7017,19 @@ export interface ToggleFeaturesRequest {
      * @memberof ToggleFeaturesRequest
      */
     enabling?: boolean;
+}
+/**
+ * Describes the user who triggered the deployment
+ * @export
+ * @interface TriggeredBy
+ */
+export interface TriggeredBy {
+    /**
+     * The email address of the user. Used to associate the user with a Jira user. Max length is 255 characters.
+     * @type {string}
+     * @memberof TriggeredBy
+     */
+    email?: string;
 }
 /**
  * 
@@ -7190,7 +7301,7 @@ export interface VulnerabilityDetails {
      */
     updateSequenceNumber: number;
     /**
-     * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider.
+     * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider. This must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(/[a-zA-Z0-9\\-_.~@:{}=]+)*`
      * @type {string}
      * @memberof VulnerabilityDetails
      */

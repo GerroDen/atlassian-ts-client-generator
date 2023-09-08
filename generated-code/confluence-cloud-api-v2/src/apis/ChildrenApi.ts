@@ -26,7 +26,6 @@ export interface GetChildCustomContentRequest {
     cursor?: string;
     limit?: number;
     sort?: Array<ChildCustomContentSortOrder>;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetChildPagesRequest {
@@ -34,7 +33,6 @@ export interface GetChildPagesRequest {
     cursor?: string;
     limit?: number;
     sort?: Array<ChildPageSortOrder>;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -63,10 +61,6 @@ export class ChildrenApi extends runtime.BaseAPI {
 
         if (requestParameters.sort) {
             queryParameters['sort'] = requestParameters.sort;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -119,10 +113,6 @@ export class ChildrenApi extends runtime.BaseAPI {
 
         if (requestParameters.sort) {
             queryParameters['sort'] = requestParameters.sort;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

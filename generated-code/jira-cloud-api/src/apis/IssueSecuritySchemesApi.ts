@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   AddSecuritySchemeLevelsRequestBean,
+  AssociateSecuritySchemeWithProjectDetails,
   CreateIssueSecuritySchemeDetails,
   ErrorCollection,
   PageBeanIssueSecuritySchemeToProjectMapping,
@@ -41,6 +42,10 @@ export interface AddSecurityLevelMembersRequest {
     schemeId: string;
     levelId: string;
     securitySchemeMembersRequest: SecuritySchemeMembersRequest;
+}
+
+export interface AssociateSchemesToProjectsRequest {
+    associateSecuritySchemeWithProjectDetails: AssociateSecuritySchemeWithProjectDetails;
 }
 
 export interface CreateIssueSecuritySchemeRequest {
@@ -214,6 +219,48 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
     async addSecurityLevelMembers(requestParameters: AddSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.addSecurityLevelMembersRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Associates an issue security scheme with a project and remaps security levels of issues to the new levels, if provided.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Associate security scheme to project
+     */
+    async associateSchemesToProjectsRaw(requestParameters: AssociateSchemesToProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.associateSecuritySchemeWithProjectDetails === null || requestParameters.associateSecuritySchemeWithProjectDetails === undefined) {
+            throw new runtime.RequiredError('associateSecuritySchemeWithProjectDetails','Required parameter requestParameters.associateSecuritySchemeWithProjectDetails was null or undefined when calling associateSchemesToProjects.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issuesecurityschemes/project`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.associateSecuritySchemeWithProjectDetails,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Associates an issue security scheme with a project and remaps security levels of issues to the new levels, if provided.  This operation is [asynchronous](#async). Follow the `location` link in the response to determine the status of the task and use [Get task](#api-rest-api-3-task-taskId-get) to obtain subsequent updates.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Associate security scheme to project
+     */
+    async associateSchemesToProjects(requestParameters: AssociateSchemesToProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.associateSchemesToProjectsRaw(requestParameters, initOverrides);
     }
 
     /**

@@ -17,15 +17,17 @@ import * as runtime from '../runtime';
 import type {
   CreatePageRequest,
   MultiEntityResultPage,
-  Page,
+  PageSingle,
   PageSortOrder,
   PrimaryBodyRepresentation,
+  PrimaryBodyRepresentationSingle,
   UpdatePageRequest,
 } from '../models';
 
 export interface CreatePageOperationRequest {
     createPageRequest: CreatePageRequest;
-    serializeIdsAsStrings?: boolean;
+    embedded?: boolean;
+    _private?: boolean;
 }
 
 export interface DeletePageRequest {
@@ -34,43 +36,45 @@ export interface DeletePageRequest {
 
 export interface GetLabelPagesRequest {
     id: number;
+    spaceId?: Array<number>;
     bodyFormat?: PrimaryBodyRepresentation;
     sort?: PageSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPageByIdRequest {
     id: number;
-    bodyFormat?: PrimaryBodyRepresentation;
+    bodyFormat?: PrimaryBodyRepresentationSingle;
     getDraft?: boolean;
     version?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPagesRequest {
     id?: Array<number>;
-    status?: GetPagesStatusEnum;
+    spaceId?: Array<number>;
+    sort?: PageSortOrder;
+    status?: Array<GetPagesStatusEnum>;
+    title?: string;
     bodyFormat?: PrimaryBodyRepresentation;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPagesInSpaceRequest {
     id: number;
-    status?: GetPagesInSpaceStatusEnum;
+    depth?: GetPagesInSpaceDepthEnum;
+    sort?: PageSortOrder;
+    status?: Array<GetPagesInSpaceStatusEnum>;
+    title?: string;
     bodyFormat?: PrimaryBodyRepresentation;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdatePageOperationRequest {
     id: number;
     updatePageRequest: UpdatePageRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -82,15 +86,19 @@ export class PageApi extends runtime.BaseAPI {
      * Creates a page in the space.  Pages are created as published by default unless specified as a draft in the status field. If creating a published page, the title must be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a page in the space.
      * Create page
      */
-    async createPageRaw(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Page>> {
+    async createPageRaw(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageSingle>> {
         if (requestParameters.createPageRequest === null || requestParameters.createPageRequest === undefined) {
             throw new runtime.RequiredError('createPageRequest','Required parameter requestParameters.createPageRequest was null or undefined when calling createPage.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
+        if (requestParameters.embedded !== undefined) {
+            queryParameters['embedded'] = requestParameters.embedded;
+        }
+
+        if (requestParameters._private !== undefined) {
+            queryParameters['private'] = requestParameters._private;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -120,7 +128,7 @@ export class PageApi extends runtime.BaseAPI {
      * Creates a page in the space.  Pages are created as published by default unless specified as a draft in the status field. If creating a published page, the title must be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a page in the space.
      * Create page
      */
-    async createPage(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Page> {
+    async createPage(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageSingle> {
         const response = await this.createPageRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -175,6 +183,10 @@ export class PageApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.spaceId) {
+            queryParameters['space-id'] = requestParameters.spaceId;
+        }
+
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
         }
@@ -189,10 +201,6 @@ export class PageApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -228,7 +236,7 @@ export class PageApi extends runtime.BaseAPI {
      * Returns a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
      * Get page by id
      */
-    async getPageByIdRaw(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Page>> {
+    async getPageByIdRaw(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageSingle>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageById.');
         }
@@ -245,10 +253,6 @@ export class PageApi extends runtime.BaseAPI {
 
         if (requestParameters.version !== undefined) {
             queryParameters['version'] = requestParameters.version;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -275,7 +279,7 @@ export class PageApi extends runtime.BaseAPI {
      * Returns a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
      * Get page by id
      */
-    async getPageById(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Page> {
+    async getPageById(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageSingle> {
         const response = await this.getPageByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -291,8 +295,20 @@ export class PageApi extends runtime.BaseAPI {
             queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters.status !== undefined) {
+        if (requestParameters.spaceId) {
+            queryParameters['space-id'] = requestParameters.spaceId;
+        }
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
+        if (requestParameters.status) {
             queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.title !== undefined) {
+            queryParameters['title'] = requestParameters.title;
         }
 
         if (requestParameters.bodyFormat !== undefined) {
@@ -305,10 +321,6 @@ export class PageApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -351,8 +363,20 @@ export class PageApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.status !== undefined) {
+        if (requestParameters.depth !== undefined) {
+            queryParameters['depth'] = requestParameters.depth;
+        }
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
+        if (requestParameters.status) {
             queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.title !== undefined) {
+            queryParameters['title'] = requestParameters.title;
         }
 
         if (requestParameters.bodyFormat !== undefined) {
@@ -365,10 +389,6 @@ export class PageApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -404,7 +424,7 @@ export class PageApi extends runtime.BaseAPI {
      * Update a page by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
      * Update page
      */
-    async updatePageRaw(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Page>> {
+    async updatePageRaw(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageSingle>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updatePage.');
         }
@@ -414,10 +434,6 @@ export class PageApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -446,7 +462,7 @@ export class PageApi extends runtime.BaseAPI {
      * Update a page by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
      * Update page
      */
-    async updatePage(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Page> {
+    async updatePage(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageSingle> {
         const response = await this.updatePageRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -463,6 +479,14 @@ export const GetPagesStatusEnum = {
     Trashed: 'trashed'
 } as const;
 export type GetPagesStatusEnum = typeof GetPagesStatusEnum[keyof typeof GetPagesStatusEnum];
+/**
+ * @export
+ */
+export const GetPagesInSpaceDepthEnum = {
+    All: 'all',
+    Root: 'root'
+} as const;
+export type GetPagesInSpaceDepthEnum = typeof GetPagesInSpaceDepthEnum[keyof typeof GetPagesInSpaceDepthEnum];
 /**
  * @export
  */

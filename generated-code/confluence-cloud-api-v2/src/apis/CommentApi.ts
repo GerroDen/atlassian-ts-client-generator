@@ -23,22 +23,23 @@ import type {
   MultiEntityResultBlogPostCommentModel,
   MultiEntityResultBlogPostInlineCommentModel,
   MultiEntityResultChildrenCommentModel,
+  MultiEntityResultFooterCommentModel,
   MultiEntityResultInlineCommentChildrenModel,
+  MultiEntityResultInlineCommentModel,
   MultiEntityResultPageCommentModel,
   MultiEntityResultPageInlineCommentModel,
   PrimaryBodyRepresentation,
+  PrimaryBodyRepresentationSingle,
   UpdateFooterCommentModel,
   UpdateInlineCommentModel,
 } from '../models';
 
 export interface CreateFooterCommentRequest {
     createFooterCommentModel: CreateFooterCommentModel;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface CreateInlineCommentRequest {
     createInlineCommentModel: CreateInlineCommentModel;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface DeleteFooterCommentRequest {
@@ -55,7 +56,6 @@ export interface GetBlogPostFooterCommentsRequest {
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetBlogPostInlineCommentsRequest {
@@ -64,14 +64,12 @@ export interface GetBlogPostInlineCommentsRequest {
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetFooterCommentByIdRequest {
     commentId: number;
-    bodyFormat?: PrimaryBodyRepresentation;
+    bodyFormat?: PrimaryBodyRepresentationSingle;
     version?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetFooterCommentChildrenRequest {
@@ -80,19 +78,30 @@ export interface GetFooterCommentChildrenRequest {
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
+}
+
+export interface GetFooterCommentsRequest {
+    bodyFormat?: PrimaryBodyRepresentation;
+    sort?: CommentSortOrder;
+    cursor?: string;
+    limit?: number;
 }
 
 export interface GetInlineCommentByIdRequest {
     commentId: number;
-    bodyFormat?: PrimaryBodyRepresentation;
+    bodyFormat?: PrimaryBodyRepresentationSingle;
     version?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetInlineCommentChildrenRequest {
     id: number;
-    serializeIdsAsStrings?: boolean;
+    bodyFormat?: PrimaryBodyRepresentation;
+    sort?: CommentSortOrder;
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetInlineCommentsRequest {
     bodyFormat?: PrimaryBodyRepresentation;
     sort?: CommentSortOrder;
     cursor?: string;
@@ -105,7 +114,6 @@ export interface GetPageFooterCommentsRequest {
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPageInlineCommentsRequest {
@@ -114,19 +122,16 @@ export interface GetPageInlineCommentsRequest {
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateFooterCommentRequest {
     commentId: number;
     updateFooterCommentModel: UpdateFooterCommentModel;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateInlineCommentRequest {
     commentId: number;
     updateInlineCommentModel: UpdateInlineCommentModel;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -144,10 +149,6 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -191,10 +192,6 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -333,10 +330,6 @@ export class CommentApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -393,10 +386,6 @@ export class CommentApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -443,10 +432,6 @@ export class CommentApi extends runtime.BaseAPI {
 
         if (requestParameters.version !== undefined) {
             queryParameters['version'] = requestParameters.version;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -505,10 +490,6 @@ export class CommentApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -539,6 +520,58 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get footer comments
+     */
+    async getFooterCommentsRaw(requestParameters: GetFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultFooterCommentModel>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.bodyFormat !== undefined) {
+            queryParameters['body-format'] = requestParameters.bodyFormat;
+        }
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/footer-comments`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get footer comments
+     */
+    async getFooterComments(requestParameters: GetFooterCommentsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultFooterCommentModel> {
+        const response = await this.getFooterCommentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Retrieves an inline comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
      * Get inline comment by id
      */
@@ -555,10 +588,6 @@ export class CommentApi extends runtime.BaseAPI {
 
         if (requestParameters.version !== undefined) {
             queryParameters['version'] = requestParameters.version;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -600,10 +629,6 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
@@ -651,6 +676,58 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns all inline comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get inline comments
+     */
+    async getInlineCommentsRaw(requestParameters: GetInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentModel>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.bodyFormat !== undefined) {
+            queryParameters['body-format'] = requestParameters.bodyFormat;
+        }
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/inline-comments`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all inline comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get inline comments
+     */
+    async getInlineComments(requestParameters: GetInlineCommentsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultInlineCommentModel> {
+        const response = await this.getInlineCommentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns the root footer comments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
      * Get footer comments for page
      */
@@ -675,10 +752,6 @@ export class CommentApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -737,10 +810,6 @@ export class CommentApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -784,10 +853,6 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -835,10 +900,6 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

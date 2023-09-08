@@ -15,9 +15,14 @@
 
 import * as runtime from '../runtime';
 import type {
+  ArchiveIssueAsyncRequest,
+  ArchivedIssuesFilterRequest,
   CreatedIssue,
   CreatedIssues,
   ErrorCollection,
+  ExportArchivedIssuesTaskProgressResponse,
+  IssueArchivalSyncRequest,
+  IssueArchivalSyncResponse,
   IssueBean,
   IssueChangelogIds,
   IssueCreateMetadata,
@@ -31,6 +36,14 @@ import type {
   Transitions,
   User,
 } from '../models';
+
+export interface ArchiveIssuesRequest {
+    issueArchivalSyncRequest: IssueArchivalSyncRequest;
+}
+
+export interface ArchiveIssuesAsyncRequest {
+    archiveIssueAsyncRequest: ArchiveIssueAsyncRequest;
+}
 
 export interface AssignIssueRequest {
     issueIdOrKey: string;
@@ -62,6 +75,12 @@ export interface EditIssueRequest {
     notifyUsers?: boolean;
     overrideScreenSecurity?: boolean;
     overrideEditableFlag?: boolean;
+    returnIssue?: boolean;
+    expand?: string;
+}
+
+export interface ExportArchivedIssuesRequest {
+    requestBody: { [key: string]: any; };
 }
 
 export interface GetChangeLogsRequest {
@@ -112,10 +131,100 @@ export interface NotifyRequest {
     requestBody: { [key: string]: any; };
 }
 
+export interface UnarchiveIssuesRequest {
+    issueArchivalSyncRequest: IssueArchivalSyncRequest;
+}
+
 /**
  * 
  */
 export class IssuesApi extends runtime.BaseAPI {
+
+    /**
+     * Enables admins to archive up to 1000 issues in a single request using issue ID/key, returning details of the issue(s) archived in the process and the errors encountered, if any.  **Note that:**   *  you can\'t archive subtasks directly, only through their parent issues  *  you can only archive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.     
+     * Archive issue(s) by issue ID/key
+     */
+    async archiveIssuesRaw(requestParameters: ArchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueArchivalSyncResponse>> {
+        if (requestParameters.issueArchivalSyncRequest === null || requestParameters.issueArchivalSyncRequest === undefined) {
+            throw new runtime.RequiredError('issueArchivalSyncRequest','Required parameter requestParameters.issueArchivalSyncRequest was null or undefined when calling archiveIssues.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issue/archive`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.issueArchivalSyncRequest,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Enables admins to archive up to 1000 issues in a single request using issue ID/key, returning details of the issue(s) archived in the process and the errors encountered, if any.  **Note that:**   *  you can\'t archive subtasks directly, only through their parent issues  *  you can only archive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.     
+     * Archive issue(s) by issue ID/key
+     */
+    async archiveIssues(requestParameters: ArchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IssueArchivalSyncResponse> {
+        const response = await this.archiveIssuesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Enables admins to archive up to 100,000 issues in a single request using JQL, returning the URL to check the status of the submitted request.  You can use the [get task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-rest-api-3-task-taskid-get) and [cancel task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-rest-api-3-task-taskid-cancel-post) APIs to manage the request.  **Note that:**   *  you can\'t archive subtasks directly, only through their parent issues  *  you can only archive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.  **Rate limiting:** Only a single request per user can be active at any given time.     
+     * Archive issue(s) by JQL
+     */
+    async archiveIssuesAsyncRaw(requestParameters: ArchiveIssuesAsyncRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        if (requestParameters.archiveIssueAsyncRequest === null || requestParameters.archiveIssueAsyncRequest === undefined) {
+            throw new runtime.RequiredError('archiveIssueAsyncRequest','Required parameter requestParameters.archiveIssueAsyncRequest was null or undefined when calling archiveIssuesAsync.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issue/archive`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.archiveIssueAsyncRequest,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Enables admins to archive up to 100,000 issues in a single request using JQL, returning the URL to check the status of the submitted request.  You can use the [get task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-rest-api-3-task-taskid-get) and [cancel task](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-tasks/#api-rest-api-3-task-taskid-cancel-post) APIs to manage the request.  **Note that:**   *  you can\'t archive subtasks directly, only through their parent issues  *  you can only archive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.  **Rate limiting:** Only a single request per user can be active at any given time.     
+     * Archive issue(s) by JQL
+     */
+    async archiveIssuesAsync(requestParameters: ArchiveIssuesAsyncRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.archiveIssuesAsyncRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Assigns an issue to a user. Use this operation when the calling user does not have the *Edit Issues* permission but has the *Assign issue* permission for the project that the issue is in.  If `name` or `accountId` is set to:   *  `\"-1\"`, the issue is assigned to the default assignee for the project.  *  `null`, the issue is set to unassigned.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:**   *  *Browse Projects* and *Assign Issues* [ project permission](https://confluence.atlassian.com/x/yodKLg) for the project that the issue is in.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
@@ -371,6 +480,14 @@ export class IssuesApi extends runtime.BaseAPI {
             queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
+        if (requestParameters.returnIssue !== undefined) {
+            queryParameters['returnIssue'] = requestParameters.returnIssue;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -400,6 +517,49 @@ export class IssuesApi extends runtime.BaseAPI {
      */
     async editIssue(requestParameters: EditIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.editIssueRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Enables admins to retrieve details of all archived issues. Upon a successful request, the admin who submitted it will receive an email with a link to download a CSV file with the issue details.  Note that this API only exports the values of system fields and archival-specific fields (`ArchivedBy` and `ArchivedDate`). Custom fields aren\'t supported.  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.  **Rate limiting:** Only a single request can be active at any given time.     
+     * Export archived issue(s)
+     */
+    async exportArchivedIssuesRaw(requestParameters: ExportArchivedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExportArchivedIssuesTaskProgressResponse>> {
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling exportArchivedIssues.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issues/archive/export`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.requestBody,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Enables admins to retrieve details of all archived issues. Upon a successful request, the admin who submitted it will receive an email with a link to download a CSV file with the issue details.  Note that this API only exports the values of system fields and archival-specific fields (`ArchivedBy` and `ArchivedDate`). Custom fields aren\'t supported.  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.  **Rate limiting:** Only a single request can be active at any given time.     
+     * Export archived issue(s)
+     */
+    async exportArchivedIssues(requestParameters: ExportArchivedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExportArchivedIssuesTaskProgressResponse> {
+        const response = await this.exportArchivedIssuesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -802,6 +962,49 @@ export class IssuesApi extends runtime.BaseAPI {
      */
     async notify(requestParameters: NotifyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.notifyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Enables admins to unarchive up to 1000 issues in a single request using issue ID/key, returning details of the issue(s) unarchived in the process and the errors encountered, if any.  **Note that:**   *  you can\'t unarchive subtasks directly, only through their parent issues  *  you can only unarchive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.     
+     * Unarchive issue(s) by issue keys/ID
+     */
+    async unarchiveIssuesRaw(requestParameters: UnarchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueArchivalSyncResponse>> {
+        if (requestParameters.issueArchivalSyncRequest === null || requestParameters.issueArchivalSyncRequest === undefined) {
+            throw new runtime.RequiredError('issueArchivalSyncRequest','Required parameter requestParameters.issueArchivalSyncRequest was null or undefined when calling unarchiveIssues.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/issue/unarchive`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.issueArchivalSyncRequest,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Enables admins to unarchive up to 1000 issues in a single request using issue ID/key, returning details of the issue(s) unarchived in the process and the errors encountered, if any.  **Note that:**   *  you can\'t unarchive subtasks directly, only through their parent issues  *  you can only unarchive issues from software, service management, and business projects  **[Permissions](#permissions) required:** Jira admin or site admin: [global permission](https://confluence.atlassian.com/x/x4dKLg)  **License required:** Premium or Enterprise  **Signed-in users only:** This API can\'t be accessed anonymously.     
+     * Unarchive issue(s) by issue keys/ID
+     */
+    async unarchiveIssues(requestParameters: UnarchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IssueArchivalSyncResponse> {
+        const response = await this.unarchiveIssuesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

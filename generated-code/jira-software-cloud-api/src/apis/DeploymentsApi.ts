@@ -15,7 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeploymentData,
+  DeploymentData1,
   ErrorMessage1,
   SubmitDeploymentRequest,
   SubmitDeploymentsResponse,
@@ -152,7 +152,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a deployment by key
      */
-    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData>> {
+    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
         if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
             throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getDeploymentByKey.');
         }
@@ -191,7 +191,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a deployment by key
      */
-    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData> {
+    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData1> {
         const response = await this.getDeploymentByKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }

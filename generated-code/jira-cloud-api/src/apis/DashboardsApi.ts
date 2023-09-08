@@ -16,6 +16,8 @@
 import * as runtime from '../runtime';
 import type {
   AvailableDashboardGadgetsResponse,
+  BulkEditShareableEntityRequest,
+  BulkEditShareableEntityResponse,
   Dashboard,
   DashboardDetails,
   DashboardGadget,
@@ -32,6 +34,10 @@ import type {
 export interface AddGadgetRequest {
     dashboardId: number;
     dashboardGadgetSettings: DashboardGadgetSettings;
+}
+
+export interface BulkEditDashboardsRequest {
+    bulkEditShareableEntityRequest: BulkEditShareableEntityRequest;
 }
 
 export interface CopyDashboardRequest {
@@ -167,6 +173,49 @@ export class DashboardsApi extends runtime.BaseAPI {
      */
     async addGadget(requestParameters: AddGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DashboardGadget> {
         const response = await this.addGadgetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Bulk edit dashboards. Maximum number of dashboards to be edited at the same time is 100.  **[Permissions](#permissions) required:** None  The dashboards to be updated must be owned by the user, or the user must be an administrator.
+     * Bulk edit dashboards
+     */
+    async bulkEditDashboardsRaw(requestParameters: BulkEditDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkEditShareableEntityResponse>> {
+        if (requestParameters.bulkEditShareableEntityRequest === null || requestParameters.bulkEditShareableEntityRequest === undefined) {
+            throw new runtime.RequiredError('bulkEditShareableEntityRequest','Required parameter requestParameters.bulkEditShareableEntityRequest was null or undefined when calling bulkEditDashboards.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:jira-work"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/dashboard/bulk/edit`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.bulkEditShareableEntityRequest,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Bulk edit dashboards. Maximum number of dashboards to be edited at the same time is 100.  **[Permissions](#permissions) required:** None  The dashboards to be updated must be owned by the user, or the user must be an administrator.
+     * Bulk edit dashboards
+     */
+    async bulkEditDashboards(requestParameters: BulkEditDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkEditShareableEntityResponse> {
+        const response = await this.bulkEditDashboardsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

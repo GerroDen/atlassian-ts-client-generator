@@ -8,6 +8,30 @@
 export interface AgentStatus {
     /**
      * 
+     * @type {number}
+     * @memberof AgentStatus
+     */
+    orderIndex?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AgentStatus
+     */
+    allowDelete?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AgentStatus
+     */
+    idle?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentStatus
+     */
+    imagePath?: string;
+    /**
+     * 
      * @type {string}
      * @memberof AgentStatus
      */
@@ -30,30 +54,6 @@ export interface AgentStatus {
      * @memberof AgentStatus
      */
     icon?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof AgentStatus
-     */
-    orderIndex?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgentStatus
-     */
-    imagePath?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AgentStatus
-     */
-    allowDelete?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AgentStatus
-     */
-    idle?: boolean;
 }
 /**
  * 
@@ -67,6 +67,18 @@ export interface ArtifactLink {
      * @memberof ArtifactLink
      */
     sharedArtifact?: boolean;
+    /**
+     * 
+     * @type {ResultsSummary}
+     * @memberof ArtifactLink
+     */
+    buildResultsSummary?: ResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactLink
+     */
+    linkType?: string;
     /**
      * 
      * @type {BuildResultsSummary}
@@ -93,18 +105,6 @@ export interface ArtifactLink {
     label?: string;
     /**
      * 
-     * @type {ResultsSummary}
-     * @memberof ArtifactLink
-     */
-    buildResultsSummary?: ResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof ArtifactLink
-     */
-    linkType?: string;
-    /**
-     * 
      * @type {number}
      * @memberof ArtifactLink
      */
@@ -124,16 +124,16 @@ export interface Author {
     breakages?: Array<ResultsSummary>;
     /**
      * 
-     * @type {Array<ResultsSummary>}
-     * @memberof Author
-     */
-    fixes?: Array<ResultsSummary>;
-    /**
-     * 
      * @type {number}
      * @memberof Author
      */
     numberOfBreakages?: number;
+    /**
+     * 
+     * @type {Array<ResultsSummary>}
+     * @memberof Author
+     */
+    fixes?: Array<ResultsSummary>;
     /**
      * 
      * @type {number}
@@ -249,12 +249,6 @@ export interface BambooEntityOid {
      * @type {number}
      * @memberof BambooEntityOid
      */
-    value?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BambooEntityOid
-     */
     serverKey?: number;
     /**
      * 
@@ -262,6 +256,12 @@ export interface BambooEntityOid {
      * @memberof BambooEntityOid
      */
     entityOid?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BambooEntityOid
+     */
+    value?: number;
 }
 
 
@@ -291,18 +291,6 @@ export type BambooEntityOidEntityTypeEnum = typeof BambooEntityOidEntityTypeEnum
 export interface BranchIntegrationConfiguration {
     /**
      * 
-     * @type {string}
-     * @memberof BranchIntegrationConfiguration
-     */
-    strategy?: BranchIntegrationConfigurationStrategyEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchIntegrationConfiguration
-     */
-    enabled?: boolean;
-    /**
-     * 
      * @type {boolean}
      * @memberof BranchIntegrationConfiguration
      */
@@ -319,6 +307,18 @@ export interface BranchIntegrationConfiguration {
      * @memberof BranchIntegrationConfiguration
      */
     integrationPoint?: BranchIntegrationPoint;
+    /**
+     * 
+     * @type {string}
+     * @memberof BranchIntegrationConfiguration
+     */
+    strategy?: BranchIntegrationConfigurationStrategyEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchIntegrationConfiguration
+     */
+    enabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -345,16 +345,16 @@ export type BranchIntegrationConfigurationStrategyEnum = typeof BranchIntegratio
 export interface BranchIntegrationPoint {
     /**
      * 
-     * @type {string}
-     * @memberof BranchIntegrationPoint
-     */
-    integrationVcsReference?: string;
-    /**
-     * 
      * @type {PlanKey}
      * @memberof BranchIntegrationPoint
      */
     integrationPlanBranchKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof BranchIntegrationPoint
+     */
+    integrationVcsReference?: string;
 }
 /**
  * 
@@ -374,6 +374,24 @@ export interface BranchMonitoringConfiguration {
      * @memberof BranchMonitoringConfiguration
      */
     matchingPattern?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchMonitoringConfiguration
+     */
+    planBranchCreationEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchMonitoringConfiguration
+     */
+    removedBranchCleanUpEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchMonitoringConfiguration
+     */
+    inactiveBranchCleanUpEnabled?: boolean;
     /**
      * 
      * @type {number}
@@ -416,24 +434,6 @@ export interface BranchMonitoringConfiguration {
      * @memberof BranchMonitoringConfiguration
      */
     defaultTrigger?: TriggerDefinition;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchMonitoringConfiguration
-     */
-    planBranchCreationEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchMonitoringConfiguration
-     */
-    removedBranchCleanUpEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchMonitoringConfiguration
-     */
-    inactiveBranchCleanUpEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -551,6 +551,12 @@ export interface BuildAgent {
      * @type {boolean}
      * @memberof BuildAgent
      */
+    dedicated?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildAgent
+     */
     busy?: boolean;
     /**
      * 
@@ -560,22 +566,16 @@ export interface BuildAgent {
     agentStatus?: AgentStatus;
     /**
      * 
-     * @type {boolean}
+     * @type {PipelineDefinition}
      * @memberof BuildAgent
      */
-    dedicated?: boolean;
+    definition?: PipelineDefinition;
     /**
      * 
      * @type {boolean}
      * @memberof BuildAgent
      */
     requestedToBeStopped?: boolean;
-    /**
-     * 
-     * @type {PipelineDefinition}
-     * @memberof BuildAgent
-     */
-    definition?: PipelineDefinition;
     /**
      * 
      * @type {boolean}
@@ -605,13 +605,13 @@ export interface BuildAgent {
      * @type {boolean}
      * @memberof BuildAgent
      */
-    enabled?: boolean;
+    active?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof BuildAgent
      */
-    active?: boolean;
+    enabled?: boolean;
 }
 
 
@@ -621,7 +621,8 @@ export interface BuildAgent {
 export const BuildAgentTypeEnum = {
     Local: 'LOCAL',
     Remote: 'REMOTE',
-    Elastic: 'ELASTIC'
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type BuildAgentTypeEnum = typeof BuildAgentTypeEnum[keyof typeof BuildAgentTypeEnum];
 
@@ -657,16 +658,10 @@ export interface BuildDefinition {
     branchSpecificConfiguration?: BranchSpecificConfiguration;
     /**
      * 
-     * @type {Array<TaskDefinition>}
+     * @type {object}
      * @memberof BuildDefinition
      */
-    taskDefinitions?: Array<TaskDefinition>;
-    /**
-     * 
-     * @type {BranchMonitoringConfiguration}
-     * @memberof BuildDefinition
-     */
-    branchMonitoringConfiguration?: BranchMonitoringConfiguration;
+    configObjects?: object;
     /**
      * 
      * @type {BranchIntegrationConfiguration}
@@ -675,16 +670,10 @@ export interface BuildDefinition {
     branchIntegrationConfiguration?: BranchIntegrationConfiguration;
     /**
      * 
-     * @type {object}
+     * @type {Array<TaskDefinition>}
      * @memberof BuildDefinition
      */
-    configObjects?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildDefinition
-     */
-    merged?: boolean;
+    taskDefinitions?: Array<TaskDefinition>;
     /**
      * 
      * @type {boolean}
@@ -697,6 +686,18 @@ export interface BuildDefinition {
      * @memberof BuildDefinition
      */
     repositoryIdDefiningWorkingDir?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildDefinition
+     */
+    merged?: boolean;
+    /**
+     * 
+     * @type {BranchMonitoringConfiguration}
+     * @memberof BuildDefinition
+     */
+    branchMonitoringConfiguration?: BranchMonitoringConfiguration;
 }
 /**
  * 
@@ -743,12 +744,6 @@ export interface BuildLogger {
     logEntryCount?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof BuildLogger
-     */
-    persistent?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof BuildLogger
      */
@@ -765,6 +760,12 @@ export interface BuildLogger {
      * @memberof BuildLogger
      */
     mutatorStack?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildLogger
+     */
+    persistent?: boolean;
 }
 /**
  * 
@@ -787,6 +788,24 @@ export interface BuildMonitoringLink {
 export interface BuildResultsSummary {
     /**
      * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    queueDuration?: number;
+    /**
+     * 
+     * @type {ChainResultsSummary}
+     * @memberof BuildResultsSummary
+     */
+    chainResultsSummary?: ChainResultsSummary;
+    /**
+     * 
+     * @type {Array<ArtifactLink>}
+     * @memberof BuildResultsSummary
+     */
+    producedArtifactLinks?: Array<ArtifactLink>;
+    /**
+     * 
      * @type {string}
      * @memberof BuildResultsSummary
      */
@@ -796,19 +815,7 @@ export interface BuildResultsSummary {
      * @type {number}
      * @memberof BuildResultsSummary
      */
-    queueDuration?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
     vcsUpdateDuration?: number;
-    /**
-     * 
-     * @type {Array<ArtifactLink>}
-     * @memberof BuildResultsSummary
-     */
-    producedArtifactLinks?: Array<ArtifactLink>;
     /**
      * 
      * @type {FilteredTestResultsTestClassResult}
@@ -827,12 +834,6 @@ export interface BuildResultsSummary {
      * @memberof BuildResultsSummary
      */
     resultVariables?: object;
-    /**
-     * 
-     * @type {ChainResultsSummary}
-     * @memberof BuildResultsSummary
-     */
-    chainResultsSummary?: ChainResultsSummary;
     /**
      * 
      * @type {string}
@@ -859,16 +860,22 @@ export interface BuildResultsSummary {
     duration?: number;
     /**
      * 
+     * @type {TriggerReason}
+     * @memberof BuildResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    deltaState?: BuildResultsSummaryDeltaStateEnum;
+    /**
+     * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
     onceOff?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    restartCount?: number;
     /**
      * 
      * @type {boolean}
@@ -913,18 +920,6 @@ export interface BuildResultsSummary {
     timeToFix?: number;
     /**
      * 
-     * @type {TriggerReason}
-     * @memberof BuildResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    deltaState?: BuildResultsSummaryDeltaStateEnum;
-    /**
-     * 
      * @type {TestResultsSummary}
      * @memberof BuildResultsSummary
      */
@@ -946,7 +941,19 @@ export interface BuildResultsSummary {
      * @type {number}
      * @memberof BuildResultsSummary
      */
+    restartCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
     buildAgentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildAgentType?: BuildResultsSummaryBuildAgentTypeEnum;
     /**
      * 
      * @type {number}
@@ -997,6 +1004,18 @@ export interface BuildResultsSummary {
     planResultKey?: PlanResultKey;
     /**
      * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof BuildResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
@@ -1019,12 +1038,6 @@ export interface BuildResultsSummary {
      * @memberof BuildResultsSummary
      */
     notBuilt?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    planName?: string;
     /**
      * 
      * @type {Array<string>}
@@ -1051,46 +1064,16 @@ export interface BuildResultsSummary {
     pending?: boolean;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof BuildResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {ImmutablePlan}
      * @memberof BuildResultsSummary
      */
     planIfExists?: ImmutablePlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof BuildResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {ImmutableChain}
@@ -1099,22 +1082,10 @@ export interface BuildResultsSummary {
     immutableChain?: ImmutableChain;
     /**
      * 
-     * @type {Array<Commit>}
-     * @memberof BuildResultsSummary
-     */
-    commits?: Array<Commit>;
-    /**
-     * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    queued?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    active?: boolean;
+    finished?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1127,6 +1098,12 @@ export interface BuildResultsSummary {
      * @memberof BuildResultsSummary
      */
     customBuildData?: object;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof BuildResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
@@ -1156,6 +1133,12 @@ export interface BuildResultsSummary {
      * @type {string}
      * @memberof BuildResultsSummary
      */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
     processingDurationDescription?: string;
     /**
      * 
@@ -1168,6 +1151,18 @@ export interface BuildResultsSummary {
      * @type {string}
      * @memberof BuildResultsSummary
      */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
     relativeQueueDate?: string;
     /**
      * 
@@ -1175,6 +1170,12 @@ export interface BuildResultsSummary {
      * @memberof BuildResultsSummary
      */
     relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    testSummary?: string;
     /**
      * 
      * @type {string}
@@ -1219,10 +1220,28 @@ export interface BuildResultsSummary {
     manuallyOverriddenVariables?: Array<VariableSubstitution>;
     /**
      * 
+     * @type {Array<Commit>}
+     * @memberof BuildResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
      * @type {string}
      * @memberof BuildResultsSummary
      */
     fullPlanName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    queued?: boolean;
     /**
      * 
      * @type {string}
@@ -1255,6 +1274,17 @@ export const BuildResultsSummaryDeltaStateEnum = {
     Fixed: 'FIXED'
 } as const;
 export type BuildResultsSummaryDeltaStateEnum = typeof BuildResultsSummaryDeltaStateEnum[keyof typeof BuildResultsSummaryDeltaStateEnum];
+
+/**
+ * @export
+ */
+export const BuildResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type BuildResultsSummaryBuildAgentTypeEnum = typeof BuildResultsSummaryBuildAgentTypeEnum[keyof typeof BuildResultsSummaryBuildAgentTypeEnum];
 
 /**
  * @export
@@ -1292,16 +1322,16 @@ export interface ChainResultsSummary {
     specsResult?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    continuable?: boolean;
-    /**
-     * 
      * @type {MergeResultSummary}
      * @memberof ChainResultsSummary
      */
     mergeResult?: MergeResultSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    continuable?: boolean;
     /**
      * 
      * @type {number}
@@ -1352,6 +1382,12 @@ export interface ChainResultsSummary {
     totalJobCount?: number;
     /**
      * 
+     * @type {Array<ResultsSummary>}
+     * @memberof ChainResultsSummary
+     */
+    orderedJobResultSummaries?: Array<ResultsSummary>;
+    /**
+     * 
      * @type {PlanKey}
      * @memberof ChainResultsSummary
      */
@@ -1362,6 +1398,18 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof ChainResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    planName?: string;
     /**
      * 
      * @type {boolean}
@@ -1388,12 +1436,6 @@ export interface ChainResultsSummary {
     notBuilt?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    planName?: string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ChainResultsSummary
      */
@@ -1418,70 +1460,10 @@ export interface ChainResultsSummary {
     pending?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {Array<Labelling>}
      * @memberof ChainResultsSummary
      */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    queueTime?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof ChainResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ChainResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    restartCount?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    onceOff?: boolean;
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {ImmutableChain}
@@ -1490,28 +1472,64 @@ export interface ChainResultsSummary {
     immutableChain?: ImmutableChain;
     /**
      * 
-     * @type {Array<Commit>}
+     * @type {TriggerReason}
      * @memberof ChainResultsSummary
      */
-    commits?: Array<Commit>;
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    deltaState?: ChainResultsSummaryDeltaStateEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    queued?: boolean;
+    onceOff?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    active?: boolean;
+    customBuild?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    rebuild?: boolean;
     /**
      * 
      * @type {number}
      * @memberof ChainResultsSummary
      */
-    duration?: number;
+    logSize?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    buildCancelledDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    buildCompletedDate?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    finished?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1524,6 +1542,12 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     customBuildData?: object;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ChainResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
@@ -1556,6 +1580,18 @@ export interface ChainResultsSummary {
     timeToFix?: number;
     /**
      * 
+     * @type {TestResultsSummary}
+     * @memberof ChainResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
      * @type {string}
      * @memberof ChainResultsSummary
      */
@@ -1566,6 +1602,18 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     shortReasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    relativeBuildDate?: string;
     /**
      * 
      * @type {string}
@@ -1583,7 +1631,19 @@ export interface ChainResultsSummary {
      * @type {string}
      * @memberof ChainResultsSummary
      */
+    testSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
     buildTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    queueTime?: string;
     /**
      * 
      * @type {Array<ArtifactLink>}
@@ -1625,7 +1685,25 @@ export interface ChainResultsSummary {
      * @type {number}
      * @memberof ChainResultsSummary
      */
+    restartCount?: number;
+    /**
+     * 
+     * @type {Array<Commit>}
+     * @memberof ChainResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
     buildAgentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    buildAgentType?: ChainResultsSummaryBuildAgentTypeEnum;
     /**
      * 
      * @type {string}
@@ -1634,46 +1712,22 @@ export interface ChainResultsSummary {
     fullPlanName?: string;
     /**
      * 
-     * @type {TriggerReason}
+     * @type {number}
      * @memberof ChainResultsSummary
      */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    deltaState?: ChainResultsSummaryDeltaStateEnum;
+    duration?: number;
     /**
      * 
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    customBuild?: boolean;
+    active?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    buildCancelledDate?: string;
+    queued?: boolean;
     /**
      * 
      * @type {number}
@@ -1776,6 +1830,17 @@ export type ChainResultsSummaryDeltaStateEnum = typeof ChainResultsSummaryDeltaS
 /**
  * @export
  */
+export const ChainResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type ChainResultsSummaryBuildAgentTypeEnum = typeof ChainResultsSummaryBuildAgentTypeEnum[keyof typeof ChainResultsSummaryBuildAgentTypeEnum];
+
+/**
+ * @export
+ */
 export const ChainResultsSummaryBuildStateEnum = {
     Unknown: 'Unknown',
     Successful: 'Successful',
@@ -1827,36 +1892,6 @@ export interface ChainStageResult {
     pending?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    manual?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {ChainResultsSummary}
-     * @memberof ChainStageResult
-     */
-    chainResult?: ChainResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainStageResult
-     */
-    state?: ChainStageResultStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    _final?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof ChainStageResult
      */
@@ -1866,19 +1901,25 @@ export interface ChainStageResult {
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    runnable?: boolean;
+    finished?: boolean;
     /**
      * 
-     * @type {Array<StageVariableContext>}
+     * @type {boolean}
      * @memberof ChainStageResult
      */
-    manualVariables?: Array<StageVariableContext>;
+    manual?: boolean;
     /**
      * 
-     * @type {Array<StageVariableContext>}
+     * @type {ChainResultsSummary}
      * @memberof ChainStageResult
      */
-    manualVariablesEncrypted?: Array<StageVariableContext>;
+    chainResult?: ChainResultsSummary;
+    /**
+     * 
+     * @type {Set<BuildResultsSummary>}
+     * @memberof ChainStageResult
+     */
+    buildResults?: Set<BuildResultsSummary>;
     /**
      * 
      * @type {Array<BuildResultsSummary>}
@@ -1902,12 +1943,6 @@ export interface ChainStageResult {
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    completed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
     allJobsExist?: boolean;
     /**
      * 
@@ -1917,10 +1952,40 @@ export interface ChainStageResult {
     allNotSuccessfulJobsExist?: boolean;
     /**
      * 
-     * @type {Set<BuildResultsSummary>}
+     * @type {boolean}
      * @memberof ChainStageResult
      */
-    buildResults?: Set<BuildResultsSummary>;
+    _final?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    runnable?: boolean;
+    /**
+     * 
+     * @type {Array<StageVariableContext>}
+     * @memberof ChainStageResult
+     */
+    manualVariables?: Array<StageVariableContext>;
+    /**
+     * 
+     * @type {Array<StageVariableContext>}
+     * @memberof ChainStageResult
+     */
+    manualVariablesEncrypted?: Array<StageVariableContext>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    completed?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainStageResult
+     */
+    state?: ChainStageResultStateEnum;
     /**
      * 
      * @type {number}
@@ -2017,13 +2082,13 @@ export interface Commit {
      * @type {string}
      * @memberof Commit
      */
-    comment?: string;
+    date?: string;
     /**
      * 
      * @type {string}
      * @memberof Commit
      */
-    date?: string;
+    comment?: string;
 }
 /**
  * 
@@ -2036,7 +2101,7 @@ export interface CommitFile {
      * @type {string}
      * @memberof CommitFile
      */
-    cleanName?: string;
+    revision?: string;
     /**
      * 
      * @type {string}
@@ -2048,19 +2113,19 @@ export interface CommitFile {
      * @type {string}
      * @memberof CommitFile
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitFile
-     */
-    revision?: string;
+    cleanName?: string;
     /**
      * 
      * @type {boolean}
      * @memberof CommitFile
      */
     revisionKnown?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommitFile
+     */
+    name?: string;
 }
 /**
  * 
@@ -2089,6 +2154,18 @@ export interface ConfigurationNode {
     parentNode?: ConfigurationNode;
     /**
      * 
+     * @type {number}
+     * @memberof ConfigurationNode
+     */
+    childrenCount?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfigurationNode
+     */
+    attribute?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ConfigurationNode
      */
@@ -2113,12 +2190,6 @@ export interface ConfigurationNode {
     defined?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ConfigurationNode
-     */
-    attribute?: boolean;
-    /**
-     * 
      * @type {object}
      * @memberof ConfigurationNode
      */
@@ -2135,12 +2206,6 @@ export interface ConfigurationNode {
      * @memberof ConfigurationNode
      */
     attributeCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConfigurationNode
-     */
-    childrenCount?: number;
 }
 /**
  * 
@@ -2156,16 +2221,16 @@ export interface ConsumedSubscription {
     artifactLink?: ArtifactLink;
     /**
      * 
-     * @type {string}
-     * @memberof ConsumedSubscription
-     */
-    destinationDirectory?: string;
-    /**
-     * 
      * @type {ResultsSummary}
      * @memberof ConsumedSubscription
      */
     consumerResultSummary?: ResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConsumedSubscription
+     */
+    destinationDirectory?: string;
     /**
      * 
      * @type {number}
@@ -2387,6 +2452,12 @@ export interface DeploymentResult {
     agentId?: number;
     /**
      * 
+     * @type {string}
+     * @memberof DeploymentResult
+     */
+    agentType?: DeploymentResultAgentTypeEnum;
+    /**
+     * 
      * @type {object}
      * @memberof DeploymentResult
      */
@@ -2487,6 +2558,17 @@ export interface DeploymentResult {
 /**
  * @export
  */
+export const DeploymentResultAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type DeploymentResultAgentTypeEnum = typeof DeploymentResultAgentTypeEnum[keyof typeof DeploymentResultAgentTypeEnum];
+
+/**
+ * @export
+ */
 export const DeploymentResultDeploymentStateEnum = {
     Unknown: 'Unknown',
     Successful: 'Successful',
@@ -2569,10 +2651,10 @@ export interface DeploymentVersion {
     variableContext?: Array<VariableSubstitutionContext>;
     /**
      * 
-     * @type {Array<DeploymentVersionItem>}
+     * @type {string}
      * @memberof DeploymentVersion
      */
-    items?: Array<DeploymentVersionItem>;
+    creatorGravatarUrl?: string;
     /**
      * 
      * @type {string}
@@ -2581,10 +2663,10 @@ export interface DeploymentVersion {
     creatorDisplayName?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<DeploymentVersionItem>}
      * @memberof DeploymentVersion
      */
-    creatorGravatarUrl?: string;
+    items?: Array<DeploymentVersionItem>;
     /**
      * 
      * @type {number}
@@ -2597,6 +2679,18 @@ export interface DeploymentVersion {
      * @memberof DeploymentVersion
      */
     planBranchName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersion
+     */
+    creatorUserName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersion
+     */
+    ageZeroPoint?: string;
     /**
      * 
      * @type {string}
@@ -2615,18 +2709,6 @@ export interface DeploymentVersion {
      * @memberof DeploymentVersion
      */
     id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    ageZeroPoint?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    creatorUserName?: string;
 }
 /**
  * 
@@ -2857,6 +2939,12 @@ export interface Environment {
     triggerDefinitionsSupplier?: object;
     /**
      * 
+     * @type {number}
+     * @memberof Environment
+     */
+    position?: number;
+    /**
+     * 
      * @type {string}
      * @memberof Environment
      */
@@ -2881,22 +2969,16 @@ export interface Environment {
     description?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<TriggerDefinition>}
      * @memberof Environment
      */
-    position?: number;
+    triggerDefinitions?: Array<TriggerDefinition>;
     /**
      * 
      * @type {boolean}
      * @memberof Environment
      */
     suspended?: boolean;
-    /**
-     * 
-     * @type {Array<TriggerDefinition>}
-     * @memberof Environment
-     */
-    triggerDefinitions?: Array<TriggerDefinition>;
 }
 
 
@@ -2947,6 +3029,37 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     latestResult?: DeploymentResult;
+}
+/**
+ * 
+ * @export
+ * @interface EphemeralAgentsConfigurationDTO
+ */
+export interface EphemeralAgentsConfigurationDTO {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    pathToConfig?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    label?: string;
+    /**
+     * 
+     * @type {PodsCleanup}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    podsCleanup?: PodsCleanup;
 }
 /**
  * 
@@ -3039,25 +3152,13 @@ export interface FilteredTestResultsTestClassResult {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
      */
-    fixedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResult
-     */
-    skippedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResult
-     */
-    newFailedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResult
-     */
     existingFailedTests?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResult
+     */
+    fixedTests?: any | null;
     /**
      * 
      * @type {any}
@@ -3072,6 +3173,12 @@ export interface FilteredTestResultsTestClassResult {
     quarantinedTests?: any | null;
     /**
      * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResult
+     */
+    skippedTests?: any | null;
+    /**
+     * 
      * @type {Array<TestCaseResult>}
      * @memberof FilteredTestResultsTestClassResult
      */
@@ -3082,6 +3189,12 @@ export interface FilteredTestResultsTestClassResult {
      * @memberof FilteredTestResultsTestClassResult
      */
     skippedTestList?: Array<TestCaseResult>;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResult
+     */
+    newFailedTests?: any | null;
 }
 /**
  * 
@@ -3094,25 +3207,13 @@ export interface FilteredTestResultsTestClassResultDescriptor {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
-    fixedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    skippedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    newFailedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
     existingFailedTests?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResultDescriptor
+     */
+    fixedTests?: any | null;
     /**
      * 
      * @type {any}
@@ -3127,6 +3228,12 @@ export interface FilteredTestResultsTestClassResultDescriptor {
     quarantinedTests?: any | null;
     /**
      * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResultDescriptor
+     */
+    skippedTests?: any | null;
+    /**
+     * 
      * @type {Array<TestCaseResult>}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
@@ -3137,6 +3244,55 @@ export interface FilteredTestResultsTestClassResultDescriptor {
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
     skippedTestList?: Array<TestCaseResult>;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResultDescriptor
+     */
+    newFailedTests?: any | null;
+}
+/**
+ * 
+ * @export
+ * @interface FindAssignedGroups200Response
+ */
+export interface FindAssignedGroups200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof FindAssignedGroups200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FindAssignedGroups200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FindAssignedGroups200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FindAssignedGroups200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FindAssignedGroups200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<RestGroup>}
+     * @memberof FindAssignedGroups200Response
+     */
+    results?: Array<RestGroup>;
 }
 /**
  * 
@@ -3227,49 +3383,6 @@ export interface FindUnassignedUserRepositoryAliases200Response {
 /**
  * 
  * @export
- * @interface FindUsersInGroup200Response
- */
-export interface FindUsersInGroup200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof FindUsersInGroup200Response
-     */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindUsersInGroup200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindUsersInGroup200Response
-     */
-    next?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof FindUsersInGroup200Response
-     */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof FindUsersInGroup200Response
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {Array<RestUserDetails>}
-     * @memberof FindUsersInGroup200Response
-     */
-    results?: Array<RestUserDetails>;
-}
-/**
- * 
- * @export
  * @interface GetAgents200Response
  */
 export interface GetAgents200Response {
@@ -3313,86 +3426,43 @@ export interface GetAgents200Response {
 /**
  * 
  * @export
- * @interface GetAvailableGroups4200Response
+ * @interface GetAvailableUsers6200Response
  */
-export interface GetAvailableGroups4200Response {
+export interface GetAvailableUsers6200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetAvailableGroups4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     self?: string;
     /**
      * 
      * @type {string}
-     * @memberof GetAvailableGroups4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     prev?: string;
     /**
      * 
      * @type {string}
-     * @memberof GetAvailableGroups4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     next?: string;
     /**
      * 
      * @type {number}
-     * @memberof GetAvailableGroups4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     start?: number;
     /**
      * 
      * @type {number}
-     * @memberof GetAvailableGroups4200Response
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {Array<RestGroup>}
-     * @memberof GetAvailableGroups4200Response
-     */
-    results?: Array<RestGroup>;
-}
-/**
- * 
- * @export
- * @interface GetAvailableUsers4200Response
- */
-export interface GetAvailableUsers4200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAvailableUsers4200Response
-     */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAvailableUsers4200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAvailableUsers4200Response
-     */
-    next?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAvailableUsers4200Response
-     */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAvailableUsers4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     limit?: number;
     /**
      * 
      * @type {Array<RestUser>}
-     * @memberof GetAvailableUsers4200Response
+     * @memberof GetAvailableUsers6200Response
      */
     results?: Array<RestUser>;
 }
@@ -3528,6 +3598,92 @@ export interface GetEnvironmentsExecutableByAgent200Response {
 /**
  * 
  * @export
+ * @interface GetEphemeralAgentPodLogs200Response
+ */
+export interface GetEphemeralAgentPodLogs200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<RestEphemeralPodLogs>}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    results?: Array<RestEphemeralPodLogs>;
+}
+/**
+ * 
+ * @export
+ * @interface GetEphemeralAgentPodRawLogs200Response
+ */
+export interface GetEphemeralAgentPodRawLogs200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    results?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface GetPaginatedProjectRepositories200Response
  */
 export interface GetPaginatedProjectRepositories200Response {
@@ -3614,45 +3770,88 @@ export interface GetPaginatedProjectSharedCredentials200Response {
 /**
  * 
  * @export
- * @interface GetUserTokens200Response
+ * @interface GetUserAccessTokens200Response
  */
-export interface GetUserTokens200Response {
+export interface GetUserAccessTokens200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     self?: string;
     /**
      * 
      * @type {string}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     prev?: string;
     /**
      * 
      * @type {string}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     next?: string;
     /**
      * 
      * @type {number}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     start?: number;
     /**
      * 
      * @type {number}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     limit?: number;
     /**
      * 
      * @type {Array<RestAccessToken>}
-     * @memberof GetUserTokens200Response
+     * @memberof GetUserAccessTokens200Response
      */
     results?: Array<RestAccessToken>;
+}
+/**
+ * 
+ * @export
+ * @interface GetUsers200Response
+ */
+export interface GetUsers200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUsers200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUsers200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUsers200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUsers200Response
+     */
+    start?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUsers200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<RestUserDetails>}
+     * @memberof GetUsers200Response
+     */
+    results?: Array<RestUserDetails>;
 }
 /**
  * 
@@ -3747,16 +3946,16 @@ export interface HierarchicalConfiguration {
 export interface ImmutableArtifactDefinition {
     /**
      * 
-     * @type {Array<ImmutableArtifactSubscription>}
-     * @memberof ImmutableArtifactDefinition
-     */
-    subscriptions?: Array<ImmutableArtifactSubscription>;
-    /**
-     * 
      * @type {ImmutableJob}
      * @memberof ImmutableArtifactDefinition
      */
     producerJob?: ImmutableJob;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableArtifactDefinition
+     */
+    entityType?: ImmutableArtifactDefinitionEntityTypeEnum;
     /**
      * 
      * @type {string}
@@ -3771,22 +3970,16 @@ export interface ImmutableArtifactDefinition {
     httpCompressionOn?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof ImmutableArtifactDefinition
      */
-    entityType?: ImmutableArtifactDefinitionEntityTypeEnum;
+    copyPatterns?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ImmutableArtifactDefinition
      */
     exclusionPatterns?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ImmutableArtifactDefinition
-     */
-    copyPatterns?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -3855,12 +4048,6 @@ export interface ImmutableArtifactSubscription {
      * @type {string}
      * @memberof ImmutableArtifactSubscription
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableArtifactSubscription
-     */
     destinationDirectory?: string;
     /**
      * 
@@ -3874,6 +4061,12 @@ export interface ImmutableArtifactSubscription {
      * @memberof ImmutableArtifactSubscription
      */
     artifactDefinition?: ImmutableArtifactDefinition;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableArtifactSubscription
+     */
+    name?: string;
     /**
      * 
      * @type {number}
@@ -3913,6 +4106,12 @@ export interface ImmutableChain {
     vcsBambooSpecsSource?: ImmutableVcsBambooSpecsSource;
     /**
      * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    entityType?: ImmutableChainEntityTypeEnum;
+    /**
+     * 
      * @type {Array<ImmutableChainStage>}
      * @memberof ImmutableChain
      */
@@ -3937,22 +4136,16 @@ export interface ImmutableChain {
     effectiveRepositoryDefinitions?: Array<RepositoryDefinition>;
     /**
      * 
-     * @type {PlanResultKey}
-     * @memberof ImmutableChain
-     */
-    lastResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    entityType?: ImmutableChainEntityTypeEnum;
-    /**
-     * 
      * @type {Array<PlanRepositoryDefinition>}
      * @memberof ImmutableChain
      */
     planRepositoryDefinitions?: Array<PlanRepositoryDefinition>;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof ImmutableChain
+     */
+    lastResultKey?: PlanResultKey;
     /**
      * 
      * @type {string}
@@ -3967,6 +4160,12 @@ export interface ImmutableChain {
     master?: ImmutableChain;
     /**
      * 
+     * @type {Array<VariableDefinition>}
+     * @memberof ImmutableChain
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutableChain
      */
@@ -3979,10 +4178,10 @@ export interface ImmutableChain {
     latestResultsSummary?: ImmutableResultsSummary;
     /**
      * 
-     * @type {BuildDefinition}
+     * @type {boolean}
      * @memberof ImmutableChain
      */
-    buildDefinition?: BuildDefinition;
+    executing?: boolean;
     /**
      * 
      * @type {boolean}
@@ -3991,16 +4190,16 @@ export interface ImmutableChain {
     busy?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    executing?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ImmutableChain
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {BuildDefinition}
+     * @memberof ImmutableChain
+     */
+    buildDefinition?: BuildDefinition;
     /**
      * 
      * @type {string}
@@ -4051,22 +4250,16 @@ export interface ImmutableChain {
     type?: string;
     /**
      * 
-     * @type {Project}
-     * @memberof ImmutableChain
-     */
-    project?: Project;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutableChain
      */
     active?: boolean;
     /**
      * 
-     * @type {Array<VariableDefinition>}
+     * @type {Project}
      * @memberof ImmutableChain
      */
-    variables?: Array<VariableDefinition>;
+    project?: Project;
     /**
      * 
      * @type {string}
@@ -4102,7 +4295,7 @@ export interface ImmutableChain {
      * @type {number}
      * @memberof ImmutableChain
      */
-    masterIdIfExists?: number;
+    databaseId?: number;
     /**
      * 
      * @type {number}
@@ -4114,7 +4307,7 @@ export interface ImmutableChain {
      * @type {number}
      * @memberof ImmutableChain
      */
-    databaseId?: number;
+    masterIdIfExists?: number;
     /**
      * 
      * @type {string}
@@ -4141,16 +4334,16 @@ export interface ImmutableChain {
     oid?: BambooEntityOid;
     /**
      * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    suspended?: boolean;
-    /**
-     * 
      * @type {Array<TriggerDefinition>}
      * @memberof ImmutableChain
      */
     triggerDefinitions?: Array<TriggerDefinition>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableChain
+     */
+    suspended?: boolean;
 }
 
 
@@ -4196,16 +4389,16 @@ export interface ImmutableChainStage {
     jobs?: Set<ImmutableJob>;
     /**
      * 
-     * @type {string}
-     * @memberof ImmutableChainStage
-     */
-    entityType?: ImmutableChainStageEntityTypeEnum;
-    /**
-     * 
      * @type {number}
      * @memberof ImmutableChainStage
      */
     databaseId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChainStage
+     */
+    entityType?: ImmutableChainStageEntityTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -4301,6 +4494,30 @@ export interface ImmutableJob {
     entityType?: ImmutableJobEntityTypeEnum;
     /**
      * 
+     * @type {Array<ImmutableArtifactSubscription>}
+     * @memberof ImmutableJob
+     */
+    artifactSubscriptions?: Array<ImmutableArtifactSubscription>;
+    /**
+     * 
+     * @type {RequirementSet}
+     * @memberof ImmutableJob
+     */
+    effectiveRequirementSet?: RequirementSet;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableJob
+     */
+    divergent?: boolean;
+    /**
+     * 
+     * @type {Array<ImmutableArtifactDefinition>}
+     * @memberof ImmutableJob
+     */
+    artifactDefinitions?: Array<ImmutableArtifactDefinition>;
+    /**
+     * 
      * @type {ImmutableChain}
      * @memberof ImmutableJob
      */
@@ -4319,28 +4536,10 @@ export interface ImmutableJob {
     stage?: ImmutableChainStage;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<VariableDefinition>}
      * @memberof ImmutableJob
      */
-    divergent?: boolean;
-    /**
-     * 
-     * @type {Array<ImmutableArtifactDefinition>}
-     * @memberof ImmutableJob
-     */
-    artifactDefinitions?: Array<ImmutableArtifactDefinition>;
-    /**
-     * 
-     * @type {Array<ImmutableArtifactSubscription>}
-     * @memberof ImmutableJob
-     */
-    artifactSubscriptions?: Array<ImmutableArtifactSubscription>;
-    /**
-     * 
-     * @type {RequirementSet}
-     * @memberof ImmutableJob
-     */
-    effectiveRequirementSet?: RequirementSet;
+    variables?: Array<VariableDefinition>;
     /**
      * 
      * @type {boolean}
@@ -4355,10 +4554,10 @@ export interface ImmutableJob {
     latestResultsSummary?: ImmutableResultsSummary;
     /**
      * 
-     * @type {BuildDefinition}
+     * @type {boolean}
      * @memberof ImmutableJob
      */
-    buildDefinition?: BuildDefinition;
+    executing?: boolean;
     /**
      * 
      * @type {boolean}
@@ -4367,16 +4566,16 @@ export interface ImmutableJob {
     busy?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ImmutableJob
-     */
-    executing?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ImmutableJob
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {BuildDefinition}
+     * @memberof ImmutableJob
+     */
+    buildDefinition?: BuildDefinition;
     /**
      * 
      * @type {string}
@@ -4427,22 +4626,16 @@ export interface ImmutableJob {
     type?: string;
     /**
      * 
-     * @type {Project}
-     * @memberof ImmutableJob
-     */
-    project?: Project;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutableJob
      */
     active?: boolean;
     /**
      * 
-     * @type {Array<VariableDefinition>}
+     * @type {Project}
      * @memberof ImmutableJob
      */
-    variables?: Array<VariableDefinition>;
+    project?: Project;
     /**
      * 
      * @type {string}
@@ -4478,7 +4671,7 @@ export interface ImmutableJob {
      * @type {number}
      * @memberof ImmutableJob
      */
-    masterIdIfExists?: number;
+    databaseId?: number;
     /**
      * 
      * @type {number}
@@ -4490,7 +4683,7 @@ export interface ImmutableJob {
      * @type {number}
      * @memberof ImmutableJob
      */
-    databaseId?: number;
+    masterIdIfExists?: number;
     /**
      * 
      * @type {string}
@@ -4560,6 +4753,12 @@ export type ImmutableJobPlanTypeEnum = typeof ImmutableJobPlanTypeEnum[keyof typ
 export interface ImmutablePlan {
     /**
      * 
+     * @type {Array<VariableDefinition>}
+     * @memberof ImmutablePlan
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutablePlan
      */
@@ -4572,10 +4771,10 @@ export interface ImmutablePlan {
     latestResultsSummary?: ImmutableResultsSummary;
     /**
      * 
-     * @type {BuildDefinition}
+     * @type {boolean}
      * @memberof ImmutablePlan
      */
-    buildDefinition?: BuildDefinition;
+    executing?: boolean;
     /**
      * 
      * @type {boolean}
@@ -4584,16 +4783,16 @@ export interface ImmutablePlan {
     busy?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ImmutablePlan
-     */
-    executing?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ImmutablePlan
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {BuildDefinition}
+     * @memberof ImmutablePlan
+     */
+    buildDefinition?: BuildDefinition;
     /**
      * 
      * @type {string}
@@ -4644,6 +4843,12 @@ export interface ImmutablePlan {
     type?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof ImmutablePlan
+     */
+    active?: boolean;
+    /**
+     * 
      * @type {ImmutablePlan}
      * @memberof ImmutablePlan
      */
@@ -4654,18 +4859,6 @@ export interface ImmutablePlan {
      * @memberof ImmutablePlan
      */
     project?: Project;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutablePlan
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {Array<VariableDefinition>}
-     * @memberof ImmutablePlan
-     */
-    variables?: Array<VariableDefinition>;
     /**
      * 
      * @type {string}
@@ -4701,7 +4894,7 @@ export interface ImmutablePlan {
      * @type {number}
      * @memberof ImmutablePlan
      */
-    masterIdIfExists?: number;
+    databaseId?: number;
     /**
      * 
      * @type {number}
@@ -4713,7 +4906,7 @@ export interface ImmutablePlan {
      * @type {number}
      * @memberof ImmutablePlan
      */
-    databaseId?: number;
+    masterIdIfExists?: number;
     /**
      * 
      * @type {string}
@@ -4795,12 +4988,6 @@ export interface ImmutableRequirement {
     matchValue?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ImmutableRequirement
-     */
-    key?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutableRequirement
      */
@@ -4813,6 +5000,12 @@ export interface ImmutableRequirement {
     ownerId?: number;
     /**
      * 
+     * @type {string}
+     * @memberof ImmutableRequirement
+     */
+    pluginModuleKey?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutableRequirement
      */
@@ -4822,7 +5015,7 @@ export interface ImmutableRequirement {
      * @type {string}
      * @memberof ImmutableRequirement
      */
-    pluginModuleKey?: string;
+    key?: string;
     /**
      * 
      * @type {number}
@@ -4881,6 +5074,18 @@ export interface ImmutableResultsSummary {
     repositoryChangesets?: Array<RepositoryChangeset>;
     /**
      * 
+     * @type {ImmutablePlan}
+     * @memberof ImmutableResultsSummary
+     */
+    immutablePlan?: ImmutablePlan;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
@@ -4903,18 +5108,6 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     notBuilt?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    planName?: string;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof ImmutableResultsSummary
-     */
-    immutablePlan?: ImmutablePlan;
     /**
      * 
      * @type {Array<string>}
@@ -4941,6 +5134,12 @@ export interface ImmutableResultsSummary {
     pending?: boolean;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof ImmutableResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {Array<ConsumedSubscription>}
      * @memberof ImmutableResultsSummary
      */
@@ -4953,64 +5152,22 @@ export interface ImmutableResultsSummary {
     planIfExists?: ImmutablePlan;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableChain}
      * @memberof ImmutableResultsSummary
      */
-    durationDescription?: string;
+    immutableChain?: ImmutableChain;
+    /**
+     * 
+     * @type {TriggerReason}
+     * @memberof ImmutableResultsSummary
+     */
+    triggerReason?: TriggerReason;
     /**
      * 
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    queueTime?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof ImmutableResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ImmutableResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    restartCount?: number;
+    deltaState?: ImmutableResultsSummaryDeltaStateEnum;
     /**
      * 
      * @type {boolean}
@@ -5019,34 +5176,46 @@ export interface ImmutableResultsSummary {
     onceOff?: boolean;
     /**
      * 
-     * @type {ImmutableChain}
+     * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
-    immutableChain?: ImmutableChain;
-    /**
-     * 
-     * @type {Array<Commit>}
-     * @memberof ImmutableResultsSummary
-     */
-    commits?: Array<Commit>;
+    customBuild?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
-    queued?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    active?: boolean;
+    rebuild?: boolean;
     /**
      * 
      * @type {number}
      * @memberof ImmutableResultsSummary
      */
-    duration?: number;
+    logSize?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    buildCancelledDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    buildCompletedDate?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    finished?: boolean;
     /**
      * 
      * @type {boolean}
@@ -5059,6 +5228,12 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     customBuildData?: object;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ImmutableResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
@@ -5091,6 +5266,18 @@ export interface ImmutableResultsSummary {
     timeToFix?: number;
     /**
      * 
+     * @type {TestResultsSummary}
+     * @memberof ImmutableResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
@@ -5101,6 +5288,18 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     shortReasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    relativeBuildDate?: string;
     /**
      * 
      * @type {string}
@@ -5118,7 +5317,19 @@ export interface ImmutableResultsSummary {
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
+    testSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
     buildTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    queueTime?: string;
     /**
      * 
      * @type {Array<ArtifactLink>}
@@ -5160,7 +5371,25 @@ export interface ImmutableResultsSummary {
      * @type {number}
      * @memberof ImmutableResultsSummary
      */
+    restartCount?: number;
+    /**
+     * 
+     * @type {Array<Commit>}
+     * @memberof ImmutableResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
     buildAgentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    buildAgentType?: ImmutableResultsSummaryBuildAgentTypeEnum;
     /**
      * 
      * @type {string}
@@ -5169,46 +5398,22 @@ export interface ImmutableResultsSummary {
     fullPlanName?: string;
     /**
      * 
-     * @type {TriggerReason}
+     * @type {number}
      * @memberof ImmutableResultsSummary
      */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    deltaState?: ImmutableResultsSummaryDeltaStateEnum;
+    duration?: number;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
-    customBuild?: boolean;
+    active?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    buildCancelledDate?: string;
+    queued?: boolean;
     /**
      * 
      * @type {number}
@@ -5269,6 +5474,17 @@ export type ImmutableResultsSummaryDeltaStateEnum = typeof ImmutableResultsSumma
 /**
  * @export
  */
+export const ImmutableResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type ImmutableResultsSummaryBuildAgentTypeEnum = typeof ImmutableResultsSummaryBuildAgentTypeEnum[keyof typeof ImmutableResultsSummaryBuildAgentTypeEnum];
+
+/**
+ * @export
+ */
 export const ImmutableResultsSummaryBuildStateEnum = {
     Unknown: 'Unknown',
     Successful: 'Successful',
@@ -5290,16 +5506,16 @@ export interface ImmutableVcsBambooSpecsSource {
     vcsLocationBambooSpecsState?: ImmutableVcsLocationBambooSpecsState;
     /**
      * 
-     * @type {boolean}
-     * @memberof ImmutableVcsBambooSpecsSource
-     */
-    yamlConfiguration?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof ImmutableVcsBambooSpecsSource
      */
     sourceLocation?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableVcsBambooSpecsSource
+     */
+    yamlConfiguration?: boolean;
     /**
      * 
      * @type {number}
@@ -5327,16 +5543,22 @@ export interface ImmutableVcsLocationBambooSpecsState {
     vcsLocationId?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
-    id?: number;
+    revision?: string;
     /**
      * 
      * @type {string}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
     specsExecutionDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableVcsLocationBambooSpecsState
+     */
+    logFilename?: string;
     /**
      * 
      * @type {string}
@@ -5351,16 +5573,10 @@ export interface ImmutableVcsLocationBambooSpecsState {
     specsNotFound?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
-    logFilename?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableVcsLocationBambooSpecsState
-     */
-    revision?: string;
+    id?: number;
 }
 
 
@@ -5384,13 +5600,13 @@ export interface JiraAssignee {
      * @type {string}
      * @memberof JiraAssignee
      */
-    name?: string;
+    displayName?: string;
     /**
      * 
      * @type {string}
      * @memberof JiraAssignee
      */
-    displayName?: string;
+    name?: string;
 }
 /**
  * 
@@ -5398,18 +5614,6 @@ export interface JiraAssignee {
  * @interface JiraIssueDetails
  */
 export interface JiraIssueDetails {
-    /**
-     * 
-     * @type {string}
-     * @memberof JiraIssueDetails
-     */
-    issueKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JiraIssueDetails
-     */
-    displayUrl?: string;
     /**
      * 
      * @type {JiraAssignee}
@@ -5422,6 +5626,18 @@ export interface JiraIssueDetails {
      * @memberof JiraIssueDetails
      */
     fixVersions?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraIssueDetails
+     */
+    issueKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraIssueDetails
+     */
+    displayUrl?: string;
     /**
      * 
      * @type {JiraType}
@@ -5487,30 +5703,6 @@ export interface JiraType {
 export interface JsonArray {
     /**
      * 
-     * @type {string}
-     * @memberof JsonArray
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonArray
-     */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonArray
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonArray
-     */
-    asLong?: number;
-    /**
-     * 
      * @type {number}
      * @memberof JsonArray
      */
@@ -5559,22 +5751,46 @@ export interface JsonArray {
     asShort?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof JsonArray
      */
-    jsonArray?: boolean;
+    asString?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonArray
+     */
+    asDouble?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonArray
+     */
+    asLong?: number;
     /**
      * 
      * @type {boolean}
      * @memberof JsonArray
      */
-    jsonObject?: boolean;
+    asBoolean?: boolean;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonArray
+     */
+    asJsonNull?: JsonNull;
     /**
      * 
      * @type {boolean}
      * @memberof JsonArray
      */
     jsonPrimitive?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonArray
+     */
+    jsonObject?: boolean;
     /**
      * 
      * @type {boolean}
@@ -5601,10 +5817,10 @@ export interface JsonArray {
     asJsonPrimitive?: JsonPrimitive;
     /**
      * 
-     * @type {JsonNull}
+     * @type {boolean}
      * @memberof JsonArray
      */
-    asJsonNull?: JsonNull;
+    jsonArray?: boolean;
 }
 /**
  * 
@@ -5614,72 +5830,6 @@ export interface JsonArray {
 export interface JsonElement {
     /**
      * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    jsonObject?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonElement
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonElement
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonElement
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    jsonPrimitive?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonElement
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonElement
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonElement
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
      * @type {JsonNull}
      * @memberof JsonElement
      */
@@ -5732,6 +5882,72 @@ export interface JsonElement {
      * @memberof JsonElement
      */
     asShort?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    jsonPrimitive?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    jsonObject?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    jsonNull?: boolean;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonElement
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonElement
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonElement
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonElement
+     */
+    asString?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonElement
+     */
+    asDouble?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonElement
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    asBoolean?: boolean;
 }
 /**
  * 
@@ -5741,72 +5957,6 @@ export interface JsonElement {
 export interface JsonNull {
     /**
      * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    jsonObject?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonNull
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNull
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNull
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    jsonPrimitive?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonNull
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonNull
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonNull
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
      * @type {JsonNull}
      * @memberof JsonNull
      */
@@ -5859,6 +6009,72 @@ export interface JsonNull {
      * @memberof JsonNull
      */
     asShort?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    jsonPrimitive?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    jsonObject?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    jsonNull?: boolean;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonNull
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonNull
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonNull
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonNull
+     */
+    asString?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNull
+     */
+    asDouble?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNull
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    asBoolean?: boolean;
 }
 /**
  * 
@@ -5868,72 +6084,6 @@ export interface JsonNull {
 export interface JsonObject {
     /**
      * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    jsonObject?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonObject
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonObject
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonObject
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    jsonPrimitive?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonObject
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonObject
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonObject
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
      * @type {JsonNull}
      * @memberof JsonObject
      */
@@ -5986,6 +6136,72 @@ export interface JsonObject {
      * @memberof JsonObject
      */
     asShort?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    jsonPrimitive?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    jsonObject?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    jsonNull?: boolean;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonObject
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonObject
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonObject
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonObject
+     */
+    asString?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonObject
+     */
+    asDouble?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonObject
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    asBoolean?: boolean;
 }
 /**
  * 
@@ -5993,42 +6209,6 @@ export interface JsonObject {
  * @interface JsonPrimitive
  */
 export interface JsonPrimitive {
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonPrimitive
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonPrimitive
-     */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonPrimitive
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonPrimitive
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonPrimitive
-     */
-    number?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonPrimitive
-     */
-    _boolean?: boolean;
     /**
      * 
      * @type {number}
@@ -6085,22 +6265,58 @@ export interface JsonPrimitive {
     string?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof JsonPrimitive
      */
-    jsonArray?: boolean;
+    asString?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonPrimitive
+     */
+    asDouble?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonPrimitive
+     */
+    asLong?: number;
     /**
      * 
      * @type {boolean}
      * @memberof JsonPrimitive
      */
-    jsonObject?: boolean;
+    asBoolean?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    number?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    _boolean?: boolean;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonPrimitive
+     */
+    asJsonNull?: JsonNull;
     /**
      * 
      * @type {boolean}
      * @memberof JsonPrimitive
      */
     jsonPrimitive?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    jsonObject?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6127,10 +6343,10 @@ export interface JsonPrimitive {
     asJsonPrimitive?: JsonPrimitive;
     /**
      * 
-     * @type {JsonNull}
+     * @type {boolean}
      * @memberof JsonPrimitive
      */
-    asJsonNull?: JsonNull;
+    jsonArray?: boolean;
 }
 /**
  * 
@@ -6199,6 +6415,12 @@ export interface Label {
      * @type {string}
      * @memberof Label
      */
+    lastModificationDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Label
+     */
     name?: string;
     /**
      * 
@@ -6206,12 +6428,6 @@ export interface Label {
      * @memberof Label
      */
     namespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Label
-     */
-    lastModificationDate?: string;
     /**
      * 
      * @type {number}
@@ -6233,28 +6449,16 @@ export interface Labelling {
     plan?: Plan;
     /**
      * 
-     * @type {string}
-     * @memberof Labelling
-     */
-    creationDate?: string;
-    /**
-     * 
-     * @type {Project}
-     * @memberof Labelling
-     */
-    project?: Project;
-    /**
-     * 
-     * @type {string}
-     * @memberof Labelling
-     */
-    userName?: string;
-    /**
-     * 
      * @type {Label}
      * @memberof Labelling
      */
     label?: Label;
+    /**
+     * 
+     * @type {string}
+     * @memberof Labelling
+     */
+    creationDate?: string;
     /**
      * 
      * @type {ResultsSummary}
@@ -6267,6 +6471,18 @@ export interface Labelling {
      * @memberof Labelling
      */
     lastModificationDate?: string;
+    /**
+     * 
+     * @type {Project}
+     * @memberof Labelling
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {string}
+     * @memberof Labelling
+     */
+    userName?: string;
     /**
      * 
      * @type {number}
@@ -6345,129 +6561,129 @@ export type LinkedJiraIssueIssueTypeEnum = typeof LinkedJiraIssueIssueTypeEnum[k
 /**
  * 
  * @export
- * @interface ListGroupPermissions4200Response
+ * @interface ListGroupPermissions6200Response
  */
-export interface ListGroupPermissions4200Response {
+export interface ListGroupPermissions6200Response {
     /**
      * 
      * @type {string}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     self?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     prev?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     next?: string;
     /**
      * 
      * @type {number}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     start?: number;
     /**
      * 
      * @type {number}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     limit?: number;
     /**
      * 
      * @type {Array<RestGroupPermission>}
-     * @memberof ListGroupPermissions4200Response
+     * @memberof ListGroupPermissions6200Response
      */
     results?: Array<RestGroupPermission>;
 }
 /**
  * 
  * @export
- * @interface ListRolePermissions4200Response
+ * @interface ListRolePermissions6200Response
  */
-export interface ListRolePermissions4200Response {
+export interface ListRolePermissions6200Response {
     /**
      * 
      * @type {string}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     self?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     prev?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     next?: string;
     /**
      * 
      * @type {number}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     start?: number;
     /**
      * 
      * @type {number}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     limit?: number;
     /**
      * 
      * @type {Array<RestRolePermission>}
-     * @memberof ListRolePermissions4200Response
+     * @memberof ListRolePermissions6200Response
      */
     results?: Array<RestRolePermission>;
 }
 /**
  * 
  * @export
- * @interface ListUserPermissions4200Response
+ * @interface ListUserPermissions6200Response
  */
-export interface ListUserPermissions4200Response {
+export interface ListUserPermissions6200Response {
     /**
      * 
      * @type {string}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     self?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     prev?: string;
     /**
      * 
      * @type {string}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     next?: string;
     /**
      * 
      * @type {number}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     start?: number;
     /**
      * 
      * @type {number}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     limit?: number;
     /**
      * 
      * @type {Array<RestUserPermission>}
-     * @memberof ListUserPermissions4200Response
+     * @memberof ListUserPermissions6200Response
      */
     results?: Array<RestUserPermission>;
 }
@@ -6477,6 +6693,18 @@ export interface ListUserPermissions4200Response {
  * @interface Log
  */
 export interface Log {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Log
+     */
+    infoEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Log
+     */
+    errorEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6495,18 +6723,6 @@ export interface Log {
      * @memberof Log
      */
     traceEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    infoEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    errorEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6557,36 +6773,6 @@ export interface MergeResultSummary {
      * @type {string}
      * @memberof MergeResultSummary
      */
-    mergeState?: MergeResultSummaryMergeStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
-    pushState?: MergeResultSummaryPushStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
-    integrationStrategy?: MergeResultSummaryIntegrationStrategyEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
-    integrationRepositoryBranchName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MergeResultSummary
-     */
-    emptyMerge?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
     failureReason?: string;
     /**
      * 
@@ -6605,6 +6791,12 @@ export interface MergeResultSummary {
      * @type {string}
      * @memberof MergeResultSummary
      */
+    integrationRepositoryBranchName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
     integrationBranchVcsKey?: string;
     /**
      * 
@@ -6612,6 +6804,30 @@ export interface MergeResultSummary {
      * @memberof MergeResultSummary
      */
     mergeResultVcsKey?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MergeResultSummary
+     */
+    emptyMerge?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
+    mergeState?: MergeResultSummaryMergeStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
+    pushState?: MergeResultSummaryPushStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
+    integrationStrategy?: MergeResultSummaryIntegrationStrategyEnum;
     /**
      * 
      * @type {number}
@@ -6664,28 +6880,28 @@ export type MergeResultSummaryIntegrationStrategyEnum = typeof MergeResultSummar
 export interface MutableArtifact {
     /**
      * 
+     * @type {string}
+     * @memberof MutableArtifact
+     */
+    label?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof MutableArtifact
      */
     sharedArtifact?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof MutableArtifact
+     */
+    linkType?: string;
+    /**
+     * 
      * @type {PlanResultKey}
      * @memberof MutableArtifact
      */
     planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {number}
-     * @memberof MutableArtifact
-     */
-    size?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MutableArtifact
-     */
-    label?: string;
     /**
      * 
      * @type {boolean}
@@ -6700,10 +6916,10 @@ export interface MutableArtifact {
     archiverType?: MutableArtifactArchiverTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof MutableArtifact
      */
-    linkType?: string;
+    size?: number;
     /**
      * 
      * @type {number}
@@ -6778,6 +6994,12 @@ export interface Node {
     parentNode?: ConfigurationNode;
     /**
      * 
+     * @type {number}
+     * @memberof Node
+     */
+    childrenCount?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof Node
      */
@@ -6788,12 +7010,6 @@ export interface Node {
      * @memberof Node
      */
     attributeCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    childrenCount?: number;
 }
 /**
  * 
@@ -6849,25 +7065,7 @@ export interface NotificationRecipient {
      * @type {string}
      * @memberof NotificationRecipient
      */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationRecipient
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof NotificationRecipient
-     */
-    scopes?: Set<NotificationRecipientScopesEnum>;
-    /**
-     * 
-     * @type {WeightedDescriptor}
-     * @memberof NotificationRecipient
-     */
-    moduleDescriptor?: WeightedDescriptor;
+    editHtml?: string;
     /**
      * 
      * @type {string}
@@ -6891,7 +7089,25 @@ export interface NotificationRecipient {
      * @type {string}
      * @memberof NotificationRecipient
      */
-    editHtml?: string;
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationRecipient
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof NotificationRecipient
+     */
+    scopes?: Set<NotificationRecipientScopesEnum>;
+    /**
+     * 
+     * @type {WeightedDescriptor}
+     * @memberof NotificationRecipient
+     */
+    moduleDescriptor?: WeightedDescriptor;
 }
 
 
@@ -6917,6 +7133,12 @@ export interface NotificationRule {
      * @memberof NotificationRule
      */
     notificationSet?: NotificationSet;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationRule
+     */
+    conditionKey?: string;
     /**
      * 
      * @type {string}
@@ -6949,12 +7171,6 @@ export interface NotificationRule {
     recipientType?: string;
     /**
      * 
-     * @type {string}
-     * @memberof NotificationRule
-     */
-    conditionKey?: string;
-    /**
-     * 
      * @type {number}
      * @memberof NotificationRule
      */
@@ -6974,16 +7190,16 @@ export interface NotificationSet {
     notificationRules?: Set<NotificationRule>;
     /**
      * 
-     * @type {string}
-     * @memberof NotificationSet
-     */
-    notificationSetType?: NotificationSetNotificationSetTypeEnum;
-    /**
-     * 
      * @type {Array<NotificationRule>}
      * @memberof NotificationSet
      */
     sortedNotificationRules?: Array<NotificationRule>;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationSet
+     */
+    notificationSetType?: NotificationSetNotificationSetTypeEnum;
     /**
      * 
      * @type {number}
@@ -7008,6 +7224,24 @@ export type NotificationSetNotificationSetTypeEnum = typeof NotificationSetNotif
  * @interface NotificationType
  */
 export interface NotificationType {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    editHtml?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    configurationData?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    viewHtml?: string;
     /**
      * 
      * @type {string}
@@ -7038,24 +7272,6 @@ export interface NotificationType {
      * @memberof NotificationType
      */
     moduleDescriptor?: WeightedDescriptor;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    configurationData?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    viewHtml?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    editHtml?: string;
 }
 
 
@@ -7099,6 +7315,12 @@ export interface Operations {
      * @type {boolean}
      * @memberof Operations
      */
+    canDelete?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
     canExecute?: boolean;
     /**
      * 
@@ -7106,12 +7328,6 @@ export interface Operations {
      * @memberof Operations
      */
     cantExecuteReason?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    canDelete?: boolean;
     /**
      * 
      * @type {boolean}
@@ -7139,10 +7355,34 @@ export interface Operations {
 export interface PipelineDefinition {
     /**
      * 
+     * @type {boolean}
+     * @memberof PipelineDefinition
+     */
+    dedicated?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof PipelineDefinition
      */
     creationDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineDefinition
+     */
+    lastModificationDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineDefinition
+     */
+    ephemeralAgentDedicationUntyped?: string;
+    /**
+     * 
+     * @type {ResultKey}
+     * @memberof PipelineDefinition
+     */
+    ephemeralAgentDedication?: ResultKey;
     /**
      * 
      * @type {string}
@@ -7169,12 +7409,6 @@ export interface PipelineDefinition {
     description?: string;
     /**
      * 
-     * @type {string}
-     * @memberof PipelineDefinition
-     */
-    lastModificationDate?: string;
-    /**
-     * 
      * @type {number}
      * @memberof PipelineDefinition
      */
@@ -7188,7 +7422,8 @@ export interface PipelineDefinition {
 export const PipelineDefinitionTypeEnum = {
     Local: 'LOCAL',
     Remote: 'REMOTE',
-    Elastic: 'ELASTIC'
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type PipelineDefinitionTypeEnum = typeof PipelineDefinitionTypeEnum[keyof typeof PipelineDefinitionTypeEnum];
 
@@ -7204,12 +7439,6 @@ export interface Plan {
      * @memberof Plan
      */
     latestResultsSummary?: ResultsSummary;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof Plan
-     */
-    planKey?: PlanKey;
     /**
      * 
      * @type {string}
@@ -7240,6 +7469,18 @@ export interface Plan {
      * @memberof Plan
      */
     labellings?: Array<Labelling>;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof Plan
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof Plan
+     */
+    relatedLabellings?: Array<Labelling>;
     /**
      * 
      * @type {Project}
@@ -7296,10 +7537,10 @@ export interface Plan {
     markedForDeletion?: boolean;
     /**
      * 
-     * @type {BuildDefinition}
+     * @type {boolean}
      * @memberof Plan
      */
-    buildDefinition?: BuildDefinition;
+    executing?: boolean;
     /**
      * 
      * @type {boolean}
@@ -7308,16 +7549,16 @@ export interface Plan {
     busy?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof Plan
-     */
-    executing?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof Plan
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {BuildDefinition}
+     * @memberof Plan
+     */
+    buildDefinition?: BuildDefinition;
     /**
      * 
      * @type {string}
@@ -7350,12 +7591,6 @@ export interface Plan {
     averageBuildDuration?: number;
     /**
      * 
-     * @type {Array<VariableDefinition>}
-     * @memberof Plan
-     */
-    effectiveVariables?: Array<VariableDefinition>;
-    /**
-     * 
      * @type {string}
      * @memberof Plan
      */
@@ -7368,12 +7603,6 @@ export interface Plan {
     active?: boolean;
     /**
      * 
-     * @type {Array<VariableDefinition>}
-     * @memberof Plan
-     */
-    variables?: Array<VariableDefinition>;
-    /**
-     * 
      * @type {string}
      * @memberof Plan
      */
@@ -7383,7 +7612,7 @@ export interface Plan {
      * @type {number}
      * @memberof Plan
      */
-    masterIdIfExists?: number;
+    databaseId?: number;
     /**
      * 
      * @type {number}
@@ -7395,7 +7624,7 @@ export interface Plan {
      * @type {number}
      * @memberof Plan
      */
-    databaseId?: number;
+    masterIdIfExists?: number;
 }
 
 
@@ -7490,12 +7719,6 @@ export interface PlanRepositoryDefinition {
     linked?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof PlanRepositoryDefinition
-     */
-    entityType?: PlanRepositoryDefinitionEntityTypeEnum;
-    /**
-     * 
      * @type {VcsChangeDetectionOptions}
      * @memberof PlanRepositoryDefinition
      */
@@ -7518,6 +7741,12 @@ export interface PlanRepositoryDefinition {
      * @memberof PlanRepositoryDefinition
      */
     legacyRepository?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanRepositoryDefinition
+     */
+    parentId?: number;
     /**
      * 
      * @type {BambooEntityOid}
@@ -7544,10 +7773,10 @@ export interface PlanRepositoryDefinition {
     rootVcsShared?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof PlanRepositoryDefinition
      */
-    parentId?: number;
+    entityType?: PlanRepositoryDefinitionEntityTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -7700,6 +7929,25 @@ export interface PlanWithCustomExpirySettings {
 /**
  * 
  * @export
+ * @interface PodsCleanup
+ */
+export interface PodsCleanup {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PodsCleanup
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodsCleanup
+     */
+    delay?: number;
+}
+/**
+ * 
+ * @export
  * @interface Project
  */
 export interface Project {
@@ -7709,6 +7957,12 @@ export interface Project {
      * @memberof Project
      */
     vcsBambooSpecsSource?: VcsBambooSpecsSource;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof Project
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {string}
@@ -7721,12 +7975,6 @@ export interface Project {
      * @memberof Project
      */
     currentStatus?: string;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    labellings?: Array<Labelling>;
     /**
      * 
      * @type {Array<Labelling>}
@@ -7885,22 +8133,16 @@ export interface Repository {
 export interface RepositoryChangeset {
     /**
      * 
+     * @type {number}
+     * @memberof RepositoryChangeset
+     */
+    position?: number;
+    /**
+     * 
      * @type {ResultsSummary}
      * @memberof RepositoryChangeset
      */
     resultsSummary?: ResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryChangeset
-     */
-    changesetId?: string;
-    /**
-     * 
-     * @type {RepositoryDataEntity}
-     * @memberof RepositoryChangeset
-     */
-    repositoryData?: RepositoryDataEntity;
     /**
      * 
      * @type {Set<Commit>}
@@ -7915,16 +8157,22 @@ export interface RepositoryChangeset {
     skippedCommitsCount?: number;
     /**
      * 
+     * @type {RepositoryDataEntity}
+     * @memberof RepositoryChangeset
+     */
+    repositoryData?: RepositoryDataEntity;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepositoryChangeset
+     */
+    changesetId?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RepositoryChangeset
      */
     buildTrigger?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof RepositoryChangeset
-     */
-    position?: number;
     /**
      * 
      * @type {number}
@@ -7952,6 +8200,12 @@ export interface RepositoryDataEntity {
     entityType?: RepositoryDataEntityEntityTypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof RepositoryDataEntity
+     */
+    xmlData?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RepositoryDataEntity
      */
@@ -7968,12 +8222,6 @@ export interface RepositoryDataEntity {
      * @memberof RepositoryDataEntity
      */
     pluginKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDataEntity
-     */
-    xmlData?: string;
     /**
      * 
      * @type {string}
@@ -8051,18 +8299,6 @@ export interface RepositoryDefinition {
     global?: boolean;
     /**
      * 
-     * @type {HierarchicalConfiguration}
-     * @memberof RepositoryDefinition
-     */
-    _configuration?: HierarchicalConfiguration;
-    /**
-     * 
-     * @type {Repository}
-     * @memberof RepositoryDefinition
-     */
-    repository?: Repository;
-    /**
-     * 
      * @type {string}
      * @memberof RepositoryDefinition
      */
@@ -8073,6 +8309,18 @@ export interface RepositoryDefinition {
      * @memberof RepositoryDefinition
      */
     webRepositoryViewer?: WebRepositoryViewer;
+    /**
+     * 
+     * @type {HierarchicalConfiguration}
+     * @memberof RepositoryDefinition
+     */
+    _configuration?: HierarchicalConfiguration;
+    /**
+     * 
+     * @type {Repository}
+     * @memberof RepositoryDefinition
+     */
+    repository?: Repository;
     /**
      * 
      * @type {number}
@@ -8150,12 +8398,6 @@ export interface Requirement {
     requirementSet?: RequirementSet;
     /**
      * 
-     * @type {string}
-     * @memberof Requirement
-     */
-    key?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof Requirement
      */
@@ -8190,6 +8432,12 @@ export interface Requirement {
      * @memberof Requirement
      */
     matchType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Requirement
+     */
+    key?: string;
     /**
      * 
      * @type {number}
@@ -8252,6 +8500,12 @@ export interface RequirementReadonlyData {
      * @memberof RequirementReadonlyData
      */
     matchingImages?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RequirementReadonlyData
+     */
+    matchingTemplates?: number;
 }
 /**
  * 
@@ -8420,7 +8674,8 @@ export interface RestAgentAssignmentExecutorDetails {
  */
 export const RestAgentAssignmentExecutorDetailsTypeEnum = {
     Agent: 'AGENT',
-    Image: 'IMAGE'
+    Image: 'IMAGE',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type RestAgentAssignmentExecutorDetailsTypeEnum = typeof RestAgentAssignmentExecutorDetailsTypeEnum[keyof typeof RestAgentAssignmentExecutorDetailsTypeEnum];
 
@@ -8430,7 +8685,8 @@ export type RestAgentAssignmentExecutorDetailsTypeEnum = typeof RestAgentAssignm
 export const RestAgentAssignmentExecutorDetailsAgentTypeEnum = {
     Local: 'LOCAL',
     Remote: 'REMOTE',
-    Elastic: 'ELASTIC'
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type RestAgentAssignmentExecutorDetailsAgentTypeEnum = typeof RestAgentAssignmentExecutorDetailsAgentTypeEnum[keyof typeof RestAgentAssignmentExecutorDetailsAgentTypeEnum];
 
@@ -8886,7 +9142,8 @@ export interface RestBuildAgent {
 export const RestBuildAgentTypeEnum = {
     Local: 'LOCAL',
     Remote: 'REMOTE',
-    Elastic: 'ELASTIC'
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type RestBuildAgentTypeEnum = typeof RestBuildAgentTypeEnum[keyof typeof RestBuildAgentTypeEnum];
 
@@ -9119,6 +9376,12 @@ export interface RestBuildMonitoring {
  * @interface RestCapability
  */
 export interface RestCapability {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCapability
+     */
+    readonly self?: string;
     /**
      * 
      * @type {string}
@@ -9676,7 +9939,8 @@ export type RestDedicatedAgentExecutableTypeEnum = typeof RestDedicatedAgentExec
  */
 export const RestDedicatedAgentExecutorTypeEnum = {
     Agent: 'AGENT',
-    Image: 'IMAGE'
+    Image: 'IMAGE',
+    Ephemeral: 'EPHEMERAL'
 } as const;
 export type RestDedicatedAgentExecutorTypeEnum = typeof RestDedicatedAgentExecutorTypeEnum[keyof typeof RestDedicatedAgentExecutorTypeEnum];
 
@@ -9952,6 +10216,12 @@ export interface RestDeploymentResult {
     environment?: Environment;
     /**
      * 
+     * @type {string}
+     * @memberof RestDeploymentResult
+     */
+    agentType?: RestDeploymentResultAgentTypeEnum;
+    /**
+     * 
      * @type {number}
      * @memberof RestDeploymentResult
      */
@@ -9998,6 +10268,17 @@ export const RestDeploymentResultLifeCycleStateEnum = {
     NotBuilt: 'NotBuilt'
 } as const;
 export type RestDeploymentResultLifeCycleStateEnum = typeof RestDeploymentResultLifeCycleStateEnum[keyof typeof RestDeploymentResultLifeCycleStateEnum];
+
+/**
+ * @export
+ */
+export const RestDeploymentResultAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type RestDeploymentResultAgentTypeEnum = typeof RestDeploymentResultAgentTypeEnum[keyof typeof RestDeploymentResultAgentTypeEnum];
 
 /**
  * 
@@ -10458,16 +10739,16 @@ export interface RestElasticImageConfig {
     legacyEbsHandlingEnabled?: boolean;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof RestElasticImageConfig
      */
-    availabilityZones?: Array<string>;
+    availabilityZone?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof RestElasticImageConfig
      */
-    subnetIds?: Array<string>;
+    subnetId?: string;
 }
 /**
  * 
@@ -10625,16 +10906,16 @@ export interface RestEnvironment {
     configurationState?: RestEnvironmentConfigurationStateEnum;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestEnvironment
-     */
-    suspended?: boolean;
-    /**
-     * 
      * @type {Array<TriggerDefinition>}
      * @memberof RestEnvironment
      */
     triggerDefinitions?: Array<TriggerDefinition>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestEnvironment
+     */
+    suspended?: boolean;
     /**
      * 
      * @type {ImmutableRequirementSet}
@@ -10970,16 +11251,16 @@ export interface RestEnvironmentWithConfigCounts {
     triggersCount?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    suspended?: boolean;
-    /**
-     * 
      * @type {Array<TriggerDefinition>}
      * @memberof RestEnvironmentWithConfigCounts
      */
     triggerDefinitions?: Array<TriggerDefinition>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    suspended?: boolean;
     /**
      * 
      * @type {ImmutableRequirementSet}
@@ -11017,6 +11298,80 @@ export const RestEnvironmentWithConfigCountsConfigurationStateEnum = {
 } as const;
 export type RestEnvironmentWithConfigCountsConfigurationStateEnum = typeof RestEnvironmentWithConfigCountsConfigurationStateEnum[keyof typeof RestEnvironmentWithConfigCountsConfigurationStateEnum];
 
+/**
+ * 
+ * @export
+ * @interface RestEphemeralAgentTemplate
+ */
+export interface RestEphemeralAgentTemplate {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    configurationId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    configurationName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    template?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    dedicated?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface RestEphemeralPodLogs
+ */
+export interface RestEphemeralPodLogs {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralPodLogs
+     */
+    podName?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RestEphemeralPodLogs
+     */
+    logs?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralPodLogs
+     */
+    containerName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralPodLogs
+     */
+    lastTimeStamp?: string;
+}
 /**
  * 
  * @export
@@ -11262,6 +11617,12 @@ export interface RestGeneralConfiguration {
      * @memberof RestGeneralConfiguration
      */
     rssPollingCronExpression?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestGeneralConfiguration
+     */
+    quietPeriodGloballyDisabled?: boolean;
 }
 /**
  * 
@@ -12198,6 +12559,49 @@ export interface RestPageModelRestBrokenPlan {
 /**
  * 
  * @export
+ * @interface RestPageModelRestCapability
+ */
+export interface RestPageModelRestCapability {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestCapability
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestCapability
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestCapability
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {Array<RestCapability>}
+     * @memberof RestPageModelRestCapability
+     */
+    results?: Array<RestCapability>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestCapability
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestCapability
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestPageModelRestDeploymentProject
  */
 export interface RestPageModelRestDeploymentProject {
@@ -12278,6 +12682,49 @@ export interface RestPageModelRestEnvironmentForExecutablesView {
      * 
      * @type {number}
      * @memberof RestPageModelRestEnvironmentForExecutablesView
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RestPageModelRestEphemeralAgentTemplate
+ */
+export interface RestPageModelRestEphemeralAgentTemplate {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {Array<RestEphemeralAgentTemplate>}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
+     */
+    results?: Array<RestEphemeralAgentTemplate>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestEphemeralAgentTemplate
      */
     start?: number;
 }
@@ -13389,13 +13836,13 @@ export interface RestProgress {
      * @type {boolean}
      * @memberof RestProgress
      */
-    valid?: boolean;
+    underAverageTime?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof RestProgress
      */
-    underAverageTime?: boolean;
+    valid?: boolean;
 }
 /**
  * 
@@ -13874,6 +14321,12 @@ export interface RestRemoteAgentCapability {
      * @memberof RestRemoteAgentCapability
      */
     key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRemoteAgentCapability
+     */
+    readonly self?: string;
     /**
      * 
      * @type {string}
@@ -15739,6 +16192,37 @@ export interface Result {
 /**
  * 
  * @export
+ * @interface ResultKey
+ */
+export interface ResultKey {
+    /**
+     * 
+     * @type {Key}
+     * @memberof ResultKey
+     */
+    entityKey?: Key;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultKey
+     */
+    resultNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultKey
+     */
+    resultNumberLong?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultKey
+     */
+    key?: string;
+}
+/**
+ * 
+ * @export
  * @interface ResultsSummary
  */
 export interface ResultsSummary {
@@ -15768,16 +16252,22 @@ export interface ResultsSummary {
     duration?: number;
     /**
      * 
+     * @type {TriggerReason}
+     * @memberof ResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    deltaState?: ResultsSummaryDeltaStateEnum;
+    /**
+     * 
      * @type {boolean}
      * @memberof ResultsSummary
      */
     onceOff?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    restartCount?: number;
     /**
      * 
      * @type {boolean}
@@ -15822,18 +16312,6 @@ export interface ResultsSummary {
     timeToFix?: number;
     /**
      * 
-     * @type {TriggerReason}
-     * @memberof ResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    deltaState?: ResultsSummaryDeltaStateEnum;
-    /**
-     * 
      * @type {TestResultsSummary}
      * @memberof ResultsSummary
      */
@@ -15855,7 +16333,19 @@ export interface ResultsSummary {
      * @type {number}
      * @memberof ResultsSummary
      */
+    restartCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
     buildAgentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildAgentType?: ResultsSummaryBuildAgentTypeEnum;
     /**
      * 
      * @type {number}
@@ -15912,6 +16402,12 @@ export interface ResultsSummary {
     repositoryChangesets?: Array<RepositoryChangeset>;
     /**
      * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof ResultsSummary
      */
@@ -15934,12 +16430,6 @@ export interface ResultsSummary {
      * @memberof ResultsSummary
      */
     notBuilt?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    planName?: string;
     /**
      * 
      * @type {Array<string>}
@@ -15966,6 +16456,12 @@ export interface ResultsSummary {
     pending?: boolean;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof ResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {Array<ConsumedSubscription>}
      * @memberof ResultsSummary
      */
@@ -15978,64 +16474,16 @@ export interface ResultsSummary {
     planIfExists?: ImmutablePlan;
     /**
      * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
      * @type {ImmutableChain}
      * @memberof ResultsSummary
      */
     immutableChain?: ImmutableChain;
     /**
      * 
-     * @type {Array<Commit>}
-     * @memberof ResultsSummary
-     */
-    commits?: Array<Commit>;
-    /**
-     * 
      * @type {boolean}
      * @memberof ResultsSummary
      */
-    queued?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    active?: boolean;
+    finished?: boolean;
     /**
      * 
      * @type {boolean}
@@ -16048,6 +16496,12 @@ export interface ResultsSummary {
      * @memberof ResultsSummary
      */
     customBuildData?: object;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {Set<LinkedJiraIssue>}
@@ -16077,6 +16531,12 @@ export interface ResultsSummary {
      * @type {string}
      * @memberof ResultsSummary
      */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
     processingDurationDescription?: string;
     /**
      * 
@@ -16089,6 +16549,18 @@ export interface ResultsSummary {
      * @type {string}
      * @memberof ResultsSummary
      */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
     relativeQueueDate?: string;
     /**
      * 
@@ -16096,6 +16568,12 @@ export interface ResultsSummary {
      * @memberof ResultsSummary
      */
     relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    testSummary?: string;
     /**
      * 
      * @type {string}
@@ -16140,10 +16618,28 @@ export interface ResultsSummary {
     manuallyOverriddenVariables?: Array<VariableSubstitution>;
     /**
      * 
+     * @type {Array<Commit>}
+     * @memberof ResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
      * @type {string}
      * @memberof ResultsSummary
      */
     fullPlanName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    queued?: boolean;
     /**
      * 
      * @type {string}
@@ -16176,6 +16672,17 @@ export const ResultsSummaryDeltaStateEnum = {
     Fixed: 'FIXED'
 } as const;
 export type ResultsSummaryDeltaStateEnum = typeof ResultsSummaryDeltaStateEnum[keyof typeof ResultsSummaryDeltaStateEnum];
+
+/**
+ * @export
+ */
+export const ResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type ResultsSummaryBuildAgentTypeEnum = typeof ResultsSummaryBuildAgentTypeEnum[keyof typeof ResultsSummaryBuildAgentTypeEnum];
 
 /**
  * @export
@@ -16471,16 +16978,16 @@ export interface StrSubstitutor {
 export interface TaskConditionConfig {
     /**
      * 
-     * @type {object}
-     * @memberof TaskConditionConfig
-     */
-    _configuration?: object;
-    /**
-     * 
      * @type {string}
      * @memberof TaskConditionConfig
      */
     conditionPluginKey?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof TaskConditionConfig
+     */
+    _configuration?: object;
 }
 /**
  * 
@@ -16496,22 +17003,16 @@ export interface TaskDefinition {
     entityType?: TaskDefinitionEntityTypeEnum;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof TaskDefinition
      */
-    _configuration?: object;
+    userDescription?: string;
     /**
      * 
      * @type {boolean}
      * @memberof TaskDefinition
      */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskDefinition
-     */
-    userDescription?: string;
+    finalising?: boolean;
     /**
      * 
      * @type {TaskRootDirectorySelector}
@@ -16526,10 +17027,16 @@ export interface TaskDefinition {
     conditions?: Array<TaskConditionConfig>;
     /**
      * 
+     * @type {object}
+     * @memberof TaskDefinition
+     */
+    _configuration?: object;
+    /**
+     * 
      * @type {boolean}
      * @memberof TaskDefinition
      */
-    finalising?: boolean;
+    enabled?: boolean;
     /**
      * 
      * @type {number}
@@ -16608,6 +17115,36 @@ export type TaskRootDirectorySelectorTaskRootDirectoryTypeEnum = typeof TaskRoot
 export interface TestCase {
     /**
      * 
+     * @type {TestClass}
+     * @memberof TestCase
+     */
+    testClass?: TestClass;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    successPercentage?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    totalTestRuns?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    numberOfSuccessRuns?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    numberOfSkippedRuns?: number;
+    /**
+     * 
      * @type {number}
      * @memberof TestCase
      */
@@ -16624,6 +17161,12 @@ export interface TestCase {
      * @memberof TestCase
      */
     averageDurationInSeconds?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestCase
+     */
+    quarantined?: boolean;
     /**
      * 
      * @type {number}
@@ -16662,42 +17205,6 @@ export interface TestCase {
     methodName?: string;
     /**
      * 
-     * @type {TestClass}
-     * @memberof TestCase
-     */
-    testClass?: TestClass;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    totalTestRuns?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    successPercentage?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    numberOfSuccessRuns?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    numberOfSkippedRuns?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TestCase
-     */
-    quarantined?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof TestCase
      */
@@ -16709,6 +17216,48 @@ export interface TestCase {
  * @interface TestCaseResult
  */
 export interface TestCaseResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    deltaState?: TestCaseResultDeltaStateEnum;
+    /**
+     * 
+     * @type {TestCase}
+     * @memberof TestCaseResult
+     */
+    testCase?: TestCase;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    prettyDuration?: string;
+    /**
+     * 
+     * @type {TestClassResult}
+     * @memberof TestCaseResult
+     */
+    testClassResult?: TestClassResult;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCaseResult
+     */
+    failingSince?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestCaseResult
+     */
+    quarantined?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCaseResult
+     */
+    duration?: number;
     /**
      * 
      * @type {string}
@@ -16738,61 +17287,9 @@ export interface TestCaseResult {
      * @type {number}
      * @memberof TestCaseResult
      */
-    duration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    deltaState?: TestCaseResultDeltaStateEnum;
-    /**
-     * 
-     * @type {TestCase}
-     * @memberof TestCaseResult
-     */
-    testCase?: TestCase;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCaseResult
-     */
-    failingSince?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    prettyDuration?: string;
-    /**
-     * 
-     * @type {TestClassResult}
-     * @memberof TestCaseResult
-     */
-    testClassResult?: TestClassResult;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TestCaseResult
-     */
-    quarantined?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCaseResult
-     */
     id?: number;
 }
 
-
-/**
- * @export
- */
-export const TestCaseResultStateEnum = {
-    Success: 'SUCCESS',
-    Skipped: 'SKIPPED',
-    Failed: 'FAILED'
-} as const;
-export type TestCaseResultStateEnum = typeof TestCaseResultStateEnum[keyof typeof TestCaseResultStateEnum];
 
 /**
  * @export
@@ -16808,6 +17305,16 @@ export const TestCaseResultDeltaStateEnum = {
 export type TestCaseResultDeltaStateEnum = typeof TestCaseResultDeltaStateEnum[keyof typeof TestCaseResultDeltaStateEnum];
 
 /**
+ * @export
+ */
+export const TestCaseResultStateEnum = {
+    Success: 'SUCCESS',
+    Skipped: 'SKIPPED',
+    Failed: 'FAILED'
+} as const;
+export type TestCaseResultStateEnum = typeof TestCaseResultStateEnum[keyof typeof TestCaseResultStateEnum];
+
+/**
  * 
  * @export
  * @interface TestCaseResultError
@@ -16815,16 +17322,16 @@ export type TestCaseResultDeltaStateEnum = typeof TestCaseResultDeltaStateEnum[k
 export interface TestCaseResultError {
     /**
      * 
-     * @type {string}
-     * @memberof TestCaseResultError
-     */
-    content?: string;
-    /**
-     * 
      * @type {TestCaseResult}
      * @memberof TestCaseResultError
      */
     testCaseResult?: TestCaseResult;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResultError
+     */
+    content?: string;
     /**
      * 
      * @type {number}
@@ -16846,6 +17353,24 @@ export interface TestClass {
     plan?: Plan;
     /**
      * 
+     * @type {Array<TestCase>}
+     * @memberof TestClass
+     */
+    testCases?: Array<TestCase>;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestClass
+     */
+    masterJobId?: number;
+    /**
+     * 
+     * @type {Array<TestCase>}
+     * @memberof TestClass
+     */
+    testCaseCollection?: Array<TestCase>;
+    /**
+     * 
      * @type {string}
      * @memberof TestClass
      */
@@ -16856,24 +17381,6 @@ export interface TestClass {
      * @memberof TestClass
      */
     shortName?: string;
-    /**
-     * 
-     * @type {Array<TestCase>}
-     * @memberof TestClass
-     */
-    testCases?: Array<TestCase>;
-    /**
-     * 
-     * @type {Array<TestCase>}
-     * @memberof TestClass
-     */
-    testCaseCollection?: Array<TestCase>;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestClass
-     */
-    masterJobId?: number;
     /**
      * 
      * @type {number}
@@ -16901,24 +17408,6 @@ export interface TestClassResult {
     testCaseResults?: Array<TestCaseResult>;
     /**
      * 
-     * @type {number}
-     * @memberof TestClassResult
-     */
-    successfulTestCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestClassResult
-     */
-    failedTestCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestClassResult
-     */
-    skippedTestCount?: number;
-    /**
-     * 
      * @type {BuildResultsSummary}
      * @memberof TestClassResult
      */
@@ -16935,6 +17424,24 @@ export interface TestClassResult {
      * @memberof TestClassResult
      */
     testCaseResultsSet?: Set<TestCaseResult>;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestClassResult
+     */
+    failedTestCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestClassResult
+     */
+    successfulTestCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestClassResult
+     */
+    skippedTestCount?: number;
     /**
      * 
      * @type {string}
@@ -16957,15 +17464,46 @@ export interface TestClassResult {
 /**
  * 
  * @export
+ * @interface TestConnectionResultDto
+ */
+export interface TestConnectionResultDto {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestConnectionResultDto
+     */
+    success?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestConnectionResultDto
+     */
+    clientVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestConnectionResultDto
+     */
+    serverVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestConnectionResultDto
+     */
+    errorMessage?: string;
+}
+/**
+ * 
+ * @export
  * @interface TestResultsSummary
  */
 export interface TestResultsSummary {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof TestResultsSummary
      */
-    failedTestCaseCount?: number;
+    testSummaryDescription?: string;
     /**
      * 
      * @type {number}
@@ -16977,19 +17515,7 @@ export interface TestResultsSummary {
      * @type {number}
      * @memberof TestResultsSummary
      */
-    quarantinedTestCaseCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResultsSummary
-     */
-    skippedTestCaseCount?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestResultsSummary
-     */
-    testSummaryDescription?: string;
+    failedTestCaseCount?: number;
     /**
      * 
      * @type {number}
@@ -17019,6 +17545,18 @@ export interface TestResultsSummary {
      * @type {number}
      * @memberof TestResultsSummary
      */
+    quarantinedTestCaseCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
+    skippedTestCaseCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
     ignoredTestCaseCount?: number;
     /**
      * 
@@ -17033,18 +17571,6 @@ export interface TestResultsSummary {
  * @interface TriggerDefinition
  */
 export interface TriggerDefinition {
-    /**
-     * 
-     * @type {object}
-     * @memberof TriggerDefinition
-     */
-    _configuration?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TriggerDefinition
-     */
-    enabled?: boolean;
     /**
      * 
      * @type {string}
@@ -17063,6 +17589,18 @@ export interface TriggerDefinition {
      * @memberof TriggerDefinition
      */
     triggerConditionsConfiguration?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof TriggerDefinition
+     */
+    _configuration?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TriggerDefinition
+     */
+    enabled?: boolean;
     /**
      * 
      * @type {number}
@@ -17093,6 +17631,12 @@ export interface TriggerReason {
      * @type {string}
      * @memberof TriggerReason
      */
+    nameForSentence?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerReason
+     */
     name?: string;
     /**
      * 
@@ -17100,12 +17644,6 @@ export interface TriggerReason {
      * @memberof TriggerReason
      */
     key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TriggerReason
-     */
-    nameForSentence?: string;
 }
 /**
  * 
@@ -17436,16 +17974,16 @@ export interface VcsBambooSpecsSource {
     vcsLocationBambooSpecsState?: VcsLocationBambooSpecsState;
     /**
      * 
-     * @type {boolean}
-     * @memberof VcsBambooSpecsSource
-     */
-    yamlConfiguration?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof VcsBambooSpecsSource
      */
     sourceLocation?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VcsBambooSpecsSource
+     */
+    yamlConfiguration?: boolean;
     /**
      * 
      * @type {number}
@@ -17464,13 +18002,13 @@ export interface VcsBranch {
      * @type {string}
      * @memberof VcsBranch
      */
-    name?: string;
+    displayName?: string;
     /**
      * 
      * @type {string}
      * @memberof VcsBranch
      */
-    displayName?: string;
+    name?: string;
 }
 /**
  * 
@@ -17515,12 +18053,6 @@ export interface VcsChangeDetectionOptions {
      * @type {number}
      * @memberof VcsChangeDetectionOptions
      */
-    maxRetries?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VcsChangeDetectionOptions
-     */
     quietPeriod?: number;
     /**
      * 
@@ -17528,6 +18060,12 @@ export interface VcsChangeDetectionOptions {
      * @memberof VcsChangeDetectionOptions
      */
     quietPeriodEnabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof VcsChangeDetectionOptions
+     */
+    maxRetries?: number;
     /**
      * 
      * @type {boolean}
@@ -17591,12 +18129,6 @@ export interface VcsLocationBambooSpecsState {
     vcsLocationId?: number;
     /**
      * 
-     * @type {number}
-     * @memberof VcsLocationBambooSpecsState
-     */
-    id?: number;
-    /**
-     * 
      * @type {string}
      * @memberof VcsLocationBambooSpecsState
      */
@@ -17606,13 +18138,19 @@ export interface VcsLocationBambooSpecsState {
      * @type {string}
      * @memberof VcsLocationBambooSpecsState
      */
-    specImportState?: VcsLocationBambooSpecsStateSpecImportStateEnum;
+    logFilename?: string;
     /**
      * 
      * @type {string}
      * @memberof VcsLocationBambooSpecsState
      */
-    logFilename?: string;
+    specImportState?: VcsLocationBambooSpecsStateSpecImportStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof VcsLocationBambooSpecsState
+     */
+    id?: number;
 }
 
 
@@ -17658,16 +18196,16 @@ export interface VcsLocationDefinition {
 export interface VcsRepositoryViewerDefinition {
     /**
      * 
-     * @type {boolean}
-     * @memberof VcsRepositoryViewerDefinition
-     */
-    legacyViewer?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof VcsRepositoryViewerDefinition
      */
     legacyConfigurationXml?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VcsRepositoryViewerDefinition
+     */
+    legacyViewer?: boolean;
     /**
      * 
      * @type {object}
@@ -17823,16 +18361,16 @@ export interface VersionVariables {
 export interface WebRepositoryViewer {
     /**
      * 
-     * @type {Array<string>}
-     * @memberof WebRepositoryViewer
-     */
-    supportedRepositories?: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof WebRepositoryViewer
      */
     shortKey?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WebRepositoryViewer
+     */
+    supportedRepositories?: Array<string>;
     /**
      * 
      * @type {string}

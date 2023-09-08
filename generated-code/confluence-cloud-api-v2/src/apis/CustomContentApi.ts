@@ -16,15 +16,16 @@
 import * as runtime from '../runtime';
 import type {
   CreateCustomContentRequest,
-  CustomContent,
   CustomContentBodyRepresentation,
+  CustomContentBodyRepresentationSingle,
+  CustomContentSingle,
+  CustomContentSortOrder,
   MultiEntityResultCustomContent,
   UpdateCustomContentRequest,
 } from '../models';
 
 export interface CreateCustomContentOperationRequest {
     createCustomContentRequest: CreateCustomContentRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface DeleteCustomContentRequest {
@@ -33,36 +34,36 @@ export interface DeleteCustomContentRequest {
 
 export interface GetCustomContentByIdRequest {
     id: number;
-    bodyFormat?: CustomContentBodyRepresentation;
+    bodyFormat?: CustomContentBodyRepresentationSingle;
     version?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentByTypeRequest {
     type: string;
     id?: Array<number>;
+    spaceId?: Array<number>;
+    sort?: CustomContentSortOrder;
     cursor?: string;
     limit?: number;
     bodyFormat?: CustomContentBodyRepresentation;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentByTypeInBlogPostRequest {
     id: number;
     type: string;
+    sort?: CustomContentSortOrder;
     cursor?: string;
     limit?: number;
     bodyFormat?: CustomContentBodyRepresentation;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentByTypeInPageRequest {
     id: number;
     type: string;
+    sort?: CustomContentSortOrder;
     cursor?: string;
     limit?: number;
     bodyFormat?: CustomContentBodyRepresentation;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentByTypeInSpaceRequest {
@@ -71,13 +72,11 @@ export interface GetCustomContentByTypeInSpaceRequest {
     cursor?: string;
     limit?: number;
     bodyFormat?: CustomContentBodyRepresentation;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface UpdateCustomContentOperationRequest {
     id: number;
     updateCustomContentRequest: UpdateCustomContentRequest;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -89,16 +88,12 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
      * Create custom content
      */
-    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContent>> {
+    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
         if (requestParameters.createCustomContentRequest === null || requestParameters.createCustomContentRequest === undefined) {
             throw new runtime.RequiredError('createCustomContentRequest','Required parameter requestParameters.createCustomContentRequest was null or undefined when calling createCustomContent.');
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -127,7 +122,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
      * Create custom content
      */
-    async createCustomContent(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContent> {
+    async createCustomContent(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
         const response = await this.createCustomContentRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -175,7 +170,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
      * Get custom content by id
      */
-    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContent>> {
+    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentById.');
         }
@@ -188,10 +183,6 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         if (requestParameters.version !== undefined) {
             queryParameters['version'] = requestParameters.version;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -218,7 +209,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
      * Get custom content by id
      */
-    async getCustomContentById(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContent> {
+    async getCustomContentById(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
         const response = await this.getCustomContentByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -242,6 +233,14 @@ export class CustomContentApi extends runtime.BaseAPI {
             queryParameters['id'] = requestParameters.id;
         }
 
+        if (requestParameters.spaceId) {
+            queryParameters['space-id'] = requestParameters.spaceId;
+        }
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
         }
@@ -252,10 +251,6 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -306,6 +301,10 @@ export class CustomContentApi extends runtime.BaseAPI {
             queryParameters['type'] = requestParameters.type;
         }
 
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
         }
@@ -316,10 +315,6 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -370,6 +365,10 @@ export class CustomContentApi extends runtime.BaseAPI {
             queryParameters['type'] = requestParameters.type;
         }
 
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
         }
@@ -380,10 +379,6 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         if (requestParameters.bodyFormat !== undefined) {
             queryParameters['body-format'] = requestParameters.bodyFormat;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -446,10 +441,6 @@ export class CustomContentApi extends runtime.BaseAPI {
             queryParameters['body-format'] = requestParameters.bodyFormat;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -483,7 +474,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
-    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContent>> {
+    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateCustomContent.');
         }
@@ -493,10 +484,6 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -525,7 +512,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
-    async updateCustomContent(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContent> {
+    async updateCustomContent(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
         const response = await this.updateCustomContentRaw(requestParameters, initOverrides);
         return await response.value();
     }

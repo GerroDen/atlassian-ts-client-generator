@@ -16,7 +16,6 @@
 import * as runtime from '../runtime';
 import type {
   ErrorMessage1,
-  GetVulnerabilitiesByContainerIdResponse,
   SecurityWorkspaceIds,
   SecurityWorkspaceResponse,
   SubmitSecurityWorkspacesRequest,
@@ -45,15 +44,6 @@ export interface GetLinkedWorkspaceByIdRequest {
 
 export interface GetLinkedWorkspacesRequest {
     authorization: string;
-}
-
-export interface GetVulnerabilitiesByContainerRequest {
-    authorization: string;
-    containerId: string;
-    pageSize?: number;
-    nextPageToken?: string;
-    updatedFrom?: string;
-    updatedTo?: string;
 }
 
 export interface GetVulnerabilityByIdRequest {
@@ -258,66 +248,6 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      */
     async getLinkedWorkspaces(requestParameters: GetLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecurityWorkspaceIds> {
         const response = await this.getLinkedWorkspacesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Retrieve the ingested Vulnerabilities that belong to the given security container ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get all vulnerabilities by security container ID
-     */
-    async getVulnerabilitiesByContainerRaw(requestParameters: GetVulnerabilitiesByContainerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVulnerabilitiesByContainerIdResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getVulnerabilitiesByContainer.');
-        }
-
-        if (requestParameters.containerId === null || requestParameters.containerId === undefined) {
-            throw new runtime.RequiredError('containerId','Required parameter requestParameters.containerId was null or undefined when calling getVulnerabilitiesByContainer.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.containerId !== undefined) {
-            queryParameters['containerId'] = requestParameters.containerId;
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
-        }
-
-        if (requestParameters.nextPageToken !== undefined) {
-            queryParameters['nextPageToken'] = requestParameters.nextPageToken;
-        }
-
-        if (requestParameters.updatedFrom !== undefined) {
-            queryParameters['updatedFrom'] = requestParameters.updatedFrom;
-        }
-
-        if (requestParameters.updatedTo !== undefined) {
-            queryParameters['updatedTo'] = requestParameters.updatedTo;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
-        }
-
-        const response = await this.request({
-            path: `/rest/security/1.0/vulnerability/bulkByContainer`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Retrieve the ingested Vulnerabilities that belong to the given security container ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get all vulnerabilities by security container ID
-     */
-    async getVulnerabilitiesByContainer(requestParameters: GetVulnerabilitiesByContainerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetVulnerabilitiesByContainerIdResponse> {
-        const response = await this.getVulnerabilitiesByContainerRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

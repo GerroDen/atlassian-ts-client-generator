@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  AttachmentPropertiesUpdateBody,
   Content,
   ContentArray,
 } from '../models';
@@ -61,7 +62,7 @@ export interface UpdateAttachmentDataRequest {
 export interface UpdateAttachmentPropertiesRequest {
     id: string;
     attachmentId: string;
-    body: { [key: string]: any; } | null;
+    body: { [key: string]: any; };
 }
 
 /**

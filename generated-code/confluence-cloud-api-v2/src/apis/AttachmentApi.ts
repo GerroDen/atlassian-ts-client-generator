@@ -21,30 +21,42 @@ import type {
   MultiEntityResultAttachment1,
 } from '../models';
 
+export interface DeleteAttachmentRequest {
+    id: number;
+}
+
 export interface GetAttachmentByIdRequest {
     id: string;
     version?: number;
-    serializeIdsAsStrings?: boolean;
+}
+
+export interface GetAttachmentsRequest {
+    sort?: AttachmentSortOrder;
+    cursor?: string;
+    status?: Array<GetAttachmentsStatusEnum>;
+    mediaType?: string;
+    filename?: string;
+    limit?: number;
 }
 
 export interface GetBlogpostAttachmentsRequest {
     id: number;
     sort?: AttachmentSortOrder;
     cursor?: string;
+    status?: Array<GetBlogpostAttachmentsStatusEnum>;
     mediaType?: string;
     filename?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetCustomContentAttachmentsRequest {
     id: number;
     sort?: AttachmentSortOrder;
     cursor?: string;
+    status?: Array<GetCustomContentAttachmentsStatusEnum>;
     mediaType?: string;
     filename?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetLabelAttachmentsRequest {
@@ -52,23 +64,61 @@ export interface GetLabelAttachmentsRequest {
     sort?: AttachmentSortOrder;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 export interface GetPageAttachmentsRequest {
     id: number;
     sort?: AttachmentSortOrder;
     cursor?: string;
+    status?: Array<GetPageAttachmentsStatusEnum>;
     mediaType?: string;
     filename?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
  * 
  */
 export class AttachmentApi extends runtime.BaseAPI {
+
+    /**
+     * Delete an attachment by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space.
+     * Delete attachment
+     */
+    async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAttachment.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
+        }
+
+        const response = await this.request({
+            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete an attachment by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space.
+     * Delete attachment
+     */
+    async deleteAttachment(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteAttachmentRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Returns a specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
@@ -83,10 +133,6 @@ export class AttachmentApi extends runtime.BaseAPI {
 
         if (requestParameters.version !== undefined) {
             queryParameters['version'] = requestParameters.version;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -119,6 +165,66 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns all attachments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment.
+     * Get attachments
+     */
+    async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.sort !== undefined) {
+            queryParameters['sort'] = requestParameters.sort;
+        }
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.mediaType !== undefined) {
+            queryParameters['mediaType'] = requestParameters.mediaType;
+        }
+
+        if (requestParameters.filename !== undefined) {
+            queryParameters['filename'] = requestParameters.filename;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/attachments`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns all attachments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment.
+     * Get attachments
+     */
+    async getAttachments(requestParameters: GetAttachmentsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultAttachment> {
+        const response = await this.getAttachmentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns the attachments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
      * Get attachments for blog post
      */
@@ -137,6 +243,10 @@ export class AttachmentApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
         if (requestParameters.mediaType !== undefined) {
             queryParameters['mediaType'] = requestParameters.mediaType;
         }
@@ -147,10 +257,6 @@ export class AttachmentApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -201,6 +307,10 @@ export class AttachmentApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
         if (requestParameters.mediaType !== undefined) {
             queryParameters['mediaType'] = requestParameters.mediaType;
         }
@@ -211,10 +321,6 @@ export class AttachmentApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -269,10 +375,6 @@ export class AttachmentApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -321,6 +423,10 @@ export class AttachmentApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
         if (requestParameters.mediaType !== undefined) {
             queryParameters['mediaType'] = requestParameters.mediaType;
         }
@@ -331,10 +437,6 @@ export class AttachmentApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -367,3 +469,40 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
 }
+
+/**
+ * @export
+ */
+export const GetAttachmentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed'
+} as const;
+export type GetAttachmentsStatusEnum = typeof GetAttachmentsStatusEnum[keyof typeof GetAttachmentsStatusEnum];
+/**
+ * @export
+ */
+export const GetBlogpostAttachmentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed'
+} as const;
+export type GetBlogpostAttachmentsStatusEnum = typeof GetBlogpostAttachmentsStatusEnum[keyof typeof GetBlogpostAttachmentsStatusEnum];
+/**
+ * @export
+ */
+export const GetCustomContentAttachmentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed'
+} as const;
+export type GetCustomContentAttachmentsStatusEnum = typeof GetCustomContentAttachmentsStatusEnum[keyof typeof GetCustomContentAttachmentsStatusEnum];
+/**
+ * @export
+ */
+export const GetPageAttachmentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed'
+} as const;
+export type GetPageAttachmentsStatusEnum = typeof GetPageAttachmentsStatusEnum[keyof typeof GetPageAttachmentsStatusEnum];

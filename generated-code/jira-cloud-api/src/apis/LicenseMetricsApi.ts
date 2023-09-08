@@ -15,11 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  License,
   LicenseMetric,
 } from '../models';
 
 export interface GetApproximateApplicationLicenseCountRequest {
-    applicationKey: string;
+    applicationKey: GetApproximateApplicationLicenseCountApplicationKeyEnum;
 }
 
 /**
@@ -28,7 +29,7 @@ export interface GetApproximateApplicationLicenseCountRequest {
 export class LicenseMetricsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the total approximate user account for a specific `jira licence application key`. Please note this information is cached with a 7-day lifecycle and could be stale at the time of call.  #### Application Key ####  An application key represents a specific version of Jira. See \\{@link ApplicationKey\\} for details  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Returns the total approximate number of user accounts for a single Jira license. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get approximate application license count
      */
     async getApproximateApplicationLicenseCountRaw(requestParameters: GetApproximateApplicationLicenseCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
@@ -59,7 +60,7 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the total approximate user account for a specific `jira licence application key`. Please note this information is cached with a 7-day lifecycle and could be stale at the time of call.  #### Application Key ####  An application key represents a specific version of Jira. See \\{@link ApplicationKey\\} for details  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Returns the total approximate number of user accounts for a single Jira license. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get approximate application license count
      */
     async getApproximateApplicationLicenseCount(requestParameters: GetApproximateApplicationLicenseCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LicenseMetric> {
@@ -68,7 +69,7 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the total approximate user account across all jira licenced application keys. Please note this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Returns the approximate number of user accounts across all Jira licenses. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get approximate license count
      */
     async getApproximateLicenseCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
@@ -95,7 +96,7 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the total approximate user account across all jira licenced application keys. Please note this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Returns the approximate number of user accounts across all Jira licenses. Note that this information is cached with a 7-day lifecycle and could be stale at the time of call.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get approximate license count
      */
     async getApproximateLicenseCount(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LicenseMetric> {
@@ -103,4 +104,51 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     * Returns licensing information about the Jira instance.  **[Permissions](#permissions) required:** None.
+     * Get license
+     */
+    async getLicenseRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<License>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-configuration"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/instance/license`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns licensing information about the Jira instance.  **[Permissions](#permissions) required:** None.
+     * Get license
+     */
+    async getLicense(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<License> {
+        const response = await this.getLicenseRaw(initOverrides);
+        return await response.value();
+    }
+
 }
+
+/**
+ * @export
+ */
+export const GetApproximateApplicationLicenseCountApplicationKeyEnum = {
+    Core: 'jira-core',
+    ProductDiscovery: 'jira-product-discovery',
+    Software: 'jira-software',
+    Servicedesk: 'jira-servicedesk'
+} as const;
+export type GetApproximateApplicationLicenseCountApplicationKeyEnum = typeof GetApproximateApplicationLicenseCountApplicationKeyEnum[keyof typeof GetApproximateApplicationLicenseCountApplicationKeyEnum];

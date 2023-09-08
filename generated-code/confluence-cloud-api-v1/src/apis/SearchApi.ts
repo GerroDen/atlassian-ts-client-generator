@@ -39,6 +39,7 @@ export interface SearchUserRequest {
     start?: number;
     limit?: number;
     expand?: Array<string>;
+    sitePermissionTypeFilter?: SearchUserSitePermissionTypeFilterEnum;
 }
 
 /**
@@ -165,6 +166,10 @@ export class SearchApi extends runtime.BaseAPI {
             queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
+        if (requestParameters.sitePermissionTypeFilter !== undefined) {
+            queryParameters['sitePermissionTypeFilter'] = requestParameters.sitePermissionTypeFilter;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -216,3 +221,12 @@ export const SearchByCQLSitePermissionTypeFilterEnum = {
     None: 'none'
 } as const;
 export type SearchByCQLSitePermissionTypeFilterEnum = typeof SearchByCQLSitePermissionTypeFilterEnum[keyof typeof SearchByCQLSitePermissionTypeFilterEnum];
+/**
+ * @export
+ */
+export const SearchUserSitePermissionTypeFilterEnum = {
+    All: 'all',
+    ExternalCollaborator: 'externalCollaborator',
+    None: 'none'
+} as const;
+export type SearchUserSitePermissionTypeFilterEnum = typeof SearchUserSitePermissionTypeFilterEnum[keyof typeof SearchUserSitePermissionTypeFilterEnum];

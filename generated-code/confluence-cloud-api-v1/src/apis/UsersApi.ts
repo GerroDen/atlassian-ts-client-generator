@@ -378,7 +378,8 @@ export type GetAnonymousUserExpandEnum = typeof GetAnonymousUserExpandEnum[keyof
  */
 export const GetBulkUserLookupExpandEnum = {
     Operations: 'operations',
-    PersonalSpace: 'personalSpace'
+    PersonalSpace: 'personalSpace',
+    IsExternalCollaborator: 'isExternalCollaborator'
 } as const;
 export type GetBulkUserLookupExpandEnum = typeof GetBulkUserLookupExpandEnum[keyof typeof GetBulkUserLookupExpandEnum];
 /**

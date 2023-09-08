@@ -164,7 +164,7 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Returns all [admin-driven themes](https://developer.atlassian.com/cloud/confluence/create-a-confluence-theme/), not including the default theme. Note that this API only applies to themes set for an entire space or site by the admin. User-driven theming controls (Light, Dark, and match browser) are an unrelated feature. Admin-driven themes will override user-driven themes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
      * Get themes
      */
     async getThemesRaw(requestParameters: GetThemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ThemeArray>> {
@@ -199,7 +199,7 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Returns all [admin-driven themes](https://developer.atlassian.com/cloud/confluence/create-a-confluence-theme/), not including the default theme. Note that this API only applies to themes set for an entire space or site by the admin. User-driven theming controls (Light, Dark, and match browser) are an unrelated feature. Admin-driven themes will override user-driven themes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
      * Get themes
      */
     async getThemes(requestParameters: GetThemesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ThemeArray> {

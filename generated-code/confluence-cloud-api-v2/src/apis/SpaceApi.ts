@@ -24,6 +24,7 @@ import type {
 export interface GetSpaceByIdRequest {
     id: number;
     descriptionFormat?: SpaceDescriptionBodyRepresentation;
+    includeIcon?: boolean;
 }
 
 export interface GetSpacesRequest {
@@ -34,9 +35,9 @@ export interface GetSpacesRequest {
     labels?: Array<string>;
     sort?: SpaceSortOrder;
     descriptionFormat?: SpaceDescriptionBodyRepresentation;
+    includeIcon?: boolean;
     cursor?: string;
     limit?: number;
-    serializeIdsAsStrings?: boolean;
 }
 
 /**
@@ -57,6 +58,10 @@ export class SpaceApi extends runtime.BaseAPI {
 
         if (requestParameters.descriptionFormat !== undefined) {
             queryParameters['description-format'] = requestParameters.descriptionFormat;
+        }
+
+        if (requestParameters.includeIcon !== undefined) {
+            queryParameters['include-icon'] = requestParameters.includeIcon;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -123,16 +128,16 @@ export class SpaceApi extends runtime.BaseAPI {
             queryParameters['description-format'] = requestParameters.descriptionFormat;
         }
 
+        if (requestParameters.includeIcon !== undefined) {
+            queryParameters['include-icon'] = requestParameters.includeIcon;
+        }
+
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.serializeIdsAsStrings !== undefined) {
-            queryParameters['serialize-ids-as-strings'] = requestParameters.serializeIdsAsStrings;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
