@@ -63,7 +63,7 @@ export interface GetFiltersPaginatedRequest {
     groupname?: string;
     groupId?: string;
     projectId?: number;
-    id?: number[];
+    id?: Array<number>;
     orderBy?: GetFiltersPaginatedOrderByEnum;
     startAt?: number;
     maxResults?: number;

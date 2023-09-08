@@ -24,7 +24,7 @@ export interface AssignSchemeToProjectRequest {
 }
 
 export interface GetWorkflowSchemeProjectAssociationsRequest {
-    projectId: number[];
+    projectId: Array<number>;
 }
 
 /**

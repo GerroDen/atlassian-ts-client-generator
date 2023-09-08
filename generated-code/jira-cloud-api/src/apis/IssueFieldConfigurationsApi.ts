@@ -54,13 +54,13 @@ export interface DeleteFieldConfigurationSchemeRequest {
 export interface GetAllFieldConfigurationSchemesRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
 }
 
 export interface GetAllFieldConfigurationsRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
     isDefault?: boolean;
     query?: string;
 }
@@ -74,11 +74,11 @@ export interface GetFieldConfigurationItemsRequest {
 export interface GetFieldConfigurationSchemeMappingsRequest {
     startAt?: number;
     maxResults?: number;
-    fieldConfigurationSchemeId?: number[];
+    fieldConfigurationSchemeId?: Array<number>;
 }
 
 export interface GetFieldConfigurationSchemeProjectMappingRequest {
-    projectId: number[];
+    projectId: Array<number>;
     startAt?: number;
     maxResults?: number;
 }

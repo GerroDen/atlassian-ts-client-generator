@@ -58,17 +58,17 @@ export interface GetIssueSecuritySchemeRequest {
 export interface GetSecurityLevelMembersRequest {
     startAt?: string;
     maxResults?: string;
-    id?: string[];
-    schemeId?: string[];
-    levelId?: string[];
+    id?: Array<string>;
+    schemeId?: Array<string>;
+    levelId?: Array<string>;
     expand?: string;
 }
 
 export interface GetSecurityLevelsRequest {
     startAt?: string;
     maxResults?: string;
-    id?: string[];
-    schemeId?: string[];
+    id?: Array<string>;
+    schemeId?: Array<string>;
     onlyDefault?: boolean;
 }
 
@@ -87,15 +87,15 @@ export interface RemoveMemberFromSecurityLevelRequest {
 export interface SearchProjectsUsingSecuritySchemesRequest {
     startAt?: string;
     maxResults?: string;
-    issueSecuritySchemeId?: string[];
-    projectId?: string[];
+    issueSecuritySchemeId?: Array<string>;
+    projectId?: Array<string>;
 }
 
 export interface SearchSecuritySchemesRequest {
     startAt?: string;
     maxResults?: string;
-    id?: string[];
-    projectId?: string[];
+    id?: Array<string>;
+    projectId?: Array<string>;
 }
 
 export interface SetDefaultLevelsOperationRequest {

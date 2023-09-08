@@ -27,7 +27,7 @@ export interface GetIssueSecurityLevelMembersRequest {
     issueSecuritySchemeId: number;
     startAt?: number;
     maxResults?: number;
-    issueSecurityLevelId?: number[];
+    issueSecurityLevelId?: Array<number>;
     expand?: string;
 }
 

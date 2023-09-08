@@ -46,15 +46,15 @@ export interface GetNotificationSchemeRequest {
 export interface GetNotificationSchemeToProjectMappingsRequest {
     startAt?: string;
     maxResults?: string;
-    notificationSchemeId?: string[];
-    projectId?: string[];
+    notificationSchemeId?: Array<string>;
+    projectId?: Array<string>;
 }
 
 export interface GetNotificationSchemesRequest {
     startAt?: string;
     maxResults?: string;
-    id?: string[];
-    projectId?: string[];
+    id?: Array<string>;
+    projectId?: Array<string>;
     onlyDefault?: boolean;
     expand?: string;
 }

@@ -32,7 +32,7 @@ export interface DeleteScreenSchemeRequest {
 export interface GetScreenSchemesRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
     expand?: string;
     queryString?: string;
     orderBy?: GetScreenSchemesOrderByEnum;

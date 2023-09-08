@@ -1418,7 +1418,7 @@ export interface Commit {
      * @type {Set<string>}
      * @memberof Commit
      */
-    flags?: CommitFlagsEnum[];
+    flags?: Array<CommitFlagsEnum>;
     /**
      * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
      * @type {string}
@@ -3830,19 +3830,19 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    included?: string[];
+    included?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    actuallyIncluded?: string[];
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    excluded?: string[];
+    excluded?: Array<string>;
 }
 /**
  * 
@@ -3855,7 +3855,7 @@ export interface IssueAssignRequestBean {
      * @type {Set<string>}
      * @memberof IssueAssignRequestBean
      */
-    issues?: string[];
+    issues?: Array<string>;
 }
 /**
  * Details about an issue.
@@ -4090,19 +4090,19 @@ export interface IssueBeanFieldsToInclude {
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    included?: string[];
+    included?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    actuallyIncluded?: string[];
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    excluded?: string[];
+    excluded?: Array<string>;
 }
 /**
  * The operations that can be performed on the issue.
@@ -4829,7 +4829,7 @@ export interface MoveIssuesToBacklogRequest {
      * @type {Set<string>}
      * @memberof MoveIssuesToBacklogRequest
      */
-    issues?: string[];
+    issues?: Array<string>;
 }
 /**
  * 

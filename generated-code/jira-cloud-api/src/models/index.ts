@@ -306,7 +306,7 @@ export interface ApplicationRole {
      * @type {Set<string>}
      * @memberof ApplicationRole
      */
-    defaultGroups?: string[];
+    defaultGroups?: Array<string>;
     /**
      * The groups that are granted default access for this application role.
      * @type {Array<GroupName>}
@@ -330,7 +330,7 @@ export interface ApplicationRole {
      * @type {Set<string>}
      * @memberof ApplicationRole
      */
-    groups?: string[];
+    groups?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -397,7 +397,7 @@ export interface AssociateFieldConfigurationsWithIssueTypesRequest {
      * @type {Set<FieldConfigurationToIssueTypeMapping>}
      * @memberof AssociateFieldConfigurationsWithIssueTypesRequest
      */
-    mappings: FieldConfigurationToIssueTypeMapping[];
+    mappings: Array<FieldConfigurationToIssueTypeMapping>;
 }
 /**
  * Details of an item associated with the changed record.
@@ -1275,7 +1275,7 @@ export interface BulkIssuePropertyUpdateRequestFilter {
      * @type {Set<number>}
      * @memberof BulkIssuePropertyUpdateRequestFilter
      */
-    entityIds?: number[];
+    entityIds?: Array<number>;
     /**
      * Whether the bulk operation occurs only when the property is present on or absent from an issue.
      * @type {boolean}
@@ -1319,13 +1319,13 @@ export interface BulkPermissionGrants {
      * @type {Set<string>}
      * @memberof BulkPermissionGrants
      */
-    globalPermissions: string[];
+    globalPermissions: Array<string>;
     /**
      * List of project permissions and the projects and issues those permissions provide access to.
      * @type {Set<BulkProjectPermissionGrants>}
      * @memberof BulkPermissionGrants
      */
-    projectPermissions: BulkProjectPermissionGrants[];
+    projectPermissions: Array<BulkProjectPermissionGrants>;
 }
 /**
  * Details of global permissions to look up and project permissions with associated projects and issues to look up.
@@ -1344,13 +1344,13 @@ export interface BulkPermissionsRequestBean {
      * @type {Set<string>}
      * @memberof BulkPermissionsRequestBean
      */
-    globalPermissions?: string[];
+    globalPermissions?: Array<string>;
     /**
      * Project permissions with associated projects and issues to look up.
      * @type {Set<BulkProjectPermissions>}
      * @memberof BulkPermissionsRequestBean
      */
-    projectPermissions?: BulkProjectPermissions[];
+    projectPermissions?: Array<BulkProjectPermissions>;
 }
 /**
  * List of project permissions and the projects and issues those permissions grant access to.
@@ -1363,7 +1363,7 @@ export interface BulkProjectPermissionGrants {
      * @type {Set<number>}
      * @memberof BulkProjectPermissionGrants
      */
-    issues: number[];
+    issues: Array<number>;
     /**
      * A project permission,
      * @type {string}
@@ -1375,7 +1375,7 @@ export interface BulkProjectPermissionGrants {
      * @type {Set<number>}
      * @memberof BulkProjectPermissionGrants
      */
-    projects: number[];
+    projects: Array<number>;
 }
 /**
  * Details of project permissions and associated issues and projects to look up.
@@ -1388,19 +1388,19 @@ export interface BulkProjectPermissions {
      * @type {Set<number>}
      * @memberof BulkProjectPermissions
      */
-    issues?: number[];
+    issues?: Array<number>;
     /**
      * List of project permissions.
      * @type {Set<string>}
      * @memberof BulkProjectPermissions
      */
-    permissions: string[];
+    permissions: Array<string>;
     /**
      * List of project IDs.
      * @type {Set<number>}
      * @memberof BulkProjectPermissions
      */
-    projects?: number[];
+    projects?: Array<number>;
 }
 /**
  * A change item.
@@ -3309,7 +3309,7 @@ export interface CreateWorkflowDetails {
      * @type {Set<CreateWorkflowStatusDetails>}
      * @memberof CreateWorkflowDetails
      */
-    statuses: CreateWorkflowStatusDetails[];
+    statuses: Array<CreateWorkflowStatusDetails>;
     /**
      * The transitions of the workflow. For the request to be valid, these transitions must:
      * 
@@ -3787,7 +3787,7 @@ export interface CustomFieldConfigurations {
      * @type {Set<ContextualConfiguration>}
      * @memberof CustomFieldConfigurations
      */
-    configurations: ContextualConfiguration[];
+    configurations: Array<ContextualConfiguration>;
 }
 /**
  * The details of a custom field context.
@@ -4005,7 +4005,7 @@ export interface CustomFieldContextDefaultValueForgeMultiGroupField {
      * @type {Set<string>}
      * @memberof CustomFieldContextDefaultValueForgeMultiGroupField
      */
-    groupIds: string[];
+    groupIds: Array<string>;
     /**
      * 
      * @type {string}
@@ -4218,7 +4218,7 @@ export interface CustomFieldContextDefaultValueMultipleGroupPicker {
      * @type {Set<string>}
      * @memberof CustomFieldContextDefaultValueMultipleGroupPicker
      */
-    groupIds: string[];
+    groupIds: Array<string>;
     /**
      * 
      * @type {string}
@@ -4268,7 +4268,7 @@ export interface CustomFieldContextDefaultValueMultipleVersionPicker {
      * @type {Set<string>}
      * @memberof CustomFieldContextDefaultValueMultipleVersionPicker
      */
-    versionIds: string[];
+    versionIds: Array<string>;
     /**
      * The order the pickable versions are displayed in. If not provided, the released-first order is used. Available version orders are `"releasedFirst"` and `"unreleasedFirst"`.
      * @type {string}
@@ -5575,7 +5575,7 @@ export interface EventNotificationField {
      * @type {Set<string>}
      * @memberof EventNotificationField
      */
-    clauseNames?: string[];
+    clauseNames?: Array<string>;
     /**
      * Whether the field is a custom field.
      * @type {boolean}
@@ -6184,7 +6184,7 @@ export interface FieldDetails {
      * @type {Set<string>}
      * @memberof FieldDetails
      */
-    clauseNames?: string[];
+    clauseNames?: Array<string>;
     /**
      * Whether the field is a custom field.
      * @type {boolean}
@@ -7857,7 +7857,7 @@ export interface GlobalScopeBean {
      * @type {Set<string>}
      * @memberof GlobalScopeBean
      */
-    attributes?: GlobalScopeBeanAttributesEnum[];
+    attributes?: Array<GlobalScopeBeanAttributesEnum>;
 }
 
 
@@ -8416,19 +8416,19 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    actuallyIncluded?: string[];
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    excluded?: string[];
+    excluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    included?: string[];
+    included?: Array<string>;
 }
 /**
  * Details about an issue.
@@ -8595,7 +8595,7 @@ export interface IssueChangelogIds {
      * @type {Set<number>}
      * @memberof IssueChangelogIds
      */
-    changelogIds: number[];
+    changelogIds: Array<number>;
 }
 /**
  * 
@@ -8608,7 +8608,7 @@ export interface IssueCommentListRequestBean {
      * @type {Set<number>}
      * @memberof IssueCommentListRequestBean
      */
-    ids: number[];
+    ids: Array<number>;
 }
 /**
  * An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
@@ -8665,10 +8665,10 @@ export interface IssueEntityProperties {
      * @type {Set<number>}
      * @memberof IssueEntityProperties
      */
-    entitiesIds?: number[];
+    entitiesIds?: Array<number>;
     /**
      * A list of entity property keys and values.
-     * @type {{ [key: string]: any; }}
+     * @type {{ [key: string]: JsonNode; }}
      * @memberof IssueEntityProperties
      */
     properties?: { [key: string]: any; };
@@ -8687,7 +8687,7 @@ export interface IssueEntityPropertiesForMultiUpdate {
     issueID?: number;
     /**
      * Entity properties to set on the issue. The maximum length of an issue property value is 32768 characters.
-     * @type {{ [key: string]: any; }}
+     * @type {{ [key: string]: JsonNode; }}
      * @memberof IssueEntityPropertiesForMultiUpdate
      */
     properties?: { [key: string]: any; };
@@ -8753,7 +8753,7 @@ export interface IssueFieldOptionConfiguration {
      * @type {Set<string>}
      * @memberof IssueFieldOptionConfiguration
      */
-    attributes?: IssueFieldOptionConfigurationAttributesEnum[];
+    attributes?: Array<IssueFieldOptionConfigurationAttributesEnum>;
     /**
      * 
      * @type {IssueFieldOptionConfigurationScope}
@@ -8789,13 +8789,13 @@ export interface IssueFieldOptionConfigurationScope {
      * @type {Set<number>}
      * @memberof IssueFieldOptionConfigurationScope
      */
-    projects?: number[];
+    projects?: Array<number>;
     /**
      * Defines the projects in which the option is available and the behavior of the option within each project. Specify one object per project. The behavior of the option in a project context overrides the behavior in the global context.
      * @type {Set<ProjectScopeBean>}
      * @memberof IssueFieldOptionConfigurationScope
      */
-    projects2?: ProjectScopeBean[];
+    projects2?: Array<ProjectScopeBean>;
 }
 /**
  * 
@@ -8840,13 +8840,13 @@ export interface IssueFieldOptionScopeBean {
      * @type {Set<number>}
      * @memberof IssueFieldOptionScopeBean
      */
-    projects?: number[];
+    projects?: Array<number>;
     /**
      * Defines the projects in which the option is available and the behavior of the option within each project. Specify one object per project. The behavior of the option in a project context overrides the behavior in the global context.
      * @type {Set<ProjectScopeBean>}
      * @memberof IssueFieldOptionScopeBean
      */
-    projects2?: ProjectScopeBean[];
+    projects2?: Array<ProjectScopeBean>;
 }
 /**
  * Defines the behavior of the option within the global context. If this property is set, even if set to an empty object, then the option is available in all projects.
@@ -8859,7 +8859,7 @@ export interface IssueFieldOptionScopeBeanGlobal {
      * @type {Set<string>}
      * @memberof IssueFieldOptionScopeBeanGlobal
      */
-    attributes?: IssueFieldOptionScopeBeanGlobalAttributesEnum[];
+    attributes?: Array<IssueFieldOptionScopeBeanGlobalAttributesEnum>;
 }
 
 
@@ -8889,7 +8889,7 @@ export interface IssueFilterForBulkPropertyDelete {
      * @type {Set<number>}
      * @memberof IssueFilterForBulkPropertyDelete
      */
-    entityIds?: number[];
+    entityIds?: Array<number>;
 }
 /**
  * Bulk operation filter details.
@@ -8908,7 +8908,7 @@ export interface IssueFilterForBulkPropertySet {
      * @type {Set<number>}
      * @memberof IssueFilterForBulkPropertySet
      */
-    entityIds?: number[];
+    entityIds?: Array<number>;
     /**
      * Whether the bulk operation occurs only when the property is present on or absent from an issue.
      * @type {boolean}
@@ -9114,13 +9114,13 @@ export interface IssueMatchesForJQL {
      * @type {Set<string>}
      * @memberof IssueMatchesForJQL
      */
-    errors: string[];
+    errors: Array<string>;
     /**
      * A list of issue IDs.
      * @type {Set<number>}
      * @memberof IssueMatchesForJQL
      */
-    matchedIssues: number[];
+    matchedIssues: Array<number>;
 }
 /**
  * A list of issues suggested for use in auto-completion.
@@ -10394,7 +10394,7 @@ export interface IssuesAndJQLQueries {
      * @type {Set<number>}
      * @memberof IssuesAndJQLQueries
      */
-    issueIds: number[];
+    issueIds: Array<number>;
     /**
      * A list of JQL queries.
      * @type {Array<string>}
@@ -11223,7 +11223,7 @@ export interface JiraStatus {
      * @type {Set<ProjectIssueTypes>}
      * @memberof JiraStatus
      */
-    usages?: ProjectIssueTypes[];
+    usages?: Array<ProjectIssueTypes>;
 }
 
 
@@ -12498,7 +12498,7 @@ export interface NewUserDetails {
      * @type {Set<string>}
      * @memberof NewUserDetails
      */
-    products?: string[];
+    products?: Array<string>;
     /**
      * The URL of the user.
      * @type {string}
@@ -15891,7 +15891,7 @@ export interface ParsedJqlQuery {
      * @type {Set<string>}
      * @memberof ParsedJqlQuery
      */
-    errors?: string[];
+    errors?: Array<string>;
     /**
      * The JQL query that was parsed and validated.
      * @type {string}
@@ -17675,7 +17675,7 @@ export interface ProjectIssueTypes {
      * @type {Set<string>}
      * @memberof ProjectIssueTypes
      */
-    issueTypes?: Set<string> | null;
+    issueTypes?: Array<string> | null;
     /**
      * 
      * @type {ProjectId}
@@ -18180,7 +18180,7 @@ export interface ProjectScopeBean {
      * @type {Set<string>}
      * @memberof ProjectScopeBean
      */
-    attributes?: ProjectScopeBeanAttributesEnum[];
+    attributes?: Array<ProjectScopeBeanAttributesEnum>;
     /**
      * The ID of the project that the option's behavior applies to.
      * @type {number}
@@ -18279,7 +18279,7 @@ export interface PublishDraftWorkflowScheme {
      * @type {Set<StatusMapping>}
      * @memberof PublishDraftWorkflowScheme
      */
-    statusMappings?: StatusMapping[];
+    statusMappings?: Array<StatusMapping>;
 }
 /**
  * Properties that identify a published workflow.
@@ -19899,7 +19899,7 @@ export interface SecuritySchemeWithProjects {
      * @type {Set<number>}
      * @memberof SecuritySchemeWithProjects
      */
-    readonly projectIds?: number[];
+    readonly projectIds?: Array<number>;
     /**
      * The URL of the issue security scheme.
      * @type {string}
@@ -22690,13 +22690,13 @@ export interface UserFilter {
      * @type {Set<string>}
      * @memberof UserFilter
      */
-    groups?: string[];
+    groups?: Array<string>;
     /**
      * Roles that autocomplete suggestion users must belong to. If not provided, the default values are used. A maximum of 10 roles can be provided.
      * @type {Set<number>}
      * @memberof UserFilter
      */
-    roleIds?: number[];
+    roleIds?: Array<number>;
 }
 /**
  * The groups that the user belongs to.
@@ -24259,7 +24259,7 @@ export interface WorkflowTransitionRulesDetails {
      * @type {Set<string>}
      * @memberof WorkflowTransitionRulesDetails
      */
-    workflowRuleIds: string[];
+    workflowRuleIds: Array<string>;
 }
 /**
  * Details about a workflow configuration update request.
@@ -24282,16 +24282,16 @@ export interface WorkflowTransitionRulesUpdate {
 export interface WorkflowTransitionRulesUpdateErrorDetails {
     /**
      * A list of transition rule update errors, indexed by the transition rule ID. Any transition rule that appears here wasn't updated.
-     * @type {{ [key: string]: string[]; }}
+     * @type {{ [key: string]: Set<string>; }}
      * @memberof WorkflowTransitionRulesUpdateErrorDetails
      */
-    ruleUpdateErrors: { [key: string]: string[]; };
+    ruleUpdateErrors: { [key: string]: Array<string>; };
     /**
      * The list of errors that specify why the workflow update failed. The workflow was not updated if the list contains any entries.
      * @type {Set<string>}
      * @memberof WorkflowTransitionRulesUpdateErrorDetails
      */
-    updateErrors: string[];
+    updateErrors: Array<string>;
     /**
      * 
      * @type {WorkflowId}
@@ -24489,7 +24489,7 @@ export interface WorklogIdsRequestBean {
      * @type {Set<number>}
      * @memberof WorklogIdsRequestBean
      */
-    ids: number[];
+    ids: Array<number>;
 }
 /**
  * Details of the user who last updated the worklog.

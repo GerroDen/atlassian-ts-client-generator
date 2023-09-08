@@ -37,7 +37,7 @@ export interface GetAllWorkflowsRequest {
 export interface GetWorkflowsPaginatedRequest {
     startAt?: number;
     maxResults?: number;
-    workflowName?: string[];
+    workflowName?: Array<string>;
     expand?: string;
     queryString?: string;
     orderBy?: GetWorkflowsPaginatedOrderByEnum;

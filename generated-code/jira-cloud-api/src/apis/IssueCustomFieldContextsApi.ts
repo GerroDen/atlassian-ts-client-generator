@@ -54,7 +54,7 @@ export interface GetContextsForFieldRequest {
     fieldId: string;
     isAnyIssueType?: boolean;
     isGlobalContext?: boolean;
-    contextId?: number[];
+    contextId?: Array<number>;
     startAt?: number;
     maxResults?: number;
 }
@@ -68,7 +68,7 @@ export interface GetCustomFieldContextsForProjectsAndIssueTypesRequest {
 
 export interface GetDefaultValuesRequest {
     fieldId: string;
-    contextId?: number[];
+    contextId?: Array<number>;
     startAt?: number;
     maxResults?: number;
 }
@@ -82,7 +82,7 @@ export interface GetIssueTypeMappingsForContextsRequest {
 
 export interface GetProjectContextMappingRequest {
     fieldId: string;
-    contextId?: number[];
+    contextId?: Array<number>;
     startAt?: number;
     maxResults?: number;
 }

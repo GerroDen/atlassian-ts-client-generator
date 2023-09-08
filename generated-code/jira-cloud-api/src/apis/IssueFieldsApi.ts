@@ -42,7 +42,7 @@ export interface GetFieldsPaginatedRequest {
     startAt?: number;
     maxResults?: number;
     type?: Array<GetFieldsPaginatedTypeEnum>;
-    id?: string[];
+    id?: Array<string>;
     query?: string;
     orderBy?: GetFieldsPaginatedOrderByEnum;
     expand?: string;
@@ -51,7 +51,7 @@ export interface GetFieldsPaginatedRequest {
 export interface GetTrashedFieldsPaginatedRequest {
     startAt?: number;
     maxResults?: number;
-    id?: string[];
+    id?: Array<string>;
     query?: string;
     expand?: GetTrashedFieldsPaginatedExpandEnum;
     orderBy?: string;

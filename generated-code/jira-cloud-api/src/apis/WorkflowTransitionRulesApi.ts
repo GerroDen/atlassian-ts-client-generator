@@ -27,12 +27,12 @@ export interface DeleteWorkflowTransitionRuleConfigurationsRequest {
 }
 
 export interface GetWorkflowTransitionRuleConfigurationsRequest {
-    types: GetWorkflowTransitionRuleConfigurationsTypesEnum[];
+    types: Array<GetWorkflowTransitionRuleConfigurationsTypesEnum>;
     startAt?: number;
     maxResults?: number;
-    keys?: string[];
-    workflowNames?: string[];
-    withTags?: string[];
+    keys?: Array<string>;
+    workflowNames?: Array<string>;
+    withTags?: Array<string>;
     draft?: boolean;
     expand?: string;
 }

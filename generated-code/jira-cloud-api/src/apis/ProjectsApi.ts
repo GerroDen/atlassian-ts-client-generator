@@ -81,8 +81,8 @@ export interface SearchProjectsRequest {
     startAt?: number;
     maxResults?: number;
     orderBy?: SearchProjectsOrderByEnum;
-    id?: number[];
-    keys?: string[];
+    id?: Array<number>;
+    keys?: Array<string>;
     query?: string;
     typeKey?: "business" | "service_desk" | "software";
     categoryId?: number;

@@ -21,8 +21,8 @@ import type {
 
 export interface GetCustomFieldConfigurationRequest {
     fieldIdOrKey: string;
-    id?: number[];
-    fieldContextId?: number[];
+    id?: Array<number>;
+    fieldContextId?: Array<number>;
     issueId?: number;
     projectKeyOrId?: string;
     issueTypeId?: string;

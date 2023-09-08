@@ -32,8 +32,8 @@ export interface AddUserToGroupRequest {
 export interface BulkGetGroupsRequest {
     startAt?: number;
     maxResults?: number;
-    groupId?: string[];
-    groupName?: string[];
+    groupId?: Array<string>;
+    groupName?: Array<string>;
     accessType?: string;
     applicationKey?: string;
 }

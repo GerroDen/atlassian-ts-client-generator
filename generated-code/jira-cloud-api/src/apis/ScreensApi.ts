@@ -42,9 +42,9 @@ export interface GetAvailableScreenFieldsRequest {
 export interface GetScreensRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
     queryString?: string;
-    scope?: GetScreensScopeEnum[];
+    scope?: Array<GetScreensScopeEnum>;
     orderBy?: GetScreensOrderByEnum;
 }
 

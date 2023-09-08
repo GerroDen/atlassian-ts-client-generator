@@ -46,14 +46,14 @@ export interface DeleteIssueTypeSchemeRequest {
 export interface GetAllIssueTypeSchemesRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
     orderBy?: GetAllIssueTypeSchemesOrderByEnum;
     expand?: string;
     queryString?: string;
 }
 
 export interface GetIssueTypeSchemeForProjectsRequest {
-    projectId: number[];
+    projectId: Array<number>;
     startAt?: number;
     maxResults?: number;
 }
@@ -61,7 +61,7 @@ export interface GetIssueTypeSchemeForProjectsRequest {
 export interface GetIssueTypeSchemesMappingRequest {
     startAt?: number;
     maxResults?: number;
-    issueTypeSchemeId?: number[];
+    issueTypeSchemeId?: Array<number>;
 }
 
 export interface RemoveIssueTypeFromIssueTypeSchemeRequest {

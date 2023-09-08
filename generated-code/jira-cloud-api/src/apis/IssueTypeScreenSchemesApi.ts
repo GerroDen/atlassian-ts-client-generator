@@ -48,11 +48,11 @@ export interface DeleteIssueTypeScreenSchemeRequest {
 export interface GetIssueTypeScreenSchemeMappingsRequest {
     startAt?: number;
     maxResults?: number;
-    issueTypeScreenSchemeId?: number[];
+    issueTypeScreenSchemeId?: Array<number>;
 }
 
 export interface GetIssueTypeScreenSchemeProjectAssociationsRequest {
-    projectId: number[];
+    projectId: Array<number>;
     startAt?: number;
     maxResults?: number;
 }
@@ -60,7 +60,7 @@ export interface GetIssueTypeScreenSchemeProjectAssociationsRequest {
 export interface GetIssueTypeScreenSchemesRequest {
     startAt?: number;
     maxResults?: number;
-    id?: number[];
+    id?: Array<number>;
     queryString?: string;
     orderBy?: GetIssueTypeScreenSchemesOrderByEnum;
     expand?: string;
