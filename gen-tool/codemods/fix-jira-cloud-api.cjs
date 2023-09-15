@@ -41,6 +41,19 @@ const transformer = (file, api) => {
         j.tsLiteralType(j.stringLiteral("software")),
       ]);
     });
+  source
+    .find(j.TSPropertySignature)
+    .filter(
+      (path) => path.parent?.parent?.node?.id?.name === "SearchProjectsRequest",
+    )
+    .filter((path) => path.node.key?.name === "propertyQuery")
+    .forEach((path) => {
+      console.log(path.node.typeAnnotation.typeAnnotation);
+      path.node.typeAnnotation.typeAnnotation = j.tsInstantiationExpression(
+        j.identifier("Array"),
+        j.tsTypeParameterInstantiation([j.tsStringKeyword()]),
+      );
+    });
   return source.toSource();
 };
 

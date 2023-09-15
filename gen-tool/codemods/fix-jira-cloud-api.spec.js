@@ -57,4 +57,21 @@ describe("fix-jira-cloud-api", () => {
   typeKey?: "business" | "service_desk" | "software";
 }`);
   });
+
+  it("fixes request type for project search to allow an array in propertyQuery", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface SearchProjectsRequest {
+  propertyQuery?: string;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface SearchProjectsRequest {
+  propertyQuery?: Array<string>;
+}`);
+  });
 });
