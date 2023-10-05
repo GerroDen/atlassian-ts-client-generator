@@ -26,6 +26,12 @@ const transformer = (file, { j }) => {
     .forEach((path) => {
       path.node.typeName = j.identifier("Array");
     });
+  source
+    .find(j.TSPropertySignature)
+    .filter((path) => path.node.key?.name === "_default")
+    .forEach((path) => {
+      path.node.key.name = "default";
+    });
   return source.toSource();
 };
 

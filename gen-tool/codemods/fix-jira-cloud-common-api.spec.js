@@ -16,7 +16,7 @@ describe("fix-jira-cloud-common-api", () => {
   Created: '+created'
 } as const;`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export const GetCommentsOrderByEnum = {
@@ -38,7 +38,7 @@ describe("fix-jira-cloud-common-api", () => {
   _48x48?: string;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`export interface AvatarUrlsBean {
@@ -58,11 +58,28 @@ describe("fix-jira-cloud-common-api", () => {
   restRepositorySelector?: Set<RestRepositorySelector>;
 }`,
       },
-      options,
+      options
     );
 
     expect(result).toBe(`interface BulkAddExemptRepositoriesRequest {
   restRepositorySelector?: Array<RestRepositorySelector>;
+}`);
+  });
+
+  it("replaces 'default' key in object properties", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `interface ScreenSchemeDetailsScreens {
+  _default?: number;
+}`,
+      },
+      options
+    );
+
+    expect(result).toBe(`interface ScreenSchemeDetailsScreens {
+  default?: number;
 }`);
   });
 });
