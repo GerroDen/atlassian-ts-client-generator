@@ -5875,7 +5875,7 @@ export interface DeprecatedWorkflow {
      * @type {boolean}
      * @memberof DeprecatedWorkflow
      */
-    _default?: boolean;
+    default?: boolean;
     /**
      * The description of the workflow.
      * @type {string}
@@ -6302,7 +6302,7 @@ export interface EventNotificationProjectRole {
      * @type {boolean}
      * @memberof EventNotificationProjectRole
      */
-    readonly _default?: boolean;
+    readonly default?: boolean;
     /**
      * The description of the project role.
      * @type {string}
@@ -8483,6 +8483,12 @@ export interface FunctionReferenceData {
      */
     isList?: FunctionReferenceDataIsListEnum;
     /**
+     * Whether the function supports both single and list value operators.
+     * @type {string}
+     * @memberof FunctionReferenceData
+     */
+    supportsListAndSingleValueOperators?: FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum;
+    /**
      * The data types returned by the function.
      * @type {Array<string>}
      * @memberof FunctionReferenceData
@@ -8505,6 +8511,15 @@ export const FunctionReferenceDataIsListEnum = {
     False: 'false'
 } as const;
 export type FunctionReferenceDataIsListEnum = typeof FunctionReferenceDataIsListEnum[keyof typeof FunctionReferenceDataIsListEnum];
+
+/**
+ * @export
+ */
+export const FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum = {
+    True: 'true',
+    False: 'false'
+} as const;
+export type FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum = typeof FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum[keyof typeof FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum];
 
 /**
  * 
@@ -9257,7 +9272,7 @@ export interface IssueBeanChangelog {
  */
 export interface IssueBeanEditmeta {
     /**
-     * 
+     * A list of editable field details.
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueBeanEditmeta
      */
@@ -11069,7 +11084,7 @@ export interface IssueUpdateDetailsTransition {
  */
 export interface IssueUpdateMetadata {
     /**
-     * 
+     * A list of editable field details.
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueUpdateMetadata
      */
@@ -12076,67 +12091,67 @@ export type JiraWorkflowStatusStatusCategoryEnum = typeof JiraWorkflowStatusStat
  */
 export interface JqlFunctionPrecomputationBean {
     /**
-     * 
+     * The list of arguments function was invoked with.
      * @type {Array<string>}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly arguments?: Array<string>;
     /**
-     * 
+     * The timestamp of the precomputation creation.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly created?: string;
     /**
-     * 
+     * The error message to be displayed to the user.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly error?: string;
     /**
-     * 
+     * The field the function was executed against.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly field?: string;
     /**
-     * 
+     * The function key.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly functionKey?: string;
     /**
-     * 
+     * The name of the function.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly functionName?: string;
     /**
-     * 
+     * The id of the precomputation.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly id?: string;
     /**
-     * 
+     * The operator in context of which function was executed.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly operator?: string;
     /**
-     * 
+     * The timestamp of the precomputation last update.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly updated?: string;
     /**
-     * 
+     * The timestamp of the precomputation last usage.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
     readonly used?: string;
     /**
-     * 
+     * The JQL fragment stored as the precomputation.
      * @type {string}
      * @memberof JqlFunctionPrecomputationBean
      */
@@ -12149,23 +12164,23 @@ export interface JqlFunctionPrecomputationBean {
  */
 export interface JqlFunctionPrecomputationUpdateBean {
     /**
-     * 
+     * The error message to be displayed to the user if the given function clause is no longer valid during recalculation of the precomputation.
      * @type {string}
      * @memberof JqlFunctionPrecomputationUpdateBean
      */
-    error: string;
+    error?: string;
     /**
-     * 
+     * The id of the precomputation to update.
      * @type {string}
      * @memberof JqlFunctionPrecomputationUpdateBean
      */
     id: string;
     /**
-     * 
+     * The new value of the precomputation.
      * @type {string}
      * @memberof JqlFunctionPrecomputationUpdateBean
      */
-    value: string;
+    value?: string;
 }
 /**
  * List of pairs (id and value) for precomputation updates.
@@ -16881,6 +16896,7 @@ export interface PermissionDetails {
  * @interface PermissionGrant
  */
 export interface PermissionGrant {
+    [key: string]: any | any;
     /**
      * 
      * @type {PermissionGrantHolder}
@@ -17639,6 +17655,12 @@ export interface ProjectCategory {
  */
 export interface ProjectComponent {
     /**
+     * Compass component's ID. Can't be updated. Not required for creating a Project Component.
+     * @type {string}
+     * @memberof ProjectComponent
+     */
+    readonly ari?: string;
+    /**
      * 
      * @type {ProjectComponentAssignee}
      * @memberof ProjectComponent
@@ -17694,6 +17716,12 @@ export interface ProjectComponent {
      * @memberof ProjectComponent
      */
     leadUserName?: string;
+    /**
+     * Compass component's metadata. Can't be updated. Not required for creating a Project Component.
+     * @type {{ [key: string]: string; }}
+     * @memberof ProjectComponent
+     */
+    readonly metadata?: { [key: string]: string; };
     /**
      * The unique name for the component in the project. Required when creating a component. Optional when updating a component. The maximum length is 255 characters.
      * @type {string}
@@ -18635,7 +18663,7 @@ export interface ProjectIssueTypeMappings {
     mappings: Array<ProjectIssueTypeMapping>;
 }
 /**
- * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
+ * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
  * @export
  * @interface ProjectIssueTypes
  */
@@ -18938,7 +18966,7 @@ export interface ProjectRole {
      * @type {boolean}
      * @memberof ProjectRole
      */
-    readonly _default?: boolean;
+    readonly default?: boolean;
     /**
      * The description of the project role.
      * @type {string}
@@ -19027,7 +19055,7 @@ export interface ProjectRoleDetails {
      * @type {boolean}
      * @memberof ProjectRoleDetails
      */
-    readonly _default?: boolean;
+    readonly default?: boolean;
     /**
      * The description of the project role.
      * @type {string}
@@ -19747,7 +19775,7 @@ export interface ResolutionJsonBean {
      * @type {boolean}
      * @memberof ResolutionJsonBean
      */
-    _default?: boolean;
+    default?: boolean;
     /**
      * 
      * @type {string}
@@ -20211,7 +20239,7 @@ export interface ScreenSchemeDetailsScreens {
      * @type {number}
      * @memberof ScreenSchemeDetailsScreens
      */
-    _default?: number;
+    default?: number;
     /**
      * The ID of the edit screen.
      * @type {number}
@@ -20304,7 +20332,7 @@ export interface ScreenSchemeScreens {
      * @type {number}
      * @memberof ScreenSchemeScreens
      */
-    _default?: number;
+    default?: number;
     /**
      * The ID of the edit screen.
      * @type {number}
@@ -20365,7 +20393,7 @@ export interface ScreenTypes {
      * @type {number}
      * @memberof ScreenTypes
      */
-    _default?: number;
+    default?: number;
     /**
      * The ID of the edit screen.
      * @type {number}
@@ -20983,6 +21011,12 @@ export interface ServerInformation {
      */
     serverTime?: string;
     /**
+     * 
+     * @type {ServerInformationServerTimeZone}
+     * @memberof ServerInformation
+     */
+    serverTimeZone?: ServerInformationServerTimeZone;
+    /**
      * The name of the Jira instance.
      * @type {string}
      * @memberof ServerInformation
@@ -21000,6 +21034,37 @@ export interface ServerInformation {
      * @memberof ServerInformation
      */
     versionNumbers?: Array<number>;
+}
+/**
+ * The default timezone of the Jira server. In a format known as Olson Time Zones, IANA Time Zones or TZ Database Time Zones.
+ * @export
+ * @interface ServerInformationServerTimeZone
+ */
+export interface ServerInformationServerTimeZone {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServerInformationServerTimeZone
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ServerInformationServerTimeZone
+     */
+    dstsavings?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServerInformationServerTimeZone
+     */
+    id?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ServerInformationServerTimeZone
+     */
+    rawOffset?: number;
 }
 /**
  * 
@@ -21502,7 +21567,7 @@ export interface SharePermissionRole {
      * @type {boolean}
      * @memberof SharePermissionRole
      */
-    readonly _default?: boolean;
+    readonly default?: boolean;
     /**
      * The description of the project role.
      * @type {string}
@@ -23489,7 +23554,7 @@ export interface UpdateScreenSchemeDetailsScreens {
      * @type {string}
      * @memberof UpdateScreenSchemeDetailsScreens
      */
-    _default?: string;
+    default?: string;
     /**
      * The ID of the edit screen. To remove the screen association, pass a null.
      * @type {string}
@@ -23520,7 +23585,7 @@ export interface UpdateScreenTypes {
      * @type {string}
      * @memberof UpdateScreenTypes
      */
-    _default?: string;
+    default?: string;
     /**
      * The ID of the edit screen. To remove the screen association, pass a null.
      * @type {string}
@@ -24289,6 +24354,12 @@ export interface ValueOperand {
  */
 export interface Version {
     /**
+     * If the expand option `approvers` is used, returns a list containing the approvers for this version.
+     * @type {Array<VersionApprover>}
+     * @memberof Version
+     */
+    readonly approvers?: Array<VersionApprover>;
+    /**
      * Indicates that the version is archived. Optional when creating or updating a version.
      * @type {boolean}
      * @memberof Version
@@ -24301,10 +24372,18 @@ export interface Version {
      */
     description?: string;
     /**
+     * If the expand option `driver` is used, returns the Atlassian account ID of the driver.
+     * @type {string}
+     * @memberof Version
+     */
+    readonly driver?: string;
+    /**
      * Use [expand](em>#expansion) to include additional information about version in the response. This parameter accepts a comma-separated list. Expand options include:
      * 
      *  *  `operations` Returns the list of operations available for this version.
      *  *  `issuesstatus` Returns the count of issues in this version for each of the status categories *to do*, *in progress*, *done*, and *unmapped*. The *unmapped* property contains a count of issues with a status other than *to do*, *in progress*, and *done*.
+     *  *  `driver` Returns the Atlassian account ID of the version driver.
+     *  *  `approvers` Returns a list containing approvers for this version.
      * 
      * Optional for create and update.
      * @type {string}
@@ -24395,6 +24474,38 @@ export interface Version {
      * @memberof Version
      */
     readonly userStartDate?: string;
+}
+/**
+ * Contains details about a version approver.
+ * @export
+ * @interface VersionApprover
+ */
+export interface VersionApprover {
+    [key: string]: any | any;
+    /**
+     * The Atlassian account ID of the approver.
+     * @type {string}
+     * @memberof VersionApprover
+     */
+    readonly accountId?: string;
+    /**
+     * A description of why the user is declining the approval.
+     * @type {string}
+     * @memberof VersionApprover
+     */
+    readonly declineReason?: string;
+    /**
+     * A description of what the user is approving within the specified version.
+     * @type {string}
+     * @memberof VersionApprover
+     */
+    readonly description?: string;
+    /**
+     * The status of the approval, which can be *PENDING*, *APPROVED*, or *DECLINED*
+     * @type {string}
+     * @memberof VersionApprover
+     */
+    readonly status?: string;
 }
 /**
  * Various counts of issues within a version.

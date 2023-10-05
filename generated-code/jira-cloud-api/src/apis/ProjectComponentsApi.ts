@@ -60,7 +60,7 @@ export interface UpdateComponentRequest {
 export class ProjectComponentsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a component. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Creates a project component only. To create a Compass Component, use Compass. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create component
      */
     async createComponentRaw(requestParameters: CreateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
@@ -94,7 +94,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a component. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Creates a project component only. To create a Compass Component, use Compass. Use components to provide containers for issues within a project.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project in which the component is created or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create component
      */
     async createComponent(requestParameters: CreateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectComponent> {
@@ -322,7 +322,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a component. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Updates a project component only. A compass component needs to be updated in Compass. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update component
      */
     async updateComponentRaw(requestParameters: UpdateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
@@ -360,7 +360,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a component. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Updates a project component only. A compass component needs to be updated in Compass. Any fields included in the request are overwritten. If `leadAccountId` is an empty string (\"\") the component lead is removed.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the component or *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update component
      */
     async updateComponent(requestParameters: UpdateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectComponent> {

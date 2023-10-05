@@ -33,6 +33,13 @@ export interface GetAllScreenTabsRequest {
     projectKey?: string;
 }
 
+export interface GetBulkScreenTabsRequest {
+    screenId?: Array<number>;
+    tabId?: Array<number>;
+    startAt?: number;
+    maxResult?: number;
+}
+
 export interface MoveScreenTabRequest {
     screenId: number;
     tabId: number;
@@ -182,6 +189,57 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     async getAllScreenTabs(requestParameters: GetAllScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ScreenableTab>> {
         const response = await this.getAllScreenTabsRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Returns the list of tabs for a bulk of screens.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get bulk screen tabs
+     */
+    async getBulkScreenTabsRaw(requestParameters: GetBulkScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.screenId) {
+            queryParameters['screenId'] = requestParameters.screenId;
+        }
+
+        if (requestParameters.tabId) {
+            queryParameters['tabId'] = requestParameters.tabId;
+        }
+
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
+        }
+
+        if (requestParameters.maxResult !== undefined) {
+            queryParameters['maxResult'] = requestParameters.maxResult;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["manage:jira-project"]);
+        }
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/rest/api/3/screens/tabs`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Returns the list of tabs for a bulk of screens.  **[Permissions](#permissions) required:**   *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
+     * Get bulk screen tabs
+     */
+    async getBulkScreenTabs(requestParameters: GetBulkScreenTabsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.getBulkScreenTabsRaw(requestParameters, initOverrides);
     }
 
     /**

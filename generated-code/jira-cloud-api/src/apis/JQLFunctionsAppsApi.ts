@@ -24,7 +24,6 @@ export interface GetPrecomputationsRequest {
     startAt?: number;
     maxResults?: number;
     orderBy?: string;
-    filter?: string;
 }
 
 export interface UpdatePrecomputationsRequest {
@@ -57,10 +56,6 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
 
         if (requestParameters.orderBy !== undefined) {
             queryParameters['orderBy'] = requestParameters.orderBy;
-        }
-
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
