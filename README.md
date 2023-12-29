@@ -19,5 +19,6 @@ All steps require to generate all files from the specs again with `npm run gen`.
 
 The `swagger.json` is used to generate TypeScript files via [OpenApi Generator CLI](https://github.com/OpenAPITools/openapi-generator-cli).
 The generated code is then fixed against serious typing errors, which probably result from bad specs in the `swagger.json` files.
-All fixes are in the `gen-tool` directory for each product separately.
+All fixes are made with [jscodeshift](https://github.com/facebook/jscodeshift).
+All codemods are located in the `gen-tool` directory for each product separately.
 Each product generates a separate subproject inside the `generated-code` directory and is type checked with `tsc`.
