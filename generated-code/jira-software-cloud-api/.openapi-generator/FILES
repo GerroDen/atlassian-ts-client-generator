@@ -5,7 +5,6 @@ README.md
 package.json
 src/apis/BacklogApi.ts
 src/apis/BoardApi.ts
-src/apis/BoardsApi.ts
 src/apis/BuildsApi.ts
 src/apis/DeploymentsApi.ts
 src/apis/DevelopmentInformationApi.ts

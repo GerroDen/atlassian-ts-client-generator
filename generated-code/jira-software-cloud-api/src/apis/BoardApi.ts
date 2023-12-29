@@ -320,7 +320,7 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all boards. This only includes boards that the user has permission to view.
+     * Returns all boards. This only includes boards that the user has permission to view.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on February 15, 2024.   *  `read:board-scope:jira-software`, `read:project:jira`
      * Get all boards
      */
     async getAllBoardsRaw(requestParameters: GetAllBoardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200Response>> {
@@ -392,7 +392,7 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all boards. This only includes boards that the user has permission to view.
+     * Returns all boards. This only includes boards that the user has permission to view.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on February 15, 2024.   *  `read:board-scope:jira-software`, `read:project:jira`
      * Get all boards
      */
     async getAllBoards(requestParameters: GetAllBoardsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllBoards200Response> {

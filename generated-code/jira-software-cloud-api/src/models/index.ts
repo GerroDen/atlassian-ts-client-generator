@@ -4529,6 +4529,68 @@ export interface IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf {
     readonly name?: string;
 }
 /**
+ * An association type referencing Jira issue id or keys.
+ * @export
+ * @interface IssueIdOrKeysAssociation
+ */
+export interface IssueIdOrKeysAssociation {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof IssueIdOrKeysAssociation
+     */
+    associationType: IssueIdOrKeysAssociationAssociationTypeEnum;
+    /**
+     * The Jira issue id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof IssueIdOrKeysAssociation
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const IssueIdOrKeysAssociationAssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys'
+} as const;
+export type IssueIdOrKeysAssociationAssociationTypeEnum = typeof IssueIdOrKeysAssociationAssociationTypeEnum[keyof typeof IssueIdOrKeysAssociationAssociationTypeEnum];
+
+/**
+ * An association type referencing Jira issue id or keys.
+ * @export
+ * @interface IssueIdOrKeysAssociation1
+ */
+export interface IssueIdOrKeysAssociation1 {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof IssueIdOrKeysAssociation1
+     */
+    associationType: IssueIdOrKeysAssociation1AssociationTypeEnum;
+    /**
+     * The Jira issue id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof IssueIdOrKeysAssociation1
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const IssueIdOrKeysAssociation1AssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys'
+} as const;
+export type IssueIdOrKeysAssociation1AssociationTypeEnum = typeof IssueIdOrKeysAssociation1AssociationTypeEnum[keyof typeof IssueIdOrKeysAssociation1AssociationTypeEnum];
+
+/**
  * An association type referencing issues in Jira.
  * @export
  * @interface IssueKeysAssociation
@@ -6931,11 +6993,42 @@ export interface SubmitVulnerabilitiesResponse {
      * 
      * If a Vulnerability has been associated with any other association other than those in this array it will still be stored against those valid associations.
      * If a Vulnerability was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
-     * @type {Array<VulnerabilityDetailsAssociationsInner>}
+     * @type {Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>}
      * @memberof SubmitVulnerabilitiesResponse
      */
-    unknownAssociations?: Array<VulnerabilityDetailsAssociationsInner>;
+    unknownAssociations?: Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>;
 }
+/**
+ * 
+ * @export
+ * @interface SubmitVulnerabilitiesResponseUnknownAssociationsInner
+ */
+export interface SubmitVulnerabilitiesResponseUnknownAssociationsInner {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof SubmitVulnerabilitiesResponseUnknownAssociationsInner
+     */
+    associationType: SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum;
+    /**
+     * The service id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof SubmitVulnerabilitiesResponseUnknownAssociationsInner
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum = {
+    ServiceIdOrKeys: 'serviceIdOrKeys'
+} as const;
+export type SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum = typeof SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum[keyof typeof SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum];
+
 /**
  * 
  * @export
@@ -7375,11 +7468,37 @@ export interface VulnerabilityDetails {
      */
     additionalInfo?: VulnerabilityAdditionalInfo;
     /**
-     * The entities to associate the Security Vulnerability information with.
-     * @type {Array<VulnerabilityDetailsAssociationsInner>}
+     * The associations (e.g. Jira issue) to add in addition to the currently stored associations of the Security Vulnerability.
+     * @type {Array<VulnerabilityDetailsAddAssociationsInner>}
      * @memberof VulnerabilityDetails
      */
-    associations?: Array<VulnerabilityDetailsAssociationsInner>;
+    addAssociations?: Array<VulnerabilityDetailsAddAssociationsInner>;
+    /**
+     * The associations (e.g. Jira issue) to remove from currently stored associations of the Security Vulnerability.
+     * @type {Array<VulnerabilityDetailsRemoveAssociationsInner>}
+     * @memberof VulnerabilityDetails
+     */
+    removeAssociations?: Array<VulnerabilityDetailsRemoveAssociationsInner>;
+    /**
+     * An ISO-8601 Date-time string representing the last time the provider updated associations on this entity.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * @type {string}
+     * @memberof VulnerabilityDetails
+     */
+    associationsLastUpdated?: string;
+    /**
+     * A sequence number to compare when writing entity associations to the database.
+     * 
+     * This can be any monotonically increasing number. A highly recommended implementation is to use epoch millis.
+     * 
+     * If it is not provided it will default to being equal to the corresponding entity's `updateSequenceNumber`.
+     * 
+     * Associations are written following a LastWriteWins strategy, association that are received with an associationsUpdateSequenceNumber lower than what is currently stored will be ignored.
+     * @type {number}
+     * @memberof VulnerabilityDetails
+     */
+    associationsUpdateSequenceNumber?: number;
 }
 
 
@@ -7414,23 +7533,166 @@ export const VulnerabilityDetailsStatusEnum = {
 export type VulnerabilityDetailsStatusEnum = typeof VulnerabilityDetailsStatusEnum[keyof typeof VulnerabilityDetailsStatusEnum];
 
 /**
+ * Data related to a specific vulnerability in a specific workspace that the vulnerability is present in. Must specify at least one association.
+ * @export
+ * @interface VulnerabilityDetails1
+ */
+export interface VulnerabilityDetails1 {
+    /**
+     * The VulnerabilityData schema version used for this vulnerability data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    schemaVersion: VulnerabilityDetails1SchemaVersionEnum;
+    /**
+     * The identifier for the Vulnerability. Must be unique for a given Provider.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Vulnerability in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Vulnerability and increment that on each update to Jira).
+     * 
+     * Updates for a Vulnerability that are received with an updateSequenceId lower than what is currently stored will be ignored.
+     * @type {number}
+     * @memberof VulnerabilityDetails1
+     */
+    updateSequenceNumber: number;
+    /**
+     * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider. This must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(/[a-zA-Z0-9\\-_.~@:{}=]+)*`
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    containerId: string;
+    /**
+     * The human-readable name for the Vulnerability. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    displayName: string;
+    /**
+     * A description of the issue in markdown format that will be shown in the UI and used when creating Jira Issues. HTML tags are not supported in the markdown format. For creating a new line `\n` can be used. Read more about the accepted markdown transformations [here](https://atlaskit.atlassian.com/packages/editor/editor-markdown-transformer).
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this vulnerability, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the vulnerability in that project).
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    url: string;
+    /**
+     * The type of Vulnerability detected.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    type: VulnerabilityDetails1TypeEnum;
+    /**
+     * The timestamp to present to the user that shows when the Vulnerability was introduced.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    introducedDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Vulnerability was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    lastUpdated: string;
+    /**
+     * 
+     * @type {VulnerabilitySeverity}
+     * @memberof VulnerabilityDetails1
+     */
+    severity: VulnerabilitySeverity;
+    /**
+     * The identifying information for the Vulnerability.
+     * @type {Array<Identifier>}
+     * @memberof VulnerabilityDetails1
+     */
+    identifiers?: Array<Identifier>;
+    /**
+     * The current status of the Vulnerability.
+     * @type {string}
+     * @memberof VulnerabilityDetails1
+     */
+    status: VulnerabilityDetails1StatusEnum;
+    /**
+     * 
+     * @type {VulnerabilityAdditionalInfo}
+     * @memberof VulnerabilityDetails1
+     */
+    additionalInfo?: VulnerabilityAdditionalInfo;
+    /**
+     * The entities to associate the Security Vulnerability information with.
+     * @type {Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>}
+     * @memberof VulnerabilityDetails1
+     */
+    associations?: Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>;
+}
+
+
+/**
+ * @export
+ */
+export const VulnerabilityDetails1SchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type VulnerabilityDetails1SchemaVersionEnum = typeof VulnerabilityDetails1SchemaVersionEnum[keyof typeof VulnerabilityDetails1SchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const VulnerabilityDetails1TypeEnum = {
+    Sca: 'sca',
+    Sast: 'sast',
+    Dast: 'dast',
+    Unknown: 'unknown'
+} as const;
+export type VulnerabilityDetails1TypeEnum = typeof VulnerabilityDetails1TypeEnum[keyof typeof VulnerabilityDetails1TypeEnum];
+
+/**
+ * @export
+ */
+export const VulnerabilityDetails1StatusEnum = {
+    Open: 'open',
+    Closed: 'closed',
+    Ignored: 'ignored',
+    Unknown: 'unknown'
+} as const;
+export type VulnerabilityDetails1StatusEnum = typeof VulnerabilityDetails1StatusEnum[keyof typeof VulnerabilityDetails1StatusEnum];
+
+/**
  * 
  * @export
- * @interface VulnerabilityDetailsAssociationsInner
+ * @interface VulnerabilityDetailsAddAssociationsInner
  */
-export interface VulnerabilityDetailsAssociationsInner {
+export interface VulnerabilityDetailsAddAssociationsInner {
     /**
      * Defines the association type.
      * @type {string}
-     * @memberof VulnerabilityDetailsAssociationsInner
+     * @memberof VulnerabilityDetailsAddAssociationsInner
      */
-    associationType: VulnerabilityDetailsAssociationsInnerAssociationTypeEnum;
+    associationType: VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum;
     /**
-     * The service id or keys to associate the Security information with.
+     * The Jira issue id or keys to associate the Security information with.
      * 
-     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
      * @type {Array<string>}
-     * @memberof VulnerabilityDetailsAssociationsInner
+     * @memberof VulnerabilityDetailsAddAssociationsInner
      */
     values: Array<string>;
 }
@@ -7439,10 +7701,41 @@ export interface VulnerabilityDetailsAssociationsInner {
 /**
  * @export
  */
-export const VulnerabilityDetailsAssociationsInnerAssociationTypeEnum = {
-    ServiceIdOrKeys: 'serviceIdOrKeys'
+export const VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys'
 } as const;
-export type VulnerabilityDetailsAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsAssociationsInnerAssociationTypeEnum];
+export type VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface VulnerabilityDetailsRemoveAssociationsInner
+ */
+export interface VulnerabilityDetailsRemoveAssociationsInner {
+    /**
+     * Defines the association type.
+     * @type {string}
+     * @memberof VulnerabilityDetailsRemoveAssociationsInner
+     */
+    associationType: VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum;
+    /**
+     * The Jira issue id or keys to associate the Security information with.
+     * 
+     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * @type {Array<string>}
+     * @memberof VulnerabilityDetailsRemoveAssociationsInner
+     */
+    values: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys'
+} as const;
+export type VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum];
 
 /**
  * Severity information for a single Vulnerability.

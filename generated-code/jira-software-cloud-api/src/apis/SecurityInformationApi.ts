@@ -21,7 +21,7 @@ import type {
   SubmitSecurityWorkspacesRequest,
   SubmitVulnerabilitiesRequest,
   SubmitVulnerabilitiesResponse,
-  VulnerabilityDetails,
+  VulnerabilityDetails1,
 } from '../models';
 
 export interface DeleteLinkedWorkspacesRequest {
@@ -255,7 +255,7 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a Vulnerability by ID
      */
-    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails>> {
+    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails1>> {
         if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
             throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getVulnerabilityById.');
         }
@@ -286,7 +286,7 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a Vulnerability by ID
      */
-    async getVulnerabilityById(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VulnerabilityDetails> {
+    async getVulnerabilityById(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VulnerabilityDetails1> {
         const response = await this.getVulnerabilityByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
