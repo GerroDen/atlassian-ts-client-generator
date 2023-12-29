@@ -1,0 +1,13 @@
+.gitignore
+.npmignore
+.openapi-generator-ignore
+README.md
+package.json
+src/apis/TeamsMembersPublicAPIApi.ts
+src/apis/TeamsPublicAPIApi.ts
+src/apis/index.ts
+src/index.ts
+src/models/index.ts
+src/runtime.ts
+tsconfig.esm.json
+tsconfig.json
