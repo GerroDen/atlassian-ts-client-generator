@@ -57,4 +57,21 @@ describe("fix-jira-cloud-api", () => {
   typeKey?: "business" | "service_desk" | "software";
 }`);
   });
+
+  it("fixes usage of StoreAvatarTypeEnum which is correctly typed as StoreAvatarOperationRequest", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface StoreAvatarOperationRequest {
+    type: StoreAvatarTypeEnum;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface StoreAvatarOperationRequest {
+    type: StoreAvatarOperationTypeEnum;
+}`);
+  });
 });

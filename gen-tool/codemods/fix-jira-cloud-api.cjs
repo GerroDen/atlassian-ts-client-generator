@@ -41,6 +41,12 @@ const transformer = (file, api) => {
         j.tsLiteralType(j.stringLiteral("software")),
       ]);
     });
+  source
+    .find(j.TSTypeReference)
+    .filter((path) => path.node.typeName?.name === "StoreAvatarTypeEnum")
+    .replaceWith(
+      j.tsTypeReference(j.identifier("StoreAvatarOperationTypeEnum")),
+    );
   return source.toSource();
 };
 

@@ -5950,7 +5950,7 @@ export const DeprecatedWorkflowScopeTypeEnum = {
 export type DeprecatedWorkflowScopeTypeEnum = typeof DeprecatedWorkflowScopeTypeEnum[keyof typeof DeprecatedWorkflowScopeTypeEnum];
 
 /**
- * The version details of the workflow.
+ * The current version details of this workflow scheme.
  * @export
  * @interface DocumentVersion
  */
@@ -6834,6 +6834,122 @@ export interface FieldConfigurationToIssueTypeMapping {
     issueTypeId: string;
 }
 /**
+ * The metadata describing an issue field for createmeta.
+ * @export
+ * @interface FieldCreateMetadata
+ */
+export interface FieldCreateMetadata {
+    /**
+     * The list of values allowed in the field.
+     * @type {Array<any>}
+     * @memberof FieldCreateMetadata
+     */
+    readonly allowedValues?: Array<any>;
+    /**
+     * The URL that can be used to automatically complete the field.
+     * @type {string}
+     * @memberof FieldCreateMetadata
+     */
+    readonly autoCompleteUrl?: string;
+    /**
+     * The configuration properties.
+     * @type {{ [key: string]: any; }}
+     * @memberof FieldCreateMetadata
+     */
+    readonly _configuration?: { [key: string]: any; };
+    /**
+     * The default value of the field.
+     * @type {any}
+     * @memberof FieldCreateMetadata
+     */
+    readonly defaultValue?: any | null;
+    /**
+     * The field id.
+     * @type {string}
+     * @memberof FieldCreateMetadata
+     */
+    readonly fieldId: string;
+    /**
+     * Whether the field has a default value.
+     * @type {boolean}
+     * @memberof FieldCreateMetadata
+     */
+    readonly hasDefaultValue?: boolean;
+    /**
+     * The key of the field.
+     * @type {string}
+     * @memberof FieldCreateMetadata
+     */
+    readonly key: string;
+    /**
+     * The name of the field.
+     * @type {string}
+     * @memberof FieldCreateMetadata
+     */
+    readonly name: string;
+    /**
+     * The list of operations that can be performed on the field.
+     * @type {Array<string>}
+     * @memberof FieldCreateMetadata
+     */
+    readonly operations: Array<string>;
+    /**
+     * Whether the field is required.
+     * @type {boolean}
+     * @memberof FieldCreateMetadata
+     */
+    readonly required: boolean;
+    /**
+     * 
+     * @type {FieldCreateMetadataSchema}
+     * @memberof FieldCreateMetadata
+     */
+    schema: FieldCreateMetadataSchema;
+}
+/**
+ * The data type of the field.
+ * @export
+ * @interface FieldCreateMetadataSchema
+ */
+export interface FieldCreateMetadataSchema {
+    /**
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly _configuration?: { [key: string]: any; };
+    /**
+     * If the field is a custom field, the URI of the field.
+     * @type {string}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly custom?: string;
+    /**
+     * If the field is a custom field, the custom ID of the field.
+     * @type {number}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly customId?: number;
+    /**
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof FieldCreateMetadataSchema
+     */
+    readonly type: string;
+}
+/**
  * Details about a field.
  * @export
  * @interface FieldDetails
@@ -7070,53 +7186,10 @@ export interface FieldMetadata {
     readonly required: boolean;
     /**
      * 
-     * @type {FieldMetadataSchema}
+     * @type {FieldCreateMetadataSchema}
      * @memberof FieldMetadata
      */
-    schema: FieldMetadataSchema;
-}
-/**
- * The data type of the field.
- * @export
- * @interface FieldMetadataSchema
- */
-export interface FieldMetadataSchema {
-    /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldMetadataSchema
-     */
-    readonly _configuration?: { [key: string]: any; };
-    /**
-     * If the field is a custom field, the URI of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly custom?: string;
-    /**
-     * If the field is a custom field, the custom ID of the field.
-     * @type {number}
-     * @memberof FieldMetadataSchema
-     */
-    readonly customId?: number;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly system?: string;
-    /**
-     * The data type of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly type: string;
+    schema: FieldCreateMetadataSchema;
 }
 /**
  * Details of a field that can be used in advanced searches.
@@ -9272,7 +9345,7 @@ export interface IssueBeanChangelog {
  */
 export interface IssueBeanEditmeta {
     /**
-     * A list of editable field details.
+     * 
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueBeanEditmeta
      */
@@ -9903,6 +9976,12 @@ export interface IssueSecurityLevelMember {
      * @memberof IssueSecurityLevelMember
      */
     issueSecurityLevelId: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IssueSecurityLevelMember
+     */
+    managed?: boolean;
 }
 /**
  * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
@@ -11084,7 +11163,7 @@ export interface IssueUpdateDetailsTransition {
  */
 export interface IssueUpdateMetadata {
     /**
-     * A list of editable field details.
+     * 
      * @type {{ [key: string]: FieldMetadata; }}
      * @memberof IssueUpdateMetadata
      */
@@ -16623,6 +16702,82 @@ export interface PageOfComments {
     readonly total?: number;
 }
 /**
+ * A page of CreateMetaIssueType with Field.
+ * @export
+ * @interface PageOfCreateMetaIssueTypeWithField
+ */
+export interface PageOfCreateMetaIssueTypeWithField {
+    [key: string]: any | any;
+    /**
+     * The collection of FieldCreateMetaBeans.
+     * @type {Array<FieldCreateMetadata>}
+     * @memberof PageOfCreateMetaIssueTypeWithField
+     */
+    readonly fields?: Array<FieldCreateMetadata>;
+    /**
+     * The maximum number of items to return per page.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypeWithField
+     */
+    readonly maxResults?: number;
+    /**
+     * 
+     * @type {Array<FieldCreateMetadata>}
+     * @memberof PageOfCreateMetaIssueTypeWithField
+     */
+    results?: Array<FieldCreateMetadata>;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypeWithField
+     */
+    readonly startAt?: number;
+    /**
+     * The total number of items in all pages.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypeWithField
+     */
+    readonly total?: number;
+}
+/**
+ * A page of CreateMetaIssueTypes.
+ * @export
+ * @interface PageOfCreateMetaIssueTypes
+ */
+export interface PageOfCreateMetaIssueTypes {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {Array<IssueTypeIssueCreateMetadata>}
+     * @memberof PageOfCreateMetaIssueTypes
+     */
+    createMetaIssueType?: Array<IssueTypeIssueCreateMetadata>;
+    /**
+     * The list of CreateMetaIssueType.
+     * @type {Array<IssueTypeIssueCreateMetadata>}
+     * @memberof PageOfCreateMetaIssueTypes
+     */
+    readonly issueTypes?: Array<IssueTypeIssueCreateMetadata>;
+    /**
+     * The maximum number of items to return per page.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypes
+     */
+    readonly maxResults?: number;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypes
+     */
+    readonly startAt?: number;
+    /**
+     * The total number of items in all pages.
+     * @type {number}
+     * @memberof PageOfCreateMetaIssueTypes
+     */
+    readonly total?: number;
+}
+/**
  * A page containing dashboard details.
  * @export
  * @interface PageOfDashboards
@@ -16811,6 +16966,68 @@ export interface PaginatedResponseComment {
      * 
      * @type {number}
      * @memberof PaginatedResponseComment
+     */
+    total?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedResponseFieldCreateMetadata
+ */
+export interface PaginatedResponseFieldCreateMetadata {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseFieldCreateMetadata
+     */
+    maxResults?: number;
+    /**
+     * 
+     * @type {Array<FieldCreateMetadata>}
+     * @memberof PaginatedResponseFieldCreateMetadata
+     */
+    results?: Array<FieldCreateMetadata>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseFieldCreateMetadata
+     */
+    startAt?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseFieldCreateMetadata
+     */
+    total?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedResponseIssueTypeIssueCreateMetadata
+ */
+export interface PaginatedResponseIssueTypeIssueCreateMetadata {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseIssueTypeIssueCreateMetadata
+     */
+    maxResults?: number;
+    /**
+     * 
+     * @type {Array<IssueTypeIssueCreateMetadata>}
+     * @memberof PaginatedResponseIssueTypeIssueCreateMetadata
+     */
+    results?: Array<IssueTypeIssueCreateMetadata>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseIssueTypeIssueCreateMetadata
+     */
+    startAt?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedResponseIssueTypeIssueCreateMetadata
      */
     total?: number;
 }
@@ -17296,7 +17513,7 @@ export interface Project {
      */
     insight?: ProjectInsight;
     /**
-     * Whether the project is private.
+     * Whether the project is private from the user's perspective. This means the user can't see the project or any associated issues.
      * @type {boolean}
      * @memberof Project
      */
@@ -18663,7 +18880,7 @@ export interface ProjectIssueTypeMappings {
     mappings: Array<ProjectIssueTypeMapping>;
 }
 /**
- * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
+ * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
  * @export
  * @interface ProjectIssueTypes
  */
@@ -20753,6 +20970,12 @@ export interface SecurityLevelMember {
      * @memberof SecurityLevelMember
      */
     readonly issueSecuritySchemeId: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SecurityLevelMember
+     */
+    managed?: boolean;
 }
 /**
  * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
@@ -20992,6 +21215,18 @@ export interface ServerInformation {
      * @memberof ServerInformation
      */
     deploymentType?: string;
+    /**
+     * The display URL of the Jira instance.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    displayUrl?: string;
+    /**
+     * The display URL of the Servicedesk Help Center.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    displayUrlServicedeskHelpCenter?: string;
     /**
      * Jira instance health check results. Deprecated and no longer returned.
      * @type {Array<HealthCheckResult>}
@@ -21393,7 +21628,7 @@ export interface SharePermissionProject {
      */
     insight?: ProjectInsight;
     /**
-     * Whether the project is private.
+     * Whether the project is private from the user's perspective. This means the user can't see the project or any associated issues.
      * @type {boolean}
      * @memberof SharePermissionProject
      */
@@ -22401,7 +22636,7 @@ export interface StatusUpdateRequest {
      * @type {Array<StatusUpdate>}
      * @memberof StatusUpdateRequest
      */
-    statuses?: Array<StatusUpdate>;
+    statuses: Array<StatusUpdate>;
 }
 /**
  * The statuses associated with each workflow.
@@ -22427,6 +22662,1606 @@ export interface StatusesPerWorkflow {
      * @memberof StatusesPerWorkflow
      */
     workflowId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequest
+ */
+export interface StoreAvatarRequest {
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContext}
+     * @memberof StoreAvatarRequest
+     */
+    asyncContext?: StoreAvatarRequestAsyncContext;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    asyncStarted?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    asyncSupported?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequest
+     */
+    attributeNames?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    authType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    characterEncoding?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequest
+     */
+    contentLength?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequest
+     */
+    contentLengthLong?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    contentType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    contextPath?: string;
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestCookiesInner>}
+     * @memberof StoreAvatarRequest
+     */
+    cookies?: Array<StoreAvatarRequestCookiesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    dispatcherType?: StoreAvatarRequestDispatcherTypeEnum;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequest
+     */
+    headerNames?: object;
+    /**
+     * 
+     * @type {StoreAvatarRequestHttpServletMapping}
+     * @memberof StoreAvatarRequest
+     */
+    httpServletMapping?: StoreAvatarRequestHttpServletMapping;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestInputStream}
+     * @memberof StoreAvatarRequest
+     */
+    inputStream?: StoreAvatarRequestAsyncContextRequestInputStream;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    localAddr?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    localName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequest
+     */
+    localPort?: number;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestLocale}
+     * @memberof StoreAvatarRequest
+     */
+    locale?: StoreAvatarRequestAsyncContextRequestLocale;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequest
+     */
+    locales?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    method?: string;
+    /**
+     * 
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof StoreAvatarRequest
+     */
+    parameterMap?: { [key: string]: Array<string>; };
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequest
+     */
+    parameterNames?: object;
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestPartsInner>}
+     * @memberof StoreAvatarRequest
+     */
+    parts?: Array<StoreAvatarRequestPartsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    pathInfo?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    pathTranslated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    protocol?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    queryString?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequest
+     */
+    reader?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    remoteAddr?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    remoteHost?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequest
+     */
+    remotePort?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    remoteUser?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    requestURI?: string;
+    /**
+     * 
+     * @type {StoreAvatarRequestRequestURL}
+     * @memberof StoreAvatarRequest
+     */
+    requestURL?: StoreAvatarRequestRequestURL;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    requestedSessionId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    requestedSessionIdFromCookie?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    requestedSessionIdFromURL?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    requestedSessionIdFromUrl?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    requestedSessionIdValid?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    scheme?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    secure?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    serverName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequest
+     */
+    serverPort?: number;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
+     * @memberof StoreAvatarRequest
+     */
+    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequest
+     */
+    servletPath?: string;
+    /**
+     * 
+     * @type {StoreAvatarRequestSession}
+     * @memberof StoreAvatarRequest
+     */
+    session?: StoreAvatarRequestSession;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof StoreAvatarRequest
+     */
+    trailerFields?: { [key: string]: string; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequest
+     */
+    trailerFieldsReady?: boolean;
+    /**
+     * 
+     * @type {StoreAvatarRequestUserPrincipal}
+     * @memberof StoreAvatarRequest
+     */
+    userPrincipal?: StoreAvatarRequestUserPrincipal;
+}
+
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestDispatcherTypeEnum = {
+    Forward: 'FORWARD',
+    Include: 'INCLUDE',
+    Request: 'REQUEST',
+    Async: 'ASYNC',
+    Error: 'ERROR'
+} as const;
+export type StoreAvatarRequestDispatcherTypeEnum = typeof StoreAvatarRequestDispatcherTypeEnum[keyof typeof StoreAvatarRequestDispatcherTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContext
+ */
+export interface StoreAvatarRequestAsyncContext {
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequest}
+     * @memberof StoreAvatarRequestAsyncContext
+     */
+    request?: StoreAvatarRequestAsyncContextRequest;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextResponse}
+     * @memberof StoreAvatarRequestAsyncContext
+     */
+    response?: StoreAvatarRequestAsyncContextResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContext
+     */
+    timeout?: number;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequest
+ */
+export interface StoreAvatarRequestAsyncContextRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    asyncStarted?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    asyncSupported?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    attributeNames?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    characterEncoding?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    contentLength?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    contentLengthLong?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    contentType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    dispatcherType?: StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestInputStream}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    inputStream?: StoreAvatarRequestAsyncContextRequestInputStream;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    localAddr?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    localName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    localPort?: number;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestLocale}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    locale?: StoreAvatarRequestAsyncContextRequestLocale;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    locales?: object;
+    /**
+     * 
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    parameterMap?: { [key: string]: Array<string>; };
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    parameterNames?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    protocol?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    reader?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    remoteAddr?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    remoteHost?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    remotePort?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    scheme?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    secure?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    serverName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    serverPort?: number;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
+     * @memberof StoreAvatarRequestAsyncContextRequest
+     */
+    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
+}
+
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum = {
+    Forward: 'FORWARD',
+    Include: 'INCLUDE',
+    Request: 'REQUEST',
+    Async: 'ASYNC',
+    Error: 'ERROR'
+} as const;
+export type StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum = typeof StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum[keyof typeof StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestInputStream
+ */
+export interface StoreAvatarRequestAsyncContextRequestInputStream {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
+     */
+    finished?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
+     */
+    readListener?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
+     */
+    ready?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestLocale
+ */
+export interface StoreAvatarRequestAsyncContextRequestLocale {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    country?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    displayCountry?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    displayLanguage?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    displayScript?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    displayVariant?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    extensionKeys?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    iso3Country?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    iso3Language?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    language?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    script?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    unicodeLocaleAttributes?: Array<string>;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    unicodeLocaleKeys?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestLocale
+     */
+    variant?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContext
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContext {
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    attributeNames?: object;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoader}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    classLoader?: StoreAvatarRequestAsyncContextRequestServletContextClassLoader;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    contextPath?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    defaultSessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum>;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    effectiveMajorVersion?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    effectiveMinorVersion?: number;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    effectiveSessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum>;
+    /**
+     * 
+     * @type {{ [key: string]: StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue; }}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    filterRegistrations?: { [key: string]: StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue; };
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    initParameterNames?: object;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    jspConfigDescriptor?: StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    majorVersion?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    minorVersion?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    requestCharacterEncoding?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    responseCharacterEncoding?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    serverInfo?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    servletContextName?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    servletNames?: object;
+    /**
+     * 
+     * @type {{ [key: string]: StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue; }}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    servletRegistrations?: { [key: string]: StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue; };
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    servlets?: object;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    sessionCookieConfig?: StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    sessionTimeout?: number;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    sessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
+     */
+    virtualServerName?: string;
+}
+
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum = {
+    Cookie: 'COOKIE',
+    Url: 'URL',
+    Ssl: 'SSL'
+} as const;
+export type StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum];
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum = {
+    Cookie: 'COOKIE',
+    Url: 'URL',
+    Ssl: 'SSL'
+} as const;
+export type StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum];
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum = {
+    Cookie: 'COOKIE',
+    Url: 'URL',
+    Ssl: 'SSL'
+} as const;
+export type StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum];
+
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoader {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    defaultAssertionStatus?: boolean;
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    definedPackages?: Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    name?: string;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    parent?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    registeredAsParallelCapable?: boolean;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
+     */
+    unnamedModule?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner {
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    annotations?: Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    declaredAnnotations?: Array<object>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    implementationTitle?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    implementationVendor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    implementationVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    sealed?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    specificationTitle?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    specificationVendor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
+     */
+    specificationVersion?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+     */
+    defaultAssertionStatus?: boolean;
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+     */
+    definedPackages?: Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+     */
+    registeredAsParallelCapable?: boolean;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
+     */
+    unnamedModule?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule {
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    annotations?: Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    declaredAnnotations?: Array<object>;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    descriptor?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    layer?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    named?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
+     */
+    packages?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
+     */
+    automatic?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
+     */
+    open?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+     */
+    className?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+     */
+    initParameters?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+     */
+    servletNameMappings?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
+     */
+    urlPatternMappings?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor {
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
+     */
+    jspPropertyGroups?: Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner>;
+    /**
+     * 
+     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
+     */
+    taglibs?: Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    buffer?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    defaultContentType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    deferredSyntaxAllowedAsLiteral?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    elIgnored?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    errorOnUndeclaredNamespace?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    includeCodas?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    includePreludes?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    isXml?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    pageEncoding?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    scriptingInvalid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    trimDirectiveWhitespaces?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
+     */
+    urlPatterns?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
+     */
+    taglibLocation?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
+     */
+    taglibURI?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+     */
+    className?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+     */
+    initParameters?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+     */
+    mappings?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
+     */
+    runAsRole?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+ */
+export interface StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    domain?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    httpOnly?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    maxAge?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    path?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
+     */
+    secure?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextResponse
+ */
+export interface StoreAvatarRequestAsyncContextResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    bufferSize?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    characterEncoding?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    committed?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    contentLength?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    contentLengthLong?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    contentType?: string;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestLocale}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    locale?: StoreAvatarRequestAsyncContextRequestLocale;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextResponseOutputStream}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    outputStream?: StoreAvatarRequestAsyncContextResponseOutputStream;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextResponse
+     */
+    writer?: object;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestAsyncContextResponseOutputStream
+ */
+export interface StoreAvatarRequestAsyncContextResponseOutputStream {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestAsyncContextResponseOutputStream
+     */
+    ready?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestAsyncContextResponseOutputStream
+     */
+    writeListener?: object;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestCookiesInner
+ */
+export interface StoreAvatarRequestCookiesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    domain?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    httpOnly?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    maxAge?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    path?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    secure?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    value?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestCookiesInner
+     */
+    version?: number;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestHttpServletMapping
+ */
+export interface StoreAvatarRequestHttpServletMapping {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestHttpServletMapping
+     */
+    mappingMatch?: StoreAvatarRequestHttpServletMappingMappingMatchEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestHttpServletMapping
+     */
+    matchValue?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestHttpServletMapping
+     */
+    pattern?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestHttpServletMapping
+     */
+    servletName?: string;
+}
+
+
+/**
+ * @export
+ */
+export const StoreAvatarRequestHttpServletMappingMappingMatchEnum = {
+    ContextRoot: 'CONTEXT_ROOT',
+    Default: 'DEFAULT',
+    Exact: 'EXACT',
+    Extension: 'EXTENSION',
+    Path: 'PATH'
+} as const;
+export type StoreAvatarRequestHttpServletMappingMappingMatchEnum = typeof StoreAvatarRequestHttpServletMappingMappingMatchEnum[keyof typeof StoreAvatarRequestHttpServletMappingMappingMatchEnum];
+
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestPartsInner
+ */
+export interface StoreAvatarRequestPartsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    contentType?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    headerNames?: Array<string>;
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    inputStream?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    size?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestPartsInner
+     */
+    submittedFileName?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestRequestURL
+ */
+export interface StoreAvatarRequestRequestURL {
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestRequestURL
+     */
+    length?: number;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestSession
+ */
+export interface StoreAvatarRequestSession {
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestSession
+     */
+    attributeNames?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestSession
+     */
+    creationTime?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestSession
+     */
+    id?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestSession
+     */
+    lastAccessedTime?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoreAvatarRequestSession
+     */
+    maxInactiveInterval?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StoreAvatarRequestSession
+     */
+    _new?: boolean;
+    /**
+     * 
+     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
+     * @memberof StoreAvatarRequestSession
+     */
+    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
+    /**
+     * 
+     * @type {StoreAvatarRequestSessionSessionContext}
+     * @memberof StoreAvatarRequestSession
+     */
+    sessionContext?: StoreAvatarRequestSessionSessionContext;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StoreAvatarRequestSession
+     */
+    valueNames?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestSessionSessionContext
+ */
+export interface StoreAvatarRequestSessionSessionContext {
+    /**
+     * 
+     * @type {object}
+     * @memberof StoreAvatarRequestSessionSessionContext
+     */
+    ids?: object;
+}
+/**
+ * 
+ * @export
+ * @interface StoreAvatarRequestUserPrincipal
+ */
+export interface StoreAvatarRequestUserPrincipal {
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreAvatarRequestUserPrincipal
+     */
+    name?: string;
 }
 /**
  * An issue suggested for use in the issue picker auto-completion.
@@ -23061,23 +24896,23 @@ export interface UiModificationContextDetails {
      */
     readonly isAvailable?: boolean;
     /**
-     * The issue type ID of the context.
+     * The issue type ID of the context. Null is treated as a wildcard, meaning the UI modification will be applied to all issue types. Each UI modification context can have a maximum of one wildcard.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
-    issueTypeId: string;
+    issueTypeId?: string;
     /**
-     * The project ID of the context.
+     * The project ID of the context. Null is treated as a wildcard, meaning the UI modification will be applied to all projects. Each UI modification context can have a maximum of one wildcard.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
-    projectId: string;
+    projectId?: string;
     /**
-     * The view type of the context. Only `GIC`(Global Issue Create) and `IssueView` are supported.
+     * The view type of the context. Only `GIC`(Global Issue Create) and `IssueView` are supported. Null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each UI modification context can have a maximum of one wildcard.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
-    viewType: UiModificationContextDetailsViewTypeEnum;
+    viewType?: UiModificationContextDetailsViewTypeEnum;
 }
 
 
@@ -24366,7 +26201,7 @@ export interface Version {
      */
     archived?: boolean;
     /**
-     * The description of the version. Optional when creating or updating a version.
+     * The description of the version. Optional when creating or updating a version. The maximum size is 16,384 bytes.
      * @type {string}
      * @memberof Version
      */
