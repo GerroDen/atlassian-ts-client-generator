@@ -1,0 +1,8 @@
+{
+  "name": "user-management-cloud-api",
+  "version": "0.0.1",
+  "description": "OpenAPI client for user-management-cloud-api",
+  "author": "OpenAPI-Generator",
+  "private": true,
+  "main": "src/index.ts"
+}
