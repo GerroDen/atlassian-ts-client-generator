@@ -14,6 +14,8 @@
     "fetch:confluence-cloud-api-v2": "curl -o confluence-cloud-api-v2/swagger.json https://developer.atlassian.com/cloud/confluence/openapi-v2.v3.json",
     "fetch:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
     "fetch:jira-software-cloud-api": "curl -o jira-software-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/software/swagger.v3.json",
+    "fetch:teams-cloud-api": "curl -o teams-cloud-api/swagger.json https://dac-static.atlassian.com/platform/teams/swagger-public-api-v1.v3.json?_v=3.12148.0",
+    "fetch:user-management-cloud-api": "curl -o user-management-cloud-api/swagger.json https://dac-static.atlassian.com/cloud/admin/user-management/swagger.v3.json?_v=1.48.14",
     "gen": "run-s 'gen:*'",
     "gen:bamboo-api": "run-s 'gen:bamboo-api:*'",
     "gen:bamboo-api:gen": "gen-tool/gen-api.js bamboo-api",
