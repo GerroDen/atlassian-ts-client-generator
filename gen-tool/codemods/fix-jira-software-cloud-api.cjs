@@ -1,9 +1,8 @@
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, api) => {
   const { j } = api;
-  const commonTransfer = require("./fix-jira-cloud-common-api.cjs");
-  const transformed = commonTransfer(file, api);
-  const source = j(transformed);
+  file.source = require("./fix-jira-cloud-common-api.cjs")(file, api);
+  const source = j(file.source);
   source
     .find(j.ExportAllDeclaration)
     .filter((path) => path.node.source?.value === "./BoardsApi")

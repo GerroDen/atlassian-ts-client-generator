@@ -1,5 +1,7 @@
 /** @type {import("jscodeshift").Transform} */
-const transformer = (file, { j }) => {
+const transformer = (file, api) => {
+  const { j } = api;
+  file.source = require("./fix-common.cjs")(file, api);
   const source = j(file.source);
   source
     .find(j.ObjectProperty)
@@ -25,12 +27,6 @@ const transformer = (file, { j }) => {
     .filter((path) => path.node.typeName?.name === "Set")
     .forEach((path) => {
       path.node.typeName = j.identifier("Array");
-    });
-  source
-    .find(j.TSPropertySignature)
-    .filter((path) => path.node.key?.name === "_default")
-    .forEach((path) => {
-      path.node.key.name = "default";
     });
   return source.toSource();
 };
