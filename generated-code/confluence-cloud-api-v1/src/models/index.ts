@@ -7747,7 +7747,7 @@ export interface SpaceSettingsEditor {
      * @type {string}
      * @memberof SpaceSettingsEditor
      */
-    _default: string;
+    default: string;
 }
 /**
  * 

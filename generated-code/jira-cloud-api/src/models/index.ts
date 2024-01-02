@@ -194,7 +194,7 @@ export interface AppWorkflowTransitionRule {
      * @type {RuleConfiguration}
      * @memberof AppWorkflowTransitionRule
      */
-    _configuration: RuleConfiguration;
+    configuration: RuleConfiguration;
     /**
      * The ID of the transition rule.
      * @type {string}
@@ -3194,7 +3194,7 @@ export interface ConnectWorkflowTransitionRule {
      * @type {RuleConfiguration}
      * @memberof ConnectWorkflowTransitionRule
      */
-    _configuration: RuleConfiguration;
+    configuration: RuleConfiguration;
     /**
      * The ID of the transition rule.
      * @type {string}
@@ -3357,7 +3357,7 @@ export interface ContextualConfiguration {
      * @type {any}
      * @memberof ContextualConfiguration
      */
-    _configuration?: any | null;
+    configuration?: any | null;
     /**
      * The ID of the field context the configuration is associated with.
      * @type {string}
@@ -3809,7 +3809,7 @@ export interface CreateWorkflowCondition {
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowCondition
      */
-    _configuration?: { [key: string]: any; };
+    configuration?: { [key: string]: any; };
     /**
      * The compound condition operator.
      * @type {string}
@@ -4067,7 +4067,7 @@ export interface CreateWorkflowTransitionRule {
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowTransitionRule
      */
-    _configuration?: { [key: string]: any; };
+    configuration?: { [key: string]: any; };
     /**
      * The type of the transition rule.
      * @type {string}
@@ -4174,7 +4174,7 @@ export interface CreateWorkflowTransitionRulesDetailsConditions {
      * @type {{ [key: string]: any; }}
      * @memberof CreateWorkflowTransitionRulesDetailsConditions
      */
-    _configuration?: { [key: string]: any; };
+    configuration?: { [key: string]: any; };
     /**
      * The compound condition operator.
      * @type {string}
@@ -6856,7 +6856,7 @@ export interface FieldCreateMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldCreateMetadata
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -6917,7 +6917,7 @@ export interface FieldCreateMetadataSchema {
      * @type {{ [key: string]: any; }}
      * @memberof FieldCreateMetadataSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -7027,7 +7027,7 @@ export interface FieldDetailsSchema {
      * @type {{ [key: string]: any; }}
      * @memberof FieldDetailsSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -7147,7 +7147,7 @@ export interface FieldMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadata
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -12913,7 +12913,7 @@ export interface JsonTypeBean {
      * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -28072,7 +28072,7 @@ export interface WorkflowSimpleCondition {
      * @type {object}
      * @memberof WorkflowSimpleCondition
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {string}
@@ -28255,7 +28255,7 @@ export interface WorkflowTransitionRule {
      * @type {any}
      * @memberof WorkflowTransitionRule
      */
-    _configuration?: any | null;
+    configuration?: any | null;
     /**
      * The type of the transition rule.
      * @type {string}

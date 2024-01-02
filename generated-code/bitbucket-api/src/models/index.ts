@@ -3305,7 +3305,7 @@ export interface RestBranch {
      * @type {boolean}
      * @memberof RestBranch
      */
-    readonly _default?: boolean;
+    readonly default?: boolean;
     /**
      * 
      * @type {string}
@@ -11558,7 +11558,7 @@ export interface RestWebhook {
      * @type {object}
      * @memberof RestWebhook
      */
-    _configuration?: object;
+    configuration?: object;
     /**
      * 
      * @type {string}

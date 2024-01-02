@@ -2843,7 +2843,7 @@ export interface FieldMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadata
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
 }
 /**
  * The data type of the field.
@@ -2886,7 +2886,7 @@ export interface FieldMetadataSchema {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchema
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
 }
 /**
  * The schema of a field.
@@ -2929,7 +2929,7 @@ export interface FieldMetadataSchemaAllOf {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchemaAllOf
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
 }
 /**
  * 
@@ -4364,7 +4364,7 @@ export interface IssueBeanTransitionsInnerFieldsValue {
      * @type {{ [key: string]: any; }}
      * @memberof IssueBeanTransitionsInnerFieldsValue
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
 }
 /**
  * Details of the issue status after the transition.
@@ -4781,7 +4781,7 @@ export interface JsonTypeBean {
      * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
 }
 /**
  * Details a link group, which defines issue operations.

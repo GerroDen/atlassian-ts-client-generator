@@ -58,7 +58,7 @@ export interface GetAvatarsRequest {
 }
 
 export interface StoreAvatarOperationRequest {
-    type: StoreAvatarTypeEnum;
+    type: StoreAvatarOperationTypeEnum;
     entityId: string;
     size: number;
     storeAvatarRequest: StoreAvatarRequest;
