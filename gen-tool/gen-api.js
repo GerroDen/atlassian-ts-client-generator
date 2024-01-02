@@ -63,10 +63,16 @@ function additionalProperties(properties) {
 }
 
 function normalizeVersion(version) {
-  if (version.split(".").length !== 2) {
-    return version;
+  if (/^\d+\.\d+\.$/.test(version)) {
+    const newVersion = version + ".0";
+    console.log(`Fixing ${dir} version ${version} -> ${newVersion}`);
+    return newVersion;
   }
-  const newVersion = version + ".0";
-  console.log(`Fixing ${dir} version ${version} -> ${newVersion}`);
-  return newVersion;
+  const match = /^(\d+\.\d+\.\d+).+$/.exec(version);
+  if (match) {
+    const newVersion = match[1];
+    console.log(`Fixing ${dir} version ${version} -> ${newVersion}`);
+    return newVersion;
+  }
+  return version;
 }
