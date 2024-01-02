@@ -1,6 +1,6 @@
 {
   "name": "jira-cloud-api",
-  "version": "1001.0.0-SNAPSHOT-b1f11b4174db39c259727b35fea4f2f138890399",
+  "version": "1001.0.0",
   "description": "OpenAPI client for jira-cloud-api",
   "author": "OpenAPI-Generator",
   "private": true,
