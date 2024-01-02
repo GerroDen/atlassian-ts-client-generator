@@ -63,7 +63,7 @@ function additionalProperties(properties) {
 }
 
 function normalizeVersion(version) {
-  if (/^\d+\.\d+\.$/.test(version)) {
+  if (/^\d+\.\d+$/.test(version)) {
     const newVersion = version + ".0";
     console.log(`Fixing ${dir} version ${version} -> ${newVersion}`);
     return newVersion;
