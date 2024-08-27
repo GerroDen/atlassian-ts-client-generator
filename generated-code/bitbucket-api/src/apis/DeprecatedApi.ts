@@ -24,7 +24,7 @@ import type {
   RestBuildStatus,
   RestPullRequestParticipant,
   UserPickerContext,
-} from '../models';
+} from '../models/index';
 
 interface AddBuildStatusRequest {
     commitId: string;
@@ -133,7 +133,7 @@ interface RemoveUserFromGroupRequest {
 interface SetDefaultBranch1Request {
     projectKey: string;
     repositorySlug: string;
-    restBranch?: RestBranch;
+    restBranch?: Omit<RestBranch, 'displayId'|'default'|'latestCommit'|'latestChangeset'>;
 }
 
 interface SynchronizeRepositoryWithUpstreamRequest {
@@ -186,10 +186,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Associates a build status with a commit.The <code>state</code>, the <code>key</code> and the <code>url</code> fields are mandatory. The <code>name</code> and<code>description</code> fields are optional.All fields (mandatory or optional) are limited to 255 characters, except for the <code>url</code>,which is limited to 450 characters.Supported values for the <code>state</code> are <code>SUCCESSFUL</code>, <code>FAILED</code>and <code>INPROGRESS</code>.The authenticated user must have <strong>LICENSED</strong> permission or higher to call this resource.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
      * Create build status for commit
+     * @deprecated
      */
     async addBuildStatusRaw(requestParameters: AddBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling addBuildStatus.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling addBuildStatus().'
+            );
         }
 
         const queryParameters: any = {};
@@ -199,11 +203,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))),
+            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBuildStatus,
+            body: requestParameters['restBuildStatus'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -212,6 +216,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Associates a build status with a commit.The <code>state</code>, the <code>key</code> and the <code>url</code> fields are mandatory. The <code>name</code> and<code>description</code> fields are optional.All fields (mandatory or optional) are limited to 255 characters, except for the <code>url</code>,which is limited to 450 characters.Supported values for the <code>state</code> are <code>SUCCESSFUL</code>, <code>FAILED</code>and <code>INPROGRESS</code>.The authenticated user must have <strong>LICENSED</strong> permission or higher to call this resource.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
      * Create build status for commit
+     * @deprecated
      */
     async addBuildStatus(requestParameters: AddBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addBuildStatusRaw(requestParameters, initOverrides);
@@ -220,6 +225,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -233,7 +239,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.groupPickerContext,
+            body: requestParameters['groupPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -242,6 +248,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addGroupToUser(requestParameters: AddGroupToUserRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addGroupToUserRaw(requestParameters, initOverrides);
@@ -250,6 +257,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -263,7 +271,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userPickerContext,
+            body: requestParameters['userPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -272,6 +280,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addUserToGroup(requestParameters: AddUserToGroupRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addUserToGroupRaw(requestParameters, initOverrides);
@@ -280,18 +289,28 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Approve pull request
+     * @deprecated
      */
     async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling approve.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling approve().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling approve.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling approve().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling approve.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling approve().'
+            );
         }
 
         const queryParameters: any = {};
@@ -299,7 +318,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -311,6 +330,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Approve pull request
+     * @deprecated
      */
     async approve(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestPullRequestParticipant> {
         const response = await this.approveRaw(requestParameters, initOverrides);
@@ -320,18 +340,28 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve the total number of OPEN and RESOLVED tasks associated with a pull request.    <strong>Deprecated since 7.2</strong>. Tasks are now managed using Comments with BLOCKER severity. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments?count=true instead.
      * Get pull request task count
+     * @deprecated
      */
     async countPullRequestTasksRaw(requestParameters: CountPullRequestTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling countPullRequestTasks.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling countPullRequestTasks().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling countPullRequestTasks.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling countPullRequestTasks().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling countPullRequestTasks.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling countPullRequestTasks().'
+            );
         }
 
         const queryParameters: any = {};
@@ -339,7 +369,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/tasks/count`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/tasks/count`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -351,6 +381,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve the total number of OPEN and RESOLVED tasks associated with a pull request.    <strong>Deprecated since 7.2</strong>. Tasks are now managed using Comments with BLOCKER severity. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments?count=true instead.
      * Get pull request task count
+     * @deprecated
      */
     async countPullRequestTasks(requestParameters: CountPullRequestTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.countPullRequestTasksRaw(requestParameters, initOverrides);
@@ -359,6 +390,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Create a new task.   <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with severity BLOCKER. Call <code>POST /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments</code> instead,passing the attribute \'severity\' set to \'BLOCKER\'.
      * Create task
+     * @deprecated
      */
     async createTaskRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -378,6 +410,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Create a new task.   <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with severity BLOCKER. Call <code>POST /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments</code> instead,passing the attribute \'severity\' set to \'BLOCKER\'.
      * Create task
+     * @deprecated
      */
     async createTask(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.createTaskRaw(initOverrides);
@@ -386,10 +419,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Delete a task.  <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with BLOCKER severity. Call <code>DELETE /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}</code>instead. @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call DELETE /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} instead.  Note that only the task\'s creator, the context\'s author or an admin of the context\'s repository can delete a task. (For a pull request task, those are the task\'s creator, the pull request\'s author or an admin on the repository containing the pull request). Additionally a task cannot be deleted if it has already been resolved.
      * Delete task
+     * @deprecated
      */
     async deleteTaskRaw(requestParameters: DeleteTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
-            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling deleteTask.');
+        if (requestParameters['taskId'] == null) {
+            throw new runtime.RequiredError(
+                'taskId',
+                'Required parameter "taskId" was null or undefined when calling deleteTask().'
+            );
         }
 
         const queryParameters: any = {};
@@ -397,7 +434,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -409,6 +446,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Delete a task.  <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with BLOCKER severity. Call <code>DELETE /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}</code>instead. @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call DELETE /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} instead.  Note that only the task\'s creator, the context\'s author or an admin of the context\'s repository can delete a task. (For a pull request task, those are the task\'s creator, the pull request\'s author or an admin on the repository containing the pull request). Additionally a task cannot be deleted if it has already been resolved.
      * Delete task
+     * @deprecated
      */
     async deleteTask(requestParameters: DeleteTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteTaskRaw(requestParameters, initOverrides);
@@ -417,30 +455,34 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Gets build statuses associated with a commit.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
      * Get build statuses for commit
+     * @deprecated
      */
     async getBuildStatusRaw(requestParameters: GetBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBuildStatus200Response>> {
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getBuildStatus.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getBuildStatus().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.orderBy !== undefined) {
-            queryParameters['orderBy'] = requestParameters.orderBy;
+        if (requestParameters['orderBy'] != null) {
+            queryParameters['orderBy'] = requestParameters['orderBy'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))),
+            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -452,6 +494,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Gets build statuses associated with a commit.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
      * Get build statuses for commit
+     * @deprecated
      */
     async getBuildStatus(requestParameters: GetBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBuildStatus200Response> {
         const response = await this.getBuildStatusRaw(requestParameters, initOverrides);
@@ -463,20 +506,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
      * Get build status statistics for commit
      */
     async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getBuildStatusStats.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getBuildStatusStats().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.includeUnique !== undefined) {
-            queryParameters['includeUnique'] = requestParameters.includeUnique;
+        if (requestParameters['includeUnique'] != null) {
+            queryParameters['includeUnique'] = requestParameters['includeUnique'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/build-status/latest/commits/stats/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))),
+            path: `/build-status/latest/commits/stats/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -497,14 +543,21 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
      * Get default branch
+     * @deprecated
      */
     async getDefaultBranch1Raw(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getDefaultBranch1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getDefaultBranch1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getDefaultBranch1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getDefaultBranch1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -512,7 +565,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -524,47 +577,68 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
      * Get default branch
+     * @deprecated
      */
-    async getDefaultBranch1(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestBranch> {
+    async getDefaultBranch1(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestBranch | null | undefined > {
         const response = await this.getDefaultBranch1Raw(requestParameters, initOverrides);
-        return await response.value();
+        switch (response.raw.status) {
+            case 200:
+                return await response.value();
+            case 204:
+                return null;
+            default:
+                return await response.value();
+        }
     }
 
     /**
      * Get a page of users who liked a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the **REPO_READ** (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong>
      * Get comment likes
+     * @deprecated
      */
     async getLikersRaw(requestParameters: GetLikersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLikers200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getLikers.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getLikers().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getLikers.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getLikers().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getLikers.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getLikers().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getLikers.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getLikers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -576,6 +650,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Get a page of users who liked a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the **REPO_READ** (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong>
      * Get comment likes
+     * @deprecated
      */
     async getLikers(requestParameters: GetLikersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetLikers200Response> {
         const response = await this.getLikersRaw(requestParameters, initOverrides);
@@ -585,38 +660,51 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Get a page of users who liked a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>.   The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.**
      * Get pull request comment likes
+     * @deprecated
      */
     async getLikers1Raw(requestParameters: GetLikers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLikers200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getLikers1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getLikers1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getLikers1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getLikers1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getLikers1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getLikers1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getLikers1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getLikers1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -628,6 +716,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Get a page of users who liked a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>.   The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.**
      * Get pull request comment likes
+     * @deprecated
      */
     async getLikers1(requestParameters: GetLikers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetLikers200Response> {
         const response = await this.getLikers1Raw(requestParameters, initOverrides);
@@ -650,10 +739,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.requestBody,
+            body: requestParameters['requestBody'],
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
@@ -668,18 +761,28 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve the tasks associated with a pull request.   **Removed in 8.0**. Tasks are now managed using Comments with BLOCKER severity. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments instead   **Deprecated since 7.2, changed to 404 in 8.0, remove in 9.0.** Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments instead
      * Get pull request tasks
+     * @deprecated
      */
     async getPullRequestTasksRaw(requestParameters: GetPullRequestTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPullRequestTasks.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPullRequestTasks().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getPullRequestTasks.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getPullRequestTasks().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getPullRequestTasks.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getPullRequestTasks().'
+            );
         }
 
         const queryParameters: any = {};
@@ -687,7 +790,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/tasks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/tasks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -699,6 +802,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve the tasks associated with a pull request.   **Removed in 8.0**. Tasks are now managed using Comments with BLOCKER severity. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments instead   **Deprecated since 7.2, changed to 404 in 8.0, remove in 9.0.** Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments instead
      * Get pull request tasks
+     * @deprecated
      */
     async getPullRequestTasks(requestParameters: GetPullRequestTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getPullRequestTasksRaw(requestParameters, initOverrides);
@@ -707,10 +811,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve an existing task.  <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with BLOCKER severity. Call <code>GET /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code>instead. @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call GET /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} instead.
      * Get task
+     * @deprecated
      */
     async getTaskRaw(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
-            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling getTask.');
+        if (requestParameters['taskId'] == null) {
+            throw new runtime.RequiredError(
+                'taskId',
+                'Required parameter "taskId" was null or undefined when calling getTask().'
+            );
         }
 
         const queryParameters: any = {};
@@ -718,7 +826,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -730,6 +838,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Retrieve an existing task.  <strong>Removed in 8.0</strong>. Tasks are now managed using Comments with BLOCKER severity. Call <code>GET /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code>instead. @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call GET /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} instead.
      * Get task
+     * @deprecated
      */
     async getTask(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.getTaskRaw(requestParameters, initOverrides);
@@ -738,22 +847,35 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Like a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong> Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Like a commit comment
+     * @deprecated
      */
     async likeRaw(requestParameters: LikeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling like.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling like().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling like.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling like().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling like.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling like().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling like.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling like().'
+            );
         }
 
         const queryParameters: any = {};
@@ -761,7 +883,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -773,6 +895,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Like a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong> Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Like a commit comment
+     * @deprecated
      */
     async like(requestParameters: LikeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.likeRaw(requestParameters, initOverrides);
@@ -781,22 +904,35 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Like a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>. The like will be recorded against the requesting user.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.** Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Like a pull request comment
+     * @deprecated
      */
     async like1Raw(requestParameters: Like1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling like1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling like1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling like1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling like1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling like1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling like1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling like1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling like1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -804,7 +940,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -816,6 +952,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Like a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>. The like will be recorded against the requesting user.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.** Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Like a pull request comment
+     * @deprecated
      */
     async like1(requestParameters: Like1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.like1Raw(requestParameters, initOverrides);
@@ -824,10 +961,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This REST endpoint is retained for backwards compatibility only. It is a no-op. Starting from 4.6.0, mirrors no longer specify a disabled lifecycle callback in their addon descriptor. Prior to 4.6.0, this was the callback method that was called when the mirroring atlassian-connect add-on has been disabled in the upstream server identified by <code> upstreamId</code>.
      * On disable of mirror addon
+     * @deprecated
      */
     async onAddonDisabledRaw(requestParameters: OnAddonDisabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.upstreamId === null || requestParameters.upstreamId === undefined) {
-            throw new runtime.RequiredError('upstreamId','Required parameter requestParameters.upstreamId was null or undefined when calling onAddonDisabled.');
+        if (requestParameters['upstreamId'] == null) {
+            throw new runtime.RequiredError(
+                'upstreamId',
+                'Required parameter "upstreamId" was null or undefined when calling onAddonDisabled().'
+            );
         }
 
         const queryParameters: any = {};
@@ -835,7 +976,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/upstreamServers/{upstreamId}/addon/disabled`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters.upstreamId))),
+            path: `/mirroring/latest/upstreamServers/{upstreamId}/addon/disabled`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters['upstreamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -847,6 +988,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This REST endpoint is retained for backwards compatibility only. It is a no-op. Starting from 4.6.0, mirrors no longer specify a disabled lifecycle callback in their addon descriptor. Prior to 4.6.0, this was the callback method that was called when the mirroring atlassian-connect add-on has been disabled in the upstream server identified by <code> upstreamId</code>.
      * On disable of mirror addon
+     * @deprecated
      */
     async onAddonDisabled(requestParameters: OnAddonDisabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.onAddonDisabledRaw(requestParameters, initOverrides);
@@ -855,10 +997,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This REST endpoint is retained for backwards compatibility only. It is a no-op. Starting from 4.6.0, mirrors no longer specify an enabled lifecycle callback in their addon descriptor. Prior to 4.6.0, this was the callback method that was called when the mirroring atlassian-connect add-on has been enabled in the upstream server identified by <code>upstreamId</code>.
      * On enabled of mirror addon
+     * @deprecated
      */
     async onAddonEnabledRaw(requestParameters: OnAddonEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.upstreamId === null || requestParameters.upstreamId === undefined) {
-            throw new runtime.RequiredError('upstreamId','Required parameter requestParameters.upstreamId was null or undefined when calling onAddonEnabled.');
+        if (requestParameters['upstreamId'] == null) {
+            throw new runtime.RequiredError(
+                'upstreamId',
+                'Required parameter "upstreamId" was null or undefined when calling onAddonEnabled().'
+            );
         }
 
         const queryParameters: any = {};
@@ -866,7 +1012,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/upstreamServers/{upstreamId}/addon/enabled`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters.upstreamId))),
+            path: `/mirroring/latest/upstreamServers/{upstreamId}/addon/enabled`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters['upstreamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -878,6 +1024,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This REST endpoint is retained for backwards compatibility only. It is a no-op. Starting from 4.6.0, mirrors no longer specify an enabled lifecycle callback in their addon descriptor. Prior to 4.6.0, this was the callback method that was called when the mirroring atlassian-connect add-on has been enabled in the upstream server identified by <code>upstreamId</code>.
      * On enabled of mirror addon
+     * @deprecated
      */
     async onAddonEnabled(requestParameters: OnAddonEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.onAddonEnabledRaw(requestParameters, initOverrides);
@@ -886,6 +1033,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
      * Remove user from group
+     * @deprecated
      */
     async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -899,7 +1047,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userPickerContext,
+            body: requestParameters['userPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -908,6 +1056,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
      * Remove user from group
+     * @deprecated
      */
     async removeUserFromGroup(requestParameters: RemoveUserFromGroupRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.removeUserFromGroupRaw(requestParameters, initOverrides);
@@ -916,14 +1065,21 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
      * Update default branch
+     * @deprecated
      */
     async setDefaultBranch1Raw(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling setDefaultBranch1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling setDefaultBranch1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling setDefaultBranch1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling setDefaultBranch1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -933,11 +1089,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBranch,
+            body: requestParameters['restBranch'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -946,6 +1102,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
      * Update default branch
+     * @deprecated
      */
     async setDefaultBranch1(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.setDefaultBranch1Raw(requestParameters, initOverrides);
@@ -954,26 +1111,33 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This method is no longer supported
      * Get upstream settings
+     * @deprecated
      */
     async synchronizeRepositoryWithUpstreamRaw(requestParameters: SynchronizeRepositoryWithUpstreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.upstreamRepoId === null || requestParameters.upstreamRepoId === undefined) {
-            throw new runtime.RequiredError('upstreamRepoId','Required parameter requestParameters.upstreamRepoId was null or undefined when calling synchronizeRepositoryWithUpstream.');
+        if (requestParameters['upstreamRepoId'] == null) {
+            throw new runtime.RequiredError(
+                'upstreamRepoId',
+                'Required parameter "upstreamRepoId" was null or undefined when calling synchronizeRepositoryWithUpstream().'
+            );
         }
 
-        if (requestParameters.upstreamId === null || requestParameters.upstreamId === undefined) {
-            throw new runtime.RequiredError('upstreamId','Required parameter requestParameters.upstreamId was null or undefined when calling synchronizeRepositoryWithUpstream.');
+        if (requestParameters['upstreamId'] == null) {
+            throw new runtime.RequiredError(
+                'upstreamId',
+                'Required parameter "upstreamId" was null or undefined when calling synchronizeRepositoryWithUpstream().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.level !== undefined) {
-            queryParameters['level'] = requestParameters.level;
+        if (requestParameters['level'] != null) {
+            queryParameters['level'] = requestParameters['level'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/upstreamServers/{upstreamId}/repos/{upstreamRepoId}/synchronization`.replace(`{${"upstreamRepoId"}}`, encodeURIComponent(String(requestParameters.upstreamRepoId))).replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters.upstreamId))),
+            path: `/mirroring/latest/upstreamServers/{upstreamId}/repos/{upstreamRepoId}/synchronization`.replace(`{${"upstreamRepoId"}}`, encodeURIComponent(String(requestParameters['upstreamRepoId']))).replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters['upstreamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -985,6 +1149,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This method is no longer supported
      * Get upstream settings
+     * @deprecated
      */
     async synchronizeRepositoryWithUpstream(requestParameters: SynchronizeRepositoryWithUpstreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.synchronizeRepositoryWithUpstreamRaw(requestParameters, initOverrides);
@@ -993,22 +1158,26 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This method is no longer supported
      * Change upstream settings
+     * @deprecated
      */
     async synchronizeWithUpstreamRaw(requestParameters: SynchronizeWithUpstreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.upstreamId === null || requestParameters.upstreamId === undefined) {
-            throw new runtime.RequiredError('upstreamId','Required parameter requestParameters.upstreamId was null or undefined when calling synchronizeWithUpstream.');
+        if (requestParameters['upstreamId'] == null) {
+            throw new runtime.RequiredError(
+                'upstreamId',
+                'Required parameter "upstreamId" was null or undefined when calling synchronizeWithUpstream().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.level !== undefined) {
-            queryParameters['level'] = requestParameters.level;
+        if (requestParameters['level'] != null) {
+            queryParameters['level'] = requestParameters['level'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/upstreamServers/{upstreamId}/synchronization`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters.upstreamId))),
+            path: `/mirroring/latest/upstreamServers/{upstreamId}/synchronization`.replace(`{${"upstreamId"}}`, encodeURIComponent(String(requestParameters['upstreamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1020,6 +1189,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * This method is no longer supported
      * Change upstream settings
+     * @deprecated
      */
     async synchronizeWithUpstream(requestParameters: SynchronizeWithUpstreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.synchronizeWithUpstreamRaw(requestParameters, initOverrides);
@@ -1028,30 +1198,40 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
      * Unassign pull request participant
+     * @deprecated
      */
     async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1063,6 +1243,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
      * Unassign pull request participant
+     * @deprecated
      */
     async unassignParticipantRole1(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.unassignParticipantRole1Raw(requestParameters, initOverrides);
@@ -1071,22 +1252,35 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unlike a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong> Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Unlike a commit comment
+     * @deprecated
      */
     async unlikeRaw(requestParameters: UnlikeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unlike.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unlike().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling unlike.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling unlike().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling unlike.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling unlike().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unlike.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unlike().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1094,7 +1288,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1106,6 +1300,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unlike a commit comment in the specified repository, identified by <code>commitId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  <strong>Deprecated in 8.0 to be removed in 9.0.</strong> Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Unlike a commit comment
+     * @deprecated
      */
     async unlike(requestParameters: UnlikeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.unlikeRaw(requestParameters, initOverrides);
@@ -1114,22 +1309,35 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unlike a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.** Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Unlike a pull request comment
+     * @deprecated
      */
     async unlike1Raw(requestParameters: Unlike1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unlike1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unlike1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling unlike1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling unlike1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unlike1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unlike1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unlike1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unlike1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1137,7 +1345,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/likes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1149,6 +1357,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Unlike a pull request comment in the specified repository, identified by <code>pullRequestId</code> and <code>commentId</code>.  The authenticated user must have the <strong>REPO_READ</strong> (or higher) permission for the specified repository to access this resource.  **Deprecated in 8.0 to be removed in 9.0.** Likes have been replaced with reactions. For backwards compatibility, the <pre>thumbsup</pre> reaction is treated as a like.
      * Unlike a pull request comment
+     * @deprecated
      */
     async unlike1(requestParameters: Unlike1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.unlike1Raw(requestParameters, initOverrides);
@@ -1157,10 +1366,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Update an existing task.     <strong>Removed in 8.0</strong>.  Tasks are now managed using Comments with BLOCKER severity.  Call <code>PUT /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code> instead.  To resolve a task, pass the attribute \'state\' set to \'RESOLVED\'.  @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call <code>PUT  /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code> instead.    As of Stash 3.3, only the state and text of a task can be updated.    Updating the state of a task is allowed for any user having <em>READ</em> access to the repository.  However only the task\'s creator, the context\'s author or an admin of the context\'s repository can update the task\'s text. (For a pull request task, those are the task\'s creator, the pull request\'s author or an admin on the repository containing the pull request). Additionally the task\'s text cannot be updated if it has been resolved.
      * Update task
+     * @deprecated
      */
     async updateTaskRaw(requestParameters: UpdateTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
-            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling updateTask.');
+        if (requestParameters['taskId'] == null) {
+            throw new runtime.RequiredError(
+                'taskId',
+                'Required parameter "taskId" was null or undefined when calling updateTask().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1168,7 +1381,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
+            path: `/api/latest/tasks/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1180,6 +1393,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Update an existing task.     <strong>Removed in 8.0</strong>.  Tasks are now managed using Comments with BLOCKER severity.  Call <code>PUT /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code> instead.  To resolve a task, pass the attribute \'state\' set to \'RESOLVED\'.  @deprecated since 7.2, changed to 404 in 8.0, remove in 9.0. Call <code>PUT  /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId} </code> instead.    As of Stash 3.3, only the state and text of a task can be updated.    Updating the state of a task is allowed for any user having <em>READ</em> access to the repository.  However only the task\'s creator, the context\'s author or an admin of the context\'s repository can update the task\'s text. (For a pull request task, those are the task\'s creator, the pull request\'s author or an admin on the repository containing the pull request). Additionally the task\'s text cannot be updated if it has been resolved.
      * Update task
+     * @deprecated
      */
     async updateTask(requestParameters: UpdateTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.updateTaskRaw(requestParameters, initOverrides);
@@ -1188,18 +1402,28 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Unapprove pull request
+     * @deprecated
      */
     async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling withdrawApproval.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling withdrawApproval().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling withdrawApproval.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling withdrawApproval().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling withdrawApproval.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling withdrawApproval().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1207,7 +1431,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1219,6 +1443,7 @@ export class DeprecatedApi extends runtime.BaseAPI {
     /**
      * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Unapprove pull request
+     * @deprecated
      */
     async withdrawApproval(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestPullRequestParticipant> {
         const response = await this.withdrawApprovalRaw(requestParameters, initOverrides);

@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   GetAll401Response,
   RestBuildCapabilities,
-} from '../models';
+} from '../models/index';
 
 /**
  * 

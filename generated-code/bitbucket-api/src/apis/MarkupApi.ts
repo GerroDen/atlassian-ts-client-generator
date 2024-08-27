@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   GetAll401Response,
   RestMarkup,
-} from '../models';
+} from '../models/index';
 
 interface PreviewRequest {
     htmlEscape?: string;
@@ -39,20 +39,20 @@ export class MarkupApi extends runtime.BaseAPI {
     async previewRaw(requestParameters: PreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMarkup>> {
         const queryParameters: any = {};
 
-        if (requestParameters.htmlEscape !== undefined) {
-            queryParameters['htmlEscape'] = requestParameters.htmlEscape;
+        if (requestParameters['htmlEscape'] != null) {
+            queryParameters['htmlEscape'] = requestParameters['htmlEscape'];
         }
 
-        if (requestParameters.urlMode !== undefined) {
-            queryParameters['urlMode'] = requestParameters.urlMode;
+        if (requestParameters['urlMode'] != null) {
+            queryParameters['urlMode'] = requestParameters['urlMode'];
         }
 
-        if (requestParameters.includeHeadingId !== undefined) {
-            queryParameters['includeHeadingId'] = requestParameters.includeHeadingId;
+        if (requestParameters['includeHeadingId'] != null) {
+            queryParameters['includeHeadingId'] = requestParameters['includeHeadingId'];
         }
 
-        if (requestParameters.hardwrap !== undefined) {
-            queryParameters['hardwrap'] = requestParameters.hardwrap;
+        if (requestParameters['hardwrap'] != null) {
+            queryParameters['hardwrap'] = requestParameters['hardwrap'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -64,7 +64,7 @@ export class MarkupApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

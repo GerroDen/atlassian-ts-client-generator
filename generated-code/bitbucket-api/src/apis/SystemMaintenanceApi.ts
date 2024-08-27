@@ -57,7 +57,7 @@ import type {
   StartMeshMigrationRequest,
   UserPasswordUpdate,
   UserUpdate,
-} from '../models';
+} from '../models/index';
 
 interface CancelExportJobRequest {
     jobId: string;
@@ -294,7 +294,7 @@ interface UpdateRequest {
 }
 
 interface Update1Request {
-    restBitbucketLicense?: RestBitbucketLicense;
+    restBitbucketLicense?: Omit<RestBitbucketLicense, 'expiryDate'|'daysBeforeExpiry'|'gracePeriodEndDate'|'maintenanceExpiryDate'|'maximumNumberOfUsers'|'purchaseDate'|'unlimitedNumberOfUsers'|'serverId'|'numberOfDaysBeforeExpiry'|'numberOfDaysBeforeGracePeriodExpiry'|'numberOfDaysBeforeMaintenanceExpiry'|'supportEntitlementNumber'|'creationDate'>;
 }
 
 interface Update2Request {
@@ -335,8 +335,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Cancel export job
      */
     async cancelExportJobRaw(requestParameters: CancelExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling cancelExportJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling cancelExportJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -344,7 +347,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/exports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -366,8 +369,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Cancel import job
      */
     async cancelImportJobRaw(requestParameters: CancelImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling cancelImportJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling cancelImportJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -375,7 +381,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/imports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -397,8 +403,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Cancel Mesh migration job
      */
     async cancelMeshMigrationJobRaw(requestParameters: CancelMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling cancelMeshMigrationJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling cancelMeshMigrationJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -406,7 +415,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/mesh/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -528,20 +537,20 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.content !== undefined) {
-            formParams.append('content', requestParameters.content as any);
+        if (requestParameters['content'] != null) {
+            formParams.append('content', requestParameters['content'] as any);
         }
 
-        if (requestParameters.description !== undefined) {
-            formParams.append('description', requestParameters.description as any);
+        if (requestParameters['description'] != null) {
+            formParams.append('description', requestParameters['description'] as any);
         }
 
-        if (requestParameters.name !== undefined) {
-            formParams.append('name', requestParameters.name as any);
+        if (requestParameters['name'] != null) {
+            formParams.append('name', requestParameters['name'] as any);
         }
 
-        if (requestParameters.type !== undefined) {
-            formParams.append('type', requestParameters.type as any);
+        if (requestParameters['type'] != null) {
+            formParams.append('type', requestParameters['type'] as any);
         }
 
         const response = await this.request({
@@ -569,8 +578,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Delete a hook script.
      */
     async delete4Raw(requestParameters: Delete4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.scriptId === null || requestParameters.scriptId === undefined) {
-            throw new runtime.RequiredError('scriptId','Required parameter requestParameters.scriptId was null or undefined when calling delete4.');
+        if (requestParameters['scriptId'] == null) {
+            throw new runtime.RequiredError(
+                'scriptId',
+                'Required parameter "scriptId" was null or undefined when calling delete4().'
+            );
         }
 
         const queryParameters: any = {};
@@ -578,7 +590,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters.scriptId))),
+            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -598,20 +610,23 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     /**
      */
     async delete5Raw(requestParameters: Delete5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling delete5.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling delete5().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.force !== undefined) {
-            queryParameters['force'] = requestParameters.force;
+        if (requestParameters['force'] != null) {
+            queryParameters['force'] = requestParameters['force'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -631,8 +646,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Delete user specific rate limit settings
      */
     async delete9Raw(requestParameters: Delete9Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling delete9.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling delete9().'
+            );
         }
 
         const queryParameters: any = {};
@@ -640,7 +658,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -662,8 +680,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Delete user avatar
      */
     async deleteAvatarRaw(requestParameters: DeleteAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamedLink>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling deleteAvatar.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling deleteAvatar().'
+            );
         }
 
         const queryParameters: any = {};
@@ -671,7 +692,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -803,8 +824,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get user specific rate limit settings
      */
     async get6Raw(requestParameters: Get6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling get6.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling get6().'
+            );
         }
 
         const queryParameters: any = {};
@@ -812,7 +836,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -893,16 +917,16 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async getAll1Raw(requestParameters: GetAll1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAll1200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -933,12 +957,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async getAllMeshMigrationSummariesRaw(requestParameters: GetAllMeshMigrationSummariesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllMeshMigrationSummaries200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1013,9 +1037,16 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Gets the announcement banner, if one exists and is available to the user
      * Get announcement banner
      */
-    async getBanner(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestAnnouncementBanner> {
+    async getBanner(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestAnnouncementBanner | null | undefined > {
         const response = await this.getBannerRaw(initOverrides);
-        return await response.value();
+        switch (response.raw.status) {
+            case 200:
+                return await response.value();
+            case 204:
+                return null;
+            default:
+                return await response.value();
+        }
     }
 
     /**
@@ -1023,8 +1054,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get a hook script
      */
     async getByIdRaw(requestParameters: GetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
-        if (requestParameters.scriptId === null || requestParameters.scriptId === undefined) {
-            throw new runtime.RequiredError('scriptId','Required parameter requestParameters.scriptId was null or undefined when calling getById.');
+        if (requestParameters['scriptId'] == null) {
+            throw new runtime.RequiredError(
+                'scriptId',
+                'Required parameter "scriptId" was null or undefined when calling getById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1032,7 +1066,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters.scriptId))),
+            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1055,8 +1089,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get Mesh node
      */
     async getById1Raw(requestParameters: GetById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getById1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getById1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1064,7 +1101,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1141,8 +1178,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get export job details
      */
     async getExportJobRaw(requestParameters: GetExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getExportJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getExportJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1150,7 +1190,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/exports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1173,32 +1213,35 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get job messages
      */
     async getExportJobMessagesRaw(requestParameters: GetExportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getExportJobMessages.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getExportJobMessages().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.severity !== undefined) {
-            queryParameters['severity'] = requestParameters.severity;
+        if (requestParameters['severity'] != null) {
+            queryParameters['severity'] = requestParameters['severity'];
         }
 
-        if (requestParameters.subject !== undefined) {
-            queryParameters['subject'] = requestParameters.subject;
+        if (requestParameters['subject'] != null) {
+            queryParameters['subject'] = requestParameters['subject'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/exports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1251,16 +1294,16 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async getHistoryRaw(requestParameters: GetHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetHistory200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1289,8 +1332,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get import job status
      */
     async getImportJobRaw(requestParameters: GetImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getImportJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getImportJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1298,7 +1344,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/imports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1321,32 +1367,35 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get import job messages
      */
     async getImportJobMessagesRaw(requestParameters: GetImportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getImportJobMessages.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getImportJobMessages().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.severity !== undefined) {
-            queryParameters['severity'] = requestParameters.severity;
+        if (requestParameters['severity'] != null) {
+            queryParameters['severity'] = requestParameters['severity'];
         }
 
-        if (requestParameters.subject !== undefined) {
-            queryParameters['subject'] = requestParameters.subject;
+        if (requestParameters['subject'] != null) {
+            queryParameters['subject'] = requestParameters['subject'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/imports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1397,8 +1446,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get label
      */
     async getLabelRaw(requestParameters: GetLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
-        if (requestParameters.labelName === null || requestParameters.labelName === undefined) {
-            throw new runtime.RequiredError('labelName','Required parameter requestParameters.labelName was null or undefined when calling getLabel.');
+        if (requestParameters['labelName'] == null) {
+            throw new runtime.RequiredError(
+                'labelName',
+                'Required parameter "labelName" was null or undefined when calling getLabel().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1406,7 +1458,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/labels/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters.labelName))),
+            path: `/api/latest/labels/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1429,28 +1481,31 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get labelables for label
      */
     async getLabelablesRaw(requestParameters: GetLabelablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabelables200Response>> {
-        if (requestParameters.labelName === null || requestParameters.labelName === undefined) {
-            throw new runtime.RequiredError('labelName','Required parameter requestParameters.labelName was null or undefined when calling getLabelables.');
+        if (requestParameters['labelName'] == null) {
+            throw new runtime.RequiredError(
+                'labelName',
+                'Required parameter "labelName" was null or undefined when calling getLabelables().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/labels/{labelName}/labeled`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters.labelName))),
+            path: `/api/latest/labels/{labelName}/labeled`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1475,16 +1530,16 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async getLabelsRaw(requestParameters: GetLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabels200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.prefix !== undefined) {
-            queryParameters['prefix'] = requestParameters.prefix;
+        if (requestParameters['prefix'] != null) {
+            queryParameters['prefix'] = requestParameters['prefix'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1513,8 +1568,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get current log level
      */
     async getLevelRaw(requestParameters: GetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLogLevel>> {
-        if (requestParameters.loggerName === null || requestParameters.loggerName === undefined) {
-            throw new runtime.RequiredError('loggerName','Required parameter requestParameters.loggerName was null or undefined when calling getLevel.');
+        if (requestParameters['loggerName'] == null) {
+            throw new runtime.RequiredError(
+                'loggerName',
+                'Required parameter "loggerName" was null or undefined when calling getLevel().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1522,7 +1580,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/logs/logger/{loggerName}`.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters.loggerName))),
+            path: `/api/latest/logs/logger/{loggerName}`.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1573,8 +1631,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get Mesh migration job details
      */
     async getMeshMigrationJobRaw(requestParameters: GetMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getMeshMigrationJob.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getMeshMigrationJob().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1582,7 +1643,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/mesh/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1604,32 +1665,35 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get Mesh migration job messages
      */
     async getMeshMigrationJobMessagesRaw(requestParameters: GetMeshMigrationJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getMeshMigrationJobMessages.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getMeshMigrationJobMessages().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.severity !== undefined) {
-            queryParameters['severity'] = requestParameters.severity;
+        if (requestParameters['severity'] != null) {
+            queryParameters['severity'] = requestParameters['severity'];
         }
 
-        if (requestParameters.subject !== undefined) {
-            queryParameters['subject'] = requestParameters.subject;
+        if (requestParameters['subject'] != null) {
+            queryParameters['subject'] = requestParameters['subject'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/mesh/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1652,8 +1716,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get Mesh migration job summary
      */
     async getMeshMigrationJobSummaryRaw(requestParameters: GetMeshMigrationJobSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshMigrationSummary>> {
-        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
-            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getMeshMigrationJobSummary.');
+        if (requestParameters['jobId'] == null) {
+            throw new runtime.RequiredError(
+                'jobId',
+                'Required parameter "jobId" was null or undefined when calling getMeshMigrationJobSummary().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1661,7 +1728,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/summary`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
+            path: `/api/latest/migration/mesh/{jobId}/summary`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1823,8 +1890,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get support zip for node
      */
     async getSupportZipRaw(requestParameters: GetSupportZipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSupportZip.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSupportZip().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1832,7 +1902,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/support-zips/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/admin/git/mesh/support-zips/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1908,8 +1978,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get user
      */
     async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling getUser.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling getUser().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1917,7 +1990,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1940,8 +2013,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get user settings
      */
     async getUserSettingsRaw(requestParameters: GetUserSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettingsMap>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling getUserSettings.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling getUserSettings().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1949,7 +2025,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1974,20 +2050,20 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async getUsers2Raw(requestParameters: GetUsers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.permissionN !== undefined) {
-            queryParameters['permission.N'] = requestParameters.permissionN;
+        if (requestParameters['permissionN'] != null) {
+            queryParameters['permission.N'] = requestParameters['permissionN'];
         }
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
-        if (requestParameters.group !== undefined) {
-            queryParameters['group'] = requestParameters.group;
+        if (requestParameters['group'] != null) {
+            queryParameters['group'] = requestParameters['group'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2027,7 +2103,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restExportRequest,
+            body: requestParameters['restExportRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2058,7 +2134,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restMeshMigrationRequest,
+            body: requestParameters['restMeshMigrationRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2078,8 +2154,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Get hook script content
      */
     async readRaw(requestParameters: ReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.scriptId === null || requestParameters.scriptId === undefined) {
-            throw new runtime.RequiredError('scriptId','Required parameter requestParameters.scriptId was null or undefined when calling read.');
+        if (requestParameters['scriptId'] == null) {
+            throw new runtime.RequiredError(
+                'scriptId',
+                'Required parameter "scriptId" was null or undefined when calling read().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2087,7 +2166,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}/content`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters.scriptId))),
+            path: `/api/latest/hook-scripts/{scriptId}/content`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2120,7 +2199,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restMeshNode,
+            body: requestParameters['restMeshNode'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2142,32 +2221,32 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     async searchMeshMigrationReposRaw(requestParameters: SearchMeshMigrationReposRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchMeshMigrationRepos200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.migrationId !== undefined) {
-            queryParameters['migrationId'] = requestParameters.migrationId;
+        if (requestParameters['migrationId'] != null) {
+            queryParameters['migrationId'] = requestParameters['migrationId'];
         }
 
-        if (requestParameters.projectKey !== undefined) {
-            queryParameters['projectKey'] = requestParameters.projectKey;
+        if (requestParameters['projectKey'] != null) {
+            queryParameters['projectKey'] = requestParameters['projectKey'];
         }
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.state !== undefined) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.remote !== undefined) {
-            queryParameters['remote'] = requestParameters.remote;
+        if (requestParameters['remote'] != null) {
+            queryParameters['remote'] = requestParameters['remote'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2196,8 +2275,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Set rate limit settings for user
      */
     async set2Raw(requestParameters: Set2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling set2.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling set2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2207,11 +2289,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restUserRateLimitSettingsUpdateRequest,
+            body: requestParameters['restUserRateLimitSettingsUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2242,7 +2324,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBulkUserRateLimitSettingsUpdateRequest,
+            body: requestParameters['restBulkUserRateLimitSettingsUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2273,7 +2355,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.setBannerRequest,
+            body: requestParameters['setBannerRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2303,7 +2385,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.setDefaultBranchRequest,
+            body: requestParameters['setDefaultBranchRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2322,12 +2404,18 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Set log level
      */
     async setLevelRaw(requestParameters: SetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.levelName === null || requestParameters.levelName === undefined) {
-            throw new runtime.RequiredError('levelName','Required parameter requestParameters.levelName was null or undefined when calling setLevel.');
+        if (requestParameters['levelName'] == null) {
+            throw new runtime.RequiredError(
+                'levelName',
+                'Required parameter "levelName" was null or undefined when calling setLevel().'
+            );
         }
 
-        if (requestParameters.loggerName === null || requestParameters.loggerName === undefined) {
-            throw new runtime.RequiredError('loggerName','Required parameter requestParameters.loggerName was null or undefined when calling setLevel.');
+        if (requestParameters['loggerName'] == null) {
+            throw new runtime.RequiredError(
+                'loggerName',
+                'Required parameter "loggerName" was null or undefined when calling setLevel().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2335,7 +2423,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/logs/logger/{loggerName}/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters.levelName))).replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters.loggerName))),
+            path: `/api/latest/logs/logger/{loggerName}/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName']))).replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2368,7 +2456,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.setMailConfigRequest,
+            body: requestParameters['setMailConfigRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2399,7 +2487,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRepositoryPolicy,
+            body: requestParameters['restRepositoryPolicy'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2430,7 +2518,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRepositoryPolicy,
+            body: requestParameters['restRepositoryPolicy'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2450,8 +2538,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Set root log level
      */
     async setRootLevelRaw(requestParameters: SetRootLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.levelName === null || requestParameters.levelName === undefined) {
-            throw new runtime.RequiredError('levelName','Required parameter requestParameters.levelName was null or undefined when calling setRootLevel.');
+        if (requestParameters['levelName'] == null) {
+            throw new runtime.RequiredError(
+                'levelName',
+                'Required parameter "levelName" was null or undefined when calling setRootLevel().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2459,7 +2550,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/logs/rootLogger/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters.levelName))),
+            path: `/api/latest/logs/rootLogger/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2492,7 +2583,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2522,7 +2613,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRateLimitSettings,
+            body: requestParameters['restRateLimitSettings'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2553,7 +2644,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restExportRequest,
+            body: requestParameters['restExportRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2584,7 +2675,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restImportRequest,
+            body: requestParameters['restImportRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2615,7 +2706,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.startMeshMigrationRequest,
+            body: requestParameters['startMeshMigrationRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2635,8 +2726,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Update a hook script
      */
     async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
-        if (requestParameters.scriptId === null || requestParameters.scriptId === undefined) {
-            throw new runtime.RequiredError('scriptId','Required parameter requestParameters.scriptId was null or undefined when calling update.');
+        if (requestParameters['scriptId'] == null) {
+            throw new runtime.RequiredError(
+                'scriptId',
+                'Required parameter "scriptId" was null or undefined when calling update().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2646,11 +2740,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters.scriptId))),
+            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.examplePutMultipartFormData,
+            body: requestParameters['examplePutMultipartFormData'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2681,7 +2775,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBitbucketLicense,
+            body: requestParameters['restBitbucketLicense'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2701,8 +2795,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Update Mesh node
      */
     async update2Raw(requestParameters: Update2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling update2.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling update2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2712,11 +2809,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restMeshNode,
+            body: requestParameters['restMeshNode'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2747,7 +2844,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSshKeySettings,
+            body: requestParameters['restSshKeySettings'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2766,8 +2863,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Update user settings
      */
     async updateSettingsRaw(requestParameters: UpdateSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling updateSettings.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling updateSettings().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2777,11 +2877,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.exampleSettingsMap,
+            body: requestParameters['exampleSettingsMap'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2811,7 +2911,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userUpdate,
+            body: requestParameters['userUpdate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2842,7 +2942,7 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userPasswordUpdate,
+            body: requestParameters['userPasswordUpdate'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -2861,16 +2961,19 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
      * Update user avatar
      */
     async uploadAvatar1Raw(requestParameters: UploadAvatar1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling uploadAvatar1.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling uploadAvatar1().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAtlassianToken !== undefined && requestParameters.xAtlassianToken !== null) {
-            headerParameters['X-Atlassian-Token'] = String(requestParameters.xAtlassianToken);
+        if (requestParameters['xAtlassianToken'] != null) {
+            headerParameters['X-Atlassian-Token'] = String(requestParameters['xAtlassianToken']);
         }
 
         const consumes: runtime.Consume[] = [
@@ -2889,12 +2992,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.avatar !== undefined) {
-            formParams.append('avatar', requestParameters.avatar as any);
+        if (requestParameters['avatar'] != null) {
+            formParams.append('avatar', requestParameters['avatar'] as any);
         }
 
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))),
+            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

@@ -26,11 +26,11 @@ import type {
   RestSecretScanningRuleSetRequest,
   Search2200Response,
   Search3200Response,
-} from '../models';
+} from '../models/index';
 
 interface AddKeyRequest {
     user?: string;
-    restGpgKey?: RestGpgKey;
+    restGpgKey?: Omit<RestGpgKey, 'expiryDate'|'emailAddress'|'subKeys'|'fingerprint'|'id'>;
 }
 
 interface BulkAddExemptRepositoriesRequest {
@@ -225,6 +225,7 @@ export class SecurityApi extends runtime.BaseAPI {
     /**
      * Exempt a repository from being scanned for secrets   <strong>Deprecated since 8.6</strong>. Exemptions are now managed by scope.  Use POST /rest/api/1.0/secret-scanning/exempt for global scope  Use POST /rest/api/1.0/projects/{projectKey}/secret-scanning/exempt for the project scope
      * Exempt a repo from secret scanning
+     * @deprecated
      */
     async addExemptRepoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -244,6 +245,7 @@ export class SecurityApi extends runtime.BaseAPI {
     /**
      * Exempt a repository from being scanned for secrets   <strong>Deprecated since 8.6</strong>. Exemptions are now managed by scope.  Use POST /rest/api/1.0/secret-scanning/exempt for global scope  Use POST /rest/api/1.0/projects/{projectKey}/secret-scanning/exempt for the project scope
      * Exempt a repo from secret scanning
+     * @deprecated
      */
     async addExemptRepo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addExemptRepoRaw(initOverrides);
@@ -256,8 +258,8 @@ export class SecurityApi extends runtime.BaseAPI {
     async addKeyRaw(requestParameters: AddKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGpgKey>> {
         const queryParameters: any = {};
 
-        if (requestParameters.user !== undefined) {
-            queryParameters['user'] = requestParameters.user;
+        if (requestParameters['user'] != null) {
+            queryParameters['user'] = requestParameters['user'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -269,7 +271,7 @@ export class SecurityApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restGpgKey,
+            body: requestParameters['restGpgKey'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -300,7 +302,7 @@ export class SecurityApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRepositorySelector,
+            body: requestParameters['restRepositorySelector'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -330,7 +332,7 @@ export class SecurityApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRepositorySelector,
+            body: requestParameters['restRepositorySelector'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -349,12 +351,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Create project secret scanning allowlist rule
      */
     async createAllowlistRuleRaw(requestParameters: CreateAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createAllowlistRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createAllowlistRule().'
+            );
         }
 
-        if (requestParameters.restSecretScanningAllowlistRuleSetRequest === null || requestParameters.restSecretScanningAllowlistRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningAllowlistRuleSetRequest','Required parameter requestParameters.restSecretScanningAllowlistRuleSetRequest was null or undefined when calling createAllowlistRule.');
+        if (requestParameters['restSecretScanningAllowlistRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningAllowlistRuleSetRequest',
+                'Required parameter "restSecretScanningAllowlistRuleSetRequest" was null or undefined when calling createAllowlistRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -364,11 +372,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningAllowlistRuleSetRequest,
+            body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -388,16 +396,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Create repository secret scanning allowlist rule
      */
     async createAllowlistRule1Raw(requestParameters: CreateAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createAllowlistRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling createAllowlistRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling createAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.restSecretScanningAllowlistRuleSetRequest === null || requestParameters.restSecretScanningAllowlistRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningAllowlistRuleSetRequest','Required parameter requestParameters.restSecretScanningAllowlistRuleSetRequest was null or undefined when calling createAllowlistRule1.');
+        if (requestParameters['restSecretScanningAllowlistRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningAllowlistRuleSetRequest',
+                'Required parameter "restSecretScanningAllowlistRuleSetRequest" was null or undefined when calling createAllowlistRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -407,11 +424,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningAllowlistRuleSetRequest,
+            body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -431,12 +448,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Create project secret scanning rule
      */
     async createRuleRaw(requestParameters: CreateRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createRule().'
+            );
         }
 
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling createRule.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling createRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -446,11 +469,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -470,16 +493,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Create repository secret scanning rule
      */
     async createRule1Raw(requestParameters: CreateRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling createRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling createRule1().'
+            );
         }
 
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling createRule1.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling createRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -489,11 +521,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -513,8 +545,11 @@ export class SecurityApi extends runtime.BaseAPI {
      * Create global secret scanning rule
      */
     async createRule2Raw(requestParameters: CreateRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling createRule2.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling createRule2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -528,7 +563,7 @@ export class SecurityApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -548,12 +583,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a project secret scanning allowlist rule
      */
     async deleteAllowlistRuleRaw(requestParameters: DeleteAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteAllowlistRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteAllowlistRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAllowlistRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteAllowlistRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -561,7 +602,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -583,16 +624,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a repository secret scanning allowlist rule
      */
     async deleteAllowlistRule1Raw(requestParameters: DeleteAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteAllowlistRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAllowlistRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deleteAllowlistRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deleteAllowlistRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -600,7 +650,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -651,8 +701,8 @@ export class SecurityApi extends runtime.BaseAPI {
     async deleteForUserRaw(requestParameters: DeleteForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters.user !== undefined) {
-            queryParameters['user'] = requestParameters.user;
+        if (requestParameters['user'] != null) {
+            queryParameters['user'] = requestParameters['user'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -680,8 +730,11 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a GPG key
      */
     async deleteKeyRaw(requestParameters: DeleteKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.fingerprintOrId === null || requestParameters.fingerprintOrId === undefined) {
-            throw new runtime.RequiredError('fingerprintOrId','Required parameter requestParameters.fingerprintOrId was null or undefined when calling deleteKey.');
+        if (requestParameters['fingerprintOrId'] == null) {
+            throw new runtime.RequiredError(
+                'fingerprintOrId',
+                'Required parameter "fingerprintOrId" was null or undefined when calling deleteKey().'
+            );
         }
 
         const queryParameters: any = {};
@@ -689,7 +742,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/gpg/latest/keys/{fingerprintOrId}`.replace(`{${"fingerprintOrId"}}`, encodeURIComponent(String(requestParameters.fingerprintOrId))),
+            path: `/gpg/latest/keys/{fingerprintOrId}`.replace(`{${"fingerprintOrId"}}`, encodeURIComponent(String(requestParameters['fingerprintOrId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -711,12 +764,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a project secret scanning rule
      */
     async deleteRuleRaw(requestParameters: DeleteRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -724,7 +783,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -746,16 +805,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a repository secret scanning rule
      */
     async deleteRule1Raw(requestParameters: DeleteRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deleteRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deleteRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -763,7 +831,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -785,8 +853,11 @@ export class SecurityApi extends runtime.BaseAPI {
      * Delete a global secret scanning rule
      */
     async deleteRule2Raw(requestParameters: DeleteRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteRule2.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteRule2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -794,7 +865,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -816,16 +887,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Edit an existing project secret scanning allowlist rule
      */
     async editAllowlistRuleRaw(requestParameters: EditAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling editAllowlistRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling editAllowlistRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling editAllowlistRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling editAllowlistRule().'
+            );
         }
 
-        if (requestParameters.restSecretScanningAllowlistRuleSetRequest === null || requestParameters.restSecretScanningAllowlistRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningAllowlistRuleSetRequest','Required parameter requestParameters.restSecretScanningAllowlistRuleSetRequest was null or undefined when calling editAllowlistRule.');
+        if (requestParameters['restSecretScanningAllowlistRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningAllowlistRuleSetRequest',
+                'Required parameter "restSecretScanningAllowlistRuleSetRequest" was null or undefined when calling editAllowlistRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -835,11 +915,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningAllowlistRuleSetRequest,
+            body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -859,20 +939,32 @@ export class SecurityApi extends runtime.BaseAPI {
      * Edit an existing repository secret scanning allowlist rule
      */
     async editAllowlistRule1Raw(requestParameters: EditAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling editAllowlistRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling editAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling editAllowlistRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling editAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling editAllowlistRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling editAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.restSecretScanningAllowlistRuleSetRequest === null || requestParameters.restSecretScanningAllowlistRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningAllowlistRuleSetRequest','Required parameter requestParameters.restSecretScanningAllowlistRuleSetRequest was null or undefined when calling editAllowlistRule1.');
+        if (requestParameters['restSecretScanningAllowlistRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningAllowlistRuleSetRequest',
+                'Required parameter "restSecretScanningAllowlistRuleSetRequest" was null or undefined when calling editAllowlistRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -882,11 +974,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningAllowlistRuleSetRequest,
+            body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -906,16 +998,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Edit an existing project secret scanning rule
      */
     async editRuleRaw(requestParameters: EditRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling editRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling editRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling editRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling editRule().'
+            );
         }
 
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling editRule.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling editRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -925,11 +1026,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -949,20 +1050,32 @@ export class SecurityApi extends runtime.BaseAPI {
      * Edit an existing repository secret scanning rule
      */
     async editRule1Raw(requestParameters: EditRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling editRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling editRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling editRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling editRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling editRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling editRule1().'
+            );
         }
 
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling editRule1.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling editRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -972,11 +1085,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -996,12 +1109,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Edit a global secret scanning rule.
      */
     async editRule2Raw(requestParameters: EditRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling editRule2.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling editRule2().'
+            );
         }
 
-        if (requestParameters.restSecretScanningRuleSetRequest === null || requestParameters.restSecretScanningRuleSetRequest === undefined) {
-            throw new runtime.RequiredError('restSecretScanningRuleSetRequest','Required parameter requestParameters.restSecretScanningRuleSetRequest was null or undefined when calling editRule2.');
+        if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restSecretScanningRuleSetRequest',
+                'Required parameter "restSecretScanningRuleSetRequest" was null or undefined when calling editRule2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1011,11 +1130,11 @@ export class SecurityApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSecretScanningRuleSetRequest,
+            body: requestParameters['restSecretScanningRuleSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1037,16 +1156,16 @@ export class SecurityApi extends runtime.BaseAPI {
     async findExemptReposByProjectRaw(requestParameters: FindExemptReposByProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1077,16 +1196,16 @@ export class SecurityApi extends runtime.BaseAPI {
     async findExemptReposByScopeRaw(requestParameters: FindExemptReposByScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1115,12 +1234,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Get a project secret scanning allowlist rule
      */
     async getAllowlistRuleRaw(requestParameters: GetAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getAllowlistRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getAllowlistRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAllowlistRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAllowlistRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1128,7 +1253,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1151,16 +1276,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Get a repository secret scanning allowlist rule
      */
     async getAllowlistRule1Raw(requestParameters: GetAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getAllowlistRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAllowlistRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAllowlistRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getAllowlistRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getAllowlistRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1168,7 +1302,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1193,16 +1327,16 @@ export class SecurityApi extends runtime.BaseAPI {
     async getKeysForUserRaw(requestParameters: GetKeysForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetKeysForUser200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.user !== undefined) {
-            queryParameters['user'] = requestParameters.user;
+        if (requestParameters['user'] != null) {
+            queryParameters['user'] = requestParameters['user'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1231,12 +1365,18 @@ export class SecurityApi extends runtime.BaseAPI {
      * Get a project secret scanning rule
      */
     async getRuleRaw(requestParameters: GetRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getRule().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRule.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRule().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1244,7 +1384,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1267,16 +1407,25 @@ export class SecurityApi extends runtime.BaseAPI {
      * Get a repository secret scanning rule
      */
     async getRule1Raw(requestParameters: GetRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getRule1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getRule1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRule1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRule1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getRule1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getRule1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1284,7 +1433,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1307,8 +1456,11 @@ export class SecurityApi extends runtime.BaseAPI {
      * Get a global secret scanning rule
      */
     async getRule2Raw(requestParameters: GetRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRule2.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRule2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1316,7 +1468,7 @@ export class SecurityApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1366,32 +1518,35 @@ export class SecurityApi extends runtime.BaseAPI {
      * Find project secret scanning rules
      */
     async search1Raw(requestParameters: Search1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling search1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling search1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1414,36 +1569,42 @@ export class SecurityApi extends runtime.BaseAPI {
      * Find repository secret scanning allowlist rules
      */
     async search2Raw(requestParameters: Search2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling search2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling search2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling search2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling search2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1466,36 +1627,42 @@ export class SecurityApi extends runtime.BaseAPI {
      * Find repository secret scanning rules
      */
     async search3Raw(requestParameters: Search3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling search3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling search3().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling search3.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling search3().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1520,20 +1687,20 @@ export class SecurityApi extends runtime.BaseAPI {
     async search4Raw(requestParameters: Search4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1562,32 +1729,35 @@ export class SecurityApi extends runtime.BaseAPI {
      * Find project secret scanning allowlist rules
      */
     async searchAllowlistRuleRaw(requestParameters: SearchAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling searchAllowlistRule.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling searchAllowlistRule().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

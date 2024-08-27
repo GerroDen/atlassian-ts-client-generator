@@ -32,7 +32,7 @@ import type {
   UserPickerContext,
   UserRename,
   UserUpdate,
-} from '../models';
+} from '../models/index';
 
 interface AddGroupToUserRequest {
     groupPickerContext?: GroupPickerContext;
@@ -272,6 +272,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -285,7 +286,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.groupPickerContext,
+            body: requestParameters['groupPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -294,6 +295,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addGroupToUser(requestParameters: AddGroupToUserRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addGroupToUserRaw(requestParameters, initOverrides);
@@ -302,6 +304,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -315,7 +318,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userPickerContext,
+            body: requestParameters['userPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -324,6 +327,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
      * Add user to group
+     * @deprecated
      */
     async addUserToGroup(requestParameters: AddUserToGroupRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addUserToGroupRaw(requestParameters, initOverrides);
@@ -345,7 +349,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userAndGroups,
+            body: requestParameters['userAndGroups'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -375,7 +379,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.groupAndUsers,
+            body: requestParameters['groupAndUsers'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -394,14 +398,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Clear CAPTCHA for user
      */
     async clearUserCaptchaChallengeRaw(requestParameters: ClearUserCaptchaChallengeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling clearUserCaptchaChallenge.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling clearUserCaptchaChallenge().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -429,14 +436,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Create group
      */
     async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling createGroup.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling createGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -465,42 +475,51 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Create user
      */
     async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.emailAddress === null || requestParameters.emailAddress === undefined) {
-            throw new runtime.RequiredError('emailAddress','Required parameter requestParameters.emailAddress was null or undefined when calling createUser.');
+        if (requestParameters['emailAddress'] == null) {
+            throw new runtime.RequiredError(
+                'emailAddress',
+                'Required parameter "emailAddress" was null or undefined when calling createUser().'
+            );
         }
 
-        if (requestParameters.displayName === null || requestParameters.displayName === undefined) {
-            throw new runtime.RequiredError('displayName','Required parameter requestParameters.displayName was null or undefined when calling createUser.');
+        if (requestParameters['displayName'] == null) {
+            throw new runtime.RequiredError(
+                'displayName',
+                'Required parameter "displayName" was null or undefined when calling createUser().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling createUser.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling createUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.emailAddress !== undefined) {
-            queryParameters['emailAddress'] = requestParameters.emailAddress;
+        if (requestParameters['emailAddress'] != null) {
+            queryParameters['emailAddress'] = requestParameters['emailAddress'];
         }
 
-        if (requestParameters.password !== undefined) {
-            queryParameters['password'] = requestParameters.password;
+        if (requestParameters['password'] != null) {
+            queryParameters['password'] = requestParameters['password'];
         }
 
-        if (requestParameters.addToDefaultGroup !== undefined) {
-            queryParameters['addToDefaultGroup'] = requestParameters.addToDefaultGroup;
+        if (requestParameters['addToDefaultGroup'] != null) {
+            queryParameters['addToDefaultGroup'] = requestParameters['addToDefaultGroup'];
         }
 
-        if (requestParameters.displayName !== undefined) {
-            queryParameters['displayName'] = requestParameters.displayName;
+        if (requestParameters['displayName'] != null) {
+            queryParameters['displayName'] = requestParameters['displayName'];
         }
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.notify !== undefined) {
-            queryParameters['notify'] = requestParameters.notify;
+        if (requestParameters['notify'] != null) {
+            queryParameters['notify'] = requestParameters['notify'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -528,14 +547,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Remove group
      */
     async deleteGroupRaw(requestParameters: DeleteGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling deleteGroup.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling deleteGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -564,14 +586,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Remove user
      */
     async deleteUserRaw(requestParameters: DeleteUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling deleteUser.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling deleteUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -600,14 +625,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Erase user information
      */
     async eraseUserRaw(requestParameters: EraseUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestErasedUser>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling eraseUser.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling eraseUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -636,26 +664,29 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get groups for user
      */
     async findGroupsForUserRaw(requestParameters: FindGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
-        if (requestParameters.context === null || requestParameters.context === undefined) {
-            throw new runtime.RequiredError('context','Required parameter requestParameters.context was null or undefined when calling findGroupsForUser.');
+        if (requestParameters['context'] == null) {
+            throw new runtime.RequiredError(
+                'context',
+                'Required parameter "context" was null or undefined when calling findGroupsForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.context !== undefined) {
-            queryParameters['context'] = requestParameters.context;
+        if (requestParameters['context'] != null) {
+            queryParameters['context'] = requestParameters['context'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -684,26 +715,29 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Find other groups for user
      */
     async findOtherGroupsForUserRaw(requestParameters: FindOtherGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
-        if (requestParameters.context === null || requestParameters.context === undefined) {
-            throw new runtime.RequiredError('context','Required parameter requestParameters.context was null or undefined when calling findOtherGroupsForUser.');
+        if (requestParameters['context'] == null) {
+            throw new runtime.RequiredError(
+                'context',
+                'Required parameter "context" was null or undefined when calling findOtherGroupsForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.context !== undefined) {
-            queryParameters['context'] = requestParameters.context;
+        if (requestParameters['context'] != null) {
+            queryParameters['context'] = requestParameters['context'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -732,26 +766,29 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get group members
      */
     async findUsersInGroupRaw(requestParameters: FindUsersInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
-        if (requestParameters.context === null || requestParameters.context === undefined) {
-            throw new runtime.RequiredError('context','Required parameter requestParameters.context was null or undefined when calling findUsersInGroup.');
+        if (requestParameters['context'] == null) {
+            throw new runtime.RequiredError(
+                'context',
+                'Required parameter "context" was null or undefined when calling findUsersInGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.context !== undefined) {
-            queryParameters['context'] = requestParameters.context;
+        if (requestParameters['context'] != null) {
+            queryParameters['context'] = requestParameters['context'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -780,26 +817,29 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get members not in group
      */
     async findUsersNotInGroupRaw(requestParameters: FindUsersNotInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
-        if (requestParameters.context === null || requestParameters.context === undefined) {
-            throw new runtime.RequiredError('context','Required parameter requestParameters.context was null or undefined when calling findUsersNotInGroup.');
+        if (requestParameters['context'] == null) {
+            throw new runtime.RequiredError(
+                'context',
+                'Required parameter "context" was null or undefined when calling findUsersNotInGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.context !== undefined) {
-            queryParameters['context'] = requestParameters.context;
+        if (requestParameters['context'] != null) {
+            queryParameters['context'] = requestParameters['context'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -830,16 +870,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -870,16 +910,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getGroups1Raw(requestParameters: GetGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -910,16 +950,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getGroupsWithAnyPermissionRaw(requestParameters: GetGroupsWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -948,32 +988,38 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get groups with permission to repository
      */
     async getGroupsWithAnyPermission2Raw(requestParameters: GetGroupsWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getGroupsWithAnyPermission2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getGroupsWithAnyPermission2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getGroupsWithAnyPermission2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getGroupsWithAnyPermission2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -998,16 +1044,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getGroupsWithoutAnyPermissionRaw(requestParameters: GetGroupsWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1036,32 +1082,38 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get groups without repository permission
      */
     async getGroupsWithoutAnyPermission2Raw(requestParameters: GetGroupsWithoutAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getGroupsWithoutAnyPermission2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getGroupsWithoutAnyPermission2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getGroupsWithoutAnyPermission2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getGroupsWithoutAnyPermission2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1086,16 +1138,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getUsers1Raw(requestParameters: GetUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1126,16 +1178,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getUsersWithAnyPermissionRaw(requestParameters: GetUsersWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1164,32 +1216,38 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get users with permission to repository
      */
     async getUsersWithAnyPermission2Raw(requestParameters: GetUsersWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithAnyPermission1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getUsersWithAnyPermission2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getUsersWithAnyPermission2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getUsersWithAnyPermission2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getUsersWithAnyPermission2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1214,16 +1272,16 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     async getUsersWithoutAnyPermissionRaw(requestParameters: GetUsersWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLikers200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1252,32 +1310,38 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Get users without repository permission
      */
     async getUsersWithoutPermission1Raw(requestParameters: GetUsersWithoutPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLikers200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getUsersWithoutPermission1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getUsersWithoutPermission1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getUsersWithoutPermission1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getUsersWithoutPermission1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1311,7 +1375,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.groupPickerContext,
+            body: requestParameters['groupPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1328,6 +1392,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
      * Remove user from group
+     * @deprecated
      */
     async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
@@ -1341,7 +1406,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userPickerContext,
+            body: requestParameters['userPickerContext'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1350,6 +1415,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     /**
      * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
      * Remove user from group
+     * @deprecated
      */
     async removeUserFromGroup(requestParameters: RemoveUserFromGroupRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.removeUserFromGroupRaw(requestParameters, initOverrides);
@@ -1371,7 +1437,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userRename,
+            body: requestParameters['userRename'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1391,28 +1457,34 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Revoke all repository permissions for users and groups
      */
     async revokePermissions1Raw(requestParameters: RevokePermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling revokePermissions1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling revokePermissions1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling revokePermissions1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling revokePermissions1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.user !== undefined) {
-            queryParameters['user'] = requestParameters.user;
+        if (requestParameters['user'] != null) {
+            queryParameters['user'] = requestParameters['user'];
         }
 
-        if (requestParameters.group !== undefined) {
-            queryParameters['group'] = requestParameters.group;
+        if (requestParameters['group'] != null) {
+            queryParameters['group'] = requestParameters['group'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1434,14 +1506,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Revoke all global permissions for group
      */
     async revokePermissionsForGroupRaw(requestParameters: RevokePermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling revokePermissionsForGroup.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling revokePermissionsForGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1469,28 +1544,37 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Revoke group repository permission
      */
     async revokePermissionsForGroup2Raw(requestParameters: RevokePermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling revokePermissionsForGroup2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling revokePermissionsForGroup2().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling revokePermissionsForGroup2.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling revokePermissionsForGroup2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling revokePermissionsForGroup2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling revokePermissionsForGroup2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1512,14 +1596,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Revoke all global permissions for user
      */
     async revokePermissionsForUserRaw(requestParameters: RevokePermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling revokePermissionsForUser.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling revokePermissionsForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1547,28 +1634,37 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Revoke user repository permission
      */
     async revokePermissionsForUser2Raw(requestParameters: RevokePermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling revokePermissionsForUser2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling revokePermissionsForUser2().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling revokePermissionsForUser2.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling revokePermissionsForUser2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling revokePermissionsForUser2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling revokePermissionsForUser2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1590,32 +1686,38 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Search repository permissions
      */
     async searchPermissions1Raw(requestParameters: SearchPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling searchPermissions1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling searchPermissions1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling searchPermissions1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling searchPermissions1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
-        if (requestParameters.filterText !== undefined) {
-            queryParameters['filterText'] = requestParameters.filterText;
+        if (requestParameters['filterText'] != null) {
+            queryParameters['filterText'] = requestParameters['filterText'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/search`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/search`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1637,36 +1739,48 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Update group repository permission
      */
     async setPermissionForGroupRaw(requestParameters: SetPermissionForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling setPermissionForGroup.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling setPermissionForGroup().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling setPermissionForGroup.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling setPermissionForGroup().'
+            );
         }
 
-        if (requestParameters.permission === null || requestParameters.permission === undefined) {
-            throw new runtime.RequiredError('permission','Required parameter requestParameters.permission was null or undefined when calling setPermissionForGroup.');
+        if (requestParameters['permission'] == null) {
+            throw new runtime.RequiredError(
+                'permission',
+                'Required parameter "permission" was null or undefined when calling setPermissionForGroup().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling setPermissionForGroup.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling setPermissionForGroup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1688,22 +1802,28 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Update global permission for group
      */
     async setPermissionForGroupsRaw(requestParameters: SetPermissionForGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling setPermissionForGroups.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling setPermissionForGroups().'
+            );
         }
 
-        if (requestParameters.permission === null || requestParameters.permission === undefined) {
-            throw new runtime.RequiredError('permission','Required parameter requestParameters.permission was null or undefined when calling setPermissionForGroups.');
+        if (requestParameters['permission'] == null) {
+            throw new runtime.RequiredError(
+                'permission',
+                'Required parameter "permission" was null or undefined when calling setPermissionForGroups().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1731,36 +1851,48 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Update user repository permission
      */
     async setPermissionForUserRaw(requestParameters: SetPermissionForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling setPermissionForUser.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling setPermissionForUser().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling setPermissionForUser.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling setPermissionForUser().'
+            );
         }
 
-        if (requestParameters.permission === null || requestParameters.permission === undefined) {
-            throw new runtime.RequiredError('permission','Required parameter requestParameters.permission was null or undefined when calling setPermissionForUser.');
+        if (requestParameters['permission'] == null) {
+            throw new runtime.RequiredError(
+                'permission',
+                'Required parameter "permission" was null or undefined when calling setPermissionForUser().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling setPermissionForUser.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling setPermissionForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1782,22 +1914,28 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Update global permission for user
      */
     async setPermissionForUsersRaw(requestParameters: SetPermissionForUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling setPermissionForUsers.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling setPermissionForUsers().'
+            );
         }
 
-        if (requestParameters.permission === null || requestParameters.permission === undefined) {
-            throw new runtime.RequiredError('permission','Required parameter requestParameters.permission was null or undefined when calling setPermissionForUsers.');
+        if (requestParameters['permission'] == null) {
+            throw new runtime.RequiredError(
+                'permission',
+                'Required parameter "permission" was null or undefined when calling setPermissionForUsers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.permission !== undefined) {
-            queryParameters['permission'] = requestParameters.permission;
+        if (requestParameters['permission'] != null) {
+            queryParameters['permission'] = requestParameters['permission'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1836,7 +1974,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.userUpdate,
+            body: requestParameters['userUpdate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1867,7 +2005,7 @@ export class PermissionManagementApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.adminPasswordUpdate,
+            body: requestParameters['adminPasswordUpdate'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1886,14 +2024,17 @@ export class PermissionManagementApi extends runtime.BaseAPI {
      * Check user removal
      */
     async validateErasableRaw(requestParameters: ValidateErasableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling validateErasable.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling validateErasable().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -29,7 +29,7 @@ import type {
   RestMirroringRequest,
   RestProject,
   RestRepositoryMirrorEvent,
-} from '../models';
+} from '../models/index';
 
 interface DeleteRequest {
     mirroringRequestId: string;
@@ -96,7 +96,7 @@ interface PublishEventRequest {
 }
 
 interface RegisterRequest {
-    restMirroringRequest?: RestMirroringRequest;
+    restMirroringRequest?: Omit<RestMirroringRequest, 'id'>;
 }
 
 interface RejectRequest {
@@ -126,8 +126,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Delete a mirroring request
      */
     async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.mirroringRequestId === null || requestParameters.mirroringRequestId === undefined) {
-            throw new runtime.RequiredError('mirroringRequestId','Required parameter requestParameters.mirroringRequestId was null or undefined when calling _delete.');
+        if (requestParameters['mirroringRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'mirroringRequestId',
+                'Required parameter "mirroringRequestId" was null or undefined when calling _delete().'
+            );
         }
 
         const queryParameters: any = {};
@@ -135,7 +138,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters.mirroringRequestId))),
+            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -157,8 +160,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Accept a mirroring request
      */
     async acceptRaw(requestParameters: AcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
-        if (requestParameters.mirroringRequestId === null || requestParameters.mirroringRequestId === undefined) {
-            throw new runtime.RequiredError('mirroringRequestId','Required parameter requestParameters.mirroringRequestId was null or undefined when calling accept.');
+        if (requestParameters['mirroringRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'mirroringRequestId',
+                'Required parameter "mirroringRequestId" was null or undefined when calling accept().'
+            );
         }
 
         const queryParameters: any = {};
@@ -166,7 +172,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}/accept`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters.mirroringRequestId))),
+            path: `/mirroring/latest/requests/{mirroringRequestId}/accept`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -223,7 +229,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restAuthenticationRequest,
+            body: requestParameters['restAuthenticationRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -269,8 +275,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get a mirroring request
      */
     async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroringRequest>> {
-        if (requestParameters.mirroringRequestId === null || requestParameters.mirroringRequestId === undefined) {
-            throw new runtime.RequiredError('mirroringRequestId','Required parameter requestParameters.mirroringRequestId was null or undefined when calling get.');
+        if (requestParameters['mirroringRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'mirroringRequestId',
+                'Required parameter "mirroringRequestId" was null or undefined when calling get().'
+            );
         }
 
         const queryParameters: any = {};
@@ -278,7 +287,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters.mirroringRequestId))),
+            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -299,8 +308,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     /**
      */
     async get1Raw(requestParameters: Get1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.mirrorId === null || requestParameters.mirrorId === undefined) {
-            throw new runtime.RequiredError('mirrorId','Required parameter requestParameters.mirrorId was null or undefined when calling get1.');
+        if (requestParameters['mirrorId'] == null) {
+            throw new runtime.RequiredError(
+                'mirrorId',
+                'Required parameter "mirrorId" was null or undefined when calling get1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -308,7 +320,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}/webPanels/config`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters.mirrorId))),
+            path: `/mirroring/latest/mirrorServers/{mirrorId}/webPanels/config`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -330,8 +342,8 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     async getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
         const queryParameters: any = {};
 
-        if (requestParameters.includeDefaultBranch !== undefined) {
-            queryParameters['includeDefaultBranch'] = requestParameters.includeDefaultBranch;
+        if (requestParameters['includeDefaultBranch'] != null) {
+            queryParameters['includeDefaultBranch'] = requestParameters['includeDefaultBranch'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -360,28 +372,31 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get hashes for repositories in project
      */
     async getAllReposForProjectRaw(requestParameters: GetAllReposForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllReposForProject200Response>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getAllReposForProject.');
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling getAllReposForProject().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.includeDefaultBranch !== undefined) {
-            queryParameters['includeDefaultBranch'] = requestParameters.includeDefaultBranch;
+        if (requestParameters['includeDefaultBranch'] != null) {
+            queryParameters['includeDefaultBranch'] = requestParameters['includeDefaultBranch'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/projects/{projectId}/repos`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            path: `/mirroring/latest/projects/{projectId}/repos`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -404,8 +419,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get project
      */
     async getByIdRaw(requestParameters: GetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getById.');
+        if (requestParameters['projectId'] == null) {
+            throw new runtime.RequiredError(
+                'projectId',
+                'Required parameter "projectId" was null or undefined when calling getById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -413,7 +431,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            path: `/mirroring/latest/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -436,20 +454,23 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get content hash for a repository
      */
     async getById1Raw(requestParameters: GetById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
-        if (requestParameters.repoId === null || requestParameters.repoId === undefined) {
-            throw new runtime.RequiredError('repoId','Required parameter requestParameters.repoId was null or undefined when calling getById1.');
+        if (requestParameters['repoId'] == null) {
+            throw new runtime.RequiredError(
+                'repoId',
+                'Required parameter "repoId" was null or undefined when calling getById1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.includeDefaultBranch !== undefined) {
-            queryParameters['includeDefaultBranch'] = requestParameters.includeDefaultBranch;
+        if (requestParameters['includeDefaultBranch'] != null) {
+            queryParameters['includeDefaultBranch'] = requestParameters['includeDefaultBranch'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/repos/{repoId}`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters.repoId))),
+            path: `/mirroring/latest/repos/{repoId}`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -472,8 +493,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get mirror by ID
      */
     async getMirrorRaw(requestParameters: GetMirrorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
-        if (requestParameters.mirrorId === null || requestParameters.mirrorId === undefined) {
-            throw new runtime.RequiredError('mirrorId','Required parameter requestParameters.mirrorId was null or undefined when calling getMirror.');
+        if (requestParameters['mirrorId'] == null) {
+            throw new runtime.RequiredError(
+                'mirrorId',
+                'Required parameter "mirrorId" was null or undefined when calling getMirror().'
+            );
         }
 
         const queryParameters: any = {};
@@ -481,7 +505,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters.mirrorId))),
+            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -532,8 +556,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Get mirrors for repository
      */
     async getRepositoryMirrorsRaw(requestParameters: GetRepositoryMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroredRepositoryDescriptor>> {
-        if (requestParameters.repoId === null || requestParameters.repoId === undefined) {
-            throw new runtime.RequiredError('repoId','Required parameter requestParameters.repoId was null or undefined when calling getRepositoryMirrors.');
+        if (requestParameters['repoId'] == null) {
+            throw new runtime.RequiredError(
+                'repoId',
+                'Required parameter "repoId" was null or undefined when calling getRepositoryMirrors().'
+            );
         }
 
         const queryParameters: any = {};
@@ -541,7 +568,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/repos/{repoId}/mirrors`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters.repoId))),
+            path: `/mirroring/latest/repos/{repoId}/mirrors`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -566,12 +593,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     async listMirrorsRaw(requestParameters: ListMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListMirrors200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -602,16 +629,16 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     async listRequestsRaw(requestParameters: ListRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRequests200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.state !== undefined) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -640,8 +667,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Publish RepositoryMirrorEvent
      */
     async publishEventRaw(requestParameters: PublishEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.mirrorId === null || requestParameters.mirrorId === undefined) {
-            throw new runtime.RequiredError('mirrorId','Required parameter requestParameters.mirrorId was null or undefined when calling publishEvent.');
+        if (requestParameters['mirrorId'] == null) {
+            throw new runtime.RequiredError(
+                'mirrorId',
+                'Required parameter "mirrorId" was null or undefined when calling publishEvent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -651,11 +681,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}/events`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters.mirrorId))),
+            path: `/mirroring/latest/mirrorServers/{mirrorId}/events`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRepositoryMirrorEvent,
+            body: requestParameters['restRepositoryMirrorEvent'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -685,7 +715,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restMirroringRequest,
+            body: requestParameters['restMirroringRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -705,8 +735,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Reject a mirroring request
      */
     async rejectRaw(requestParameters: RejectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
-        if (requestParameters.mirroringRequestId === null || requestParameters.mirroringRequestId === undefined) {
-            throw new runtime.RequiredError('mirroringRequestId','Required parameter requestParameters.mirroringRequestId was null or undefined when calling reject.');
+        if (requestParameters['mirroringRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'mirroringRequestId',
+                'Required parameter "mirroringRequestId" was null or undefined when calling reject().'
+            );
         }
 
         const queryParameters: any = {};
@@ -714,7 +747,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}/reject`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters.mirroringRequestId))),
+            path: `/mirroring/latest/requests/{mirroringRequestId}/reject`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -737,8 +770,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Delete mirror by ID
      */
     async removeRaw(requestParameters: RemoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.mirrorId === null || requestParameters.mirrorId === undefined) {
-            throw new runtime.RequiredError('mirrorId','Required parameter requestParameters.mirrorId was null or undefined when calling remove.');
+        if (requestParameters['mirrorId'] == null) {
+            throw new runtime.RequiredError(
+                'mirrorId',
+                'Required parameter "mirrorId" was null or undefined when calling remove().'
+            );
         }
 
         const queryParameters: any = {};
@@ -746,7 +782,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters.mirrorId))),
+            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -779,7 +815,7 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -798,8 +834,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
      * Upgrade add-on for a mirror
      */
     async upgradeRaw(requestParameters: UpgradeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
-        if (requestParameters.mirrorId === null || requestParameters.mirrorId === undefined) {
-            throw new runtime.RequiredError('mirrorId','Required parameter requestParameters.mirrorId was null or undefined when calling upgrade.');
+        if (requestParameters['mirrorId'] == null) {
+            throw new runtime.RequiredError(
+                'mirrorId',
+                'Required parameter "mirrorId" was null or undefined when calling upgrade().'
+            );
         }
 
         const queryParameters: any = {};
@@ -809,11 +848,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters.mirrorId))),
+            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restMirrorUpgradeRequest,
+            body: requestParameters['restMirrorUpgradeRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

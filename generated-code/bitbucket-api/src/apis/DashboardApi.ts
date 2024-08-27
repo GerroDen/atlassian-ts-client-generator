@@ -18,7 +18,7 @@ import type {
   GetAll401Response,
   GetPullRequestSuggestions200Response,
   GetPullRequests1200Response,
-} from '../models';
+} from '../models/index';
 
 interface GetPullRequestSuggestionsRequest {
     changesSince?: string;
@@ -47,12 +47,12 @@ export class DashboardApi extends runtime.BaseAPI {
     async getPullRequestSuggestionsRaw(requestParameters: GetPullRequestSuggestionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequestSuggestions200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.changesSince !== undefined) {
-            queryParameters['changesSince'] = requestParameters.changesSince;
+        if (requestParameters['changesSince'] != null) {
+            queryParameters['changesSince'] = requestParameters['changesSince'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -83,32 +83,32 @@ export class DashboardApi extends runtime.BaseAPI {
     async getPullRequests1Raw(requestParameters: GetPullRequests1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.closedSince !== undefined) {
-            queryParameters['closedSince'] = requestParameters.closedSince;
+        if (requestParameters['closedSince'] != null) {
+            queryParameters['closedSince'] = requestParameters['closedSince'];
         }
 
-        if (requestParameters.role !== undefined) {
-            queryParameters['role'] = requestParameters.role;
+        if (requestParameters['role'] != null) {
+            queryParameters['role'] = requestParameters['role'];
         }
 
-        if (requestParameters.participantStatus !== undefined) {
-            queryParameters['participantStatus'] = requestParameters.participantStatus;
+        if (requestParameters['participantStatus'] != null) {
+            queryParameters['participantStatus'] = requestParameters['participantStatus'];
         }
 
-        if (requestParameters.state !== undefined) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

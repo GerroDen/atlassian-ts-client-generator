@@ -30,7 +30,7 @@ import type {
   RestRequiredBuildConditionSetRequest,
   RestSetInsightReportRequest,
   RestSingleAddInsightAnnotationRequest,
-} from '../models';
+} from '../models/index';
 
 interface DeleteRequest {
     projectKey: string;
@@ -196,16 +196,25 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Delete a required builds merge check
      */
     async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling _delete.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling _delete().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling _delete.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling _delete().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling _delete.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling _delete().'
+            );
         }
 
         const queryParameters: any = {};
@@ -213,7 +222,7 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -235,20 +244,32 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Delete a Code Insights report
      */
     async _delete_1Raw(requestParameters: Delete0Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling _delete_1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling _delete_1().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling _delete_1.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling _delete_1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling _delete_1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling _delete_1().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling _delete_1.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling _delete_1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -256,7 +277,7 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -278,16 +299,25 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Store a build status
      */
     async addRaw(requestParameters: AddRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling add.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling add().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling add.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling add().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling add.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling add().'
+            );
         }
 
         const queryParameters: any = {};
@@ -297,11 +327,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBuildStatusSetRequest,
+            body: requestParameters['restBuildStatusSetRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -320,20 +350,32 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Add Code Insights annotations
      */
     async addAnnotationsRaw(requestParameters: AddAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling addAnnotations.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling addAnnotations().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling addAnnotations.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling addAnnotations().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling addAnnotations.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling addAnnotations().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling addAnnotations.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling addAnnotations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -343,11 +385,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restBulkAddInsightAnnotationRequest,
+            body: requestParameters['restBulkAddInsightAnnotationRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -366,12 +408,18 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Create a required builds merge check
      */
     async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling create.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling create().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling create.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling create().'
+            );
         }
 
         const queryParameters: any = {};
@@ -381,11 +429,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRequiredBuildConditionSetRequest,
+            body: requestParameters['restRequiredBuildConditionSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -405,16 +453,25 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Create or update a deployment
      */
     async create_2Raw(requestParameters: Create0Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling create_2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling create_2().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling create_2.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling create_2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling create_2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling create_2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -424,11 +481,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restDeploymentSetRequest,
+            body: requestParameters['restDeploymentSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -448,28 +505,37 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Delete a specific build status
      */
     async delete2Raw(requestParameters: Delete2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling delete2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling delete2().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling delete2.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling delete2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling delete2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling delete2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -491,36 +557,45 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Delete a deployment
      */
     async delete3Raw(requestParameters: Delete3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling delete3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling delete3().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling delete3.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling delete3().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling delete3.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling delete3().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.deploymentSequenceNumber !== undefined) {
-            queryParameters['deploymentSequenceNumber'] = requestParameters.deploymentSequenceNumber;
+        if (requestParameters['deploymentSequenceNumber'] != null) {
+            queryParameters['deploymentSequenceNumber'] = requestParameters['deploymentSequenceNumber'];
         }
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.environmentKey !== undefined) {
-            queryParameters['environmentKey'] = requestParameters.environmentKey;
+        if (requestParameters['environmentKey'] != null) {
+            queryParameters['environmentKey'] = requestParameters['environmentKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -542,32 +617,44 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Delete Code Insights annotations
      */
     async deleteAnnotationsRaw(requestParameters: DeleteAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteAnnotations.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteAnnotations().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling deleteAnnotations.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling deleteAnnotations().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deleteAnnotations.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deleteAnnotations().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteAnnotations.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling deleteAnnotations().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.externalId !== undefined) {
-            queryParameters['externalId'] = requestParameters.externalId;
+        if (requestParameters['externalId'] != null) {
+            queryParameters['externalId'] = requestParameters['externalId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -589,20 +676,32 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get a Code Insights report
      */
     async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling get.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling get().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling get.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling get().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling get.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling get().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling get.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling get().'
+            );
         }
 
         const queryParameters: any = {};
@@ -610,7 +709,7 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -633,28 +732,37 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get a specific build status
      */
     async get2Raw(requestParameters: Get2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStatus>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling get2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling get2().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling get2.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling get2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling get2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling get2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/builds`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -677,36 +785,45 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get a deployment
      */
     async get3Raw(requestParameters: Get3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling get3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling get3().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling get3.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling get3().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling get3.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling get3().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.deploymentSequenceNumber !== undefined) {
-            queryParameters['deploymentSequenceNumber'] = requestParameters.deploymentSequenceNumber;
+        if (requestParameters['deploymentSequenceNumber'] != null) {
+            queryParameters['deploymentSequenceNumber'] = requestParameters['deploymentSequenceNumber'];
         }
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.environmentKey !== undefined) {
-            queryParameters['environmentKey'] = requestParameters.environmentKey;
+        if (requestParameters['environmentKey'] != null) {
+            queryParameters['environmentKey'] = requestParameters['environmentKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/deployments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -729,20 +846,32 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get Code Insights annotations for a report
      */
     async getAnnotationsRaw(requestParameters: GetAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getAnnotations.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getAnnotations().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getAnnotations.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getAnnotations().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getAnnotations.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getAnnotations().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getAnnotations.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling getAnnotations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -750,7 +879,7 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -773,44 +902,53 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get Code Insights annotations for a commit
      */
     async getAnnotations1Raw(requestParameters: GetAnnotations1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getAnnotations1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getAnnotations1().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getAnnotations1.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getAnnotations1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getAnnotations1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getAnnotations1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.severity !== undefined) {
-            queryParameters['severity'] = requestParameters.severity;
+        if (requestParameters['severity'] != null) {
+            queryParameters['severity'] = requestParameters['severity'];
         }
 
-        if (requestParameters.path !== undefined) {
-            queryParameters['path'] = requestParameters.path;
+        if (requestParameters['path'] != null) {
+            queryParameters['path'] = requestParameters['path'];
         }
 
-        if (requestParameters.externalId !== undefined) {
-            queryParameters['externalId'] = requestParameters.externalId;
+        if (requestParameters['externalId'] != null) {
+            queryParameters['externalId'] = requestParameters['externalId'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/annotations`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -833,20 +971,23 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get build status statistics for commit
      */
     async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getBuildStatusStats.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getBuildStatusStats().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.includeUnique !== undefined) {
-            queryParameters['includeUnique'] = requestParameters.includeUnique;
+        if (requestParameters['includeUnique'] != null) {
+            queryParameters['includeUnique'] = requestParameters['includeUnique'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/build-status/latest/commits/stats/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))),
+            path: `/build-status/latest/commits/stats/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -880,10 +1021,14 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.requestBody,
+            body: requestParameters['requestBody'],
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
@@ -900,28 +1045,34 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get required builds merge checks
      */
     async getPageRaw(requestParameters: GetPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPage200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPage.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPage().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getPage.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getPage().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -944,32 +1095,41 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Get all Code Insights reports for a commit
      */
     async getReportsRaw(requestParameters: GetReportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReports200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReports.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReports().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getReports.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getReports().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getReports.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getReports().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -992,20 +1152,32 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Create a Code Insights report
      */
     async setRaw(requestParameters: SetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling set.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling set().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling set.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling set().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling set.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling set().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling set.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling set().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1015,11 +1187,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSetInsightReportRequest,
+            body: requestParameters['restSetInsightReportRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1039,24 +1211,39 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Create or replace a Code Insights annotation
      */
     async setAnnotationRaw(requestParameters: SetAnnotationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling setAnnotation.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling setAnnotation().'
+            );
         }
 
-        if (requestParameters.externalId === null || requestParameters.externalId === undefined) {
-            throw new runtime.RequiredError('externalId','Required parameter requestParameters.externalId was null or undefined when calling setAnnotation.');
+        if (requestParameters['externalId'] == null) {
+            throw new runtime.RequiredError(
+                'externalId',
+                'Required parameter "externalId" was null or undefined when calling setAnnotation().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling setAnnotation.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling setAnnotation().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling setAnnotation.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling setAnnotation().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling setAnnotation.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling setAnnotation().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1066,11 +1253,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations/{externalId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"externalId"}}`, encodeURIComponent(String(requestParameters.externalId))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/insights/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/reports/{key}/annotations/{externalId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"externalId"}}`, encodeURIComponent(String(requestParameters['externalId']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restSingleAddInsightAnnotationRequest,
+            body: requestParameters['restSingleAddInsightAnnotationRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1089,16 +1276,25 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
      * Update a required builds merge check
      */
     async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling update.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling update().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling update.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling update().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling update.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling update().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1108,11 +1304,11 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/required-builds/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restRequiredBuildConditionSetRequest,
+            body: requestParameters['restRequiredBuildConditionSetRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

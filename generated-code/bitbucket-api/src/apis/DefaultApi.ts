@@ -54,16 +54,16 @@ export class DefaultApi extends runtime.BaseAPI {
     async getPullRequests2Raw(requestParameters: GetPullRequests2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters.role !== undefined) {
-            queryParameters['role'] = requestParameters.role;
+        if (requestParameters['role'] != null) {
+            queryParameters['role'] = requestParameters['role'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

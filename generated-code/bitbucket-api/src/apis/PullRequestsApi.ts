@@ -49,7 +49,7 @@ import type {
   RestUserReaction,
   StreamDiff2200Response,
   UpdatePullRequestCondition1Request,
-} from '../models';
+} from '../models/index';
 
 interface ApplySuggestionRequest {
     projectKey: string;
@@ -105,14 +105,14 @@ interface CreateComment1Request {
     projectKey: string;
     pullRequestId: string;
     repositorySlug: string;
-    restComment?: RestComment;
+    restComment?: Omit<RestComment, 'updatedDate'|'createdDate'|'reply'|'pending'|'anchored'|'html'|'comments'>;
 }
 
 interface CreateComment2Request {
     projectKey: string;
     pullRequestId: string;
     repositorySlug: string;
-    restComment?: RestComment;
+    restComment?: Omit<RestComment, 'updatedDate'|'createdDate'|'reply'|'pending'|'anchored'|'html'|'comments'>;
 }
 
 interface CreatePullRequestConditionRequest {
@@ -506,7 +506,7 @@ interface UpdateComment1Request {
     commentId: string;
     pullRequestId: string;
     repositorySlug: string;
-    restComment?: RestComment;
+    restComment?: Omit<RestComment, 'updatedDate'|'createdDate'|'reply'|'pending'|'anchored'|'html'|'comments'>;
 }
 
 interface UpdateComment2Request {
@@ -514,7 +514,7 @@ interface UpdateComment2Request {
     commentId: string;
     pullRequestId: string;
     repositorySlug: string;
-    restComment?: RestComment;
+    restComment?: Omit<RestComment, 'updatedDate'|'createdDate'|'reply'|'pending'|'anchored'|'html'|'comments'>;
 }
 
 interface UpdatePullRequestConditionRequest {
@@ -560,20 +560,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Apply pull request suggestion
      */
     async applySuggestionRaw(requestParameters: ApplySuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling applySuggestion.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling applySuggestion().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling applySuggestion.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling applySuggestion().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling applySuggestion.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling applySuggestion().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling applySuggestion.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling applySuggestion().'
+            );
         }
 
         const queryParameters: any = {};
@@ -583,11 +595,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/apply-suggestion`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/apply-suggestion`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restApplySuggestionRequest,
+            body: requestParameters['restApplySuggestionRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -604,18 +616,28 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Approve pull request
+     * @deprecated
      */
     async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling approve.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling approve().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling approve.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling approve().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling approve.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling approve().'
+            );
         }
 
         const queryParameters: any = {};
@@ -623,7 +645,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -635,6 +657,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Approve pull request
+     * @deprecated
      */
     async approve(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestPullRequestParticipant> {
         const response = await this.approveRaw(requestParameters, initOverrides);
@@ -646,20 +669,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Assign pull request participant role
      */
     async assignParticipantRoleRaw(requestParameters: AssignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling assignParticipantRole.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling assignParticipantRole().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling assignParticipantRole.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling assignParticipantRole().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling assignParticipantRole.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling assignParticipantRole().'
+            );
         }
 
-        if (requestParameters.restPullRequestAssignParticipantRoleRequest === null || requestParameters.restPullRequestAssignParticipantRoleRequest === undefined) {
-            throw new runtime.RequiredError('restPullRequestAssignParticipantRoleRequest','Required parameter requestParameters.restPullRequestAssignParticipantRoleRequest was null or undefined when calling assignParticipantRole.');
+        if (requestParameters['restPullRequestAssignParticipantRoleRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restPullRequestAssignParticipantRoleRequest',
+                'Required parameter "restPullRequestAssignParticipantRoleRequest" was null or undefined when calling assignParticipantRole().'
+            );
         }
 
         const queryParameters: any = {};
@@ -669,11 +704,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestAssignParticipantRoleRequest,
+            body: requestParameters['restPullRequestAssignParticipantRoleRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -693,16 +728,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Test if pull request can be merged
      */
     async canMergeRaw(requestParameters: CanMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeability>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling canMerge.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling canMerge().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling canMerge.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling canMerge().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling canMerge.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling canMerge().'
+            );
         }
 
         const queryParameters: any = {};
@@ -710,7 +754,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -733,16 +777,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Check PR rebase precondition
      */
     async canRebaseRaw(requestParameters: CanRebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseability>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling canRebase.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling canRebase().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling canRebase.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling canRebase().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling canRebase.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling canRebase().'
+            );
         }
 
         const queryParameters: any = {};
@@ -750,7 +803,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/git/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/rebase`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/git/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/rebase`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -773,12 +826,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Create pull request
      */
     async create2Raw(requestParameters: Create2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling create2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling create2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling create2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling create2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -788,11 +847,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequest,
+            body: requestParameters['restPullRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -812,8 +871,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Create reviewer group
      */
     async create3Raw(requestParameters: Create3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling create3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling create3().'
+            );
         }
 
         const queryParameters: any = {};
@@ -823,11 +885,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restReviewerGroup,
+            body: requestParameters['restReviewerGroup'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -847,12 +909,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Create reviewer group
      */
     async create4Raw(requestParameters: Create4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling create4.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling create4().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling create4.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling create4().'
+            );
         }
 
         const queryParameters: any = {};
@@ -862,11 +930,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restReviewerGroup,
+            body: requestParameters['restReviewerGroup'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -886,16 +954,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Add new blocker comment
      */
     async createComment1Raw(requestParameters: CreateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createComment1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createComment1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling createComment1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling createComment1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling createComment1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling createComment1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -905,11 +982,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restComment,
+            body: requestParameters['restComment'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -929,16 +1006,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Add pull request comment
      */
     async createComment2Raw(requestParameters: CreateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createComment2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createComment2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling createComment2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling createComment2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling createComment2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling createComment2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -948,11 +1034,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restComment,
+            body: requestParameters['restComment'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -972,8 +1058,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Create default reviewer
      */
     async createPullRequestConditionRaw(requestParameters: CreatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createPullRequestCondition.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createPullRequestCondition().'
+            );
         }
 
         const queryParameters: any = {};
@@ -983,11 +1072,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/default-reviewers/latest/projects/{projectKey}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restDefaultReviewersRequest,
+            body: requestParameters['restDefaultReviewersRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1007,12 +1096,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Create default reviewers condition
      */
     async createPullRequestCondition1Raw(requestParameters: CreatePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling createPullRequestCondition1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling createPullRequestCondition1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling createPullRequestCondition1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling createPullRequestCondition1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1022,11 +1117,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restDefaultReviewersRequest,
+            body: requestParameters['restDefaultReviewersRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1046,22 +1141,31 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Decline pull request
      */
     async declineRaw(requestParameters: DeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling decline.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling decline().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling decline.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling decline().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling decline.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling decline().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1069,11 +1173,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/decline`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/decline`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestDeclineRequest,
+            body: requestParameters['restPullRequestDeclineRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1093,16 +1197,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete pull request
      */
     async delete6Raw(requestParameters: Delete6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling delete6.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling delete6().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling delete6.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling delete6().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling delete6.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling delete6().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1112,11 +1225,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestDeleteRequest,
+            body: requestParameters['restPullRequestDeleteRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1135,12 +1248,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete reviewer group
      */
     async delete7Raw(requestParameters: Delete7Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling delete7.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling delete7().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling delete7.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling delete7().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1148,7 +1267,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1170,16 +1289,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete reviewer group
      */
     async delete8Raw(requestParameters: Delete8Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling delete8.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling delete8().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling delete8.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling delete8().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling delete8.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling delete8().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1187,7 +1315,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1209,32 +1337,44 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete pull request comment
      */
     async deleteComment1Raw(requestParameters: DeleteComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteComment1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteComment1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteComment1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling deleteComment1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling deleteComment1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling deleteComment1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deleteComment1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deleteComment1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1256,32 +1396,44 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete a pull request comment
      */
     async deleteComment2Raw(requestParameters: DeleteComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deleteComment2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deleteComment2().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteComment2.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling deleteComment2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling deleteComment2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling deleteComment2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deleteComment2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deleteComment2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1303,12 +1455,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Remove default reviewer
      */
     async deletePullRequestConditionRaw(requestParameters: DeletePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deletePullRequestCondition.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deletePullRequestCondition().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deletePullRequestCondition.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deletePullRequestCondition().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1316,7 +1474,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/default-reviewers/latest/projects/{projectKey}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1338,16 +1496,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Delete a default reviewer condition
      */
     async deletePullRequestCondition1Raw(requestParameters: DeletePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling deletePullRequestCondition1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling deletePullRequestCondition1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deletePullRequestCondition1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deletePullRequestCondition1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling deletePullRequestCondition1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling deletePullRequestCondition1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1355,7 +1522,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1377,16 +1544,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Discard pull request review
      */
     async discardReviewRaw(requestParameters: DiscardReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling discardReview.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling discardReview().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling discardReview.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling discardReview().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling discardReview.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling discardReview().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1394,7 +1570,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1416,16 +1592,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Complete pull request review
      */
     async finishReviewRaw(requestParameters: FinishReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling finishReview.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling finishReview().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling finishReview.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling finishReview().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling finishReview.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling finishReview().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1435,11 +1620,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestFinishReviewRequest,
+            body: requestParameters['restPullRequestFinishReviewRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1458,16 +1643,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request
      */
     async get5Raw(requestParameters: Get5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling get5.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling get5().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling get5.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling get5().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling get5.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling get5().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1475,7 +1669,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1498,40 +1692,49 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request activity
      */
     async getActivitiesRaw(requestParameters: GetActivitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetActivities200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getActivities.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getActivities().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getActivities.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getActivities().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getActivities.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getActivities().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.fromType !== undefined) {
-            queryParameters['fromType'] = requestParameters.fromType;
+        if (requestParameters['fromType'] != null) {
+            queryParameters['fromType'] = requestParameters['fromType'];
         }
 
-        if (requestParameters.fromId !== undefined) {
-            queryParameters['fromId'] = requestParameters.fromId;
+        if (requestParameters['fromId'] != null) {
+            queryParameters['fromId'] = requestParameters['fromId'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/activities`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/activities`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1554,20 +1757,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request comment
      */
     async getComment1Raw(requestParameters: GetComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getComment1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getComment1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getComment1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getComment1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getComment1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getComment1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getComment1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getComment1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1575,7 +1790,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1598,20 +1813,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get a pull request comment
      */
     async getComment2Raw(requestParameters: GetComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getComment2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getComment2().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getComment2.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getComment2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getComment2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getComment2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getComment2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getComment2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1619,7 +1846,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1642,44 +1869,53 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Search pull request comments
      */
     async getComments1Raw(requestParameters: GetComments1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getComments1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getComments1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getComments1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getComments1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getComments1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getComments1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.count !== undefined) {
-            queryParameters['count'] = requestParameters.count;
+        if (requestParameters['count'] != null) {
+            queryParameters['count'] = requestParameters['count'];
         }
 
-        if (requestParameters.state) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.states !== undefined) {
-            queryParameters['states'] = requestParameters.states;
+        if (requestParameters['states'] != null) {
+            queryParameters['states'] = requestParameters['states'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1702,68 +1938,80 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request comments for path
      */
     async getComments2Raw(requestParameters: GetComments2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
-        if (requestParameters.path === null || requestParameters.path === undefined) {
-            throw new runtime.RequiredError('path','Required parameter requestParameters.path was null or undefined when calling getComments2.');
+        if (requestParameters['path'] == null) {
+            throw new runtime.RequiredError(
+                'path',
+                'Required parameter "path" was null or undefined when calling getComments2().'
+            );
         }
 
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getComments2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getComments2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getComments2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getComments2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getComments2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getComments2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.path !== undefined) {
-            queryParameters['path'] = requestParameters.path;
+        if (requestParameters['path'] != null) {
+            queryParameters['path'] = requestParameters['path'];
         }
 
-        if (requestParameters.fromHash !== undefined) {
-            queryParameters['fromHash'] = requestParameters.fromHash;
+        if (requestParameters['fromHash'] != null) {
+            queryParameters['fromHash'] = requestParameters['fromHash'];
         }
 
-        if (requestParameters.anchorState !== undefined) {
-            queryParameters['anchorState'] = requestParameters.anchorState;
+        if (requestParameters['anchorState'] != null) {
+            queryParameters['anchorState'] = requestParameters['anchorState'];
         }
 
-        if (requestParameters.diffType) {
-            queryParameters['diffType'] = requestParameters.diffType;
+        if (requestParameters['diffType'] != null) {
+            queryParameters['diffType'] = requestParameters['diffType'];
         }
 
-        if (requestParameters.toHash !== undefined) {
-            queryParameters['toHash'] = requestParameters.toHash;
+        if (requestParameters['toHash'] != null) {
+            queryParameters['toHash'] = requestParameters['toHash'];
         }
 
-        if (requestParameters.state) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.diffTypes !== undefined) {
-            queryParameters['diffTypes'] = requestParameters.diffTypes;
+        if (requestParameters['diffTypes'] != null) {
+            queryParameters['diffTypes'] = requestParameters['diffTypes'];
         }
 
-        if (requestParameters.states !== undefined) {
-            queryParameters['states'] = requestParameters.states;
+        if (requestParameters['states'] != null) {
+            queryParameters['states'] = requestParameters['states'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1786,44 +2034,53 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request commits
      */
     async getCommits1Raw(requestParameters: GetCommits1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response1>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getCommits1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getCommits1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getCommits1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getCommits1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getCommits1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getCommits1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.avatarScheme !== undefined) {
-            queryParameters['avatarScheme'] = requestParameters.avatarScheme;
+        if (requestParameters['avatarScheme'] != null) {
+            queryParameters['avatarScheme'] = requestParameters['avatarScheme'];
         }
 
-        if (requestParameters.withCounts !== undefined) {
-            queryParameters['withCounts'] = requestParameters.withCounts;
+        if (requestParameters['withCounts'] != null) {
+            queryParameters['withCounts'] = requestParameters['withCounts'];
         }
 
-        if (requestParameters.avatarSize !== undefined) {
-            queryParameters['avatarSize'] = requestParameters.avatarSize;
+        if (requestParameters['avatarSize'] != null) {
+            queryParameters['avatarSize'] = requestParameters['avatarSize'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/commits`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/commits`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1846,8 +2103,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get merge strategies
      */
     async getMergeConfigRaw(requestParameters: GetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
-        if (requestParameters.scmId === null || requestParameters.scmId === undefined) {
-            throw new runtime.RequiredError('scmId','Required parameter requestParameters.scmId was null or undefined when calling getMergeConfig.');
+        if (requestParameters['scmId'] == null) {
+            throw new runtime.RequiredError(
+                'scmId',
+                'Required parameter "scmId" was null or undefined when calling getMergeConfig().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1855,7 +2115,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/admin/pull-requests/{scmId}`.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters.scmId))),
+            path: `/api/latest/admin/pull-requests/{scmId}`.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1878,56 +2138,62 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull requests for repository
      */
     async getPageRaw(requestParameters: GetPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPage.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPage().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getPage.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getPage().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.withAttributes !== undefined) {
-            queryParameters['withAttributes'] = requestParameters.withAttributes;
+        if (requestParameters['withAttributes'] != null) {
+            queryParameters['withAttributes'] = requestParameters['withAttributes'];
         }
 
-        if (requestParameters.at !== undefined) {
-            queryParameters['at'] = requestParameters.at;
+        if (requestParameters['at'] != null) {
+            queryParameters['at'] = requestParameters['at'];
         }
 
-        if (requestParameters.withProperties !== undefined) {
-            queryParameters['withProperties'] = requestParameters.withProperties;
+        if (requestParameters['withProperties'] != null) {
+            queryParameters['withProperties'] = requestParameters['withProperties'];
         }
 
-        if (requestParameters.filterText !== undefined) {
-            queryParameters['filterText'] = requestParameters.filterText;
+        if (requestParameters['filterText'] != null) {
+            queryParameters['filterText'] = requestParameters['filterText'];
         }
 
-        if (requestParameters.state !== undefined) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
-        if (requestParameters.direction !== undefined) {
-            queryParameters['direction'] = requestParameters.direction;
+        if (requestParameters['direction'] != null) {
+            queryParameters['direction'] = requestParameters['direction'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1950,8 +2216,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get default reviewers
      */
     async getPullRequestConditionsRaw(requestParameters: GetPullRequestConditionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPullRequestConditions.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPullRequestConditions().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1959,7 +2228,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/default-reviewers/latest/projects/{projectKey}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1982,12 +2251,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get configured default reviewers
      */
     async getPullRequestConditions1Raw(requestParameters: GetPullRequestConditions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPullRequestConditions1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPullRequestConditions1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getPullRequestConditions1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getPullRequestConditions1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1995,7 +2270,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/conditions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2018,32 +2293,41 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get repository pull requests containing commit
      */
     async getPullRequestsRaw(requestParameters: GetPullRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getPullRequests.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getPullRequests().'
+            );
         }
 
-        if (requestParameters.commitId === null || requestParameters.commitId === undefined) {
-            throw new runtime.RequiredError('commitId','Required parameter requestParameters.commitId was null or undefined when calling getPullRequests.');
+        if (requestParameters['commitId'] == null) {
+            throw new runtime.RequiredError(
+                'commitId',
+                'Required parameter "commitId" was null or undefined when calling getPullRequests().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getPullRequests.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getPullRequests().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters.commitId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/commits/{commitId}/pull-requests`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2066,32 +2350,41 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request comment thread
      */
     async getReviewRaw(requestParameters: GetReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReview.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReview().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getReview.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getReview().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getReview.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getReview().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/review`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2114,12 +2407,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get reviewer group
      */
     async getReviewerGroupRaw(requestParameters: GetReviewerGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReviewerGroup.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReviewerGroup().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getReviewerGroup.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getReviewerGroup().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2127,7 +2426,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2150,16 +2449,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get reviewer group
      */
     async getReviewerGroup1Raw(requestParameters: GetReviewerGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReviewerGroup1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReviewerGroup1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getReviewerGroup1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getReviewerGroup1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getReviewerGroup1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getReviewerGroup1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2167,7 +2475,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2190,24 +2498,27 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get all reviewer groups
      */
     async getReviewerGroupsRaw(requestParameters: GetReviewerGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReviewerGroups.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReviewerGroups().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2230,28 +2541,34 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get all reviewer groups
      */
     async getReviewerGroups1Raw(requestParameters: GetReviewerGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReviewerGroups1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReviewerGroups1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getReviewerGroups1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getReviewerGroups1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2274,36 +2591,42 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get required reviewers for PR creation
      */
     async getReviewersRaw(requestParameters: GetReviewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getReviewers.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getReviewers().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getReviewers.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getReviewers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.targetRepoId !== undefined) {
-            queryParameters['targetRepoId'] = requestParameters.targetRepoId;
+        if (requestParameters['targetRepoId'] != null) {
+            queryParameters['targetRepoId'] = requestParameters['targetRepoId'];
         }
 
-        if (requestParameters.sourceRepoId !== undefined) {
-            queryParameters['sourceRepoId'] = requestParameters.sourceRepoId;
+        if (requestParameters['sourceRepoId'] != null) {
+            queryParameters['sourceRepoId'] = requestParameters['sourceRepoId'];
         }
 
-        if (requestParameters.sourceRefId !== undefined) {
-            queryParameters['sourceRefId'] = requestParameters.sourceRefId;
+        if (requestParameters['sourceRefId'] != null) {
+            queryParameters['sourceRefId'] = requestParameters['sourceRefId'];
         }
 
-        if (requestParameters.targetRefId !== undefined) {
-            queryParameters['targetRefId'] = requestParameters.targetRefId;
+        if (requestParameters['targetRefId'] != null) {
+            queryParameters['targetRefId'] = requestParameters['targetRefId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/reviewers`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/reviewers`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2326,16 +2649,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get reviewer group users
      */
     async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestApplicationUser>>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getUsers.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getUsers().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getUsers.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getUsers().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getUsers.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getUsers().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2343,7 +2675,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2366,32 +2698,41 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Get pull request participants
      */
     async listParticipantsRaw(requestParameters: ListParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListParticipants200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling listParticipants.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling listParticipants().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling listParticipants.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling listParticipants().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling listParticipants.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling listParticipants().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2414,22 +2755,31 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Merge pull request
      */
     async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling merge.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling merge().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling merge.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling merge().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling merge.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling merge().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2437,11 +2787,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestMergeRequest,
+            body: requestParameters['restPullRequestMergeRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2461,24 +2811,39 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * React to a PR comment
      */
     async react1Raw(requestParameters: React1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserReaction>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling react1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling react1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling react1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling react1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling react1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling react1().'
+            );
         }
 
-        if (requestParameters.emoticon === null || requestParameters.emoticon === undefined) {
-            throw new runtime.RequiredError('emoticon','Required parameter requestParameters.emoticon was null or undefined when calling react1.');
+        if (requestParameters['emoticon'] == null) {
+            throw new runtime.RequiredError(
+                'emoticon',
+                'Required parameter "emoticon" was null or undefined when calling react1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling react1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling react1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2486,7 +2851,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/reactions/{emoticon}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters.emoticon))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/reactions/{emoticon}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2509,16 +2874,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Rebase pull request
      */
     async rebaseRaw(requestParameters: RebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseResult>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling rebase.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling rebase().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling rebase.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling rebase().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling rebase.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling rebase().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2528,11 +2902,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/git/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/rebase`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/git/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/rebase`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestRebaseRequest,
+            body: requestParameters['restPullRequestRebaseRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2552,22 +2926,31 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Re-open pull request
      */
     async reopenRaw(requestParameters: ReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling reopen.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling reopen().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling reopen.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling reopen().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling reopen.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling reopen().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2575,11 +2958,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/reopen`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/reopen`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestReopenRequest,
+            body: requestParameters['restPullRequestReopenRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2599,40 +2982,46 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Search pull request participants
      */
     async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLikers200Response>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling search.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling search().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling search.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling search().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.filter !== undefined) {
-            queryParameters['filter'] = requestParameters.filter;
+        if (requestParameters['filter'] != null) {
+            queryParameters['filter'] = requestParameters['filter'];
         }
 
-        if (requestParameters.role !== undefined) {
-            queryParameters['role'] = requestParameters.role;
+        if (requestParameters['role'] != null) {
+            queryParameters['role'] = requestParameters['role'];
         }
 
-        if (requestParameters.direction !== undefined) {
-            queryParameters['direction'] = requestParameters.direction;
+        if (requestParameters['direction'] != null) {
+            queryParameters['direction'] = requestParameters['direction'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2655,8 +3044,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update merge strategies
      */
     async setMergeConfigRaw(requestParameters: SetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
-        if (requestParameters.scmId === null || requestParameters.scmId === undefined) {
-            throw new runtime.RequiredError('scmId','Required parameter requestParameters.scmId was null or undefined when calling setMergeConfig.');
+        if (requestParameters['scmId'] == null) {
+            throw new runtime.RequiredError(
+                'scmId',
+                'Required parameter "scmId" was null or undefined when calling setMergeConfig().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2666,11 +3058,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/admin/pull-requests/{scmId}`.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters.scmId))),
+            path: `/api/latest/admin/pull-requests/{scmId}`.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestSettings,
+            body: requestParameters['restPullRequestSettings'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -2690,48 +3082,57 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Gets pull request changes
      */
     async streamChanges1Raw(requestParameters: StreamChanges1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChange>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling streamChanges1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling streamChanges1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling streamChanges1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling streamChanges1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling streamChanges1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling streamChanges1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sinceId !== undefined) {
-            queryParameters['sinceId'] = requestParameters.sinceId;
+        if (requestParameters['sinceId'] != null) {
+            queryParameters['sinceId'] = requestParameters['sinceId'];
         }
 
-        if (requestParameters.changeScope !== undefined) {
-            queryParameters['changeScope'] = requestParameters.changeScope;
+        if (requestParameters['changeScope'] != null) {
+            queryParameters['changeScope'] = requestParameters['changeScope'];
         }
 
-        if (requestParameters.untilId !== undefined) {
-            queryParameters['untilId'] = requestParameters.untilId;
+        if (requestParameters['untilId'] != null) {
+            queryParameters['untilId'] = requestParameters['untilId'];
         }
 
-        if (requestParameters.withComments !== undefined) {
-            queryParameters['withComments'] = requestParameters.withComments;
+        if (requestParameters['withComments'] != null) {
+            queryParameters['withComments'] = requestParameters['withComments'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/changes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/changes`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2754,72 +3155,84 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Stream a diff within a pull request
      */
     async streamDiff3Raw(requestParameters: StreamDiff3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StreamDiff2200Response>> {
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling streamDiff3.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling streamDiff3().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling streamDiff3.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling streamDiff3().'
+            );
         }
 
-        if (requestParameters.path === null || requestParameters.path === undefined) {
-            throw new runtime.RequiredError('path','Required parameter requestParameters.path was null or undefined when calling streamDiff3.');
+        if (requestParameters['path'] == null) {
+            throw new runtime.RequiredError(
+                'path',
+                'Required parameter "path" was null or undefined when calling streamDiff3().'
+            );
         }
 
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling streamDiff3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling streamDiff3().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sinceId !== undefined) {
-            queryParameters['sinceId'] = requestParameters.sinceId;
+        if (requestParameters['sinceId'] != null) {
+            queryParameters['sinceId'] = requestParameters['sinceId'];
         }
 
-        if (requestParameters.srcPath !== undefined) {
-            queryParameters['srcPath'] = requestParameters.srcPath;
+        if (requestParameters['srcPath'] != null) {
+            queryParameters['srcPath'] = requestParameters['srcPath'];
         }
 
-        if (requestParameters.diffType !== undefined) {
-            queryParameters['diffType'] = requestParameters.diffType;
+        if (requestParameters['diffType'] != null) {
+            queryParameters['diffType'] = requestParameters['diffType'];
         }
 
-        if (requestParameters.avatarSize !== undefined) {
-            queryParameters['avatarSize'] = requestParameters.avatarSize;
+        if (requestParameters['avatarSize'] != null) {
+            queryParameters['avatarSize'] = requestParameters['avatarSize'];
         }
 
-        if (requestParameters.avatarScheme !== undefined) {
-            queryParameters['avatarScheme'] = requestParameters.avatarScheme;
+        if (requestParameters['avatarScheme'] != null) {
+            queryParameters['avatarScheme'] = requestParameters['avatarScheme'];
         }
 
-        if (requestParameters.contextLines !== undefined) {
-            queryParameters['contextLines'] = requestParameters.contextLines;
+        if (requestParameters['contextLines'] != null) {
+            queryParameters['contextLines'] = requestParameters['contextLines'];
         }
 
-        if (requestParameters.untilId !== undefined) {
-            queryParameters['untilId'] = requestParameters.untilId;
+        if (requestParameters['untilId'] != null) {
+            queryParameters['untilId'] = requestParameters['untilId'];
         }
 
-        if (requestParameters.whitespace !== undefined) {
-            queryParameters['whitespace'] = requestParameters.whitespace;
+        if (requestParameters['whitespace'] != null) {
+            queryParameters['whitespace'] = requestParameters['whitespace'];
         }
 
-        if (requestParameters.withComments !== undefined) {
-            queryParameters['withComments'] = requestParameters.withComments;
+        if (requestParameters['withComments'] != null) {
+            queryParameters['withComments'] = requestParameters['withComments'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/diff/{path}`.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))).replace(`{${"path"}}`, encodeURIComponent(String(requestParameters.path))).replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/diff/{path}`.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))).replace(`{${"path"}}`, encodeURIComponent(String(requestParameters['path']))).replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2840,52 +3253,61 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      */
     async streamDiff4Raw(requestParameters: StreamDiff4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling streamDiff4.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling streamDiff4().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling streamDiff4.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling streamDiff4().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling streamDiff4.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling streamDiff4().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.contextLines !== undefined) {
-            queryParameters['contextLines'] = requestParameters.contextLines;
+        if (requestParameters['contextLines'] != null) {
+            queryParameters['contextLines'] = requestParameters['contextLines'];
         }
 
-        if (requestParameters.sinceId !== undefined) {
-            queryParameters['sinceId'] = requestParameters.sinceId;
+        if (requestParameters['sinceId'] != null) {
+            queryParameters['sinceId'] = requestParameters['sinceId'];
         }
 
-        if (requestParameters.srcPath !== undefined) {
-            queryParameters['srcPath'] = requestParameters.srcPath;
+        if (requestParameters['srcPath'] != null) {
+            queryParameters['srcPath'] = requestParameters['srcPath'];
         }
 
-        if (requestParameters.diffType !== undefined) {
-            queryParameters['diffType'] = requestParameters.diffType;
+        if (requestParameters['diffType'] != null) {
+            queryParameters['diffType'] = requestParameters['diffType'];
         }
 
-        if (requestParameters.untilId !== undefined) {
-            queryParameters['untilId'] = requestParameters.untilId;
+        if (requestParameters['untilId'] != null) {
+            queryParameters['untilId'] = requestParameters['untilId'];
         }
 
-        if (requestParameters.whitespace !== undefined) {
-            queryParameters['whitespace'] = requestParameters.whitespace;
+        if (requestParameters['whitespace'] != null) {
+            queryParameters['whitespace'] = requestParameters['whitespace'];
         }
 
-        if (requestParameters.withComments !== undefined) {
-            queryParameters['withComments'] = requestParameters.withComments;
+        if (requestParameters['withComments'] != null) {
+            queryParameters['withComments'] = requestParameters['withComments'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/diff`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/diff`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2905,16 +3327,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Stream pull request as patch
      */
     async streamPatch1Raw(requestParameters: StreamPatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling streamPatch1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling streamPatch1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling streamPatch1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling streamPatch1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling streamPatch1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling streamPatch1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -2922,7 +3353,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}.patch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}.patch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2944,32 +3375,41 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Stream raw pull request diff
      */
     async streamRawDiff2Raw(requestParameters: StreamRawDiff2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling streamRawDiff2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling streamRawDiff2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling streamRawDiff2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling streamRawDiff2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling streamRawDiff2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling streamRawDiff2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.contextLines !== undefined) {
-            queryParameters['contextLines'] = requestParameters.contextLines;
+        if (requestParameters['contextLines'] != null) {
+            queryParameters['contextLines'] = requestParameters['contextLines'];
         }
 
-        if (requestParameters.whitespace !== undefined) {
-            queryParameters['whitespace'] = requestParameters.whitespace;
+        if (requestParameters['whitespace'] != null) {
+            queryParameters['whitespace'] = requestParameters['whitespace'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}.diff`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}.diff`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2991,24 +3431,39 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Remove a reaction from a PR comment
      */
     async unReact1Raw(requestParameters: UnReact1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unReact1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unReact1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling unReact1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling unReact1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unReact1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unReact1().'
+            );
         }
 
-        if (requestParameters.emoticon === null || requestParameters.emoticon === undefined) {
-            throw new runtime.RequiredError('emoticon','Required parameter requestParameters.emoticon was null or undefined when calling unReact1.');
+        if (requestParameters['emoticon'] == null) {
+            throw new runtime.RequiredError(
+                'emoticon',
+                'Required parameter "emoticon" was null or undefined when calling unReact1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unReact1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unReact1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3016,7 +3471,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/reactions/{emoticon}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters.emoticon))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/comment-likes/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}/reactions/{emoticon}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -3038,20 +3493,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Unassign pull request participant
      */
     async unassignParticipantRoleRaw(requestParameters: UnassignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unassignParticipantRole.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unassignParticipantRole().'
+            );
         }
 
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling unassignParticipantRole.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling unassignParticipantRole().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unassignParticipantRole.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unassignParticipantRole().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unassignParticipantRole.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unassignParticipantRole().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3059,7 +3526,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -3079,30 +3546,40 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
      * Unassign pull request participant
+     * @deprecated
      */
     async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unassignParticipantRole1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unassignParticipantRole1().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -3114,6 +3591,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
      * Unassign pull request participant
+     * @deprecated
      */
     async unassignParticipantRole1(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.unassignParticipantRole1Raw(requestParameters, initOverrides);
@@ -3124,16 +3602,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Stop watching pull request
      */
     async unwatch1Raw(requestParameters: Unwatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling unwatch1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling unwatch1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling unwatch1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling unwatch1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling unwatch1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling unwatch1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3141,7 +3628,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/watch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/watch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -3163,16 +3650,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update pull request metadata
      */
     async update3Raw(requestParameters: Update3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling update3.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling update3().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling update3.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling update3().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling update3.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling update3().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3182,11 +3678,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequest,
+            body: requestParameters['restPullRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3206,12 +3702,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update reviewer group attributes
      */
     async update4Raw(requestParameters: Update4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling update4.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling update4().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling update4.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling update4().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3221,11 +3723,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/latest/projects/{projectKey}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restReviewerGroup,
+            body: requestParameters['restReviewerGroup'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3245,16 +3747,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update reviewer group attributes
      */
     async update5Raw(requestParameters: Update5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling update5.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling update5().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling update5.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling update5().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling update5.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling update5().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3264,11 +3775,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/settings/reviewer-groups/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restReviewerGroup,
+            body: requestParameters['restReviewerGroup'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3288,20 +3799,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update pull request comment
      */
     async updateComment1Raw(requestParameters: UpdateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling updateComment1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling updateComment1().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling updateComment1.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling updateComment1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling updateComment1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling updateComment1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling updateComment1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling updateComment1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3311,11 +3834,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/blocker-comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restComment,
+            body: requestParameters['restComment'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3335,20 +3858,32 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update pull request comment
      */
     async updateComment2Raw(requestParameters: UpdateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling updateComment2.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling updateComment2().'
+            );
         }
 
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling updateComment2.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling updateComment2().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling updateComment2.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling updateComment2().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling updateComment2.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling updateComment2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3358,11 +3893,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/comments/{commentId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restComment,
+            body: requestParameters['restComment'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3382,12 +3917,18 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update the default reviewer
      */
     async updatePullRequestConditionRaw(requestParameters: UpdatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling updatePullRequestCondition.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling updatePullRequestCondition().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updatePullRequestCondition.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updatePullRequestCondition().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3397,11 +3938,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/default-reviewers/latest/projects/{projectKey}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restDefaultReviewersRequest,
+            body: requestParameters['restDefaultReviewersRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3421,16 +3962,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Update a default reviewer condition
      */
     async updatePullRequestCondition1Raw(requestParameters: UpdatePullRequestCondition1OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling updatePullRequestCondition1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling updatePullRequestCondition1().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updatePullRequestCondition1.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updatePullRequestCondition1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling updatePullRequestCondition1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling updatePullRequestCondition1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3440,11 +3990,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/default-reviewers/latest/projects/{projectKey}/repos/{repositorySlug}/condition/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updatePullRequestCondition1Request,
+            body: requestParameters['updatePullRequestCondition1Request'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3464,24 +4014,39 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Change pull request status
      */
     async updateStatusRaw(requestParameters: UpdateStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling updateStatus.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling updateStatus().'
+            );
         }
 
-        if (requestParameters.userSlug === null || requestParameters.userSlug === undefined) {
-            throw new runtime.RequiredError('userSlug','Required parameter requestParameters.userSlug was null or undefined when calling updateStatus.');
+        if (requestParameters['userSlug'] == null) {
+            throw new runtime.RequiredError(
+                'userSlug',
+                'Required parameter "userSlug" was null or undefined when calling updateStatus().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling updateStatus.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling updateStatus().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling updateStatus.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling updateStatus().'
+            );
         }
 
-        if (requestParameters.restPullRequestAssignStatusRequest === null || requestParameters.restPullRequestAssignStatusRequest === undefined) {
-            throw new runtime.RequiredError('restPullRequestAssignStatusRequest','Required parameter requestParameters.restPullRequestAssignStatusRequest was null or undefined when calling updateStatus.');
+        if (requestParameters['restPullRequestAssignStatusRequest'] == null) {
+            throw new runtime.RequiredError(
+                'restPullRequestAssignStatusRequest',
+                'Required parameter "restPullRequestAssignStatusRequest" was null or undefined when calling updateStatus().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3491,11 +4056,11 @@ export class PullRequestsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters.userSlug))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.restPullRequestAssignStatusRequest,
+            body: requestParameters['restPullRequestAssignStatusRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -3515,16 +4080,25 @@ export class PullRequestsApi extends runtime.BaseAPI {
      * Watch pull request
      */
     async watch1Raw(requestParameters: Watch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling watch1.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling watch1().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling watch1.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling watch1().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling watch1.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling watch1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3532,7 +4106,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/watch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/watch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -3552,18 +4126,28 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Unapprove pull request
+     * @deprecated
      */
     async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling withdrawApproval.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling withdrawApproval().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling withdrawApproval.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling withdrawApproval().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling withdrawApproval.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling withdrawApproval().'
+            );
         }
 
         const queryParameters: any = {};
@@ -3571,7 +4155,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -3583,6 +4167,7 @@ export class PullRequestsApi extends runtime.BaseAPI {
     /**
      * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
      * Unapprove pull request
+     * @deprecated
      */
     async withdrawApproval(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RestPullRequestParticipant> {
         const response = await this.withdrawApprovalRaw(requestParameters, initOverrides);

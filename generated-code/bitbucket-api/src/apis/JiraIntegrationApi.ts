@@ -20,7 +20,7 @@ import type {
   RestCommentJiraIssue,
   RestEnhancedEntityLink,
   RestJiraIssue,
-} from '../models';
+} from '../models/index';
 
 interface CreateIssueRequest {
     commentId: string;
@@ -55,14 +55,17 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
      * Create Jira Issue
      */
     async createIssueRaw(requestParameters: CreateIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommentJiraIssue>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling createIssue.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling createIssue().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.applicationId !== undefined) {
-            queryParameters['applicationId'] = requestParameters.applicationId;
+        if (requestParameters['applicationId'] != null) {
+            queryParameters['applicationId'] = requestParameters['applicationId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -70,11 +73,11 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/jira/latest/comments/{commentId}/issues`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/jira/latest/comments/{commentId}/issues`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -94,28 +97,31 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
      * Get changesets for issue key
      */
     async getCommitsRaw(requestParameters: GetCommitsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
-        if (requestParameters.issueKey === null || requestParameters.issueKey === undefined) {
-            throw new runtime.RequiredError('issueKey','Required parameter requestParameters.issueKey was null or undefined when calling getCommits.');
+        if (requestParameters['issueKey'] == null) {
+            throw new runtime.RequiredError(
+                'issueKey',
+                'Required parameter "issueKey" was null or undefined when calling getCommits().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.maxChanges !== undefined) {
-            queryParameters['maxChanges'] = requestParameters.maxChanges;
+        if (requestParameters['maxChanges'] != null) {
+            queryParameters['maxChanges'] = requestParameters['maxChanges'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/jira/latest/issues/{issueKey}/commits`.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters.issueKey))),
+            path: `/jira/latest/issues/{issueKey}/commits`.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -138,8 +144,11 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
      * Get entity link
      */
     async getForProjectRaw(requestParameters: GetForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEnhancedEntityLink>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getForProject.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getForProject().'
+            );
         }
 
         const queryParameters: any = {};
@@ -147,7 +156,7 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/jira/latest/projects/{projectKey}/primary-enhanced-entitylink`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))),
+            path: `/jira/latest/projects/{projectKey}/primary-enhanced-entitylink`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -170,16 +179,25 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
      * Get issues for a pull request
      */
     async getIssueKeysForPullRequestRaw(requestParameters: GetIssueKeysForPullRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestJiraIssue>>> {
-        if (requestParameters.projectKey === null || requestParameters.projectKey === undefined) {
-            throw new runtime.RequiredError('projectKey','Required parameter requestParameters.projectKey was null or undefined when calling getIssueKeysForPullRequest.');
+        if (requestParameters['projectKey'] == null) {
+            throw new runtime.RequiredError(
+                'projectKey',
+                'Required parameter "projectKey" was null or undefined when calling getIssueKeysForPullRequest().'
+            );
         }
 
-        if (requestParameters.pullRequestId === null || requestParameters.pullRequestId === undefined) {
-            throw new runtime.RequiredError('pullRequestId','Required parameter requestParameters.pullRequestId was null or undefined when calling getIssueKeysForPullRequest.');
+        if (requestParameters['pullRequestId'] == null) {
+            throw new runtime.RequiredError(
+                'pullRequestId',
+                'Required parameter "pullRequestId" was null or undefined when calling getIssueKeysForPullRequest().'
+            );
         }
 
-        if (requestParameters.repositorySlug === null || requestParameters.repositorySlug === undefined) {
-            throw new runtime.RequiredError('repositorySlug','Required parameter requestParameters.repositorySlug was null or undefined when calling getIssueKeysForPullRequest.');
+        if (requestParameters['repositorySlug'] == null) {
+            throw new runtime.RequiredError(
+                'repositorySlug',
+                'Required parameter "repositorySlug" was null or undefined when calling getIssueKeysForPullRequest().'
+            );
         }
 
         const queryParameters: any = {};
@@ -187,7 +205,7 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters.projectKey))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters.pullRequestId))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters.repositorySlug))),
+            path: `/jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
