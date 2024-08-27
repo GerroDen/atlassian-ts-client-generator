@@ -4,10 +4,6 @@ const transformer = (file, api) => {
   file.source = require("./fix-jira-cloud-common-api.cjs")(file, api);
   const source = j(file.source);
   source
-    .find(j.ExportAllDeclaration)
-    .filter((path) => path.node.source?.value === "./BoardsApi")
-    .remove();
-  source
     .find(j.TSPropertySignature)
     .filter(
       (path) => path.parent?.parent?.node?.id?.name === "GetAllBoardsRequest",
