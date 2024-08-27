@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   MultiEntityResultSpacePermission,
-} from '../models';
+} from '../models/index';
 
 export interface GetSpacePermissionsRequest {
     id: number;
@@ -34,18 +34,21 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
      * Get space permissions
      */
     async getSpacePermissionsRaw(requestParameters: GetSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSpacePermissions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSpacePermissions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -55,11 +58,11 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         }
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
         const response = await this.request({
-            path: `/spaces/{id}/permissions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/spaces/{id}/permissions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -16,10 +16,10 @@
 import * as runtime from '../runtime';
 import type {
   PermittedOperationsResponse,
-} from '../models';
+} from '../models/index';
 
 export interface GetAttachmentOperationsRequest {
-    id: number;
+    id: string;
 }
 
 export interface GetBlogPostOperationsRequest {
@@ -27,6 +27,10 @@ export interface GetBlogPostOperationsRequest {
 }
 
 export interface GetCustomContentOperationsRequest {
+    id: number;
+}
+
+export interface GetDatabaseOperationsRequest {
     id: number;
 }
 
@@ -42,7 +46,15 @@ export interface GetPageOperationsRequest {
     id: number;
 }
 
+export interface GetSmartLinkOperationsRequest {
+    id: number;
+}
+
 export interface GetSpaceOperationsRequest {
+    id: number;
+}
+
+export interface GetWhiteboardOperationsRequest {
     id: number;
 }
 
@@ -56,8 +68,11 @@ export class OperationApi extends runtime.BaseAPI {
      * Get permitted operations for attachment
      */
     async getAttachmentOperationsRaw(requestParameters: GetAttachmentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachmentOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachmentOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -73,7 +88,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/attachments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -96,8 +111,11 @@ export class OperationApi extends runtime.BaseAPI {
      * Get permitted operations for blog post
      */
     async getBlogPostOperationsRaw(requestParameters: GetBlogPostOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -113,7 +131,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -136,8 +154,11 @@ export class OperationApi extends runtime.BaseAPI {
      * Get permitted operations for custom content
      */
     async getCustomContentOperationsRaw(requestParameters: GetCustomContentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -153,7 +174,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/custom-content/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -172,12 +193,58 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns the permitted operations on specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
+     * Get permitted operations for a database
+     */
+    async getDatabaseOperationsRaw(requestParameters: GetDatabaseOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getDatabaseOperations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the permitted operations on specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
+     * Get permitted operations for a database
+     */
+    async getDatabaseOperations(requestParameters: GetDatabaseOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
+        const response = await this.getDatabaseOperationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns the permitted operations on specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the footer comment and its corresponding space.
      * Get permitted operations for footer comment
      */
     async getFooterCommentOperationsRaw(requestParameters: GetFooterCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterCommentOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterCommentOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -193,7 +260,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/footer-comments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -216,8 +283,11 @@ export class OperationApi extends runtime.BaseAPI {
      * Get permitted operations for inline comment
      */
     async getInlineCommentOperationsRaw(requestParameters: GetInlineCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineCommentOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineCommentOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -233,7 +303,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/inline-comments/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -256,8 +326,11 @@ export class OperationApi extends runtime.BaseAPI {
      * Get permitted operations for page
      */
     async getPageOperationsRaw(requestParameters: GetPageOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -273,7 +346,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -292,12 +365,58 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns the permitted operations on specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
+     * Get permitted operations for a Smart Link in the content tree
+     */
+    async getSmartLinkOperationsRaw(requestParameters: GetSmartLinkOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSmartLinkOperations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/embeds/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the permitted operations on specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
+     * Get permitted operations for a Smart Link in the content tree
+     */
+    async getSmartLinkOperations(requestParameters: GetSmartLinkOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
+        const response = await this.getSmartLinkOperationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns the permitted operations on specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space.
      * Get permitted operations for space
      */
     async getSpaceOperationsRaw(requestParameters: GetSpaceOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSpaceOperations.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSpaceOperations().'
+            );
         }
 
         const queryParameters: any = {};
@@ -313,7 +432,7 @@ export class OperationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/spaces/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -328,6 +447,49 @@ export class OperationApi extends runtime.BaseAPI {
      */
     async getSpaceOperations(requestParameters: GetSpaceOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
         const response = await this.getSpaceOperationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the permitted operations on specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
+     * Get permitted operations for a whiteboard
+     */
+    async getWhiteboardOperationsRaw(requestParameters: GetWhiteboardOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getWhiteboardOperations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the permitted operations on specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
+     * Get permitted operations for a whiteboard
+     */
+    async getWhiteboardOperations(requestParameters: GetWhiteboardOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
+        const response = await this.getWhiteboardOperationsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

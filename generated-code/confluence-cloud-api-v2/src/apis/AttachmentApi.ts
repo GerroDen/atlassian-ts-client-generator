@@ -15,19 +15,24 @@
 
 import * as runtime from '../runtime';
 import type {
-  Attachment,
   AttachmentSortOrder,
+  GetAttachmentById200Response,
   MultiEntityResultAttachment,
-  MultiEntityResultAttachment1,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteAttachmentRequest {
     id: number;
+    purge?: boolean;
 }
 
 export interface GetAttachmentByIdRequest {
     id: string;
     version?: number;
+    includeLabels?: boolean;
+    includeProperties?: boolean;
+    includeOperations?: boolean;
+    includeVersions?: boolean;
+    includeVersion?: boolean;
 }
 
 export interface GetAttachmentsRequest {
@@ -82,15 +87,22 @@ export interface GetPageAttachmentsRequest {
 export class AttachmentApi extends runtime.BaseAPI {
 
     /**
-     * Delete an attachment by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space.
+     * Delete an attachment by id.  Deleting an attachment moves the attachment to the trash, where it can be restored later. To permanently delete an attachment (or \"purge\" it), the endpoint must be called on a **trashed** attachment with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space. Permission to administer the space (if attempting to purge).
      * Delete attachment
      */
     async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAttachment.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteAttachment().'
+            );
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters['purge'] != null) {
+            queryParameters['purge'] = requestParameters['purge'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -103,7 +115,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -113,7 +125,7 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete an attachment by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space.
+     * Delete an attachment by id.  Deleting an attachment moves the attachment to the trash, where it can be restored later. To permanently delete an attachment (or \"purge\" it), the endpoint must be called on a **trashed** attachment with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space. Permission to administer the space (if attempting to purge).
      * Delete attachment
      */
     async deleteAttachment(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -124,15 +136,38 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Returns a specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
      * Get attachment by id
      */
-    async getAttachmentByIdRaw(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Attachment>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachmentById.');
+    async getAttachmentByIdRaw(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAttachmentById200Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachmentById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
+        }
+
+        if (requestParameters['includeLabels'] != null) {
+            queryParameters['include-labels'] = requestParameters['includeLabels'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeVersions'] != null) {
+            queryParameters['include-versions'] = requestParameters['includeVersions'];
+        }
+
+        if (requestParameters['includeVersion'] != null) {
+            queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -146,7 +181,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -159,7 +194,7 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Returns a specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
      * Get attachment by id
      */
-    async getAttachmentById(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Attachment> {
+    async getAttachmentById(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAttachmentById200Response> {
         const response = await this.getAttachmentByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -171,28 +206,28 @@ export class AttachmentApi extends runtime.BaseAPI {
     async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.mediaType !== undefined) {
-            queryParameters['mediaType'] = requestParameters.mediaType;
+        if (requestParameters['mediaType'] != null) {
+            queryParameters['mediaType'] = requestParameters['mediaType'];
         }
 
-        if (requestParameters.filename !== undefined) {
-            queryParameters['filename'] = requestParameters.filename;
+        if (requestParameters['filename'] != null) {
+            queryParameters['filename'] = requestParameters['filename'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -229,34 +264,37 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Get attachments for blog post
      */
     async getBlogpostAttachmentsRaw(requestParameters: GetBlogpostAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogpostAttachments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogpostAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.mediaType !== undefined) {
-            queryParameters['mediaType'] = requestParameters.mediaType;
+        if (requestParameters['mediaType'] != null) {
+            queryParameters['mediaType'] = requestParameters['mediaType'];
         }
 
-        if (requestParameters.filename !== undefined) {
-            queryParameters['filename'] = requestParameters.filename;
+        if (requestParameters['filename'] != null) {
+            queryParameters['filename'] = requestParameters['filename'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -270,7 +308,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -293,34 +331,37 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Get attachments for custom content
      */
     async getCustomContentAttachmentsRaw(requestParameters: GetCustomContentAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentAttachments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.mediaType !== undefined) {
-            queryParameters['mediaType'] = requestParameters.mediaType;
+        if (requestParameters['mediaType'] != null) {
+            queryParameters['mediaType'] = requestParameters['mediaType'];
         }
 
-        if (requestParameters.filename !== undefined) {
-            queryParameters['filename'] = requestParameters.filename;
+        if (requestParameters['filename'] != null) {
+            queryParameters['filename'] = requestParameters['filename'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -334,7 +375,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/custom-content/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -356,23 +397,26 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Returns the attachments of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
      * Get attachments for label
      */
-    async getLabelAttachmentsRaw(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment1>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLabelAttachments.');
+    async getLabelAttachmentsRaw(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getLabelAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -386,7 +430,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/labels/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/labels/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -399,7 +443,7 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Returns the attachments of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
      * Get attachments for label
      */
-    async getLabelAttachments(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultAttachment1> {
+    async getLabelAttachments(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultAttachment> {
         const response = await this.getLabelAttachmentsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -409,34 +453,37 @@ export class AttachmentApi extends runtime.BaseAPI {
      * Get attachments for page
      */
     async getPageAttachmentsRaw(requestParameters: GetPageAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageAttachments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.mediaType !== undefined) {
-            queryParameters['mediaType'] = requestParameters.mediaType;
+        if (requestParameters['mediaType'] != null) {
+            queryParameters['mediaType'] = requestParameters['mediaType'];
         }
 
-        if (requestParameters.filename !== undefined) {
-            queryParameters['filename'] = requestParameters.filename;
+        if (requestParameters['filename'] != null) {
+            queryParameters['filename'] = requestParameters['filename'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -450,7 +497,7 @@ export class AttachmentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

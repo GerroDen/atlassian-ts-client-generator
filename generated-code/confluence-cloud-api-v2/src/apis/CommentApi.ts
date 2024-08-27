@@ -16,13 +16,16 @@
 import * as runtime from '../runtime';
 import type {
   CommentSortOrder,
+  CreateFooterComment201Response,
   CreateFooterCommentModel,
+  CreateInlineComment201Response,
   CreateInlineCommentModel,
   FooterCommentModel,
-  InlineCommentModel,
+  MultiEntityResultAttachmentCommentModel,
   MultiEntityResultBlogPostCommentModel,
   MultiEntityResultBlogPostInlineCommentModel,
   MultiEntityResultChildrenCommentModel,
+  MultiEntityResultCustomContentCommentModel,
   MultiEntityResultFooterCommentModel,
   MultiEntityResultInlineCommentChildrenModel,
   MultiEntityResultInlineCommentModel,
@@ -30,9 +33,9 @@ import type {
   MultiEntityResultPageInlineCommentModel,
   PrimaryBodyRepresentation,
   PrimaryBodyRepresentationSingle,
-  UpdateFooterCommentModel,
+  UpdateFooterCommentRequest,
   UpdateInlineCommentModel,
-} from '../models';
+} from '../models/index';
 
 export interface CreateFooterCommentRequest {
     createFooterCommentModel: CreateFooterCommentModel;
@@ -50,9 +53,19 @@ export interface DeleteInlineCommentRequest {
     commentId: number;
 }
 
+export interface GetAttachmentCommentsRequest {
+    id: string;
+    bodyFormat?: PrimaryBodyRepresentation;
+    cursor?: string;
+    limit?: number;
+    sort?: CommentSortOrder;
+    version?: number;
+}
+
 export interface GetBlogPostFooterCommentsRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentation;
+    status?: Array<GetBlogPostFooterCommentsStatusEnum>;
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
@@ -61,15 +74,30 @@ export interface GetBlogPostFooterCommentsRequest {
 export interface GetBlogPostInlineCommentsRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentation;
+    status?: Array<GetBlogPostInlineCommentsStatusEnum>;
+    resolutionStatus?: Array<GetBlogPostInlineCommentsResolutionStatusEnum>;
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
+}
+
+export interface GetCustomContentCommentsRequest {
+    id: number;
+    bodyFormat?: PrimaryBodyRepresentation;
+    cursor?: string;
+    limit?: number;
+    sort?: CommentSortOrder;
 }
 
 export interface GetFooterCommentByIdRequest {
     commentId: number;
     bodyFormat?: PrimaryBodyRepresentationSingle;
     version?: number;
+    includeProperties?: boolean;
+    includeOperations?: boolean;
+    includeLikes?: boolean;
+    includeVersions?: boolean;
+    includeVersion?: boolean;
 }
 
 export interface GetFooterCommentChildrenRequest {
@@ -91,6 +119,11 @@ export interface GetInlineCommentByIdRequest {
     commentId: number;
     bodyFormat?: PrimaryBodyRepresentationSingle;
     version?: number;
+    includeProperties?: boolean;
+    includeOperations?: boolean;
+    includeLikes?: boolean;
+    includeVersions?: boolean;
+    includeVersion?: boolean;
 }
 
 export interface GetInlineCommentChildrenRequest {
@@ -111,6 +144,7 @@ export interface GetInlineCommentsRequest {
 export interface GetPageFooterCommentsRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentation;
+    status?: Array<GetPageFooterCommentsStatusEnum>;
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
@@ -119,14 +153,16 @@ export interface GetPageFooterCommentsRequest {
 export interface GetPageInlineCommentsRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentation;
+    status?: Array<GetPageInlineCommentsStatusEnum>;
+    resolutionStatus?: Array<GetPageInlineCommentsResolutionStatusEnum>;
     sort?: CommentSortOrder;
     cursor?: string;
     limit?: number;
 }
 
-export interface UpdateFooterCommentRequest {
+export interface UpdateFooterCommentOperationRequest {
     commentId: number;
-    updateFooterCommentModel: UpdateFooterCommentModel;
+    updateFooterCommentRequest: UpdateFooterCommentRequest;
 }
 
 export interface UpdateInlineCommentRequest {
@@ -140,12 +176,15 @@ export interface UpdateInlineCommentRequest {
 export class CommentApi extends runtime.BaseAPI {
 
     /**
-     * Create a footer comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Create a footer comment.  The footer comment can be made against several locations:  - at the top level (specifying pageId or blogPostId in the request body) - as a reply (specifying parentCommentId in the request body) - against an attachment (note: this is different than the comments added via the attachment properties page on the UI, which are referred to as version comments) - against a custom content  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Create footer comment
      */
-    async createFooterCommentRaw(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
-        if (requestParameters.createFooterCommentModel === null || requestParameters.createFooterCommentModel === undefined) {
-            throw new runtime.RequiredError('createFooterCommentModel','Required parameter requestParameters.createFooterCommentModel was null or undefined when calling createFooterComment.');
+    async createFooterCommentRaw(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+        if (requestParameters['createFooterCommentModel'] == null) {
+            throw new runtime.RequiredError(
+                'createFooterCommentModel',
+                'Required parameter "createFooterCommentModel" was null or undefined when calling createFooterComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -167,17 +206,17 @@ export class CommentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createFooterCommentModel,
+            body: requestParameters['createFooterCommentModel'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
 
     /**
-     * Create a footer comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Create a footer comment.  The footer comment can be made against several locations:  - at the top level (specifying pageId or blogPostId in the request body) - as a reply (specifying parentCommentId in the request body) - against an attachment (note: this is different than the comments added via the attachment properties page on the UI, which are referred to as version comments) - against a custom content  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Create footer comment
      */
-    async createFooterComment(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FooterCommentModel> {
+    async createFooterComment(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateFooterComment201Response> {
         const response = await this.createFooterCommentRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -186,9 +225,12 @@ export class CommentApi extends runtime.BaseAPI {
      * Create an inline comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body). Note the inlineCommentProperties object in the request body is used to select the text the inline comment should be tied to. This is what determines the text  highlighting when viewing a page in Confluence.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Create inline comment
      */
-    async createInlineCommentRaw(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InlineCommentModel>> {
-        if (requestParameters.createInlineCommentModel === null || requestParameters.createInlineCommentModel === undefined) {
-            throw new runtime.RequiredError('createInlineCommentModel','Required parameter requestParameters.createInlineCommentModel was null or undefined when calling createInlineComment.');
+    async createInlineCommentRaw(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        if (requestParameters['createInlineCommentModel'] == null) {
+            throw new runtime.RequiredError(
+                'createInlineCommentModel',
+                'Required parameter "createInlineCommentModel" was null or undefined when calling createInlineComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -210,7 +252,7 @@ export class CommentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createInlineCommentModel,
+            body: requestParameters['createInlineCommentModel'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -220,7 +262,7 @@ export class CommentApi extends runtime.BaseAPI {
      * Create an inline comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body). Note the inlineCommentProperties object in the request body is used to select the text the inline comment should be tied to. This is what determines the text  highlighting when viewing a page in Confluence.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Create inline comment
      */
-    async createInlineComment(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InlineCommentModel> {
+    async createInlineComment(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateInlineComment201Response> {
         const response = await this.createInlineCommentRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -230,8 +272,11 @@ export class CommentApi extends runtime.BaseAPI {
      * Delete footer comment
      */
     async deleteFooterCommentRaw(requestParameters: DeleteFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteFooterComment.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling deleteFooterComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -247,7 +292,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -269,8 +314,11 @@ export class CommentApi extends runtime.BaseAPI {
      * Delete inline comment
      */
     async deleteInlineCommentRaw(requestParameters: DeleteInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteInlineComment.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling deleteInlineComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -286,7 +334,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -304,30 +352,37 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the root footer comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get footer comments for blog post
+     * Returns the comments of the specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding containers.
+     * Get attachment comments
      */
-    async getBlogPostFooterCommentsRaw(requestParameters: GetBlogPostFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostCommentModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostFooterComments.');
+    async getAttachmentCommentsRaw(requestParameters: GetAttachmentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachmentCommentModel>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachmentComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -341,7 +396,70 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/attachments/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the comments of the specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding containers.
+     * Get attachment comments
+     */
+    async getAttachmentComments(requestParameters: GetAttachmentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultAttachmentCommentModel> {
+        const response = await this.getAttachmentCommentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the root footer comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get footer comments for blog post
+     */
+    async getBlogPostFooterCommentsRaw(requestParameters: GetBlogPostFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostCommentModel>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostFooterComments().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/blogposts/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -364,26 +482,37 @@ export class CommentApi extends runtime.BaseAPI {
      * Get inline comments for blog post
      */
     async getBlogPostInlineCommentsRaw(requestParameters: GetBlogPostInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostInlineCommentModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostInlineComments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostInlineComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['resolutionStatus'] != null) {
+            queryParameters['resolution-status'] = requestParameters['resolutionStatus'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -397,7 +526,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -416,22 +545,33 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
-     * Get footer comment by id
+     * Returns the comments of the specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding containers.
+     * Get custom content comments
      */
-    async getFooterCommentByIdRaw(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getFooterCommentById.');
+    async getCustomContentCommentsRaw(requestParameters: GetCustomContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContentCommentModel>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -445,7 +585,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/custom-content/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -455,39 +595,54 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
-     * Get footer comment by id
+     * Returns the comments of the specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding containers.
+     * Get custom content comments
      */
-    async getFooterCommentById(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FooterCommentModel> {
-        const response = await this.getFooterCommentByIdRaw(requestParameters, initOverrides);
+    async getCustomContentComments(requestParameters: GetCustomContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultCustomContentCommentModel> {
+        const response = await this.getCustomContentCommentsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Returns the children footer comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get children footer comments
+     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
+     * Get footer comment by id
      */
-    async getFooterCommentChildrenRaw(requestParameters: GetFooterCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultChildrenCommentModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterCommentChildren.');
+    async getFooterCommentByIdRaw(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getFooterCommentById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeLikes'] != null) {
+            queryParameters['include-likes'] = requestParameters['includeLikes'];
+        }
+
+        if (requestParameters['includeVersions'] != null) {
+            queryParameters['include-versions'] = requestParameters['includeVersions'];
+        }
+
+        if (requestParameters['includeVersion'] != null) {
+            queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -501,7 +656,66 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
+     * Get footer comment by id
+     */
+    async getFooterCommentById(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateFooterComment201Response> {
+        const response = await this.getFooterCommentByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the children footer comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get children footer comments
+     */
+    async getFooterCommentChildrenRaw(requestParameters: GetFooterCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultChildrenCommentModel>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterCommentChildren().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/footer-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -520,26 +734,26 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
      * Get footer comments
      */
     async getFooterCommentsRaw(requestParameters: GetFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultFooterCommentModel>> {
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -563,7 +777,7 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
      * Get footer comments
      */
     async getFooterComments(requestParameters: GetFooterCommentsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultFooterCommentModel> {
@@ -575,19 +789,42 @@ export class CommentApi extends runtime.BaseAPI {
      * Retrieves an inline comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
      * Get inline comment by id
      */
-    async getInlineCommentByIdRaw(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InlineCommentModel>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getInlineCommentById.');
+    async getInlineCommentByIdRaw(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getInlineCommentById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeLikes'] != null) {
+            queryParameters['include-likes'] = requestParameters['includeLikes'];
+        }
+
+        if (requestParameters['includeVersions'] != null) {
+            queryParameters['include-versions'] = requestParameters['includeVersions'];
+        }
+
+        if (requestParameters['includeVersion'] != null) {
+            queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -601,7 +838,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -614,7 +851,7 @@ export class CommentApi extends runtime.BaseAPI {
      * Retrieves an inline comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
      * Get inline comment by id
      */
-    async getInlineCommentById(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InlineCommentModel> {
+    async getInlineCommentById(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateInlineComment201Response> {
         const response = await this.getInlineCommentByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -624,26 +861,29 @@ export class CommentApi extends runtime.BaseAPI {
      * Get children inline comments
      */
     async getInlineCommentChildrenRaw(requestParameters: GetInlineCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentChildrenModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineCommentChildren.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineCommentChildren().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -657,7 +897,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/inline-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -682,20 +922,20 @@ export class CommentApi extends runtime.BaseAPI {
     async getInlineCommentsRaw(requestParameters: GetInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentModel>> {
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -732,26 +972,33 @@ export class CommentApi extends runtime.BaseAPI {
      * Get footer comments for page
      */
     async getPageFooterCommentsRaw(requestParameters: GetPageFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageCommentModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageFooterComments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageFooterComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -765,7 +1012,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -788,26 +1035,37 @@ export class CommentApi extends runtime.BaseAPI {
      * Get inline comments for page
      */
     async getPageInlineCommentsRaw(requestParameters: GetPageInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageInlineCommentModel>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageInlineComments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageInlineComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['resolutionStatus'] != null) {
+            queryParameters['resolution-status'] = requestParameters['resolutionStatus'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -821,7 +1079,7 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -843,13 +1101,19 @@ export class CommentApi extends runtime.BaseAPI {
      * Update a footer comment. This can be used to update the body text of a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Update footer comment
      */
-    async updateFooterCommentRaw(requestParameters: UpdateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling updateFooterComment.');
+    async updateFooterCommentRaw(requestParameters: UpdateFooterCommentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling updateFooterComment().'
+            );
         }
 
-        if (requestParameters.updateFooterCommentModel === null || requestParameters.updateFooterCommentModel === undefined) {
-            throw new runtime.RequiredError('updateFooterCommentModel','Required parameter requestParameters.updateFooterCommentModel was null or undefined when calling updateFooterComment.');
+        if (requestParameters['updateFooterCommentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateFooterCommentRequest',
+                'Required parameter "updateFooterCommentRequest" was null or undefined when calling updateFooterComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -867,11 +1131,11 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateFooterCommentModel,
+            body: requestParameters['updateFooterCommentRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -881,7 +1145,7 @@ export class CommentApi extends runtime.BaseAPI {
      * Update a footer comment. This can be used to update the body text of a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Update footer comment
      */
-    async updateFooterComment(requestParameters: UpdateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FooterCommentModel> {
+    async updateFooterComment(requestParameters: UpdateFooterCommentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FooterCommentModel> {
         const response = await this.updateFooterCommentRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -890,13 +1154,19 @@ export class CommentApi extends runtime.BaseAPI {
      * Update an inline comment. This can be used to update the body text of a comment and/or to resolve the comment  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Update inline comment
      */
-    async updateInlineCommentRaw(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InlineCommentModel>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling updateInlineComment.');
+    async updateInlineCommentRaw(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling updateInlineComment().'
+            );
         }
 
-        if (requestParameters.updateInlineCommentModel === null || requestParameters.updateInlineCommentModel === undefined) {
-            throw new runtime.RequiredError('updateInlineCommentModel','Required parameter requestParameters.updateInlineCommentModel was null or undefined when calling updateInlineComment.');
+        if (requestParameters['updateInlineCommentModel'] == null) {
+            throw new runtime.RequiredError(
+                'updateInlineCommentModel',
+                'Required parameter "updateInlineCommentModel" was null or undefined when calling updateInlineComment().'
+            );
         }
 
         const queryParameters: any = {};
@@ -914,11 +1184,11 @@ export class CommentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateInlineCommentModel,
+            body: requestParameters['updateInlineCommentModel'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -928,9 +1198,76 @@ export class CommentApi extends runtime.BaseAPI {
      * Update an inline comment. This can be used to update the body text of a comment and/or to resolve the comment  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
      * Update inline comment
      */
-    async updateInlineComment(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InlineCommentModel> {
+    async updateInlineComment(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateInlineComment201Response> {
         const response = await this.updateInlineCommentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
 }
+
+/**
+ * @export
+ */
+export const GetBlogPostFooterCommentsStatusEnum = {
+    Current: 'current',
+    Deleted: 'deleted',
+    Trashed: 'trashed',
+    Historical: 'historical',
+    Draft: 'draft'
+} as const;
+export type GetBlogPostFooterCommentsStatusEnum = typeof GetBlogPostFooterCommentsStatusEnum[keyof typeof GetBlogPostFooterCommentsStatusEnum];
+/**
+ * @export
+ */
+export const GetBlogPostInlineCommentsStatusEnum = {
+    Current: 'current',
+    Deleted: 'deleted',
+    Trashed: 'trashed',
+    Historical: 'historical',
+    Draft: 'draft'
+} as const;
+export type GetBlogPostInlineCommentsStatusEnum = typeof GetBlogPostInlineCommentsStatusEnum[keyof typeof GetBlogPostInlineCommentsStatusEnum];
+/**
+ * @export
+ */
+export const GetBlogPostInlineCommentsResolutionStatusEnum = {
+    Resolved: 'resolved',
+    Open: 'open',
+    Dangling: 'dangling',
+    Reopened: 'reopened'
+} as const;
+export type GetBlogPostInlineCommentsResolutionStatusEnum = typeof GetBlogPostInlineCommentsResolutionStatusEnum[keyof typeof GetBlogPostInlineCommentsResolutionStatusEnum];
+/**
+ * @export
+ */
+export const GetPageFooterCommentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed',
+    Deleted: 'deleted',
+    Historical: 'historical',
+    Draft: 'draft'
+} as const;
+export type GetPageFooterCommentsStatusEnum = typeof GetPageFooterCommentsStatusEnum[keyof typeof GetPageFooterCommentsStatusEnum];
+/**
+ * @export
+ */
+export const GetPageInlineCommentsStatusEnum = {
+    Current: 'current',
+    Archived: 'archived',
+    Trashed: 'trashed',
+    Deleted: 'deleted',
+    Historical: 'historical',
+    Draft: 'draft'
+} as const;
+export type GetPageInlineCommentsStatusEnum = typeof GetPageInlineCommentsStatusEnum[keyof typeof GetPageInlineCommentsStatusEnum];
+/**
+ * @export
+ */
+export const GetPageInlineCommentsResolutionStatusEnum = {
+    Resolved: 'resolved',
+    Open: 'open',
+    Dangling: 'dangling',
+    Reopened: 'reopened'
+} as const;
+export type GetPageInlineCommentsResolutionStatusEnum = typeof GetPageInlineCommentsResolutionStatusEnum[keyof typeof GetPageInlineCommentsResolutionStatusEnum];

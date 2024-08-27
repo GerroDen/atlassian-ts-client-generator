@@ -9,6 +9,17 @@ const transformer = (file, api) => {
     .forEach((path) => {
       path.node.key.name += "Desc";
     });
+  source
+    .find(j.TSPropertySignature)
+    .filter((path) =>
+      path.value?.leadingComments?.at(0)?.value?.includes("@deprecated"),
+    )
+    .filter((path) =>
+      ["inlineMarkerRef", "inlineOriginalSelection"].includes(
+        path.value.key.name,
+      ),
+    )
+    .remove();
   return source.toSource();
 };
 

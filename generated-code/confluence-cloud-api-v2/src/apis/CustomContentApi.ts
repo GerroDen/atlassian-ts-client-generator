@@ -15,14 +15,14 @@
 
 import * as runtime from '../runtime';
 import type {
+  CreateCustomContent201Response,
   CreateCustomContentRequest,
   CustomContentBodyRepresentation,
   CustomContentBodyRepresentationSingle,
-  CustomContentSingle,
   CustomContentSortOrder,
   MultiEntityResultCustomContent,
   UpdateCustomContentRequest,
-} from '../models';
+} from '../models/index';
 
 export interface CreateCustomContentOperationRequest {
     createCustomContentRequest: CreateCustomContentRequest;
@@ -30,12 +30,18 @@ export interface CreateCustomContentOperationRequest {
 
 export interface DeleteCustomContentRequest {
     id: number;
+    purge?: boolean;
 }
 
 export interface GetCustomContentByIdRequest {
     id: number;
     bodyFormat?: CustomContentBodyRepresentationSingle;
     version?: number;
+    includeLabels?: boolean;
+    includeProperties?: boolean;
+    includeOperations?: boolean;
+    includeVersions?: boolean;
+    includeVersion?: boolean;
 }
 
 export interface GetCustomContentByTypeRequest {
@@ -88,9 +94,12 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
      * Create custom content
      */
-    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
-        if (requestParameters.createCustomContentRequest === null || requestParameters.createCustomContentRequest === undefined) {
-            throw new runtime.RequiredError('createCustomContentRequest','Required parameter requestParameters.createCustomContentRequest was null or undefined when calling createCustomContent.');
+    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        if (requestParameters['createCustomContentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createCustomContentRequest',
+                'Required parameter "createCustomContentRequest" was null or undefined when calling createCustomContent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -112,7 +121,7 @@ export class CustomContentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createCustomContentRequest,
+            body: requestParameters['createCustomContentRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -122,21 +131,28 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
      * Create custom content
      */
-    async createCustomContent(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
+    async createCustomContent(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateCustomContent201Response> {
         const response = await this.createCustomContentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Delete a custom content by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space.
+     * Delete a custom content by id.  Deleting a custom content will either move it to the trash or permanently delete it (purge it), depending on the apiSupport. To permanently delete a **trashed** custom content, the endpoint must be called with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space. Permission to administer the space (if attempting to purge).
      * Delete custom content
      */
     async deleteCustomContentRaw(requestParameters: DeleteCustomContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteCustomContent.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteCustomContent().'
+            );
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters['purge'] != null) {
+            queryParameters['purge'] = requestParameters['purge'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -149,7 +165,7 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -159,7 +175,7 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a custom content by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space.
+     * Delete a custom content by id.  Deleting a custom content will either move it to the trash or permanently delete it (purge it), depending on the apiSupport. To permanently delete a **trashed** custom content, the endpoint must be called with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space. Permission to administer the space (if attempting to purge).
      * Delete custom content
      */
     async deleteCustomContent(requestParameters: DeleteCustomContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -170,19 +186,42 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
      * Get custom content by id
      */
-    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentById.');
+    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
+        }
+
+        if (requestParameters['includeLabels'] != null) {
+            queryParameters['include-labels'] = requestParameters['includeLabels'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeVersions'] != null) {
+            queryParameters['include-versions'] = requestParameters['includeVersions'];
+        }
+
+        if (requestParameters['includeVersion'] != null) {
+            queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -196,7 +235,7 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -209,7 +248,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
      * Get custom content by id
      */
-    async getCustomContentById(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
+    async getCustomContentById(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateCustomContent201Response> {
         const response = await this.getCustomContentByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -219,38 +258,41 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Get custom content by type
      */
     async getCustomContentByTypeRaw(requestParameters: GetCustomContentByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getCustomContentByType.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getCustomContentByType().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.id) {
-            queryParameters['id'] = requestParameters.id;
+        if (requestParameters['id'] != null) {
+            queryParameters['id'] = requestParameters['id'];
         }
 
-        if (requestParameters.spaceId) {
-            queryParameters['space-id'] = requestParameters.spaceId;
+        if (requestParameters['spaceId'] != null) {
+            queryParameters['space-id'] = requestParameters['spaceId'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -287,34 +329,40 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Get custom content by type in blog post
      */
     async getCustomContentByTypeInBlogPostRaw(requestParameters: GetCustomContentByTypeInBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentByTypeInBlogPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentByTypeInBlogPost().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getCustomContentByTypeInBlogPost.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getCustomContentByTypeInBlogPost().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -328,7 +376,7 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -351,34 +399,40 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Get custom content by type in page
      */
     async getCustomContentByTypeInPageRaw(requestParameters: GetCustomContentByTypeInPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentByTypeInPage.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentByTypeInPage().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getCustomContentByTypeInPage.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getCustomContentByTypeInPage().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -392,7 +446,7 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -415,30 +469,36 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Get custom content by type in space
      */
     async getCustomContentByTypeInSpaceRaw(requestParameters: GetCustomContentByTypeInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomContentByTypeInSpace.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getCustomContentByTypeInSpace().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getCustomContentByTypeInSpace.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getCustomContentByTypeInSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -452,7 +512,7 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/spaces/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -474,13 +534,19 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
-    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomContentSingle>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateCustomContent.');
+    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateCustomContent().'
+            );
         }
 
-        if (requestParameters.updateCustomContentRequest === null || requestParameters.updateCustomContentRequest === undefined) {
-            throw new runtime.RequiredError('updateCustomContentRequest','Required parameter requestParameters.updateCustomContentRequest was null or undefined when calling updateCustomContent.');
+        if (requestParameters['updateCustomContentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateCustomContentRequest',
+                'Required parameter "updateCustomContentRequest" was null or undefined when calling updateCustomContent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -498,11 +564,11 @@ export class CustomContentApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateCustomContentRequest,
+            body: requestParameters['updateCustomContentRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -512,7 +578,7 @@ export class CustomContentApi extends runtime.BaseAPI {
      * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
-    async updateCustomContent(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CustomContentSingle> {
+    async updateCustomContent(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateCustomContent201Response> {
         const response = await this.updateCustomContentRaw(requestParameters, initOverrides);
         return await response.value();
     }

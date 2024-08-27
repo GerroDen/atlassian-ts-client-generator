@@ -15,16 +15,20 @@
 
 import * as runtime from '../runtime';
 import type {
+  GetSpaceById200Response,
   MultiEntityResultSpace,
-  Space,
   SpaceDescriptionBodyRepresentation,
   SpaceSortOrder,
-} from '../models';
+} from '../models/index';
 
 export interface GetSpaceByIdRequest {
     id: number;
     descriptionFormat?: SpaceDescriptionBodyRepresentation;
     includeIcon?: boolean;
+    includeOperations?: boolean;
+    includeProperties?: boolean;
+    includePermissions?: boolean;
+    includeLabels?: boolean;
 }
 
 export interface GetSpacesRequest {
@@ -33,6 +37,8 @@ export interface GetSpacesRequest {
     type?: GetSpacesTypeEnum;
     status?: GetSpacesStatusEnum;
     labels?: Array<string>;
+    favoritedBy?: string;
+    notFavoritedBy?: string;
     sort?: SpaceSortOrder;
     descriptionFormat?: SpaceDescriptionBodyRepresentation;
     includeIcon?: boolean;
@@ -49,19 +55,38 @@ export class SpaceApi extends runtime.BaseAPI {
      * Returns a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
      * Get space by id
      */
-    async getSpaceByIdRaw(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSpaceById.');
+    async getSpaceByIdRaw(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceById200Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSpaceById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.descriptionFormat !== undefined) {
-            queryParameters['description-format'] = requestParameters.descriptionFormat;
+        if (requestParameters['descriptionFormat'] != null) {
+            queryParameters['description-format'] = requestParameters['descriptionFormat'];
         }
 
-        if (requestParameters.includeIcon !== undefined) {
-            queryParameters['include-icon'] = requestParameters.includeIcon;
+        if (requestParameters['includeIcon'] != null) {
+            queryParameters['include-icon'] = requestParameters['includeIcon'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
+        if (requestParameters['includePermissions'] != null) {
+            queryParameters['include-permissions'] = requestParameters['includePermissions'];
+        }
+
+        if (requestParameters['includeLabels'] != null) {
+            queryParameters['include-labels'] = requestParameters['includeLabels'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -75,7 +100,7 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/spaces/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -88,7 +113,7 @@ export class SpaceApi extends runtime.BaseAPI {
      * Returns a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
      * Get space by id
      */
-    async getSpaceById(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Space> {
+    async getSpaceById(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSpaceById200Response> {
         const response = await this.getSpaceByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -100,44 +125,52 @@ export class SpaceApi extends runtime.BaseAPI {
     async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpace>> {
         const queryParameters: any = {};
 
-        if (requestParameters.ids) {
-            queryParameters['ids'] = requestParameters.ids;
+        if (requestParameters['ids'] != null) {
+            queryParameters['ids'] = requestParameters['ids'];
         }
 
-        if (requestParameters.keys) {
-            queryParameters['keys'] = requestParameters.keys;
+        if (requestParameters['keys'] != null) {
+            queryParameters['keys'] = requestParameters['keys'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.labels) {
-            queryParameters['labels'] = requestParameters.labels;
+        if (requestParameters['labels'] != null) {
+            queryParameters['labels'] = requestParameters['labels'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['favoritedBy'] != null) {
+            queryParameters['favorited-by'] = requestParameters['favoritedBy'];
         }
 
-        if (requestParameters.descriptionFormat !== undefined) {
-            queryParameters['description-format'] = requestParameters.descriptionFormat;
+        if (requestParameters['notFavoritedBy'] != null) {
+            queryParameters['not-favorited-by'] = requestParameters['notFavoritedBy'];
         }
 
-        if (requestParameters.includeIcon !== undefined) {
-            queryParameters['include-icon'] = requestParameters.includeIcon;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['descriptionFormat'] != null) {
+            queryParameters['description-format'] = requestParameters['descriptionFormat'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['includeIcon'] != null) {
+            queryParameters['include-icon'] = requestParameters['includeIcon'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -176,6 +209,8 @@ export class SpaceApi extends runtime.BaseAPI {
  */
 export const GetSpacesTypeEnum = {
     Global: 'global',
+    Collaboration: 'collaboration',
+    KnowledgeBase: 'knowledge_base',
     Personal: 'personal'
 } as const;
 export type GetSpacesTypeEnum = typeof GetSpacesTypeEnum[keyof typeof GetSpacesTypeEnum];

@@ -20,7 +20,7 @@ import type {
   ContentPropertySortOrder,
   ContentPropertyUpdateRequest,
   MultiEntityResultContentProperty,
-} from '../models';
+} from '../models/index';
 
 export interface CreateAttachmentPropertyRequest {
     attachmentId: string;
@@ -42,8 +42,23 @@ export interface CreateCustomContentPropertyRequest {
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
 }
 
+export interface CreateDatabasePropertyRequest {
+    id: number;
+    contentPropertyCreateRequest: ContentPropertyCreateRequest;
+}
+
 export interface CreatePagePropertyRequest {
     pageId: number;
+    contentPropertyCreateRequest: ContentPropertyCreateRequest;
+}
+
+export interface CreateSmartLinkPropertyRequest {
+    id: number;
+    contentPropertyCreateRequest: ContentPropertyCreateRequest;
+}
+
+export interface CreateWhiteboardPropertyRequest {
+    id: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
 }
 
@@ -67,8 +82,23 @@ export interface DeleteCustomContentPropertyByIdRequest {
     propertyId: number;
 }
 
+export interface DeleteDatabasePropertyByIdRequest {
+    databaseId: number;
+    propertyId: number;
+}
+
 export interface DeletePagePropertyByIdRequest {
     pageId: number;
+    propertyId: number;
+}
+
+export interface DeleteSmartLinkPropertyByIdRequest {
+    embedId: number;
+    propertyId: number;
+}
+
+export interface DeleteWhiteboardPropertyByIdRequest {
+    whiteboardId: number;
     propertyId: number;
 }
 
@@ -124,6 +154,19 @@ export interface GetCustomContentContentPropertiesByIdRequest {
     propertyId: number;
 }
 
+export interface GetDatabaseContentPropertiesRequest {
+    id: number;
+    key?: string;
+    sort?: ContentPropertySortOrder;
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetDatabaseContentPropertiesByIdRequest {
+    databaseId: number;
+    propertyId: number;
+}
+
 export interface GetPageContentPropertiesRequest {
     pageId: number;
     key?: string;
@@ -134,6 +177,32 @@ export interface GetPageContentPropertiesRequest {
 
 export interface GetPageContentPropertiesByIdRequest {
     pageId: number;
+    propertyId: number;
+}
+
+export interface GetSmartLinkContentPropertiesRequest {
+    id: number;
+    key?: string;
+    sort?: ContentPropertySortOrder;
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetSmartLinkContentPropertiesByIdRequest {
+    embedId: number;
+    propertyId: number;
+}
+
+export interface GetWhiteboardContentPropertiesRequest {
+    id: number;
+    key?: string;
+    sort?: ContentPropertySortOrder;
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetWhiteboardContentPropertiesByIdRequest {
+    whiteboardId: number;
     propertyId: number;
 }
 
@@ -161,8 +230,26 @@ export interface UpdateCustomContentPropertyByIdRequest {
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
 }
 
+export interface UpdateDatabasePropertyByIdRequest {
+    databaseId: number;
+    propertyId: number;
+    contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
+}
+
 export interface UpdatePagePropertyByIdRequest {
     pageId: number;
+    propertyId: number;
+    contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
+}
+
+export interface UpdateSmartLinkPropertyByIdRequest {
+    embedId: number;
+    propertyId: number;
+    contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
+}
+
+export interface UpdateWhiteboardPropertyByIdRequest {
+    whiteboardId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
 }
@@ -177,12 +264,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Create content property for attachment
      */
     async createAttachmentPropertyRaw(requestParameters: CreateAttachmentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling createAttachmentProperty.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling createAttachmentProperty().'
+            );
         }
 
-        if (requestParameters.contentPropertyCreateRequest === null || requestParameters.contentPropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyCreateRequest','Required parameter requestParameters.contentPropertyCreateRequest was null or undefined when calling createAttachmentProperty.');
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createAttachmentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -200,11 +293,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))),
+            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyCreateRequest,
+            body: requestParameters['contentPropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -224,12 +317,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Create content property for blog post
      */
     async createBlogpostPropertyRaw(requestParameters: CreateBlogpostPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling createBlogpostProperty.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling createBlogpostProperty().'
+            );
         }
 
-        if (requestParameters.contentPropertyCreateRequest === null || requestParameters.contentPropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyCreateRequest','Required parameter requestParameters.contentPropertyCreateRequest was null or undefined when calling createBlogpostProperty.');
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createBlogpostProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -247,11 +346,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))),
+            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyCreateRequest,
+            body: requestParameters['contentPropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -271,12 +370,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Create content property for comment
      */
     async createCommentPropertyRaw(requestParameters: CreateCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling createCommentProperty.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling createCommentProperty().'
+            );
         }
 
-        if (requestParameters.contentPropertyCreateRequest === null || requestParameters.contentPropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyCreateRequest','Required parameter requestParameters.contentPropertyCreateRequest was null or undefined when calling createCommentProperty.');
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createCommentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -294,11 +399,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyCreateRequest,
+            body: requestParameters['contentPropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -318,12 +423,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Create content property for custom content
      */
     async createCustomContentPropertyRaw(requestParameters: CreateCustomContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling createCustomContentProperty.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling createCustomContentProperty().'
+            );
         }
 
-        if (requestParameters.contentPropertyCreateRequest === null || requestParameters.contentPropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyCreateRequest','Required parameter requestParameters.contentPropertyCreateRequest was null or undefined when calling createCustomContentProperty.');
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createCustomContentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -341,11 +452,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))),
+            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyCreateRequest,
+            body: requestParameters['contentPropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -361,16 +472,75 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates a new content property for a database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the database.
+     * Create content property for database
+     */
+    async createDatabasePropertyRaw(requestParameters: CreateDatabasePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createDatabaseProperty().'
+            );
+        }
+
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createDatabaseProperty().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyCreateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a new content property for a database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the database.
+     * Create content property for database
+     */
+    async createDatabaseProperty(requestParameters: CreateDatabasePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.createDatabasePropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates a new content property for a page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
      * Create content property for page
      */
     async createPagePropertyRaw(requestParameters: CreatePagePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling createPageProperty.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling createPageProperty().'
+            );
         }
 
-        if (requestParameters.contentPropertyCreateRequest === null || requestParameters.contentPropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyCreateRequest','Required parameter requestParameters.contentPropertyCreateRequest was null or undefined when calling createPageProperty.');
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createPageProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -388,11 +558,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))),
+            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyCreateRequest,
+            body: requestParameters['contentPropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -408,16 +578,128 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates a new content property for a Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the Smart Link in the content tree.
+     * Create content property for Smart Link in the content tree
+     */
+    async createSmartLinkPropertyRaw(requestParameters: CreateSmartLinkPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createSmartLinkProperty().'
+            );
+        }
+
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createSmartLinkProperty().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/embeds/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyCreateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a new content property for a Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the Smart Link in the content tree.
+     * Create content property for Smart Link in the content tree
+     */
+    async createSmartLinkProperty(requestParameters: CreateSmartLinkPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.createSmartLinkPropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a new content property for a whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the whiteboard.
+     * Create content property for whiteboard
+     */
+    async createWhiteboardPropertyRaw(requestParameters: CreateWhiteboardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createWhiteboardProperty().'
+            );
+        }
+
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createWhiteboardProperty().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyCreateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a new content property for a whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the whiteboard.
+     * Create content property for whiteboard
+     */
+    async createWhiteboardProperty(requestParameters: CreateWhiteboardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.createWhiteboardPropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Deletes a content property for an attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
      * Delete content property for attachment by id
      */
     async deleteAttachmentPropertyByIdRaw(requestParameters: DeleteAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling deleteAttachmentPropertyById.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling deleteAttachmentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deleteAttachmentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteAttachmentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -433,7 +715,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -455,12 +737,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Delete content property for blogpost by id
      */
     async deleteBlogpostPropertyByIdRaw(requestParameters: DeleteBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling deleteBlogpostPropertyById.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling deleteBlogpostPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deleteBlogpostPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteBlogpostPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -476,7 +764,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -498,12 +786,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Delete content property for comment by id
      */
     async deleteCommentPropertyByIdRaw(requestParameters: DeleteCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteCommentPropertyById.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling deleteCommentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deleteCommentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteCommentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -519,7 +813,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -541,12 +835,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Delete content property for custom content by id
      */
     async deleteCustomContentPropertyByIdRaw(requestParameters: DeleteCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling deleteCustomContentPropertyById.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling deleteCustomContentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deleteCustomContentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteCustomContentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -562,7 +862,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -580,16 +880,71 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Deletes a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Delete content property for database by id
+     */
+    async deleteDatabasePropertyByIdRaw(requestParameters: DeleteDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['databaseId'] == null) {
+            throw new runtime.RequiredError(
+                'databaseId',
+                'Required parameter "databaseId" was null or undefined when calling deleteDatabasePropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteDatabasePropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Delete content property for database by id
+     */
+    async deleteDatabasePropertyById(requestParameters: DeleteDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteDatabasePropertyByIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Deletes a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
      * Delete content property for page by id
      */
     async deletePagePropertyByIdRaw(requestParameters: DeletePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling deletePagePropertyById.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling deletePagePropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deletePagePropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deletePagePropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -605,7 +960,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -623,30 +978,131 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all Content Properties tied to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
-     * Get content properties for attachment
+     * Deletes a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Delete content property for Smart Link in the content tree by id
      */
-    async getAttachmentContentPropertiesRaw(requestParameters: GetAttachmentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling getAttachmentContentProperties.');
+    async deleteSmartLinkPropertyByIdRaw(requestParameters: DeleteSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['embedId'] == null) {
+            throw new runtime.RequiredError(
+                'embedId',
+                'Required parameter "embedId" was null or undefined when calling deleteSmartLinkPropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteSmartLinkPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        const response = await this.request({
+            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Delete content property for Smart Link in the content tree by id
+     */
+    async deleteSmartLinkPropertyById(requestParameters: DeleteSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteSmartLinkPropertyByIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Delete content property for whiteboard by id
+     */
+    async deleteWhiteboardPropertyByIdRaw(requestParameters: DeleteWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['whiteboardId'] == null) {
+            throw new runtime.RequiredError(
+                'whiteboardId',
+                'Required parameter "whiteboardId" was null or undefined when calling deleteWhiteboardPropertyById().'
+            );
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteWhiteboardPropertyById().'
+            );
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Delete content property for whiteboard by id
+     */
+    async deleteWhiteboardPropertyById(requestParameters: DeleteWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteWhiteboardPropertyByIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Retrieves all Content Properties tied to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
+     * Get content properties for attachment
+     */
+    async getAttachmentContentPropertiesRaw(requestParameters: GetAttachmentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling getAttachmentContentProperties().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -660,7 +1116,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))),
+            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -683,12 +1139,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content property for attachment by id
      */
     async getAttachmentContentPropertiesByIdRaw(requestParameters: GetAttachmentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling getAttachmentContentPropertiesById.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling getAttachmentContentPropertiesById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getAttachmentContentPropertiesById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getAttachmentContentPropertiesById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -704,7 +1166,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -727,26 +1189,29 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content properties for blog post
      */
     async getBlogpostContentPropertiesRaw(requestParameters: GetBlogpostContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling getBlogpostContentProperties.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling getBlogpostContentProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -760,7 +1225,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))),
+            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -783,12 +1248,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content property for blog post by id
      */
     async getBlogpostContentPropertiesByIdRaw(requestParameters: GetBlogpostContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling getBlogpostContentPropertiesById.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling getBlogpostContentPropertiesById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getBlogpostContentPropertiesById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getBlogpostContentPropertiesById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -804,7 +1275,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -827,26 +1298,29 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content properties for comment
      */
     async getCommentContentPropertiesRaw(requestParameters: GetCommentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getCommentContentProperties.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getCommentContentProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -860,7 +1334,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))),
+            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -883,12 +1357,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content property for comment by id
      */
     async getCommentContentPropertiesByIdRaw(requestParameters: GetCommentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getCommentContentPropertiesById.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling getCommentContentPropertiesById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getCommentContentPropertiesById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getCommentContentPropertiesById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -904,7 +1384,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -927,26 +1407,29 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content properties for custom content
      */
     async getCustomContentContentPropertiesRaw(requestParameters: GetCustomContentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling getCustomContentContentProperties.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling getCustomContentContentProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -960,7 +1443,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))),
+            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -983,12 +1466,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content property for custom content by id
      */
     async getCustomContentContentPropertiesByIdRaw(requestParameters: GetCustomContentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling getCustomContentContentPropertiesById.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling getCustomContentContentPropertiesById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getCustomContentContentPropertiesById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getCustomContentContentPropertiesById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1004,7 +1493,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1023,30 +1512,142 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get content properties for page
+     * Retrieves Content Properties tied to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content properties for database
      */
-    async getPageContentPropertiesRaw(requestParameters: GetPageContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling getPageContentProperties.');
+    async getDatabaseContentPropertiesRaw(requestParameters: GetDatabaseContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getDatabaseContentProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content properties for database
+     */
+    async getDatabaseContentProperties(requestParameters: GetDatabaseContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultContentProperty> {
+        const response = await this.getDatabaseContentPropertiesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content property for database by id
+     */
+    async getDatabaseContentPropertiesByIdRaw(requestParameters: GetDatabaseContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['databaseId'] == null) {
+            throw new runtime.RequiredError(
+                'databaseId',
+                'Required parameter "databaseId" was null or undefined when calling getDatabaseContentPropertiesById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getDatabaseContentPropertiesById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content property for database by id
+     */
+    async getDatabaseContentPropertiesById(requestParameters: GetDatabaseContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.getDatabaseContentPropertiesByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get content properties for page
+     */
+    async getPageContentPropertiesRaw(requestParameters: GetPageContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling getPageContentProperties().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1060,7 +1661,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))),
+            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1083,12 +1684,18 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Get content property for page by id
      */
     async getPageContentPropertiesByIdRaw(requestParameters: GetPageContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling getPageContentPropertiesById.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling getPageContentPropertiesById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getPageContentPropertiesById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getPageContentPropertiesById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1104,7 +1711,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1123,20 +1730,247 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves Content Properties tied to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content properties for Smart Link in the content tree
+     */
+    async getSmartLinkContentPropertiesRaw(requestParameters: GetSmartLinkContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getSmartLinkContentProperties().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/embeds/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content properties for Smart Link in the content tree
+     */
+    async getSmartLinkContentProperties(requestParameters: GetSmartLinkContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultContentProperty> {
+        const response = await this.getSmartLinkContentPropertiesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content property for Smart Link in the content tree by id
+     */
+    async getSmartLinkContentPropertiesByIdRaw(requestParameters: GetSmartLinkContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['embedId'] == null) {
+            throw new runtime.RequiredError(
+                'embedId',
+                'Required parameter "embedId" was null or undefined when calling getSmartLinkContentPropertiesById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getSmartLinkContentPropertiesById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content property for Smart Link in the content tree by id
+     */
+    async getSmartLinkContentPropertiesById(requestParameters: GetSmartLinkContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.getSmartLinkContentPropertiesByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content properties for whiteboard
+     */
+    async getWhiteboardContentPropertiesRaw(requestParameters: GetWhiteboardContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getWhiteboardContentProperties().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content properties for whiteboard
+     */
+    async getWhiteboardContentProperties(requestParameters: GetWhiteboardContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultContentProperty> {
+        const response = await this.getWhiteboardContentPropertiesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content property for whiteboard by id
+     */
+    async getWhiteboardContentPropertiesByIdRaw(requestParameters: GetWhiteboardContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['whiteboardId'] == null) {
+            throw new runtime.RequiredError(
+                'whiteboardId',
+                'Required parameter "whiteboardId" was null or undefined when calling getWhiteboardContentPropertiesById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getWhiteboardContentPropertiesById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content property for whiteboard by id
+     */
+    async getWhiteboardContentPropertiesById(requestParameters: GetWhiteboardContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.getWhiteboardContentPropertiesByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Update a content property for attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
      * Update content property for attachment by id
      */
     async updateAttachmentPropertyByIdRaw(requestParameters: UpdateAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling updateAttachmentPropertyById.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling updateAttachmentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updateAttachmentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateAttachmentPropertyById().'
+            );
         }
 
-        if (requestParameters.contentPropertyUpdateRequest === null || requestParameters.contentPropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyUpdateRequest','Required parameter requestParameters.contentPropertyUpdateRequest was null or undefined when calling updateAttachmentPropertyById.');
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateAttachmentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1154,11 +1988,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyUpdateRequest,
+            body: requestParameters['contentPropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1178,16 +2012,25 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Update content property for blog post by id
      */
     async updateBlogpostPropertyByIdRaw(requestParameters: UpdateBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling updateBlogpostPropertyById.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling updateBlogpostPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updateBlogpostPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateBlogpostPropertyById().'
+            );
         }
 
-        if (requestParameters.contentPropertyUpdateRequest === null || requestParameters.contentPropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyUpdateRequest','Required parameter requestParameters.contentPropertyUpdateRequest was null or undefined when calling updateBlogpostPropertyById.');
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateBlogpostPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1205,11 +2048,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyUpdateRequest,
+            body: requestParameters['contentPropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1229,16 +2072,25 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Update content property for comment by id
      */
     async updateCommentPropertyByIdRaw(requestParameters: UpdateCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
-            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling updateCommentPropertyById.');
+        if (requestParameters['commentId'] == null) {
+            throw new runtime.RequiredError(
+                'commentId',
+                'Required parameter "commentId" was null or undefined when calling updateCommentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updateCommentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateCommentPropertyById().'
+            );
         }
 
-        if (requestParameters.contentPropertyUpdateRequest === null || requestParameters.contentPropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyUpdateRequest','Required parameter requestParameters.contentPropertyUpdateRequest was null or undefined when calling updateCommentPropertyById.');
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateCommentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1256,11 +2108,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyUpdateRequest,
+            body: requestParameters['contentPropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1280,16 +2132,25 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      * Update content property for custom content by id
      */
     async updateCustomContentPropertyByIdRaw(requestParameters: UpdateCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling updateCustomContentPropertyById.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling updateCustomContentPropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updateCustomContentPropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateCustomContentPropertyById().'
+            );
         }
 
-        if (requestParameters.contentPropertyUpdateRequest === null || requestParameters.contentPropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyUpdateRequest','Required parameter requestParameters.contentPropertyUpdateRequest was null or undefined when calling updateCustomContentPropertyById.');
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateCustomContentPropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1307,11 +2168,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyUpdateRequest,
+            body: requestParameters['contentPropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1327,20 +2188,89 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Update a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Update content property for database by id
+     */
+    async updateDatabasePropertyByIdRaw(requestParameters: UpdateDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['databaseId'] == null) {
+            throw new runtime.RequiredError(
+                'databaseId',
+                'Required parameter "databaseId" was null or undefined when calling updateDatabasePropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateDatabasePropertyById().'
+            );
+        }
+
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateDatabasePropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyUpdateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Update a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Update content property for database by id
+     */
+    async updateDatabasePropertyById(requestParameters: UpdateDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.updateDatabasePropertyByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Update a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
      * Update content property for page by id
      */
     async updatePagePropertyByIdRaw(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling updatePagePropertyById.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling updatePagePropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updatePagePropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updatePagePropertyById().'
+            );
         }
 
-        if (requestParameters.contentPropertyUpdateRequest === null || requestParameters.contentPropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('contentPropertyUpdateRequest','Required parameter requestParameters.contentPropertyUpdateRequest was null or undefined when calling updatePagePropertyById.');
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updatePagePropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1358,11 +2288,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.contentPropertyUpdateRequest,
+            body: requestParameters['contentPropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1374,6 +2304,126 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      */
     async updatePagePropertyById(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updatePagePropertyByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Update content property for Smart Link in the content tree by id
+     */
+    async updateSmartLinkPropertyByIdRaw(requestParameters: UpdateSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['embedId'] == null) {
+            throw new runtime.RequiredError(
+                'embedId',
+                'Required parameter "embedId" was null or undefined when calling updateSmartLinkPropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateSmartLinkPropertyById().'
+            );
+        }
+
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateSmartLinkPropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyUpdateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Update a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Update content property for Smart Link in the content tree by id
+     */
+    async updateSmartLinkPropertyById(requestParameters: UpdateSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.updateSmartLinkPropertyByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Update content property for whiteboard by id
+     */
+    async updateWhiteboardPropertyByIdRaw(requestParameters: UpdateWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['whiteboardId'] == null) {
+            throw new runtime.RequiredError(
+                'whiteboardId',
+                'Required parameter "whiteboardId" was null or undefined when calling updateWhiteboardPropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateWhiteboardPropertyById().'
+            );
+        }
+
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateWhiteboardPropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyUpdateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Update a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Update content property for whiteboard by id
+     */
+    async updateWhiteboardPropertyById(requestParameters: UpdateWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.updateWhiteboardPropertyByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -19,7 +19,7 @@ import type {
   SpaceProperty,
   SpacePropertyCreateRequest,
   SpacePropertyUpdateRequest,
-} from '../models';
+} from '../models/index';
 
 export interface CreateSpacePropertyRequest {
     spaceId: number;
@@ -59,12 +59,18 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
      * Create space property in space
      */
     async createSpacePropertyRaw(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceId === null || requestParameters.spaceId === undefined) {
-            throw new runtime.RequiredError('spaceId','Required parameter requestParameters.spaceId was null or undefined when calling createSpaceProperty.');
+        if (requestParameters['spaceId'] == null) {
+            throw new runtime.RequiredError(
+                'spaceId',
+                'Required parameter "spaceId" was null or undefined when calling createSpaceProperty().'
+            );
         }
 
-        if (requestParameters.spacePropertyCreateRequest === null || requestParameters.spacePropertyCreateRequest === undefined) {
-            throw new runtime.RequiredError('spacePropertyCreateRequest','Required parameter requestParameters.spacePropertyCreateRequest was null or undefined when calling createSpaceProperty.');
+        if (requestParameters['spacePropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'spacePropertyCreateRequest',
+                'Required parameter "spacePropertyCreateRequest" was null or undefined when calling createSpaceProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -82,11 +88,11 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters.spaceId))),
+            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.spacePropertyCreateRequest,
+            body: requestParameters['spacePropertyCreateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -106,12 +112,18 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
      * Delete space property by id
      */
     async deleteSpacePropertyByIdRaw(requestParameters: DeleteSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceId === null || requestParameters.spaceId === undefined) {
-            throw new runtime.RequiredError('spaceId','Required parameter requestParameters.spaceId was null or undefined when calling deleteSpacePropertyById.');
+        if (requestParameters['spaceId'] == null) {
+            throw new runtime.RequiredError(
+                'spaceId',
+                'Required parameter "spaceId" was null or undefined when calling deleteSpacePropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling deleteSpacePropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteSpacePropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -127,7 +139,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters.spaceId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -149,22 +161,25 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
      * Get space properties in space
      */
     async getSpacePropertiesRaw(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceProperty>> {
-        if (requestParameters.spaceId === null || requestParameters.spaceId === undefined) {
-            throw new runtime.RequiredError('spaceId','Required parameter requestParameters.spaceId was null or undefined when calling getSpaceProperties.');
+        if (requestParameters['spaceId'] == null) {
+            throw new runtime.RequiredError(
+                'spaceId',
+                'Required parameter "spaceId" was null or undefined when calling getSpaceProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -178,7 +193,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters.spaceId))),
+            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -201,12 +216,18 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
      * Get space property by id
      */
     async getSpacePropertyByIdRaw(requestParameters: GetSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceId === null || requestParameters.spaceId === undefined) {
-            throw new runtime.RequiredError('spaceId','Required parameter requestParameters.spaceId was null or undefined when calling getSpacePropertyById.');
+        if (requestParameters['spaceId'] == null) {
+            throw new runtime.RequiredError(
+                'spaceId',
+                'Required parameter "spaceId" was null or undefined when calling getSpacePropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling getSpacePropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getSpacePropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -222,7 +243,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters.spaceId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -245,16 +266,25 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
      * Update space property by id
      */
     async updateSpacePropertyByIdRaw(requestParameters: UpdateSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceId === null || requestParameters.spaceId === undefined) {
-            throw new runtime.RequiredError('spaceId','Required parameter requestParameters.spaceId was null or undefined when calling updateSpacePropertyById.');
+        if (requestParameters['spaceId'] == null) {
+            throw new runtime.RequiredError(
+                'spaceId',
+                'Required parameter "spaceId" was null or undefined when calling updateSpacePropertyById().'
+            );
         }
 
-        if (requestParameters.propertyId === null || requestParameters.propertyId === undefined) {
-            throw new runtime.RequiredError('propertyId','Required parameter requestParameters.propertyId was null or undefined when calling updateSpacePropertyById.');
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateSpacePropertyById().'
+            );
         }
 
-        if (requestParameters.spacePropertyUpdateRequest === null || requestParameters.spacePropertyUpdateRequest === undefined) {
-            throw new runtime.RequiredError('spacePropertyUpdateRequest','Required parameter requestParameters.spacePropertyUpdateRequest was null or undefined when calling updateSpacePropertyById.');
+        if (requestParameters['spacePropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'spacePropertyUpdateRequest',
+                'Required parameter "spacePropertyUpdateRequest" was null or undefined when calling updateSpacePropertyById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -272,11 +302,11 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters.spaceId))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters.propertyId))),
+            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.spacePropertyUpdateRequest,
+            body: requestParameters['spacePropertyUpdateRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

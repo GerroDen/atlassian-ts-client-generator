@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ModelInteger,
   MultiEntityResultString,
-} from '../models';
+} from '../models/index';
 
 export interface GetBlogPostLikeCountRequest {
     id: number;
@@ -69,8 +69,11 @@ export class LikeApi extends runtime.BaseAPI {
      * Get like count for blog post
      */
     async getBlogPostLikeCountRaw(requestParameters: GetBlogPostLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostLikeCount.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostLikeCount().'
+            );
         }
 
         const queryParameters: any = {};
@@ -86,7 +89,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -109,18 +112,21 @@ export class LikeApi extends runtime.BaseAPI {
      * Get account IDs of likes for blog post
      */
     async getBlogPostLikeUsersRaw(requestParameters: GetBlogPostLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostLikeUsers.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostLikeUsers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -134,7 +140,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -157,8 +163,11 @@ export class LikeApi extends runtime.BaseAPI {
      * Get like count for footer comment
      */
     async getFooterLikeCountRaw(requestParameters: GetFooterLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterLikeCount.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterLikeCount().'
+            );
         }
 
         const queryParameters: any = {};
@@ -174,7 +183,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/footer-comments/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -197,18 +206,21 @@ export class LikeApi extends runtime.BaseAPI {
      * Get account IDs of likes for footer comment
      */
     async getFooterLikeUsersRaw(requestParameters: GetFooterLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterLikeUsers.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterLikeUsers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -222,7 +234,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/footer-comments/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -245,8 +257,11 @@ export class LikeApi extends runtime.BaseAPI {
      * Get like count for inline comment
      */
     async getInlineLikeCountRaw(requestParameters: GetInlineLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineLikeCount.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineLikeCount().'
+            );
         }
 
         const queryParameters: any = {};
@@ -262,7 +277,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/inline-comments/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -285,18 +300,21 @@ export class LikeApi extends runtime.BaseAPI {
      * Get account IDs of likes for inline comment
      */
     async getInlineLikeUsersRaw(requestParameters: GetInlineLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineLikeUsers.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineLikeUsers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -310,7 +328,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/inline-comments/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -333,8 +351,11 @@ export class LikeApi extends runtime.BaseAPI {
      * Get like count for page
      */
     async getPageLikeCountRaw(requestParameters: GetPageLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageLikeCount.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageLikeCount().'
+            );
         }
 
         const queryParameters: any = {};
@@ -350,7 +371,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/likes/count`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -373,18 +394,21 @@ export class LikeApi extends runtime.BaseAPI {
      * Get account IDs of likes for page
      */
     async getPageLikeUsersRaw(requestParameters: GetPageLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageLikeUsers.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageLikeUsers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -398,7 +422,7 @@ export class LikeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/likes/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

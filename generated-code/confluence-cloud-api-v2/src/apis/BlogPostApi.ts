@@ -15,14 +15,14 @@
 
 import * as runtime from '../runtime';
 import type {
-  BlogPostSingle,
   BlogPostSortOrder,
+  CreateBlogPost200Response,
   CreateBlogPostRequest,
   MultiEntityResultBlogPost,
   PrimaryBodyRepresentation,
   PrimaryBodyRepresentationSingle,
   UpdateBlogPostRequest,
-} from '../models';
+} from '../models/index';
 
 export interface CreateBlogPostOperationRequest {
     createBlogPostRequest: CreateBlogPostRequest;
@@ -31,13 +31,23 @@ export interface CreateBlogPostOperationRequest {
 
 export interface DeleteBlogPostRequest {
     id: number;
+    purge?: boolean;
+    draft?: boolean;
 }
 
 export interface GetBlogPostByIdRequest {
     id: number;
     bodyFormat?: PrimaryBodyRepresentationSingle;
     getDraft?: boolean;
+    status?: Array<GetBlogPostByIdStatusEnum>;
     version?: number;
+    includeLabels?: boolean;
+    includeProperties?: boolean;
+    includeOperations?: boolean;
+    includeLikes?: boolean;
+    includeVersions?: boolean;
+    includeVersion?: boolean;
+    includeFavoritedByCurrentUserStatus?: boolean;
 }
 
 export interface GetBlogPostsRequest {
@@ -84,15 +94,18 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Creates a new blog post in the space specified by the spaceId.  By default this will create the blog post as a non-draft, unless the status is specified as draft. If creating a non-draft, the title must not be empty.  Currently only supports the storage representation specified in the body.representation enums below
      * Create blog post
      */
-    async createBlogPostRaw(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPostSingle>> {
-        if (requestParameters.createBlogPostRequest === null || requestParameters.createBlogPostRequest === undefined) {
-            throw new runtime.RequiredError('createBlogPostRequest','Required parameter requestParameters.createBlogPostRequest was null or undefined when calling createBlogPost.');
+    async createBlogPostRaw(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        if (requestParameters['createBlogPostRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createBlogPostRequest',
+                'Required parameter "createBlogPostRequest" was null or undefined when calling createBlogPost().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters._private !== undefined) {
-            queryParameters['private'] = requestParameters._private;
+        if (requestParameters['_private'] != null) {
+            queryParameters['private'] = requestParameters['_private'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -112,7 +125,7 @@ export class BlogPostApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createBlogPostRequest,
+            body: requestParameters['createBlogPostRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -122,21 +135,32 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Creates a new blog post in the space specified by the spaceId.  By default this will create the blog post as a non-draft, unless the status is specified as draft. If creating a non-draft, the title must not be empty.  Currently only supports the storage representation specified in the body.representation enums below
      * Create blog post
      */
-    async createBlogPost(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPostSingle> {
+    async createBlogPost(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateBlogPost200Response> {
         const response = await this.createBlogPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Delete a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space.
+     * Delete a blog post by id.  By default this will delete blog posts that are non-drafts. To delete a blog post that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a blog post that is not a draft moves the blog post to the trash, where it can be restored later. To permanently delete a blog post (or \"purge\" it), the endpoint must be called on a **trashed** blog post with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space. Permission to administer the space (if attempting to purge).
      * Delete blog post
      */
     async deleteBlogPostRaw(requestParameters: DeleteBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteBlogPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteBlogPost().'
+            );
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters['purge'] != null) {
+            queryParameters['purge'] = requestParameters['purge'];
+        }
+
+        if (requestParameters['draft'] != null) {
+            queryParameters['draft'] = requestParameters['draft'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -149,7 +173,7 @@ export class BlogPostApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -159,7 +183,7 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space.
+     * Delete a blog post by id.  By default this will delete blog posts that are non-drafts. To delete a blog post that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a blog post that is not a draft moves the blog post to the trash, where it can be restored later. To permanently delete a blog post (or \"purge\" it), the endpoint must be called on a **trashed** blog post with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space. Permission to administer the space (if attempting to purge).
      * Delete blog post
      */
     async deleteBlogPost(requestParameters: DeleteBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -170,23 +194,58 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Returns a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
      * Get blog post by id
      */
-    async getBlogPostByIdRaw(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPostSingle>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostById.');
+    async getBlogPostByIdRaw(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.getDraft !== undefined) {
-            queryParameters['get-draft'] = requestParameters.getDraft;
+        if (requestParameters['getDraft'] != null) {
+            queryParameters['get-draft'] = requestParameters['getDraft'];
         }
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
+        }
+
+        if (requestParameters['includeLabels'] != null) {
+            queryParameters['include-labels'] = requestParameters['includeLabels'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeLikes'] != null) {
+            queryParameters['include-likes'] = requestParameters['includeLikes'];
+        }
+
+        if (requestParameters['includeVersions'] != null) {
+            queryParameters['include-versions'] = requestParameters['includeVersions'];
+        }
+
+        if (requestParameters['includeVersion'] != null) {
+            queryParameters['include-version'] = requestParameters['includeVersion'];
+        }
+
+        if (requestParameters['includeFavoritedByCurrentUserStatus'] != null) {
+            queryParameters['include-favorited-by-current-user-status'] = requestParameters['includeFavoritedByCurrentUserStatus'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -200,7 +259,7 @@ export class BlogPostApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -213,7 +272,7 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Returns a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
      * Get blog post by id
      */
-    async getBlogPostById(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPostSingle> {
+    async getBlogPostById(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateBlogPost200Response> {
         const response = await this.getBlogPostByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -225,36 +284,36 @@ export class BlogPostApi extends runtime.BaseAPI {
     async getBlogPostsRaw(requestParameters: GetBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
         const queryParameters: any = {};
 
-        if (requestParameters.id) {
-            queryParameters['id'] = requestParameters.id;
+        if (requestParameters['id'] != null) {
+            queryParameters['id'] = requestParameters['id'];
         }
 
-        if (requestParameters.spaceId) {
-            queryParameters['space-id'] = requestParameters.spaceId;
+        if (requestParameters['spaceId'] != null) {
+            queryParameters['space-id'] = requestParameters['spaceId'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.title !== undefined) {
-            queryParameters['title'] = requestParameters.title;
+        if (requestParameters['title'] != null) {
+            queryParameters['title'] = requestParameters['title'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -291,34 +350,37 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Get blog posts in space
      */
     async getBlogPostsInSpaceRaw(requestParameters: GetBlogPostsInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostsInSpace.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostsInSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.title !== undefined) {
-            queryParameters['title'] = requestParameters.title;
+        if (requestParameters['title'] != null) {
+            queryParameters['title'] = requestParameters['title'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -332,7 +394,7 @@ export class BlogPostApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/spaces/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/spaces/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -355,30 +417,33 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Get blog posts for label
      */
     async getLabelBlogPostsRaw(requestParameters: GetLabelBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLabelBlogPosts.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getLabelBlogPosts().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.spaceId) {
-            queryParameters['space-id'] = requestParameters.spaceId;
+        if (requestParameters['spaceId'] != null) {
+            queryParameters['space-id'] = requestParameters['spaceId'];
         }
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -392,7 +457,7 @@ export class BlogPostApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/labels/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/labels/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -414,13 +479,19 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Update a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to update blog posts in the space.
      * Update blog post
      */
-    async updateBlogPostRaw(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPostSingle>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateBlogPost.');
+    async updateBlogPostRaw(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateBlogPost().'
+            );
         }
 
-        if (requestParameters.updateBlogPostRequest === null || requestParameters.updateBlogPostRequest === undefined) {
-            throw new runtime.RequiredError('updateBlogPostRequest','Required parameter requestParameters.updateBlogPostRequest was null or undefined when calling updateBlogPost.');
+        if (requestParameters['updateBlogPostRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateBlogPostRequest',
+                'Required parameter "updateBlogPostRequest" was null or undefined when calling updateBlogPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -438,11 +509,11 @@ export class BlogPostApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateBlogPostRequest,
+            body: requestParameters['updateBlogPostRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -452,13 +523,24 @@ export class BlogPostApi extends runtime.BaseAPI {
      * Update a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to update blog posts in the space.
      * Update blog post
      */
-    async updateBlogPost(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPostSingle> {
+    async updateBlogPost(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateBlogPost200Response> {
         const response = await this.updateBlogPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
 }
 
+/**
+ * @export
+ */
+export const GetBlogPostByIdStatusEnum = {
+    Current: 'current',
+    Trashed: 'trashed',
+    Deleted: 'deleted',
+    Historical: 'historical',
+    Draft: 'draft'
+} as const;
+export type GetBlogPostByIdStatusEnum = typeof GetBlogPostByIdStatusEnum[keyof typeof GetBlogPostByIdStatusEnum];
 /**
  * @export
  */

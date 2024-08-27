@@ -24,7 +24,7 @@ import type {
   MultiEntityResultVersion4,
   PrimaryBodyRepresentation,
   VersionSortOrder,
-} from '../models';
+} from '../models/index';
 
 export interface GetAttachmentVersionDetailsRequest {
     attachmentId: string;
@@ -113,12 +113,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for attachment version
      */
     async getAttachmentVersionDetailsRaw(requestParameters: GetAttachmentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling getAttachmentVersionDetails.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling getAttachmentVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getAttachmentVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getAttachmentVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -134,7 +140,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{attachment-id}/versions/{version-number}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters.attachmentId))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/attachments/{attachment-id}/versions/{version-number}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -157,22 +163,25 @@ export class VersionApi extends runtime.BaseAPI {
      * Get attachment versions
      */
     async getAttachmentVersionsRaw(requestParameters: GetAttachmentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachmentVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachmentVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -186,7 +195,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/attachments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/attachments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -209,12 +218,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for blog post version
      */
     async getBlogPostVersionDetailsRaw(requestParameters: GetBlogPostVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.blogpostId === null || requestParameters.blogpostId === undefined) {
-            throw new runtime.RequiredError('blogpostId','Required parameter requestParameters.blogpostId was null or undefined when calling getBlogPostVersionDetails.');
+        if (requestParameters['blogpostId'] == null) {
+            throw new runtime.RequiredError(
+                'blogpostId',
+                'Required parameter "blogpostId" was null or undefined when calling getBlogPostVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getBlogPostVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getBlogPostVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -230,7 +245,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/versions/{version-number}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters.blogpostId))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/blogposts/{blogpost-id}/versions/{version-number}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -253,26 +268,29 @@ export class VersionApi extends runtime.BaseAPI {
      * Get blog post versions
      */
     async getBlogPostVersionsRaw(requestParameters: GetBlogPostVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion1>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getBlogPostVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getBlogPostVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -286,7 +304,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/blogposts/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/blogposts/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -309,12 +327,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for custom content version
      */
     async getCustomContentVersionDetailsRaw(requestParameters: GetCustomContentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling getCustomContentVersionDetails.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling getCustomContentVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getCustomContentVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getCustomContentVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -330,7 +354,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/versions/{version-number}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/custom-content/{custom-content-id}/versions/{version-number}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -353,26 +377,29 @@ export class VersionApi extends runtime.BaseAPI {
      * Get custom content versions
      */
     async getCustomContentVersionsRaw(requestParameters: GetCustomContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion3>> {
-        if (requestParameters.customContentId === null || requestParameters.customContentId === undefined) {
-            throw new runtime.RequiredError('customContentId','Required parameter requestParameters.customContentId was null or undefined when calling getCustomContentVersions.');
+        if (requestParameters['customContentId'] == null) {
+            throw new runtime.RequiredError(
+                'customContentId',
+                'Required parameter "customContentId" was null or undefined when calling getCustomContentVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -386,7 +413,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/versions`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters.customContentId))),
+            path: `/custom-content/{custom-content-id}/versions`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -409,12 +436,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for footer comment version
      */
     async getFooterCommentVersionDetailsRaw(requestParameters: GetFooterCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterCommentVersionDetails.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterCommentVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getFooterCommentVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getFooterCommentVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -430,7 +463,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/footer-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -453,26 +486,29 @@ export class VersionApi extends runtime.BaseAPI {
      * Get footer comment versions
      */
     async getFooterCommentVersionsRaw(requestParameters: GetFooterCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFooterCommentVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFooterCommentVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -486,7 +522,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/footer-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/footer-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -509,12 +545,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for inline comment version
      */
     async getInlineCommentVersionDetailsRaw(requestParameters: GetInlineCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineCommentVersionDetails.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineCommentVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getInlineCommentVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getInlineCommentVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -530,7 +572,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/inline-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -553,26 +595,29 @@ export class VersionApi extends runtime.BaseAPI {
      * Get inline comment versions
      */
     async getInlineCommentVersionsRaw(requestParameters: GetInlineCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInlineCommentVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getInlineCommentVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -586,7 +631,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/inline-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/inline-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -609,12 +654,18 @@ export class VersionApi extends runtime.BaseAPI {
      * Get version details for page version
      */
     async getPageVersionDetailsRaw(requestParameters: GetPageVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling getPageVersionDetails.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling getPageVersionDetails().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getPageVersionDetails.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getPageVersionDetails().'
+            );
         }
 
         const queryParameters: any = {};
@@ -630,7 +681,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{page-id}/versions/{version-number}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters.pageId))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/pages/{page-id}/versions/{version-number}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -653,26 +704,29 @@ export class VersionApi extends runtime.BaseAPI {
      * Get page versions
      */
     async getPageVersionsRaw(requestParameters: GetPageVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion2>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPageVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getPageVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.sort !== undefined) {
-            queryParameters['sort'] = requestParameters.sort;
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -686,7 +740,7 @@ export class VersionApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/pages/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/pages/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

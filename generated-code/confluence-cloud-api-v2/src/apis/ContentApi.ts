@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ContentIdToContentTypeResponse,
   ConvertContentIdsToContentTypesRequest,
-} from '../models';
+} from '../models/index';
 
 export interface ConvertContentIdsToContentTypesOperationRequest {
     convertContentIdsToContentTypesRequest: ConvertContentIdsToContentTypesRequest;
@@ -33,8 +33,11 @@ export class ContentApi extends runtime.BaseAPI {
      * Convert content ids to content types
      */
     async convertContentIdsToContentTypesRaw(requestParameters: ConvertContentIdsToContentTypesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentIdToContentTypeResponse>> {
-        if (requestParameters.convertContentIdsToContentTypesRequest === null || requestParameters.convertContentIdsToContentTypesRequest === undefined) {
-            throw new runtime.RequiredError('convertContentIdsToContentTypesRequest','Required parameter requestParameters.convertContentIdsToContentTypesRequest was null or undefined when calling convertContentIdsToContentTypes.');
+        if (requestParameters['convertContentIdsToContentTypesRequest'] == null) {
+            throw new runtime.RequiredError(
+                'convertContentIdsToContentTypesRequest',
+                'Required parameter "convertContentIdsToContentTypesRequest" was null or undefined when calling convertContentIdsToContentTypes().'
+            );
         }
 
         const queryParameters: any = {};
@@ -56,7 +59,7 @@ export class ContentApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.convertContentIdsToContentTypesRequest,
+            body: requestParameters['convertContentIdsToContentTypesRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

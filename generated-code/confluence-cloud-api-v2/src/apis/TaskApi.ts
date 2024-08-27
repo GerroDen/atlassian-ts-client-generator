@@ -19,7 +19,7 @@ import type {
   PrimaryBodyRepresentation,
   Task,
   UpdateTaskRequest,
-} from '../models';
+} from '../models/index';
 
 export interface GetTaskByIdRequest {
     id: number;
@@ -50,6 +50,7 @@ export interface GetTasksRequest {
 export interface UpdateTaskOperationRequest {
     id: number;
     updateTaskRequest: UpdateTaskRequest;
+    bodyFormat?: PrimaryBodyRepresentation;
 }
 
 /**
@@ -62,14 +63,17 @@ export class TaskApi extends runtime.BaseAPI {
      * Get task by id
      */
     async getTaskByIdRaw(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Task>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTaskById.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getTaskById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -83,7 +87,7 @@ export class TaskApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -108,76 +112,76 @@ export class TaskApi extends runtime.BaseAPI {
     async getTasksRaw(requestParameters: GetTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultTask>> {
         const queryParameters: any = {};
 
-        if (requestParameters.bodyFormat !== undefined) {
-            queryParameters['body-format'] = requestParameters.bodyFormat;
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
-        if (requestParameters.includeBlankTasks !== undefined) {
-            queryParameters['include-blank-tasks'] = requestParameters.includeBlankTasks;
+        if (requestParameters['includeBlankTasks'] != null) {
+            queryParameters['include-blank-tasks'] = requestParameters['includeBlankTasks'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.taskId) {
-            queryParameters['task-id'] = requestParameters.taskId;
+        if (requestParameters['taskId'] != null) {
+            queryParameters['task-id'] = requestParameters['taskId'];
         }
 
-        if (requestParameters.spaceId) {
-            queryParameters['space-id'] = requestParameters.spaceId;
+        if (requestParameters['spaceId'] != null) {
+            queryParameters['space-id'] = requestParameters['spaceId'];
         }
 
-        if (requestParameters.pageId) {
-            queryParameters['page-id'] = requestParameters.pageId;
+        if (requestParameters['pageId'] != null) {
+            queryParameters['page-id'] = requestParameters['pageId'];
         }
 
-        if (requestParameters.blogpostId) {
-            queryParameters['blogpost-id'] = requestParameters.blogpostId;
+        if (requestParameters['blogpostId'] != null) {
+            queryParameters['blogpost-id'] = requestParameters['blogpostId'];
         }
 
-        if (requestParameters.createdBy) {
-            queryParameters['created-by'] = requestParameters.createdBy;
+        if (requestParameters['createdBy'] != null) {
+            queryParameters['created-by'] = requestParameters['createdBy'];
         }
 
-        if (requestParameters.assignedTo) {
-            queryParameters['assigned-to'] = requestParameters.assignedTo;
+        if (requestParameters['assignedTo'] != null) {
+            queryParameters['assigned-to'] = requestParameters['assignedTo'];
         }
 
-        if (requestParameters.completedBy) {
-            queryParameters['completed-by'] = requestParameters.completedBy;
+        if (requestParameters['completedBy'] != null) {
+            queryParameters['completed-by'] = requestParameters['completedBy'];
         }
 
-        if (requestParameters.createdAtFrom !== undefined) {
-            queryParameters['created-at-from'] = requestParameters.createdAtFrom;
+        if (requestParameters['createdAtFrom'] != null) {
+            queryParameters['created-at-from'] = requestParameters['createdAtFrom'];
         }
 
-        if (requestParameters.createdAtTo !== undefined) {
-            queryParameters['created-at-to'] = requestParameters.createdAtTo;
+        if (requestParameters['createdAtTo'] != null) {
+            queryParameters['created-at-to'] = requestParameters['createdAtTo'];
         }
 
-        if (requestParameters.dueAtFrom !== undefined) {
-            queryParameters['due-at-from'] = requestParameters.dueAtFrom;
+        if (requestParameters['dueAtFrom'] != null) {
+            queryParameters['due-at-from'] = requestParameters['dueAtFrom'];
         }
 
-        if (requestParameters.dueAtTo !== undefined) {
-            queryParameters['due-at-to'] = requestParameters.dueAtTo;
+        if (requestParameters['dueAtTo'] != null) {
+            queryParameters['due-at-to'] = requestParameters['dueAtTo'];
         }
 
-        if (requestParameters.completedAtFrom !== undefined) {
-            queryParameters['completed-at-from'] = requestParameters.completedAtFrom;
+        if (requestParameters['completedAtFrom'] != null) {
+            queryParameters['completed-at-from'] = requestParameters['completedAtFrom'];
         }
 
-        if (requestParameters.completedAtTo !== undefined) {
-            queryParameters['completed-at-to'] = requestParameters.completedAtTo;
+        if (requestParameters['completedAtTo'] != null) {
+            queryParameters['completed-at-to'] = requestParameters['completedAtTo'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -210,19 +214,29 @@ export class TaskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a task by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the containing page or blog post and view its corresponding space.
+     * Update a task by id. This endpoint currently only supports updating task status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the containing page or blog post and view its corresponding space.
      * Update task
      */
     async updateTaskRaw(requestParameters: UpdateTaskOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Task>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateTask.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTask().'
+            );
         }
 
-        if (requestParameters.updateTaskRequest === null || requestParameters.updateTaskRequest === undefined) {
-            throw new runtime.RequiredError('updateTaskRequest','Required parameter requestParameters.updateTaskRequest was null or undefined when calling updateTask.');
+        if (requestParameters['updateTaskRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateTaskRequest',
+                'Required parameter "updateTaskRequest" was null or undefined when calling updateTask().'
+            );
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters['bodyFormat'] != null) {
+            queryParameters['body-format'] = requestParameters['bodyFormat'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -237,18 +251,18 @@ export class TaskApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateTaskRequest,
+            body: requestParameters['updateTaskRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
 
     /**
-     * Update a task by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the containing page or blog post and view its corresponding space.
+     * Update a task by id. This endpoint currently only supports updating task status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the containing page or blog post and view its corresponding space.
      * Update task
      */
     async updateTask(requestParameters: UpdateTaskOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
