@@ -50,7 +50,7 @@
     "lint": "run-p 'lint:*'",
     "lint:eslint": "eslint . --ext js,cjs",
     "lint:prettier": "prettier '{**/*,*}.{js,cjs,json}' --check",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "openapi-generator-version": "openapi-generator-cli version-manager list"
   },
   "devDependencies": {
