@@ -22,7 +22,7 @@ import type {
   PublicApiMembershipRemovePayload,
   PublicApiMembershipRemoveResponse,
   PublicApiOverallCodedError,
-} from '../models';
+} from '../models/index';
 
 export interface AddMembers2Request {
     orgId: string;
@@ -53,16 +53,25 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
      * Add a set of membership(s).
      */
     async addMembers2Raw(requestParameters: AddMembers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipAddResponse>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling addMembers2.');
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling addMembers2().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling addMembers2.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling addMembers2().'
+            );
         }
 
-        if (requestParameters.publicApiMembershipAddPayload === null || requestParameters.publicApiMembershipAddPayload === undefined) {
-            throw new runtime.RequiredError('publicApiMembershipAddPayload','Required parameter requestParameters.publicApiMembershipAddPayload was null or undefined when calling addMembers2.');
+        if (requestParameters['publicApiMembershipAddPayload'] == null) {
+            throw new runtime.RequiredError(
+                'publicApiMembershipAddPayload',
+                'Required parameter "publicApiMembershipAddPayload" was null or undefined when calling addMembers2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -72,11 +81,11 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members/add`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members/add`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.publicApiMembershipAddPayload,
+            body: requestParameters['publicApiMembershipAddPayload'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -96,18 +105,24 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
      * Fetch a set of membership(s).
      */
     async fetchMembersRaw(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiFetchResponsePublicApiMembershipAccountId>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling fetchMembers.');
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling fetchMembers().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling fetchMembers.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling fetchMembers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.siteId !== undefined) {
-            queryParameters['siteId'] = requestParameters.siteId;
+        if (requestParameters['siteId'] != null) {
+            queryParameters['siteId'] = requestParameters['siteId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -115,11 +130,11 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.publicApiMembershipFetchPayload,
+            body: requestParameters['publicApiMembershipFetchPayload'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -139,16 +154,25 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
      * Remove a set of membership(s).
      */
     async removeMembers1Raw(requestParameters: RemoveMembers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipRemoveResponse>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling removeMembers1.');
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling removeMembers1().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling removeMembers1.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling removeMembers1().'
+            );
         }
 
-        if (requestParameters.publicApiMembershipRemovePayload === null || requestParameters.publicApiMembershipRemovePayload === undefined) {
-            throw new runtime.RequiredError('publicApiMembershipRemovePayload','Required parameter requestParameters.publicApiMembershipRemovePayload was null or undefined when calling removeMembers1.');
+        if (requestParameters['publicApiMembershipRemovePayload'] == null) {
+            throw new runtime.RequiredError(
+                'publicApiMembershipRemovePayload',
+                'Required parameter "publicApiMembershipRemovePayload" was null or undefined when calling removeMembers1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -158,11 +182,11 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members/remove`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/members/remove`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.publicApiMembershipRemovePayload,
+            body: requestParameters['publicApiMembershipRemovePayload'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

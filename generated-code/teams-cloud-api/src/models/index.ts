@@ -3,6 +3,31 @@
 /**
  * 
  * @export
+ * @interface PublicApiAddMemberError
+ */
+export interface PublicApiAddMemberError {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiAddMemberError
+     */
+    accountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiAddMemberError
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiAddMemberError
+     */
+    message: string;
+}
+/**
+ * 
+ * @export
  * @interface PublicApiFetchResponsePublicApiMembershipAccountId
  */
 export interface PublicApiFetchResponsePublicApiMembershipAccountId {
@@ -18,6 +43,31 @@ export interface PublicApiFetchResponsePublicApiMembershipAccountId {
      * @memberof PublicApiFetchResponsePublicApiMembershipAccountId
      */
     results: Array<PublicApiMembership>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicApiMemberNotFoundError
+ */
+export interface PublicApiMemberNotFoundError {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiMemberNotFoundError
+     */
+    accountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiMemberNotFoundError
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiMemberNotFoundError
+     */
+    message: string;
 }
 /**
  * 
@@ -53,10 +103,10 @@ export interface PublicApiMembershipAddPayload {
 export interface PublicApiMembershipAddResponse {
     /**
      * 
-     * @type {Set<PublicApiMembershipCodedError>}
+     * @type {Set<PublicApiMembershipAddResponseErrorsInner>}
      * @memberof PublicApiMembershipAddResponse
      */
-    errors: Set<PublicApiMembershipCodedError>;
+    errors: Set<PublicApiMembershipAddResponseErrorsInner>;
     /**
      * 
      * @type {Set<PublicApiMembership>}
@@ -64,6 +114,12 @@ export interface PublicApiMembershipAddResponse {
      */
     members: Set<PublicApiMembership>;
 }
+/**
+ * @type PublicApiMembershipAddResponseErrorsInner
+ * 
+ * @export
+ */
+export type PublicApiMembershipAddResponseErrorsInner = PublicApiAddMemberError | PublicApiMemberNotFoundError | PublicApiRemoveMemberError;
 /**
  * 
  * @export
@@ -106,7 +162,7 @@ export interface PublicApiMembershipFetchPayload {
      * @type {number}
      * @memberof PublicApiMembershipFetchPayload
      */
-    first: number;
+    first?: number;
 }
 /**
  * 
@@ -129,10 +185,10 @@ export interface PublicApiMembershipRemovePayload {
 export interface PublicApiMembershipRemoveResponse {
     /**
      * 
-     * @type {Set<PublicApiMembershipCodedError>}
+     * @type {Set<PublicApiMembershipAddResponseErrorsInner>}
      * @memberof PublicApiMembershipRemoveResponse
      */
-    errors: Set<PublicApiMembershipCodedError>;
+    errors: Set<PublicApiMembershipAddResponseErrorsInner>;
 }
 /**
  * 
@@ -171,6 +227,31 @@ export interface PublicApiPageInfoAccountId {
      * @memberof PublicApiPageInfoAccountId
      */
     hasNextPage: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PublicApiRemoveMemberError
+ */
+export interface PublicApiRemoveMemberError {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiRemoveMemberError
+     */
+    accountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiRemoveMemberError
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiRemoveMemberError
+     */
+    message: string;
 }
 /**
  * 

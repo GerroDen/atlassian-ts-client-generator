@@ -20,14 +20,14 @@ import type {
   PublicApiTeamResponse,
   PublicApiTeamResponseWithMembers,
   PublicApiTeamUpdatePayload,
-} from '../models';
+} from '../models/index';
 
 export interface CreateTeamRequest {
     orgId: string;
     publicApiTeamCreationPayload: PublicApiTeamCreationPayload;
 }
 
-export interface DeleteTeam1Request {
+export interface DeleteTeam2Request {
     orgId: string;
     teamId: string;
 }
@@ -38,10 +38,20 @@ export interface GetTeam2Request {
     siteId?: string;
 }
 
-export interface UpdateTeamRequest {
+export interface RestoreTeamRequest {
+    orgId: string;
+    teamId: string;
+}
+
+export interface UpdateTeam1Request {
     orgId: string;
     teamId: string;
     publicApiTeamUpdatePayload: PublicApiTeamUpdatePayload;
+}
+
+export interface UploadAndSetTeamCoverPhotoRequest {
+    teamId: string;
+    file: Blob;
 }
 
 /**
@@ -54,12 +64,18 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
      * Create a team.
      */
     async createTeamRaw(requestParameters: CreateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponseWithMembers>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling createTeam.');
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling createTeam().'
+            );
         }
 
-        if (requestParameters.publicApiTeamCreationPayload === null || requestParameters.publicApiTeamCreationPayload === undefined) {
-            throw new runtime.RequiredError('publicApiTeamCreationPayload','Required parameter requestParameters.publicApiTeamCreationPayload was null or undefined when calling createTeam.');
+        if (requestParameters['publicApiTeamCreationPayload'] == null) {
+            throw new runtime.RequiredError(
+                'publicApiTeamCreationPayload',
+                'Required parameter "publicApiTeamCreationPayload" was null or undefined when calling createTeam().'
+            );
         }
 
         const queryParameters: any = {};
@@ -69,11 +85,11 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.publicApiTeamCreationPayload,
+            body: requestParameters['publicApiTeamCreationPayload'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -91,13 +107,19 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     /**
      * Delete a team.
      */
-    async deleteTeam1Raw(requestParameters: DeleteTeam1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling deleteTeam1.');
+    async deleteTeam2Raw(requestParameters: DeleteTeam2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling deleteTeam2().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling deleteTeam1.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling deleteTeam2().'
+            );
         }
 
         const queryParameters: any = {};
@@ -105,7 +127,7 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -117,32 +139,38 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     /**
      * Delete a team.
      */
-    async deleteTeam1(requestParameters: DeleteTeam1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTeam1Raw(requestParameters, initOverrides);
+    async deleteTeam2(requestParameters: DeleteTeam2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTeam2Raw(requestParameters, initOverrides);
     }
 
     /**
      * Get a single team.
      */
     async getTeam2Raw(requestParameters: GetTeam2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling getTeam2.');
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling getTeam2().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling getTeam2.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling getTeam2().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.siteId !== undefined) {
-            queryParameters['siteId'] = requestParameters.siteId;
+        if (requestParameters['siteId'] != null) {
+            queryParameters['siteId'] = requestParameters['siteId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -160,20 +188,68 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
+     * Restore a single soft-deleted team
+     */
+    async restoreTeamRaw(requestParameters: RestoreTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling restoreTeam().'
+            );
+        }
+
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling restoreTeam().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}/restore`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Restore a single soft-deleted team
+     */
+    async restoreTeam(requestParameters: RestoreTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.restoreTeamRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * This will only update the fields that get passed in and leave the rest as unmodified.
      * Modify a team.
      */
-    async updateTeamRaw(requestParameters: UpdateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
-        if (requestParameters.orgId === null || requestParameters.orgId === undefined) {
-            throw new runtime.RequiredError('orgId','Required parameter requestParameters.orgId was null or undefined when calling updateTeam.');
+    async updateTeam1Raw(requestParameters: UpdateTeam1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling updateTeam1().'
+            );
         }
 
-        if (requestParameters.teamId === null || requestParameters.teamId === undefined) {
-            throw new runtime.RequiredError('teamId','Required parameter requestParameters.teamId was null or undefined when calling updateTeam.');
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling updateTeam1().'
+            );
         }
 
-        if (requestParameters.publicApiTeamUpdatePayload === null || requestParameters.publicApiTeamUpdatePayload === undefined) {
-            throw new runtime.RequiredError('publicApiTeamUpdatePayload','Required parameter requestParameters.publicApiTeamUpdatePayload was null or undefined when calling updateTeam.');
+        if (requestParameters['publicApiTeamUpdatePayload'] == null) {
+            throw new runtime.RequiredError(
+                'publicApiTeamUpdatePayload',
+                'Required parameter "publicApiTeamUpdatePayload" was null or undefined when calling updateTeam1().'
+            );
         }
 
         const queryParameters: any = {};
@@ -183,11 +259,11 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters.orgId))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters.teamId))),
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams/{teamId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.publicApiTeamUpdatePayload,
+            body: requestParameters['publicApiTeamUpdatePayload'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -197,9 +273,71 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
      * This will only update the fields that get passed in and leave the rest as unmodified.
      * Modify a team.
      */
-    async updateTeam(requestParameters: UpdateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiTeamResponse> {
-        const response = await this.updateTeamRaw(requestParameters, initOverrides);
+    async updateTeam1(requestParameters: UpdateTeam1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiTeamResponse> {
+        const response = await this.updateTeam1Raw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * This updates the cover photo of the team. The cover photo must be a valid image file.
+     * Upload a team cover photo
+     */
+    async uploadAndSetTeamCoverPhotoRaw(requestParameters: UploadAndSetTeamCoverPhotoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['teamId'] == null) {
+            throw new runtime.RequiredError(
+                'teamId',
+                'Required parameter "teamId" was null or undefined when calling uploadAndSetTeamCoverPhoto().'
+            );
+        }
+
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling uploadAndSetTeamCoverPhoto().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['file'] != null) {
+            formParams.append('file', requestParameters['file'] as any);
+        }
+
+        const response = await this.request({
+            path: `/gateway/api/public/teams/v1/{teamId}/cover-photo`.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * This updates the cover photo of the team. The cover photo must be a valid image file.
+     * Upload a team cover photo
+     */
+    async uploadAndSetTeamCoverPhoto(requestParameters: UploadAndSetTeamCoverPhotoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.uploadAndSetTeamCoverPhotoRaw(requestParameters, initOverrides);
     }
 
 }
