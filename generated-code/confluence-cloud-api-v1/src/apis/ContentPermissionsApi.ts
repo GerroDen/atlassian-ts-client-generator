@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ContentPermissionRequest,
   PermissionCheckResponse,
-} from '../models';
+} from '../models/index';
 
 export interface CheckContentPermissionRequest {
     id: string;
@@ -34,12 +34,18 @@ export class ContentPermissionsApi extends runtime.BaseAPI {
      * Check content permissions
      */
     async checkContentPermissionRaw(requestParameters: CheckContentPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionCheckResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling checkContentPermission.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling checkContentPermission().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling checkContentPermission.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling checkContentPermission().'
+            );
         }
 
         const queryParameters: any = {};
@@ -57,11 +63,11 @@ export class ContentPermissionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/permission/check`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/permission/check`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

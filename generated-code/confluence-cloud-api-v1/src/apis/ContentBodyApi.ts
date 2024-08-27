@@ -19,11 +19,11 @@ import type {
   AsyncId,
   ContentBody,
   ContentBodyCreate,
-} from '../models';
+} from '../models/index';
 
 export interface AsyncConvertContentBodyRequestRequest {
     to: AsyncConvertContentBodyRequestToEnum;
-    body: { [key: string]: any; };
+    body: ContentBodyCreate;
     expand?: Array<string>;
     spaceKeyContext?: string;
     contentIdContext?: string;
@@ -37,7 +37,7 @@ export interface AsyncConvertContentBodyResponseRequest {
 
 export interface ConvertContentBodyRequest {
     to: string;
-    body: { [key: string]: any; };
+    body: ContentBodyCreate;
     spaceKeyContext?: string;
     contentIdContext?: string;
     embeddedContentRender?: ConvertContentBodyEmbeddedContentRenderEnum;
@@ -54,34 +54,40 @@ export class ContentBodyApi extends runtime.BaseAPI {
      * Asynchronously convert content body
      */
     async asyncConvertContentBodyRequestRaw(requestParameters: AsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
-        if (requestParameters.to === null || requestParameters.to === undefined) {
-            throw new runtime.RequiredError('to','Required parameter requestParameters.to was null or undefined when calling asyncConvertContentBodyRequest.');
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling asyncConvertContentBodyRequest().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling asyncConvertContentBodyRequest.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling asyncConvertContentBodyRequest().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.spaceKeyContext !== undefined) {
-            queryParameters['spaceKeyContext'] = requestParameters.spaceKeyContext;
+        if (requestParameters['spaceKeyContext'] != null) {
+            queryParameters['spaceKeyContext'] = requestParameters['spaceKeyContext'];
         }
 
-        if (requestParameters.contentIdContext !== undefined) {
-            queryParameters['contentIdContext'] = requestParameters.contentIdContext;
+        if (requestParameters['contentIdContext'] != null) {
+            queryParameters['contentIdContext'] = requestParameters['contentIdContext'];
         }
 
-        if (requestParameters.allowCache !== undefined) {
-            queryParameters['allowCache'] = requestParameters.allowCache;
+        if (requestParameters['allowCache'] != null) {
+            queryParameters['allowCache'] = requestParameters['allowCache'];
         }
 
-        if (requestParameters.embeddedContentRender !== undefined) {
-            queryParameters['embeddedContentRender'] = requestParameters.embeddedContentRender;
+        if (requestParameters['embeddedContentRender'] != null) {
+            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -97,11 +103,11 @@ export class ContentBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters.to))),
+            path: `/wiki/rest/api/contentbody/convert/async/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -121,8 +127,11 @@ export class ContentBodyApi extends runtime.BaseAPI {
      * Get asynchronously converted content body from the id or the current status of the task.
      */
     async asyncConvertContentBodyResponseRaw(requestParameters: AsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncContentBody>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling asyncConvertContentBodyResponse.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling asyncConvertContentBodyResponse().'
+            );
         }
 
         const queryParameters: any = {};
@@ -138,7 +147,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/contentbody/convert/async/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -161,30 +170,36 @@ export class ContentBodyApi extends runtime.BaseAPI {
      * Convert content body
      */
     async convertContentBodyRaw(requestParameters: ConvertContentBodyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentBody>> {
-        if (requestParameters.to === null || requestParameters.to === undefined) {
-            throw new runtime.RequiredError('to','Required parameter requestParameters.to was null or undefined when calling convertContentBody.');
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling convertContentBody().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling convertContentBody.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling convertContentBody().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKeyContext !== undefined) {
-            queryParameters['spaceKeyContext'] = requestParameters.spaceKeyContext;
+        if (requestParameters['spaceKeyContext'] != null) {
+            queryParameters['spaceKeyContext'] = requestParameters['spaceKeyContext'];
         }
 
-        if (requestParameters.contentIdContext !== undefined) {
-            queryParameters['contentIdContext'] = requestParameters.contentIdContext;
+        if (requestParameters['contentIdContext'] != null) {
+            queryParameters['contentIdContext'] = requestParameters['contentIdContext'];
         }
 
-        if (requestParameters.embeddedContentRender !== undefined) {
-            queryParameters['embeddedContentRender'] = requestParameters.embeddedContentRender;
+        if (requestParameters['embeddedContentRender'] != null) {
+            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -200,11 +215,11 @@ export class ContentBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters.to))),
+            path: `/wiki/rest/api/contentbody/convert/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

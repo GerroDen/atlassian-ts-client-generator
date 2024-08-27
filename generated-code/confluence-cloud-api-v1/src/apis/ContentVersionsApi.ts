@@ -18,7 +18,7 @@ import type {
   Version,
   VersionArray,
   VersionRestore,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteContentVersionRequest {
     id: string;
@@ -54,12 +54,18 @@ export class ContentVersionsApi extends runtime.BaseAPI {
      * Delete content version
      */
     async deleteContentVersionRaw(requestParameters: DeleteContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteContentVersion.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteContentVersion().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling deleteContentVersion.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling deleteContentVersion().'
+            );
         }
 
         const queryParameters: any = {};
@@ -75,7 +81,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -95,20 +101,27 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content version
+     * @deprecated
      */
     async getContentVersionRaw(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentVersion.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentVersion().'
+            );
         }
 
-        if (requestParameters.versionNumber === null || requestParameters.versionNumber === undefined) {
-            throw new runtime.RequiredError('versionNumber','Required parameter requestParameters.versionNumber was null or undefined when calling getContentVersion.');
+        if (requestParameters['versionNumber'] == null) {
+            throw new runtime.RequiredError(
+                'versionNumber',
+                'Required parameter "versionNumber" was null or undefined when calling getContentVersion().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -122,7 +135,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters.versionNumber))),
+            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -134,6 +147,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content version
+     * @deprecated
      */
     async getContentVersion(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Version> {
         const response = await this.getContentVersionRaw(requestParameters, initOverrides);
@@ -143,24 +157,28 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content versions
+     * @deprecated
      */
     async getContentVersionsRaw(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentVersions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -174,7 +192,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -186,6 +204,7 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get content versions
+     * @deprecated
      */
     async getContentVersions(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VersionArray> {
         const response = await this.getContentVersionsRaw(requestParameters, initOverrides);
@@ -197,18 +216,24 @@ export class ContentVersionsApi extends runtime.BaseAPI {
      * Restore content version
      */
     async restoreContentVersionRaw(requestParameters: RestoreContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling restoreContentVersion.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling restoreContentVersion().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling restoreContentVersion.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling restoreContentVersion().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -224,11 +249,11 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

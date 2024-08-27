@@ -20,7 +20,7 @@ import type {
   LookAndFeelSettings,
   LookAndFeelWithLinks,
   SystemInfoEntity,
-} from '../models';
+} from '../models/index';
 
 export interface GetLookAndFeelSettingsRequest {
     spaceKey?: string;
@@ -56,8 +56,8 @@ export class SettingsApi extends runtime.BaseAPI {
     async getLookAndFeelSettingsRaw(requestParameters: GetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSettings>> {
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -132,8 +132,8 @@ export class SettingsApi extends runtime.BaseAPI {
     async resetLookAndFeelSettingsRaw(requestParameters: ResetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -167,16 +167,20 @@ export class SettingsApi extends runtime.BaseAPI {
     /**
      * Sets the look and feel settings to either the default settings or the custom settings, for the site or a single space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Set look and feel settings
+     * @deprecated
      */
     async setLookAndFeelSettingsRaw(requestParameters: SetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setLookAndFeelSettings.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling setLookAndFeelSettings().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -196,15 +200,20 @@ export class SettingsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
      * Sets the look and feel settings to either the default settings or the custom settings, for the site or a single space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Set look and feel settings
+     * @deprecated
      */
     async setLookAndFeelSettings(requestParameters: SetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
         const response = await this.setLookAndFeelSettingsRaw(requestParameters, initOverrides);
@@ -216,8 +225,11 @@ export class SettingsApi extends runtime.BaseAPI {
      * Select look and feel settings
      */
     async updateLookAndFeelRaw(requestParameters: UpdateLookAndFeelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSelection>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateLookAndFeel.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateLookAndFeel().'
+            );
         }
 
         const queryParameters: any = {};
@@ -239,7 +251,7 @@ export class SettingsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -259,14 +271,17 @@ export class SettingsApi extends runtime.BaseAPI {
      * Update look and feel settings
      */
     async updateLookAndFeelSettingsRaw(requestParameters: UpdateLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelWithLinks>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateLookAndFeelSettings.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateLookAndFeelSettings().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -286,7 +301,7 @@ export class SettingsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

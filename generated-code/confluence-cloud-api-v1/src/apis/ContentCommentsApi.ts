@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ContentArray,
-} from '../models';
+} from '../models/index';
 
 export interface GetContentCommentsRequest {
     id: string;
@@ -34,38 +34,42 @@ export interface GetContentCommentsRequest {
 export class ContentCommentsApi extends runtime.BaseAPI {
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content comments
+     * @deprecated
      */
     async getContentCommentsRaw(requestParameters: GetContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentComments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentComments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.parentVersion !== undefined) {
-            queryParameters['parentVersion'] = requestParameters.parentVersion;
+        if (requestParameters['parentVersion'] != null) {
+            queryParameters['parentVersion'] = requestParameters['parentVersion'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.location) {
-            queryParameters['location'] = requestParameters.location;
+        if (requestParameters['location'] != null) {
+            queryParameters['location'] = requestParameters['location'];
         }
 
-        if (requestParameters.depth !== undefined) {
-            queryParameters['depth'] = requestParameters.depth;
+        if (requestParameters['depth'] != null) {
+            queryParameters['depth'] = requestParameters['depth'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -79,7 +83,7 @@ export class ContentCommentsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/comment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/child/comment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -89,8 +93,9 @@ export class ContentCommentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the comments on a piece of content.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content comments
+     * @deprecated
      */
     async getContentComments(requestParameters: GetContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
         const response = await this.getContentCommentsRaw(requestParameters, initOverrides);

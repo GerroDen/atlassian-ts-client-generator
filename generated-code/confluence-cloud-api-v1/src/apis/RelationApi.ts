@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Relation,
   RelationArray,
-} from '../models';
+} from '../models/index';
 
 export interface CreateRelationshipRequest {
     relationName: string;
@@ -90,46 +90,61 @@ export interface GetRelationshipRequest {
 export class RelationApi extends runtime.BaseAPI {
 
     /**
-     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `GET /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `PUT /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Create relationship
      */
     async createRelationshipRaw(requestParameters: CreateRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
-        if (requestParameters.relationName === null || requestParameters.relationName === undefined) {
-            throw new runtime.RequiredError('relationName','Required parameter requestParameters.relationName was null or undefined when calling createRelationship.');
+        if (requestParameters['relationName'] == null) {
+            throw new runtime.RequiredError(
+                'relationName',
+                'Required parameter "relationName" was null or undefined when calling createRelationship().'
+            );
         }
 
-        if (requestParameters.sourceType === null || requestParameters.sourceType === undefined) {
-            throw new runtime.RequiredError('sourceType','Required parameter requestParameters.sourceType was null or undefined when calling createRelationship.');
+        if (requestParameters['sourceType'] == null) {
+            throw new runtime.RequiredError(
+                'sourceType',
+                'Required parameter "sourceType" was null or undefined when calling createRelationship().'
+            );
         }
 
-        if (requestParameters.sourceKey === null || requestParameters.sourceKey === undefined) {
-            throw new runtime.RequiredError('sourceKey','Required parameter requestParameters.sourceKey was null or undefined when calling createRelationship.');
+        if (requestParameters['sourceKey'] == null) {
+            throw new runtime.RequiredError(
+                'sourceKey',
+                'Required parameter "sourceKey" was null or undefined when calling createRelationship().'
+            );
         }
 
-        if (requestParameters.targetType === null || requestParameters.targetType === undefined) {
-            throw new runtime.RequiredError('targetType','Required parameter requestParameters.targetType was null or undefined when calling createRelationship.');
+        if (requestParameters['targetType'] == null) {
+            throw new runtime.RequiredError(
+                'targetType',
+                'Required parameter "targetType" was null or undefined when calling createRelationship().'
+            );
         }
 
-        if (requestParameters.targetKey === null || requestParameters.targetKey === undefined) {
-            throw new runtime.RequiredError('targetKey','Required parameter requestParameters.targetKey was null or undefined when calling createRelationship.');
+        if (requestParameters['targetKey'] == null) {
+            throw new runtime.RequiredError(
+                'targetKey',
+                'Required parameter "targetKey" was null or undefined when calling createRelationship().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sourceStatus !== undefined) {
-            queryParameters['sourceStatus'] = requestParameters.sourceStatus;
+        if (requestParameters['sourceStatus'] != null) {
+            queryParameters['sourceStatus'] = requestParameters['sourceStatus'];
         }
 
-        if (requestParameters.targetStatus !== undefined) {
-            queryParameters['targetStatus'] = requestParameters.targetStatus;
+        if (requestParameters['targetStatus'] != null) {
+            queryParameters['targetStatus'] = requestParameters['targetStatus'];
         }
 
-        if (requestParameters.sourceVersion !== undefined) {
-            queryParameters['sourceVersion'] = requestParameters.sourceVersion;
+        if (requestParameters['sourceVersion'] != null) {
+            queryParameters['sourceVersion'] = requestParameters['sourceVersion'];
         }
 
-        if (requestParameters.targetVersion !== undefined) {
-            queryParameters['targetVersion'] = requestParameters.targetVersion;
+        if (requestParameters['targetVersion'] != null) {
+            queryParameters['targetVersion'] = requestParameters['targetVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -143,7 +158,7 @@ export class RelationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters.relationName))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters.sourceType))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters.sourceKey))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters.targetType))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters.targetKey))),
+            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -153,7 +168,7 @@ export class RelationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `GET /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `PUT /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Create relationship
      */
     async createRelationship(requestParameters: CreateRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Relation> {
@@ -166,42 +181,57 @@ export class RelationApi extends runtime.BaseAPI {
      * Delete relationship
      */
     async deleteRelationshipRaw(requestParameters: DeleteRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.relationName === null || requestParameters.relationName === undefined) {
-            throw new runtime.RequiredError('relationName','Required parameter requestParameters.relationName was null or undefined when calling deleteRelationship.');
+        if (requestParameters['relationName'] == null) {
+            throw new runtime.RequiredError(
+                'relationName',
+                'Required parameter "relationName" was null or undefined when calling deleteRelationship().'
+            );
         }
 
-        if (requestParameters.sourceType === null || requestParameters.sourceType === undefined) {
-            throw new runtime.RequiredError('sourceType','Required parameter requestParameters.sourceType was null or undefined when calling deleteRelationship.');
+        if (requestParameters['sourceType'] == null) {
+            throw new runtime.RequiredError(
+                'sourceType',
+                'Required parameter "sourceType" was null or undefined when calling deleteRelationship().'
+            );
         }
 
-        if (requestParameters.sourceKey === null || requestParameters.sourceKey === undefined) {
-            throw new runtime.RequiredError('sourceKey','Required parameter requestParameters.sourceKey was null or undefined when calling deleteRelationship.');
+        if (requestParameters['sourceKey'] == null) {
+            throw new runtime.RequiredError(
+                'sourceKey',
+                'Required parameter "sourceKey" was null or undefined when calling deleteRelationship().'
+            );
         }
 
-        if (requestParameters.targetType === null || requestParameters.targetType === undefined) {
-            throw new runtime.RequiredError('targetType','Required parameter requestParameters.targetType was null or undefined when calling deleteRelationship.');
+        if (requestParameters['targetType'] == null) {
+            throw new runtime.RequiredError(
+                'targetType',
+                'Required parameter "targetType" was null or undefined when calling deleteRelationship().'
+            );
         }
 
-        if (requestParameters.targetKey === null || requestParameters.targetKey === undefined) {
-            throw new runtime.RequiredError('targetKey','Required parameter requestParameters.targetKey was null or undefined when calling deleteRelationship.');
+        if (requestParameters['targetKey'] == null) {
+            throw new runtime.RequiredError(
+                'targetKey',
+                'Required parameter "targetKey" was null or undefined when calling deleteRelationship().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sourceStatus !== undefined) {
-            queryParameters['sourceStatus'] = requestParameters.sourceStatus;
+        if (requestParameters['sourceStatus'] != null) {
+            queryParameters['sourceStatus'] = requestParameters['sourceStatus'];
         }
 
-        if (requestParameters.targetStatus !== undefined) {
-            queryParameters['targetStatus'] = requestParameters.targetStatus;
+        if (requestParameters['targetStatus'] != null) {
+            queryParameters['targetStatus'] = requestParameters['targetStatus'];
         }
 
-        if (requestParameters.sourceVersion !== undefined) {
-            queryParameters['sourceVersion'] = requestParameters.sourceVersion;
+        if (requestParameters['sourceVersion'] != null) {
+            queryParameters['sourceVersion'] = requestParameters['sourceVersion'];
         }
 
-        if (requestParameters.targetVersion !== undefined) {
-            queryParameters['targetVersion'] = requestParameters.targetVersion;
+        if (requestParameters['targetVersion'] != null) {
+            queryParameters['targetVersion'] = requestParameters['targetVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -215,7 +245,7 @@ export class RelationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters.relationName))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters.sourceType))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters.sourceKey))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters.targetType))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters.targetKey))),
+            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -237,50 +267,62 @@ export class RelationApi extends runtime.BaseAPI {
      * Find source entities related to a target entity
      */
     async findSourcesForTargetRaw(requestParameters: FindSourcesForTargetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
-        if (requestParameters.relationName === null || requestParameters.relationName === undefined) {
-            throw new runtime.RequiredError('relationName','Required parameter requestParameters.relationName was null or undefined when calling findSourcesForTarget.');
+        if (requestParameters['relationName'] == null) {
+            throw new runtime.RequiredError(
+                'relationName',
+                'Required parameter "relationName" was null or undefined when calling findSourcesForTarget().'
+            );
         }
 
-        if (requestParameters.sourceType === null || requestParameters.sourceType === undefined) {
-            throw new runtime.RequiredError('sourceType','Required parameter requestParameters.sourceType was null or undefined when calling findSourcesForTarget.');
+        if (requestParameters['sourceType'] == null) {
+            throw new runtime.RequiredError(
+                'sourceType',
+                'Required parameter "sourceType" was null or undefined when calling findSourcesForTarget().'
+            );
         }
 
-        if (requestParameters.targetType === null || requestParameters.targetType === undefined) {
-            throw new runtime.RequiredError('targetType','Required parameter requestParameters.targetType was null or undefined when calling findSourcesForTarget.');
+        if (requestParameters['targetType'] == null) {
+            throw new runtime.RequiredError(
+                'targetType',
+                'Required parameter "targetType" was null or undefined when calling findSourcesForTarget().'
+            );
         }
 
-        if (requestParameters.targetKey === null || requestParameters.targetKey === undefined) {
-            throw new runtime.RequiredError('targetKey','Required parameter requestParameters.targetKey was null or undefined when calling findSourcesForTarget.');
+        if (requestParameters['targetKey'] == null) {
+            throw new runtime.RequiredError(
+                'targetKey',
+                'Required parameter "targetKey" was null or undefined when calling findSourcesForTarget().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sourceStatus !== undefined) {
-            queryParameters['sourceStatus'] = requestParameters.sourceStatus;
+        if (requestParameters['sourceStatus'] != null) {
+            queryParameters['sourceStatus'] = requestParameters['sourceStatus'];
         }
 
-        if (requestParameters.targetStatus !== undefined) {
-            queryParameters['targetStatus'] = requestParameters.targetStatus;
+        if (requestParameters['targetStatus'] != null) {
+            queryParameters['targetStatus'] = requestParameters['targetStatus'];
         }
 
-        if (requestParameters.sourceVersion !== undefined) {
-            queryParameters['sourceVersion'] = requestParameters.sourceVersion;
+        if (requestParameters['sourceVersion'] != null) {
+            queryParameters['sourceVersion'] = requestParameters['sourceVersion'];
         }
 
-        if (requestParameters.targetVersion !== undefined) {
-            queryParameters['targetVersion'] = requestParameters.targetVersion;
+        if (requestParameters['targetVersion'] != null) {
+            queryParameters['targetVersion'] = requestParameters['targetVersion'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -294,7 +336,7 @@ export class RelationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/to/{targetType}/{targetKey}/from/{sourceType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters.relationName))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters.sourceType))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters.targetType))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters.targetKey))),
+            path: `/wiki/rest/api/relation/{relationName}/to/{targetType}/{targetKey}/from/{sourceType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -317,50 +359,62 @@ export class RelationApi extends runtime.BaseAPI {
      * Find target entities related to a source entity
      */
     async findTargetFromSourceRaw(requestParameters: FindTargetFromSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
-        if (requestParameters.relationName === null || requestParameters.relationName === undefined) {
-            throw new runtime.RequiredError('relationName','Required parameter requestParameters.relationName was null or undefined when calling findTargetFromSource.');
+        if (requestParameters['relationName'] == null) {
+            throw new runtime.RequiredError(
+                'relationName',
+                'Required parameter "relationName" was null or undefined when calling findTargetFromSource().'
+            );
         }
 
-        if (requestParameters.sourceType === null || requestParameters.sourceType === undefined) {
-            throw new runtime.RequiredError('sourceType','Required parameter requestParameters.sourceType was null or undefined when calling findTargetFromSource.');
+        if (requestParameters['sourceType'] == null) {
+            throw new runtime.RequiredError(
+                'sourceType',
+                'Required parameter "sourceType" was null or undefined when calling findTargetFromSource().'
+            );
         }
 
-        if (requestParameters.sourceKey === null || requestParameters.sourceKey === undefined) {
-            throw new runtime.RequiredError('sourceKey','Required parameter requestParameters.sourceKey was null or undefined when calling findTargetFromSource.');
+        if (requestParameters['sourceKey'] == null) {
+            throw new runtime.RequiredError(
+                'sourceKey',
+                'Required parameter "sourceKey" was null or undefined when calling findTargetFromSource().'
+            );
         }
 
-        if (requestParameters.targetType === null || requestParameters.targetType === undefined) {
-            throw new runtime.RequiredError('targetType','Required parameter requestParameters.targetType was null or undefined when calling findTargetFromSource.');
+        if (requestParameters['targetType'] == null) {
+            throw new runtime.RequiredError(
+                'targetType',
+                'Required parameter "targetType" was null or undefined when calling findTargetFromSource().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sourceStatus !== undefined) {
-            queryParameters['sourceStatus'] = requestParameters.sourceStatus;
+        if (requestParameters['sourceStatus'] != null) {
+            queryParameters['sourceStatus'] = requestParameters['sourceStatus'];
         }
 
-        if (requestParameters.targetStatus !== undefined) {
-            queryParameters['targetStatus'] = requestParameters.targetStatus;
+        if (requestParameters['targetStatus'] != null) {
+            queryParameters['targetStatus'] = requestParameters['targetStatus'];
         }
 
-        if (requestParameters.sourceVersion !== undefined) {
-            queryParameters['sourceVersion'] = requestParameters.sourceVersion;
+        if (requestParameters['sourceVersion'] != null) {
+            queryParameters['sourceVersion'] = requestParameters['sourceVersion'];
         }
 
-        if (requestParameters.targetVersion !== undefined) {
-            queryParameters['targetVersion'] = requestParameters.targetVersion;
+        if (requestParameters['targetVersion'] != null) {
+            queryParameters['targetVersion'] = requestParameters['targetVersion'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -374,7 +428,7 @@ export class RelationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters.relationName))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters.sourceType))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters.sourceKey))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters.targetType))),
+            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -397,46 +451,61 @@ export class RelationApi extends runtime.BaseAPI {
      * Find relationship from source to target
      */
     async getRelationshipRaw(requestParameters: GetRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
-        if (requestParameters.relationName === null || requestParameters.relationName === undefined) {
-            throw new runtime.RequiredError('relationName','Required parameter requestParameters.relationName was null or undefined when calling getRelationship.');
+        if (requestParameters['relationName'] == null) {
+            throw new runtime.RequiredError(
+                'relationName',
+                'Required parameter "relationName" was null or undefined when calling getRelationship().'
+            );
         }
 
-        if (requestParameters.sourceType === null || requestParameters.sourceType === undefined) {
-            throw new runtime.RequiredError('sourceType','Required parameter requestParameters.sourceType was null or undefined when calling getRelationship.');
+        if (requestParameters['sourceType'] == null) {
+            throw new runtime.RequiredError(
+                'sourceType',
+                'Required parameter "sourceType" was null or undefined when calling getRelationship().'
+            );
         }
 
-        if (requestParameters.sourceKey === null || requestParameters.sourceKey === undefined) {
-            throw new runtime.RequiredError('sourceKey','Required parameter requestParameters.sourceKey was null or undefined when calling getRelationship.');
+        if (requestParameters['sourceKey'] == null) {
+            throw new runtime.RequiredError(
+                'sourceKey',
+                'Required parameter "sourceKey" was null or undefined when calling getRelationship().'
+            );
         }
 
-        if (requestParameters.targetType === null || requestParameters.targetType === undefined) {
-            throw new runtime.RequiredError('targetType','Required parameter requestParameters.targetType was null or undefined when calling getRelationship.');
+        if (requestParameters['targetType'] == null) {
+            throw new runtime.RequiredError(
+                'targetType',
+                'Required parameter "targetType" was null or undefined when calling getRelationship().'
+            );
         }
 
-        if (requestParameters.targetKey === null || requestParameters.targetKey === undefined) {
-            throw new runtime.RequiredError('targetKey','Required parameter requestParameters.targetKey was null or undefined when calling getRelationship.');
+        if (requestParameters['targetKey'] == null) {
+            throw new runtime.RequiredError(
+                'targetKey',
+                'Required parameter "targetKey" was null or undefined when calling getRelationship().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sourceStatus !== undefined) {
-            queryParameters['sourceStatus'] = requestParameters.sourceStatus;
+        if (requestParameters['sourceStatus'] != null) {
+            queryParameters['sourceStatus'] = requestParameters['sourceStatus'];
         }
 
-        if (requestParameters.targetStatus !== undefined) {
-            queryParameters['targetStatus'] = requestParameters.targetStatus;
+        if (requestParameters['targetStatus'] != null) {
+            queryParameters['targetStatus'] = requestParameters['targetStatus'];
         }
 
-        if (requestParameters.sourceVersion !== undefined) {
-            queryParameters['sourceVersion'] = requestParameters.sourceVersion;
+        if (requestParameters['sourceVersion'] != null) {
+            queryParameters['sourceVersion'] = requestParameters['sourceVersion'];
         }
 
-        if (requestParameters.targetVersion !== undefined) {
-            queryParameters['targetVersion'] = requestParameters.targetVersion;
+        if (requestParameters['targetVersion'] != null) {
+            queryParameters['targetVersion'] = requestParameters['targetVersion'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -450,7 +519,7 @@ export class RelationApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters.relationName))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters.sourceType))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters.sourceKey))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters.targetType))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters.targetKey))),
+            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

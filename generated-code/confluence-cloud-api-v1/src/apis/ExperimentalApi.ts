@@ -18,7 +18,7 @@ import type {
   LabelArray,
   LabelCreate,
   LongTask,
-} from '../models';
+} from '../models/index';
 
 export interface AddLabelsToSpaceRequest {
     spaceKey: string;
@@ -52,12 +52,18 @@ export class ExperimentalApi extends runtime.BaseAPI {
      * Add labels to a space
      */
     async addLabelsToSpaceRaw(requestParameters: AddLabelsToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling addLabelsToSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling addLabelsToSpace().'
+            );
         }
 
-        if (requestParameters.labelCreate === null || requestParameters.labelCreate === undefined) {
-            throw new runtime.RequiredError('labelCreate','Required parameter requestParameters.labelCreate was null or undefined when calling addLabelsToSpace.');
+        if (requestParameters['labelCreate'] == null) {
+            throw new runtime.RequiredError(
+                'labelCreate',
+                'Required parameter "labelCreate" was null or undefined when calling addLabelsToSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -75,11 +81,11 @@ export class ExperimentalApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.labelCreate,
+            body: requestParameters['labelCreate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -99,22 +105,28 @@ export class ExperimentalApi extends runtime.BaseAPI {
      * Remove label from a space
      */
     async deleteLabelFromSpaceRaw(requestParameters: DeleteLabelFromSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling deleteLabelFromSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling deleteLabelFromSpace().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling deleteLabelFromSpace.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling deleteLabelFromSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.prefix !== undefined) {
-            queryParameters['prefix'] = requestParameters.prefix;
+        if (requestParameters['prefix'] != null) {
+            queryParameters['prefix'] = requestParameters['prefix'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -128,7 +140,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -150,8 +162,11 @@ export class ExperimentalApi extends runtime.BaseAPI {
      * Delete page tree
      */
     async deletePageTreeRaw(requestParameters: DeletePageTreeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deletePageTree.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deletePageTree().'
+            );
         }
 
         const queryParameters: any = {};
@@ -167,7 +182,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/pageTree`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/pageTree`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -190,22 +205,25 @@ export class ExperimentalApi extends runtime.BaseAPI {
      * Get Space Labels
      */
     async getLabelsForSpaceRaw(requestParameters: GetLabelsForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getLabelsForSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getLabelsForSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.prefix !== undefined) {
-            queryParameters['prefix'] = requestParameters.prefix;
+        if (requestParameters['prefix'] != null) {
+            queryParameters['prefix'] = requestParameters['prefix'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -219,7 +237,7 @@ export class ExperimentalApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

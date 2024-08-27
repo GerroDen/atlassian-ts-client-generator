@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   SpaceSettings,
   SpaceSettingsUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface GetSpaceSettingsRequest {
     spaceKey: string;
@@ -38,8 +38,11 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
      * Get space settings
      */
     async getSpaceSettingsRaw(requestParameters: GetSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getSpaceSettings.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getSpaceSettings().'
+            );
         }
 
         const queryParameters: any = {};
@@ -55,7 +58,7 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -78,12 +81,18 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
      * Update space settings
      */
     async updateSpaceSettingsRaw(requestParameters: UpdateSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling updateSpaceSettings.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling updateSpaceSettings().'
+            );
         }
 
-        if (requestParameters.spaceSettingsUpdate === null || requestParameters.spaceSettingsUpdate === undefined) {
-            throw new runtime.RequiredError('spaceSettingsUpdate','Required parameter requestParameters.spaceSettingsUpdate was null or undefined when calling updateSpaceSettings.');
+        if (requestParameters['spaceSettingsUpdate'] == null) {
+            throw new runtime.RequiredError(
+                'spaceSettingsUpdate',
+                'Required parameter "spaceSettingsUpdate" was null or undefined when calling updateSpaceSettings().'
+            );
         }
 
         const queryParameters: any = {};
@@ -101,11 +110,11 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.spaceSettingsUpdate,
+            body: requestParameters['spaceSettingsUpdate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

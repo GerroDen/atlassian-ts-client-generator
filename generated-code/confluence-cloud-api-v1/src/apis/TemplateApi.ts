@@ -20,10 +20,10 @@ import type {
   ContentTemplateArray,
   ContentTemplateCreate,
   ContentTemplateUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface CreateContentTemplateRequest {
-    body: { [key: string]: any; };
+    body: ContentTemplateCreate;
 }
 
 export interface GetBlueprintTemplatesRequest {
@@ -49,7 +49,7 @@ export interface RemoveTemplateRequest {
 }
 
 export interface UpdateContentTemplateRequest {
-    body: { [key: string]: any; };
+    body: ContentTemplateUpdate;
 }
 
 /**
@@ -62,8 +62,11 @@ export class TemplateApi extends runtime.BaseAPI {
      * Create content template
      */
     async createContentTemplateRaw(requestParameters: CreateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createContentTemplate.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createContentTemplate().'
+            );
         }
 
         const queryParameters: any = {};
@@ -85,7 +88,7 @@ export class TemplateApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -107,20 +110,20 @@ export class TemplateApi extends runtime.BaseAPI {
     async getBlueprintTemplatesRaw(requestParameters: GetBlueprintTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlueprintTemplateArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -157,8 +160,11 @@ export class TemplateApi extends runtime.BaseAPI {
      * Get content template
      */
     async getContentTemplateRaw(requestParameters: GetContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
-        if (requestParameters.contentTemplateId === null || requestParameters.contentTemplateId === undefined) {
-            throw new runtime.RequiredError('contentTemplateId','Required parameter requestParameters.contentTemplateId was null or undefined when calling getContentTemplate.');
+        if (requestParameters['contentTemplateId'] == null) {
+            throw new runtime.RequiredError(
+                'contentTemplateId',
+                'Required parameter "contentTemplateId" was null or undefined when calling getContentTemplate().'
+            );
         }
 
         const queryParameters: any = {};
@@ -174,7 +180,7 @@ export class TemplateApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters.contentTemplateId))),
+            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -199,20 +205,20 @@ export class TemplateApi extends runtime.BaseAPI {
     async getContentTemplatesRaw(requestParameters: GetContentTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplateArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -249,8 +255,11 @@ export class TemplateApi extends runtime.BaseAPI {
      * Remove template
      */
     async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.contentTemplateId === null || requestParameters.contentTemplateId === undefined) {
-            throw new runtime.RequiredError('contentTemplateId','Required parameter requestParameters.contentTemplateId was null or undefined when calling removeTemplate.');
+        if (requestParameters['contentTemplateId'] == null) {
+            throw new runtime.RequiredError(
+                'contentTemplateId',
+                'Required parameter "contentTemplateId" was null or undefined when calling removeTemplate().'
+            );
         }
 
         const queryParameters: any = {};
@@ -266,7 +275,7 @@ export class TemplateApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters.contentTemplateId))),
+            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -288,8 +297,11 @@ export class TemplateApi extends runtime.BaseAPI {
      * Update content template
      */
     async updateContentTemplateRaw(requestParameters: UpdateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateContentTemplate.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateContentTemplate().'
+            );
         }
 
         const queryParameters: any = {};
@@ -311,7 +323,7 @@ export class TemplateApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

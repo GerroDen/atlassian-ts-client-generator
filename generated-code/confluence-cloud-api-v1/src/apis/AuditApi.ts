@@ -19,7 +19,7 @@ import type {
   AuditRecordArray,
   AuditRecordCreate,
   RetentionPeriod,
-} from '../models';
+} from '../models/index';
 
 export interface CreateAuditRecordRequest {
     body: AuditRecordCreate;
@@ -62,8 +62,11 @@ export class AuditApi extends runtime.BaseAPI {
      * Create audit record
      */
     async createAuditRecordRaw(requestParameters: CreateAuditRecordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecord>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createAuditRecord.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createAuditRecord().'
+            );
         }
 
         const queryParameters: any = {};
@@ -85,7 +88,7 @@ export class AuditApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -107,20 +110,20 @@ export class AuditApi extends runtime.BaseAPI {
     async exportAuditRecordsRaw(requestParameters: ExportAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
         const queryParameters: any = {};
 
-        if (requestParameters.startDate !== undefined) {
-            queryParameters['startDate'] = requestParameters.startDate;
+        if (requestParameters['startDate'] != null) {
+            queryParameters['startDate'] = requestParameters['startDate'];
         }
 
-        if (requestParameters.endDate !== undefined) {
-            queryParameters['endDate'] = requestParameters.endDate;
+        if (requestParameters['endDate'] != null) {
+            queryParameters['endDate'] = requestParameters['endDate'];
         }
 
-        if (requestParameters.searchString !== undefined) {
-            queryParameters['searchString'] = requestParameters.searchString;
+        if (requestParameters['searchString'] != null) {
+            queryParameters['searchString'] = requestParameters['searchString'];
         }
 
-        if (requestParameters.format !== undefined) {
-            queryParameters['format'] = requestParameters.format;
+        if (requestParameters['format'] != null) {
+            queryParameters['format'] = requestParameters['format'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -159,24 +162,24 @@ export class AuditApi extends runtime.BaseAPI {
     async getAuditRecordsRaw(requestParameters: GetAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.startDate !== undefined) {
-            queryParameters['startDate'] = requestParameters.startDate;
+        if (requestParameters['startDate'] != null) {
+            queryParameters['startDate'] = requestParameters['startDate'];
         }
 
-        if (requestParameters.endDate !== undefined) {
-            queryParameters['endDate'] = requestParameters.endDate;
+        if (requestParameters['endDate'] != null) {
+            queryParameters['endDate'] = requestParameters['endDate'];
         }
 
-        if (requestParameters.searchString !== undefined) {
-            queryParameters['searchString'] = requestParameters.searchString;
+        if (requestParameters['searchString'] != null) {
+            queryParameters['searchString'] = requestParameters['searchString'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -215,24 +218,24 @@ export class AuditApi extends runtime.BaseAPI {
     async getAuditRecordsForTimePeriodRaw(requestParameters: GetAuditRecordsForTimePeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.number !== undefined) {
-            queryParameters['number'] = requestParameters.number;
+        if (requestParameters['number'] != null) {
+            queryParameters['number'] = requestParameters['number'];
         }
 
-        if (requestParameters.units !== undefined) {
-            queryParameters['units'] = requestParameters.units;
+        if (requestParameters['units'] != null) {
+            queryParameters['units'] = requestParameters['units'];
         }
 
-        if (requestParameters.searchString !== undefined) {
-            queryParameters['searchString'] = requestParameters.searchString;
+        if (requestParameters['searchString'] != null) {
+            queryParameters['searchString'] = requestParameters['searchString'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -305,8 +308,11 @@ export class AuditApi extends runtime.BaseAPI {
      * Set retention period
      */
     async setRetentionPeriodRaw(requestParameters: SetRetentionPeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setRetentionPeriod.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling setRetentionPeriod().'
+            );
         }
 
         const queryParameters: any = {};
@@ -328,7 +334,7 @@ export class AuditApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

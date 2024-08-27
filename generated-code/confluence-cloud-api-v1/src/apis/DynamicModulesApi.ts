@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ConnectModules,
   DynamicModulesErrorMessage,
-} from '../models';
+} from '../models/index';
 
 export interface RegisterModulesRequest {
     body: ConnectModules;
@@ -65,8 +65,11 @@ export class DynamicModulesApi extends runtime.BaseAPI {
      * Register modules
      */
     async registerModulesRaw(requestParameters: RegisterModulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling registerModules.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling registerModules().'
+            );
         }
 
         const queryParameters: any = {};
@@ -80,7 +83,7 @@ export class DynamicModulesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -99,14 +102,17 @@ export class DynamicModulesApi extends runtime.BaseAPI {
      * Remove modules
      */
     async removeModulesRaw(requestParameters: RemoveModulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.moduleKey === null || requestParameters.moduleKey === undefined) {
-            throw new runtime.RequiredError('moduleKey','Required parameter requestParameters.moduleKey was null or undefined when calling removeModules.');
+        if (requestParameters['moduleKey'] == null) {
+            throw new runtime.RequiredError(
+                'moduleKey',
+                'Required parameter "moduleKey" was null or undefined when calling removeModules().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.moduleKey) {
-            queryParameters['moduleKey'] = requestParameters.moduleKey.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['moduleKey'] != null) {
+            queryParameters['moduleKey'] = requestParameters['moduleKey']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

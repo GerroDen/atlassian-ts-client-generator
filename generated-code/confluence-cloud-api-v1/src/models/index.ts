@@ -733,17 +733,23 @@ export interface AuditRecordAuthor {
      */
     accountType?: string;
     /**
-     * 
+     * This is deprecated. Use `isGuest` instead.
      * @type {boolean}
      * @memberof AuditRecordAuthor
      */
     externalCollaborator?: boolean;
     /**
-     * Whether the user is an external collaborator user
+     * This is deprecated. Use `isGuest` instead. Whether the user is an external collaborator user
      * @type {boolean}
      * @memberof AuditRecordAuthor
      */
     isExternalCollaborator?: boolean;
+    /**
+     * Whether the user is a guest user
+     * @type {boolean}
+     * @memberof AuditRecordAuthor
+     */
+    isGuest?: boolean;
     /**
      * The public name or nickname of the user. Will always contain a value.
      * @type {string}
@@ -895,17 +901,16 @@ export type AuditRecordCreateAuthorTypeEnum = typeof AuditRecordCreateAuthorType
  */
 export interface AvailableContentStates {
     /**
-     * Space suggested content states that can be used in the space. This can be null if space content states are disabled in the space.
-     * This list can be empty if there are no space content states defined in the space.
-     * All spaces start with 3 default space content states, and this can be modified in the UI under space settings.
+     * Space suggested content states that can be used in the space.
+     * This list can be empty if there are no space content states defined in the space or if space content states are disabled in the space.
+     * All spaces start with 4 default space content states, and this can be modified in the UI under space settings.
      * @type {Array<ContentState>}
      * @memberof AvailableContentStates
      */
     spaceContentStates: Array<ContentState>;
     /**
      * Custom content states that can be used by the user on the content of this call.
-     * This can be null if custom content states are disabled in the space of the content.
-     * This list can be empty if there are no custom content states defined by the user.
+     * This list can be empty if there are no custom content states defined by the user or if custom content states are disabled in the space of the content.
      * This will at most have 3 of the most recently published content states. 
      * Only the calling user has access to place these states on content, but all users can see these states once they are placed.
      * @type {Array<ContentState>}
@@ -1089,25 +1094,6 @@ export interface Breadcrumb {
 /**
  * 
  * @export
- * @interface BulkContentStateSetInput
- */
-export interface BulkContentStateSetInput {
-    /**
-     * maximum number of ids you can pass in is 300
-     * @type {Array<string>}
-     * @memberof BulkContentStateSetInput
-     */
-    ids: Array<string>;
-    /**
-     * 
-     * @type {ContentStateInput}
-     * @memberof BulkContentStateSetInput
-     */
-    contentState: ContentStateInput;
-}
-/**
- * 
- * @export
  * @interface BulkRemoveContentStatesRequest
  */
 export interface BulkRemoveContentStatesRequest {
@@ -1190,11 +1176,17 @@ export interface BulkUserLookup {
      */
     timeZone?: string | null;
     /**
-     * Whether the user is an external collaborator user
+     * This is deprecated. Use `isGuest` instead to find out whether the user is a guest user.
      * @type {boolean}
      * @memberof BulkUserLookup
      */
     isExternalCollaborator?: boolean;
+    /**
+     * Whether the user is a guest user
+     * @type {boolean}
+     * @memberof BulkUserLookup
+     */
+    isGuest?: boolean;
     /**
      * 
      * @type {Array<OperationCheckResult>}
@@ -1793,25 +1785,6 @@ export interface ContentBlogpost {
 /**
  * 
  * @export
- * @interface ContentBlogpostAllOf
- */
-export interface ContentBlogpostAllOf {
-    /**
-     * 
-     * @type {ContentMetadata}
-     * @memberof ContentBlogpostAllOf
-     */
-    metadata: ContentMetadata;
-    /**
-     * 
-     * @type {{ [key: string]: GenericLinksValue; }}
-     * @memberof ContentBlogpostAllOf
-     */
-    _links: { [key: string]: GenericLinksValue; };
-}
-/**
- * 
- * @export
  * @interface ContentBlueprintDraft
  */
 export interface ContentBlueprintDraft {
@@ -2238,6 +2211,24 @@ export interface ContentChildTypeExpandable {
      * @memberof ContentChildTypeExpandable
      */
     whiteboard?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildTypeExpandable
+     */
+    database?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildTypeExpandable
+     */
+    embed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildTypeExpandable
+     */
+    folder?: string;
 }
 /**
  * 
@@ -2264,6 +2255,30 @@ export interface ContentChildren {
      * @memberof ContentChildren
      */
     page?: ContentArray;
+    /**
+     * 
+     * @type {ContentArray}
+     * @memberof ContentChildren
+     */
+    whiteboard?: ContentArray;
+    /**
+     * 
+     * @type {ContentArray}
+     * @memberof ContentChildren
+     */
+    database?: ContentArray;
+    /**
+     * 
+     * @type {ContentArray}
+     * @memberof ContentChildren
+     */
+    embed?: ContentArray;
+    /**
+     * 
+     * @type {ContentArray}
+     * @memberof ContentChildren
+     */
+    folder?: ContentArray;
     /**
      * 
      * @type {ContentChildrenExpandable}
@@ -2302,6 +2317,30 @@ export interface ContentChildrenExpandable {
      * @memberof ContentChildrenExpandable
      */
     page?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildrenExpandable
+     */
+    whiteboard?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildrenExpandable
+     */
+    database?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildrenExpandable
+     */
+    embed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentChildrenExpandable
+     */
+    folder?: string;
 }
 /**
  * 
@@ -3704,8 +3743,7 @@ export type ContentRestrictionUpdateOperationEnum = typeof ContentRestrictionUpd
 export interface ContentRestrictionUpdateRestrictions {
     /**
      * The groups that the restrictions will be applied to. This array must
-     * have at least one item, otherwise it should be omitted. At least one of `name` or `id` is required,
-     * and `id` should be used where possible in advance of the `name` deprecation.
+     * have at least one item, otherwise it should be omitted.
      * @type {Array<ContentRestrictionUpdateRestrictionsGroupInner>}
      * @memberof ContentRestrictionUpdateRestrictions
      */
@@ -3729,13 +3767,6 @@ export interface ContentRestrictionUpdateRestrictionsGroupInner {
      * @memberof ContentRestrictionUpdateRestrictionsGroupInner
      */
     type: ContentRestrictionUpdateRestrictionsGroupInnerTypeEnum;
-    /**
-     * The name of the group.
-     * @type {string}
-     * @memberof ContentRestrictionUpdateRestrictionsGroupInner
-     * @deprecated
-     */
-    name?: string;
     /**
      * The id of the group.
      * @type {string}
@@ -3895,42 +3926,6 @@ export interface ContentStateFailure {
      * @memberof ContentStateFailure
      */
     failureReason: string;
-}
-/**
- * 
- * @export
- * @interface ContentStateInput
- */
-export interface ContentStateInput {
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentStateInput
-     */
-    name?: string;
-    /**
-     * Color of state. Must be in 6 digit hex form (#FFFFFF). The default colors offered in the UI are:
-     *  #ff7452 (red),
-     *  #2684ff (blue),
-     *  #ffc400 (yellow),
-     *  #57d9a3 (green), and
-     *  #8777d9 (purple)
-     * @type {string}
-     * @memberof ContentStateInput
-     */
-    color?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContentStateInput
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentStateInput
-     */
-    spaceKey?: string;
 }
 /**
  * 
@@ -5029,7 +5024,7 @@ export interface GroupArrayWithLinks {
     _links: { [key: string]: GenericLinksValue; };
 }
 /**
- * The name property will soon be deprecated in favor of using id.
+ * 
  * @export
  * @interface GroupCreate
  */
@@ -5041,13 +5036,6 @@ export interface GroupCreate {
      * @memberof GroupCreate
      */
     type: GroupCreateTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof GroupCreate
-     * @deprecated
-     */
-    name?: string;
     /**
      * 
      * @type {string}
@@ -5315,6 +5303,8 @@ export interface LabeledContent {
      */
     title: string;
 }
+
+
 /**
  * 
  * @export
@@ -5916,19 +5906,6 @@ export interface LookAndFeelWithLinks {
 /**
  * 
  * @export
- * @interface LookAndFeelWithLinksAllOf
- */
-export interface LookAndFeelWithLinksAllOf {
-    /**
-     * 
-     * @type {{ [key: string]: GenericLinksValue; }}
-     * @memberof LookAndFeelWithLinksAllOf
-     */
-    _links?: { [key: string]: GenericLinksValue; };
-}
-/**
- * 
- * @export
  * @interface MacroInstance
  */
 export interface MacroInstance {
@@ -6166,8 +6143,7 @@ export interface PermissionSubject {
     /**
      * for `type=user`, identifier should be user's accountId or `anonymous` for anonymous users
      * 
-     * for `type=group`, identifier should be the groupId. We are deprecating groupName support in mid-2024 
-     * for this field but still accept it in the interim.
+     * for `type=group`, identifier should be the groupId.
      * @type {string}
      * @memberof PermissionSubject
      */
@@ -6721,6 +6697,12 @@ export interface Space {
      * @type {string}
      * @memberof Space
      */
+    alias?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Space
+     */
     name: string;
     /**
      * 
@@ -6852,18 +6834,26 @@ export interface SpaceArray {
 export interface SpaceCreate {
     [key: string]: any | any;
     /**
-     * The key for the new space. Format: See [Space
-     * keys](https://confluence.atlassian.com/x/lqNMMQ).
-     * @type {string}
-     * @memberof SpaceCreate
-     */
-    key: string;
-    /**
      * The name of the new space.
      * @type {string}
      * @memberof SpaceCreate
      */
     name: string;
+    /**
+     * The key for the new space. Format: See [Space
+     * keys](https://confluence.atlassian.com/x/lqNMMQ).
+     * @type {string}
+     * @memberof SpaceCreate
+     */
+    key?: string;
+    /**
+     * This field will be used as the new identifier for the space in confluence page URLs.
+     * If the property is not provided the alias will be the provided key.
+     * This property is experimental and may be changed or removed in the future.
+     * @type {string}
+     * @memberof SpaceCreate
+     */
+    alias?: string;
     /**
      * 
      * @type {SpaceDescriptionCreate}
@@ -8001,6 +7991,12 @@ export interface SystemInfoEntity {
      * @type {string}
      * @memberof SystemInfoEntity
      */
+    fallbackBaseUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemInfoEntity
+     */
     edition?: string;
     /**
      * 
@@ -8020,6 +8016,12 @@ export interface SystemInfoEntity {
      * @memberof SystemInfoEntity
      */
     defaultTimeZone?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemInfoEntity
+     */
+    microsPerimeter?: string;
 }
 /**
  * 
@@ -8408,17 +8410,23 @@ export interface User {
      */
     timeZone?: string | null;
     /**
-     * Whether the user is an external collaborator user
+     * This is deprecated. Use `isGuest` instead to find out whether the user is a guest user.
+     * @type {boolean}
+     * @memberof User
+     */
+    externalCollaborator?: boolean;
+    /**
+     * This is deprecated. Use `isGuest` instead to find out whether the user is a guest user.
      * @type {boolean}
      * @memberof User
      */
     isExternalCollaborator?: boolean;
     /**
-     * Whether the user is an external collaborator user
+     * Whether the user is a guest user
      * @type {boolean}
      * @memberof User
      */
-    externalCollaborator?: boolean;
+    isGuest?: boolean;
     /**
      * 
      * @type {Array<OperationCheckResult>}
@@ -8503,12 +8511,6 @@ export interface UserAnonymous {
      * @memberof UserAnonymous
      */
     operations?: Array<OperationCheckResult>;
-    /**
-     * Whether the user is an external collaborator user
-     * @type {boolean}
-     * @memberof UserAnonymous
-     */
-    isExternalCollaborator?: boolean;
     /**
      * 
      * @type {UserAnonymousExpandable}
@@ -9156,6 +9158,18 @@ export interface WatchUser {
      * @type {boolean}
      * @memberof WatchUser
      */
+    externalCollaborator: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WatchUser
+     */
+    isGuest: boolean | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WatchUser
+     */
     isExternalCollaborator: boolean;
     /**
      * 
@@ -9187,12 +9201,6 @@ export interface WatchUser {
      * @memberof WatchUser
      */
     personalSpace: object | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WatchUser
-     */
-    externalCollaborator: boolean;
 }
 /**
  * 

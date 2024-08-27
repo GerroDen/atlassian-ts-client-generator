@@ -22,7 +22,7 @@ import type {
   CopyPageRequest,
   LongTask,
   MovePage200Response,
-} from '../models';
+} from '../models/index';
 
 export interface CopyPageOperationRequest {
     id: string;
@@ -80,18 +80,24 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
      * Copy single page
      */
     async copyPageRaw(requestParameters: CopyPageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling copyPage.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling copyPage().'
+            );
         }
 
-        if (requestParameters.request === null || requestParameters.request === undefined) {
-            throw new runtime.RequiredError('request','Required parameter requestParameters.request was null or undefined when calling copyPage.');
+        if (requestParameters['request'] == null) {
+            throw new runtime.RequiredError(
+                'request',
+                'Required parameter "request" was null or undefined when calling copyPage().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -107,11 +113,11 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.request,
+            body: requestParameters['request'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -131,12 +137,18 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
      * Copy page hierarchy
      */
     async copyPageHierarchyRaw(requestParameters: CopyPageHierarchyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling copyPageHierarchy.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling copyPageHierarchy().'
+            );
         }
 
-        if (requestParameters.request === null || requestParameters.request === undefined) {
-            throw new runtime.RequiredError('request','Required parameter requestParameters.request was null or undefined when calling copyPageHierarchy.');
+        if (requestParameters['request'] == null) {
+            throw new runtime.RequiredError(
+                'request',
+                'Required parameter "request" was null or undefined when calling copyPageHierarchy().'
+            );
         }
 
         const queryParameters: any = {};
@@ -154,11 +166,11 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/pagehierarchy/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/pagehierarchy/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.request,
+            body: requestParameters['request'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -174,22 +186,26 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a map of the direct children of a piece of content. A piece of content has different types of child content, depending on its type. These are the default parent-child content type relationships:  - `page`: child content is `page`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Apps can override these default relationships. Apps can also introduce new content types that create new parent-child content relationships.  Note, the map will always include all child content types that are valid for the content. However, if the content has no instances of a child content type, the map will contain an empty array for that child content type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a map of the direct children of a piece of content. A piece of content has different types of child content, depending on its type. These are the default parent-child content type relationships:  - `page`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Apps can override these default relationships. Apps can also introduce new content types that create new parent-child content relationships.  Note, the map will always include all child content types that are valid for the content. However, if the content has no instances of a child content type, the map will contain an empty array for that child content type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content children
+     * @deprecated
      */
     async getContentChildrenRaw(requestParameters: GetContentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentChildren>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentChildren.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentChildren().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.parentVersion !== undefined) {
-            queryParameters['parentVersion'] = requestParameters.parentVersion;
+        if (requestParameters['parentVersion'] != null) {
+            queryParameters['parentVersion'] = requestParameters['parentVersion'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -203,7 +219,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/child`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -213,8 +229,9 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a map of the direct children of a piece of content. A piece of content has different types of child content, depending on its type. These are the default parent-child content type relationships:  - `page`: child content is `page`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Apps can override these default relationships. Apps can also introduce new content types that create new parent-child content relationships.  Note, the map will always include all child content types that are valid for the content. However, if the content has no instances of a child content type, the map will contain an empty array for that child content type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a map of the direct children of a piece of content. A piece of content has different types of child content, depending on its type. These are the default parent-child content type relationships:  - `page`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Apps can override these default relationships. Apps can also introduce new content types that create new parent-child content relationships.  Note, the map will always include all child content types that are valid for the content. However, if the content has no instances of a child content type, the map will contain an empty array for that child content type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content children
+     * @deprecated
      */
     async getContentChildren(requestParameters: GetContentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentChildren> {
         const response = await this.getContentChildrenRaw(requestParameters, initOverrides);
@@ -222,34 +239,41 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all children of a given type, for a piece of content. A piece of content has different types of child content, depending on its type:  - `page`: child content is `page`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Custom content types that are provided by apps can also be returned.  Note, this method only returns direct children. To return children at all levels, use [Get descendants by type](#api-content-id-descendant-type-get).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all children of a given type, for a piece of content. A piece of content has different types of child content, depending on its type:  - `page`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Custom content types that are provided by apps can also be returned.  Note, this method only returns direct children. To return children at all levels, use [Get descendants by type](#api-content-id-descendant-type-get).  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content children by type
+     * @deprecated
      */
     async getContentChildrenByTypeRaw(requestParameters: GetContentChildrenByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentChildrenByType.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentChildrenByType().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getContentChildrenByType.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getContentChildrenByType().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.parentVersion !== undefined) {
-            queryParameters['parentVersion'] = requestParameters.parentVersion;
+        if (requestParameters['parentVersion'] != null) {
+            queryParameters['parentVersion'] = requestParameters['parentVersion'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -263,7 +287,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/{type}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))),
+            path: `/wiki/rest/api/content/{id}/child/{type}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -273,8 +297,9 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all children of a given type, for a piece of content. A piece of content has different types of child content, depending on its type:  - `page`: child content is `page`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Custom content types that are provided by apps can also be returned.  Note, this method only returns direct children. To return children at all levels, use [Get descendants by type](#api-content-id-descendant-type-get).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all children of a given type, for a piece of content. A piece of content has different types of child content, depending on its type:  - `page`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: child content is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: child content is `comment`, `attachment` - `attachment`: child content is `comment` - `comment`: child content is `attachment`  Custom content types that are provided by apps can also be returned.  Note, this method only returns direct children. To return children at all levels, use [Get descendants by type](#api-content-id-descendant-type-get).  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content children by type
+     * @deprecated
      */
     async getContentChildrenByType(requestParameters: GetContentChildrenByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
         const response = await this.getContentChildrenByTypeRaw(requestParameters, initOverrides);
@@ -282,18 +307,21 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content descendants
      */
     async getContentDescendantsRaw(requestParameters: GetContentDescendantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentChildren>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentDescendants.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentDescendants().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -307,7 +335,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/descendant`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/descendant`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -317,7 +345,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content descendants
      */
     async getContentDescendants(requestParameters: GetContentDescendantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentChildren> {
@@ -326,34 +354,40 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content descendants by type
      */
     async getDescendantsOfTypeRaw(requestParameters: GetDescendantsOfTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDescendantsOfType.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getDescendantsOfType().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getDescendantsOfType.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getDescendantsOfType().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.depth !== undefined) {
-            queryParameters['depth'] = requestParameters.depth;
+        if (requestParameters['depth'] != null) {
+            queryParameters['depth'] = requestParameters['depth'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -367,7 +401,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/descendant/{type}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))),
+            path: `/wiki/rest/api/content/{id}/descendant/{type}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -377,7 +411,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content descendants by type
      */
     async getDescendantsOfType(requestParameters: GetDescendantsOfTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
@@ -390,16 +424,25 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
      * Move a page to a new location relative to a target page
      */
     async movePageRaw(requestParameters: MovePageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MovePage200Response>> {
-        if (requestParameters.pageId === null || requestParameters.pageId === undefined) {
-            throw new runtime.RequiredError('pageId','Required parameter requestParameters.pageId was null or undefined when calling movePage.');
+        if (requestParameters['pageId'] == null) {
+            throw new runtime.RequiredError(
+                'pageId',
+                'Required parameter "pageId" was null or undefined when calling movePage().'
+            );
         }
 
-        if (requestParameters.position === null || requestParameters.position === undefined) {
-            throw new runtime.RequiredError('position','Required parameter requestParameters.position was null or undefined when calling movePage.');
+        if (requestParameters['position'] == null) {
+            throw new runtime.RequiredError(
+                'position',
+                'Required parameter "position" was null or undefined when calling movePage().'
+            );
         }
 
-        if (requestParameters.targetId === null || requestParameters.targetId === undefined) {
-            throw new runtime.RequiredError('targetId','Required parameter requestParameters.targetId was null or undefined when calling movePage.');
+        if (requestParameters['targetId'] == null) {
+            throw new runtime.RequiredError(
+                'targetId',
+                'Required parameter "targetId" was null or undefined when calling movePage().'
+            );
         }
 
         const queryParameters: any = {};
@@ -415,7 +458,7 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{pageId}/move/{position}/{targetId}`.replace(`{${"pageId"}}`, encodeURIComponent(String(requestParameters.pageId))).replace(`{${"position"}}`, encodeURIComponent(String(requestParameters.position))).replace(`{${"targetId"}}`, encodeURIComponent(String(requestParameters.targetId))),
+            path: `/wiki/rest/api/content/{pageId}/move/{position}/{targetId}`.replace(`{${"pageId"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"position"}}`, encodeURIComponent(String(requestParameters['position']))).replace(`{${"targetId"}}`, encodeURIComponent(String(requestParameters['targetId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

@@ -19,7 +19,7 @@ import type {
   UserPropertyCreate,
   UserPropertyKeyArray,
   UserPropertyUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface CreateUserPropertyRequest {
     userId: string;
@@ -59,16 +59,25 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Create user property by key
      */
     async createUserPropertyRaw(requestParameters: CreateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling createUserProperty.');
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling createUserProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling createUserProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling createUserProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createUserProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createUserProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -86,11 +95,11 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -109,12 +118,18 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Delete user property
      */
     async deleteUserPropertyRaw(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling deleteUserProperty.');
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling deleteUserProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteUserProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling deleteUserProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -130,7 +145,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -152,18 +167,21 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Get user properties
      */
     async getUserPropertiesRaw(requestParameters: GetUserPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserPropertyKeyArray>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling getUserProperties.');
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling getUserProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -177,7 +195,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/wiki/rest/api/user/{userId}/property`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -200,12 +218,18 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Get user property
      */
     async getUserPropertyRaw(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserProperty>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling getUserProperty.');
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling getUserProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getUserProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling getUserProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -221,7 +245,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -244,16 +268,25 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Update user property
      */
     async updateUserPropertyRaw(requestParameters: UpdateUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling updateUserProperty.');
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling updateUserProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling updateUserProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling updateUserProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateUserProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateUserProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -271,11 +304,11 @@ export class UserPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

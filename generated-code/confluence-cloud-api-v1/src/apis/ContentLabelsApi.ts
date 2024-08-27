@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AddLabelsToContentRequest,
   LabelArray,
-} from '../models';
+} from '../models/index';
 
 export interface AddLabelsToContentOperationRequest {
     id: string;
@@ -51,12 +51,18 @@ export class ContentLabelsApi extends runtime.BaseAPI {
      * Add labels to content
      */
     async addLabelsToContentRaw(requestParameters: AddLabelsToContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addLabelsToContent.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling addLabelsToContent().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addLabelsToContent.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling addLabelsToContent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -74,11 +80,11 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -96,24 +102,28 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
      * Get labels for content
+     * @deprecated
      */
     async getLabelsForContentRaw(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLabelsForContent.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getLabelsForContent().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.prefix !== undefined) {
-            queryParameters['prefix'] = requestParameters.prefix;
+        if (requestParameters['prefix'] != null) {
+            queryParameters['prefix'] = requestParameters['prefix'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -127,7 +137,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -139,6 +149,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
      * Get labels for content
+     * @deprecated
      */
     async getLabelsForContent(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
         const response = await this.getLabelsForContentRaw(requestParameters, initOverrides);
@@ -150,12 +161,18 @@ export class ContentLabelsApi extends runtime.BaseAPI {
      * Remove label from content
      */
     async removeLabelFromContentRaw(requestParameters: RemoveLabelFromContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeLabelFromContent.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeLabelFromContent().'
+            );
         }
 
-        if (requestParameters.label === null || requestParameters.label === undefined) {
-            throw new runtime.RequiredError('label','Required parameter requestParameters.label was null or undefined when calling removeLabelFromContent.');
+        if (requestParameters['label'] == null) {
+            throw new runtime.RequiredError(
+                'label',
+                'Required parameter "label" was null or undefined when calling removeLabelFromContent().'
+            );
         }
 
         const queryParameters: any = {};
@@ -171,7 +188,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label/{label}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"label"}}`, encodeURIComponent(String(requestParameters.label))),
+            path: `/wiki/rest/api/content/{id}/label/{label}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"label"}}`, encodeURIComponent(String(requestParameters['label']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -193,18 +210,24 @@ export class ContentLabelsApi extends runtime.BaseAPI {
      * Remove label from content using query parameter
      */
     async removeLabelFromContentUsingQueryParameterRaw(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeLabelFromContentUsingQueryParameter.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeLabelFromContentUsingQueryParameter().'
+            );
         }
 
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling removeLabelFromContentUsingQueryParameter.');
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling removeLabelFromContentUsingQueryParameter().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -218,7 +241,7 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

@@ -20,7 +20,7 @@ import type {
   SpacePropertyCreate,
   SpacePropertyCreateNoKey,
   SpacePropertyUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface CreateSpacePropertyRequest {
     spaceKey: string;
@@ -65,14 +65,21 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property
+     * @deprecated
      */
     async createSpacePropertyRaw(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling createSpaceProperty.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling createSpaceProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createSpaceProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createSpaceProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -90,11 +97,11 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/property`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -103,6 +110,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property
+     * @deprecated
      */
     async createSpaceProperty(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
         const response = await this.createSpacePropertyRaw(requestParameters, initOverrides);
@@ -112,18 +120,28 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property for key
+     * @deprecated
      */
     async createSpacePropertyForKeyRaw(requestParameters: CreateSpacePropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling createSpacePropertyForKey.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling createSpacePropertyForKey().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling createSpacePropertyForKey.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling createSpacePropertyForKey().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createSpacePropertyForKey.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createSpacePropertyForKey().'
+            );
         }
 
         const queryParameters: any = {};
@@ -141,11 +159,11 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -154,6 +172,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new space property. This is the same as `POST /wiki/rest/api/space/{spaceKey}/property` but the key for the property is passed as a path parameter, rather than in the request body.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Create space property for key
+     * @deprecated
      */
     async createSpacePropertyForKey(requestParameters: CreateSpacePropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
         const response = await this.createSpacePropertyForKeyRaw(requestParameters, initOverrides);
@@ -163,14 +182,21 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Delete space property
+     * @deprecated
      */
     async deleteSpacePropertyRaw(requestParameters: DeleteSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling deleteSpaceProperty.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling deleteSpaceProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteSpaceProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling deleteSpaceProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -186,7 +212,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -198,6 +224,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Deletes a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Delete space property
+     * @deprecated
      */
     async deleteSpaceProperty(requestParameters: DeleteSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteSpacePropertyRaw(requestParameters, initOverrides);
@@ -206,24 +233,28 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space properties
+     * @deprecated
      */
     async getSpacePropertiesRaw(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpacePropertyArray>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getSpaceProperties.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getSpaceProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -237,7 +268,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/property`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -249,6 +280,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all properties for the given space. Space properties are a key-value storage associated with a space.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space properties
+     * @deprecated
      */
     async getSpaceProperties(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpacePropertyArray> {
         const response = await this.getSpacePropertiesRaw(requestParameters, initOverrides);
@@ -258,20 +290,27 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space property
+     * @deprecated
      */
     async getSpacePropertyRaw(requestParameters: GetSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getSpaceProperty.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getSpaceProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getSpaceProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling getSpaceProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -285,7 +324,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -297,6 +336,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space property.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
      * Get space property
+     * @deprecated
      */
     async getSpaceProperty(requestParameters: GetSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
         const response = await this.getSpacePropertyRaw(requestParameters, initOverrides);
@@ -306,18 +346,28 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Update space property
+     * @deprecated
      */
     async updateSpacePropertyRaw(requestParameters: UpdateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling updateSpaceProperty.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling updateSpaceProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling updateSpaceProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling updateSpaceProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateSpaceProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateSpaceProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -335,11 +385,11 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/space/{spaceKey}/property/{key}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -348,6 +398,7 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a space property. Note, you cannot update the key of a space property, only the value.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘Admin’ permission for the space.
      * Update space property
+     * @deprecated
      */
     async updateSpaceProperty(requestParameters: UpdateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceProperty> {
         const response = await this.updateSpacePropertyRaw(requestParameters, initOverrides);

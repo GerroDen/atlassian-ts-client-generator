@@ -18,7 +18,7 @@ import type {
   AttachmentPropertiesUpdateBody,
   Content,
   ContentArray,
-} from '../models';
+} from '../models/index';
 
 export interface CreateAttachmentRequest {
     id: string;
@@ -62,7 +62,7 @@ export interface UpdateAttachmentDataRequest {
 export interface UpdateAttachmentPropertiesRequest {
     id: string;
     attachmentId: string;
-    body: { [key: string]: any; };
+    body: AttachmentPropertiesUpdateBody;
 }
 
 /**
@@ -75,22 +75,31 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
      * Create attachment
      */
     async createAttachmentRaw(requestParameters: CreateAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createAttachment.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createAttachment().'
+            );
         }
 
-        if (requestParameters.file === null || requestParameters.file === undefined) {
-            throw new runtime.RequiredError('file','Required parameter requestParameters.file was null or undefined when calling createAttachment.');
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling createAttachment().'
+            );
         }
 
-        if (requestParameters.minorEdit === null || requestParameters.minorEdit === undefined) {
-            throw new runtime.RequiredError('minorEdit','Required parameter requestParameters.minorEdit was null or undefined when calling createAttachment.');
+        if (requestParameters['minorEdit'] == null) {
+            throw new runtime.RequiredError(
+                'minorEdit',
+                'Required parameter "minorEdit" was null or undefined when calling createAttachment().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -123,20 +132,20 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.file !== undefined) {
-            formParams.append('file', requestParameters.file as any);
+        if (requestParameters['file'] != null) {
+            formParams.append('file', requestParameters['file'] as any);
         }
 
-        if (requestParameters.comment !== undefined) {
-            formParams.append('comment', requestParameters.comment as any);
+        if (requestParameters['comment'] != null) {
+            formParams.append('comment', requestParameters['comment'] as any);
         }
 
-        if (requestParameters.minorEdit !== undefined) {
-            formParams.append('minorEdit', requestParameters.minorEdit as any);
+        if (requestParameters['minorEdit'] != null) {
+            formParams.append('minorEdit', requestParameters['minorEdit'] as any);
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -160,22 +169,31 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
      * Create or update attachment
      */
     async createOrUpdateAttachmentsRaw(requestParameters: CreateOrUpdateAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createOrUpdateAttachments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createOrUpdateAttachments().'
+            );
         }
 
-        if (requestParameters.file === null || requestParameters.file === undefined) {
-            throw new runtime.RequiredError('file','Required parameter requestParameters.file was null or undefined when calling createOrUpdateAttachments.');
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling createOrUpdateAttachments().'
+            );
         }
 
-        if (requestParameters.minorEdit === null || requestParameters.minorEdit === undefined) {
-            throw new runtime.RequiredError('minorEdit','Required parameter requestParameters.minorEdit was null or undefined when calling createOrUpdateAttachments.');
+        if (requestParameters['minorEdit'] == null) {
+            throw new runtime.RequiredError(
+                'minorEdit',
+                'Required parameter "minorEdit" was null or undefined when calling createOrUpdateAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -208,20 +226,20 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.file !== undefined) {
-            formParams.append('file', requestParameters.file as any);
+        if (requestParameters['file'] != null) {
+            formParams.append('file', requestParameters['file'] as any);
         }
 
-        if (requestParameters.comment !== undefined) {
-            formParams.append('comment', requestParameters.comment as any);
+        if (requestParameters['comment'] != null) {
+            formParams.append('comment', requestParameters['comment'] as any);
         }
 
-        if (requestParameters.minorEdit !== undefined) {
-            formParams.append('minorEdit', requestParameters.minorEdit as any);
+        if (requestParameters['minorEdit'] != null) {
+            formParams.append('minorEdit', requestParameters['minorEdit'] as any);
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -245,18 +263,24 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
      * Get URI to download attachment
      */
     async downloadAttatchmentRaw(requestParameters: DownloadAttatchmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling downloadAttatchment.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling downloadAttatchment().'
+            );
         }
 
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling downloadAttatchment.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling downloadAttatchment().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.version !== undefined) {
-            queryParameters['version'] = requestParameters.version;
+        if (requestParameters['version'] != null) {
+            queryParameters['version'] = requestParameters['version'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -270,7 +294,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters.attachmentId))),
+            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -290,32 +314,36 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get attachments
+     * @deprecated
      */
     async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachments.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAttachments().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.filename !== undefined) {
-            queryParameters['filename'] = requestParameters.filename;
+        if (requestParameters['filename'] != null) {
+            queryParameters['filename'] = requestParameters['filename'];
         }
 
-        if (requestParameters.mediaType !== undefined) {
-            queryParameters['mediaType'] = requestParameters.mediaType;
+        if (requestParameters['mediaType'] != null) {
+            queryParameters['mediaType'] = requestParameters['mediaType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -329,7 +357,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/child/attachment`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -341,6 +369,7 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the attachments for a piece of content.  By default, the following objects are expanded: `metadata`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
      * Get attachments
+     * @deprecated
      */
     async getAttachments(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
         const response = await this.getAttachmentsRaw(requestParameters, initOverrides);
@@ -352,20 +381,32 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
      * Update attachment data
      */
     async updateAttachmentDataRaw(requestParameters: UpdateAttachmentDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateAttachmentData.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateAttachmentData().'
+            );
         }
 
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling updateAttachmentData.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling updateAttachmentData().'
+            );
         }
 
-        if (requestParameters.file === null || requestParameters.file === undefined) {
-            throw new runtime.RequiredError('file','Required parameter requestParameters.file was null or undefined when calling updateAttachmentData.');
+        if (requestParameters['file'] == null) {
+            throw new runtime.RequiredError(
+                'file',
+                'Required parameter "file" was null or undefined when calling updateAttachmentData().'
+            );
         }
 
-        if (requestParameters.minorEdit === null || requestParameters.minorEdit === undefined) {
-            throw new runtime.RequiredError('minorEdit','Required parameter requestParameters.minorEdit was null or undefined when calling updateAttachmentData.');
+        if (requestParameters['minorEdit'] == null) {
+            throw new runtime.RequiredError(
+                'minorEdit',
+                'Required parameter "minorEdit" was null or undefined when calling updateAttachmentData().'
+            );
         }
 
         const queryParameters: any = {};
@@ -400,20 +441,20 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
             formParams = new URLSearchParams();
         }
 
-        if (requestParameters.file !== undefined) {
-            formParams.append('file', requestParameters.file as any);
+        if (requestParameters['file'] != null) {
+            formParams.append('file', requestParameters['file'] as any);
         }
 
-        if (requestParameters.comment !== undefined) {
-            formParams.append('comment', requestParameters.comment as any);
+        if (requestParameters['comment'] != null) {
+            formParams.append('comment', requestParameters['comment'] as any);
         }
 
-        if (requestParameters.minorEdit !== undefined) {
-            formParams.append('minorEdit', requestParameters.minorEdit as any);
+        if (requestParameters['minorEdit'] != null) {
+            formParams.append('minorEdit', requestParameters['minorEdit'] as any);
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/data`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters.attachmentId))),
+            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}/data`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -437,16 +478,25 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
      * Update attachment properties
      */
     async updateAttachmentPropertiesRaw(requestParameters: UpdateAttachmentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateAttachmentProperties.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateAttachmentProperties().'
+            );
         }
 
-        if (requestParameters.attachmentId === null || requestParameters.attachmentId === undefined) {
-            throw new runtime.RequiredError('attachmentId','Required parameter requestParameters.attachmentId was null or undefined when calling updateAttachmentProperties.');
+        if (requestParameters['attachmentId'] == null) {
+            throw new runtime.RequiredError(
+                'attachmentId',
+                'Required parameter "attachmentId" was null or undefined when calling updateAttachmentProperties().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateAttachmentProperties.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateAttachmentProperties().'
+            );
         }
 
         const queryParameters: any = {};
@@ -464,11 +514,11 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters.attachmentId))),
+            path: `/wiki/rest/api/content/{id}/child/attachment/{attachmentId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

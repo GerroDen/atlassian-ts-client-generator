@@ -17,13 +17,14 @@ import * as runtime from '../runtime';
 import type {
   LongTaskStatusArray,
   LongTaskStatusWithLinks,
-} from '../models';
+} from '../models/index';
 
 export interface GetTaskRequest {
     id: string;
 }
 
 export interface GetTasksRequest {
+    key?: string;
     start?: number;
     limit?: number;
 }
@@ -38,8 +39,11 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
      * Get long-running task
      */
     async getTaskRaw(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusWithLinks>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTask.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getTask().'
+            );
         }
 
         const queryParameters: any = {};
@@ -55,7 +59,7 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/longtask/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/longtask/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -80,12 +84,16 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
     async getTasksRaw(requestParameters: GetTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

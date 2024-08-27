@@ -20,7 +20,7 @@ import type {
   GroupArrayWithLinks,
   User,
   UserAnonymous,
-} from '../models';
+} from '../models/index';
 
 export interface GetAnonymousUserRequest {
     expand?: Array<GetAnonymousUserExpandEnum>;
@@ -29,7 +29,6 @@ export interface GetAnonymousUserRequest {
 export interface GetBulkUserLookupRequest {
     accountId: string;
     expand?: Array<GetBulkUserLookupExpandEnum>;
-    limit?: number;
 }
 
 export interface GetCurrentUserRequest {
@@ -67,8 +66,8 @@ export class UsersApi extends runtime.BaseAPI {
     async getAnonymousUserRaw(requestParameters: GetAnonymousUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnonymous>> {
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -101,26 +100,25 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns user details for the ids provided in request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Returns user details for the ids provided in the request. Currently this API returns a maximum of 100 results. If more than 100 account ids are passed in, then the first 100 will be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Get multiple users using ids
      */
     async getBulkUserLookupRaw(requestParameters: GetBulkUserLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkUserLookupArray>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getBulkUserLookup.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling getBulkUserLookup().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -144,7 +142,7 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns user details for the ids provided in request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Returns user details for the ids provided in the request. Currently this API returns a maximum of 100 results. If more than 100 account ids are passed in, then the first 100 will be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Get multiple users using ids
      */
     async getBulkUserLookup(requestParameters: GetBulkUserLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkUserLookupArray> {
@@ -159,8 +157,8 @@ export class UsersApi extends runtime.BaseAPI {
     async getCurrentUserRaw(requestParameters: GetCurrentUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -197,22 +195,25 @@ export class UsersApi extends runtime.BaseAPI {
      * Get group memberships for user
      */
     async getGroupMembershipsForUserRaw(requestParameters: GetGroupMembershipsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GroupArrayWithLinks>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getGroupMembershipsForUser.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling getGroupMembershipsForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -249,14 +250,17 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user email address
      */
     async getPrivacyUnsafeUserEmailRaw(requestParameters: GetPrivacyUnsafeUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountIdEmailRecord>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getPrivacyUnsafeUserEmail.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling getPrivacyUnsafeUserEmail().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -285,14 +289,17 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user email addresses in batch
      */
     async getPrivacyUnsafeUserEmailBulkRaw(requestParameters: GetPrivacyUnsafeUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccountIdEmailRecord>>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getPrivacyUnsafeUserEmailBulk.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling getPrivacyUnsafeUserEmailBulk().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.accountId) {
-            queryParameters['accountId'] = requestParameters.accountId.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -321,18 +328,21 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user
      */
     async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getUser.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling getUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   SearchPageResponseSearchResult,
-} from '../models';
+} from '../models/index';
 
 export interface SearchByCQLRequest {
     cql: string;
@@ -48,66 +48,69 @@ export interface SearchUserRequest {
 export class SearchApi extends runtime.BaseAPI {
 
     /**
-     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
+     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
      * Search content
      */
     async searchByCQLRaw(requestParameters: SearchByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
-        if (requestParameters.cql === null || requestParameters.cql === undefined) {
-            throw new runtime.RequiredError('cql','Required parameter requestParameters.cql was null or undefined when calling searchByCQL.');
+        if (requestParameters['cql'] == null) {
+            throw new runtime.RequiredError(
+                'cql',
+                'Required parameter "cql" was null or undefined when calling searchByCQL().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cql !== undefined) {
-            queryParameters['cql'] = requestParameters.cql;
+        if (requestParameters['cql'] != null) {
+            queryParameters['cql'] = requestParameters['cql'];
         }
 
-        if (requestParameters.cqlcontext !== undefined) {
-            queryParameters['cqlcontext'] = requestParameters.cqlcontext;
+        if (requestParameters['cqlcontext'] != null) {
+            queryParameters['cqlcontext'] = requestParameters['cqlcontext'];
         }
 
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
         }
 
-        if (requestParameters.next !== undefined) {
-            queryParameters['next'] = requestParameters.next;
+        if (requestParameters['next'] != null) {
+            queryParameters['next'] = requestParameters['next'];
         }
 
-        if (requestParameters.prev !== undefined) {
-            queryParameters['prev'] = requestParameters.prev;
+        if (requestParameters['prev'] != null) {
+            queryParameters['prev'] = requestParameters['prev'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.includeArchivedSpaces !== undefined) {
-            queryParameters['includeArchivedSpaces'] = requestParameters.includeArchivedSpaces;
+        if (requestParameters['includeArchivedSpaces'] != null) {
+            queryParameters['includeArchivedSpaces'] = requestParameters['includeArchivedSpaces'];
         }
 
-        if (requestParameters.excludeCurrentSpaces !== undefined) {
-            queryParameters['excludeCurrentSpaces'] = requestParameters.excludeCurrentSpaces;
+        if (requestParameters['excludeCurrentSpaces'] != null) {
+            queryParameters['excludeCurrentSpaces'] = requestParameters['excludeCurrentSpaces'];
         }
 
-        if (requestParameters.excerpt !== undefined) {
-            queryParameters['excerpt'] = requestParameters.excerpt;
+        if (requestParameters['excerpt'] != null) {
+            queryParameters['excerpt'] = requestParameters['excerpt'];
         }
 
-        if (requestParameters.sitePermissionTypeFilter !== undefined) {
-            queryParameters['sitePermissionTypeFilter'] = requestParameters.sitePermissionTypeFilter;
+        if (requestParameters['sitePermissionTypeFilter'] != null) {
+            queryParameters['sitePermissionTypeFilter'] = requestParameters['sitePermissionTypeFilter'];
         }
 
-        if (requestParameters.u !== undefined) {
-            queryParameters['_'] = requestParameters.u;
+        if (requestParameters['u'] != null) {
+            queryParameters['_'] = requestParameters['u'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -131,7 +134,7 @@ export class SearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
+     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
      * Search content
      */
     async searchByCQL(requestParameters: SearchByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchPageResponseSearchResult> {
@@ -144,30 +147,33 @@ export class SearchApi extends runtime.BaseAPI {
      * Search users
      */
     async searchUserRaw(requestParameters: SearchUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
-        if (requestParameters.cql === null || requestParameters.cql === undefined) {
-            throw new runtime.RequiredError('cql','Required parameter requestParameters.cql was null or undefined when calling searchUser.');
+        if (requestParameters['cql'] == null) {
+            throw new runtime.RequiredError(
+                'cql',
+                'Required parameter "cql" was null or undefined when calling searchUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.cql !== undefined) {
-            queryParameters['cql'] = requestParameters.cql;
+        if (requestParameters['cql'] != null) {
+            queryParameters['cql'] = requestParameters['cql'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.sitePermissionTypeFilter !== undefined) {
-            queryParameters['sitePermissionTypeFilter'] = requestParameters.sitePermissionTypeFilter;
+        if (requestParameters['sitePermissionTypeFilter'] != null) {
+            queryParameters['sitePermissionTypeFilter'] = requestParameters['sitePermissionTypeFilter'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

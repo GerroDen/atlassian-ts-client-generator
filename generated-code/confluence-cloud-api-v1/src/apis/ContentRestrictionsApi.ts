@@ -19,13 +19,7 @@ import type {
   ContentRestrictionAddOrUpdateArray,
   ContentRestrictionArray,
   GetRestrictionsByOperation200ResponseValue,
-} from '../models';
-
-export interface AddGroupToContentRestrictionRequest {
-    id: string;
-    operationKey: AddGroupToContentRestrictionOperationKeyEnum;
-    groupName: string;
-}
+} from '../models/index';
 
 export interface AddGroupToContentRestrictionByGroupIdRequest {
     id: string;
@@ -50,12 +44,6 @@ export interface AddUserToContentRestrictionRequest {
 export interface DeleteRestrictionsRequest {
     id: string;
     expand?: Array<DeleteRestrictionsExpandEnum>;
-}
-
-export interface GetContentRestrictionStatusForGroupRequest {
-    id: string;
-    operationKey: GetContentRestrictionStatusForGroupOperationKeyEnum;
-    groupName: string;
 }
 
 export interface GetContentRestrictionStatusForUserRequest {
@@ -98,12 +86,6 @@ export interface RemoveGroupFromContentRestrictionRequest {
     groupId: string;
 }
 
-export interface RemoveGroupFromContentRestrictionByIdRequest {
-    id: string;
-    operationKey: RemoveGroupFromContentRestrictionByIdOperationKeyEnum;
-    groupName: string;
-}
-
 export interface RemoveUserFromContentRestrictionRequest {
     id: string;
     operationKey: RemoveUserFromContentRestrictionOperationKeyEnum;
@@ -124,67 +106,29 @@ export interface UpdateRestrictionsRequest {
 export class ContentRestrictionsApi extends runtime.BaseAPI {
 
     /**
-     * Deprecated, use [Add group to content restriction via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-put). Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Add group to content restriction
-     */
-    async addGroupToContentRestrictionRaw(requestParameters: AddGroupToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addGroupToContentRestriction.');
-        }
-
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling addGroupToContentRestriction.');
-        }
-
-        if (requestParameters.groupName === null || requestParameters.groupName === undefined) {
-            throw new runtime.RequiredError('groupName','Required parameter requestParameters.groupName was null or undefined when calling addGroupToContentRestriction.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/group/{groupName}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupName"}}`, encodeURIComponent(String(requestParameters.groupName))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Add group to content restriction via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-put). Adds a group to a content restriction. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Add group to content restriction
-     */
-    async addGroupToContentRestriction(requestParameters: AddGroupToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.addGroupToContentRestrictionRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Adds a group to a content restriction by Group Id. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Add group to content restriction
      */
     async addGroupToContentRestrictionByGroupIdRaw(requestParameters: AddGroupToContentRestrictionByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addGroupToContentRestrictionByGroupId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling addGroupToContentRestrictionByGroupId().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling addGroupToContentRestrictionByGroupId.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling addGroupToContentRestrictionByGroupId().'
+            );
         }
 
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling addGroupToContentRestrictionByGroupId.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling addGroupToContentRestrictionByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
@@ -200,7 +144,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters.groupId))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -222,18 +166,24 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Add restrictions
      */
     async addRestrictionsRaw(requestParameters: AddRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addRestrictions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling addRestrictions().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addRestrictions.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling addRestrictions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -249,11 +199,11 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -273,26 +223,32 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Add user to content restriction
      */
     async addUserToContentRestrictionRaw(requestParameters: AddUserToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addUserToContentRestriction.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling addUserToContentRestriction().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling addUserToContentRestriction.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling addUserToContentRestriction().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -306,7 +262,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -328,14 +284,17 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Delete restrictions
      */
     async deleteRestrictionsRaw(requestParameters: DeleteRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteRestrictions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteRestrictions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -349,7 +308,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -368,77 +327,36 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Get content restriction status for group via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-get). Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content restriction status for group
-     */
-    async getContentRestrictionStatusForGroupRaw(requestParameters: GetContentRestrictionStatusForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentRestrictionStatusForGroup.');
-        }
-
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling getContentRestrictionStatusForGroup.');
-        }
-
-        if (requestParameters.groupName === null || requestParameters.groupName === undefined) {
-            throw new runtime.RequiredError('groupName','Required parameter requestParameters.groupName was null or undefined when calling getContentRestrictionStatusForGroup.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/group/{groupName}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupName"}}`, encodeURIComponent(String(requestParameters.groupName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Get content restriction status for group via groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-bygroupid-groupid-get). Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `admins` group, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/group/admins`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content restriction status for group
-     */
-    async getContentRestrictionStatusForGroup(requestParameters: GetContentRestrictionStatusForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.getContentRestrictionStatusForGroupRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Returns whether the specified content restriction applies to a user. For example, if a page with `id=123` has a `read` restriction for a user with an account ID of `384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/user?accountId=384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`  Note that a response of `true` does not guarantee that the user can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
      * Get content restriction status for user
      */
     async getContentRestrictionStatusForUserRaw(requestParameters: GetContentRestrictionStatusForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentRestrictionStatusForUser.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentRestrictionStatusForUser().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling getContentRestrictionStatusForUser.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling getContentRestrictionStatusForUser().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -452,7 +370,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -474,16 +392,25 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Get content restriction status for group
      */
     async getIndividualGroupRestrictionStatusByGroupIdRaw(requestParameters: GetIndividualGroupRestrictionStatusByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId().'
+            );
         }
 
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling getIndividualGroupRestrictionStatusByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
@@ -499,7 +426,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters.groupId))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -521,22 +448,25 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Get restrictions
      */
     async getRestrictionsRaw(requestParameters: GetRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRestrictions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRestrictions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -550,7 +480,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -573,14 +503,17 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Get restrictions by operation
      */
     async getRestrictionsByOperationRaw(requestParameters: GetRestrictionsByOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetRestrictionsByOperation200ResponseValue; }>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRestrictionsByOperation.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRestrictionsByOperation().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -594,7 +527,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -617,26 +550,32 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Get restrictions for operation
      */
     async getRestrictionsForOperationRaw(requestParameters: GetRestrictionsForOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestriction>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRestrictionsForOperation.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getRestrictionsForOperation().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling getRestrictionsForOperation.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling getRestrictionsForOperation().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -650,7 +589,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -673,16 +612,25 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Remove group from content restriction
      */
     async removeGroupFromContentRestrictionRaw(requestParameters: RemoveGroupFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeGroupFromContentRestriction.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeGroupFromContentRestriction().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling removeGroupFromContentRestriction.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling removeGroupFromContentRestriction().'
+            );
         }
 
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling removeGroupFromContentRestriction.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling removeGroupFromContentRestriction().'
+            );
         }
 
         const queryParameters: any = {};
@@ -698,7 +646,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters.groupId))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -716,77 +664,36 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Remove group from content restriction by groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-user-delete). Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Remove group from content restriction
-     */
-    async removeGroupFromContentRestrictionByIdRaw(requestParameters: RemoveGroupFromContentRestrictionByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeGroupFromContentRestrictionById.');
-        }
-
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling removeGroupFromContentRestrictionById.');
-        }
-
-        if (requestParameters.groupName === null || requestParameters.groupName === undefined) {
-            throw new runtime.RequiredError('groupName','Required parameter requestParameters.groupName was null or undefined when calling removeGroupFromContentRestrictionById.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/group/{groupName}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))).replace(`{${"groupName"}}`, encodeURIComponent(String(requestParameters.groupName))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Remove group from content restriction by groupId](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-restrictions/#api-wiki-rest-api-content-id-restriction-byoperation-operationkey-user-delete). Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Remove group from content restriction
-     */
-    async removeGroupFromContentRestrictionById(requestParameters: RemoveGroupFromContentRestrictionByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.removeGroupFromContentRestrictionByIdRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
      * Remove user from content restriction
      */
     async removeUserFromContentRestrictionRaw(requestParameters: RemoveUserFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeUserFromContentRestriction.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeUserFromContentRestriction().'
+            );
         }
 
-        if (requestParameters.operationKey === null || requestParameters.operationKey === undefined) {
-            throw new runtime.RequiredError('operationKey','Required parameter requestParameters.operationKey was null or undefined when calling removeUserFromContentRestriction.');
+        if (requestParameters['operationKey'] == null) {
+            throw new runtime.RequiredError(
+                'operationKey',
+                'Required parameter "operationKey" was null or undefined when calling removeUserFromContentRestriction().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -800,7 +707,7 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters.operationKey))),
+            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -822,18 +729,24 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
      * Update restrictions
      */
     async updateRestrictionsRaw(requestParameters: UpdateRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateRestrictions.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateRestrictions().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateRestrictions.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateRestrictions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -849,11 +762,11 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -870,14 +783,6 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
 
 }
 
-/**
- * @export
- */
-export const AddGroupToContentRestrictionOperationKeyEnum = {
-    Read: 'read',
-    Update: 'update'
-} as const;
-export type AddGroupToContentRestrictionOperationKeyEnum = typeof AddGroupToContentRestrictionOperationKeyEnum[keyof typeof AddGroupToContentRestrictionOperationKeyEnum];
 /**
  * @export
  */
@@ -912,14 +817,6 @@ export const DeleteRestrictionsExpandEnum = {
     Content: 'content'
 } as const;
 export type DeleteRestrictionsExpandEnum = typeof DeleteRestrictionsExpandEnum[keyof typeof DeleteRestrictionsExpandEnum];
-/**
- * @export
- */
-export const GetContentRestrictionStatusForGroupOperationKeyEnum = {
-    Read: 'read',
-    Update: 'update'
-} as const;
-export type GetContentRestrictionStatusForGroupOperationKeyEnum = typeof GetContentRestrictionStatusForGroupOperationKeyEnum[keyof typeof GetContentRestrictionStatusForGroupOperationKeyEnum];
 /**
  * @export
  */
@@ -975,14 +872,6 @@ export const RemoveGroupFromContentRestrictionOperationKeyEnum = {
     Update: 'update'
 } as const;
 export type RemoveGroupFromContentRestrictionOperationKeyEnum = typeof RemoveGroupFromContentRestrictionOperationKeyEnum[keyof typeof RemoveGroupFromContentRestrictionOperationKeyEnum];
-/**
- * @export
- */
-export const RemoveGroupFromContentRestrictionByIdOperationKeyEnum = {
-    Read: 'read',
-    Update: 'update'
-} as const;
-export type RemoveGroupFromContentRestrictionByIdOperationKeyEnum = typeof RemoveGroupFromContentRestrictionByIdOperationKeyEnum[keyof typeof RemoveGroupFromContentRestrictionByIdOperationKeyEnum];
 /**
  * @export
  */

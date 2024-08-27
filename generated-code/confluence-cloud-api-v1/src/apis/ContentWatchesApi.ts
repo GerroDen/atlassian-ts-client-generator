@@ -18,7 +18,7 @@ import type {
   SpaceWatchArray,
   UserWatch,
   WatchArray,
-} from '../models';
+} from '../models/index';
 
 export interface AddContentWatcherRequest {
     contentId: string;
@@ -114,22 +114,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Add content watcher
      */
     async addContentWatcherRaw(requestParameters: AddContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.contentId === null || requestParameters.contentId === undefined) {
-            throw new runtime.RequiredError('contentId','Required parameter requestParameters.contentId was null or undefined when calling addContentWatcher.');
+        if (requestParameters['contentId'] == null) {
+            throw new runtime.RequiredError(
+                'contentId',
+                'Required parameter "contentId" was null or undefined when calling addContentWatcher().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -143,7 +146,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters.contentId))),
+            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -165,32 +168,38 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Add label watcher
      */
     async addLabelWatcherRaw(requestParameters: AddLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.xAtlassianToken === null || requestParameters.xAtlassianToken === undefined) {
-            throw new runtime.RequiredError('xAtlassianToken','Required parameter requestParameters.xAtlassianToken was null or undefined when calling addLabelWatcher.');
+        if (requestParameters['xAtlassianToken'] == null) {
+            throw new runtime.RequiredError(
+                'xAtlassianToken',
+                'Required parameter "xAtlassianToken" was null or undefined when calling addLabelWatcher().'
+            );
         }
 
-        if (requestParameters.labelName === null || requestParameters.labelName === undefined) {
-            throw new runtime.RequiredError('labelName','Required parameter requestParameters.labelName was null or undefined when calling addLabelWatcher.');
+        if (requestParameters['labelName'] == null) {
+            throw new runtime.RequiredError(
+                'labelName',
+                'Required parameter "labelName" was null or undefined when calling addLabelWatcher().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAtlassianToken !== undefined && requestParameters.xAtlassianToken !== null) {
-            headerParameters['X-Atlassian-Token'] = String(requestParameters.xAtlassianToken);
+        if (requestParameters['xAtlassianToken'] != null) {
+            headerParameters['X-Atlassian-Token'] = String(requestParameters['xAtlassianToken']);
         }
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -202,7 +211,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters.labelName))),
+            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -224,32 +233,38 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Add space watcher
      */
     async addSpaceWatcherRaw(requestParameters: AddSpaceWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.xAtlassianToken === null || requestParameters.xAtlassianToken === undefined) {
-            throw new runtime.RequiredError('xAtlassianToken','Required parameter requestParameters.xAtlassianToken was null or undefined when calling addSpaceWatcher.');
+        if (requestParameters['xAtlassianToken'] == null) {
+            throw new runtime.RequiredError(
+                'xAtlassianToken',
+                'Required parameter "xAtlassianToken" was null or undefined when calling addSpaceWatcher().'
+            );
         }
 
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling addSpaceWatcher.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling addSpaceWatcher().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAtlassianToken !== undefined && requestParameters.xAtlassianToken !== null) {
-            headerParameters['X-Atlassian-Token'] = String(requestParameters.xAtlassianToken);
+        if (requestParameters['xAtlassianToken'] != null) {
+            headerParameters['X-Atlassian-Token'] = String(requestParameters['xAtlassianToken']);
         }
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -261,7 +276,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -283,22 +298,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get content watch status
      */
     async getContentWatchStatusRaw(requestParameters: GetContentWatchStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
-        if (requestParameters.contentId === null || requestParameters.contentId === undefined) {
-            throw new runtime.RequiredError('contentId','Required parameter requestParameters.contentId was null or undefined when calling getContentWatchStatus.');
+        if (requestParameters['contentId'] == null) {
+            throw new runtime.RequiredError(
+                'contentId',
+                'Required parameter "contentId" was null or undefined when calling getContentWatchStatus().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -312,7 +330,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters.contentId))),
+            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -335,18 +353,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get space watchers
      */
     async getWatchersForSpaceRaw(requestParameters: GetWatchersForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getWatchersForSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getWatchersForSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -360,7 +381,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/watch`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/watch`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -383,18 +404,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get watches for page
      */
     async getWatchesForPageRaw(requestParameters: GetWatchesForPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WatchArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWatchesForPage.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getWatchesForPage().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -408,7 +432,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/notification/child-created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/notification/child-created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -431,18 +455,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get watches for space
      */
     async getWatchesForSpaceRaw(requestParameters: GetWatchesForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWatchesForSpace.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getWatchesForSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -456,7 +483,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/notification/created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/notification/created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -479,22 +506,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get label watch status
      */
     async isWatchingLabelRaw(requestParameters: IsWatchingLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
-        if (requestParameters.labelName === null || requestParameters.labelName === undefined) {
-            throw new runtime.RequiredError('labelName','Required parameter requestParameters.labelName was null or undefined when calling isWatchingLabel.');
+        if (requestParameters['labelName'] == null) {
+            throw new runtime.RequiredError(
+                'labelName',
+                'Required parameter "labelName" was null or undefined when calling isWatchingLabel().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -508,7 +538,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters.labelName))),
+            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -531,22 +561,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Get space watch status
      */
     async isWatchingSpaceRaw(requestParameters: IsWatchingSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling isWatchingSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling isWatchingSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -560,7 +593,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -583,32 +616,38 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Remove content watcher
      */
     async removeContentWatcherRaw(requestParameters: RemoveContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.xAtlassianToken === null || requestParameters.xAtlassianToken === undefined) {
-            throw new runtime.RequiredError('xAtlassianToken','Required parameter requestParameters.xAtlassianToken was null or undefined when calling removeContentWatcher.');
+        if (requestParameters['xAtlassianToken'] == null) {
+            throw new runtime.RequiredError(
+                'xAtlassianToken',
+                'Required parameter "xAtlassianToken" was null or undefined when calling removeContentWatcher().'
+            );
         }
 
-        if (requestParameters.contentId === null || requestParameters.contentId === undefined) {
-            throw new runtime.RequiredError('contentId','Required parameter requestParameters.contentId was null or undefined when calling removeContentWatcher.');
+        if (requestParameters['contentId'] == null) {
+            throw new runtime.RequiredError(
+                'contentId',
+                'Required parameter "contentId" was null or undefined when calling removeContentWatcher().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAtlassianToken !== undefined && requestParameters.xAtlassianToken !== null) {
-            headerParameters['X-Atlassian-Token'] = String(requestParameters.xAtlassianToken);
+        if (requestParameters['xAtlassianToken'] != null) {
+            headerParameters['X-Atlassian-Token'] = String(requestParameters['xAtlassianToken']);
         }
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -620,7 +659,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters.contentId))),
+            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -642,22 +681,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Remove label watcher
      */
     async removeLabelWatcherRaw(requestParameters: RemoveLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.labelName === null || requestParameters.labelName === undefined) {
-            throw new runtime.RequiredError('labelName','Required parameter requestParameters.labelName was null or undefined when calling removeLabelWatcher.');
+        if (requestParameters['labelName'] == null) {
+            throw new runtime.RequiredError(
+                'labelName',
+                'Required parameter "labelName" was null or undefined when calling removeLabelWatcher().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -671,7 +713,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters.labelName))),
+            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -693,22 +735,25 @@ export class ContentWatchesApi extends runtime.BaseAPI {
      * Remove space watch
      */
     async removeSpaceWatchRaw(requestParameters: RemoveSpaceWatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling removeSpaceWatch.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling removeSpaceWatch().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -722,7 +767,7 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

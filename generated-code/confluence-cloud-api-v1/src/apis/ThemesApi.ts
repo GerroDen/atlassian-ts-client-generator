@@ -18,7 +18,7 @@ import type {
   Theme,
   ThemeArray,
   ThemeUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface GetSpaceThemeRequest {
     spaceKey: string;
@@ -88,8 +88,11 @@ export class ThemesApi extends runtime.BaseAPI {
      * Get space theme
      */
     async getSpaceThemeRaw(requestParameters: GetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getSpaceTheme.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getSpaceTheme().'
+            );
         }
 
         const queryParameters: any = {};
@@ -105,7 +108,7 @@ export class ThemesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -128,8 +131,11 @@ export class ThemesApi extends runtime.BaseAPI {
      * Get theme
      */
     async getThemeRaw(requestParameters: GetThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
-        if (requestParameters.themeKey === null || requestParameters.themeKey === undefined) {
-            throw new runtime.RequiredError('themeKey','Required parameter requestParameters.themeKey was null or undefined when calling getTheme.');
+        if (requestParameters['themeKey'] == null) {
+            throw new runtime.RequiredError(
+                'themeKey',
+                'Required parameter "themeKey" was null or undefined when calling getTheme().'
+            );
         }
 
         const queryParameters: any = {};
@@ -145,7 +151,7 @@ export class ThemesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/settings/theme/{themeKey}`.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters.themeKey))),
+            path: `/wiki/rest/api/settings/theme/{themeKey}`.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters['themeKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -164,18 +170,18 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [admin-driven themes](https://developer.atlassian.com/cloud/confluence/create-a-confluence-theme/), not including the default theme. Note that this API only applies to themes set for an entire space or site by the admin. User-driven theming controls (Light, Dark, and match browser) are an unrelated feature. Admin-driven themes will override user-driven themes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
      * Get themes
      */
     async getThemesRaw(requestParameters: GetThemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ThemeArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -199,7 +205,7 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all [admin-driven themes](https://developer.atlassian.com/cloud/confluence/create-a-confluence-theme/), not including the default theme. Note that this API only applies to themes set for an entire space or site by the admin. User-driven theming controls (Light, Dark, and match browser) are an unrelated feature. Admin-driven themes will override user-driven themes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
      * Get themes
      */
     async getThemes(requestParameters: GetThemesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ThemeArray> {
@@ -212,8 +218,11 @@ export class ThemesApi extends runtime.BaseAPI {
      * Reset space theme
      */
     async resetSpaceThemeRaw(requestParameters: ResetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling resetSpaceTheme.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling resetSpaceTheme().'
+            );
         }
 
         const queryParameters: any = {};
@@ -229,7 +238,7 @@ export class ThemesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -251,12 +260,18 @@ export class ThemesApi extends runtime.BaseAPI {
      * Set space theme
      */
     async setSpaceThemeRaw(requestParameters: SetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling setSpaceTheme.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling setSpaceTheme().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setSpaceTheme.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling setSpaceTheme().'
+            );
         }
 
         const queryParameters: any = {};
@@ -274,11 +289,11 @@ export class ThemesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

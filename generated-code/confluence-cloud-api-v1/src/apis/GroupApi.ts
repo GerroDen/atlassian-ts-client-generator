@@ -20,12 +20,7 @@ import type {
   GroupArrayWithLinks,
   GroupName,
   UserArray,
-} from '../models';
-
-export interface AddUserToGroupRequest {
-    name: string;
-    body: AccountId;
-}
+} from '../models/index';
 
 export interface AddUserToGroupByGroupIdRequest {
     groupId: string;
@@ -38,20 +33,6 @@ export interface CreateGroupRequest {
 
 export interface GetGroupByGroupIdRequest {
     id: string;
-}
-
-export interface GetGroupByNameRequest {
-    groupName: string;
-}
-
-export interface GetGroupByQueryParamRequest {
-    name: string;
-}
-
-export interface GetGroupMembersRequest {
-    groupName: string;
-    start?: number;
-    limit?: number;
 }
 
 export interface GetGroupMembersByGroupIdRequest {
@@ -68,27 +49,8 @@ export interface GetGroupsRequest {
     accessType?: GetGroupsAccessTypeEnum;
 }
 
-export interface GetMembersByQueryParamRequest {
-    name: string;
-    start?: number;
-    limit?: number;
-    shouldReturnTotalSize?: boolean;
-    expand?: Array<GetMembersByQueryParamExpandEnum>;
-}
-
-export interface RemoveGroupRequest {
-    name: string;
-}
-
 export interface RemoveGroupByIdRequest {
     id: string;
-}
-
-export interface RemoveMemberFromGroupRequest {
-    name: string;
-    key?: string;
-    username?: string;
-    accountId?: string;
 }
 
 export interface RemoveMemberFromGroupByGroupIdRequest {
@@ -111,72 +73,28 @@ export interface SearchGroupsRequest {
 export class GroupApi extends runtime.BaseAPI {
 
     /**
-     * Adds a user as a member in a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Add member to group
-     */
-    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling addUserToGroup.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addUserToGroup.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/user`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.body,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Adds a user as a member in a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Add member to group
-     */
-    async addUserToGroup(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.addUserToGroupRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Adds a user as a member in a group represented by its groupId  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
      * Add member to group by groupId
      */
     async addUserToGroupByGroupIdRaw(requestParameters: AddUserToGroupByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling addUserToGroupByGroupId.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling addUserToGroupByGroupId().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addUserToGroupByGroupId.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling addUserToGroupByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.groupId !== undefined) {
-            queryParameters['groupId'] = requestParameters.groupId;
+        if (requestParameters['groupId'] != null) {
+            queryParameters['groupId'] = requestParameters['groupId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -196,7 +114,7 @@ export class GroupApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -215,8 +133,11 @@ export class GroupApi extends runtime.BaseAPI {
      * Create new user group
      */
     async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createGroup.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createGroup().'
+            );
         }
 
         const queryParameters: any = {};
@@ -238,7 +159,7 @@ export class GroupApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -258,14 +179,17 @@ export class GroupApi extends runtime.BaseAPI {
      * Get group
      */
     async getGroupByGroupIdRaw(requestParameters: GetGroupByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getGroupByGroupId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getGroupByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.id !== undefined) {
-            queryParameters['id'] = requestParameters.id;
+        if (requestParameters['id'] != null) {
+            queryParameters['id'] = requestParameters['id'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -298,146 +222,33 @@ export class GroupApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user group for a given group name.  Use updated Get group API  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group
-     */
-    async getGroupByNameRaw(requestParameters: GetGroupByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters.groupName === null || requestParameters.groupName === undefined) {
-            throw new runtime.RequiredError('groupName','Required parameter requestParameters.groupName was null or undefined when calling getGroupByName.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/{groupName}`.replace(`{${"groupName"}}`, encodeURIComponent(String(requestParameters.groupName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns a user group for a given group name.  Use updated Get group API  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group
-     */
-    async getGroupByName(requestParameters: GetGroupByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Group> {
-        const response = await this.getGroupByNameRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns a user group for a given group name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group
-     */
-    async getGroupByQueryParamRaw(requestParameters: GetGroupByQueryParamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getGroupByQueryParam.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/by-name`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns a user group for a given group name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group
-     */
-    async getGroupByQueryParam(requestParameters: GetGroupByQueryParamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Group> {
-        const response = await this.getGroupByQueryParamRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Returns the users that are members of a group.  Use updated Get group API  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group members
-     */
-    async getGroupMembersRaw(requestParameters: GetGroupMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserArray>> {
-        if (requestParameters.groupName === null || requestParameters.groupName === undefined) {
-            throw new runtime.RequiredError('groupName','Required parameter requestParameters.groupName was null or undefined when calling getGroupMembers.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/{groupName}/member`.replace(`{${"groupName"}}`, encodeURIComponent(String(requestParameters.groupName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns the users that are members of a group.  Use updated Get group API  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group members
-     */
-    async getGroupMembers(requestParameters: GetGroupMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserArray> {
-        const response = await this.getGroupMembersRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Returns the users that are members of a group.  Use updated Get group API  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
      * Get group members
      */
     async getGroupMembersByGroupIdRaw(requestParameters: GetGroupMembersByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserArray>> {
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling getGroupMembersByGroupId.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling getGroupMembersByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.shouldReturnTotalSize !== undefined) {
-            queryParameters['shouldReturnTotalSize'] = requestParameters.shouldReturnTotalSize;
+        if (requestParameters['shouldReturnTotalSize'] != null) {
+            queryParameters['shouldReturnTotalSize'] = requestParameters['shouldReturnTotalSize'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -451,7 +262,7 @@ export class GroupApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/group/{groupId}/membersByGroupId`.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters.groupId))),
+            path: `/wiki/rest/api/group/{groupId}/membersByGroupId`.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -476,16 +287,16 @@ export class GroupApi extends runtime.BaseAPI {
     async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GroupArrayWithLinks>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.accessType !== undefined) {
-            queryParameters['accessType'] = requestParameters.accessType;
+        if (requestParameters['accessType'] != null) {
+            queryParameters['accessType'] = requestParameters['accessType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -518,121 +329,21 @@ export class GroupApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the users that are members of a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group members
-     */
-    async getMembersByQueryParamRaw(requestParameters: GetMembersByQueryParamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserArray>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getMembersByQueryParam.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.shouldReturnTotalSize !== undefined) {
-            queryParameters['shouldReturnTotalSize'] = requestParameters.shouldReturnTotalSize;
-        }
-
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/member`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Returns the users that are members of a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group members
-     */
-    async getMembersByQueryParam(requestParameters: GetMembersByQueryParamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserArray> {
-        const response = await this.getMembersByQueryParamRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Delete user group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Delete user group
-     */
-    async removeGroupRaw(requestParameters: RemoveGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling removeGroup.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group`,
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Delete user group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Delete user group
-     */
-    async removeGroup(requestParameters: RemoveGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.removeGroupRaw(requestParameters, initOverrides);
-    }
-
-    /**
      * Delete user group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
      * Delete user group
      */
     async removeGroupByIdRaw(requestParameters: RemoveGroupByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeGroupById.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removeGroupById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.id !== undefined) {
-            queryParameters['id'] = requestParameters.id;
+        if (requestParameters['id'] != null) {
+            queryParameters['id'] = requestParameters['id'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -665,84 +376,32 @@ export class GroupApi extends runtime.BaseAPI {
 
     /**
      * Remove user as a member from a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Remove member from group
-     */
-    async removeMemberFromGroupRaw(requestParameters: RemoveMemberFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling removeMemberFromGroup.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
-        }
-
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
-        }
-
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/group/user`,
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Remove user as a member from a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
-     * Remove member from group
-     */
-    async removeMemberFromGroup(requestParameters: RemoveMemberFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.removeMemberFromGroupRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Remove user as a member from a group.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: User must be a site admin.
      * Remove member from group using group id
      */
     async removeMemberFromGroupByGroupIdRaw(requestParameters: RemoveMemberFromGroupByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
-            throw new runtime.RequiredError('groupId','Required parameter requestParameters.groupId was null or undefined when calling removeMemberFromGroupByGroupId.');
+        if (requestParameters['groupId'] == null) {
+            throw new runtime.RequiredError(
+                'groupId',
+                'Required parameter "groupId" was null or undefined when calling removeMemberFromGroupByGroupId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.groupId !== undefined) {
-            queryParameters['groupId'] = requestParameters.groupId;
+        if (requestParameters['groupId'] != null) {
+            queryParameters['groupId'] = requestParameters['groupId'];
         }
 
-        if (requestParameters.key !== undefined) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.username !== undefined) {
-            queryParameters['username'] = requestParameters.username;
+        if (requestParameters['username'] != null) {
+            queryParameters['username'] = requestParameters['username'];
         }
 
-        if (requestParameters.accountId !== undefined) {
-            queryParameters['accountId'] = requestParameters.accountId;
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -778,26 +437,29 @@ export class GroupApi extends runtime.BaseAPI {
      * Search groups by partial query
      */
     async searchGroupsRaw(requestParameters: SearchGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GroupArrayWithLinks>> {
-        if (requestParameters.query === null || requestParameters.query === undefined) {
-            throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling searchGroups.');
+        if (requestParameters['query'] == null) {
+            throw new runtime.RequiredError(
+                'query',
+                'Required parameter "query" was null or undefined when calling searchGroups().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.query !== undefined) {
-            queryParameters['query'] = requestParameters.query;
+        if (requestParameters['query'] != null) {
+            queryParameters['query'] = requestParameters['query'];
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.shouldReturnTotalSize !== undefined) {
-            queryParameters['shouldReturnTotalSize'] = requestParameters.shouldReturnTotalSize;
+        if (requestParameters['shouldReturnTotalSize'] != null) {
+            queryParameters['shouldReturnTotalSize'] = requestParameters['shouldReturnTotalSize'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -849,12 +511,3 @@ export const GetGroupsAccessTypeEnum = {
     SiteAdmin: 'site-admin'
 } as const;
 export type GetGroupsAccessTypeEnum = typeof GetGroupsAccessTypeEnum[keyof typeof GetGroupsAccessTypeEnum];
-/**
- * @export
- */
-export const GetMembersByQueryParamExpandEnum = {
-    Operations: 'operations',
-    PersonalSpace: 'personalSpace',
-    IsExternalCollaborator: 'isExternalCollaborator'
-} as const;
-export type GetMembersByQueryParamExpandEnum = typeof GetMembersByQueryParamExpandEnum[keyof typeof GetMembersByQueryParamExpandEnum];

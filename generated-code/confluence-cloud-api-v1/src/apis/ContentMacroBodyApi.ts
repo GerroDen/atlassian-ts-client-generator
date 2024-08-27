@@ -18,7 +18,7 @@ import type {
   AsyncId,
   ContentBody,
   MacroInstance,
-} from '../models';
+} from '../models/index';
 
 export interface GetAndAsyncConvertMacroBodyByMacroIdRequest {
     id: string;
@@ -57,38 +57,50 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
      * Get macro body by macro ID and convert representation Asynchronously
      */
     async getAndAsyncConvertMacroBodyByMacroIdRaw(requestParameters: GetAndAsyncConvertMacroBodyByMacroIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.version === null || requestParameters.version === undefined) {
-            throw new runtime.RequiredError('version','Required parameter requestParameters.version was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId.');
+        if (requestParameters['version'] == null) {
+            throw new runtime.RequiredError(
+                'version',
+                'Required parameter "version" was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.macroId === null || requestParameters.macroId === undefined) {
-            throw new runtime.RequiredError('macroId','Required parameter requestParameters.macroId was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId.');
+        if (requestParameters['macroId'] == null) {
+            throw new runtime.RequiredError(
+                'macroId',
+                'Required parameter "macroId" was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.to === null || requestParameters.to === undefined) {
-            throw new runtime.RequiredError('to','Required parameter requestParameters.to was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId.');
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling getAndAsyncConvertMacroBodyByMacroId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.allowCache !== undefined) {
-            queryParameters['allowCache'] = requestParameters.allowCache;
+        if (requestParameters['allowCache'] != null) {
+            queryParameters['allowCache'] = requestParameters['allowCache'];
         }
 
-        if (requestParameters.spaceKeyContext !== undefined) {
-            queryParameters['spaceKeyContext'] = requestParameters.spaceKeyContext;
+        if (requestParameters['spaceKeyContext'] != null) {
+            queryParameters['spaceKeyContext'] = requestParameters['spaceKeyContext'];
         }
 
-        if (requestParameters.embeddedContentRender !== undefined) {
-            queryParameters['embeddedContentRender'] = requestParameters.embeddedContentRender;
+        if (requestParameters['embeddedContentRender'] != null) {
+            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -102,7 +114,7 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/async/{to}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters.version))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters.macroId))).replace(`{${"to"}}`, encodeURIComponent(String(requestParameters.to))),
+            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/async/{to}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version']))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId']))).replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -125,34 +137,46 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
      * Get macro body by macro ID and convert the representation synchronously
      */
     async getAndConvertMacroBodyByMacroIdRaw(requestParameters: GetAndConvertMacroBodyByMacroIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentBody>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAndConvertMacroBodyByMacroId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getAndConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.version === null || requestParameters.version === undefined) {
-            throw new runtime.RequiredError('version','Required parameter requestParameters.version was null or undefined when calling getAndConvertMacroBodyByMacroId.');
+        if (requestParameters['version'] == null) {
+            throw new runtime.RequiredError(
+                'version',
+                'Required parameter "version" was null or undefined when calling getAndConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.macroId === null || requestParameters.macroId === undefined) {
-            throw new runtime.RequiredError('macroId','Required parameter requestParameters.macroId was null or undefined when calling getAndConvertMacroBodyByMacroId.');
+        if (requestParameters['macroId'] == null) {
+            throw new runtime.RequiredError(
+                'macroId',
+                'Required parameter "macroId" was null or undefined when calling getAndConvertMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.to === null || requestParameters.to === undefined) {
-            throw new runtime.RequiredError('to','Required parameter requestParameters.to was null or undefined when calling getAndConvertMacroBodyByMacroId.');
+        if (requestParameters['to'] == null) {
+            throw new runtime.RequiredError(
+                'to',
+                'Required parameter "to" was null or undefined when calling getAndConvertMacroBodyByMacroId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.spaceKeyContext !== undefined) {
-            queryParameters['spaceKeyContext'] = requestParameters.spaceKeyContext;
+        if (requestParameters['spaceKeyContext'] != null) {
+            queryParameters['spaceKeyContext'] = requestParameters['spaceKeyContext'];
         }
 
-        if (requestParameters.embeddedContentRender !== undefined) {
-            queryParameters['embeddedContentRender'] = requestParameters.embeddedContentRender;
+        if (requestParameters['embeddedContentRender'] != null) {
+            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -166,7 +190,7 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/{to}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters.version))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters.macroId))).replace(`{${"to"}}`, encodeURIComponent(String(requestParameters.to))),
+            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}/convert/{to}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version']))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId']))).replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -189,16 +213,25 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
      * Get macro body by macro ID
      */
     async getMacroBodyByMacroIdRaw(requestParameters: GetMacroBodyByMacroIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MacroInstance>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getMacroBodyByMacroId.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.version === null || requestParameters.version === undefined) {
-            throw new runtime.RequiredError('version','Required parameter requestParameters.version was null or undefined when calling getMacroBodyByMacroId.');
+        if (requestParameters['version'] == null) {
+            throw new runtime.RequiredError(
+                'version',
+                'Required parameter "version" was null or undefined when calling getMacroBodyByMacroId().'
+            );
         }
 
-        if (requestParameters.macroId === null || requestParameters.macroId === undefined) {
-            throw new runtime.RequiredError('macroId','Required parameter requestParameters.macroId was null or undefined when calling getMacroBodyByMacroId.');
+        if (requestParameters['macroId'] == null) {
+            throw new runtime.RequiredError(
+                'macroId',
+                'Required parameter "macroId" was null or undefined when calling getMacroBodyByMacroId().'
+            );
         }
 
         const queryParameters: any = {};
@@ -214,7 +247,7 @@ export class ContentMacroBodyApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters.version))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters.macroId))),
+            path: `/wiki/rest/api/content/{id}/history/{version}/macro/id/{macroId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version"}}`, encodeURIComponent(String(requestParameters['version']))).replace(`{${"macroId"}}`, encodeURIComponent(String(requestParameters['macroId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

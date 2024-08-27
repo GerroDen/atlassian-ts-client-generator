@@ -22,14 +22,14 @@ import type {
   SpaceArray,
   SpaceCreate,
   SpaceUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface CreatePrivateSpaceRequest {
-    spacePrivateCreate: { [key: string]: any; };
+    spacePrivateCreate: SpaceCreate;
 }
 
 export interface CreateSpaceRequest {
-    body: { [key: string]: any; };
+    body: SpaceCreate;
 }
 
 export interface DeleteSpaceRequest {
@@ -73,7 +73,7 @@ export interface GetSpacesRequest {
 
 export interface UpdateSpaceRequest {
     spaceKey: string;
-    body: { [key: string]: any; };
+    body: SpaceUpdate;
 }
 
 /**
@@ -86,8 +86,11 @@ export class SpaceApi extends runtime.BaseAPI {
      * Create private space
      */
     async createPrivateSpaceRaw(requestParameters: CreatePrivateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters.spacePrivateCreate === null || requestParameters.spacePrivateCreate === undefined) {
-            throw new runtime.RequiredError('spacePrivateCreate','Required parameter requestParameters.spacePrivateCreate was null or undefined when calling createPrivateSpace.');
+        if (requestParameters['spacePrivateCreate'] == null) {
+            throw new runtime.RequiredError(
+                'spacePrivateCreate',
+                'Required parameter "spacePrivateCreate" was null or undefined when calling createPrivateSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -109,7 +112,7 @@ export class SpaceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.spacePrivateCreate,
+            body: requestParameters['spacePrivateCreate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -129,8 +132,11 @@ export class SpaceApi extends runtime.BaseAPI {
      * Create space
      */
     async createSpaceRaw(requestParameters: CreateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createSpace.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -152,7 +158,7 @@ export class SpaceApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -168,12 +174,15 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a space. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Permanently deletes a space without sending it to the trash. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Delete space
      */
     async deleteSpaceRaw(requestParameters: DeleteSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling deleteSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling deleteSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -189,7 +198,7 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -199,7 +208,7 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a space. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Permanently deletes a space without sending it to the trash. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
      * Delete space
      */
     async deleteSpace(requestParameters: DeleteSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LongTask> {
@@ -208,34 +217,41 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content by type for space
+     * @deprecated
      */
     async getContentByTypeForSpaceRaw(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getContentByTypeForSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getContentByTypeForSpace().'
+            );
         }
 
-        if (requestParameters.type === null || requestParameters.type === undefined) {
-            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getContentByTypeForSpace.');
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getContentByTypeForSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.depth !== undefined) {
-            queryParameters['depth'] = requestParameters.depth;
+        if (requestParameters['depth'] != null) {
+            queryParameters['depth'] = requestParameters['depth'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -249,7 +265,7 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/content/{type}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))),
+            path: `/wiki/rest/api/space/{spaceKey}/content/{type}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -259,8 +275,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content by type for space
+     * @deprecated
      */
     async getContentByTypeForSpace(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
         const response = await this.getContentByTypeForSpaceRaw(requestParameters, initOverrides);
@@ -268,30 +285,34 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content for space
+     * @deprecated
      */
     async getContentForSpaceRaw(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetContentForSpace200Response>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getContentForSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getContentForSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.depth !== undefined) {
-            queryParameters['depth'] = requestParameters.depth;
+        if (requestParameters['depth'] != null) {
+            queryParameters['depth'] = requestParameters['depth'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -305,7 +326,7 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -315,8 +336,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
+     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
      * Get content for space
+     * @deprecated
      */
     async getContentForSpace(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetContentForSpace200Response> {
         const response = await this.getContentForSpaceRaw(requestParameters, initOverrides);
@@ -326,16 +348,20 @@ export class SpaceApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space
+     * @deprecated
      */
     async getSpaceRaw(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling getSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling getSpace().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -349,7 +375,7 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -361,6 +387,7 @@ export class SpaceApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get space
+     * @deprecated
      */
     async getSpace(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Space> {
         const response = await this.getSpaceRaw(requestParameters, initOverrides);
@@ -370,48 +397,49 @@ export class SpaceApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
      * Get spaces
+     * @deprecated
      */
     async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceArray>> {
         const queryParameters: any = {};
 
-        if (requestParameters.spaceKey) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
-        if (requestParameters.spaceId) {
-            queryParameters['spaceId'] = requestParameters.spaceId;
+        if (requestParameters['spaceId'] != null) {
+            queryParameters['spaceId'] = requestParameters['spaceId'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
-        if (requestParameters.label) {
-            queryParameters['label'] = requestParameters.label;
+        if (requestParameters['label'] != null) {
+            queryParameters['label'] = requestParameters['label'];
         }
 
-        if (requestParameters.favourite !== undefined) {
-            queryParameters['favourite'] = requestParameters.favourite;
+        if (requestParameters['favourite'] != null) {
+            queryParameters['favourite'] = requestParameters['favourite'];
         }
 
-        if (requestParameters.favouriteUserKey !== undefined) {
-            queryParameters['favouriteUserKey'] = requestParameters.favouriteUserKey;
+        if (requestParameters['favouriteUserKey'] != null) {
+            queryParameters['favouriteUserKey'] = requestParameters['favouriteUserKey'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -437,6 +465,7 @@ export class SpaceApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
      * Get spaces
+     * @deprecated
      */
     async getSpaces(requestParameters: GetSpacesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceArray> {
         const response = await this.getSpacesRaw(requestParameters, initOverrides);
@@ -448,12 +477,18 @@ export class SpaceApi extends runtime.BaseAPI {
      * Update space
      */
     async updateSpaceRaw(requestParameters: UpdateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling updateSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling updateSpace().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateSpace.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -471,11 +506,11 @@ export class SpaceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -532,6 +567,8 @@ export type GetSpaceExpandEnum = typeof GetSpaceExpandEnum[keyof typeof GetSpace
  */
 export const GetSpacesTypeEnum = {
     Global: 'global',
+    Collaboration: 'collaboration',
+    KnowledgeBase: 'knowledge_base',
     Personal: 'personal'
 } as const;
 export type GetSpacesTypeEnum = typeof GetSpacesTypeEnum[keyof typeof GetSpacesTypeEnum];

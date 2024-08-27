@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   GetViewers200Response,
   GetViews200Response,
-} from '../models';
+} from '../models/index';
 
 export interface GetViewersRequest {
     contentId: string;
@@ -39,14 +39,17 @@ export class AnalyticsApi extends runtime.BaseAPI {
      * Get viewers
      */
     async getViewersRaw(requestParameters: GetViewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViewers200Response>> {
-        if (requestParameters.contentId === null || requestParameters.contentId === undefined) {
-            throw new runtime.RequiredError('contentId','Required parameter requestParameters.contentId was null or undefined when calling getViewers.');
+        if (requestParameters['contentId'] == null) {
+            throw new runtime.RequiredError(
+                'contentId',
+                'Required parameter "contentId" was null or undefined when calling getViewers().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.fromDate !== undefined) {
-            queryParameters['fromDate'] = requestParameters.fromDate;
+        if (requestParameters['fromDate'] != null) {
+            queryParameters['fromDate'] = requestParameters['fromDate'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -60,7 +63,7 @@ export class AnalyticsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/analytics/content/{contentId}/viewers`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters.contentId))),
+            path: `/wiki/rest/api/analytics/content/{contentId}/viewers`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -83,14 +86,17 @@ export class AnalyticsApi extends runtime.BaseAPI {
      * Get views
      */
     async getViewsRaw(requestParameters: GetViewsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViews200Response>> {
-        if (requestParameters.contentId === null || requestParameters.contentId === undefined) {
-            throw new runtime.RequiredError('contentId','Required parameter requestParameters.contentId was null or undefined when calling getViews.');
+        if (requestParameters['contentId'] == null) {
+            throw new runtime.RequiredError(
+                'contentId',
+                'Required parameter "contentId" was null or undefined when calling getViews().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.fromDate !== undefined) {
-            queryParameters['fromDate'] = requestParameters.fromDate;
+        if (requestParameters['fromDate'] != null) {
+            queryParameters['fromDate'] = requestParameters['fromDate'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -104,7 +110,7 @@ export class AnalyticsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/analytics/content/{contentId}/views`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters.contentId))),
+            path: `/wiki/rest/api/analytics/content/{contentId}/views`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

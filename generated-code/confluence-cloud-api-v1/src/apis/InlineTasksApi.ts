@@ -18,7 +18,7 @@ import type {
   Task,
   TaskPageResponse,
   TaskStatusUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface GetTaskByIdRequest {
     inlineTaskId: string;
@@ -54,10 +54,14 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
      * Get inline task based on global ID
+     * @deprecated
      */
     async getTaskByIdRaw(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Task>> {
-        if (requestParameters.inlineTaskId === null || requestParameters.inlineTaskId === undefined) {
-            throw new runtime.RequiredError('inlineTaskId','Required parameter requestParameters.inlineTaskId was null or undefined when calling getTaskById.');
+        if (requestParameters['inlineTaskId'] == null) {
+            throw new runtime.RequiredError(
+                'inlineTaskId',
+                'Required parameter "inlineTaskId" was null or undefined when calling getTaskById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -73,7 +77,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/inlinetasks/{inlineTaskId}`.replace(`{${"inlineTaskId"}}`, encodeURIComponent(String(requestParameters.inlineTaskId))),
+            path: `/wiki/rest/api/inlinetasks/{inlineTaskId}`.replace(`{${"inlineTaskId"}}`, encodeURIComponent(String(requestParameters['inlineTaskId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -85,6 +89,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline task based on the global ID.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content associated with the task.
      * Get inline task based on global ID
+     * @deprecated
      */
     async getTaskById(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
         const response = await this.getTaskByIdRaw(requestParameters, initOverrides);
@@ -94,64 +99,65 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
      * Get inline tasks based on search parameters
+     * @deprecated
      */
     async searchTasksRaw(requestParameters: SearchTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TaskPageResponse>> {
         const queryParameters: any = {};
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.spaceKey !== undefined) {
-            queryParameters['spaceKey'] = requestParameters.spaceKey;
+        if (requestParameters['spaceKey'] != null) {
+            queryParameters['spaceKey'] = requestParameters['spaceKey'];
         }
 
-        if (requestParameters.pageId !== undefined) {
-            queryParameters['pageId'] = requestParameters.pageId;
+        if (requestParameters['pageId'] != null) {
+            queryParameters['pageId'] = requestParameters['pageId'];
         }
 
-        if (requestParameters.assignee !== undefined) {
-            queryParameters['assignee'] = requestParameters.assignee;
+        if (requestParameters['assignee'] != null) {
+            queryParameters['assignee'] = requestParameters['assignee'];
         }
 
-        if (requestParameters.creator !== undefined) {
-            queryParameters['creator'] = requestParameters.creator;
+        if (requestParameters['creator'] != null) {
+            queryParameters['creator'] = requestParameters['creator'];
         }
 
-        if (requestParameters.completedUser !== undefined) {
-            queryParameters['completedUser'] = requestParameters.completedUser;
+        if (requestParameters['completedUser'] != null) {
+            queryParameters['completedUser'] = requestParameters['completedUser'];
         }
 
-        if (requestParameters.duedateFrom !== undefined) {
-            queryParameters['duedateFrom'] = requestParameters.duedateFrom;
+        if (requestParameters['duedateFrom'] != null) {
+            queryParameters['duedateFrom'] = requestParameters['duedateFrom'];
         }
 
-        if (requestParameters.duedateTo !== undefined) {
-            queryParameters['duedateTo'] = requestParameters.duedateTo;
+        if (requestParameters['duedateTo'] != null) {
+            queryParameters['duedateTo'] = requestParameters['duedateTo'];
         }
 
-        if (requestParameters.createdateFrom !== undefined) {
-            queryParameters['createdateFrom'] = requestParameters.createdateFrom;
+        if (requestParameters['createdateFrom'] != null) {
+            queryParameters['createdateFrom'] = requestParameters['createdateFrom'];
         }
 
-        if (requestParameters.createdateTo !== undefined) {
-            queryParameters['createdateTo'] = requestParameters.createdateTo;
+        if (requestParameters['createdateTo'] != null) {
+            queryParameters['createdateTo'] = requestParameters['createdateTo'];
         }
 
-        if (requestParameters.completedateFrom !== undefined) {
-            queryParameters['completedateFrom'] = requestParameters.completedateFrom;
+        if (requestParameters['completedateFrom'] != null) {
+            queryParameters['completedateFrom'] = requestParameters['completedateFrom'];
         }
 
-        if (requestParameters.completedateTo !== undefined) {
-            queryParameters['completedateTo'] = requestParameters.completedateTo;
+        if (requestParameters['completedateTo'] != null) {
+            queryParameters['completedateTo'] = requestParameters['completedateTo'];
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -177,6 +183,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns inline tasks based on the search query.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only tasks in contents that the user has permission to view are returned.
      * Get inline tasks based on search parameters
+     * @deprecated
      */
     async searchTasks(requestParameters: SearchTasksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskPageResponse> {
         const response = await this.searchTasksRaw(requestParameters, initOverrides);
@@ -186,14 +193,21 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Updates an inline tasks status given its global ID  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content associated with the task.
      * Update inline task given global ID
+     * @deprecated
      */
     async updateTaskByIdRaw(requestParameters: UpdateTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Task>> {
-        if (requestParameters.inlineTaskId === null || requestParameters.inlineTaskId === undefined) {
-            throw new runtime.RequiredError('inlineTaskId','Required parameter requestParameters.inlineTaskId was null or undefined when calling updateTaskById.');
+        if (requestParameters['inlineTaskId'] == null) {
+            throw new runtime.RequiredError(
+                'inlineTaskId',
+                'Required parameter "inlineTaskId" was null or undefined when calling updateTaskById().'
+            );
         }
 
-        if (requestParameters.taskStatusUpdate === null || requestParameters.taskStatusUpdate === undefined) {
-            throw new runtime.RequiredError('taskStatusUpdate','Required parameter requestParameters.taskStatusUpdate was null or undefined when calling updateTaskById.');
+        if (requestParameters['taskStatusUpdate'] == null) {
+            throw new runtime.RequiredError(
+                'taskStatusUpdate',
+                'Required parameter "taskStatusUpdate" was null or undefined when calling updateTaskById().'
+            );
         }
 
         const queryParameters: any = {};
@@ -211,11 +225,11 @@ export class InlineTasksApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/inlinetasks/{inlineTaskId}`.replace(`{${"inlineTaskId"}}`, encodeURIComponent(String(requestParameters.inlineTaskId))),
+            path: `/wiki/rest/api/inlinetasks/{inlineTaskId}`.replace(`{${"inlineTaskId"}}`, encodeURIComponent(String(requestParameters['inlineTaskId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.taskStatusUpdate,
+            body: requestParameters['taskStatusUpdate'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -224,6 +238,7 @@ export class InlineTasksApi extends runtime.BaseAPI {
     /**
      * Updates an inline tasks status given its global ID  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content associated with the task.
      * Update inline task given global ID
+     * @deprecated
      */
     async updateTaskById(requestParameters: UpdateTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
         const response = await this.updateTaskByIdRaw(requestParameters, initOverrides);

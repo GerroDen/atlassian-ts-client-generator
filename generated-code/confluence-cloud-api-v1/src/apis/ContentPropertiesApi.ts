@@ -20,17 +20,17 @@ import type {
   ContentPropertyCreate,
   ContentPropertyCreateNoKey,
   ContentPropertyUpdate,
-} from '../models';
+} from '../models/index';
 
 export interface CreateContentPropertyRequest {
     id: string;
-    body: { [key: string]: any; };
+    body: ContentPropertyCreate;
 }
 
 export interface CreateContentPropertyForKeyRequest {
     id: string;
     key: string;
-    body: { [key: string]: any; };
+    body: ContentPropertyCreateNoKey;
 }
 
 export interface DeleteContentPropertyRequest {
@@ -56,7 +56,7 @@ export interface GetContentPropertyRequest {
 export interface UpdateContentPropertyRequest {
     id: string;
     key: string;
-    body: { [key: string]: any; };
+    body: ContentPropertyUpdate;
 }
 
 /**
@@ -67,14 +67,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Creates a property for an existing piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  This is the same as [Create content property for key](#api-content-id-property-key-post) except that the key is specified in the request body instead of as a path parameter.  Content properties can also be added when creating a new piece of content by including them in the `metadata.properties` of the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Create content property
+     * @deprecated
      */
     async createContentPropertyRaw(requestParameters: CreateContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createContentProperty.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createContentProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createContentProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createContentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -92,11 +99,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/property`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -105,6 +112,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Creates a property for an existing piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  This is the same as [Create content property for key](#api-content-id-property-key-post) except that the key is specified in the request body instead of as a path parameter.  Content properties can also be added when creating a new piece of content by including them in the `metadata.properties` of the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Create content property
+     * @deprecated
      */
     async createContentProperty(requestParameters: CreateContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createContentPropertyRaw(requestParameters, initOverrides);
@@ -114,18 +122,28 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Creates a property for an existing piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  This is the same as [Create content property](#api-content-id-property-post) except that the key is specified as a path parameter instead of in the request body.  Content properties can also be added when creating a new piece of content by including them in the `metadata.properties` of the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Create content property for key
+     * @deprecated
      */
     async createContentPropertyForKeyRaw(requestParameters: CreateContentPropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createContentPropertyForKey.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createContentPropertyForKey().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling createContentPropertyForKey.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling createContentPropertyForKey().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createContentPropertyForKey.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createContentPropertyForKey().'
+            );
         }
 
         const queryParameters: any = {};
@@ -143,11 +161,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -156,6 +174,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Creates a property for an existing piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  This is the same as [Create content property](#api-content-id-property-post) except that the key is specified as a path parameter instead of in the request body.  Content properties can also be added when creating a new piece of content by including them in the `metadata.properties` of the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Create content property for key
+     * @deprecated
      */
     async createContentPropertyForKey(requestParameters: CreateContentPropertyForKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createContentPropertyForKeyRaw(requestParameters, initOverrides);
@@ -165,14 +184,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Deletes a content property. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Delete content property
+     * @deprecated
      */
     async deleteContentPropertyRaw(requestParameters: DeleteContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteContentProperty.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteContentProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteContentProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling deleteContentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -188,7 +214,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -200,6 +226,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Deletes a content property. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Delete content property
+     * @deprecated
      */
     async deleteContentProperty(requestParameters: DeleteContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteContentPropertyRaw(requestParameters, initOverrides);
@@ -208,28 +235,32 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Returns the properties for a piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content properties
+     * @deprecated
      */
     async getContentPropertiesRaw(requestParameters: GetContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentPropertyArray>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentProperties.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.key) {
-            queryParameters['key'] = requestParameters.key;
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
         }
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.start !== undefined) {
-            queryParameters['start'] = requestParameters.start;
+        if (requestParameters['start'] != null) {
+            queryParameters['start'] = requestParameters['start'];
         }
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -243,7 +274,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/content/{id}/property`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -255,6 +286,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Returns the properties for a piece of content. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content properties
+     * @deprecated
      */
     async getContentProperties(requestParameters: GetContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentPropertyArray> {
         const response = await this.getContentPropertiesRaw(requestParameters, initOverrides);
@@ -264,24 +296,31 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Returns a content property for a piece of content. For more information, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content property
+     * @deprecated
      */
     async getContentPropertyRaw(requestParameters: GetContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getContentProperty.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getContentProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getContentProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling getContentProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
         }
 
-        if (requestParameters.status) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -295,7 +334,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -307,6 +346,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Returns a content property for a piece of content. For more information, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
      * Get content property
+     * @deprecated
      */
     async getContentProperty(requestParameters: GetContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.getContentPropertyRaw(requestParameters, initOverrides);
@@ -316,18 +356,28 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Updates an existing content property. This method will also create a new property for a piece of content, if the property key does not exist and the property version is 1. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Update content property
+     * @deprecated
      */
     async updateContentPropertyRaw(requestParameters: UpdateContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateContentProperty.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateContentProperty().'
+            );
         }
 
-        if (requestParameters.key === null || requestParameters.key === undefined) {
-            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling updateContentProperty.');
+        if (requestParameters['key'] == null) {
+            throw new runtime.RequiredError(
+                'key',
+                'Required parameter "key" was null or undefined when calling updateContentProperty().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateContentProperty.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateContentProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -345,11 +395,11 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
+            path: `/wiki/rest/api/content/{id}/property/{key}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -358,6 +408,7 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     /**
      * Updates an existing content property. This method will also create a new property for a piece of content, if the property key does not exist and the property version is 1. For more information about content properties, see [Confluence entity properties](https://developer.atlassian.com/cloud/confluence/confluence-entity-properties/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
      * Update content property
+     * @deprecated
      */
     async updateContentProperty(requestParameters: UpdateContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateContentPropertyRaw(requestParameters, initOverrides);

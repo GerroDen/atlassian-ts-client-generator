@@ -18,7 +18,7 @@ import type {
   SpacePermissionCustomContent,
   SpacePermissionRequest,
   SpacePermissionV2,
-} from '../models';
+} from '../models/index';
 
 export interface AddCustomContentPermissionsRequest {
     spaceKey: string;
@@ -27,7 +27,7 @@ export interface AddCustomContentPermissionsRequest {
 
 export interface AddPermissionToSpaceRequest {
     spaceKey: string;
-    body: { [key: string]: any; };
+    body: SpacePermissionRequest;
 }
 
 export interface RemovePermissionRequest {
@@ -45,12 +45,18 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
      * Add new custom content permission to space
      */
     async addCustomContentPermissionsRaw(requestParameters: AddCustomContentPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling addCustomContentPermissions.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling addCustomContentPermissions().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addCustomContentPermissions.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling addCustomContentPermissions().'
+            );
         }
 
         const queryParameters: any = {};
@@ -68,11 +74,11 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission/custom-content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/permission/custom-content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -91,12 +97,18 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
      * Add new permission to space
      */
     async addPermissionToSpaceRaw(requestParameters: AddPermissionToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpacePermissionV2>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling addPermissionToSpace.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling addPermissionToSpace().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addPermissionToSpace.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling addPermissionToSpace().'
+            );
         }
 
         const queryParameters: any = {};
@@ -114,11 +126,11 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))),
+            path: `/wiki/rest/api/space/{spaceKey}/permission`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body,
+            body: requestParameters['body'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -138,12 +150,18 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
      * Remove a space permission
      */
     async removePermissionRaw(requestParameters: RemovePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.spaceKey === null || requestParameters.spaceKey === undefined) {
-            throw new runtime.RequiredError('spaceKey','Required parameter requestParameters.spaceKey was null or undefined when calling removePermission.');
+        if (requestParameters['spaceKey'] == null) {
+            throw new runtime.RequiredError(
+                'spaceKey',
+                'Required parameter "spaceKey" was null or undefined when calling removePermission().'
+            );
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removePermission.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling removePermission().'
+            );
         }
 
         const queryParameters: any = {};
@@ -159,7 +177,7 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission/{id}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters.spaceKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/wiki/rest/api/space/{spaceKey}/permission/{id}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
