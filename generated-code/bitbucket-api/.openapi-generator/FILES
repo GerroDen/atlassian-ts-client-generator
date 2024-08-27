@@ -19,6 +19,7 @@ src/apis/PullRequestsApi.ts
 src/apis/RepositoryApi.ts
 src/apis/SecurityApi.ts
 src/apis/SystemMaintenanceApi.ts
+src/apis/SystemSigningApi.ts
 src/apis/index.ts
 src/index.ts
 src/models/index.ts

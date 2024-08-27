@@ -16,3 +16,4 @@ export * from './PullRequestsApi';
 export * from './RepositoryApi';
 export * from './SecurityApi';
 export * from './SystemMaintenanceApi';
+export * from './SystemSigningApi';
