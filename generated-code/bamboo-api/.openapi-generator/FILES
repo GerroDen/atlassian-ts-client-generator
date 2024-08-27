@@ -3,7 +3,9 @@
 .openapi-generator-ignore
 README.md
 package.json
+src/apis/AvatarApi.ts
 src/apis/BuildApi.ts
+src/apis/BuildNumberApi.ts
 src/apis/CoreApi.ts
 src/apis/DefaultApi.ts
 src/apis/DeploymentApi.ts

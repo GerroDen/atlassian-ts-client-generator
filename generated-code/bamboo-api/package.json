@@ -1,6 +1,6 @@
 {
   "name": "bamboo-api",
-  "version": "9.3.2",
+  "version": "10.0.0",
   "description": "OpenAPI client for bamboo-api",
   "author": "OpenAPI-Generator",
   "private": true,

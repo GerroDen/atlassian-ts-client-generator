@@ -8,16 +8,22 @@
 export interface AgentStatus {
     /**
      * 
-     * @type {number}
-     * @memberof AgentStatus
-     */
-    orderIndex?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof AgentStatus
      */
     allowDelete?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentStatus
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentStatus
+     */
+    icon?: string;
     /**
      * 
      * @type {boolean}
@@ -35,25 +41,19 @@ export interface AgentStatus {
      * @type {string}
      * @memberof AgentStatus
      */
-    displayName?: string;
+    label?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentStatus
+     */
+    orderIndex?: number;
     /**
      * 
      * @type {string}
      * @memberof AgentStatus
      */
     url?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgentStatus
-     */
-    label?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgentStatus
-     */
-    icon?: string;
 }
 /**
  * 
@@ -63,16 +63,28 @@ export interface AgentStatus {
 export interface ArtifactLink {
     /**
      * 
-     * @type {boolean}
+     * @type {MutableArtifact}
      * @memberof ArtifactLink
      */
-    sharedArtifact?: boolean;
+    artifact?: MutableArtifact;
     /**
      * 
      * @type {ResultsSummary}
      * @memberof ArtifactLink
      */
     buildResultsSummary?: ResultsSummary;
+    /**
+     * 
+     * @type {number}
+     * @memberof ArtifactLink
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArtifactLink
+     */
+    label?: string;
     /**
      * 
      * @type {string}
@@ -87,28 +99,22 @@ export interface ArtifactLink {
     producerJobResult?: BuildResultsSummary;
     /**
      * 
+     * @type {boolean}
+     * @memberof ArtifactLink
+     */
+    sharedArtifact?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof ArtifactLink
      */
     size?: number;
     /**
      * 
-     * @type {MutableArtifact}
+     * @type {Array<ConsumedSubscription>}
      * @memberof ArtifactLink
      */
-    artifact?: MutableArtifact;
-    /**
-     * 
-     * @type {string}
-     * @memberof ArtifactLink
-     */
-    label?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ArtifactLink
-     */
-    id?: number;
+    subscriptions?: Array<ConsumedSubscription>;
 }
 /**
  * 
@@ -121,25 +127,19 @@ export interface Author {
      * @type {Array<ResultsSummary>}
      * @memberof Author
      */
-    breakages?: Array<ResultsSummary>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Author
-     */
-    numberOfBreakages?: number;
+    allTriggeredBuildResults?: Array<ResultsSummary>;
     /**
      * 
      * @type {Array<ResultsSummary>}
      * @memberof Author
      */
-    fixes?: Array<ResultsSummary>;
+    breakages?: Array<ResultsSummary>;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Author
      */
-    numberOfFixes?: number;
+    email?: string;
     /**
      * 
      * @type {Array<ResultsSummary>}
@@ -148,40 +148,10 @@ export interface Author {
     failedBuilds?: Array<ResultsSummary>;
     /**
      * 
-     * @type {number}
-     * @memberof Author
-     */
-    numberOfFailedBuilds?: number;
-    /**
-     * 
      * @type {Array<ResultsSummary>}
      * @memberof Author
      */
-    successfulBuilds?: Array<ResultsSummary>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Author
-     */
-    numberOfSuccessfulBuilds?: number;
-    /**
-     * 
-     * @type {Array<ResultsSummary>}
-     * @memberof Author
-     */
-    triggeredBuildResults?: Array<ResultsSummary>;
-    /**
-     * 
-     * @type {Array<ResultsSummary>}
-     * @memberof Author
-     */
-    allTriggeredBuildResults?: Array<ResultsSummary>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Author
-     */
-    numberOfTriggeredBuilds?: number;
+    fixes?: Array<ResultsSummary>;
     /**
      * 
      * @type {string}
@@ -199,13 +169,49 @@ export interface Author {
      * @type {string}
      * @memberof Author
      */
-    email?: string;
+    name?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Author
      */
-    name?: string;
+    numberOfBreakages?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Author
+     */
+    numberOfFailedBuilds?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Author
+     */
+    numberOfFixes?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Author
+     */
+    numberOfSuccessfulBuilds?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Author
+     */
+    numberOfTriggeredBuilds?: number;
+    /**
+     * 
+     * @type {Array<ResultsSummary>}
+     * @memberof Author
+     */
+    successfulBuilds?: Array<ResultsSummary>;
+    /**
+     * 
+     * @type {Array<ResultsSummary>}
+     * @memberof Author
+     */
+    triggeredBuildResults?: Array<ResultsSummary>;
 }
 /**
  * 
@@ -218,6 +224,12 @@ export interface AuthorContext {
      * @type {string}
      * @memberof AuthorContext
      */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthorContext
+     */
     linkedUserName?: string;
     /**
      * 
@@ -225,12 +237,6 @@ export interface AuthorContext {
      * @memberof AuthorContext
      */
     name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AuthorContext
-     */
-    email?: string;
 }
 /**
  * 
@@ -238,6 +244,12 @@ export interface AuthorContext {
  * @interface BambooEntityOid
  */
 export interface BambooEntityOid {
+    /**
+     * 
+     * @type {number}
+     * @memberof BambooEntityOid
+     */
+    entityOid?: number;
     /**
      * 
      * @type {string}
@@ -250,12 +262,6 @@ export interface BambooEntityOid {
      * @memberof BambooEntityOid
      */
     serverKey?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BambooEntityOid
-     */
-    entityOid?: number;
     /**
      * 
      * @type {number}
@@ -294,7 +300,7 @@ export interface BranchIntegrationConfiguration {
      * @type {boolean}
      * @memberof BranchIntegrationConfiguration
      */
-    pushEnabled?: boolean;
+    enabled?: boolean;
     /**
      * 
      * @type {PlanKey}
@@ -309,16 +315,16 @@ export interface BranchIntegrationConfiguration {
     integrationPoint?: BranchIntegrationPoint;
     /**
      * 
+     * @type {boolean}
+     * @memberof BranchIntegrationConfiguration
+     */
+    pushEnabled?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof BranchIntegrationConfiguration
      */
     strategy?: BranchIntegrationConfigurationStrategyEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchIntegrationConfiguration
-     */
-    enabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -367,25 +373,25 @@ export interface BranchMonitoringConfiguration {
      * @type {string}
      * @memberof BranchMonitoringConfiguration
      */
-    planBranchWorkflow?: BranchMonitoringConfigurationPlanBranchWorkflowEnum;
+    branchTriggeringOption?: BranchMonitoringConfigurationBranchTriggeringOptionEnum;
+    /**
+     * 
+     * @type {BranchIntegrationConfiguration}
+     * @memberof BranchMonitoringConfiguration
+     */
+    defaultBranchIntegrationConfiguration?: BranchIntegrationConfiguration;
     /**
      * 
      * @type {string}
      * @memberof BranchMonitoringConfiguration
      */
-    matchingPattern?: string;
+    defaultBranchNotificationStrategy?: BranchMonitoringConfigurationDefaultBranchNotificationStrategyEnum;
     /**
      * 
-     * @type {boolean}
+     * @type {TriggerDefinition}
      * @memberof BranchMonitoringConfiguration
      */
-    planBranchCreationEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchMonitoringConfiguration
-     */
-    removedBranchCleanUpEnabled?: boolean;
+    defaultTrigger?: TriggerDefinition;
     /**
      * 
      * @type {boolean}
@@ -400,22 +406,22 @@ export interface BranchMonitoringConfiguration {
     inactiveBranchCleanUpPeriodInDays?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof BranchMonitoringConfiguration
      */
-    removedBranchCleanUpPeriodInDays?: number;
+    matchingPattern?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchMonitoringConfiguration
+     */
+    planBranchCreationEnabled?: boolean;
     /**
      * 
      * @type {string}
      * @memberof BranchMonitoringConfiguration
      */
-    defaultBranchNotificationStrategy?: BranchMonitoringConfigurationDefaultBranchNotificationStrategyEnum;
-    /**
-     * 
-     * @type {BranchIntegrationConfiguration}
-     * @memberof BranchMonitoringConfiguration
-     */
-    defaultBranchIntegrationConfiguration?: BranchIntegrationConfiguration;
+    planBranchWorkflow?: BranchMonitoringConfigurationPlanBranchWorkflowEnum;
     /**
      * 
      * @type {boolean}
@@ -424,16 +430,16 @@ export interface BranchMonitoringConfiguration {
     remoteJiraBranchLinkingEnabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof BranchMonitoringConfiguration
      */
-    branchTriggeringOption?: BranchMonitoringConfigurationBranchTriggeringOptionEnum;
+    removedBranchCleanUpEnabled?: boolean;
     /**
      * 
-     * @type {TriggerDefinition}
+     * @type {number}
      * @memberof BranchMonitoringConfiguration
      */
-    defaultTrigger?: TriggerDefinition;
+    removedBranchCleanUpPeriodInDays?: number;
     /**
      * 
      * @type {boolean}
@@ -446,13 +452,12 @@ export interface BranchMonitoringConfiguration {
 /**
  * @export
  */
-export const BranchMonitoringConfigurationPlanBranchWorkflowEnum = {
-    BranchWorkflow: 'BRANCH_WORKFLOW',
-    ManualWorkflow: 'MANUAL_WORKFLOW',
-    PullRequestWorkflow: 'PULL_REQUEST_WORKFLOW',
-    ForkEnabledPullRequestWorkflow: 'FORK_ENABLED_PULL_REQUEST_WORKFLOW'
+export const BranchMonitoringConfigurationBranchTriggeringOptionEnum = {
+    Inherited: 'INHERITED',
+    ManualOnly: 'MANUAL_ONLY',
+    Custom: 'CUSTOM'
 } as const;
-export type BranchMonitoringConfigurationPlanBranchWorkflowEnum = typeof BranchMonitoringConfigurationPlanBranchWorkflowEnum[keyof typeof BranchMonitoringConfigurationPlanBranchWorkflowEnum];
+export type BranchMonitoringConfigurationBranchTriggeringOptionEnum = typeof BranchMonitoringConfigurationBranchTriggeringOptionEnum[keyof typeof BranchMonitoringConfigurationBranchTriggeringOptionEnum];
 
 /**
  * @export
@@ -467,12 +472,13 @@ export type BranchMonitoringConfigurationDefaultBranchNotificationStrategyEnum =
 /**
  * @export
  */
-export const BranchMonitoringConfigurationBranchTriggeringOptionEnum = {
-    Inherited: 'INHERITED',
-    ManualOnly: 'MANUAL_ONLY',
-    Custom: 'CUSTOM'
+export const BranchMonitoringConfigurationPlanBranchWorkflowEnum = {
+    BranchWorkflow: 'BRANCH_WORKFLOW',
+    ManualWorkflow: 'MANUAL_WORKFLOW',
+    PullRequestWorkflow: 'PULL_REQUEST_WORKFLOW',
+    ForkEnabledPullRequestWorkflow: 'FORK_ENABLED_PULL_REQUEST_WORKFLOW'
 } as const;
-export type BranchMonitoringConfigurationBranchTriggeringOptionEnum = typeof BranchMonitoringConfigurationBranchTriggeringOptionEnum[keyof typeof BranchMonitoringConfigurationBranchTriggeringOptionEnum];
+export type BranchMonitoringConfigurationPlanBranchWorkflowEnum = typeof BranchMonitoringConfigurationPlanBranchWorkflowEnum[keyof typeof BranchMonitoringConfigurationPlanBranchWorkflowEnum];
 
 /**
  * 
@@ -480,6 +486,12 @@ export type BranchMonitoringConfigurationBranchTriggeringOptionEnum = typeof Bra
  * @interface BranchSpecificConfiguration
  */
 export interface BranchSpecificConfiguration {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchSpecificConfiguration
+     */
+    awaitingSpecsExecution?: boolean;
     /**
      * 
      * @type {boolean}
@@ -504,12 +516,6 @@ export interface BranchSpecificConfiguration {
      * @memberof BranchSpecificConfiguration
      */
     planBranchWorkflow?: BranchSpecificConfigurationPlanBranchWorkflowEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BranchSpecificConfiguration
-     */
-    awaitingSpecsExecution?: boolean;
     /**
      * 
      * @type {boolean}
@@ -551,7 +557,13 @@ export interface BuildAgent {
      * @type {boolean}
      * @memberof BuildAgent
      */
-    dedicated?: boolean;
+    active?: boolean;
+    /**
+     * 
+     * @type {AgentStatus}
+     * @memberof BuildAgent
+     */
+    agentStatus?: AgentStatus;
     /**
      * 
      * @type {boolean}
@@ -560,10 +572,10 @@ export interface BuildAgent {
     busy?: boolean;
     /**
      * 
-     * @type {AgentStatus}
+     * @type {boolean}
      * @memberof BuildAgent
      */
-    agentStatus?: AgentStatus;
+    dedicated?: boolean;
     /**
      * 
      * @type {PipelineDefinition}
@@ -575,19 +587,7 @@ export interface BuildAgent {
      * @type {boolean}
      * @memberof BuildAgent
      */
-    requestedToBeStopped?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildAgent
-     */
-    unresponsive?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildAgent
-     */
-    name?: string;
+    enabled?: boolean;
     /**
      * 
      * @type {number}
@@ -599,19 +599,25 @@ export interface BuildAgent {
      * @type {string}
      * @memberof BuildAgent
      */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildAgent
+     */
+    requestedToBeStopped?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildAgent
+     */
     type?: BuildAgentTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof BuildAgent
      */
-    active?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildAgent
-     */
-    enabled?: boolean;
+    unresponsive?: boolean;
 }
 
 
@@ -634,22 +640,16 @@ export type BuildAgentTypeEnum = typeof BuildAgentTypeEnum[keyof typeof BuildAge
 export interface BuildDefinition {
     /**
      * 
-     * @type {Array<TriggerDefinition>}
+     * @type {BranchIntegrationConfiguration}
      * @memberof BuildDefinition
      */
-    triggerDefinitions?: Array<TriggerDefinition>;
+    branchIntegrationConfiguration?: BranchIntegrationConfiguration;
     /**
      * 
-     * @type {DockerPipelineConfiguration}
+     * @type {BranchMonitoringConfiguration}
      * @memberof BuildDefinition
      */
-    dockerPipelineConfiguration?: DockerPipelineConfiguration;
-    /**
-     * 
-     * @type {object}
-     * @memberof BuildDefinition
-     */
-    customConfiguration?: object;
+    branchMonitoringConfiguration?: BranchMonitoringConfiguration;
     /**
      * 
      * @type {BranchSpecificConfiguration}
@@ -658,34 +658,28 @@ export interface BuildDefinition {
     branchSpecificConfiguration?: BranchSpecificConfiguration;
     /**
      * 
-     * @type {object}
-     * @memberof BuildDefinition
-     */
-    configObjects?: object;
-    /**
-     * 
-     * @type {BranchIntegrationConfiguration}
-     * @memberof BuildDefinition
-     */
-    branchIntegrationConfiguration?: BranchIntegrationConfiguration;
-    /**
-     * 
-     * @type {Array<TaskDefinition>}
-     * @memberof BuildDefinition
-     */
-    taskDefinitions?: Array<TaskDefinition>;
-    /**
-     * 
      * @type {boolean}
      * @memberof BuildDefinition
      */
     cleanWorkingDirectory?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof BuildDefinition
      */
-    repositoryIdDefiningWorkingDir?: number;
+    configObjects?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof BuildDefinition
+     */
+    customConfiguration?: object;
+    /**
+     * 
+     * @type {DockerPipelineConfiguration}
+     * @memberof BuildDefinition
+     */
+    dockerPipelineConfiguration?: DockerPipelineConfiguration;
     /**
      * 
      * @type {boolean}
@@ -694,10 +688,22 @@ export interface BuildDefinition {
     merged?: boolean;
     /**
      * 
-     * @type {BranchMonitoringConfiguration}
+     * @type {number}
      * @memberof BuildDefinition
      */
-    branchMonitoringConfiguration?: BranchMonitoringConfiguration;
+    repositoryIdDefiningWorkingDir?: number;
+    /**
+     * 
+     * @type {Array<TaskDefinition>}
+     * @memberof BuildDefinition
+     */
+    taskDefinitions?: Array<TaskDefinition>;
+    /**
+     * 
+     * @type {Array<TriggerDefinition>}
+     * @memberof BuildDefinition
+     */
+    triggerDefinitions?: Array<TriggerDefinition>;
 }
 /**
  * 
@@ -707,10 +713,10 @@ export interface BuildDefinition {
 export interface BuildDefinitionForBuild {
     /**
      * 
-     * @type {Plan}
+     * @type {number}
      * @memberof BuildDefinitionForBuild
      */
-    plan?: Plan;
+    id?: number;
     /**
      * 
      * @type {boolean}
@@ -719,16 +725,16 @@ export interface BuildDefinitionForBuild {
     merged?: boolean;
     /**
      * 
+     * @type {Plan}
+     * @memberof BuildDefinitionForBuild
+     */
+    plan?: Plan;
+    /**
+     * 
      * @type {string}
      * @memberof BuildDefinitionForBuild
      */
     xmlData?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildDefinitionForBuild
-     */
-    id?: number;
 }
 /**
  * 
@@ -738,22 +744,16 @@ export interface BuildDefinitionForBuild {
 export interface BuildLogger {
     /**
      * 
-     * @type {number}
-     * @memberof BuildLogger
-     */
-    logEntryCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildLogger
-     */
-    timeOfLastLog?: number;
-    /**
-     * 
      * @type {any}
      * @memberof BuildLogger
      */
     interceptorStack?: any | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildLogger
+     */
+    logEntryCount?: number;
     /**
      * 
      * @type {any}
@@ -766,6 +766,12 @@ export interface BuildLogger {
      * @memberof BuildLogger
      */
     persistent?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildLogger
+     */
+    timeOfLastLog?: number;
 }
 /**
  * 
@@ -788,160 +794,16 @@ export interface BuildMonitoringLink {
 export interface BuildResultsSummary {
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    queueDuration?: number;
-    /**
-     * 
-     * @type {ChainResultsSummary}
-     * @memberof BuildResultsSummary
-     */
-    chainResultsSummary?: ChainResultsSummary;
+    active?: boolean;
     /**
      * 
      * @type {Array<ArtifactLink>}
      * @memberof BuildResultsSummary
      */
-    producedArtifactLinks?: Array<ArtifactLink>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    vcsUpdateTime?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    vcsUpdateDuration?: number;
-    /**
-     * 
-     * @type {FilteredTestResultsTestClassResult}
-     * @memberof BuildResultsSummary
-     */
-    filteredTestResults?: FilteredTestResultsTestClassResult;
-    /**
-     * 
-     * @type {ExtraBuildResultsData}
-     * @memberof BuildResultsSummary
-     */
-    extraBuildResultsData?: ExtraBuildResultsData;
-    /**
-     * 
-     * @type {object}
-     * @memberof BuildResultsSummary
-     */
-    resultVariables?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildResultKey?: string;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof BuildResultsSummary
-     */
-    immutablePlan?: ImmutablePlan;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {TriggerReason}
-     * @memberof BuildResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    deltaState?: BuildResultsSummaryDeltaStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    onceOff?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    customBuild?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildCancelledDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    timeToFix?: number;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof BuildResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    queueTime?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    restartCount?: number;
+    artifactLinksThatExist?: Array<ArtifactLink>;
     /**
      * 
      * @type {number}
@@ -956,70 +818,106 @@ export interface BuildResultsSummary {
     buildAgentType?: BuildResultsSummaryBuildAgentTypeEnum;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof BuildResultsSummary
      */
-    variableContextBaselineId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    formatVersion?: number;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof BuildResultsSummary
-     */
-    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof BuildResultsSummary
-     */
-    substitutedVariablesEncrypted?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {number}
-     * @memberof BuildResultsSummary
-     */
-    id?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof BuildResultsSummary
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof BuildResultsSummary
-     */
-    planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {Array<RepositoryChangeset>}
-     * @memberof BuildResultsSummary
-     */
-    repositoryChangesets?: Array<RepositoryChangeset>;
+    buildCancelledDate?: string;
     /**
      * 
      * @type {string}
      * @memberof BuildResultsSummary
      */
-    planName?: string;
+    buildCompletedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildKey?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    buildNumber?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildResultKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildState?: BuildResultsSummaryBuildStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    buildTime?: string;
+    /**
+     * 
+     * @type {ChainResultsSummary}
+     * @memberof BuildResultsSummary
+     */
+    chainResultsSummary?: ChainResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    changesListSummary?: string;
+    /**
+     * 
+     * @type {Array<Commit>}
+     * @memberof BuildResultsSummary
+     */
+    commits?: Array<Commit>;
     /**
      * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    successful?: boolean;
+    customBuild?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof BuildResultsSummary
+     */
+    customBuildData?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    deltaState?: BuildResultsSummaryDeltaStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    duration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {ExtraBuildResultsData}
+     * @memberof BuildResultsSummary
+     */
+    extraBuildResultsData?: ExtraBuildResultsData;
     /**
      * 
      * @type {boolean}
@@ -1028,16 +926,70 @@ export interface BuildResultsSummary {
     failed?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {FilteredTestResultsTestClassResult}
      * @memberof BuildResultsSummary
      */
-    notRunYet?: boolean;
+    filteredTestResults?: FilteredTestResultsTestClassResult;
     /**
      * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    notBuilt?: boolean;
+    finished?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof BuildResultsSummary
+     */
+    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    formatVersion?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    fullPlanName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    id?: number;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof BuildResultsSummary
+     */
+    immutableChain?: ImmutableChain;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof BuildResultsSummary
+     */
+    immutablePlan?: ImmutablePlan;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    inProgress?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof BuildResultsSummary
+     */
+    jiraIssueKeys?: Set<string>;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof BuildResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {Array<string>}
@@ -1052,166 +1004,10 @@ export interface BuildResultsSummary {
     lifeCycleState?: BuildResultsSummaryLifeCycleStateEnum;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof BuildResultsSummary
      */
-    inProgress?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    pending?: boolean;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof BuildResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof BuildResultsSummary
-     */
-    planIfExists?: ImmutablePlan;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof BuildResultsSummary
-     */
-    immutableChain?: ImmutableChain;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BuildResultsSummary
-     */
-    waiting?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof BuildResultsSummary
-     */
-    customBuildData?: object;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof BuildResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof BuildResultsSummary
-     */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof BuildResultsSummary
-     */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof BuildResultsSummary
-     */
-    jiraIssueKeys?: Set<string>;
-    /**
-     * 
-     * @type {Set<Author>}
-     * @memberof BuildResultsSummary
-     */
-    uniqueAuthors?: Set<Author>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    processingDurationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    shortReasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    relativeQueueDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    relativeBuildStartedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    buildTime?: string;
-    /**
-     * 
-     * @type {Array<ArtifactLink>}
-     * @memberof BuildResultsSummary
-     */
-    artifactLinks?: Array<ArtifactLink>;
-    /**
-     * 
-     * @type {Array<ArtifactLink>}
-     * @memberof BuildResultsSummary
-     */
-    artifactLinksThatExist?: Array<ArtifactLink>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    changesListSummary?: string;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof BuildResultsSummary
-     */
-    substitutedVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof BuildResultsSummary
-     */
-    variableContextLogs?: Array<VariableContextSnapshot>;
+    logSize?: number;
     /**
      * 
      * @type {Array<VariableSubstitution>}
@@ -1220,22 +1016,82 @@ export interface BuildResultsSummary {
     manuallyOverriddenVariables?: Array<VariableSubstitution>;
     /**
      * 
-     * @type {Array<Commit>}
+     * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    commits?: Array<Commit>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BuildResultsSummary
-     */
-    fullPlanName?: string;
+    markedForDeletion?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
-    active?: boolean;
+    notBuilt?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    notRunYet?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    onceOff?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    pending?: boolean;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof BuildResultsSummary
+     */
+    planIfExists?: ImmutablePlan;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof BuildResultsSummary
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof BuildResultsSummary
+     */
+    planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    processingDurationDescription?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    queueDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    queueTime?: string;
     /**
      * 
      * @type {boolean}
@@ -1247,21 +1103,180 @@ export interface BuildResultsSummary {
      * @type {string}
      * @memberof BuildResultsSummary
      */
-    statDate?: string;
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    rebuild?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof BuildResultsSummary
+     */
+    relatedJiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
      * @memberof BuildResultsSummary
      */
-    buildState?: BuildResultsSummaryBuildStateEnum;
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    relativeQueueDate?: string;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof BuildResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
     /**
      * 
      * @type {number}
      * @memberof BuildResultsSummary
      */
-    buildNumber?: number;
+    restartCount?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof BuildResultsSummary
+     */
+    resultVariables?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    shortReasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    statDate?: string;
+    /**
+     * 
+     * @type {Array<ConsumedSubscription>}
+     * @memberof BuildResultsSummary
+     */
+    subscriptions?: Array<ConsumedSubscription>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof BuildResultsSummary
+     */
+    substitutedVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof BuildResultsSummary
+     */
+    substitutedVariablesEncrypted?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    successful?: boolean;
+    /**
+     * 
+     * @type {TestResultsSummary}
+     * @memberof BuildResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    testSummary?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    timeToFix?: number;
+    /**
+     * 
+     * @type {TriggerReason}
+     * @memberof BuildResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {Set<Author>}
+     * @memberof BuildResultsSummary
+     */
+    uniqueAuthors?: Set<Author>;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    variableContextBaselineId?: number;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof BuildResultsSummary
+     */
+    variableContextLogs?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof BuildResultsSummary
+     */
+    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildResultsSummary
+     */
+    vcsUpdateDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildResultsSummary
+     */
+    vcsUpdateTime?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
+    waiting?: boolean;
 }
 
+
+/**
+ * @export
+ */
+export const BuildResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type BuildResultsSummaryBuildAgentTypeEnum = typeof BuildResultsSummaryBuildAgentTypeEnum[keyof typeof BuildResultsSummaryBuildAgentTypeEnum];
+
+/**
+ * @export
+ */
+export const BuildResultsSummaryBuildStateEnum = {
+    Unknown: 'Unknown',
+    Successful: 'Successful',
+    Failed: 'Failed'
+} as const;
+export type BuildResultsSummaryBuildStateEnum = typeof BuildResultsSummaryBuildStateEnum[keyof typeof BuildResultsSummaryBuildStateEnum];
 
 /**
  * @export
@@ -1278,17 +1293,6 @@ export type BuildResultsSummaryDeltaStateEnum = typeof BuildResultsSummaryDeltaS
 /**
  * @export
  */
-export const BuildResultsSummaryBuildAgentTypeEnum = {
-    Local: 'LOCAL',
-    Remote: 'REMOTE',
-    Elastic: 'ELASTIC',
-    Ephemeral: 'EPHEMERAL'
-} as const;
-export type BuildResultsSummaryBuildAgentTypeEnum = typeof BuildResultsSummaryBuildAgentTypeEnum[keyof typeof BuildResultsSummaryBuildAgentTypeEnum];
-
-/**
- * @export
- */
 export const BuildResultsSummaryLifeCycleStateEnum = {
     Pending: 'Pending',
     Queued: 'Queued',
@@ -1297,16 +1301,6 @@ export const BuildResultsSummaryLifeCycleStateEnum = {
     NotBuilt: 'NotBuilt'
 } as const;
 export type BuildResultsSummaryLifeCycleStateEnum = typeof BuildResultsSummaryLifeCycleStateEnum[keyof typeof BuildResultsSummaryLifeCycleStateEnum];
-
-/**
- * @export
- */
-export const BuildResultsSummaryBuildStateEnum = {
-    Unknown: 'Unknown',
-    Successful: 'Successful',
-    Failed: 'Failed'
-} as const;
-export type BuildResultsSummaryBuildStateEnum = typeof BuildResultsSummaryBuildStateEnum[keyof typeof BuildResultsSummaryBuildStateEnum];
 
 /**
  * 
@@ -1319,379 +1313,13 @@ export interface ChainResultsSummary {
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    specsResult?: boolean;
-    /**
-     * 
-     * @type {MergeResultSummary}
-     * @memberof ChainResultsSummary
-     */
-    mergeResult?: MergeResultSummary;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    continuable?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    fixedInResult?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    restartable?: boolean;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ChainResultsSummary
-     */
-    immutablePlan?: ImmutableChain;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ChainResultsSummary
-     */
-    planIfExists?: ImmutableChain;
-    /**
-     * 
-     * @type {Array<ChainStageResult>}
-     * @memberof ChainResultsSummary
-     */
-    stageResults?: Array<ChainStageResult>;
-    /**
-     * 
-     * @type {FilteredTestResultsTestClassResultDescriptor}
-     * @memberof ChainResultsSummary
-     */
-    testResults?: FilteredTestResultsTestClassResultDescriptor;
-    /**
-     * 
-     * @type {Array<BuildResultsSummary>}
-     * @memberof ChainResultsSummary
-     */
-    failedJobResults?: Array<BuildResultsSummary>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    totalJobCount?: number;
-    /**
-     * 
-     * @type {Array<ResultsSummary>}
-     * @memberof ChainResultsSummary
-     */
-    orderedJobResultSummaries?: Array<ResultsSummary>;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof ChainResultsSummary
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof ChainResultsSummary
-     */
-    planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {Array<RepositoryChangeset>}
-     * @memberof ChainResultsSummary
-     */
-    repositoryChangesets?: Array<RepositoryChangeset>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    planName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    successful?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    failed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    notRunYet?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    notBuilt?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ChainResultsSummary
-     */
-    labelNames?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    lifeCycleState?: ChainResultsSummaryLifeCycleStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    inProgress?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    pending?: boolean;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof ChainResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ChainResultsSummary
-     */
-    immutableChain?: ImmutableChain;
-    /**
-     * 
-     * @type {TriggerReason}
-     * @memberof ChainResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    deltaState?: ChainResultsSummaryDeltaStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    onceOff?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    customBuild?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    buildCancelledDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    waiting?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof ChainResultsSummary
-     */
-    customBuildData?: object;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ChainResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ChainResultsSummary
-     */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ChainResultsSummary
-     */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof ChainResultsSummary
-     */
-    jiraIssueKeys?: Set<string>;
-    /**
-     * 
-     * @type {Set<Author>}
-     * @memberof ChainResultsSummary
-     */
-    uniqueAuthors?: Set<Author>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    timeToFix?: number;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof ChainResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    processingDurationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    shortReasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    relativeQueueDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    relativeBuildStartedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    buildTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    queueTime?: string;
-    /**
-     * 
-     * @type {Array<ArtifactLink>}
-     * @memberof ChainResultsSummary
-     */
-    artifactLinks?: Array<ArtifactLink>;
+    active?: boolean;
     /**
      * 
      * @type {Array<ArtifactLink>}
      * @memberof ChainResultsSummary
      */
     artifactLinksThatExist?: Array<ArtifactLink>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainResultsSummary
-     */
-    changesListSummary?: string;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ChainResultsSummary
-     */
-    substitutedVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof ChainResultsSummary
-     */
-    variableContextLogs?: Array<VariableContextSnapshot>;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ChainResultsSummary
-     */
-    manuallyOverriddenVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    restartCount?: number;
-    /**
-     * 
-     * @type {Array<Commit>}
-     * @memberof ChainResultsSummary
-     */
-    commits?: Array<Commit>;
     /**
      * 
      * @type {number}
@@ -1709,37 +1337,13 @@ export interface ChainResultsSummary {
      * @type {string}
      * @memberof ChainResultsSummary
      */
-    fullPlanName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainResultsSummary
-     */
-    queued?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChainResultsSummary
-     */
-    id?: number;
+    buildCancelledDate?: string;
     /**
      * 
      * @type {string}
      * @memberof ChainResultsSummary
      */
-    statDate?: string;
+    buildCompletedDate?: string;
     /**
      * 
      * @type {string}
@@ -1751,7 +1355,7 @@ export interface ChainResultsSummary {
      * @type {string}
      * @memberof ChainResultsSummary
      */
-    buildState?: ChainResultsSummaryBuildStateEnum;
+    buildKey?: string;
     /**
      * 
      * @type {number}
@@ -1763,19 +1367,97 @@ export interface ChainResultsSummary {
      * @type {string}
      * @memberof ChainResultsSummary
      */
-    buildKey?: string;
+    buildResultKey?: string;
     /**
      * 
      * @type {string}
      * @memberof ChainResultsSummary
      */
-    buildResultKey?: string;
+    buildState?: ChainResultsSummaryBuildStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    buildTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    changesListSummary?: string;
+    /**
+     * 
+     * @type {Array<Commit>}
+     * @memberof ChainResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    continuable?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    customBuild?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ChainResultsSummary
+     */
+    customBuildData?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    deltaState?: ChainResultsSummaryDeltaStateEnum;
     /**
      * 
      * @type {number}
      * @memberof ChainResultsSummary
      */
-    variableContextBaselineId?: number;
+    duration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    failed?: boolean;
+    /**
+     * 
+     * @type {Array<BuildResultsSummary>}
+     * @memberof ChainResultsSummary
+     */
+    failedJobResults?: Array<BuildResultsSummary>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    finished?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    fixedInResult?: number;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ChainResultsSummary
+     */
+    fixingJiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {number}
@@ -1784,10 +1466,250 @@ export interface ChainResultsSummary {
     formatVersion?: number;
     /**
      * 
-     * @type {Array<VariableContextSnapshot>}
+     * @type {string}
      * @memberof ChainResultsSummary
      */
-    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
+    fullPlanName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    id?: number;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ChainResultsSummary
+     */
+    immutableChain?: ImmutableChain;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ChainResultsSummary
+     */
+    immutablePlan?: ImmutableChain;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    inProgress?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof ChainResultsSummary
+     */
+    jiraIssueKeys?: Set<string>;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ChainResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ChainResultsSummary
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    lifeCycleState?: ChainResultsSummaryLifeCycleStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    logSize?: number;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ChainResultsSummary
+     */
+    manuallyOverriddenVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {MergeResultSummary}
+     * @memberof ChainResultsSummary
+     */
+    mergeResult?: MergeResultSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    notBuilt?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    notRunYet?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    onceOff?: boolean;
+    /**
+     * 
+     * @type {Array<ResultsSummary>}
+     * @memberof ChainResultsSummary
+     */
+    orderedJobResultSummaries?: Array<ResultsSummary>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    pending?: boolean;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ChainResultsSummary
+     */
+    planIfExists?: ImmutableChain;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof ChainResultsSummary
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof ChainResultsSummary
+     */
+    planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    processingDurationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    queueTime?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    queued?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    rebuild?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ChainResultsSummary
+     */
+    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    relativeQueueDate?: string;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof ChainResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    restartCount?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    restartable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    shortReasonSummary?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    specsResult?: boolean;
+    /**
+     * 
+     * @type {Array<ChainStageResult>}
+     * @memberof ChainResultsSummary
+     */
+    stageResults?: Array<ChainStageResult>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    statDate?: string;
+    /**
+     * 
+     * @type {Array<ConsumedSubscription>}
+     * @memberof ChainResultsSummary
+     */
+    subscriptions?: Array<ConsumedSubscription>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ChainResultsSummary
+     */
+    substitutedVariables?: Array<VariableSubstitution>;
     /**
      * 
      * @type {Array<VariableSubstitution>}
@@ -1799,33 +1721,75 @@ export interface ChainResultsSummary {
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
-    markedForDeletion?: boolean;
+    successful?: boolean;
+    /**
+     * 
+     * @type {FilteredTestResultsTestClassResultDescriptor}
+     * @memberof ChainResultsSummary
+     */
+    testResults?: FilteredTestResultsTestClassResultDescriptor;
+    /**
+     * 
+     * @type {TestResultsSummary}
+     * @memberof ChainResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainResultsSummary
+     */
+    testSummary?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    timeToFix?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    totalJobCount?: number;
+    /**
+     * 
+     * @type {TriggerReason}
+     * @memberof ChainResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {Set<Author>}
+     * @memberof ChainResultsSummary
+     */
+    uniqueAuthors?: Set<Author>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainResultsSummary
+     */
+    variableContextBaselineId?: number;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof ChainResultsSummary
+     */
+    variableContextLogs?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof ChainResultsSummary
+     */
+    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
+    waiting?: boolean;
 }
 
-
-/**
- * @export
- */
-export const ChainResultsSummaryLifeCycleStateEnum = {
-    Pending: 'Pending',
-    Queued: 'Queued',
-    InProgress: 'InProgress',
-    Finished: 'Finished',
-    NotBuilt: 'NotBuilt'
-} as const;
-export type ChainResultsSummaryLifeCycleStateEnum = typeof ChainResultsSummaryLifeCycleStateEnum[keyof typeof ChainResultsSummaryLifeCycleStateEnum];
-
-/**
- * @export
- */
-export const ChainResultsSummaryDeltaStateEnum = {
-    None: 'NONE',
-    Passing: 'PASSING',
-    Failing: 'FAILING',
-    Broken: 'BROKEN',
-    Fixed: 'FIXED'
-} as const;
-export type ChainResultsSummaryDeltaStateEnum = typeof ChainResultsSummaryDeltaStateEnum[keyof typeof ChainResultsSummaryDeltaStateEnum];
 
 /**
  * @export
@@ -1849,6 +1813,30 @@ export const ChainResultsSummaryBuildStateEnum = {
 export type ChainResultsSummaryBuildStateEnum = typeof ChainResultsSummaryBuildStateEnum[keyof typeof ChainResultsSummaryBuildStateEnum];
 
 /**
+ * @export
+ */
+export const ChainResultsSummaryDeltaStateEnum = {
+    None: 'NONE',
+    Passing: 'PASSING',
+    Failing: 'FAILING',
+    Broken: 'BROKEN',
+    Fixed: 'FIXED'
+} as const;
+export type ChainResultsSummaryDeltaStateEnum = typeof ChainResultsSummaryDeltaStateEnum[keyof typeof ChainResultsSummaryDeltaStateEnum];
+
+/**
+ * @export
+ */
+export const ChainResultsSummaryLifeCycleStateEnum = {
+    Pending: 'Pending',
+    Queued: 'Queued',
+    InProgress: 'InProgress',
+    Finished: 'Finished',
+    NotBuilt: 'NotBuilt'
+} as const;
+export type ChainResultsSummaryLifeCycleStateEnum = typeof ChainResultsSummaryLifeCycleStateEnum[keyof typeof ChainResultsSummaryLifeCycleStateEnum];
+
+/**
  * 
  * @export
  * @interface ChainStageResult
@@ -1859,13 +1847,37 @@ export interface ChainStageResult {
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    restartable?: boolean;
+    allJobsExist?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    successful?: boolean;
+    allNotSuccessfulJobsExist?: boolean;
+    /**
+     * 
+     * @type {Set<BuildResultsSummary>}
+     * @memberof ChainStageResult
+     */
+    buildResults?: Set<BuildResultsSummary>;
+    /**
+     * 
+     * @type {ChainResultsSummary}
+     * @memberof ChainStageResult
+     */
+    chainResult?: ChainResultsSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    completed?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainStageResult
+     */
+    description?: string;
     /**
      * 
      * @type {boolean}
@@ -1874,16 +1886,64 @@ export interface ChainStageResult {
     failed?: boolean;
     /**
      * 
+     * @type {Array<BuildResultsSummary>}
+     * @memberof ChainStageResult
+     */
+    failedBuildResults?: Array<BuildResultsSummary>;
+    /**
+     * 
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    notBuilt?: boolean;
+    _final?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    finished?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChainStageResult
+     */
+    id?: number;
     /**
      * 
      * @type {string}
      * @memberof ChainStageResult
      */
     lifeCycleState?: ChainStageResultLifeCycleStateEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    manual?: boolean;
+    /**
+     * 
+     * @type {Array<StageVariableContext>}
+     * @memberof ChainStageResult
+     */
+    manualVariables?: Array<StageVariableContext>;
+    /**
+     * 
+     * @type {Array<StageVariableContext>}
+     * @memberof ChainStageResult
+     */
+    manualVariablesEncrypted?: Array<StageVariableContext>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChainStageResult
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainStageResult
+     */
+    notBuilt?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1901,61 +1961,7 @@ export interface ChainStageResult {
      * @type {boolean}
      * @memberof ChainStageResult
      */
-    finished?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    manual?: boolean;
-    /**
-     * 
-     * @type {ChainResultsSummary}
-     * @memberof ChainStageResult
-     */
-    chainResult?: ChainResultsSummary;
-    /**
-     * 
-     * @type {Set<BuildResultsSummary>}
-     * @memberof ChainStageResult
-     */
-    buildResults?: Set<BuildResultsSummary>;
-    /**
-     * 
-     * @type {Array<BuildResultsSummary>}
-     * @memberof ChainStageResult
-     */
-    sortedBuildResults?: Array<BuildResultsSummary>;
-    /**
-     * 
-     * @type {Array<BuildResultsSummary>}
-     * @memberof ChainStageResult
-     */
-    failedBuildResults?: Array<BuildResultsSummary>;
-    /**
-     * 
-     * @type {Array<BuildResultsSummary>}
-     * @memberof ChainStageResult
-     */
-    successfulBuildResults?: Array<BuildResultsSummary>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    allJobsExist?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    allNotSuccessfulJobsExist?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    _final?: boolean;
+    restartable?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1964,22 +1970,10 @@ export interface ChainStageResult {
     runnable?: boolean;
     /**
      * 
-     * @type {Array<StageVariableContext>}
+     * @type {Array<BuildResultsSummary>}
      * @memberof ChainStageResult
      */
-    manualVariables?: Array<StageVariableContext>;
-    /**
-     * 
-     * @type {Array<StageVariableContext>}
-     * @memberof ChainStageResult
-     */
-    manualVariablesEncrypted?: Array<StageVariableContext>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChainStageResult
-     */
-    completed?: boolean;
+    sortedBuildResults?: Array<BuildResultsSummary>;
     /**
      * 
      * @type {string}
@@ -1988,22 +1982,16 @@ export interface ChainStageResult {
     state?: ChainStageResultStateEnum;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof ChainStageResult
      */
-    id?: number;
+    successful?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {Array<BuildResultsSummary>}
      * @memberof ChainStageResult
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChainStageResult
-     */
-    description?: string;
+    successfulBuildResults?: Array<BuildResultsSummary>;
 }
 
 
@@ -2043,30 +2031,6 @@ export interface Commit {
     author?: Author;
     /**
      * 
-     * @type {RepositoryChangeset}
-     * @memberof Commit
-     */
-    repositoryChangeset?: RepositoryChangeset;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Commit
-     */
-    foreignCommit?: boolean;
-    /**
-     * 
-     * @type {Array<CommitFile>}
-     * @memberof Commit
-     */
-    files?: Array<CommitFile>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Commit
-     */
-    id?: number;
-    /**
-     * 
      * @type {AuthorContext}
      * @memberof Commit
      */
@@ -2082,13 +2046,37 @@ export interface Commit {
      * @type {string}
      * @memberof Commit
      */
-    date?: string;
+    comment?: string;
     /**
      * 
      * @type {string}
      * @memberof Commit
      */
-    comment?: string;
+    date?: string;
+    /**
+     * 
+     * @type {Array<CommitFile>}
+     * @memberof Commit
+     */
+    files?: Array<CommitFile>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Commit
+     */
+    foreignCommit?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Commit
+     */
+    id?: number;
+    /**
+     * 
+     * @type {RepositoryChangeset}
+     * @memberof Commit
+     */
+    repositoryChangeset?: RepositoryChangeset;
 }
 /**
  * 
@@ -2096,12 +2084,6 @@ export interface Commit {
  * @interface CommitFile
  */
 export interface CommitFile {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitFile
-     */
-    revision?: string;
     /**
      * 
      * @type {string}
@@ -2116,16 +2098,22 @@ export interface CommitFile {
     cleanName?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof CommitFile
      */
-    revisionKnown?: boolean;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof CommitFile
      */
-    name?: string;
+    revision?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CommitFile
+     */
+    revisionKnown?: boolean;
 }
 /**
  * 
@@ -2148,52 +2136,22 @@ export interface ConfigurationInterpolator {
 export interface ConfigurationNode {
     /**
      * 
-     * @type {ConfigurationNode}
-     * @memberof ConfigurationNode
-     */
-    parentNode?: ConfigurationNode;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConfigurationNode
-     */
-    childrenCount?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof ConfigurationNode
      */
     attribute?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ConfigurationNode
      */
-    name?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof ConfigurationNode
-     */
-    value?: object;
+    attributeCount?: number;
     /**
      * 
      * @type {Array<object>}
      * @memberof ConfigurationNode
      */
     attributes?: Array<object>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ConfigurationNode
-     */
-    defined?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof ConfigurationNode
-     */
-    reference?: object;
     /**
      * 
      * @type {Array<object>}
@@ -2205,7 +2163,37 @@ export interface ConfigurationNode {
      * @type {number}
      * @memberof ConfigurationNode
      */
-    attributeCount?: number;
+    childrenCount?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfigurationNode
+     */
+    defined?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfigurationNode
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ConfigurationNode}
+     * @memberof ConfigurationNode
+     */
+    parentNode?: ConfigurationNode;
+    /**
+     * 
+     * @type {object}
+     * @memberof ConfigurationNode
+     */
+    reference?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof ConfigurationNode
+     */
+    value?: object;
 }
 /**
  * 
@@ -2252,6 +2240,12 @@ export interface ConsumedSubscription {
 export interface CreateAccessTokenRequest {
     /**
      * 
+     * @type {number}
+     * @memberof CreateAccessTokenRequest
+     */
+    daysUntilExpiry?: number;
+    /**
+     * 
      * @type {string}
      * @memberof CreateAccessTokenRequest
      */
@@ -2284,16 +2278,16 @@ export interface CreateCommentRequest {
 export interface DashboardProjectWithEnvironmentStatus {
     /**
      * 
-     * @type {DeploymentProject}
+     * @type {RestDeploymentProject}
      * @memberof DashboardProjectWithEnvironmentStatus
      */
-    deploymentProject?: DeploymentProject;
+    deploymentProject?: RestDeploymentProject;
     /**
      * 
-     * @type {Array<EnvironmentStatus>}
+     * @type {Array<RestEnvironmentDashboardStatus>}
      * @memberof DashboardProjectWithEnvironmentStatus
      */
-    environmentStatuses?: Array<EnvironmentStatus>;
+    environmentStatuses?: Array<RestEnvironmentDashboardStatus>;
     /**
      * 
      * @type {RestDeploymentVersion}
@@ -2342,255 +2336,6 @@ export interface DeploymentKey {
 /**
  * 
  * @export
- * @interface DeploymentProject
- */
-export interface DeploymentProject {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentProject
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentProject
-     */
-    entityType?: DeploymentProjectEntityTypeEnum;
-    /**
-     * 
-     * @type {Array<Environment>}
-     * @memberof DeploymentProject
-     */
-    environments?: Array<Environment>;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeploymentProject
-     */
-    id?: number;
-    /**
-     * 
-     * @type {DeploymentKey}
-     * @memberof DeploymentProject
-     */
-    key?: DeploymentKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentProject
-     */
-    name?: string;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof DeploymentProject
-     */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {Operations}
-     * @memberof DeploymentProject
-     */
-    operations?: Operations;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof DeploymentProject
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DeploymentProject
-     */
-    repositorySpecsManaged?: boolean;
-    /**
-     * 
-     * @type {ImmutableVcsBambooSpecsSource}
-     * @memberof DeploymentProject
-     */
-    vcsBambooSpecsSource?: ImmutableVcsBambooSpecsSource;
-}
-
-
-/**
- * @export
- */
-export const DeploymentProjectEntityTypeEnum = {
-    Chain: 'CHAIN',
-    Stage: 'STAGE',
-    Job: 'JOB',
-    Repository: 'REPOSITORY',
-    ChainBranch: 'CHAIN_BRANCH',
-    JobBranch: 'JOB_BRANCH',
-    Task: 'TASK',
-    Project: 'PROJECT',
-    ArtifactDefinition: 'ARTIFACT_DEFINITION',
-    DeploymentProject: 'DEPLOYMENT_PROJECT',
-    SharedCredential: 'SHARED_CREDENTIAL'
-} as const;
-export type DeploymentProjectEntityTypeEnum = typeof DeploymentProjectEntityTypeEnum[keyof typeof DeploymentProjectEntityTypeEnum];
-
-/**
- * 
- * @export
- * @interface DeploymentResult
- */
-export interface DeploymentResult {
-    /**
-     * 
-     * @type {BuildAgent}
-     * @memberof DeploymentResult
-     */
-    agent?: BuildAgent;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeploymentResult
-     */
-    agentId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    agentType?: DeploymentResultAgentTypeEnum;
-    /**
-     * 
-     * @type {object}
-     * @memberof DeploymentResult
-     */
-    customData?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    deploymentState?: DeploymentResultDeploymentStateEnum;
-    /**
-     * 
-     * @type {DeploymentVersion}
-     * @memberof DeploymentResult
-     */
-    deploymentVersion?: DeploymentVersion;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    deploymentVersionName?: string;
-    /**
-     * 
-     * @type {Environment}
-     * @memberof DeploymentResult
-     */
-    environment?: Environment;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeploymentResult
-     */
-    environmentId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    executedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    finishedDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeploymentResult
-     */
-    id?: number;
-    /**
-     * 
-     * @type {DeploymentResultKey}
-     * @memberof DeploymentResult
-     */
-    key?: DeploymentResultKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    lifeCycleState?: DeploymentResultLifeCycleStateEnum;
-    /**
-     * 
-     * @type {Operations}
-     * @memberof DeploymentResult
-     */
-    operations?: Operations;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    queuedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResult
-     */
-    startedDate?: string;
-    /**
-     * 
-     * @type {TriggerReason}
-     * @memberof DeploymentResult
-     */
-    triggerReason?: TriggerReason;
-}
-
-
-/**
- * @export
- */
-export const DeploymentResultAgentTypeEnum = {
-    Local: 'LOCAL',
-    Remote: 'REMOTE',
-    Elastic: 'ELASTIC',
-    Ephemeral: 'EPHEMERAL'
-} as const;
-export type DeploymentResultAgentTypeEnum = typeof DeploymentResultAgentTypeEnum[keyof typeof DeploymentResultAgentTypeEnum];
-
-/**
- * @export
- */
-export const DeploymentResultDeploymentStateEnum = {
-    Unknown: 'Unknown',
-    Successful: 'Successful',
-    Failed: 'Failed'
-} as const;
-export type DeploymentResultDeploymentStateEnum = typeof DeploymentResultDeploymentStateEnum[keyof typeof DeploymentResultDeploymentStateEnum];
-
-/**
- * @export
- */
-export const DeploymentResultLifeCycleStateEnum = {
-    Pending: 'Pending',
-    Queued: 'Queued',
-    InProgress: 'InProgress',
-    Finished: 'Finished',
-    NotBuilt: 'NotBuilt'
-} as const;
-export type DeploymentResultLifeCycleStateEnum = typeof DeploymentResultLifeCycleStateEnum[keyof typeof DeploymentResultLifeCycleStateEnum];
-
-/**
- * 
- * @export
  * @interface DeploymentResultKey
  */
 export interface DeploymentResultKey {
@@ -2608,6 +2353,12 @@ export interface DeploymentResultKey {
     entityKey?: Key;
     /**
      * 
+     * @type {string}
+     * @memberof DeploymentResultKey
+     */
+    key?: string;
+    /**
+     * 
      * @type {number}
      * @memberof DeploymentResultKey
      */
@@ -2618,12 +2369,6 @@ export interface DeploymentResultKey {
      * @memberof DeploymentResultKey
      */
     resultNumberLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentResultKey
-     */
-    key?: string;
 }
 /**
  * 
@@ -2631,60 +2376,6 @@ export interface DeploymentResultKey {
  * @interface DeploymentVersion
  */
 export interface DeploymentVersion {
-    /**
-     * 
-     * @type {Operations}
-     * @memberof DeploymentVersion
-     */
-    operations?: Operations;
-    /**
-     * 
-     * @type {DeploymentVersionStatus}
-     * @memberof DeploymentVersion
-     */
-    versionStatus?: DeploymentVersionStatus;
-    /**
-     * 
-     * @type {Array<VariableSubstitutionContext>}
-     * @memberof DeploymentVersion
-     */
-    variableContext?: Array<VariableSubstitutionContext>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    creatorGravatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    creatorDisplayName?: string;
-    /**
-     * 
-     * @type {Array<DeploymentVersionItem>}
-     * @memberof DeploymentVersion
-     */
-    items?: Array<DeploymentVersionItem>;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeploymentVersion
-     */
-    deploymentProjectId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    planBranchName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersion
-     */
-    creatorUserName?: string;
     /**
      * 
      * @type {string}
@@ -2702,13 +2393,67 @@ export interface DeploymentVersion {
      * @type {string}
      * @memberof DeploymentVersion
      */
-    name?: string;
+    creatorDisplayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersion
+     */
+    creatorUserName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DeploymentVersion
+     */
+    deploymentProjectId?: number;
     /**
      * 
      * @type {number}
      * @memberof DeploymentVersion
      */
     id?: number;
+    /**
+     * 
+     * @type {Array<DeploymentVersionItem>}
+     * @memberof DeploymentVersion
+     */
+    items?: Array<DeploymentVersionItem>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersion
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Operations}
+     * @memberof DeploymentVersion
+     */
+    operations?: Operations;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersion
+     */
+    planBranchName?: string;
+    /**
+     * 
+     * @type {Array<VariableSubstitutionContext>}
+     * @memberof DeploymentVersion
+     */
+    variableContext?: Array<VariableSubstitutionContext>;
+    /**
+     * 
+     * @type {DeploymentVersionStatus}
+     * @memberof DeploymentVersion
+     */
+    versionStatus?: DeploymentVersionStatus;
+    /**
+     * 
+     * @type {Array<DeploymentVersionStatus>}
+     * @memberof DeploymentVersion
+     */
+    versionStatuses?: Array<DeploymentVersionStatus>;
 }
 /**
  * 
@@ -2718,16 +2463,16 @@ export interface DeploymentVersion {
 export interface DeploymentVersionItem {
     /**
      * 
-     * @type {string}
-     * @memberof DeploymentVersionItem
-     */
-    name?: string;
-    /**
-     * 
      * @type {number}
      * @memberof DeploymentVersionItem
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersionItem
+     */
+    name?: string;
     /**
      * 
      * @type {string}
@@ -2757,25 +2502,13 @@ export interface DeploymentVersionStatus {
      * @type {string}
      * @memberof DeploymentVersionStatus
      */
-    gravatarUrl?: string;
+    creationDate?: string;
     /**
      * 
      * @type {string}
      * @memberof DeploymentVersionStatus
      */
     displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersionStatus
-     */
-    versionState?: DeploymentVersionStatusVersionStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentVersionStatus
-     */
-    creationDate?: string;
     /**
      * 
      * @type {number}
@@ -2787,7 +2520,19 @@ export interface DeploymentVersionStatus {
      * @type {string}
      * @memberof DeploymentVersionStatus
      */
+    sanitizedUserName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersionStatus
+     */
     userName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentVersionStatus
+     */
+    versionState?: DeploymentVersionStatusVersionStateEnum;
 }
 
 
@@ -2823,12 +2568,6 @@ export interface DirectoryInformationResponse {
 export interface DirectoryInformationResult {
     /**
      * 
-     * @type {string}
-     * @memberof DirectoryInformationResult
-     */
-    planName?: string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof DirectoryInformationResult
      */
@@ -2850,6 +2589,12 @@ export interface DirectoryInformationResult {
      * @type {string}
      * @memberof DirectoryInformationResult
      */
+    planName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DirectoryInformationResult
+     */
     storageTag?: string;
 }
 /**
@@ -2860,28 +2605,28 @@ export interface DirectoryInformationResult {
 export interface DockerPipelineConfiguration {
     /**
      * 
-     * @type {Array<DataVolume>}
-     * @memberof DockerPipelineConfiguration
-     */
-    dataVolumes?: Array<DataVolume>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DockerPipelineConfiguration
-     */
-    image?: string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof DockerPipelineConfiguration
      */
     additionalArgs?: Array<string>;
     /**
      * 
+     * @type {Array<DataVolume>}
+     * @memberof DockerPipelineConfiguration
+     */
+    dataVolumes?: Array<DataVolume>;
+    /**
+     * 
      * @type {boolean}
      * @memberof DockerPipelineConfiguration
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DockerPipelineConfiguration
+     */
+    image?: string;
     /**
      * 
      * @type {boolean}
@@ -2897,18 +2642,6 @@ export interface DockerPipelineConfiguration {
 export interface Environment {
     /**
      * 
-     * @type {Operations}
-     * @memberof Environment
-     */
-    operations?: Operations;
-    /**
-     * 
-     * @type {Array<TaskDefinition>}
-     * @memberof Environment
-     */
-    taskDefinitions?: Array<TaskDefinition>;
-    /**
-     * 
      * @type {string}
      * @memberof Environment
      */
@@ -2921,22 +2654,34 @@ export interface Environment {
     deploymentProjectId?: number;
     /**
      * 
-     * @type {ImmutableRequirementSet}
+     * @type {string}
      * @memberof Environment
      */
-    requirementSet?: ImmutableRequirementSet;
+    description?: string;
     /**
      * 
-     * @type {object}
+     * @type {number}
      * @memberof Environment
      */
-    taskDefinitionsSupplier?: object;
+    id?: number;
     /**
      * 
-     * @type {object}
+     * @type {DeploymentKey}
      * @memberof Environment
      */
-    triggerDefinitionsSupplier?: object;
+    key?: DeploymentKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Operations}
+     * @memberof Environment
+     */
+    operations?: Operations;
     /**
      * 
      * @type {number}
@@ -2948,25 +2693,37 @@ export interface Environment {
      * @type {string}
      * @memberof Environment
      */
-    name?: string;
+    releaseApprovalPrerequisite?: EnvironmentReleaseApprovalPrerequisiteEnum;
     /**
      * 
-     * @type {DeploymentKey}
+     * @type {ImmutableRequirementSet}
      * @memberof Environment
      */
-    key?: DeploymentKey;
+    requirementSet?: ImmutableRequirementSet;
     /**
      * 
-     * @type {number}
+     * @type {object}
      * @memberof Environment
      */
-    id?: number;
+    requirementSetSupplier?: object;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof Environment
      */
-    description?: string;
+    suspended?: boolean;
+    /**
+     * 
+     * @type {Array<TaskDefinition>}
+     * @memberof Environment
+     */
+    taskDefinitions?: Array<TaskDefinition>;
+    /**
+     * 
+     * @type {object}
+     * @memberof Environment
+     */
+    taskDefinitionsSupplier?: object;
     /**
      * 
      * @type {Array<TriggerDefinition>}
@@ -2975,10 +2732,10 @@ export interface Environment {
     triggerDefinitions?: Array<TriggerDefinition>;
     /**
      * 
-     * @type {boolean}
+     * @type {object}
      * @memberof Environment
      */
-    suspended?: boolean;
+    triggerDefinitionsSupplier?: object;
 }
 
 
@@ -2993,6 +2750,16 @@ export const EnvironmentConfigurationStateEnum = {
 export type EnvironmentConfigurationStateEnum = typeof EnvironmentConfigurationStateEnum[keyof typeof EnvironmentConfigurationStateEnum];
 
 /**
+ * @export
+ */
+export const EnvironmentReleaseApprovalPrerequisiteEnum = {
+    None: 'NONE',
+    NotBroken: 'NOT_BROKEN',
+    Approved: 'APPROVED'
+} as const;
+export type EnvironmentReleaseApprovalPrerequisiteEnum = typeof EnvironmentReleaseApprovalPrerequisiteEnum[keyof typeof EnvironmentReleaseApprovalPrerequisiteEnum];
+
+/**
  * 
  * @export
  * @interface EnvironmentIds
@@ -3004,31 +2771,6 @@ export interface EnvironmentIds {
      * @memberof EnvironmentIds
      */
     ids?: Array<number>;
-}
-/**
- * 
- * @export
- * @interface EnvironmentStatus
- */
-export interface EnvironmentStatus {
-    /**
-     * 
-     * @type {DeploymentResult}
-     * @memberof EnvironmentStatus
-     */
-    deploymentResult?: DeploymentResult;
-    /**
-     * 
-     * @type {Environment}
-     * @memberof EnvironmentStatus
-     */
-    environment?: Environment;
-    /**
-     * 
-     * @type {DeploymentResult}
-     * @memberof EnvironmentStatus
-     */
-    latestResult?: DeploymentResult;
 }
 /**
  * 
@@ -3047,13 +2789,13 @@ export interface EphemeralAgentsConfigurationDTO {
      * @type {string}
      * @memberof EphemeralAgentsConfigurationDTO
      */
-    pathToConfig?: string;
+    label?: string;
     /**
      * 
      * @type {string}
      * @memberof EphemeralAgentsConfigurationDTO
      */
-    label?: string;
+    pathToConfig?: string;
     /**
      * 
      * @type {PodsCleanup}
@@ -3064,9 +2806,58 @@ export interface EphemeralAgentsConfigurationDTO {
 /**
  * 
  * @export
+ * @interface Expansion
+ */
+export interface Expansion {
+    /**
+     * 
+     * @type {string}
+     * @memberof Expansion
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Expansion
+     */
+    root?: boolean;
+    /**
+     * 
+     * @type {Array<Expansion>}
+     * @memberof Expansion
+     */
+    subExpansions?: Array<Expansion>;
+}
+/**
+ * 
+ * @export
  * @interface ExpiryConfig
  */
 export interface ExpiryConfig {
+    /**
+     * 
+     * @type {number}
+     * @memberof ExpiryConfig
+     */
+    buildsToKeep?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExpiryConfig
+     */
+    duration?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExpiryConfig
+     */
+    expiryBuildLog?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExpiryConfig
+     */
+    expiryTypeArtifact?: boolean;
     /**
      * 
      * @type {boolean}
@@ -3081,30 +2872,6 @@ export interface ExpiryConfig {
     expiryTypeResult?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ExpiryConfig
-     */
-    expiryTypeArtifact?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ExpiryConfig
-     */
-    expiryBuildLog?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExpiryConfig
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExpiryConfig
-     */
-    period?: string;
-    /**
-     * 
      * @type {string}
      * @memberof ExpiryConfig
      */
@@ -3114,13 +2881,13 @@ export interface ExpiryConfig {
      * @type {number}
      * @memberof ExpiryConfig
      */
-    buildsToKeep?: number;
+    maximumBuildsToKeep?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ExpiryConfig
      */
-    maximumBuildsToKeep?: number;
+    period?: string;
 }
 /**
  * 
@@ -3130,16 +2897,16 @@ export interface ExpiryConfig {
 export interface ExtraBuildResultsData {
     /**
      * 
-     * @type {number}
-     * @memberof ExtraBuildResultsData
-     */
-    buildReturnCode?: number;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ExtraBuildResultsData
      */
     buildErrors?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExtraBuildResultsData
+     */
+    buildReturnCode?: number;
 }
 /**
  * 
@@ -3149,6 +2916,18 @@ export interface ExtraBuildResultsData {
 export interface FilteredTestResultsTestClassResult {
     /**
      * 
+     * @type {Array<TestCaseResult>}
+     * @memberof FilteredTestResultsTestClassResult
+     */
+    allFailedTestList?: Array<TestCaseResult>;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResult
+     */
+    allFailedTests?: any | null;
+    /**
+     * 
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
      */
@@ -3164,25 +2943,13 @@ export interface FilteredTestResultsTestClassResult {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
      */
-    allFailedTests?: any | null;
+    newFailedTests?: any | null;
     /**
      * 
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
      */
     quarantinedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResult
-     */
-    skippedTests?: any | null;
-    /**
-     * 
-     * @type {Array<TestCaseResult>}
-     * @memberof FilteredTestResultsTestClassResult
-     */
-    allFailedTestList?: Array<TestCaseResult>;
     /**
      * 
      * @type {Array<TestCaseResult>}
@@ -3194,7 +2961,7 @@ export interface FilteredTestResultsTestClassResult {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
      */
-    newFailedTests?: any | null;
+    skippedTests?: any | null;
 }
 /**
  * 
@@ -3204,6 +2971,18 @@ export interface FilteredTestResultsTestClassResult {
 export interface FilteredTestResultsTestClassResultDescriptor {
     /**
      * 
+     * @type {Array<TestCaseResult>}
+     * @memberof FilteredTestResultsTestClassResultDescriptor
+     */
+    allFailedTestList?: Array<TestCaseResult>;
+    /**
+     * 
+     * @type {any}
+     * @memberof FilteredTestResultsTestClassResultDescriptor
+     */
+    allFailedTests?: any | null;
+    /**
+     * 
      * @type {any}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
@@ -3219,25 +2998,13 @@ export interface FilteredTestResultsTestClassResultDescriptor {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
-    allFailedTests?: any | null;
+    newFailedTests?: any | null;
     /**
      * 
      * @type {any}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
     quarantinedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    skippedTests?: any | null;
-    /**
-     * 
-     * @type {Array<TestCaseResult>}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    allFailedTestList?: Array<TestCaseResult>;
     /**
      * 
      * @type {Array<TestCaseResult>}
@@ -3249,50 +3016,7 @@ export interface FilteredTestResultsTestClassResultDescriptor {
      * @type {any}
      * @memberof FilteredTestResultsTestClassResultDescriptor
      */
-    newFailedTests?: any | null;
-}
-/**
- * 
- * @export
- * @interface FindAssignedGroups200Response
- */
-export interface FindAssignedGroups200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof FindAssignedGroups200Response
-     */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindAssignedGroups200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindAssignedGroups200Response
-     */
-    next?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof FindAssignedGroups200Response
-     */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof FindAssignedGroups200Response
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {Array<RestGroup>}
-     * @memberof FindAssignedGroups200Response
-     */
-    results?: Array<RestGroup>;
+    skippedTests?: any | null;
 }
 /**
  * 
@@ -3302,16 +3026,10 @@ export interface FindAssignedGroups200Response {
 export interface FindPlansWithCustomExpirySettings200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof FindPlansWithCustomExpirySettings200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindPlansWithCustomExpirySettings200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3320,65 +3038,71 @@ export interface FindPlansWithCustomExpirySettings200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof FindPlansWithCustomExpirySettings200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof FindPlansWithCustomExpirySettings200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<PlanWithCustomExpirySettings>}
      * @memberof FindPlansWithCustomExpirySettings200Response
      */
     results?: Array<PlanWithCustomExpirySettings>;
-}
-/**
- * 
- * @export
- * @interface FindUnassignedUserRepositoryAliases200Response
- */
-export interface FindUnassignedUserRepositoryAliases200Response {
     /**
      * 
      * @type {string}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
+     * @memberof FindPlansWithCustomExpirySettings200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
-     */
-    next?: string;
-    /**
-     * 
      * @type {number}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
+     * @memberof FindPlansWithCustomExpirySettings200Response
      */
     start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface FindUsersInGroup200Response
+ */
+export interface FindUsersInGroup200Response {
     /**
      * 
      * @type {number}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
+     * @memberof FindUsersInGroup200Response
      */
     limit?: number;
     /**
      * 
-     * @type {Array<RestUserAlias>}
-     * @memberof FindUnassignedUserRepositoryAliases200Response
+     * @type {string}
+     * @memberof FindUsersInGroup200Response
      */
-    results?: Array<RestUserAlias>;
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FindUsersInGroup200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {Array<RestUserDetails>}
+     * @memberof FindUsersInGroup200Response
+     */
+    results?: Array<RestUserDetails>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FindUsersInGroup200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FindUsersInGroup200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3388,16 +3112,10 @@ export interface FindUnassignedUserRepositoryAliases200Response {
 export interface GetAgents200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetAgents200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAgents200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3406,65 +3124,71 @@ export interface GetAgents200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetAgents200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAgents200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestAgent>}
      * @memberof GetAgents200Response
      */
     results?: Array<RestAgent>;
-}
-/**
- * 
- * @export
- * @interface GetAvailableUsers6200Response
- */
-export interface GetAvailableUsers6200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetAvailableUsers6200Response
+     * @memberof GetAgents200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof GetAvailableUsers6200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAvailableUsers6200Response
-     */
-    next?: string;
-    /**
-     * 
      * @type {number}
-     * @memberof GetAvailableUsers6200Response
+     * @memberof GetAgents200Response
      */
     start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetAvailableUsers200Response
+ */
+export interface GetAvailableUsers200Response {
     /**
      * 
      * @type {number}
-     * @memberof GetAvailableUsers6200Response
+     * @memberof GetAvailableUsers200Response
      */
     limit?: number;
     /**
      * 
+     * @type {string}
+     * @memberof GetAvailableUsers200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAvailableUsers200Response
+     */
+    prev?: string;
+    /**
+     * 
      * @type {Array<RestUser>}
-     * @memberof GetAvailableUsers6200Response
+     * @memberof GetAvailableUsers200Response
      */
     results?: Array<RestUser>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAvailableUsers200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAvailableUsers200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3474,16 +3198,10 @@ export interface GetAvailableUsers6200Response {
 export interface GetBrokenBuildsForUser200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetBrokenBuildsForUser200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetBrokenBuildsForUser200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3492,22 +3210,28 @@ export interface GetBrokenBuildsForUser200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetBrokenBuildsForUser200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetBrokenBuildsForUser200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestBrokenPlan>}
      * @memberof GetBrokenBuildsForUser200Response
      */
     results?: Array<RestBrokenPlan>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetBrokenBuildsForUser200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBrokenBuildsForUser200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3517,16 +3241,10 @@ export interface GetBrokenBuildsForUser200Response {
 export interface GetDeploymentProjects200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetDeploymentProjects200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetDeploymentProjects200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3535,22 +3253,28 @@ export interface GetDeploymentProjects200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetDeploymentProjects200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetDeploymentProjects200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestDeploymentProject>}
      * @memberof GetDeploymentProjects200Response
      */
     results?: Array<RestDeploymentProject>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetDeploymentProjects200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetDeploymentProjects200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3560,16 +3284,10 @@ export interface GetDeploymentProjects200Response {
 export interface GetEnvironmentsExecutableByAgent200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetEnvironmentsExecutableByAgent200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetEnvironmentsExecutableByAgent200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3578,22 +3296,28 @@ export interface GetEnvironmentsExecutableByAgent200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetEnvironmentsExecutableByAgent200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetEnvironmentsExecutableByAgent200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestEnvironmentForExecutablesView>}
      * @memberof GetEnvironmentsExecutableByAgent200Response
      */
     results?: Array<RestEnvironmentForExecutablesView>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEnvironmentsExecutableByAgent200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEnvironmentsExecutableByAgent200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3603,16 +3327,10 @@ export interface GetEnvironmentsExecutableByAgent200Response {
 export interface GetEphemeralAgentPodLogs200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetEphemeralAgentPodLogs200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetEphemeralAgentPodLogs200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3621,22 +3339,28 @@ export interface GetEphemeralAgentPodLogs200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetEphemeralAgentPodLogs200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetEphemeralAgentPodLogs200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestEphemeralPodLogs>}
      * @memberof GetEphemeralAgentPodLogs200Response
      */
     results?: Array<RestEphemeralPodLogs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodLogs200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3646,16 +3370,10 @@ export interface GetEphemeralAgentPodLogs200Response {
 export interface GetEphemeralAgentPodRawLogs200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetEphemeralAgentPodRawLogs200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetEphemeralAgentPodRawLogs200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3664,22 +3382,71 @@ export interface GetEphemeralAgentPodRawLogs200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetEphemeralAgentPodRawLogs200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetEphemeralAgentPodRawLogs200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof GetEphemeralAgentPodRawLogs200Response
      */
     results?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetEphemeralAgentPodRawLogs200Response
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetGroups200Response
+ */
+export interface GetGroups200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGroups200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGroups200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGroups200Response
+     */
+    prev?: string;
+    /**
+     * 
+     * @type {Array<RestGroup>}
+     * @memberof GetGroups200Response
+     */
+    results?: Array<RestGroup>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGroups200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGroups200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3689,16 +3456,10 @@ export interface GetEphemeralAgentPodRawLogs200Response {
 export interface GetPaginatedProjectRepositories200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetPaginatedProjectRepositories200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetPaginatedProjectRepositories200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3707,22 +3468,28 @@ export interface GetPaginatedProjectRepositories200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetPaginatedProjectRepositories200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetPaginatedProjectRepositories200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestProjectRepository>}
      * @memberof GetPaginatedProjectRepositories200Response
      */
     results?: Array<RestProjectRepository>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetPaginatedProjectRepositories200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetPaginatedProjectRepositories200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -3732,16 +3499,10 @@ export interface GetPaginatedProjectRepositories200Response {
 export interface GetPaginatedProjectSharedCredentials200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetPaginatedProjectSharedCredentials200Response
      */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetPaginatedProjectSharedCredentials200Response
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -3750,108 +3511,114 @@ export interface GetPaginatedProjectSharedCredentials200Response {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetPaginatedProjectSharedCredentials200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetPaginatedProjectSharedCredentials200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestSharedCredential>}
      * @memberof GetPaginatedProjectSharedCredentials200Response
      */
     results?: Array<RestSharedCredential>;
-}
-/**
- * 
- * @export
- * @interface GetUserAccessTokens200Response
- */
-export interface GetUserAccessTokens200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetUserAccessTokens200Response
+     * @memberof GetPaginatedProjectSharedCredentials200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof GetUserAccessTokens200Response
+     * @type {number}
+     * @memberof GetPaginatedProjectSharedCredentials200Response
      */
-    prev?: string;
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetUserRepositoryAliases200Response
+ */
+export interface GetUserRepositoryAliases200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUserRepositoryAliases200Response
+     */
+    limit?: number;
     /**
      * 
      * @type {string}
-     * @memberof GetUserAccessTokens200Response
+     * @memberof GetUserRepositoryAliases200Response
      */
     next?: string;
     /**
      * 
-     * @type {number}
-     * @memberof GetUserAccessTokens200Response
+     * @type {string}
+     * @memberof GetUserRepositoryAliases200Response
      */
-    start?: number;
+    prev?: string;
+    /**
+     * 
+     * @type {Array<RestUserAlias>}
+     * @memberof GetUserRepositoryAliases200Response
+     */
+    results?: Array<RestUserAlias>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUserRepositoryAliases200Response
+     */
+    self?: string;
     /**
      * 
      * @type {number}
-     * @memberof GetUserAccessTokens200Response
+     * @memberof GetUserRepositoryAliases200Response
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetUserTokens200Response
+ */
+export interface GetUserTokens200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUserTokens200Response
      */
     limit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUserTokens200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetUserTokens200Response
+     */
+    prev?: string;
     /**
      * 
      * @type {Array<RestAccessToken>}
-     * @memberof GetUserAccessTokens200Response
+     * @memberof GetUserTokens200Response
      */
     results?: Array<RestAccessToken>;
-}
-/**
- * 
- * @export
- * @interface GetUsers200Response
- */
-export interface GetUsers200Response {
     /**
      * 
      * @type {string}
-     * @memberof GetUsers200Response
+     * @memberof GetUserTokens200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof GetUsers200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetUsers200Response
-     */
-    next?: string;
-    /**
-     * 
      * @type {number}
-     * @memberof GetUsers200Response
+     * @memberof GetUserTokens200Response
      */
     start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetUsers200Response
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {Array<RestUserDetails>}
-     * @memberof GetUsers200Response
-     */
-    results?: Array<RestUserDetails>;
 }
 /**
  * 
@@ -3864,19 +3631,7 @@ export interface HierarchicalConfiguration {
      * @type {Array<object>}
      * @memberof HierarchicalConfiguration
      */
-    errorListeners?: Array<object>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof HierarchicalConfiguration
-     */
-    detailEvents?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof HierarchicalConfiguration
-     */
-    listDelimiter?: string;
+    configurationListeners?: Array<object>;
     /**
      * 
      * @type {boolean}
@@ -3888,13 +3643,43 @@ export interface HierarchicalConfiguration {
      * @type {boolean}
      * @memberof HierarchicalConfiguration
      */
-    throwExceptionOnMissing?: boolean;
+    detailEvents?: boolean;
     /**
      * 
-     * @type {StrSubstitutor}
+     * @type {Array<object>}
      * @memberof HierarchicalConfiguration
      */
-    substitutor?: StrSubstitutor;
+    errorListeners?: Array<object>;
+    /**
+     * 
+     * @type {any}
+     * @memberof HierarchicalConfiguration
+     */
+    expressionEngine?: any | null;
+    /**
+     * 
+     * @type {ConfigurationInterpolator}
+     * @memberof HierarchicalConfiguration
+     */
+    interpolator?: ConfigurationInterpolator;
+    /**
+     * 
+     * @type {object}
+     * @memberof HierarchicalConfiguration
+     */
+    keys?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof HierarchicalConfiguration
+     */
+    listDelimiter?: string;
+    /**
+     * 
+     * @type {Log}
+     * @memberof HierarchicalConfiguration
+     */
+    logger?: Log;
     /**
      * 
      * @type {Node}
@@ -3909,34 +3694,16 @@ export interface HierarchicalConfiguration {
     rootNode?: ConfigurationNode;
     /**
      * 
-     * @type {any}
+     * @type {StrSubstitutor}
      * @memberof HierarchicalConfiguration
      */
-    expressionEngine?: any | null;
+    substitutor?: StrSubstitutor;
     /**
      * 
-     * @type {object}
+     * @type {boolean}
      * @memberof HierarchicalConfiguration
      */
-    keys?: object;
-    /**
-     * 
-     * @type {Log}
-     * @memberof HierarchicalConfiguration
-     */
-    logger?: Log;
-    /**
-     * 
-     * @type {ConfigurationInterpolator}
-     * @memberof HierarchicalConfiguration
-     */
-    interpolator?: ConfigurationInterpolator;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof HierarchicalConfiguration
-     */
-    configurationListeners?: Array<object>;
+    throwExceptionOnMissing?: boolean;
 }
 /**
  * 
@@ -3946,28 +3713,10 @@ export interface HierarchicalConfiguration {
 export interface ImmutableArtifactDefinition {
     /**
      * 
-     * @type {ImmutableJob}
-     * @memberof ImmutableArtifactDefinition
-     */
-    producerJob?: ImmutableJob;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableArtifactDefinition
-     */
-    entityType?: ImmutableArtifactDefinitionEntityTypeEnum;
-    /**
-     * 
      * @type {string}
      * @memberof ImmutableArtifactDefinition
      */
     copyPattern?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableArtifactDefinition
-     */
-    httpCompressionOn?: boolean;
     /**
      * 
      * @type {Array<string>}
@@ -3985,13 +3734,13 @@ export interface ImmutableArtifactDefinition {
      * @type {boolean}
      * @memberof ImmutableArtifactDefinition
      */
-    sharedArtifact?: boolean;
+    httpCompressionOn?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ImmutableArtifactDefinition
      */
-    name?: string;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -4000,10 +3749,16 @@ export interface ImmutableArtifactDefinition {
     location?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableArtifactDefinition
      */
-    id?: number;
+    name?: string;
+    /**
+     * 
+     * @type {ImmutableJob}
+     * @memberof ImmutableArtifactDefinition
+     */
+    producerJob?: ImmutableJob;
     /**
      * 
      * @type {boolean}
@@ -4012,31 +3767,17 @@ export interface ImmutableArtifactDefinition {
     required?: boolean;
     /**
      * 
-     * @type {BambooEntityOid}
+     * @type {boolean}
      * @memberof ImmutableArtifactDefinition
      */
-    oid?: BambooEntityOid;
+    sharedArtifact?: boolean;
+    /**
+     * 
+     * @type {Array<ImmutableArtifactSubscription>}
+     * @memberof ImmutableArtifactDefinition
+     */
+    subscriptions?: Array<ImmutableArtifactSubscription>;
 }
-
-
-/**
- * @export
- */
-export const ImmutableArtifactDefinitionEntityTypeEnum = {
-    Chain: 'CHAIN',
-    Stage: 'STAGE',
-    Job: 'JOB',
-    Repository: 'REPOSITORY',
-    ChainBranch: 'CHAIN_BRANCH',
-    JobBranch: 'JOB_BRANCH',
-    Task: 'TASK',
-    Project: 'PROJECT',
-    ArtifactDefinition: 'ARTIFACT_DEFINITION',
-    DeploymentProject: 'DEPLOYMENT_PROJECT',
-    SharedCredential: 'SHARED_CREDENTIAL'
-} as const;
-export type ImmutableArtifactDefinitionEntityTypeEnum = typeof ImmutableArtifactDefinitionEntityTypeEnum[keyof typeof ImmutableArtifactDefinitionEntityTypeEnum];
-
 /**
  * 
  * @export
@@ -4045,10 +3786,10 @@ export type ImmutableArtifactDefinitionEntityTypeEnum = typeof ImmutableArtifact
 export interface ImmutableArtifactSubscription {
     /**
      * 
-     * @type {string}
+     * @type {ImmutableArtifactDefinition}
      * @memberof ImmutableArtifactSubscription
      */
-    destinationDirectory?: string;
+    artifactDefinition?: ImmutableArtifactDefinition;
     /**
      * 
      * @type {ImmutableJob}
@@ -4057,22 +3798,22 @@ export interface ImmutableArtifactSubscription {
     consumerJob?: ImmutableJob;
     /**
      * 
-     * @type {ImmutableArtifactDefinition}
-     * @memberof ImmutableArtifactSubscription
-     */
-    artifactDefinition?: ImmutableArtifactDefinition;
-    /**
-     * 
      * @type {string}
      * @memberof ImmutableArtifactSubscription
      */
-    name?: string;
+    destinationDirectory?: string;
     /**
      * 
      * @type {number}
      * @memberof ImmutableArtifactSubscription
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableArtifactSubscription
+     */
+    name?: string;
 }
 /**
  * 
@@ -4082,40 +3823,16 @@ export interface ImmutableArtifactSubscription {
 export interface ImmutableChain {
     /**
      * 
-     * @type {NotificationSet}
+     * @type {boolean}
      * @memberof ImmutableChain
      */
-    notificationSet?: NotificationSet;
+    active?: boolean;
     /**
      * 
      * @type {Array<ImmutableJob>}
      * @memberof ImmutableChain
      */
     allJobs?: Array<ImmutableJob>;
-    /**
-     * 
-     * @type {any}
-     * @memberof ImmutableChain
-     */
-    storageTag?: any | null;
-    /**
-     * 
-     * @type {ImmutableVcsBambooSpecsSource}
-     * @memberof ImmutableChain
-     */
-    vcsBambooSpecsSource?: ImmutableVcsBambooSpecsSource;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    entityType?: ImmutableChainEntityTypeEnum;
-    /**
-     * 
-     * @type {Array<ImmutableChainStage>}
-     * @memberof ImmutableChain
-     */
-    stages?: Array<ImmutableChainStage>;
     /**
      * 
      * @type {Array<ImmutableChainStage>}
@@ -4127,73 +3844,7 @@ export interface ImmutableChain {
      * @type {number}
      * @memberof ImmutableChain
      */
-    jobCount?: number;
-    /**
-     * 
-     * @type {Array<RepositoryDefinition>}
-     * @memberof ImmutableChain
-     */
-    effectiveRepositoryDefinitions?: Array<RepositoryDefinition>;
-    /**
-     * 
-     * @type {Array<PlanRepositoryDefinition>}
-     * @memberof ImmutableChain
-     */
-    planRepositoryDefinitions?: Array<PlanRepositoryDefinition>;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof ImmutableChain
-     */
-    lastResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    creationDate?: string;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ImmutableChain
-     */
-    master?: ImmutableChain;
-    /**
-     * 
-     * @type {Array<VariableDefinition>}
-     * @memberof ImmutableChain
-     */
-    variables?: Array<VariableDefinition>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {ImmutableResultsSummary}
-     * @memberof ImmutableChain
-     */
-    latestResultsSummary?: ImmutableResultsSummary;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    executing?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    busy?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ImmutableChain
-     */
-    labelNames?: Array<string>;
+    averageBuildDuration?: number;
     /**
      * 
      * @type {BuildDefinition}
@@ -4205,7 +3856,7 @@ export interface ImmutableChain {
      * @type {string}
      * @memberof ImmutableChain
      */
-    currentStatus?: string;
+    buildKey?: string;
     /**
      * 
      * @type {BuildLogger}
@@ -4214,22 +3865,46 @@ export interface ImmutableChain {
     buildLogger?: BuildLogger;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableChain
      */
-    firstBuildNumber?: number;
+    buildName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableChain
+     */
+    busy?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    creationDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    currentStatus?: string;
     /**
      * 
      * @type {number}
      * @memberof ImmutableChain
      */
-    lastBuildNumber?: number;
+    databaseId?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableChain
      */
-    averageBuildDuration?: number;
+    description?: string;
+    /**
+     * 
+     * @type {Array<RepositoryDefinition>}
+     * @memberof ImmutableChain
+     */
+    effectiveRepositoryDefinitions?: Array<RepositoryDefinition>;
     /**
      * 
      * @type {Array<VariableDefinition>}
@@ -4241,61 +3916,73 @@ export interface ImmutableChain {
      * @type {string}
      * @memberof ImmutableChain
      */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    type?: string;
+    entityType?: ImmutableChainEntityTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableChain
      */
-    active?: boolean;
-    /**
-     * 
-     * @type {Project}
-     * @memberof ImmutableChain
-     */
-    project?: Project;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    buildName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    buildKey?: string;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof ImmutableChain
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    planType?: ImmutableChainPlanTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableChain
-     */
-    suspendedFromBuilding?: boolean;
+    executing?: boolean;
     /**
      * 
      * @type {number}
      * @memberof ImmutableChain
      */
-    databaseId?: number;
+    firstBuildNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableChain
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableChain
+     */
+    jobCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    key?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ImmutableChain
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableChain
+     */
+    lastBuildNumber?: number;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof ImmutableChain
+     */
+    lastResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {ImmutableResultsSummary}
+     * @memberof ImmutableChain
+     */
+    latestResultsSummary?: ImmutableResultsSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableChain
+     */
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ImmutableChain
+     */
+    master?: ImmutableChain;
     /**
      * 
      * @type {number}
@@ -4316,16 +4003,10 @@ export interface ImmutableChain {
     name?: string;
     /**
      * 
-     * @type {number}
+     * @type {NotificationSet}
      * @memberof ImmutableChain
      */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChain
-     */
-    description?: string;
+    notificationSet?: NotificationSet;
     /**
      * 
      * @type {BambooEntityOid}
@@ -4334,16 +4015,82 @@ export interface ImmutableChain {
     oid?: BambooEntityOid;
     /**
      * 
-     * @type {Array<TriggerDefinition>}
+     * @type {PlanKey}
      * @memberof ImmutableChain
      */
-    triggerDefinitions?: Array<TriggerDefinition>;
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {Array<PlanRepositoryDefinition>}
+     * @memberof ImmutableChain
+     */
+    planRepositoryDefinitions?: Array<PlanRepositoryDefinition>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    planType?: ImmutableChainPlanTypeEnum;
+    /**
+     * 
+     * @type {Project}
+     * @memberof ImmutableChain
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {Array<ImmutableChainStage>}
+     * @memberof ImmutableChain
+     */
+    stages?: Array<ImmutableChainStage>;
+    /**
+     * 
+     * @type {any}
+     * @memberof ImmutableChain
+     */
+    storageTag?: any | null;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableChain
      */
     suspended?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableChain
+     */
+    suspendedFromBuilding?: boolean;
+    /**
+     * 
+     * @type {Array<TriggerDefinition>}
+     * @memberof ImmutableChain
+     */
+    triggerDefinitions?: Array<TriggerDefinition>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChain
+     */
+    type?: string;
+    /**
+     * 
+     * @type {Array<VariableDefinition>}
+     * @memberof ImmutableChain
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
+     * @type {ImmutableVcsBambooSpecsSource}
+     * @memberof ImmutableChain
+     */
+    vcsBambooSpecsSource?: ImmutableVcsBambooSpecsSource;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableChain
+     */
+    version?: number;
 }
 
 
@@ -4383,10 +4130,10 @@ export type ImmutableChainPlanTypeEnum = typeof ImmutableChainPlanTypeEnum[keyof
 export interface ImmutableChainStage {
     /**
      * 
-     * @type {Set<ImmutableJob>}
+     * @type {ImmutableChain}
      * @memberof ImmutableChainStage
      */
-    jobs?: Set<ImmutableJob>;
+    chain?: ImmutableChain;
     /**
      * 
      * @type {number}
@@ -4398,25 +4145,19 @@ export interface ImmutableChainStage {
      * @type {string}
      * @memberof ImmutableChainStage
      */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableChainStage
+     */
     entityType?: ImmutableChainStageEntityTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableChainStage
      */
-    manual?: boolean;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ImmutableChainStage
-     */
-    chain?: ImmutableChain;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableChainStage
-     */
-    name?: string;
+    _final?: boolean;
     /**
      * 
      * @type {number}
@@ -4425,10 +4166,22 @@ export interface ImmutableChainStage {
     id?: number;
     /**
      * 
+     * @type {Set<ImmutableJob>}
+     * @memberof ImmutableChainStage
+     */
+    jobs?: Set<ImmutableJob>;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutableChainStage
      */
-    _final?: boolean;
+    manual?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableChainStage
+     */
+    markedForDeletion?: boolean;
     /**
      * 
      * @type {ImmutableChainStage}
@@ -4440,13 +4193,7 @@ export interface ImmutableChainStage {
      * @type {string}
      * @memberof ImmutableChainStage
      */
-    description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableChainStage
-     */
-    markedForDeletion?: boolean;
+    name?: string;
     /**
      * 
      * @type {BambooEntityOid}
@@ -4482,34 +4229,10 @@ export type ImmutableChainStageEntityTypeEnum = typeof ImmutableChainStageEntity
 export interface ImmutableJob {
     /**
      * 
-     * @type {RequirementSet}
-     * @memberof ImmutableJob
-     */
-    requirementSet?: RequirementSet;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    entityType?: ImmutableJobEntityTypeEnum;
-    /**
-     * 
-     * @type {Array<ImmutableArtifactSubscription>}
-     * @memberof ImmutableJob
-     */
-    artifactSubscriptions?: Array<ImmutableArtifactSubscription>;
-    /**
-     * 
-     * @type {RequirementSet}
-     * @memberof ImmutableJob
-     */
-    effectiveRequirementSet?: RequirementSet;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutableJob
      */
-    divergent?: boolean;
+    active?: boolean;
     /**
      * 
      * @type {Array<ImmutableArtifactDefinition>}
@@ -4518,58 +4241,16 @@ export interface ImmutableJob {
     artifactDefinitions?: Array<ImmutableArtifactDefinition>;
     /**
      * 
-     * @type {ImmutableChain}
+     * @type {Array<ImmutableArtifactSubscription>}
      * @memberof ImmutableJob
      */
-    parent?: ImmutableChain;
+    artifactSubscriptions?: Array<ImmutableArtifactSubscription>;
     /**
      * 
-     * @type {ImmutableJob}
+     * @type {number}
      * @memberof ImmutableJob
      */
-    master?: ImmutableJob;
-    /**
-     * 
-     * @type {ImmutableChainStage}
-     * @memberof ImmutableJob
-     */
-    stage?: ImmutableChainStage;
-    /**
-     * 
-     * @type {Array<VariableDefinition>}
-     * @memberof ImmutableJob
-     */
-    variables?: Array<VariableDefinition>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableJob
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {ImmutableResultsSummary}
-     * @memberof ImmutableJob
-     */
-    latestResultsSummary?: ImmutableResultsSummary;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableJob
-     */
-    executing?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableJob
-     */
-    busy?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ImmutableJob
-     */
-    labelNames?: Array<string>;
+    averageBuildDuration?: number;
     /**
      * 
      * @type {BuildDefinition}
@@ -4581,7 +4262,7 @@ export interface ImmutableJob {
      * @type {string}
      * @memberof ImmutableJob
      */
-    currentStatus?: string;
+    buildKey?: string;
     /**
      * 
      * @type {BuildLogger}
@@ -4590,22 +4271,46 @@ export interface ImmutableJob {
     buildLogger?: BuildLogger;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableJob
      */
-    firstBuildNumber?: number;
+    buildName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableJob
+     */
+    busy?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableJob
+     */
+    currentStatus?: string;
     /**
      * 
      * @type {number}
      * @memberof ImmutableJob
      */
-    lastBuildNumber?: number;
+    databaseId?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutableJob
      */
-    averageBuildDuration?: number;
+    description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableJob
+     */
+    divergent?: boolean;
+    /**
+     * 
+     * @type {RequirementSet}
+     * @memberof ImmutableJob
+     */
+    effectiveRequirementSet?: RequirementSet;
     /**
      * 
      * @type {Array<VariableDefinition>}
@@ -4617,61 +4322,61 @@ export interface ImmutableJob {
      * @type {string}
      * @memberof ImmutableJob
      */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    type?: string;
+    entityType?: ImmutableJobEntityTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutableJob
      */
-    active?: boolean;
-    /**
-     * 
-     * @type {Project}
-     * @memberof ImmutableJob
-     */
-    project?: Project;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    buildName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    buildKey?: string;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof ImmutableJob
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    planType?: ImmutableJobPlanTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableJob
-     */
-    suspendedFromBuilding?: boolean;
+    executing?: boolean;
     /**
      * 
      * @type {number}
      * @memberof ImmutableJob
      */
-    databaseId?: number;
+    firstBuildNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableJob
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableJob
+     */
+    key?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ImmutableJob
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableJob
+     */
+    lastBuildNumber?: number;
+    /**
+     * 
+     * @type {ImmutableResultsSummary}
+     * @memberof ImmutableJob
+     */
+    latestResultsSummary?: ImmutableResultsSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableJob
+     */
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {ImmutableJob}
+     * @memberof ImmutableJob
+     */
+    master?: ImmutableJob;
     /**
      * 
      * @type {number}
@@ -4692,28 +4397,76 @@ export interface ImmutableJob {
     name?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ImmutableJob
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableJob
-     */
-    description?: string;
-    /**
-     * 
      * @type {BambooEntityOid}
      * @memberof ImmutableJob
      */
     oid?: BambooEntityOid;
     /**
      * 
+     * @type {ImmutableChain}
+     * @memberof ImmutableJob
+     */
+    parent?: ImmutableChain;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof ImmutableJob
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableJob
+     */
+    planType?: ImmutableJobPlanTypeEnum;
+    /**
+     * 
+     * @type {Project}
+     * @memberof ImmutableJob
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {RequirementSet}
+     * @memberof ImmutableJob
+     */
+    requirementSet?: RequirementSet;
+    /**
+     * 
+     * @type {ImmutableChainStage}
+     * @memberof ImmutableJob
+     */
+    stage?: ImmutableChainStage;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableJob
+     */
+    suspendedFromBuilding?: boolean;
+    /**
+     * 
      * @type {Array<TaskDefinition>}
      * @memberof ImmutableJob
      */
     taskDefinitions?: Array<TaskDefinition>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableJob
+     */
+    type?: string;
+    /**
+     * 
+     * @type {Array<VariableDefinition>}
+     * @memberof ImmutableJob
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableJob
+     */
+    version?: number;
 }
 
 
@@ -4753,40 +4506,16 @@ export type ImmutableJobPlanTypeEnum = typeof ImmutableJobPlanTypeEnum[keyof typ
 export interface ImmutablePlan {
     /**
      * 
-     * @type {Array<VariableDefinition>}
-     * @memberof ImmutablePlan
-     */
-    variables?: Array<VariableDefinition>;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutablePlan
      */
-    markedForDeletion?: boolean;
+    active?: boolean;
     /**
      * 
-     * @type {ImmutableResultsSummary}
+     * @type {number}
      * @memberof ImmutablePlan
      */
-    latestResultsSummary?: ImmutableResultsSummary;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutablePlan
-     */
-    executing?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutablePlan
-     */
-    busy?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ImmutablePlan
-     */
-    labelNames?: Array<string>;
+    averageBuildDuration?: number;
     /**
      * 
      * @type {BuildDefinition}
@@ -4798,7 +4527,7 @@ export interface ImmutablePlan {
      * @type {string}
      * @memberof ImmutablePlan
      */
-    currentStatus?: string;
+    buildKey?: string;
     /**
      * 
      * @type {BuildLogger}
@@ -4807,22 +4536,34 @@ export interface ImmutablePlan {
     buildLogger?: BuildLogger;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutablePlan
      */
-    firstBuildNumber?: number;
+    buildName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutablePlan
+     */
+    busy?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutablePlan
+     */
+    currentStatus?: string;
     /**
      * 
      * @type {number}
      * @memberof ImmutablePlan
      */
-    lastBuildNumber?: number;
+    databaseId?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ImmutablePlan
      */
-    averageBuildDuration?: number;
+    description?: string;
     /**
      * 
      * @type {Array<VariableDefinition>}
@@ -4834,67 +4575,61 @@ export interface ImmutablePlan {
      * @type {string}
      * @memberof ImmutablePlan
      */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    type?: string;
+    entityType?: ImmutablePlanEntityTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ImmutablePlan
      */
-    active?: boolean;
+    executing?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutablePlan
+     */
+    firstBuildNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutablePlan
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutablePlan
+     */
+    key?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ImmutablePlan
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutablePlan
+     */
+    lastBuildNumber?: number;
+    /**
+     * 
+     * @type {ImmutableResultsSummary}
+     * @memberof ImmutablePlan
+     */
+    latestResultsSummary?: ImmutableResultsSummary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutablePlan
+     */
+    markedForDeletion?: boolean;
     /**
      * 
      * @type {ImmutablePlan}
      * @memberof ImmutablePlan
      */
     master?: ImmutablePlan;
-    /**
-     * 
-     * @type {Project}
-     * @memberof ImmutablePlan
-     */
-    project?: Project;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    buildName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    buildKey?: string;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof ImmutablePlan
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    planType?: ImmutablePlanPlanTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutablePlan
-     */
-    suspendedFromBuilding?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutablePlan
-     */
-    databaseId?: number;
     /**
      * 
      * @type {number}
@@ -4915,40 +4650,54 @@ export interface ImmutablePlan {
     name?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ImmutablePlan
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutablePlan
-     */
-    entityType?: ImmutablePlanEntityTypeEnum;
-    /**
-     * 
      * @type {BambooEntityOid}
      * @memberof ImmutablePlan
      */
     oid?: BambooEntityOid;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof ImmutablePlan
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutablePlan
+     */
+    planType?: ImmutablePlanPlanTypeEnum;
+    /**
+     * 
+     * @type {Project}
+     * @memberof ImmutablePlan
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutablePlan
+     */
+    suspendedFromBuilding?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutablePlan
+     */
+    type?: string;
+    /**
+     * 
+     * @type {Array<VariableDefinition>}
+     * @memberof ImmutablePlan
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutablePlan
+     */
+    version?: number;
 }
 
-
-/**
- * @export
- */
-export const ImmutablePlanPlanTypeEnum = {
-    Chain: 'CHAIN',
-    Job: 'JOB',
-    ChainBranch: 'CHAIN_BRANCH'
-} as const;
-export type ImmutablePlanPlanTypeEnum = typeof ImmutablePlanPlanTypeEnum[keyof typeof ImmutablePlanPlanTypeEnum];
 
 /**
  * @export
@@ -4969,6 +4718,16 @@ export const ImmutablePlanEntityTypeEnum = {
 export type ImmutablePlanEntityTypeEnum = typeof ImmutablePlanEntityTypeEnum[keyof typeof ImmutablePlanEntityTypeEnum];
 
 /**
+ * @export
+ */
+export const ImmutablePlanPlanTypeEnum = {
+    Chain: 'CHAIN',
+    Job: 'JOB',
+    ChainBranch: 'CHAIN_BRANCH'
+} as const;
+export type ImmutablePlanPlanTypeEnum = typeof ImmutablePlanPlanTypeEnum[keyof typeof ImmutablePlanPlanTypeEnum];
+
+/**
  * 
  * @export
  * @interface ImmutableRequirement
@@ -4976,22 +4735,22 @@ export type ImmutablePlanEntityTypeEnum = typeof ImmutablePlanEntityTypeEnum[key
 export interface ImmutableRequirement {
     /**
      * 
+     * @type {number}
+     * @memberof ImmutableRequirement
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ImmutableRequirement
      */
-    typeOfMatch?: ImmutableRequirementTypeOfMatchEnum;
+    key?: string;
     /**
      * 
      * @type {string}
      * @memberof ImmutableRequirement
      */
     matchValue?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableRequirement
-     */
-    readonly?: boolean;
     /**
      * 
      * @type {number}
@@ -5009,19 +4768,19 @@ export interface ImmutableRequirement {
      * @type {boolean}
      * @memberof ImmutableRequirement
      */
+    readonly?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableRequirement
+     */
     regexMatch?: boolean;
     /**
      * 
      * @type {string}
      * @memberof ImmutableRequirement
      */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableRequirement
-     */
-    id?: number;
+    typeOfMatch?: ImmutableRequirementTypeOfMatchEnum;
 }
 
 
@@ -5056,280 +4815,10 @@ export interface ImmutableRequirementSet {
 export interface ImmutableResultsSummary {
     /**
      * 
-     * @type {PlanKey}
-     * @memberof ImmutableResultsSummary
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof ImmutableResultsSummary
-     */
-    planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {Array<RepositoryChangeset>}
-     * @memberof ImmutableResultsSummary
-     */
-    repositoryChangesets?: Array<RepositoryChangeset>;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof ImmutableResultsSummary
-     */
-    immutablePlan?: ImmutablePlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    planName?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
-    successful?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    failed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    notRunYet?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    notBuilt?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ImmutableResultsSummary
-     */
-    labelNames?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    lifeCycleState?: ImmutableResultsSummaryLifeCycleStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    inProgress?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    pending?: boolean;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof ImmutableResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {Array<ConsumedSubscription>}
-     * @memberof ImmutableResultsSummary
-     */
-    subscriptions?: Array<ConsumedSubscription>;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof ImmutableResultsSummary
-     */
-    planIfExists?: ImmutablePlan;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ImmutableResultsSummary
-     */
-    immutableChain?: ImmutableChain;
-    /**
-     * 
-     * @type {TriggerReason}
-     * @memberof ImmutableResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    deltaState?: ImmutableResultsSummaryDeltaStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    onceOff?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    customBuild?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    buildCancelledDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    waiting?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof ImmutableResultsSummary
-     */
-    customBuildData?: object;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ImmutableResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ImmutableResultsSummary
-     */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ImmutableResultsSummary
-     */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof ImmutableResultsSummary
-     */
-    jiraIssueKeys?: Set<string>;
-    /**
-     * 
-     * @type {Set<Author>}
-     * @memberof ImmutableResultsSummary
-     */
-    uniqueAuthors?: Set<Author>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    timeToFix?: number;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof ImmutableResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    processingDurationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    shortReasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    relativeQueueDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    relativeBuildStartedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    buildTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    queueTime?: string;
+    active?: boolean;
     /**
      * 
      * @type {Array<ArtifactLink>}
@@ -5342,42 +4831,6 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     artifactLinksThatExist?: Array<ArtifactLink>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableResultsSummary
-     */
-    changesListSummary?: string;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ImmutableResultsSummary
-     */
-    substitutedVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof ImmutableResultsSummary
-     */
-    variableContextLogs?: Array<VariableContextSnapshot>;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ImmutableResultsSummary
-     */
-    manuallyOverriddenVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    restartCount?: number;
-    /**
-     * 
-     * @type {Array<Commit>}
-     * @memberof ImmutableResultsSummary
-     */
-    commits?: Array<Commit>;
     /**
      * 
      * @type {number}
@@ -5395,37 +4848,13 @@ export interface ImmutableResultsSummary {
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
-    fullPlanName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ImmutableResultsSummary
-     */
-    queued?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableResultsSummary
-     */
-    id?: number;
+    buildCancelledDate?: string;
     /**
      * 
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
-    statDate?: string;
+    buildCompletedDate?: string;
     /**
      * 
      * @type {string}
@@ -5434,42 +4863,342 @@ export interface ImmutableResultsSummary {
     buildDate?: string;
     /**
      * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    buildNumber?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ImmutableResultsSummary
      */
     buildState?: ImmutableResultsSummaryBuildStateEnum;
     /**
      * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    buildTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    changesListSummary?: string;
+    /**
+     * 
+     * @type {Array<Commit>}
+     * @memberof ImmutableResultsSummary
+     */
+    commits?: Array<Commit>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    customBuild?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ImmutableResultsSummary
+     */
+    customBuildData?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    deltaState?: ImmutableResultsSummaryDeltaStateEnum;
+    /**
+     * 
      * @type {number}
      * @memberof ImmutableResultsSummary
      */
-    buildNumber?: number;
+    duration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    failed?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    finished?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ImmutableResultsSummary
+     */
+    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    fullPlanName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    id?: number;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ImmutableResultsSummary
+     */
+    immutableChain?: ImmutableChain;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof ImmutableResultsSummary
+     */
+    immutablePlan?: ImmutablePlan;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    inProgress?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof ImmutableResultsSummary
+     */
+    jiraIssueKeys?: Set<string>;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ImmutableResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ImmutableResultsSummary
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    lifeCycleState?: ImmutableResultsSummaryLifeCycleStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    logSize?: number;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ImmutableResultsSummary
+     */
+    manuallyOverriddenVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    notBuilt?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    notRunYet?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    onceOff?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    pending?: boolean;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof ImmutableResultsSummary
+     */
+    planIfExists?: ImmutablePlan;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof ImmutableResultsSummary
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof ImmutableResultsSummary
+     */
+    planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    processingDurationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    queueTime?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    queued?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    rebuild?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ImmutableResultsSummary
+     */
+    relatedJiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    relativeQueueDate?: string;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof ImmutableResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    restartCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    shortReasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    statDate?: string;
+    /**
+     * 
+     * @type {Array<ConsumedSubscription>}
+     * @memberof ImmutableResultsSummary
+     */
+    subscriptions?: Array<ConsumedSubscription>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ImmutableResultsSummary
+     */
+    substitutedVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    successful?: boolean;
+    /**
+     * 
+     * @type {TestResultsSummary}
+     * @memberof ImmutableResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableResultsSummary
+     */
+    testSummary?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImmutableResultsSummary
+     */
+    timeToFix?: number;
+    /**
+     * 
+     * @type {TriggerReason}
+     * @memberof ImmutableResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {Set<Author>}
+     * @memberof ImmutableResultsSummary
+     */
+    uniqueAuthors?: Set<Author>;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof ImmutableResultsSummary
+     */
+    variableContextLogs?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
+    waiting?: boolean;
 }
 
-
-/**
- * @export
- */
-export const ImmutableResultsSummaryLifeCycleStateEnum = {
-    Pending: 'Pending',
-    Queued: 'Queued',
-    InProgress: 'InProgress',
-    Finished: 'Finished',
-    NotBuilt: 'NotBuilt'
-} as const;
-export type ImmutableResultsSummaryLifeCycleStateEnum = typeof ImmutableResultsSummaryLifeCycleStateEnum[keyof typeof ImmutableResultsSummaryLifeCycleStateEnum];
-
-/**
- * @export
- */
-export const ImmutableResultsSummaryDeltaStateEnum = {
-    None: 'NONE',
-    Passing: 'PASSING',
-    Failing: 'FAILING',
-    Broken: 'BROKEN',
-    Fixed: 'FIXED'
-} as const;
-export type ImmutableResultsSummaryDeltaStateEnum = typeof ImmutableResultsSummaryDeltaStateEnum[keyof typeof ImmutableResultsSummaryDeltaStateEnum];
 
 /**
  * @export
@@ -5493,6 +5222,30 @@ export const ImmutableResultsSummaryBuildStateEnum = {
 export type ImmutableResultsSummaryBuildStateEnum = typeof ImmutableResultsSummaryBuildStateEnum[keyof typeof ImmutableResultsSummaryBuildStateEnum];
 
 /**
+ * @export
+ */
+export const ImmutableResultsSummaryDeltaStateEnum = {
+    None: 'NONE',
+    Passing: 'PASSING',
+    Failing: 'FAILING',
+    Broken: 'BROKEN',
+    Fixed: 'FIXED'
+} as const;
+export type ImmutableResultsSummaryDeltaStateEnum = typeof ImmutableResultsSummaryDeltaStateEnum[keyof typeof ImmutableResultsSummaryDeltaStateEnum];
+
+/**
+ * @export
+ */
+export const ImmutableResultsSummaryLifeCycleStateEnum = {
+    Pending: 'Pending',
+    Queued: 'Queued',
+    InProgress: 'InProgress',
+    Finished: 'Finished',
+    NotBuilt: 'NotBuilt'
+} as const;
+export type ImmutableResultsSummaryLifeCycleStateEnum = typeof ImmutableResultsSummaryLifeCycleStateEnum[keyof typeof ImmutableResultsSummaryLifeCycleStateEnum];
+
+/**
  * 
  * @export
  * @interface ImmutableVcsBambooSpecsSource
@@ -5500,10 +5253,10 @@ export type ImmutableResultsSummaryBuildStateEnum = typeof ImmutableResultsSumma
 export interface ImmutableVcsBambooSpecsSource {
     /**
      * 
-     * @type {ImmutableVcsLocationBambooSpecsState}
+     * @type {number}
      * @memberof ImmutableVcsBambooSpecsSource
      */
-    vcsLocationBambooSpecsState?: ImmutableVcsLocationBambooSpecsState;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -5512,16 +5265,16 @@ export interface ImmutableVcsBambooSpecsSource {
     sourceLocation?: string;
     /**
      * 
+     * @type {ImmutableVcsLocationBambooSpecsState}
+     * @memberof ImmutableVcsBambooSpecsSource
+     */
+    vcsLocationBambooSpecsState?: ImmutableVcsLocationBambooSpecsState;
+    /**
+     * 
      * @type {boolean}
      * @memberof ImmutableVcsBambooSpecsSource
      */
     yamlConfiguration?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImmutableVcsBambooSpecsSource
-     */
-    id?: number;
 }
 /**
  * 
@@ -5540,19 +5293,7 @@ export interface ImmutableVcsLocationBambooSpecsState {
      * @type {number}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
-    vcsLocationId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableVcsLocationBambooSpecsState
-     */
-    revision?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImmutableVcsLocationBambooSpecsState
-     */
-    specsExecutionDate?: string;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -5564,7 +5305,19 @@ export interface ImmutableVcsLocationBambooSpecsState {
      * @type {string}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
+    revision?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableVcsLocationBambooSpecsState
+     */
     specImportState?: ImmutableVcsLocationBambooSpecsStateSpecImportStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImmutableVcsLocationBambooSpecsState
+     */
+    specsExecutionDate?: string;
     /**
      * 
      * @type {boolean}
@@ -5576,7 +5329,7 @@ export interface ImmutableVcsLocationBambooSpecsState {
      * @type {number}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
-    id?: number;
+    vcsLocationId?: number;
 }
 
 
@@ -5622,6 +5375,12 @@ export interface JiraIssueDetails {
     assignee?: JiraAssignee;
     /**
      * 
+     * @type {string}
+     * @memberof JiraIssueDetails
+     */
+    displayUrl?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof JiraIssueDetails
      */
@@ -5634,18 +5393,6 @@ export interface JiraIssueDetails {
     issueKey?: string;
     /**
      * 
-     * @type {string}
-     * @memberof JiraIssueDetails
-     */
-    displayUrl?: string;
-    /**
-     * 
-     * @type {JiraType}
-     * @memberof JiraIssueDetails
-     */
-    type?: JiraType;
-    /**
-     * 
      * @type {JiraStatus}
      * @memberof JiraIssueDetails
      */
@@ -5656,6 +5403,12 @@ export interface JiraIssueDetails {
      * @memberof JiraIssueDetails
      */
     summary?: string;
+    /**
+     * 
+     * @type {JiraType}
+     * @memberof JiraIssueDetails
+     */
+    type?: JiraType;
 }
 /**
  * 
@@ -5687,13 +5440,13 @@ export interface JiraType {
      * @type {string}
      * @memberof JiraType
      */
-    typeIconUrl?: string;
+    typeDescription?: string;
     /**
      * 
      * @type {string}
      * @memberof JiraType
      */
-    typeDescription?: string;
+    typeIconUrl?: string;
 }
 /**
  * 
@@ -5706,19 +5459,19 @@ export interface JsonArray {
      * @type {number}
      * @memberof JsonArray
      */
-    asNumber?: number;
+    asBigDecimal?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonArray
      */
-    asFloat?: number;
+    asBigInteger?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonArray
      */
-    asInt?: number;
+    asBoolean?: boolean;
     /**
      * 
      * @type {string}
@@ -5736,13 +5489,55 @@ export interface JsonArray {
      * @type {number}
      * @memberof JsonArray
      */
-    asBigDecimal?: number;
+    asDouble?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonArray
      */
-    asBigInteger?: number;
+    asFloat?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonArray
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonArray
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonArray
+     */
+    asJsonNull?: JsonNull;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonArray
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonArray
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonArray
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonArray
+     */
+    asNumber?: number;
     /**
      * 
      * @type {number}
@@ -5757,34 +5552,16 @@ export interface JsonArray {
     asString?: string;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonArray
      */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonArray
-     */
-    asLong?: number;
+    jsonArray?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof JsonArray
      */
-    asBoolean?: boolean;
-    /**
-     * 
-     * @type {JsonNull}
-     * @memberof JsonArray
-     */
-    asJsonNull?: JsonNull;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonArray
-     */
-    jsonPrimitive?: boolean;
+    jsonNull?: boolean;
     /**
      * 
      * @type {boolean}
@@ -5796,31 +5573,7 @@ export interface JsonArray {
      * @type {boolean}
      * @memberof JsonArray
      */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonArray
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonArray
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonArray
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonArray
-     */
-    jsonArray?: boolean;
+    jsonPrimitive?: boolean;
 }
 /**
  * 
@@ -5830,28 +5583,22 @@ export interface JsonArray {
 export interface JsonElement {
     /**
      * 
-     * @type {JsonNull}
+     * @type {number}
      * @memberof JsonElement
      */
-    asJsonNull?: JsonNull;
+    asBigDecimal?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonElement
      */
-    asNumber?: number;
+    asBigInteger?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonElement
      */
-    asFloat?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonElement
-     */
-    asInt?: number;
+    asBoolean?: boolean;
     /**
      * 
      * @type {string}
@@ -5869,13 +5616,55 @@ export interface JsonElement {
      * @type {number}
      * @memberof JsonElement
      */
-    asBigDecimal?: number;
+    asDouble?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonElement
      */
-    asBigInteger?: number;
+    asFloat?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonElement
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonElement
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonElement
+     */
+    asJsonNull?: JsonNull;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonElement
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonElement
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonElement
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonElement
+     */
+    asNumber?: number;
     /**
      * 
      * @type {number}
@@ -5884,10 +5673,22 @@ export interface JsonElement {
     asShort?: number;
     /**
      * 
+     * @type {string}
+     * @memberof JsonElement
+     */
+    asString?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof JsonElement
      */
-    jsonPrimitive?: boolean;
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonElement
+     */
+    jsonNull?: boolean;
     /**
      * 
      * @type {boolean}
@@ -5899,55 +5700,7 @@ export interface JsonElement {
      * @type {boolean}
      * @memberof JsonElement
      */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonElement
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonElement
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonElement
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonElement
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonElement
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonElement
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonElement
-     */
-    asBoolean?: boolean;
+    jsonPrimitive?: boolean;
 }
 /**
  * 
@@ -5957,28 +5710,22 @@ export interface JsonElement {
 export interface JsonNull {
     /**
      * 
-     * @type {JsonNull}
+     * @type {number}
      * @memberof JsonNull
      */
-    asJsonNull?: JsonNull;
+    asBigDecimal?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonNull
      */
-    asNumber?: number;
+    asBigInteger?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonNull
      */
-    asFloat?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNull
-     */
-    asInt?: number;
+    asBoolean?: boolean;
     /**
      * 
      * @type {string}
@@ -5996,13 +5743,55 @@ export interface JsonNull {
      * @type {number}
      * @memberof JsonNull
      */
-    asBigDecimal?: number;
+    asDouble?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonNull
      */
-    asBigInteger?: number;
+    asFloat?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNull
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonNull
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonNull
+     */
+    asJsonNull?: JsonNull;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonNull
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonNull
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNull
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonNull
+     */
+    asNumber?: number;
     /**
      * 
      * @type {number}
@@ -6011,10 +5800,22 @@ export interface JsonNull {
     asShort?: number;
     /**
      * 
+     * @type {string}
+     * @memberof JsonNull
+     */
+    asString?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof JsonNull
      */
-    jsonPrimitive?: boolean;
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonNull
+     */
+    jsonNull?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6026,55 +5827,7 @@ export interface JsonNull {
      * @type {boolean}
      * @memberof JsonNull
      */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonNull
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonNull
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonNull
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonNull
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNull
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonNull
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonNull
-     */
-    asBoolean?: boolean;
+    jsonPrimitive?: boolean;
 }
 /**
  * 
@@ -6084,28 +5837,22 @@ export interface JsonNull {
 export interface JsonObject {
     /**
      * 
-     * @type {JsonNull}
+     * @type {number}
      * @memberof JsonObject
      */
-    asJsonNull?: JsonNull;
+    asBigDecimal?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonObject
      */
-    asNumber?: number;
+    asBigInteger?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonObject
      */
-    asFloat?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonObject
-     */
-    asInt?: number;
+    asBoolean?: boolean;
     /**
      * 
      * @type {string}
@@ -6123,13 +5870,55 @@ export interface JsonObject {
      * @type {number}
      * @memberof JsonObject
      */
-    asBigDecimal?: number;
+    asDouble?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonObject
      */
-    asBigInteger?: number;
+    asFloat?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonObject
+     */
+    asInt?: number;
+    /**
+     * 
+     * @type {JsonArray}
+     * @memberof JsonObject
+     */
+    asJsonArray?: JsonArray;
+    /**
+     * 
+     * @type {JsonNull}
+     * @memberof JsonObject
+     */
+    asJsonNull?: JsonNull;
+    /**
+     * 
+     * @type {JsonObject}
+     * @memberof JsonObject
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonObject
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonObject
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonObject
+     */
+    asNumber?: number;
     /**
      * 
      * @type {number}
@@ -6138,10 +5927,22 @@ export interface JsonObject {
     asShort?: number;
     /**
      * 
+     * @type {string}
+     * @memberof JsonObject
+     */
+    asString?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof JsonObject
      */
-    jsonPrimitive?: boolean;
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonObject
+     */
+    jsonNull?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6153,55 +5954,7 @@ export interface JsonObject {
      * @type {boolean}
      * @memberof JsonObject
      */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonObject
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonObject
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonObject
-     */
-    asJsonPrimitive?: JsonPrimitive;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    jsonArray?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonObject
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonObject
-     */
-    asDouble?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonObject
-     */
-    asLong?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonObject
-     */
-    asBoolean?: boolean;
+    jsonPrimitive?: boolean;
 }
 /**
  * 
@@ -6214,19 +5967,19 @@ export interface JsonPrimitive {
      * @type {number}
      * @memberof JsonPrimitive
      */
-    asNumber?: number;
+    asBigDecimal?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonPrimitive
      */
-    asFloat?: number;
+    asBigInteger?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof JsonPrimitive
      */
-    asInt?: number;
+    asBoolean?: boolean;
     /**
      * 
      * @type {string}
@@ -6244,61 +5997,25 @@ export interface JsonPrimitive {
      * @type {number}
      * @memberof JsonPrimitive
      */
-    asBigDecimal?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonPrimitive
-     */
-    asBigInteger?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonPrimitive
-     */
-    asShort?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonPrimitive
-     */
-    string?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof JsonPrimitive
-     */
-    asString?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof JsonPrimitive
-     */
     asDouble?: number;
     /**
      * 
      * @type {number}
      * @memberof JsonPrimitive
      */
-    asLong?: number;
+    asFloat?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof JsonPrimitive
      */
-    asBoolean?: boolean;
+    asInt?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {JsonArray}
      * @memberof JsonPrimitive
      */
-    number?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof JsonPrimitive
-     */
-    _boolean?: boolean;
+    asJsonArray?: JsonArray;
     /**
      * 
      * @type {JsonNull}
@@ -6307,10 +6024,58 @@ export interface JsonPrimitive {
     asJsonNull?: JsonNull;
     /**
      * 
+     * @type {JsonObject}
+     * @memberof JsonPrimitive
+     */
+    asJsonObject?: JsonObject;
+    /**
+     * 
+     * @type {JsonPrimitive}
+     * @memberof JsonPrimitive
+     */
+    asJsonPrimitive?: JsonPrimitive;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonPrimitive
+     */
+    asLong?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonPrimitive
+     */
+    asNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonPrimitive
+     */
+    asShort?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof JsonPrimitive
+     */
+    asString?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof JsonPrimitive
      */
-    jsonPrimitive?: boolean;
+    _boolean?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    jsonArray?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    jsonNull?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6322,31 +6087,19 @@ export interface JsonPrimitive {
      * @type {boolean}
      * @memberof JsonPrimitive
      */
-    jsonNull?: boolean;
-    /**
-     * 
-     * @type {JsonObject}
-     * @memberof JsonPrimitive
-     */
-    asJsonObject?: JsonObject;
-    /**
-     * 
-     * @type {JsonArray}
-     * @memberof JsonPrimitive
-     */
-    asJsonArray?: JsonArray;
-    /**
-     * 
-     * @type {JsonPrimitive}
-     * @memberof JsonPrimitive
-     */
-    asJsonPrimitive?: JsonPrimitive;
+    jsonPrimitive?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof JsonPrimitive
      */
-    jsonArray?: boolean;
+    number?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JsonPrimitive
+     */
+    string?: boolean;
 }
 /**
  * 
@@ -6356,10 +6109,10 @@ export interface JsonPrimitive {
 export interface JsonSearchResultsList {
     /**
      * 
-     * @type {number}
+     * @type {JsonElement}
      * @memberof JsonSearchResultsList
      */
-    startIndex?: number;
+    json?: JsonElement;
     /**
      * 
      * @type {number}
@@ -6368,22 +6121,22 @@ export interface JsonSearchResultsList {
     maxResult?: number;
     /**
      * 
-     * @type {number}
-     * @memberof JsonSearchResultsList
-     */
-    size?: number;
-    /**
-     * 
      * @type {Array<JsonElement>}
      * @memberof JsonSearchResultsList
      */
     searchResults?: Array<JsonElement>;
     /**
      * 
-     * @type {JsonElement}
+     * @type {number}
      * @memberof JsonSearchResultsList
      */
-    json?: JsonElement;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JsonSearchResultsList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -6412,6 +6165,12 @@ export interface Label {
     creationDate?: string;
     /**
      * 
+     * @type {number}
+     * @memberof Label
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof Label
      */
@@ -6428,12 +6187,6 @@ export interface Label {
      * @memberof Label
      */
     namespace?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Label
-     */
-    id?: number;
 }
 /**
  * 
@@ -6441,24 +6194,6 @@ export interface Label {
  * @interface Labelling
  */
 export interface Labelling {
-    /**
-     * 
-     * @type {Plan}
-     * @memberof Labelling
-     */
-    plan?: Plan;
-    /**
-     * 
-     * @type {Label}
-     * @memberof Labelling
-     */
-    label?: Label;
-    /**
-     * 
-     * @type {string}
-     * @memberof Labelling
-     */
-    creationDate?: string;
     /**
      * 
      * @type {ResultsSummary}
@@ -6470,7 +6205,31 @@ export interface Labelling {
      * @type {string}
      * @memberof Labelling
      */
+    creationDate?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Labelling
+     */
+    id?: number;
+    /**
+     * 
+     * @type {Label}
+     * @memberof Labelling
+     */
+    label?: Label;
+    /**
+     * 
+     * @type {string}
+     * @memberof Labelling
+     */
     lastModificationDate?: string;
+    /**
+     * 
+     * @type {Plan}
+     * @memberof Labelling
+     */
+    plan?: Plan;
     /**
      * 
      * @type {Project}
@@ -6479,16 +6238,16 @@ export interface Labelling {
     project?: Project;
     /**
      * 
+     * @type {Plan}
+     * @memberof Labelling
+     */
+    root?: Plan;
+    /**
+     * 
      * @type {string}
      * @memberof Labelling
      */
     userName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Labelling
-     */
-    id?: number;
 }
 /**
  * 
@@ -6517,16 +6276,10 @@ export interface Link {
 export interface LinkedJiraIssue {
     /**
      * 
-     * @type {ResultsSummary}
+     * @type {number}
      * @memberof LinkedJiraIssue
      */
-    resultsSummary?: ResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof LinkedJiraIssue
-     */
-    issueType?: LinkedJiraIssueIssueTypeEnum;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -6535,16 +6288,22 @@ export interface LinkedJiraIssue {
     issueKey?: string;
     /**
      * 
+     * @type {string}
+     * @memberof LinkedJiraIssue
+     */
+    issueType?: LinkedJiraIssueIssueTypeEnum;
+    /**
+     * 
      * @type {JiraIssueDetails}
      * @memberof LinkedJiraIssue
      */
     jiraIssueDetails?: JiraIssueDetails;
     /**
      * 
-     * @type {number}
+     * @type {ResultsSummary}
      * @memberof LinkedJiraIssue
      */
-    id?: number;
+    resultsSummary?: ResultsSummary;
 }
 
 
@@ -6561,131 +6320,131 @@ export type LinkedJiraIssueIssueTypeEnum = typeof LinkedJiraIssueIssueTypeEnum[k
 /**
  * 
  * @export
- * @interface ListGroupPermissions6200Response
+ * @interface ListGroupPermissions200Response
  */
-export interface ListGroupPermissions6200Response {
+export interface ListGroupPermissions200Response {
     /**
      * 
-     * @type {string}
-     * @memberof ListGroupPermissions6200Response
+     * @type {number}
+     * @memberof ListGroupPermissions200Response
      */
-    self?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
-     * @memberof ListGroupPermissions6200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListGroupPermissions6200Response
+     * @memberof ListGroupPermissions200Response
      */
     next?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ListGroupPermissions6200Response
+     * @type {string}
+     * @memberof ListGroupPermissions200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ListGroupPermissions6200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestGroupPermission>}
-     * @memberof ListGroupPermissions6200Response
+     * @memberof ListGroupPermissions200Response
      */
     results?: Array<RestGroupPermission>;
-}
-/**
- * 
- * @export
- * @interface ListRolePermissions6200Response
- */
-export interface ListRolePermissions6200Response {
     /**
      * 
      * @type {string}
-     * @memberof ListRolePermissions6200Response
+     * @memberof ListGroupPermissions200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ListRolePermissions6200Response
+     * @type {number}
+     * @memberof ListGroupPermissions200Response
      */
-    prev?: string;
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ListRolePermissions200Response
+ */
+export interface ListRolePermissions200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRolePermissions200Response
+     */
+    limit?: number;
     /**
      * 
      * @type {string}
-     * @memberof ListRolePermissions6200Response
+     * @memberof ListRolePermissions200Response
      */
     next?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ListRolePermissions6200Response
+     * @type {string}
+     * @memberof ListRolePermissions200Response
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRolePermissions6200Response
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestRolePermission>}
-     * @memberof ListRolePermissions6200Response
+     * @memberof ListRolePermissions200Response
      */
     results?: Array<RestRolePermission>;
-}
-/**
- * 
- * @export
- * @interface ListUserPermissions6200Response
- */
-export interface ListUserPermissions6200Response {
     /**
      * 
      * @type {string}
-     * @memberof ListUserPermissions6200Response
+     * @memberof ListRolePermissions200Response
      */
     self?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ListUserPermissions6200Response
-     */
-    prev?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListUserPermissions6200Response
-     */
-    next?: string;
-    /**
-     * 
      * @type {number}
-     * @memberof ListUserPermissions6200Response
+     * @memberof ListRolePermissions200Response
      */
     start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ListUserPermissions200Response
+ */
+export interface ListUserPermissions200Response {
     /**
      * 
      * @type {number}
-     * @memberof ListUserPermissions6200Response
+     * @memberof ListUserPermissions200Response
      */
     limit?: number;
     /**
      * 
+     * @type {string}
+     * @memberof ListUserPermissions200Response
+     */
+    next?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListUserPermissions200Response
+     */
+    prev?: string;
+    /**
+     * 
      * @type {Array<RestUserPermission>}
-     * @memberof ListUserPermissions6200Response
+     * @memberof ListUserPermissions200Response
      */
     results?: Array<RestUserPermission>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListUserPermissions200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListUserPermissions200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -6698,7 +6457,7 @@ export interface Log {
      * @type {boolean}
      * @memberof Log
      */
-    infoEnabled?: boolean;
+    debugEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6710,13 +6469,13 @@ export interface Log {
      * @type {boolean}
      * @memberof Log
      */
-    debugEnabled?: boolean;
+    fatalEnabled?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof Log
      */
-    warnEnabled?: boolean;
+    infoEnabled?: boolean;
     /**
      * 
      * @type {boolean}
@@ -6728,7 +6487,7 @@ export interface Log {
      * @type {boolean}
      * @memberof Log
      */
-    fatalEnabled?: boolean;
+    warnEnabled?: boolean;
 }
 /**
  * 
@@ -6773,25 +6532,25 @@ export interface MergeResultSummary {
      * @type {string}
      * @memberof MergeResultSummary
      */
-    failureReason?: string;
+    branchTargetVcsKey?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MergeResultSummary
+     */
+    emptyMerge?: boolean;
     /**
      * 
      * @type {string}
      * @memberof MergeResultSummary
      */
-    branchTargetVcsKey?: string;
+    failureReason?: string;
     /**
      * 
      * @type {number}
      * @memberof MergeResultSummary
      */
-    integrationRepositoryId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
-    integrationRepositoryBranchName?: string;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -6803,13 +6562,25 @@ export interface MergeResultSummary {
      * @type {string}
      * @memberof MergeResultSummary
      */
-    mergeResultVcsKey?: string;
+    integrationRepositoryBranchName?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof MergeResultSummary
      */
-    emptyMerge?: boolean;
+    integrationRepositoryId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
+    integrationStrategy?: MergeResultSummaryIntegrationStrategyEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MergeResultSummary
+     */
+    mergeResultVcsKey?: string;
     /**
      * 
      * @type {string}
@@ -6822,20 +6593,17 @@ export interface MergeResultSummary {
      * @memberof MergeResultSummary
      */
     pushState?: MergeResultSummaryPushStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof MergeResultSummary
-     */
-    integrationStrategy?: MergeResultSummaryIntegrationStrategyEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof MergeResultSummary
-     */
-    id?: number;
 }
 
+
+/**
+ * @export
+ */
+export const MergeResultSummaryIntegrationStrategyEnum = {
+    BranchUpdater: 'BRANCH_UPDATER',
+    GateKeeper: 'GATE_KEEPER'
+} as const;
+export type MergeResultSummaryIntegrationStrategyEnum = typeof MergeResultSummaryIntegrationStrategyEnum[keyof typeof MergeResultSummaryIntegrationStrategyEnum];
 
 /**
  * @export
@@ -6864,15 +6632,6 @@ export const MergeResultSummaryPushStateEnum = {
 export type MergeResultSummaryPushStateEnum = typeof MergeResultSummaryPushStateEnum[keyof typeof MergeResultSummaryPushStateEnum];
 
 /**
- * @export
- */
-export const MergeResultSummaryIntegrationStrategyEnum = {
-    BranchUpdater: 'BRANCH_UPDATER',
-    GateKeeper: 'GATE_KEEPER'
-} as const;
-export type MergeResultSummaryIntegrationStrategyEnum = typeof MergeResultSummaryIntegrationStrategyEnum[keyof typeof MergeResultSummaryIntegrationStrategyEnum];
-
-/**
  * 
  * @export
  * @interface MutableArtifact
@@ -6883,13 +6642,25 @@ export interface MutableArtifact {
      * @type {string}
      * @memberof MutableArtifact
      */
-    label?: string;
+    archiverType?: MutableArtifactArchiverTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof MutableArtifact
      */
-    sharedArtifact?: boolean;
+    globallyStored?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MutableArtifact
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MutableArtifact
+     */
+    label?: string;
     /**
      * 
      * @type {string}
@@ -6907,25 +6678,13 @@ export interface MutableArtifact {
      * @type {boolean}
      * @memberof MutableArtifact
      */
-    globallyStored?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MutableArtifact
-     */
-    archiverType?: MutableArtifactArchiverTypeEnum;
+    sharedArtifact?: boolean;
     /**
      * 
      * @type {number}
      * @memberof MutableArtifact
      */
     size?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MutableArtifact
-     */
-    id?: number;
 }
 
 
@@ -6941,45 +6700,22 @@ export type MutableArtifactArchiverTypeEnum = typeof MutableArtifactArchiverType
 /**
  * 
  * @export
+ * @interface NextBuildNumber
+ */
+export interface NextBuildNumber {
+    /**
+     * 
+     * @type {number}
+     * @memberof NextBuildNumber
+     */
+    nextBuildNumber?: number;
+}
+/**
+ * 
+ * @export
  * @interface Node
  */
 export interface Node {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Node
-     */
-    children?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Node
-     */
-    attributes?: Array<object>;
-    /**
-     * 
-     * @type {Node}
-     * @memberof Node
-     */
-    parent?: Node;
-    /**
-     * 
-     * @type {object}
-     * @memberof Node
-     */
-    value?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof Node
-     */
-    reference?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    name?: string;
     /**
      * 
      * @type {boolean}
@@ -6988,10 +6724,22 @@ export interface Node {
     attribute?: boolean;
     /**
      * 
-     * @type {ConfigurationNode}
+     * @type {number}
      * @memberof Node
      */
-    parentNode?: ConfigurationNode;
+    attributeCount?: number;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof Node
+     */
+    attributes?: Array<object>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof Node
+     */
+    children?: Array<object>;
     /**
      * 
      * @type {number}
@@ -7006,17 +6754,242 @@ export interface Node {
     defined?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Node
      */
-    attributeCount?: number;
+    name?: string;
+    /**
+     * 
+     * @type {Node}
+     * @memberof Node
+     */
+    parent?: Node;
+    /**
+     * 
+     * @type {ConfigurationNode}
+     * @memberof Node
+     */
+    parentNode?: ConfigurationNode;
+    /**
+     * 
+     * @type {object}
+     * @memberof Node
+     */
+    reference?: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof Node
+     */
+    value?: object;
 }
+/**
+ * 
+ * @export
+ * @interface NodeLifecycleState
+ */
+export interface NodeLifecycleState {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    pAUSED?: NodeLifecycleStatePAUSEDEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    pAUSING?: NodeLifecycleStatePAUSINGEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    pREPARINGFORRESTART?: NodeLifecycleStatePREPARINGFORRESTARTEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    rEADYFORRESTART?: NodeLifecycleStateREADYFORRESTARTEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    rUNNING?: NodeLifecycleStateRUNNINGEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    rUNNINGASSECONDARY?: NodeLifecycleStateRUNNINGASSECONDARYEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    sETUP?: NodeLifecycleStateSETUPEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    sTARTING?: NodeLifecycleStateSTARTINGEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeLifecycleState
+     */
+    correspondingClusterState?: NodeLifecycleStateCorrespondingClusterStateEnum;
+}
+
+
+/**
+ * @export
+ */
+export const NodeLifecycleStatePAUSEDEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStatePAUSEDEnum = typeof NodeLifecycleStatePAUSEDEnum[keyof typeof NodeLifecycleStatePAUSEDEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStatePAUSINGEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStatePAUSINGEnum = typeof NodeLifecycleStatePAUSINGEnum[keyof typeof NodeLifecycleStatePAUSINGEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStatePREPARINGFORRESTARTEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStatePREPARINGFORRESTARTEnum = typeof NodeLifecycleStatePREPARINGFORRESTARTEnum[keyof typeof NodeLifecycleStatePREPARINGFORRESTARTEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateREADYFORRESTARTEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStateREADYFORRESTARTEnum = typeof NodeLifecycleStateREADYFORRESTARTEnum[keyof typeof NodeLifecycleStateREADYFORRESTARTEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateRUNNINGEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStateRUNNINGEnum = typeof NodeLifecycleStateRUNNINGEnum[keyof typeof NodeLifecycleStateRUNNINGEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateRUNNINGASSECONDARYEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStateRUNNINGASSECONDARYEnum = typeof NodeLifecycleStateRUNNINGASSECONDARYEnum[keyof typeof NodeLifecycleStateRUNNINGASSECONDARYEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateSETUPEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStateSETUPEnum = typeof NodeLifecycleStateSETUPEnum[keyof typeof NodeLifecycleStateSETUPEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateSTARTINGEnum = {
+    Setup: 'SETUP',
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    PreparingForRestart: 'PREPARING_FOR_RESTART',
+    ReadyForRestart: 'READY_FOR_RESTART'
+} as const;
+export type NodeLifecycleStateSTARTINGEnum = typeof NodeLifecycleStateSTARTINGEnum[keyof typeof NodeLifecycleStateSTARTINGEnum];
+
+/**
+ * @export
+ */
+export const NodeLifecycleStateCorrespondingClusterStateEnum = {
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    Unknown: 'UNKNOWN'
+} as const;
+export type NodeLifecycleStateCorrespondingClusterStateEnum = typeof NodeLifecycleStateCorrespondingClusterStateEnum[keyof typeof NodeLifecycleStateCorrespondingClusterStateEnum];
+
 /**
  * 
  * @export
  * @interface NotificationManager
  */
 export interface NotificationManager {
+    /**
+     * 
+     * @type {Array<NotificationRecipient>}
+     * @memberof NotificationManager
+     */
+    allNotificationRecipients?: Array<NotificationRecipient>;
     /**
      * 
      * @type {Array<NotificationType>}
@@ -7028,7 +7001,7 @@ export interface NotificationManager {
      * @type {Array<NotificationType>}
      * @memberof NotificationManager
      */
-    systemNotificationTypes?: Array<NotificationType>;
+    chainNotificationTypes?: Array<NotificationType>;
     /**
      * 
      * @type {Array<NotificationType>}
@@ -7046,13 +7019,7 @@ export interface NotificationManager {
      * @type {Array<NotificationType>}
      * @memberof NotificationManager
      */
-    chainNotificationTypes?: Array<NotificationType>;
-    /**
-     * 
-     * @type {Array<NotificationRecipient>}
-     * @memberof NotificationManager
-     */
-    allNotificationRecipients?: Array<NotificationRecipient>;
+    systemNotificationTypes?: Array<NotificationType>;
 }
 /**
  * 
@@ -7065,13 +7032,37 @@ export interface NotificationRecipient {
      * @type {string}
      * @memberof NotificationRecipient
      */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationRecipient
+     */
     editHtml?: string;
     /**
      * 
      * @type {string}
      * @memberof NotificationRecipient
      */
-    viewHtml?: string;
+    key?: string;
+    /**
+     * 
+     * @type {WeightedDescriptor}
+     * @memberof NotificationRecipient
+     */
+    moduleDescriptor?: WeightedDescriptor;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationRecipient
+     */
+    recipientConfig?: string;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof NotificationRecipient
+     */
+    scopes?: Set<NotificationRecipientScopesEnum>;
     /**
      * 
      * @type {Array<any>}
@@ -7083,31 +7074,7 @@ export interface NotificationRecipient {
      * @type {string}
      * @memberof NotificationRecipient
      */
-    recipientConfig?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationRecipient
-     */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationRecipient
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof NotificationRecipient
-     */
-    scopes?: Set<NotificationRecipientScopesEnum>;
-    /**
-     * 
-     * @type {WeightedDescriptor}
-     * @memberof NotificationRecipient
-     */
-    moduleDescriptor?: WeightedDescriptor;
+    viewHtml?: string;
 }
 
 
@@ -7129,10 +7096,10 @@ export type NotificationRecipientScopesEnum = typeof NotificationRecipientScopes
 export interface NotificationRule {
     /**
      * 
-     * @type {NotificationSet}
+     * @type {string}
      * @memberof NotificationRule
      */
-    notificationSet?: NotificationSet;
+    conditionData?: string;
     /**
      * 
      * @type {string}
@@ -7141,22 +7108,28 @@ export interface NotificationRule {
     conditionKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NotificationRule
      */
-    conditionData?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof NotificationRule
-     */
-    notificationTypeForView?: object;
+    id?: number;
     /**
      * 
      * @type {NotificationManager}
      * @memberof NotificationRule
      */
     notificationManager?: NotificationManager;
+    /**
+     * 
+     * @type {NotificationSet}
+     * @memberof NotificationRule
+     */
+    notificationSet?: NotificationSet;
+    /**
+     * 
+     * @type {object}
+     * @memberof NotificationRule
+     */
+    notificationTypeForView?: object;
     /**
      * 
      * @type {string}
@@ -7169,12 +7142,6 @@ export interface NotificationRule {
      * @memberof NotificationRule
      */
     recipientType?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof NotificationRule
-     */
-    id?: number;
 }
 /**
  * 
@@ -7184,16 +7151,16 @@ export interface NotificationRule {
 export interface NotificationSet {
     /**
      * 
+     * @type {number}
+     * @memberof NotificationSet
+     */
+    id?: number;
+    /**
+     * 
      * @type {Set<NotificationRule>}
      * @memberof NotificationSet
      */
     notificationRules?: Set<NotificationRule>;
-    /**
-     * 
-     * @type {Array<NotificationRule>}
-     * @memberof NotificationSet
-     */
-    sortedNotificationRules?: Array<NotificationRule>;
     /**
      * 
      * @type {string}
@@ -7202,10 +7169,10 @@ export interface NotificationSet {
     notificationSetType?: NotificationSetNotificationSetTypeEnum;
     /**
      * 
-     * @type {number}
+     * @type {Array<NotificationRule>}
      * @memberof NotificationSet
      */
-    id?: number;
+    sortedNotificationRules?: Array<NotificationRule>;
 }
 
 
@@ -7229,31 +7196,7 @@ export interface NotificationType {
      * @type {string}
      * @memberof NotificationType
      */
-    editHtml?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
     configurationData?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    viewHtml?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationType
-     */
-    key?: string;
     /**
      * 
      * @type {string}
@@ -7265,13 +7208,37 @@ export interface NotificationType {
      * @type {string}
      * @memberof NotificationType
      */
-    scope?: NotificationTypeScopeEnum;
+    editHtml?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    key?: string;
     /**
      * 
      * @type {WeightedDescriptor}
      * @memberof NotificationType
      */
     moduleDescriptor?: WeightedDescriptor;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    scope?: NotificationTypeScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationType
+     */
+    viewHtml?: string;
 }
 
 
@@ -7297,7 +7264,37 @@ export interface Operations {
      * @type {boolean}
      * @memberof Operations
      */
+    allowedToCreateVersion?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
+    allowedToExecute?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
+    allowedToSetVersionStatus?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
+    canDelete?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
     canEdit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
+    canExecute?: boolean;
     /**
      * 
      * @type {boolean}
@@ -7312,40 +7309,10 @@ export interface Operations {
     canViewConfiguration?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    canDelete?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    canExecute?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof Operations
      */
     cantExecuteReason?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    allowedToExecute?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    allowedToCreateVersion?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Operations
-     */
-    allowedToSetVersionStatus?: boolean;
 }
 /**
  * 
@@ -7353,6 +7320,12 @@ export interface Operations {
  * @interface PipelineDefinition
  */
 export interface PipelineDefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineDefinition
+     */
+    creationDate?: string;
     /**
      * 
      * @type {boolean}
@@ -7364,13 +7337,19 @@ export interface PipelineDefinition {
      * @type {string}
      * @memberof PipelineDefinition
      */
-    creationDate?: string;
+    description?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof PipelineDefinition
      */
-    lastModificationDate?: string;
+    enabled?: boolean;
+    /**
+     * 
+     * @type {ResultKey}
+     * @memberof PipelineDefinition
+     */
+    ephemeralAgentDedication?: ResultKey;
     /**
      * 
      * @type {string}
@@ -7379,10 +7358,16 @@ export interface PipelineDefinition {
     ephemeralAgentDedicationUntyped?: string;
     /**
      * 
-     * @type {ResultKey}
+     * @type {number}
      * @memberof PipelineDefinition
      */
-    ephemeralAgentDedication?: ResultKey;
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineDefinition
+     */
+    lastModificationDate?: string;
     /**
      * 
      * @type {string}
@@ -7395,24 +7380,6 @@ export interface PipelineDefinition {
      * @memberof PipelineDefinition
      */
     type?: PipelineDefinitionTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PipelineDefinition
-     */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineDefinition
-     */
-    description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PipelineDefinition
-     */
-    id?: number;
 }
 
 
@@ -7435,16 +7402,40 @@ export type PipelineDefinitionTypeEnum = typeof PipelineDefinitionTypeEnum[keyof
 export interface Plan {
     /**
      * 
-     * @type {ResultsSummary}
+     * @type {boolean}
      * @memberof Plan
      */
-    latestResultsSummary?: ResultsSummary;
+    active?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Plan
+     */
+    averageBuildDuration?: number;
+    /**
+     * 
+     * @type {BuildDefinition}
+     * @memberof Plan
+     */
+    buildDefinition?: BuildDefinition;
+    /**
+     * 
+     * @type {BuildDefinitionForBuild}
+     * @memberof Plan
+     */
+    buildDefinitionXml?: BuildDefinitionForBuild;
     /**
      * 
      * @type {string}
      * @memberof Plan
      */
     buildKey?: string;
+    /**
+     * 
+     * @type {BuildLogger}
+     * @memberof Plan
+     */
+    buildLogger?: BuildLogger;
     /**
      * 
      * @type {string}
@@ -7456,109 +7447,7 @@ export interface Plan {
      * @type {boolean}
      * @memberof Plan
      */
-    suspendedFromBuilding?: boolean;
-    /**
-     * 
-     * @type {BuildDefinitionForBuild}
-     * @memberof Plan
-     */
-    buildDefinitionXml?: BuildDefinitionForBuild;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Plan
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof Plan
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Plan
-     */
-    relatedLabellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {Project}
-     * @memberof Plan
-     */
-    project?: Project;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof Plan
-     */
-    master?: ImmutablePlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plan
-     */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Plan
-     */
-    id?: number;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof Plan
-     */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plan
-     */
-    entityType?: PlanEntityTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plan
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plan
-     */
-    description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Plan
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Plan
-     */
-    executing?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Plan
-     */
     busy?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Plan
-     */
-    labelNames?: Array<string>;
-    /**
-     * 
-     * @type {BuildDefinition}
-     * @memberof Plan
-     */
-    buildDefinition?: BuildDefinition;
     /**
      * 
      * @type {string}
@@ -7567,10 +7456,34 @@ export interface Plan {
     currentStatus?: string;
     /**
      * 
-     * @type {BuildLogger}
+     * @type {number}
      * @memberof Plan
      */
-    buildLogger?: BuildLogger;
+    databaseId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Plan
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<VariableDefinition>}
+     * @memberof Plan
+     */
+    effectiveVariables?: Array<VariableDefinition>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Plan
+     */
+    entityType?: PlanEntityTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Plan
+     */
+    executing?: boolean;
     /**
      * 
      * @type {number}
@@ -7582,37 +7495,49 @@ export interface Plan {
      * @type {number}
      * @memberof Plan
      */
-    lastBuildNumber?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Plan
-     */
-    averageBuildDuration?: number;
+    id?: number;
     /**
      * 
      * @type {string}
      * @memberof Plan
      */
-    type?: string;
+    key?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Plan
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof Plan
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Plan
+     */
+    lastBuildNumber?: number;
+    /**
+     * 
+     * @type {ResultsSummary}
+     * @memberof Plan
+     */
+    latestResultsSummary?: ResultsSummary;
     /**
      * 
      * @type {boolean}
      * @memberof Plan
      */
-    active?: boolean;
+    markedForDeletion?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {ImmutablePlan}
      * @memberof Plan
      */
-    planType?: PlanPlanTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof Plan
-     */
-    databaseId?: number;
+    master?: ImmutablePlan;
     /**
      * 
      * @type {number}
@@ -7625,6 +7550,60 @@ export interface Plan {
      * @memberof Plan
      */
     masterIdIfExists?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Plan
+     */
+    name?: string;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof Plan
+     */
+    oid?: BambooEntityOid;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof Plan
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof Plan
+     */
+    planType?: PlanPlanTypeEnum;
+    /**
+     * 
+     * @type {Project}
+     * @memberof Plan
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Plan
+     */
+    suspendedFromBuilding?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Plan
+     */
+    type?: string;
+    /**
+     * 
+     * @type {Array<VariableDefinition>}
+     * @memberof Plan
+     */
+    variables?: Array<VariableDefinition>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Plan
+     */
+    version?: number;
 }
 
 
@@ -7689,28 +7668,34 @@ export interface PlanRepositoryDefinition {
     bambooSpecsDetectionOptions?: VcsBambooSpecsDetectionOptions;
     /**
      * 
-     * @type {boolean}
+     * @type {VcsBranchDefinition}
      * @memberof PlanRepositoryDefinition
      */
-    markedForDeletion?: boolean;
+    branch?: VcsBranchDefinition;
     /**
      * 
-     * @type {VcsLocationDefinition}
+     * @type {string}
      * @memberof PlanRepositoryDefinition
      */
-    vcsLocation?: VcsLocationDefinition;
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanRepositoryDefinition
+     */
+    entityType?: PlanRepositoryDefinitionEntityTypeEnum;
     /**
      * 
      * @type {number}
      * @memberof PlanRepositoryDefinition
      */
-    rootVcsRepositoryId?: number;
+    id?: number;
     /**
      * 
-     * @type {VcsBranchDefinition}
+     * @type {boolean}
      * @memberof PlanRepositoryDefinition
      */
-    branch?: VcsBranchDefinition;
+    legacyRepository?: boolean;
     /**
      * 
      * @type {boolean}
@@ -7719,28 +7704,22 @@ export interface PlanRepositoryDefinition {
     linked?: boolean;
     /**
      * 
-     * @type {VcsChangeDetectionOptions}
-     * @memberof PlanRepositoryDefinition
-     */
-    vcsChangeDetectionOptions?: VcsChangeDetectionOptions;
-    /**
-     * 
-     * @type {VcsBranchDetectionOptions}
-     * @memberof PlanRepositoryDefinition
-     */
-    vcsBranchDetectionOptions?: VcsBranchDetectionOptions;
-    /**
-     * 
-     * @type {VcsRepositoryViewerDefinition}
-     * @memberof PlanRepositoryDefinition
-     */
-    viewerConfiguration?: VcsRepositoryViewerDefinition;
-    /**
-     * 
      * @type {boolean}
      * @memberof PlanRepositoryDefinition
      */
-    legacyRepository?: boolean;
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanRepositoryDefinition
+     */
+    name?: string;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof PlanRepositoryDefinition
+     */
+    oid?: BambooEntityOid;
     /**
      * 
      * @type {number}
@@ -7755,6 +7734,24 @@ export interface PlanRepositoryDefinition {
     parentOid?: BambooEntityOid;
     /**
      * 
+     * @type {string}
+     * @memberof PlanRepositoryDefinition
+     */
+    pluginKey?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanRepositoryDefinition
+     */
+    position?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanRepositoryDefinition
+     */
+    projectId?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PlanRepositoryDefinition
      */
@@ -7767,16 +7764,16 @@ export interface PlanRepositoryDefinition {
     rootVcsProject?: boolean;
     /**
      * 
+     * @type {number}
+     * @memberof PlanRepositoryDefinition
+     */
+    rootVcsRepositoryId?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PlanRepositoryDefinition
      */
     rootVcsShared?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanRepositoryDefinition
-     */
-    entityType?: PlanRepositoryDefinitionEntityTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -7785,46 +7782,34 @@ export interface PlanRepositoryDefinition {
     shared?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {VcsBranchDetectionOptions}
      * @memberof PlanRepositoryDefinition
      */
-    projectId?: number;
+    vcsBranchDetectionOptions?: VcsBranchDetectionOptions;
+    /**
+     * 
+     * @type {VcsChangeDetectionOptions}
+     * @memberof PlanRepositoryDefinition
+     */
+    vcsChangeDetectionOptions?: VcsChangeDetectionOptions;
+    /**
+     * 
+     * @type {VcsLocationDefinition}
+     * @memberof PlanRepositoryDefinition
+     */
+    vcsLocation?: VcsLocationDefinition;
     /**
      * 
      * @type {number}
      * @memberof PlanRepositoryDefinition
      */
-    id?: number;
+    version?: number;
     /**
      * 
-     * @type {string}
+     * @type {VcsRepositoryViewerDefinition}
      * @memberof PlanRepositoryDefinition
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanRepositoryDefinition
-     */
-    description?: string;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof PlanRepositoryDefinition
-     */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanRepositoryDefinition
-     */
-    pluginKey?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlanRepositoryDefinition
-     */
-    position?: number;
+    viewerConfiguration?: VcsRepositoryViewerDefinition;
 }
 
 
@@ -7854,12 +7839,6 @@ export type PlanRepositoryDefinitionEntityTypeEnum = typeof PlanRepositoryDefini
 export interface PlanResultKey {
     /**
      * 
-     * @type {PlanKey}
-     * @memberof PlanResultKey
-     */
-    planKey?: PlanKey;
-    /**
-     * 
      * @type {number}
      * @memberof PlanResultKey
      */
@@ -7872,6 +7851,18 @@ export interface PlanResultKey {
     entityKey?: Key;
     /**
      * 
+     * @type {string}
+     * @memberof PlanResultKey
+     */
+    key?: string;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof PlanResultKey
+     */
+    planKey?: PlanKey;
+    /**
+     * 
      * @type {number}
      * @memberof PlanResultKey
      */
@@ -7882,12 +7873,6 @@ export interface PlanResultKey {
      * @memberof PlanResultKey
      */
     resultNumberLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanResultKey
-     */
-    key?: string;
 }
 /**
  * 
@@ -7895,24 +7880,6 @@ export interface PlanResultKey {
  * @interface PlanWithCustomExpirySettings
  */
 export interface PlanWithCustomExpirySettings {
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanWithCustomExpirySettings
-     */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanWithCustomExpirySettings
-     */
-    planName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlanWithCustomExpirySettings
-     */
-    planKey?: string;
     /**
      * 
      * @type {Link}
@@ -7925,6 +7892,24 @@ export interface PlanWithCustomExpirySettings {
      * @memberof PlanWithCustomExpirySettings
      */
     expiryConfig?: ExpiryConfig;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanWithCustomExpirySettings
+     */
+    planKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanWithCustomExpirySettings
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanWithCustomExpirySettings
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -7934,16 +7919,16 @@ export interface PlanWithCustomExpirySettings {
 export interface PodsCleanup {
     /**
      * 
-     * @type {boolean}
-     * @memberof PodsCleanup
-     */
-    enabled?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof PodsCleanup
      */
     delay?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PodsCleanup
+     */
+    enabled?: boolean;
 }
 /**
  * 
@@ -7953,16 +7938,16 @@ export interface PodsCleanup {
 export interface Project {
     /**
      * 
-     * @type {VcsBambooSpecsSource}
+     * @type {string}
      * @memberof Project
      */
-    vcsBambooSpecsSource?: VcsBambooSpecsSource;
+    currentStatus?: string;
     /**
      * 
-     * @type {Array<Labelling>}
+     * @type {string}
      * @memberof Project
      */
-    labellings?: Array<Labelling>;
+    description?: string;
     /**
      * 
      * @type {string}
@@ -7971,22 +7956,10 @@ export interface Project {
     entityType?: ProjectEntityTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Project
      */
-    currentStatus?: string;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    relatedLabellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
-    name?: string;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -7995,16 +7968,10 @@ export interface Project {
     key?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<Labelling>}
      * @memberof Project
      */
-    id?: number;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof Project
-     */
-    oid?: BambooEntityOid;
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {boolean}
@@ -8016,7 +7983,25 @@ export interface Project {
      * @type {string}
      * @memberof Project
      */
-    description?: string;
+    name?: string;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof Project
+     */
+    oid?: BambooEntityOid;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof Project
+     */
+    relatedLabellings?: Array<Labelling>;
+    /**
+     * 
+     * @type {VcsBambooSpecsSource}
+     * @memberof Project
+     */
+    vcsBambooSpecsSource?: VcsBambooSpecsSource;
 }
 
 
@@ -8055,13 +8040,13 @@ export interface QuarantineStatistics {
      * @type {string}
      * @memberof QuarantineStatistics
      */
-    quarantiningUsername?: string;
+    quarantineExpiryDate?: string;
     /**
      * 
      * @type {string}
      * @memberof QuarantineStatistics
      */
-    quarantineExpiryDate?: string;
+    quarantiningUsername?: string;
 }
 /**
  * 
@@ -8093,25 +8078,7 @@ export interface Repository {
      * @type {string}
      * @memberof Repository
      */
-    locationIdentifier?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    shortKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    key?: string;
+    description?: string;
     /**
      * 
      * @type {string}
@@ -8123,7 +8090,25 @@ export interface Repository {
      * @type {string}
      * @memberof Repository
      */
-    description?: string;
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Repository
+     */
+    locationIdentifier?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Repository
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Repository
+     */
+    shortKey?: string;
 }
 /**
  * 
@@ -8133,16 +8118,16 @@ export interface Repository {
 export interface RepositoryChangeset {
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof RepositoryChangeset
      */
-    position?: number;
+    buildTrigger?: boolean;
     /**
      * 
-     * @type {ResultsSummary}
+     * @type {string}
      * @memberof RepositoryChangeset
      */
-    resultsSummary?: ResultsSummary;
+    changesetId?: string;
     /**
      * 
      * @type {Set<Commit>}
@@ -8154,7 +8139,13 @@ export interface RepositoryChangeset {
      * @type {number}
      * @memberof RepositoryChangeset
      */
-    skippedCommitsCount?: number;
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RepositoryChangeset
+     */
+    position?: number;
     /**
      * 
      * @type {RepositoryDataEntity}
@@ -8163,22 +8154,16 @@ export interface RepositoryChangeset {
     repositoryData?: RepositoryDataEntity;
     /**
      * 
-     * @type {string}
+     * @type {ResultsSummary}
      * @memberof RepositoryChangeset
      */
-    changesetId?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RepositoryChangeset
-     */
-    buildTrigger?: boolean;
+    resultsSummary?: ResultsSummary;
     /**
      * 
      * @type {number}
      * @memberof RepositoryChangeset
      */
-    id?: number;
+    skippedCommitsCount?: number;
 }
 /**
  * 
@@ -8188,10 +8173,10 @@ export interface RepositoryChangeset {
 export interface RepositoryDataEntity {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RepositoryDataEntity
      */
-    projectId?: number;
+    description?: string;
     /**
      * 
      * @type {string}
@@ -8200,16 +8185,34 @@ export interface RepositoryDataEntity {
     entityType?: RepositoryDataEntityEntityTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RepositoryDataEntity
      */
-    xmlData?: string;
+    global?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RepositoryDataEntity
+     */
+    id?: number;
     /**
      * 
      * @type {boolean}
      * @memberof RepositoryDataEntity
      */
-    global?: boolean;
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepositoryDataEntity
+     */
+    name?: string;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof RepositoryDataEntity
+     */
+    oid?: BambooEntityOid;
     /**
      * 
      * @type {RepositoryDataEntity}
@@ -8224,34 +8227,22 @@ export interface RepositoryDataEntity {
     pluginKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RepositoryDataEntity
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDataEntity
-     */
-    description?: string;
+    projectId?: number;
     /**
      * 
      * @type {number}
      * @memberof RepositoryDataEntity
      */
-    id?: number;
+    version?: number;
     /**
      * 
-     * @type {BambooEntityOid}
+     * @type {string}
      * @memberof RepositoryDataEntity
      */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RepositoryDataEntity
-     */
-    markedForDeletion?: boolean;
+    xmlData?: string;
 }
 
 
@@ -8281,10 +8272,16 @@ export type RepositoryDataEntityEntityTypeEnum = typeof RepositoryDataEntityEnti
 export interface RepositoryDefinition {
     /**
      * 
-     * @type {boolean}
+     * @type {HierarchicalConfiguration}
      * @memberof RepositoryDefinition
      */
-    markedForDeletion?: boolean;
+    _configuration?: HierarchicalConfiguration;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepositoryDefinition
+     */
+    description?: string;
     /**
      * 
      * @type {string}
@@ -8299,46 +8296,22 @@ export interface RepositoryDefinition {
     global?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    webRepositoryPluginKey?: string;
-    /**
-     * 
-     * @type {WebRepositoryViewer}
-     * @memberof RepositoryDefinition
-     */
-    webRepositoryViewer?: WebRepositoryViewer;
-    /**
-     * 
-     * @type {HierarchicalConfiguration}
-     * @memberof RepositoryDefinition
-     */
-    _configuration?: HierarchicalConfiguration;
-    /**
-     * 
-     * @type {Repository}
-     * @memberof RepositoryDefinition
-     */
-    repository?: Repository;
-    /**
-     * 
      * @type {number}
      * @memberof RepositoryDefinition
      */
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RepositoryDefinition
      */
-    name?: string;
+    markedForDeletion?: boolean;
     /**
      * 
      * @type {string}
      * @memberof RepositoryDefinition
      */
-    description?: string;
+    name?: string;
     /**
      * 
      * @type {Repository}
@@ -8363,6 +8336,24 @@ export interface RepositoryDefinition {
      * @memberof RepositoryDefinition
      */
     position?: number;
+    /**
+     * 
+     * @type {Repository}
+     * @memberof RepositoryDefinition
+     */
+    repository?: Repository;
+    /**
+     * 
+     * @type {string}
+     * @memberof RepositoryDefinition
+     */
+    webRepositoryPluginKey?: string;
+    /**
+     * 
+     * @type {WebRepositoryViewer}
+     * @memberof RepositoryDefinition
+     */
+    webRepositoryViewer?: WebRepositoryViewer;
 }
 
 
@@ -8392,40 +8383,16 @@ export type RepositoryDefinitionEntityTypeEnum = typeof RepositoryDefinitionEnti
 export interface Requirement {
     /**
      * 
-     * @type {RequirementSet}
+     * @type {number}
      * @memberof Requirement
      */
-    requirementSet?: RequirementSet;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Requirement
-     */
-    regexMatch?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Requirement
-     */
-    systemRequirement?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Requirement
-     */
-    readonly?: boolean;
+    id?: number;
     /**
      * 
      * @type {string}
      * @memberof Requirement
      */
-    pluginModuleKey?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Requirement
-     */
-    ownerId?: number;
+    key?: string;
     /**
      * 
      * @type {string}
@@ -8437,25 +8404,49 @@ export interface Requirement {
      * @type {string}
      * @memberof Requirement
      */
-    key?: string;
+    matchValue?: string;
     /**
      * 
      * @type {number}
      * @memberof Requirement
      */
-    id?: number;
+    ownerId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Requirement
+     */
+    pluginModuleKey?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Requirement
+     */
+    readonly?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Requirement
+     */
+    regexMatch?: boolean;
+    /**
+     * 
+     * @type {RequirementSet}
+     * @memberof Requirement
+     */
+    requirementSet?: RequirementSet;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Requirement
+     */
+    systemRequirement?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Requirement
      */
     typeOfMatch?: RequirementTypeOfMatchEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Requirement
-     */
-    matchValue?: string;
 }
 
 
@@ -8515,16 +8506,16 @@ export interface RequirementReadonlyData {
 export interface RequirementSet {
     /**
      * 
-     * @type {Set<Requirement>}
-     * @memberof RequirementSet
-     */
-    requirements?: Set<Requirement>;
-    /**
-     * 
      * @type {number}
      * @memberof RequirementSet
      */
     id?: number;
+    /**
+     * 
+     * @type {Set<Requirement>}
+     * @memberof RequirementSet
+     */
+    requirements?: Set<Requirement>;
 }
 /**
  * 
@@ -8537,13 +8528,13 @@ export interface RestAccessToken {
      * @type {string}
      * @memberof RestAccessToken
      */
-    readonly self?: string;
+    creationDate?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestAccessToken
      */
-    tokenId?: string;
+    daysUntilExpiry?: number;
     /**
      * 
      * @type {string}
@@ -8561,13 +8552,19 @@ export interface RestAccessToken {
      * @type {string}
      * @memberof RestAccessToken
      */
-    creationDate?: string;
+    rawToken?: string;
     /**
      * 
      * @type {string}
      * @memberof RestAccessToken
      */
-    rawToken?: string;
+    readonly self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAccessToken
+     */
+    tokenId?: string;
 }
 /**
  * 
@@ -8575,24 +8572,6 @@ export interface RestAccessToken {
  * @interface RestAgent
  */
 export interface RestAgent {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestAgent
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestAgent
-     */
-    type?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestAgent
-     */
-    name?: string;
     /**
      * 
      * @type {string}
@@ -8607,10 +8586,28 @@ export interface RestAgent {
     enabled?: boolean;
     /**
      * 
+     * @type {number}
+     * @memberof RestAgent
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof RestAgent
      */
     link?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAgent
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAgent
+     */
+    type?: string;
 }
 /**
  * 
@@ -8618,6 +8615,24 @@ export interface RestAgent {
  * @interface RestAgentAssignmentExecutorDetails
  */
 export interface RestAgentAssignmentExecutorDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAgentAssignmentExecutorDetails
+     */
+    agentType?: RestAgentAssignmentExecutorDetailsAgentTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestAgentAssignmentExecutorDetails
+     */
+    capabilitiesMatch?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestAgentAssignmentExecutorDetails
+     */
+    disabled?: boolean;
     /**
      * 
      * @type {number}
@@ -8635,49 +8650,21 @@ export interface RestAgentAssignmentExecutorDetails {
      * @type {string}
      * @memberof RestAgentAssignmentExecutorDetails
      */
-    type?: RestAgentAssignmentExecutorDetailsTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestAgentAssignmentExecutorDetails
-     */
-    agentType?: RestAgentAssignmentExecutorDetailsAgentTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestAgentAssignmentExecutorDetails
-     */
     name?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestAgentAssignmentExecutorDetails
      */
-    capabilitiesMatch?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestAgentAssignmentExecutorDetails
-     */
-    disabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestAgentAssignmentExecutorDetails
-     */
     removable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAgentAssignmentExecutorDetails
+     */
+    type?: RestAgentAssignmentExecutorDetailsTypeEnum;
 }
 
-
-/**
- * @export
- */
-export const RestAgentAssignmentExecutorDetailsTypeEnum = {
-    Agent: 'AGENT',
-    Image: 'IMAGE',
-    Ephemeral: 'EPHEMERAL'
-} as const;
-export type RestAgentAssignmentExecutorDetailsTypeEnum = typeof RestAgentAssignmentExecutorDetailsTypeEnum[keyof typeof RestAgentAssignmentExecutorDetailsTypeEnum];
 
 /**
  * @export
@@ -8691,6 +8678,16 @@ export const RestAgentAssignmentExecutorDetailsAgentTypeEnum = {
 export type RestAgentAssignmentExecutorDetailsAgentTypeEnum = typeof RestAgentAssignmentExecutorDetailsAgentTypeEnum[keyof typeof RestAgentAssignmentExecutorDetailsAgentTypeEnum];
 
 /**
+ * @export
+ */
+export const RestAgentAssignmentExecutorDetailsTypeEnum = {
+    Agent: 'AGENT',
+    Image: 'IMAGE',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type RestAgentAssignmentExecutorDetailsTypeEnum = typeof RestAgentAssignmentExecutorDetailsTypeEnum[keyof typeof RestAgentAssignmentExecutorDetailsTypeEnum];
+
+/**
  * 
  * @export
  * @interface RestAgentCapabilities
@@ -8698,22 +8695,10 @@ export type RestAgentAssignmentExecutorDetailsAgentTypeEnum = typeof RestAgentAs
 export interface RestAgentCapabilities {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestCapability>}
      * @memberof RestAgentCapabilities
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestAgentCapabilities
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestAgentCapabilities
-     */
-    size?: number;
+    allElements?: Array<RestCapability>;
     /**
      * 
      * @type {any}
@@ -8734,10 +8719,22 @@ export interface RestAgentCapabilities {
     expand?: string;
     /**
      * 
-     * @type {Array<RestCapability>}
+     * @type {number}
      * @memberof RestAgentCapabilities
      */
-    allElements?: Array<RestCapability>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestAgentCapabilities
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestAgentCapabilities
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -8745,12 +8742,6 @@ export interface RestAgentCapabilities {
  * @interface RestAgentInformation
  */
 export interface RestAgentInformation {
-    /**
-     * 
-     * @type {RestBuildAgent}
-     * @memberof RestAgentInformation
-     */
-    general?: RestBuildAgent;
     /**
      * 
      * @type {RestAgentCapabilities}
@@ -8777,22 +8768,28 @@ export interface RestAgentInformation {
     expand?: string;
     /**
      * 
+     * @type {RestBuildAgent}
+     * @memberof RestAgentInformation
+     */
+    general?: RestBuildAgent;
+    /**
+     * 
      * @type {Link}
      * @memberof RestAgentInformation
      */
     link?: Link;
     /**
      * 
-     * @type {RestExecutableJobList}
-     * @memberof RestAgentInformation
-     */
-    restAgentExecutableJobs?: RestExecutableJobList;
-    /**
-     * 
      * @type {RestExecutableEnvironmentList}
      * @memberof RestAgentInformation
      */
     restAgentExecutableEnvironments?: RestExecutableEnvironmentList;
+    /**
+     * 
+     * @type {RestExecutableJobList}
+     * @memberof RestAgentInformation
+     */
+    restAgentExecutableJobs?: RestExecutableJobList;
 }
 /**
  * 
@@ -8815,51 +8812,17 @@ export interface RestAgentSummary {
 export interface RestAnonymousServerStatusInfo {
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleState}
      * @memberof RestAnonymousServerStatusInfo
      */
-    status?: RestAnonymousServerStatusInfoStatusEnum;
+    status?: NodeLifecycleState;
 }
-
-
-/**
- * @export
- */
-export const RestAnonymousServerStatusInfoStatusEnum = {
-    Setup: 'SETUP',
-    Starting: 'STARTING',
-    Running: 'RUNNING',
-    Pausing: 'PAUSING',
-    PreparingForRestart: 'PREPARING_FOR_RESTART',
-    ReadyForRestart: 'READY_FOR_RESTART',
-    Paused: 'PAUSED'
-} as const;
-export type RestAnonymousServerStatusInfoStatusEnum = typeof RestAnonymousServerStatusInfoStatusEnum[keyof typeof RestAnonymousServerStatusInfoStatusEnum];
-
 /**
  * 
  * @export
  * @interface RestArtifactDefinition
  */
 export interface RestArtifactDefinition {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestArtifactDefinition
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestArtifactDefinition
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestArtifactDefinition
-     */
-    location?: string;
     /**
      * 
      * @type {Array<string>}
@@ -8877,13 +8840,37 @@ export interface RestArtifactDefinition {
      * @type {boolean}
      * @memberof RestArtifactDefinition
      */
-    shared?: boolean;
+    httpCompressionOn?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestArtifactDefinition
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestArtifactDefinition
+     */
+    location?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestArtifactDefinition
+     */
+    name?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestArtifactDefinition
      */
     required?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestArtifactDefinition
+     */
+    shared?: boolean;
 }
 /**
  * 
@@ -8893,10 +8880,22 @@ export interface RestArtifactDefinition {
 export interface RestArtifactDefinitionList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestArtifactDefinition>}
      * @memberof RestArtifactDefinitionList
      */
-    startIndex?: number;
+    allElements?: Array<RestArtifactDefinition>;
+    /**
+     * 
+     * @type {Array<RestArtifactDefinition>}
+     * @memberof RestArtifactDefinitionList
+     */
+    artifacts?: Array<RestArtifactDefinition>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestArtifactDefinitionList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -8911,22 +8910,10 @@ export interface RestArtifactDefinitionList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestArtifactDefinitionList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {Array<RestArtifactDefinition>}
-     * @memberof RestArtifactDefinitionList
-     */
-    artifacts?: Array<RestArtifactDefinition>;
-    /**
-     * 
-     * @type {Array<RestArtifactDefinition>}
-     * @memberof RestArtifactDefinitionList
-     */
-    allElements?: Array<RestArtifactDefinition>;
+    startIndex?: number;
 }
 /**
  * 
@@ -8936,16 +8923,16 @@ export interface RestArtifactDefinitionList {
 export interface RestArtifactDefinitions {
     /**
      * 
-     * @type {Link}
-     * @memberof RestArtifactDefinitions
-     */
-    link?: Link;
-    /**
-     * 
      * @type {RestArtifactDefinitionList}
      * @memberof RestArtifactDefinitions
      */
     artifacts?: RestArtifactDefinitionList;
+    /**
+     * 
+     * @type {Link}
+     * @memberof RestArtifactDefinitions
+     */
+    link?: Link;
 }
 /**
  * 
@@ -8953,6 +8940,18 @@ export interface RestArtifactDefinitions {
  * @interface RestArtifactHandler
  */
 export interface RestArtifactHandler {
+    /**
+     * 
+     * @type {object}
+     * @memberof RestArtifactHandler
+     */
+    attributes?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestArtifactHandler
+     */
+    nonsharedArtifactsEnabled?: boolean;
     /**
      * 
      * @type {string}
@@ -8965,18 +8964,6 @@ export interface RestArtifactHandler {
      * @memberof RestArtifactHandler
      */
     sharedArtifactsEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestArtifactHandler
-     */
-    nonsharedArtifactsEnabled?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestArtifactHandler
-     */
-    attributes?: object;
 }
 /**
  * 
@@ -8986,16 +8973,16 @@ export interface RestArtifactHandler {
 export interface RestAuditLogConfiguration {
     /**
      * 
-     * @type {string}
-     * @memberof RestAuditLogConfiguration
-     */
-    readonly self?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestAuditLogConfiguration
      */
     auditLoggingEnabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestAuditLogConfiguration
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -9018,22 +9005,10 @@ export interface RestBranch {
 export interface RestBranchList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestBranch>}
      * @memberof RestBranchList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBranchList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBranchList
-     */
-    size?: number;
+    allElements?: Array<RestBranch>;
     /**
      * 
      * @type {any}
@@ -9042,16 +9017,28 @@ export interface RestBranchList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestBranchList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestBranch>}
      * @memberof RestBranchList
      */
     searchResults?: Array<RestBranch>;
     /**
      * 
-     * @type {Array<RestBranch>}
+     * @type {number}
      * @memberof RestBranchList
      */
-    allElements?: Array<RestBranch>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBranchList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -9061,16 +9048,16 @@ export interface RestBranchList {
 export interface RestBrokenPlan {
     /**
      * 
-     * @type {Array<RestUserResponsible>}
-     * @memberof RestBrokenPlan
-     */
-    responsibleUsers?: Array<RestUserResponsible>;
-    /**
-     * 
      * @type {string}
      * @memberof RestBrokenPlan
      */
     planResultKey?: string;
+    /**
+     * 
+     * @type {Array<RestUserResponsible>}
+     * @memberof RestBrokenPlan
+     */
+    responsibleUsers?: Array<RestUserResponsible>;
 }
 /**
  * 
@@ -9099,6 +9086,24 @@ export interface RestBruteForceProtection {
 export interface RestBuildAgent {
     /**
      * 
+     * @type {boolean}
+     * @memberof RestBuildAgent
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBuildAgent
+     */
+    busy?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBuildAgent
+     */
+    enabled?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof RestBuildAgent
      */
@@ -9115,24 +9120,6 @@ export interface RestBuildAgent {
      * @memberof RestBuildAgent
      */
     type?: RestBuildAgentTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestBuildAgent
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestBuildAgent
-     */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestBuildAgent
-     */
-    busy?: boolean;
 }
 
 
@@ -9155,16 +9142,22 @@ export type RestBuildAgentTypeEnum = typeof RestBuildAgentTypeEnum[keyof typeof 
 export interface RestBuildArtifact {
     /**
      * 
+     * @type {Link}
+     * @memberof RestBuildArtifact
+     */
+    link?: Link;
+    /**
+     * 
      * @type {string}
      * @memberof RestBuildArtifact
      */
     name?: string;
     /**
      * 
-     * @type {Link}
+     * @type {string}
      * @memberof RestBuildArtifact
      */
-    link?: Link;
+    prettySizeDescription?: string;
     /**
      * 
      * @type {PlanResultKey}
@@ -9183,12 +9176,6 @@ export interface RestBuildArtifact {
      * @memberof RestBuildArtifact
      */
     size?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBuildArtifact
-     */
-    prettySizeDescription?: string;
 }
 /**
  * 
@@ -9198,10 +9185,22 @@ export interface RestBuildArtifact {
 export interface RestBuildArtifactList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestBuildArtifact>}
      * @memberof RestBuildArtifactList
      */
-    startIndex?: number;
+    allElements?: Array<RestBuildArtifact>;
+    /**
+     * 
+     * @type {Array<RestBuildArtifact>}
+     * @memberof RestBuildArtifactList
+     */
+    artifacts?: Array<RestBuildArtifact>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestBuildArtifactList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -9216,22 +9215,10 @@ export interface RestBuildArtifactList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestBuildArtifactList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {Array<RestBuildArtifact>}
-     * @memberof RestBuildArtifactList
-     */
-    artifacts?: Array<RestBuildArtifact>;
-    /**
-     * 
-     * @type {Array<RestBuildArtifact>}
-     * @memberof RestBuildArtifactList
-     */
-    allElements?: Array<RestBuildArtifact>;
+    startIndex?: number;
 }
 /**
  * 
@@ -9239,12 +9226,6 @@ export interface RestBuildArtifactList {
  * @interface RestBuildConcurrency
  */
 export interface RestBuildConcurrency {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestBuildConcurrency
-     */
-    readonly self?: string;
     /**
      * 
      * @type {boolean}
@@ -9257,6 +9238,12 @@ export interface RestBuildConcurrency {
      * @memberof RestBuildConcurrency
      */
     defaultConcurrentBuildsNumber?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildConcurrency
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -9279,22 +9266,10 @@ export interface RestBuildLabel {
 export interface RestBuildLabelList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestBuildLabel>}
      * @memberof RestBuildLabelList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildLabelList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildLabelList
-     */
-    size?: number;
+    allElements?: Array<RestBuildLabel>;
     /**
      * 
      * @type {any}
@@ -9309,10 +9284,22 @@ export interface RestBuildLabelList {
     label?: Array<RestBuildLabel>;
     /**
      * 
-     * @type {Array<RestBuildLabel>}
+     * @type {number}
      * @memberof RestBuildLabelList
      */
-    allElements?: Array<RestBuildLabel>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildLabelList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildLabelList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -9322,16 +9309,16 @@ export interface RestBuildLabelList {
 export interface RestBuildLabels {
     /**
      * 
-     * @type {Link}
-     * @memberof RestBuildLabels
-     */
-    link?: Link;
-    /**
-     * 
      * @type {RestBuildLabelList}
      * @memberof RestBuildLabels
      */
     labels?: RestBuildLabelList;
+    /**
+     * 
+     * @type {Link}
+     * @memberof RestBuildLabels
+     */
+    link?: Link;
 }
 /**
  * 
@@ -9350,25 +9337,31 @@ export interface RestBuildMonitoring {
      * @type {number}
      * @memberof RestBuildMonitoring
      */
+    buildQueueMinutesTimeoutDefault?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildMonitoring
+     */
     buildTimeMultiplierDefault?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof RestBuildMonitoring
      */
-    logQuietMinutesTimeDefault?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestBuildMonitoring
-     */
-    buildQueueMinutesTimeoutDefault?: number;
+    forceStopHangingBuilds?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof RestBuildMonitoring
      */
     liveLogsAreActive?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildMonitoring
+     */
+    logQuietMinutesTimeDefault?: number;
 }
 /**
  * 
@@ -9381,13 +9374,13 @@ export interface RestCapability {
      * @type {string}
      * @memberof RestCapability
      */
-    readonly self?: string;
+    key?: string;
     /**
      * 
      * @type {string}
      * @memberof RestCapability
      */
-    key?: string;
+    readonly self?: string;
     /**
      * 
      * @type {string}
@@ -9406,37 +9399,25 @@ export interface RestChange {
      * @type {string}
      * @memberof RestChange
      */
-    expand?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChange
-     */
     author?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestChangeFileList}
      * @memberof RestChange
      */
-    userName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChange
-     */
-    fullName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChange
-     */
-    comment?: string;
+    changeFiles?: RestChangeFileList;
     /**
      * 
      * @type {string}
      * @memberof RestChange
      */
     changesetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChange
+     */
+    comment?: string;
     /**
      * 
      * @type {string}
@@ -9451,10 +9432,22 @@ export interface RestChange {
     date?: string;
     /**
      * 
-     * @type {RestChangeFileList}
+     * @type {string}
      * @memberof RestChange
      */
-    changeFiles?: RestChangeFileList;
+    expand?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChange
+     */
+    fullName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChange
+     */
+    userName?: string;
 }
 /**
  * 
@@ -9483,22 +9476,10 @@ export interface RestChangeFile {
 export interface RestChangeFileList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestChangeFile>}
      * @memberof RestChangeFileList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangeFileList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChangeFileList
-     */
-    size?: number;
+    allElements?: Array<RestChangeFile>;
     /**
      * 
      * @type {any}
@@ -9513,10 +9494,22 @@ export interface RestChangeFileList {
     changeFiles?: Array<RestChangeFile>;
     /**
      * 
-     * @type {Array<RestChangeFile>}
+     * @type {number}
      * @memberof RestChangeFileList
      */
-    allElements?: Array<RestChangeFile>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangeFileList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangeFileList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -9526,10 +9519,28 @@ export interface RestChangeFileList {
 export interface RestChangeList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestChange>}
      * @memberof RestChangeList
      */
-    startIndex?: number;
+    allElements?: Array<RestChange>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestChangeList
+     */
+    callback?: any | null;
+    /**
+     * 
+     * @type {Array<RestChange>}
+     * @memberof RestChangeList
+     */
+    change?: Array<RestChange>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangeList
+     */
+    expand?: string;
     /**
      * 
      * @type {number}
@@ -9544,28 +9555,10 @@ export interface RestChangeList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestChangeList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestChangeList
-     */
-    expand?: string;
-    /**
-     * 
-     * @type {Array<RestChange>}
-     * @memberof RestChangeList
-     */
-    change?: Array<RestChange>;
-    /**
-     * 
-     * @type {Array<RestChange>}
-     * @memberof RestChangeList
-     */
-    allElements?: Array<RestChange>;
+    startIndex?: number;
 }
 /**
  * 
@@ -9575,10 +9568,16 @@ export interface RestChangeList {
 export interface RestChart {
     /**
      * 
+     * @type {number}
+     * @memberof RestChart
+     */
+    height?: number;
+    /**
+     * 
      * @type {string}
      * @memberof RestChart
      */
-    location?: string;
+    imageMap?: string;
     /**
      * 
      * @type {string}
@@ -9590,19 +9589,13 @@ export interface RestChart {
      * @type {string}
      * @memberof RestChart
      */
-    imageMap?: string;
+    location?: string;
     /**
      * 
      * @type {number}
      * @memberof RestChart
      */
     width?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestChart
-     */
-    height?: number;
 }
 /**
  * 
@@ -9615,25 +9608,13 @@ export interface RestCombinedExpiryConfiguration {
      * @type {number}
      * @memberof RestCombinedExpiryConfiguration
      */
-    duration?: number;
+    buildsToKeep?: number;
     /**
      * 
      * @type {string}
      * @memberof RestCombinedExpiryConfiguration
      */
-    period?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCombinedExpiryConfiguration
-     */
-    buildsToKeep?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCombinedExpiryConfiguration
-     */
-    maximumBuildsToKeep?: number;
+    cronExpression?: string;
     /**
      * 
      * @type {number}
@@ -9645,13 +9626,7 @@ export interface RestCombinedExpiryConfiguration {
      * @type {number}
      * @memberof RestCombinedExpiryConfiguration
      */
-    maximumIgnoredLogSize?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCombinedExpiryConfiguration
-     */
-    expireResults?: boolean;
+    duration?: number;
     /**
      * 
      * @type {boolean}
@@ -9666,16 +9641,34 @@ export interface RestCombinedExpiryConfiguration {
     expireLogs?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestCombinedExpiryConfiguration
+     */
+    expireResults?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof RestCombinedExpiryConfiguration
      */
     labelsToExclude?: string;
     /**
      * 
+     * @type {number}
+     * @memberof RestCombinedExpiryConfiguration
+     */
+    maximumBuildsToKeep?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCombinedExpiryConfiguration
+     */
+    maximumIgnoredLogSize?: number;
+    /**
+     * 
      * @type {string}
      * @memberof RestCombinedExpiryConfiguration
      */
-    cronExpression?: string;
+    period?: string;
 }
 /**
  * 
@@ -9707,25 +9700,25 @@ export interface RestComment {
      * @type {string}
      * @memberof RestComment
      */
-    content?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestComment
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestComment
-     */
     author?: string;
     /**
      * 
      * @type {string}
      * @memberof RestComment
      */
+    content?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestComment
+     */
     creationDate?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestComment
+     */
+    readonly id?: number;
     /**
      * 
      * @type {string}
@@ -9741,22 +9734,10 @@ export interface RestComment {
 export interface RestCommentList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestComment>}
      * @memberof RestCommentList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentList
-     */
-    size?: number;
+    allElements?: Array<RestComment>;
     /**
      * 
      * @type {any}
@@ -9771,10 +9752,22 @@ export interface RestCommentList {
     comment?: Array<RestComment>;
     /**
      * 
-     * @type {Array<RestComment>}
+     * @type {number}
      * @memberof RestCommentList
      */
-    allElements?: Array<RestComment>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -9784,16 +9777,16 @@ export interface RestCommentList {
 export interface RestComments {
     /**
      * 
-     * @type {Link}
-     * @memberof RestComments
-     */
-    link?: Link;
-    /**
-     * 
      * @type {RestCommentList}
      * @memberof RestComments
      */
     comments?: RestCommentList;
+    /**
+     * 
+     * @type {Link}
+     * @memberof RestComments
+     */
+    link?: Link;
 }
 /**
  * 
@@ -9859,16 +9852,16 @@ export interface RestCreateVersionRequest {
 export interface RestDarkFeature {
     /**
      * 
-     * @type {string}
-     * @memberof RestDarkFeature
-     */
-    key?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestDarkFeature
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDarkFeature
+     */
+    key?: string;
 }
 /**
  * 
@@ -9881,13 +9874,13 @@ export interface RestDataVolume {
      * @type {string}
      * @memberof RestDataVolume
      */
-    hostDirectory?: string;
+    containerDirectory?: string;
     /**
      * 
      * @type {string}
      * @memberof RestDataVolume
      */
-    containerDirectory?: string;
+    hostDirectory?: string;
 }
 /**
  * 
@@ -9895,12 +9888,6 @@ export interface RestDataVolume {
  * @interface RestDedicatedAgent
  */
 export interface RestDedicatedAgent {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDedicatedAgent
-     */
-    executableType?: RestDedicatedAgentExecutableTypeEnum;
     /**
      * 
      * @type {number}
@@ -9912,13 +9899,19 @@ export interface RestDedicatedAgent {
      * @type {string}
      * @memberof RestDedicatedAgent
      */
-    executorType?: RestDedicatedAgentExecutorTypeEnum;
+    executableType?: RestDedicatedAgentExecutableTypeEnum;
     /**
      * 
      * @type {number}
      * @memberof RestDedicatedAgent
      */
     executorId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDedicatedAgent
+     */
+    executorType?: RestDedicatedAgentExecutorTypeEnum;
 }
 
 
@@ -9952,6 +9945,12 @@ export type RestDedicatedAgentExecutorTypeEnum = typeof RestDedicatedAgentExecut
 export interface RestDependencies {
     /**
      * 
+     * @type {RestPlanList}
+     * @memberof RestDependencies
+     */
+    dependencies?: RestPlanList;
+    /**
+     * 
      * @type {string}
      * @memberof RestDependencies
      */
@@ -9962,12 +9961,6 @@ export interface RestDependencies {
      * @memberof RestDependencies
      */
     link?: Link;
-    /**
-     * 
-     * @type {RestPlanList}
-     * @memberof RestDependencies
-     */
-    dependencies?: RestPlanList;
 }
 /**
  * 
@@ -9975,36 +9968,6 @@ export interface RestDependencies {
  * @interface RestDeploymentProject
  */
 export interface RestDeploymentProject {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDeploymentProject
-     */
-    id?: number;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof RestDeploymentProject
-     */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {DeploymentKey}
-     * @memberof RestDeploymentProject
-     */
-    key?: DeploymentKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentProject
-     */
-    name?: string;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof RestDeploymentProject
-     */
-    planKey?: PlanKey;
     /**
      * 
      * @type {string}
@@ -10019,10 +9982,40 @@ export interface RestDeploymentProject {
     environments?: Array<RestEnvironment>;
     /**
      * 
+     * @type {number}
+     * @memberof RestDeploymentProject
+     */
+    id?: number;
+    /**
+     * 
+     * @type {DeploymentKey}
+     * @memberof RestDeploymentProject
+     */
+    key?: DeploymentKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentProject
+     */
+    name?: string;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof RestDeploymentProject
+     */
+    oid?: BambooEntityOid;
+    /**
+     * 
      * @type {RestOperations}
      * @memberof RestDeploymentProject
      */
     operations?: RestOperations;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof RestDeploymentProject
+     */
+    planKey?: PlanKey;
     /**
      * 
      * @type {boolean}
@@ -10035,57 +10028,13 @@ export interface RestDeploymentProject {
      * @memberof RestDeploymentProject
      */
     vcsBambooSpecsSource?: ImmutableVcsBambooSpecsSource;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentProject
-     */
-    entityType?: RestDeploymentProjectEntityTypeEnum;
 }
-
-
-/**
- * @export
- */
-export const RestDeploymentProjectEntityTypeEnum = {
-    Chain: 'CHAIN',
-    Stage: 'STAGE',
-    Job: 'JOB',
-    Repository: 'REPOSITORY',
-    ChainBranch: 'CHAIN_BRANCH',
-    JobBranch: 'JOB_BRANCH',
-    Task: 'TASK',
-    Project: 'PROJECT',
-    ArtifactDefinition: 'ARTIFACT_DEFINITION',
-    DeploymentProject: 'DEPLOYMENT_PROJECT',
-    SharedCredential: 'SHARED_CREDENTIAL'
-} as const;
-export type RestDeploymentProjectEntityTypeEnum = typeof RestDeploymentProjectEntityTypeEnum[keyof typeof RestDeploymentProjectEntityTypeEnum];
-
 /**
  * 
  * @export
  * @interface RestDeploymentProjectLink
  */
 export interface RestDeploymentProjectLink {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentProjectLink
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDeploymentProjectLink
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentProjectLink
-     */
-    url?: string;
     /**
      * 
      * @type {number}
@@ -10097,7 +10046,25 @@ export interface RestDeploymentProjectLink {
      * @type {number}
      * @memberof RestDeploymentProjectLink
      */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentProjectLink
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentProjectLink
+     */
     upToDateEnvironmentCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentProjectLink
+     */
+    url?: string;
 }
 /**
  * 
@@ -10113,16 +10080,16 @@ export interface RestDeploymentProjectStatusForJiraIssue {
     deploymentProject?: RestDeploymentProjectLink;
     /**
      * 
-     * @type {Array<RestDeploymentVersionLink>}
-     * @memberof RestDeploymentProjectStatusForJiraIssue
-     */
-    versions?: Array<RestDeploymentVersionLink>;
-    /**
-     * 
      * @type {Array<RestEnvironmentStatusOfIssue>}
      * @memberof RestDeploymentProjectStatusForJiraIssue
      */
     environments?: Array<RestEnvironmentStatusOfIssue>;
+    /**
+     * 
+     * @type {Array<RestDeploymentVersionLink>}
+     * @memberof RestDeploymentProjectStatusForJiraIssue
+     */
+    versions?: Array<RestDeploymentVersionLink>;
 }
 /**
  * 
@@ -10130,6 +10097,36 @@ export interface RestDeploymentProjectStatusForJiraIssue {
  * @interface RestDeploymentResult
  */
 export interface RestDeploymentResult {
+    /**
+     * 
+     * @type {BuildAgent}
+     * @memberof RestDeploymentResult
+     */
+    agent?: BuildAgent;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentResult
+     */
+    agentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentResult
+     */
+    agentType?: RestDeploymentResultAgentTypeEnum;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestDeploymentResult
+     */
+    customData?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentResult
+     */
+    deploymentState?: RestDeploymentResultDeploymentStateEnum;
     /**
      * 
      * @type {DeploymentVersion}
@@ -10144,34 +10141,16 @@ export interface RestDeploymentResult {
     deploymentVersionName?: string;
     /**
      * 
+     * @type {Environment}
+     * @memberof RestDeploymentResult
+     */
+    environment?: Environment;
+    /**
+     * 
      * @type {number}
      * @memberof RestDeploymentResult
      */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentResult
-     */
-    deploymentState?: RestDeploymentResultDeploymentStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentResult
-     */
-    lifeCycleState?: RestDeploymentResultLifeCycleStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentResult
-     */
-    startedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentResult
-     */
-    queuedDate?: string;
+    environmentId?: number;
     /**
      * 
      * @type {string}
@@ -10186,10 +10165,10 @@ export interface RestDeploymentResult {
     finishedDate?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestDeploymentResult
      */
-    reasonSummary?: string;
+    id?: number;
     /**
      * 
      * @type {DeploymentResultKey}
@@ -10198,10 +10177,10 @@ export interface RestDeploymentResult {
     key?: DeploymentResultKey;
     /**
      * 
-     * @type {BuildAgent}
+     * @type {string}
      * @memberof RestDeploymentResult
      */
-    agent?: BuildAgent;
+    lifeCycleState?: RestDeploymentResultLifeCycleStateEnum;
     /**
      * 
      * @type {RestOperations}
@@ -10210,42 +10189,41 @@ export interface RestDeploymentResult {
     operations?: RestOperations;
     /**
      * 
-     * @type {Environment}
+     * @type {string}
      * @memberof RestDeploymentResult
      */
-    environment?: Environment;
+    queuedDate?: string;
     /**
      * 
      * @type {string}
      * @memberof RestDeploymentResult
      */
-    agentType?: RestDeploymentResultAgentTypeEnum;
+    reasonSummary?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestDeploymentResult
      */
-    environmentId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDeploymentResult
-     */
-    agentId?: number;
+    startedDate?: string;
     /**
      * 
      * @type {TriggerReason}
      * @memberof RestDeploymentResult
      */
     triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestDeploymentResult
-     */
-    customData?: object;
 }
 
+
+/**
+ * @export
+ */
+export const RestDeploymentResultAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type RestDeploymentResultAgentTypeEnum = typeof RestDeploymentResultAgentTypeEnum[keyof typeof RestDeploymentResultAgentTypeEnum];
 
 /**
  * @export
@@ -10268,17 +10246,6 @@ export const RestDeploymentResultLifeCycleStateEnum = {
     NotBuilt: 'NotBuilt'
 } as const;
 export type RestDeploymentResultLifeCycleStateEnum = typeof RestDeploymentResultLifeCycleStateEnum[keyof typeof RestDeploymentResultLifeCycleStateEnum];
-
-/**
- * @export
- */
-export const RestDeploymentResultAgentTypeEnum = {
-    Local: 'LOCAL',
-    Remote: 'REMOTE',
-    Elastic: 'ELASTIC',
-    Ephemeral: 'EPHEMERAL'
-} as const;
-export type RestDeploymentResultAgentTypeEnum = typeof RestDeploymentResultAgentTypeEnum[keyof typeof RestDeploymentResultAgentTypeEnum];
 
 /**
  * 
@@ -10307,16 +10274,10 @@ export interface RestDeploymentResultList {
 export interface RestDeploymentVersion {
     /**
      * 
-     * @type {number}
-     * @memberof RestDeploymentVersion
-     */
-    id?: number;
-    /**
-     * 
      * @type {string}
      * @memberof RestDeploymentVersion
      */
-    name?: string;
+    ageZeroPoint?: string;
     /**
      * 
      * @type {string}
@@ -10328,7 +10289,25 @@ export interface RestDeploymentVersion {
      * @type {string}
      * @memberof RestDeploymentVersion
      */
+    creatorDisplayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersion
+     */
     creatorUserName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentVersion
+     */
+    deploymentProjectId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentVersion
+     */
+    id?: number;
     /**
      * 
      * @type {Array<DeploymentVersionItem>}
@@ -10337,10 +10316,10 @@ export interface RestDeploymentVersion {
     items?: Array<DeploymentVersionItem>;
     /**
      * 
-     * @type {RestDeploymentVersionStatus}
+     * @type {string}
      * @memberof RestDeploymentVersion
      */
-    versionStatus?: RestDeploymentVersionStatus;
+    name?: string;
     /**
      * 
      * @type {Operations}
@@ -10352,37 +10331,25 @@ export interface RestDeploymentVersion {
      * @type {string}
      * @memberof RestDeploymentVersion
      */
-    creatorDisplayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersion
-     */
-    creatorGravatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersion
-     */
     planBranchName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersion
-     */
-    ageZeroPoint?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestDeploymentVersion
-     */
-    deploymentProjectId?: number;
     /**
      * 
      * @type {Array<VariableSubstitutionContext>}
      * @memberof RestDeploymentVersion
      */
     variableContext?: Array<VariableSubstitutionContext>;
+    /**
+     * 
+     * @type {RestDeploymentVersionStatus}
+     * @memberof RestDeploymentVersion
+     */
+    versionStatus?: RestDeploymentVersionStatus;
+    /**
+     * 
+     * @type {Array<DeploymentVersionStatus>}
+     * @memberof RestDeploymentVersion
+     */
+    versionStatuses?: Array<DeploymentVersionStatus>;
 }
 /**
  * 
@@ -10411,16 +10378,16 @@ export interface RestDeploymentVersionAndPlanResult {
 export interface RestDeploymentVersionLink {
     /**
      * 
-     * @type {string}
-     * @memberof RestDeploymentVersionLink
-     */
-    name?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestDeploymentVersionLink
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionLink
+     */
+    name?: string;
     /**
      * 
      * @type {string}
@@ -10436,6 +10403,18 @@ export interface RestDeploymentVersionLink {
 export interface RestDeploymentVersionStatus {
     /**
      * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatus
+     */
+    creationDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatus
+     */
+    displayName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestDeploymentVersionStatus
      */
@@ -10445,25 +10424,13 @@ export interface RestDeploymentVersionStatus {
      * @type {string}
      * @memberof RestDeploymentVersionStatus
      */
+    sanitizedUserName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatus
+     */
     userName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersionStatus
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersionStatus
-     */
-    gravatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDeploymentVersionStatus
-     */
-    creationDate?: string;
     /**
      * 
      * @type {string}
@@ -10487,21 +10454,108 @@ export type RestDeploymentVersionStatusVersionStateEnum = typeof RestDeploymentV
 /**
  * 
  * @export
+ * @interface RestDeploymentVersionStatusForDashboard
+ */
+export interface RestDeploymentVersionStatusForDashboard {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatusForDashboard
+     */
+    deploymentVersionState?: RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatusForDashboard
+     */
+    versionStatusSanitizedUserName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatusForDashboard
+     */
+    versionStatusUserDisplayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatusForDashboard
+     */
+    versionStatusUserName?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum = {
+    Unknown: 'Unknown',
+    Approved: 'Approved',
+    Broken: 'Broken',
+    Incomplete: 'Incomplete'
+} as const;
+export type RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum = typeof RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum[keyof typeof RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestDeploymentVersionStatuses
+ */
+export interface RestDeploymentVersionStatuses {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatuses
+     */
+    currentUserState?: RestDeploymentVersionStatusesCurrentUserStateEnum;
+    /**
+     * 
+     * @type {Array<RestDeploymentVersionStatus>}
+     * @memberof RestDeploymentVersionStatuses
+     */
+    statuses?: Array<RestDeploymentVersionStatus>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDeploymentVersionStatuses
+     */
+    versionGeneralState?: RestDeploymentVersionStatusesVersionGeneralStateEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestDeploymentVersionStatusesCurrentUserStateEnum = {
+    Unknown: 'Unknown',
+    Approved: 'Approved',
+    Broken: 'Broken',
+    Incomplete: 'Incomplete'
+} as const;
+export type RestDeploymentVersionStatusesCurrentUserStateEnum = typeof RestDeploymentVersionStatusesCurrentUserStateEnum[keyof typeof RestDeploymentVersionStatusesCurrentUserStateEnum];
+
+/**
+ * @export
+ */
+export const RestDeploymentVersionStatusesVersionGeneralStateEnum = {
+    Unknown: 'Unknown',
+    Approved: 'Approved',
+    Broken: 'Broken',
+    Incomplete: 'Incomplete'
+} as const;
+export type RestDeploymentVersionStatusesVersionGeneralStateEnum = typeof RestDeploymentVersionStatusesVersionGeneralStateEnum[keyof typeof RestDeploymentVersionStatusesVersionGeneralStateEnum];
+
+/**
+ * 
+ * @export
  * @interface RestDockerPipelineConfiguration
  */
 export interface RestDockerPipelineConfiguration {
     /**
      * 
-     * @type {boolean}
+     * @type {Array<string>}
      * @memberof RestDockerPipelineConfiguration
      */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestDockerPipelineConfiguration
-     */
-    dockerImage?: string;
+    additionalArguments?: Array<string>;
     /**
      * 
      * @type {Array<RestDataVolume>}
@@ -10510,10 +10564,16 @@ export interface RestDockerPipelineConfiguration {
     dataVolumes?: Array<RestDataVolume>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof RestDockerPipelineConfiguration
      */
-    additionalArguments?: Array<string>;
+    dockerImage?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestDockerPipelineConfiguration
+     */
+    enabled?: boolean;
 }
 /**
  * 
@@ -10526,13 +10586,13 @@ export interface RestElasticConfiguration {
      * @type {string}
      * @memberof RestElasticConfiguration
      */
-    readonly self?: string;
+    accessKeyId?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestElasticConfiguration
      */
-    enabled?: boolean;
+    allocatePublicIpToVpcInstances?: boolean;
     /**
      * 
      * @type {string}
@@ -10544,49 +10604,7 @@ export interface RestElasticConfiguration {
      * @type {string}
      * @memberof RestElasticConfiguration
      */
-    accessKeyId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticConfiguration
-     */
-    secretAccessKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticConfiguration
-     */
-    region?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticConfiguration
-     */
-    privateKeyFile?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticConfiguration
-     */
     certificateFile?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestElasticConfiguration
-     */
-    uploadAwsIdentifier?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestElasticConfiguration
-     */
-    maxNumOfElasticInstances?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestElasticConfiguration
-     */
-    allocatePublicIpToVpcInstances?: boolean;
     /**
      * 
      * @type {RestElasticInstanceManagement}
@@ -10599,6 +10617,48 @@ export interface RestElasticConfiguration {
      * @memberof RestElasticConfiguration
      */
     elasticTerminationConfiguration?: RestElasticTerminationConfiguration;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestElasticConfiguration
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestElasticConfiguration
+     */
+    maxNumOfElasticInstances?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticConfiguration
+     */
+    privateKeyFile?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticConfiguration
+     */
+    region?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticConfiguration
+     */
+    secretAccessKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticConfiguration
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestElasticConfiguration
+     */
+    uploadAwsIdentifier?: boolean;
 }
 
 
@@ -10619,6 +10679,24 @@ export type RestElasticConfigurationAwsCredentialsTypeEnum = typeof RestElasticC
 export interface RestElasticImageConfig {
     /**
      * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    architecture?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    availabilityZone?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    configurationDescription?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestElasticImageConfig
      */
@@ -10631,28 +10709,16 @@ export interface RestElasticImageConfig {
     configurationName?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RestElasticImageConfig
      */
-    configurationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    imageId?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestElasticImageConfig
-     */
-    rootFsSizeOverride?: number;
+    ebsEnabled?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof RestElasticImageConfig
      */
-    ebsEnabled?: boolean;
+    ebsOptimised?: boolean;
     /**
      * 
      * @type {string}
@@ -10661,52 +10727,10 @@ export interface RestElasticImageConfig {
     ebsSnapshotId?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestElasticImageConfig
-     */
-    useLegacyEbsHandling?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestElasticImageConfig
      */
-    instanceType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    product?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof RestElasticImageConfig
-     */
-    startupScripts?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    architecture?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    platform?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    rootDeviceType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestElasticImageConfig
-     */
-    region?: string;
+    iamInstanceProfileArnOrName?: string;
     /**
      * 
      * @type {string}
@@ -10718,19 +10742,13 @@ export interface RestElasticImageConfig {
      * @type {string}
      * @memberof RestElasticImageConfig
      */
-    iamInstanceProfileArnOrName?: string;
+    imageId?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestElasticImageConfig
      */
-    perSecondBillingEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestElasticImageConfig
-     */
-    ebsOptimised?: boolean;
+    instanceType?: string;
     /**
      * 
      * @type {boolean}
@@ -10739,16 +10757,58 @@ export interface RestElasticImageConfig {
     legacyEbsHandlingEnabled?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestElasticImageConfig
+     */
+    perSecondBillingEnabled?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof RestElasticImageConfig
      */
-    availabilityZone?: string;
+    platform?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    product?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    region?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestElasticImageConfig
+     */
+    rootDeviceType?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestElasticImageConfig
+     */
+    rootFsSizeOverride?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RestElasticImageConfig
+     */
+    startupScripts?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof RestElasticImageConfig
      */
     subnetId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestElasticImageConfig
+     */
+    useLegacyEbsHandling?: boolean;
 }
 /**
  * 
@@ -10777,22 +10837,22 @@ export interface RestElasticInstanceLog {
 export interface RestElasticInstanceManagement {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestElasticInstanceManagement
      */
-    type?: string;
+    allowedNonBambooInstances?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestElasticInstanceManagement
+     */
+    avgQueueTimeMinutes?: number;
     /**
      * 
      * @type {number}
      * @memberof RestElasticInstanceManagement
      */
     idleAgentShutdownDelayMinutes?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestElasticInstanceManagement
-     */
-    allowedNonBambooInstances?: number;
     /**
      * 
      * @type {number}
@@ -10813,10 +10873,10 @@ export interface RestElasticInstanceManagement {
     numOfElasticBuildsInQueue?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestElasticInstanceManagement
      */
-    avgQueueTimeMinutes?: number;
+    type?: string;
 }
 /**
  * 
@@ -10858,6 +10918,24 @@ export interface RestEnableContainer {
 export interface RestEnvironment {
     /**
      * 
+     * @type {string}
+     * @memberof RestEnvironment
+     */
+    configurationState?: RestEnvironmentConfigurationStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironment
+     */
+    deploymentProjectId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnvironment
+     */
+    description?: string;
+    /**
+     * 
      * @type {number}
      * @memberof RestEnvironment
      */
@@ -10876,18 +10954,6 @@ export interface RestEnvironment {
     name?: string;
     /**
      * 
-     * @type {string}
-     * @memberof RestEnvironment
-     */
-    description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironment
-     */
-    deploymentProjectId?: number;
-    /**
-     * 
      * @type {RestOperations}
      * @memberof RestEnvironment
      */
@@ -10903,13 +10969,7 @@ export interface RestEnvironment {
      * @type {string}
      * @memberof RestEnvironment
      */
-    configurationState?: RestEnvironmentConfigurationStateEnum;
-    /**
-     * 
-     * @type {Array<TriggerDefinition>}
-     * @memberof RestEnvironment
-     */
-    triggerDefinitions?: Array<TriggerDefinition>;
+    releaseApprovalPrerequisite?: RestEnvironmentReleaseApprovalPrerequisiteEnum;
     /**
      * 
      * @type {boolean}
@@ -10918,28 +10978,16 @@ export interface RestEnvironment {
     suspended?: boolean;
     /**
      * 
-     * @type {ImmutableRequirementSet}
-     * @memberof RestEnvironment
-     */
-    requirementSet?: ImmutableRequirementSet;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestEnvironment
-     */
-    taskDefinitionsSupplier?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestEnvironment
-     */
-    triggerDefinitionsSupplier?: object;
-    /**
-     * 
      * @type {Array<TaskDefinition>}
      * @memberof RestEnvironment
      */
     taskDefinitions?: Array<TaskDefinition>;
+    /**
+     * 
+     * @type {Array<TriggerDefinition>}
+     * @memberof RestEnvironment
+     */
+    triggerDefinitions?: Array<TriggerDefinition>;
 }
 
 
@@ -10954,23 +11002,40 @@ export const RestEnvironmentConfigurationStateEnum = {
 export type RestEnvironmentConfigurationStateEnum = typeof RestEnvironmentConfigurationStateEnum[keyof typeof RestEnvironmentConfigurationStateEnum];
 
 /**
+ * @export
+ */
+export const RestEnvironmentReleaseApprovalPrerequisiteEnum = {
+    None: 'NONE',
+    NotBroken: 'NOT_BROKEN',
+    Approved: 'APPROVED'
+} as const;
+export type RestEnvironmentReleaseApprovalPrerequisiteEnum = typeof RestEnvironmentReleaseApprovalPrerequisiteEnum[keyof typeof RestEnvironmentReleaseApprovalPrerequisiteEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestEnvironmentDashboardStatus
+ */
+export interface RestEnvironmentDashboardStatus {
+    /**
+     * 
+     * @type {RestDeploymentResult}
+     * @memberof RestEnvironmentDashboardStatus
+     */
+    deploymentResult?: RestDeploymentResult;
+    /**
+     * 
+     * @type {RestEnvironment}
+     * @memberof RestEnvironmentDashboardStatus
+     */
+    environment?: RestEnvironment;
+}
+/**
  * 
  * @export
  * @interface RestEnvironmentForExecutablesView
  */
 export interface RestEnvironmentForExecutablesView {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironmentForExecutablesView
-     */
-    projectId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEnvironmentForExecutablesView
-     */
-    projectName?: string;
     /**
      * 
      * @type {number}
@@ -10983,7 +11048,50 @@ export interface RestEnvironmentForExecutablesView {
      * @memberof RestEnvironmentForExecutablesView
      */
     environmentName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironmentForExecutablesView
+     */
+    projectId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnvironmentForExecutablesView
+     */
+    projectName?: string;
 }
+/**
+ * 
+ * @export
+ * @interface RestEnvironmentPrerequisites
+ */
+export interface RestEnvironmentPrerequisites {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnvironmentPrerequisites
+     */
+    releaseApprovalPrerequisite?: RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestEnvironmentPrerequisites
+     */
+    releaseApprovalPrerequisitePresent?: boolean;
+}
+
+
+/**
+ * @export
+ */
+export const RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum = {
+    None: 'NONE',
+    NotBroken: 'NOT_BROKEN',
+    Approved: 'APPROVED'
+} as const;
+export type RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum = typeof RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum[keyof typeof RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum];
+
 /**
  * 
  * @export
@@ -11022,10 +11130,10 @@ export interface RestEnvironmentStatusForDashboard {
     deploymentVersionRelatedBranchName?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<RestDeploymentVersionStatusForDashboard>}
      * @memberof RestEnvironmentStatusForDashboard
      */
-    deploymentVersionState?: RestEnvironmentStatusForDashboardDeploymentVersionStateEnum;
+    deploymentVersionStatuses?: Array<RestDeploymentVersionStatusForDashboard>;
     /**
      * 
      * @type {number}
@@ -11062,24 +11170,6 @@ export interface RestEnvironmentStatusForDashboard {
      * @memberof RestEnvironmentStatusForDashboard
      */
     startedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEnvironmentStatusForDashboard
-     */
-    versionStatusGravatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEnvironmentStatusForDashboard
-     */
-    versionStatusUserDisplayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEnvironmentStatusForDashboard
-     */
-    versionStatusUserName?: string;
 }
 
 
@@ -11092,17 +11182,6 @@ export const RestEnvironmentStatusForDashboardDeploymentStateEnum = {
     Failed: 'Failed'
 } as const;
 export type RestEnvironmentStatusForDashboardDeploymentStateEnum = typeof RestEnvironmentStatusForDashboardDeploymentStateEnum[keyof typeof RestEnvironmentStatusForDashboardDeploymentStateEnum];
-
-/**
- * @export
- */
-export const RestEnvironmentStatusForDashboardDeploymentVersionStateEnum = {
-    Unknown: 'Unknown',
-    Approved: 'Approved',
-    Broken: 'Broken',
-    Incomplete: 'Incomplete'
-} as const;
-export type RestEnvironmentStatusForDashboardDeploymentVersionStateEnum = typeof RestEnvironmentStatusForDashboardDeploymentVersionStateEnum[keyof typeof RestEnvironmentStatusForDashboardDeploymentVersionStateEnum];
 
 /**
  * @export
@@ -11124,12 +11203,6 @@ export type RestEnvironmentStatusForDashboardLifeCycleStateEnum = typeof RestEnv
 export interface RestEnvironmentStatusOfIssue {
     /**
      * 
-     * @type {string}
-     * @memberof RestEnvironmentStatusOfIssue
-     */
-    name?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestEnvironmentStatusOfIssue
      */
@@ -11142,22 +11215,28 @@ export interface RestEnvironmentStatusOfIssue {
     issueStatus?: RestEnvironmentStatusOfIssueIssueStatusEnum;
     /**
      * 
+     * @type {string}
+     * @memberof RestEnvironmentStatusOfIssue
+     */
+    name?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestEnvironmentStatusOfIssue
      */
     statusOk?: boolean;
     /**
      * 
-     * @type {RestDeploymentVersionLink}
-     * @memberof RestEnvironmentStatusOfIssue
-     */
-    version?: RestDeploymentVersionLink;
-    /**
-     * 
      * @type {string}
      * @memberof RestEnvironmentStatusOfIssue
      */
     url?: string;
+    /**
+     * 
+     * @type {RestDeploymentVersionLink}
+     * @memberof RestEnvironmentStatusOfIssue
+     */
+    version?: RestDeploymentVersionLink;
 }
 
 
@@ -11182,6 +11261,30 @@ export interface RestEnvironmentWithConfigCounts {
      * @type {number}
      * @memberof RestEnvironmentWithConfigCounts
      */
+    compatibleAgentsCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    configurationState?: RestEnvironmentWithConfigCountsConfigurationStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    deploymentProjectId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
     id?: number;
     /**
      * 
@@ -11197,16 +11300,10 @@ export interface RestEnvironmentWithConfigCounts {
     name?: string;
     /**
      * 
-     * @type {string}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    description?: string;
-    /**
-     * 
      * @type {number}
      * @memberof RestEnvironmentWithConfigCounts
      */
-    deploymentProjectId?: number;
+    notificationsCount?: number;
     /**
      * 
      * @type {RestOperations}
@@ -11224,37 +11321,7 @@ export interface RestEnvironmentWithConfigCounts {
      * @type {string}
      * @memberof RestEnvironmentWithConfigCounts
      */
-    configurationState?: RestEnvironmentWithConfigCountsConfigurationStateEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    compatibleAgentsCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    notificationsCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    variablesCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    triggersCount?: number;
-    /**
-     * 
-     * @type {Array<TriggerDefinition>}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    triggerDefinitions?: Array<TriggerDefinition>;
+    releaseApprovalPrerequisite?: RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum;
     /**
      * 
      * @type {boolean}
@@ -11263,28 +11330,28 @@ export interface RestEnvironmentWithConfigCounts {
     suspended?: boolean;
     /**
      * 
-     * @type {ImmutableRequirementSet}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    requirementSet?: ImmutableRequirementSet;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    taskDefinitionsSupplier?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestEnvironmentWithConfigCounts
-     */
-    triggerDefinitionsSupplier?: object;
-    /**
-     * 
      * @type {Array<TaskDefinition>}
      * @memberof RestEnvironmentWithConfigCounts
      */
     taskDefinitions?: Array<TaskDefinition>;
+    /**
+     * 
+     * @type {Array<TriggerDefinition>}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    triggerDefinitions?: Array<TriggerDefinition>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    triggersCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestEnvironmentWithConfigCounts
+     */
+    variablesCount?: number;
 }
 
 
@@ -11299,17 +11366,21 @@ export const RestEnvironmentWithConfigCountsConfigurationStateEnum = {
 export type RestEnvironmentWithConfigCountsConfigurationStateEnum = typeof RestEnvironmentWithConfigCountsConfigurationStateEnum[keyof typeof RestEnvironmentWithConfigCountsConfigurationStateEnum];
 
 /**
+ * @export
+ */
+export const RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum = {
+    None: 'NONE',
+    NotBroken: 'NOT_BROKEN',
+    Approved: 'APPROVED'
+} as const;
+export type RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum = typeof RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum[keyof typeof RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum];
+
+/**
  * 
  * @export
  * @interface RestEphemeralAgentTemplate
  */
 export interface RestEphemeralAgentTemplate {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEphemeralAgentTemplate
-     */
-    readonly self?: string;
     /**
      * 
      * @type {number}
@@ -11324,10 +11395,10 @@ export interface RestEphemeralAgentTemplate {
     configurationName?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RestEphemeralAgentTemplate
      */
-    template?: string;
+    dedicated?: boolean;
     /**
      * 
      * @type {boolean}
@@ -11336,10 +11407,16 @@ export interface RestEphemeralAgentTemplate {
     enabled?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestEphemeralAgentTemplate
      */
-    dedicated?: boolean;
+    readonly self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralAgentTemplate
+     */
+    template?: string;
 }
 /**
  * 
@@ -11352,7 +11429,13 @@ export interface RestEphemeralPodLogs {
      * @type {string}
      * @memberof RestEphemeralPodLogs
      */
-    podName?: string;
+    containerName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestEphemeralPodLogs
+     */
+    lastTimeStamp?: string;
     /**
      * 
      * @type {Array<string>}
@@ -11364,13 +11447,7 @@ export interface RestEphemeralPodLogs {
      * @type {string}
      * @memberof RestEphemeralPodLogs
      */
-    containerName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestEphemeralPodLogs
-     */
-    lastTimeStamp?: string;
+    podName?: string;
 }
 /**
  * 
@@ -11399,22 +11476,10 @@ export interface RestErrorCollection {
 export interface RestExecutableEnvironmentList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestEnvironment>}
      * @memberof RestExecutableEnvironmentList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestExecutableEnvironmentList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestExecutableEnvironmentList
-     */
-    size?: number;
+    allElements?: Array<RestEnvironment>;
     /**
      * 
      * @type {any}
@@ -11429,10 +11494,22 @@ export interface RestExecutableEnvironmentList {
     executableEnvironments?: Array<RestEnvironment>;
     /**
      * 
-     * @type {Array<RestEnvironment>}
+     * @type {number}
      * @memberof RestExecutableEnvironmentList
      */
-    allElements?: Array<RestEnvironment>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestExecutableEnvironmentList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestExecutableEnvironmentList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -11442,22 +11519,10 @@ export interface RestExecutableEnvironmentList {
 export interface RestExecutableJobList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestJob>}
      * @memberof RestExecutableJobList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestExecutableJobList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestExecutableJobList
-     */
-    size?: number;
+    allElements?: Array<RestJob>;
     /**
      * 
      * @type {any}
@@ -11472,10 +11537,22 @@ export interface RestExecutableJobList {
     executableJobs?: Array<RestJob>;
     /**
      * 
-     * @type {Array<RestJob>}
+     * @type {number}
      * @memberof RestExecutableJobList
      */
-    allElements?: Array<RestJob>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestExecutableJobList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestExecutableJobList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -11483,24 +11560,6 @@ export interface RestExecutableJobList {
  * @interface RestExpiryStatus
  */
 export interface RestExpiryStatus {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestExpiryStatus
-     */
-    running?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestExpiryStatus
-     */
-    lastRun?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestExpiryStatus
-     */
-    lastRunDate?: string;
     /**
      * 
      * @type {number}
@@ -11515,10 +11574,28 @@ export interface RestExpiryStatus {
     lastFinishedDate?: string;
     /**
      * 
+     * @type {number}
+     * @memberof RestExpiryStatus
+     */
+    lastRun?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestExpiryStatus
+     */
+    lastRunDate?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RestExpiryStatus
      */
     lastRunSuccessful?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestExpiryStatus
+     */
+    running?: boolean;
 }
 /**
  * 
@@ -11531,13 +11608,13 @@ export interface RestFavicon {
      * @type {string}
      * @memberof RestFavicon
      */
-    faviconUrl?: string;
+    faviconType?: string;
     /**
      * 
      * @type {string}
      * @memberof RestFavicon
      */
-    faviconType?: string;
+    faviconUrl?: string;
 }
 /**
  * 
@@ -11550,31 +11627,13 @@ export interface RestGeneralConfiguration {
      * @type {string}
      * @memberof RestGeneralConfiguration
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestGeneralConfiguration
-     */
-    instanceName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestGeneralConfiguration
-     */
     baseUrl?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestGeneralConfiguration
      */
-    gravatarServerUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestGeneralConfiguration
-     */
-    brokerUrl?: string;
+    branchDetectionIntervalSeconds?: number;
     /**
      * 
      * @type {string}
@@ -11583,16 +11642,16 @@ export interface RestGeneralConfiguration {
     brokerClientUrl?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestGeneralConfiguration
      */
-    dashboardDefaultPageSize?: number;
+    brokerUrl?: string;
     /**
      * 
      * @type {number}
      * @memberof RestGeneralConfiguration
      */
-    branchDetectionIntervalSeconds?: number;
+    dashboardDefaultPageSize?: number;
     /**
      * 
      * @type {boolean}
@@ -11616,13 +11675,31 @@ export interface RestGeneralConfiguration {
      * @type {string}
      * @memberof RestGeneralConfiguration
      */
-    rssPollingCronExpression?: string;
+    gravatarServerUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGeneralConfiguration
+     */
+    instanceName?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestGeneralConfiguration
      */
     quietPeriodGloballyDisabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGeneralConfiguration
+     */
+    rssPollingCronExpression?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGeneralConfiguration
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -11632,10 +11709,22 @@ export interface RestGeneralConfiguration {
 export interface RestGlobalVariable {
     /**
      * 
+     * @type {boolean}
+     * @memberof RestGlobalVariable
+     */
+    readonly encrypted?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof RestGlobalVariable
      */
     readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGlobalVariable
+     */
+    readonly link?: string;
     /**
      * 
      * @type {string}
@@ -11648,18 +11737,6 @@ export interface RestGlobalVariable {
      * @memberof RestGlobalVariable
      */
     value?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestGlobalVariable
-     */
-    readonly link?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestGlobalVariable
-     */
-    readonly encrypted?: boolean;
 }
 /**
  * 
@@ -11669,22 +11746,10 @@ export interface RestGlobalVariable {
 export interface RestGlobalVariableList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestGlobalVariable>}
      * @memberof RestGlobalVariableList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestGlobalVariableList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestGlobalVariableList
-     */
-    size?: number;
+    allElements?: Array<RestGlobalVariable>;
     /**
      * 
      * @type {any}
@@ -11699,10 +11764,22 @@ export interface RestGlobalVariableList {
     globalVariables?: Array<RestGlobalVariable>;
     /**
      * 
-     * @type {Array<RestGlobalVariable>}
+     * @type {number}
      * @memberof RestGlobalVariableList
      */
-    allElements?: Array<RestGlobalVariable>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestGlobalVariableList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestGlobalVariableList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -11712,16 +11789,16 @@ export interface RestGlobalVariableList {
 export interface RestGlobalVariables {
     /**
      * 
-     * @type {string}
-     * @memberof RestGlobalVariables
-     */
-    link?: string;
-    /**
-     * 
      * @type {RestGlobalVariableList}
      * @memberof RestGlobalVariables
      */
     globalVariables?: RestGlobalVariableList;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGlobalVariables
+     */
+    link?: string;
 }
 /**
  * 
@@ -11731,10 +11808,10 @@ export interface RestGlobalVariables {
 export interface RestGroup {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RestGroup
      */
-    readonly self?: string;
+    readonly editable?: boolean;
     /**
      * 
      * @type {string}
@@ -11743,10 +11820,10 @@ export interface RestGroup {
     name?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestGroup
      */
-    readonly editable?: boolean;
+    readonly self?: string;
 }
 /**
  * 
@@ -11756,10 +11833,10 @@ export interface RestGroup {
 export interface RestGroupPermission {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RestGroupPermission
      */
-    readonly self?: string;
+    readonly editable?: boolean;
     /**
      * 
      * @type {string}
@@ -11768,16 +11845,16 @@ export interface RestGroupPermission {
     name?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestGroupPermission
-     */
-    readonly editable?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof RestGroupPermission
      */
     permissions?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestGroupPermission
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -11790,31 +11867,13 @@ export interface RestIMServerConfiguration {
      * @type {string}
      * @memberof RestIMServerConfiguration
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestIMServerConfiguration
-     */
     host?: string;
     /**
      * 
      * @type {string}
      * @memberof RestIMServerConfiguration
      */
-    username?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestIMServerConfiguration
-     */
     password?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestIMServerConfiguration
-     */
-    resource?: string;
     /**
      * 
      * @type {number}
@@ -11827,6 +11886,24 @@ export interface RestIMServerConfiguration {
      * @memberof RestIMServerConfiguration
      */
     requireTLSSSLConnection?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestIMServerConfiguration
+     */
+    resource?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestIMServerConfiguration
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestIMServerConfiguration
+     */
+    username?: string;
 }
 /**
  * 
@@ -11852,18 +11929,6 @@ export interface RestInfo {
      * @type {string}
      * @memberof RestInfo
      */
-    version?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestInfo
-     */
-    edition?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestInfo
-     */
     buildDate?: string;
     /**
      * 
@@ -11876,7 +11941,19 @@ export interface RestInfo {
      * @type {string}
      * @memberof RestInfo
      */
+    edition?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestInfo
+     */
     state?: RestInfoStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestInfo
+     */
+    version?: string;
 }
 
 
@@ -11887,10 +11964,11 @@ export const RestInfoStateEnum = {
     Setup: 'SETUP',
     Starting: 'STARTING',
     Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
     Pausing: 'PAUSING',
+    Paused: 'PAUSED',
     PreparingForRestart: 'PREPARING_FOR_RESTART',
-    ReadyForRestart: 'READY_FOR_RESTART',
-    Paused: 'PAUSED'
+    ReadyForRestart: 'READY_FOR_RESTART'
 } as const;
 export type RestInfoStateEnum = typeof RestInfoStateEnum[keyof typeof RestInfoStateEnum];
 
@@ -11900,18 +11978,6 @@ export type RestInfoStateEnum = typeof RestInfoStateEnum[keyof typeof RestInfoSt
  * @interface RestJiraIssue
  */
 export interface RestJiraIssue {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestJiraIssue
-     */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestJiraIssue
-     */
-    summary?: string;
     /**
      * 
      * @type {string}
@@ -11929,7 +11995,19 @@ export interface RestJiraIssue {
      * @type {string}
      * @memberof RestJiraIssue
      */
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJiraIssue
+     */
     status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestJiraIssue
+     */
+    summary?: string;
     /**
      * 
      * @type {Link}
@@ -11945,22 +12023,10 @@ export interface RestJiraIssue {
 export interface RestJiraIssueList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestJiraIssue>}
      * @memberof RestJiraIssueList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestJiraIssueList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestJiraIssueList
-     */
-    size?: number;
+    allElements?: Array<RestJiraIssue>;
     /**
      * 
      * @type {any}
@@ -11975,10 +12041,22 @@ export interface RestJiraIssueList {
     issue?: Array<RestJiraIssue>;
     /**
      * 
-     * @type {Array<RestJiraIssue>}
+     * @type {number}
      * @memberof RestJiraIssueList
      */
-    allElements?: Array<RestJiraIssue>;
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestJiraIssueList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestJiraIssueList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -12001,10 +12079,16 @@ export interface RestJiraIssueRelatedDeploymentProjects {
 export interface RestJob {
     /**
      * 
+     * @type {RestAgentSummary}
+     * @memberof RestJob
+     */
+    agentSummary?: RestAgentSummary;
+    /**
+     * 
      * @type {string}
      * @memberof RestJob
      */
-    readonly self?: string;
+    description?: string;
     /**
      * 
      * @type {number}
@@ -12028,13 +12112,7 @@ export interface RestJob {
      * @type {string}
      * @memberof RestJob
      */
-    description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestJob
-     */
-    suspended?: boolean;
+    readonly self?: string;
     /**
      * 
      * @type {RestKey}
@@ -12043,22 +12121,22 @@ export interface RestJob {
     sourceJobKey?: RestKey;
     /**
      * 
-     * @type {number}
-     * @memberof RestJob
-     */
-    stageId?: number;
-    /**
-     * 
      * @type {RestStage}
      * @memberof RestJob
      */
     stage?: RestStage;
     /**
      * 
-     * @type {RestAgentSummary}
+     * @type {number}
      * @memberof RestJob
      */
-    agentSummary?: RestAgentSummary;
+    stageId?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestJob
+     */
+    suspended?: boolean;
 }
 /**
  * 
@@ -12109,13 +12187,7 @@ export interface RestMailConfiguration {
      * @type {string}
      * @memberof RestMailConfiguration
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMailConfiguration
-     */
-    name?: string;
+    emailSetting?: string;
     /**
      * 
      * @type {string}
@@ -12127,7 +12199,13 @@ export interface RestMailConfiguration {
      * @type {string}
      * @memberof RestMailConfiguration
      */
-    subjectPrefix?: string;
+    jndiLocation?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
+    name?: string;
     /**
      * 
      * @type {boolean}
@@ -12139,13 +12217,13 @@ export interface RestMailConfiguration {
      * @type {string}
      * @memberof RestMailConfiguration
      */
-    emailSetting?: string;
+    readonly self?: string;
     /**
      * 
      * @type {string}
      * @memberof RestMailConfiguration
      */
-    smtpServer?: string;
+    smtpPassword?: string;
     /**
      * 
      * @type {string}
@@ -12157,25 +12235,25 @@ export interface RestMailConfiguration {
      * @type {string}
      * @memberof RestMailConfiguration
      */
+    smtpServer?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMailConfiguration
+     */
     smtpUsername?: string;
     /**
      * 
      * @type {string}
      * @memberof RestMailConfiguration
      */
-    smtpPassword?: string;
+    subjectPrefix?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestMailConfiguration
      */
     tlsEnabled?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestMailConfiguration
-     */
-    jndiLocation?: string;
 }
 /**
  * 
@@ -12229,6 +12307,12 @@ export interface RestNamingPreview {
      * @type {string}
      * @memberof RestNamingPreview
      */
+    errorMessage?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNamingPreview
+     */
     nextVersionName?: string;
     /**
      * 
@@ -12236,12 +12320,6 @@ export interface RestNamingPreview {
      * @memberof RestNamingPreview
      */
     subsequentVersionName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestNamingPreview
-     */
-    errorMessage?: string;
 }
 /**
  * 
@@ -12249,12 +12327,6 @@ export interface RestNamingPreview {
  * @interface RestNewUser
  */
 export interface RestNewUser {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestNewUser
-     */
-    avatarUrl?: string;
     /**
      * 
      * @type {string}
@@ -12290,6 +12362,12 @@ export interface RestNewUser {
      * @type {string}
      * @memberof RestNewUser
      */
+    sanitizedName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNewUser
+     */
     readonly self?: string;
 }
 /**
@@ -12298,6 +12376,30 @@ export interface RestNewUser {
  * @interface RestNodeStatus
  */
 export interface RestNodeStatus {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestNodeStatus
+     */
+    alive?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNodeStatus
+     */
+    hostname?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestNodeStatus
+     */
+    internalCommunicationPort?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNodeStatus
+     */
+    lastHeartbeat?: string;
     /**
      * 
      * @type {string}
@@ -12310,12 +12412,6 @@ export interface RestNodeStatus {
      * @memberof RestNodeStatus
      */
     nodeName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestNodeStatus
-     */
-    lastHeartbeat?: string;
     /**
      * 
      * @type {boolean}
@@ -12334,25 +12430,7 @@ export interface RestOperations {
      * @type {boolean}
      * @memberof RestOperations
      */
-    canView?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestOperations
-     */
-    canViewConfiguration?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestOperations
-     */
-    canEdit?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestOperations
-     */
-    canDelete?: boolean;
+    allowedToCreateVersion?: boolean;
     /**
      * 
      * @type {boolean}
@@ -12364,25 +12442,43 @@ export interface RestOperations {
      * @type {boolean}
      * @memberof RestOperations
      */
+    allowedToSetVersionStatus?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    canDelete?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    canEdit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
     canExecute?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    canView?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    canViewConfiguration?: boolean;
     /**
      * 
      * @type {string}
      * @memberof RestOperations
      */
     cantExecuteReason?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestOperations
-     */
-    allowedToCreateVersion?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestOperations
-     */
-    allowedToSetVersionStatus?: boolean;
 }
 /**
  * 
@@ -12822,16 +12918,10 @@ export interface RestPageModelRestGroupPermission {
 export interface RestPageModelRestJob {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestPageModelRestJob
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPageModelRestJob
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -12840,22 +12930,28 @@ export interface RestPageModelRestJob {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestPageModelRestJob
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPageModelRestJob
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestJob>}
      * @memberof RestPageModelRestJob
      */
     results?: Array<RestJob>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestJob
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestJob
+     */
+    start?: number;
 }
 /**
  * 
@@ -12994,16 +13090,10 @@ export interface RestPageModelRestSharedCredential {
 export interface RestPageModelRestStage {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestPageModelRestStage
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPageModelRestStage
-     */
-    prev?: string;
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -13012,22 +13102,28 @@ export interface RestPageModelRestStage {
     next?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RestPageModelRestStage
      */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPageModelRestStage
-     */
-    limit?: number;
+    prev?: string;
     /**
      * 
      * @type {Array<RestStage>}
      * @memberof RestPageModelRestStage
      */
     results?: Array<RestStage>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPageModelRestStage
+     */
+    readonly self?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageModelRestStage
+     */
+    start?: number;
 }
 /**
  * 
@@ -13204,33 +13300,70 @@ export interface RestPageModelRestUserPermission {
 /**
  * 
  * @export
+ * @interface RestPersonalAccessTokensExpirationConfiguration
+ */
+export interface RestPersonalAccessTokensExpirationConfiguration {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPersonalAccessTokensExpirationConfiguration
+     */
+    expirationRequired?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPersonalAccessTokensExpirationConfiguration
+     */
+    maxDaysUntilExpiry?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestPlan
  */
 export interface RestPlan {
     /**
      * 
-     * @type {string}
+     * @type {RestPlanActionList}
      * @memberof RestPlan
      */
-    expand?: string;
+    actions?: RestPlanActionList;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPlan
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPlan
+     */
+    averageBuildTimeInSeconds?: number;
+    /**
+     * 
+     * @type {RestPlanBranchList}
+     * @memberof RestPlan
+     */
+    branches?: RestPlanBranchList;
     /**
      * 
      * @type {string}
      * @memberof RestPlan
      */
-    projectKey?: string;
+    buildName?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof RestPlan
      */
-    projectName?: string;
+    building?: boolean;
     /**
      * 
-     * @type {RestProject}
+     * @type {User}
      * @memberof RestPlan
      */
-    project?: RestProject;
+    currentRestUser?: User;
     /**
      * 
      * @type {string}
@@ -13239,10 +13372,40 @@ export interface RestPlan {
     description?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestPlan
+     */
+    enabled?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof RestPlan
      */
-    parentName?: string;
+    expand?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPlan
+     */
+    favourite?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPlan
+     */
+    id?: number;
+    /**
+     * 
+     * @type {Link}
+     * @memberof RestPlan
+     */
+    link?: Link;
+    /**
+     * 
+     * @type {RestPlan}
+     * @memberof RestPlan
+     */
+    master?: RestPlan;
     /**
      * 
      * @type {string}
@@ -13257,16 +13420,10 @@ export interface RestPlan {
     parentLink?: Link;
     /**
      * 
-     * @type {RestPlan}
-     * @memberof RestPlan
-     */
-    master?: RestPlan;
-    /**
-     * 
      * @type {string}
      * @memberof RestPlan
      */
-    stageName?: string;
+    parentName?: string;
     /**
      * 
      * @type {string}
@@ -13281,16 +13438,28 @@ export interface RestPlan {
     planName?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestProject}
      * @memberof RestPlan
      */
-    shortName?: string;
+    project?: RestProject;
     /**
      * 
      * @type {string}
      * @memberof RestPlan
      */
-    buildName?: string;
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPlan
+     */
+    projectName?: string;
+    /**
+     * 
+     * @type {RestKey}
+     * @memberof RestPlan
+     */
+    restPlanKey?: RestKey;
     /**
      * 
      * @type {string}
@@ -13302,37 +13471,13 @@ export interface RestPlan {
      * @type {string}
      * @memberof RestPlan
      */
-    type?: string;
+    shortName?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestPlan
      */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {RestKey}
-     * @memberof RestPlan
-     */
-    restPlanKey?: RestKey;
-    /**
-     * 
-     * @type {Link}
-     * @memberof RestPlan
-     */
-    link?: Link;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPlan
-     */
-    averageBuildTimeInSeconds?: number;
-    /**
-     * 
-     * @type {RestPlanActionList}
-     * @memberof RestPlan
-     */
-    actions?: RestPlanActionList;
+    stageName?: string;
     /**
      * 
      * @type {RestStageList}
@@ -13341,40 +13486,16 @@ export interface RestPlan {
     stages?: RestStageList;
     /**
      * 
-     * @type {RestPlanBranchList}
+     * @type {string}
      * @memberof RestPlan
      */
-    branches?: RestPlanBranchList;
+    type?: string;
     /**
      * 
      * @type {RestVariableDefinitionContextList}
      * @memberof RestPlan
      */
     variableContext?: RestVariableDefinitionContextList;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPlan
-     */
-    favourite?: boolean;
-    /**
-     * 
-     * @type {User}
-     * @memberof RestPlan
-     */
-    currentRestUser?: User;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPlan
-     */
-    building?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPlan
-     */
-    active?: boolean;
 }
 /**
  * 
@@ -13397,10 +13518,16 @@ export interface RestPlanAction {
 export interface RestPlanActionList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestPlanAction>}
      * @memberof RestPlanActionList
      */
-    startIndex?: number;
+    allElements?: Array<RestPlanAction>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestPlanActionList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -13415,16 +13542,10 @@ export interface RestPlanActionList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestPlanActionList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {Array<RestPlanAction>}
-     * @memberof RestPlanActionList
-     */
-    allElements?: Array<RestPlanAction>;
+    startIndex?: number;
 }
 /**
  * 
@@ -13459,10 +13580,22 @@ export interface RestPlanBranch {
 export interface RestPlanBranchList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestPlanBranch>}
      * @memberof RestPlanBranchList
      */
-    startIndex?: number;
+    allElements?: Array<RestPlanBranch>;
+    /**
+     * 
+     * @type {Array<RestPlanBranch>}
+     * @memberof RestPlanBranchList
+     */
+    branches?: Array<RestPlanBranch>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestPlanBranchList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -13477,22 +13610,10 @@ export interface RestPlanBranchList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestPlanBranchList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {Array<RestPlanBranch>}
-     * @memberof RestPlanBranchList
-     */
-    branches?: Array<RestPlanBranch>;
-    /**
-     * 
-     * @type {Array<RestPlanBranch>}
-     * @memberof RestPlanBranchList
-     */
-    allElements?: Array<RestPlanBranch>;
+    startIndex?: number;
 }
 /**
  * 
@@ -13505,7 +13626,7 @@ export interface RestPlanConfig {
      * @type {string}
      * @memberof RestPlanConfig
      */
-    readonly self?: string;
+    description?: string;
     /**
      * 
      * @type {number}
@@ -13526,16 +13647,16 @@ export interface RestPlanConfig {
     name?: string;
     /**
      * 
+     * @type {RestProjectCreate}
+     * @memberof RestPlanConfig
+     */
+    project?: RestProjectCreate;
+    /**
+     * 
      * @type {string}
      * @memberof RestPlanConfig
      */
-    description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPlanConfig
-     */
-    suspended?: boolean;
+    readonly self?: string;
     /**
      * 
      * @type {RestPageModelRestStage}
@@ -13544,10 +13665,10 @@ export interface RestPlanConfig {
     stages?: RestPageModelRestStage;
     /**
      * 
-     * @type {RestProject}
+     * @type {boolean}
      * @memberof RestPlanConfig
      */
-    project?: RestProject;
+    suspended?: boolean;
 }
 /**
  * 
@@ -13555,30 +13676,6 @@ export interface RestPlanConfig {
  * @interface RestPlanIdentifier
  */
 export interface RestPlanIdentifier {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPlanIdentifier
-     */
-    id?: number;
-    /**
-     * 
-     * @type {RestProjectIdentifier}
-     * @memberof RestPlanIdentifier
-     */
-    project?: RestProjectIdentifier;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPlanIdentifier
-     */
-    planType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPlanIdentifier
-     */
-    planKey?: string;
     /**
      * 
      * @type {string}
@@ -13590,7 +13687,7 @@ export interface RestPlanIdentifier {
      * @type {string}
      * @memberof RestPlanIdentifier
      */
-    name?: string;
+    buildName?: string;
     /**
      * 
      * @type {string}
@@ -13599,22 +13696,46 @@ export interface RestPlanIdentifier {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RestPlanIdentifier
      */
-    buildName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPlanIdentifier
-     */
-    suspendedFromBuilding?: boolean;
+    id?: number;
     /**
      * 
      * @type {number}
      * @memberof RestPlanIdentifier
      */
     masterId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPlanIdentifier
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPlanIdentifier
+     */
+    planKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestPlanIdentifier
+     */
+    planType?: string;
+    /**
+     * 
+     * @type {RestProjectIdentifier}
+     * @memberof RestPlanIdentifier
+     */
+    project?: RestProjectIdentifier;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPlanIdentifier
+     */
+    suspendedFromBuilding?: boolean;
 }
 /**
  * 
@@ -13699,22 +13820,10 @@ export interface RestPlanLabels {
 export interface RestPlanList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestPlan>}
      * @memberof RestPlanList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPlanList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPlanList
-     */
-    size?: number;
+    allElements?: Array<RestPlan>;
     /**
      * 
      * @type {any}
@@ -13723,16 +13832,28 @@ export interface RestPlanList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestPlanList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestPlan>}
      * @memberof RestPlanList
      */
     plans?: Array<RestPlan>;
     /**
      * 
-     * @type {Array<RestPlan>}
+     * @type {number}
      * @memberof RestPlanList
      */
-    allElements?: Array<RestPlan>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPlanList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -13761,6 +13882,18 @@ export interface RestPlans {
 export interface RestProgress {
     /**
      * 
+     * @type {number}
+     * @memberof RestProgress
+     */
+    averageBuildDuration?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestProgress
+     */
+    buildTime?: number;
+    /**
+     * 
      * @type {string}
      * @memberof RestProgress
      */
@@ -13782,6 +13915,24 @@ export interface RestProgress {
      * @type {string}
      * @memberof RestProgress
      */
+    prettyAverageBuildDuration?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProgress
+     */
+    prettyBuildTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProgress
+     */
+    prettyStartedTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProgress
+     */
     prettyTimeRemaining?: string;
     /**
      * 
@@ -13789,30 +13940,6 @@ export interface RestProgress {
      * @memberof RestProgress
      */
     prettyTimeRemainingLong?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestProgress
-     */
-    averageBuildDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProgress
-     */
-    prettyAverageBuildDuration?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestProgress
-     */
-    buildTime?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProgress
-     */
-    prettyBuildTime?: string;
     /**
      * 
      * @type {string}
@@ -13825,12 +13952,6 @@ export interface RestProgress {
      * @memberof RestProgress
      */
     startedTimeFormatted?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProgress
-     */
-    prettyStartedTime?: string;
     /**
      * 
      * @type {boolean}
@@ -13855,7 +13976,19 @@ export interface RestProject {
      * @type {string}
      * @memberof RestProject
      */
-    name?: string;
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProject
+     */
+    expand?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestProject
+     */
+    id?: number;
     /**
      * 
      * @type {string}
@@ -13864,14 +13997,69 @@ export interface RestProject {
     key?: string;
     /**
      * 
+     * @type {Link}
+     * @memberof RestProject
+     */
+    link?: Link;
+    /**
+     * 
      * @type {string}
      * @memberof RestProject
+     */
+    name?: string;
+    /**
+     * 
+     * @type {RestPlanList}
+     * @memberof RestProject
+     */
+    plans?: RestPlanList;
+    /**
+     * 
+     * @type {Project}
+     * @memberof RestProject
+     */
+    project?: Project;
+    /**
+     * 
+     * @type {RestProjectUriInfo}
+     * @memberof RestProject
+     */
+    uriInfo?: RestProjectUriInfo;
+    /**
+     * 
+     * @type {User}
+     * @memberof RestProject
+     */
+    user?: User;
+}
+/**
+ * 
+ * @export
+ * @interface RestProjectCreate
+ */
+export interface RestProjectCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectCreate
      */
     description?: string;
     /**
      * 
+     * @type {string}
+     * @memberof RestProjectCreate
+     */
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectCreate
+     */
+    name?: string;
+    /**
+     * 
      * @type {boolean}
-     * @memberof RestProject
+     * @memberof RestProjectCreate
      */
     publicAccess?: boolean;
 }
@@ -13886,6 +14074,12 @@ export interface RestProjectIdentifier {
      * @type {string}
      * @memberof RestProjectIdentifier
      */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectIdentifier
+     */
     key?: string;
     /**
      * 
@@ -13893,12 +14087,6 @@ export interface RestProjectIdentifier {
      * @memberof RestProjectIdentifier
      */
     name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectIdentifier
-     */
-    description?: string;
 }
 /**
  * 
@@ -13908,10 +14096,16 @@ export interface RestProjectIdentifier {
 export interface RestProjectList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestProject>}
      * @memberof RestProjectList
      */
-    startIndex?: number;
+    allElements?: Array<RestProject>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestProjectList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -13926,16 +14120,10 @@ export interface RestProjectList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestProjectList
      */
-    callback?: any | null;
-    /**
-     * 
-     * @type {Array<RestProject>}
-     * @memberof RestProjectList
-     */
-    allElements?: Array<RestProject>;
+    startIndex?: number;
 }
 /**
  * 
@@ -13943,6 +14131,18 @@ export interface RestProjectList {
  * @interface RestProjectRepository
  */
 export interface RestProjectRepository {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestProjectRepository
+     */
+    admin?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectRepository
+     */
+    icon?: string;
     /**
      * 
      * @type {number}
@@ -13954,25 +14154,13 @@ export interface RestProjectRepository {
      * @type {string}
      * @memberof RestProjectRepository
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectRepository
-     */
-    url?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectRepository
-     */
     location?: string;
     /**
      * 
      * @type {string}
      * @memberof RestProjectRepository
      */
-    icon?: string;
+    name?: string;
     /**
      * 
      * @type {string}
@@ -13981,10 +14169,108 @@ export interface RestProjectRepository {
     type?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof RestProjectRepository
      */
-    admin?: boolean;
+    url?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestProjectUriInfo
+ */
+export interface RestProjectUriInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectUriInfo
+     */
+    absolutePath?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfo
+     */
+    absolutePathBuilder?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectUriInfo
+     */
+    baseUri?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfo
+     */
+    baseUriBuilder?: object;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof RestProjectUriInfo
+     */
+    matchedResources?: Array<object>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RestProjectUriInfo
+     */
+    matchedURIs?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectUriInfo
+     */
+    path?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfo
+     */
+    pathParameters?: object;
+    /**
+     * 
+     * @type {Array<RestProjectUriInfoPathSegmentsInner>}
+     * @memberof RestProjectUriInfo
+     */
+    pathSegments?: Array<RestProjectUriInfoPathSegmentsInner>;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfo
+     */
+    _queryParameters?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectUriInfo
+     */
+    requestUri?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfo
+     */
+    requestUriBuilder?: object;
+}
+/**
+ * 
+ * @export
+ * @interface RestProjectUriInfoPathSegmentsInner
+ */
+export interface RestProjectUriInfoPathSegmentsInner {
+    /**
+     * 
+     * @type {object}
+     * @memberof RestProjectUriInfoPathSegmentsInner
+     */
+    matrixParameters?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestProjectUriInfoPathSegmentsInner
+     */
+    path?: string;
 }
 /**
  * 
@@ -14013,35 +14299,16 @@ export interface RestProjects {
 export interface RestQuarantineConfig {
     /**
      * 
-     * @type {string}
-     * @memberof RestQuarantineConfig
-     */
-    readonly self?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestQuarantineConfig
      */
     quarantineTestsEnabled?: boolean;
-}
-/**
- * 
- * @export
- * @interface RestQuarantineExpiry
- */
-export interface RestQuarantineExpiry {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestQuarantineExpiry
-     */
-    expiryDuration?: number;
     /**
      * 
      * @type {string}
-     * @memberof RestQuarantineExpiry
+     * @memberof RestQuarantineConfig
      */
-    expiryPeriod?: string;
+    readonly self?: string;
 }
 /**
  * 
@@ -14049,18 +14316,6 @@ export interface RestQuarantineExpiry {
  * @interface RestQueuedBuild
  */
 export interface RestQueuedBuild {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestQueuedBuild
-     */
-    expand?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestQueuedBuild
-     */
-    planKey?: string;
     /**
      * 
      * @type {number}
@@ -14075,16 +14330,22 @@ export interface RestQueuedBuild {
     buildResultKey?: string;
     /**
      * 
-     * @type {string}
-     * @memberof RestQueuedBuild
-     */
-    triggerReason?: string;
-    /**
-     * 
      * @type {RestChangeList}
      * @memberof RestQueuedBuild
      */
     changes?: RestChangeList;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof RestQueuedBuild
+     */
+    changesets?: Array<RepositoryChangeset>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestQueuedBuild
+     */
+    expand?: string;
     /**
      * 
      * @type {Link}
@@ -14093,10 +14354,16 @@ export interface RestQueuedBuild {
     link?: Link;
     /**
      * 
-     * @type {Array<RepositoryChangeset>}
+     * @type {string}
      * @memberof RestQueuedBuild
      */
-    changesets?: Array<RepositoryChangeset>;
+    planKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestQueuedBuild
+     */
+    triggerReason?: string;
 }
 /**
  * 
@@ -14106,22 +14373,10 @@ export interface RestQueuedBuild {
 export interface RestQueuedBuildList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestQueuedBuild>}
      * @memberof RestQueuedBuildList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestQueuedBuildList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestQueuedBuildList
-     */
-    size?: number;
+    allElements?: Array<RestQueuedBuild>;
     /**
      * 
      * @type {any}
@@ -14130,16 +14385,28 @@ export interface RestQueuedBuildList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestQueuedBuildList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestQueuedBuild>}
      * @memberof RestQueuedBuildList
      */
     queuedBuild?: Array<RestQueuedBuild>;
     /**
      * 
-     * @type {Array<RestQueuedBuild>}
+     * @type {number}
      * @memberof RestQueuedBuildList
      */
-    allElements?: Array<RestQueuedBuild>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestQueuedBuildList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14187,22 +14454,10 @@ export interface RestQueuedDeployment {
 export interface RestQueuedDeploymentList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestQueuedDeployment>}
      * @memberof RestQueuedDeploymentList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestQueuedDeploymentList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestQueuedDeploymentList
-     */
-    size?: number;
+    allElements?: Array<RestQueuedDeployment>;
     /**
      * 
      * @type {any}
@@ -14211,16 +14466,28 @@ export interface RestQueuedDeploymentList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestQueuedDeploymentList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestQueuedDeployment>}
      * @memberof RestQueuedDeploymentList
      */
     queuedDeployments?: Array<RestQueuedDeployment>;
     /**
      * 
-     * @type {Array<RestQueuedDeployment>}
+     * @type {number}
      * @memberof RestQueuedDeploymentList
      */
-    allElements?: Array<RestQueuedDeployment>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestQueuedDeploymentList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14255,6 +14522,12 @@ export interface RestQueuedDeployments {
 export interface RestQuickFilter {
     /**
      * 
+     * @type {boolean}
+     * @memberof RestQuickFilter
+     */
+    hasRules?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof RestQuickFilter
      */
@@ -14271,12 +14544,6 @@ export interface RestQuickFilter {
      * @memberof RestQuickFilter
      */
     position?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestQuickFilter
-     */
-    hasRules?: boolean;
 }
 /**
  * 
@@ -14348,16 +14615,16 @@ export interface RestRemoteAgentCapability {
 export interface RestRemoteAgentConfiguration {
     /**
      * 
-     * @type {string}
-     * @memberof RestRemoteAgentConfiguration
-     */
-    readonly self?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestRemoteAgentConfiguration
      */
     remoteAgentsSupported?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRemoteAgentConfiguration
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -14386,22 +14653,10 @@ export interface RestReport {
 export interface RestReportList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestReport>}
      * @memberof RestReportList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestReportList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestReportList
-     */
-    size?: number;
+    allElements?: Array<RestReport>;
     /**
      * 
      * @type {any}
@@ -14410,16 +14665,28 @@ export interface RestReportList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestReportList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestReport>}
      * @memberof RestReportList
      */
     reports?: Array<RestReport>;
     /**
      * 
-     * @type {Array<RestReport>}
+     * @type {number}
      * @memberof RestReportList
      */
-    allElements?: Array<RestReport>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestReportList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14469,7 +14736,13 @@ export interface RestRepository {
      * @type {string}
      * @memberof RestRepository
      */
-    url?: string;
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRepository
+     */
+    projectName?: string;
     /**
      * 
      * @type {boolean}
@@ -14481,13 +14754,7 @@ export interface RestRepository {
      * @type {string}
      * @memberof RestRepository
      */
-    projectKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRepository
-     */
-    projectName?: string;
+    url?: string;
 }
 /**
  * 
@@ -14510,22 +14777,10 @@ export interface RestRepositoryConnectionResult {
 export interface RestRepositoryList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestRepository>}
      * @memberof RestRepositoryList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepositoryList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepositoryList
-     */
-    size?: number;
+    allElements?: Array<RestRepository>;
     /**
      * 
      * @type {any}
@@ -14534,16 +14789,28 @@ export interface RestRepositoryList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestRepositoryList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestRepository>}
      * @memberof RestRepositoryList
      */
     searchResults?: Array<RestRepository>;
     /**
      * 
-     * @type {Array<RestRepository>}
+     * @type {number}
      * @memberof RestRepositoryList
      */
-    allElements?: Array<RestRepository>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRepositoryList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14578,24 +14845,6 @@ export interface RestRepositoryMinimal {
 export interface RestRepositoryUsageModel {
     /**
      * 
-     * @type {Array<RestPlanIdentifier>}
-     * @memberof RestRepositoryUsageModel
-     */
-    plans?: Array<RestPlanIdentifier>;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepositoryUsageModel
-     */
-    inaccessiblePlansCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestRepositoryUsageModel
-     */
-    totalPlans?: number;
-    /**
-     * 
      * @type {Array<RestEnvironment>}
      * @memberof RestRepositoryUsageModel
      */
@@ -14611,7 +14860,25 @@ export interface RestRepositoryUsageModel {
      * @type {number}
      * @memberof RestRepositoryUsageModel
      */
+    inaccessiblePlansCount?: number;
+    /**
+     * 
+     * @type {Array<RestPlanIdentifier>}
+     * @memberof RestRepositoryUsageModel
+     */
+    plans?: Array<RestPlanIdentifier>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRepositoryUsageModel
+     */
     totalEnvironments?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestRepositoryUsageModel
+     */
+    totalPlans?: number;
 }
 /**
  * 
@@ -14619,12 +14886,6 @@ export interface RestRepositoryUsageModel {
  * @interface RestRequirement
  */
 export interface RestRequirement {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRequirement
-     */
-    readonly self?: string;
     /**
      * 
      * @type {number}
@@ -14645,16 +14906,22 @@ export interface RestRequirement {
     matchValue?: string;
     /**
      * 
+     * @type {RequirementOperations}
+     * @memberof RestRequirement
+     */
+    operations?: RequirementOperations;
+    /**
+     * 
      * @type {RequirementReadonlyData}
      * @memberof RestRequirement
      */
     readonlyData?: RequirementReadonlyData;
     /**
      * 
-     * @type {RequirementOperations}
+     * @type {string}
      * @memberof RestRequirement
      */
-    operations?: RequirementOperations;
+    readonly self?: string;
     /**
      * 
      * @type {string}
@@ -14682,16 +14949,16 @@ export type RestRequirementTypeOfMatchEnum = typeof RestRequirementTypeOfMatchEn
 export interface RestResource {
     /**
      * 
-     * @type {string}
-     * @memberof RestResource
-     */
-    name?: string;
-    /**
-     * 
      * @type {Link}
      * @memberof RestResource
      */
     link?: Link;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestResource
+     */
+    name?: string;
 }
 /**
  * 
@@ -14701,22 +14968,10 @@ export interface RestResource {
 export interface RestResourceList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestResource>}
      * @memberof RestResourceList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestResourceList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestResourceList
-     */
-    size?: number;
+    allElements?: Array<RestResource>;
     /**
      * 
      * @type {any}
@@ -14725,16 +14980,28 @@ export interface RestResourceList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestResourceList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<RestResource>}
      * @memberof RestResourceList
      */
     resources?: Array<RestResource>;
     /**
      * 
-     * @type {Array<RestResource>}
+     * @type {number}
      * @memberof RestResourceList
      */
-    allElements?: Array<RestResource>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestResourceList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14763,22 +15030,10 @@ export interface RestResources {
 export interface RestResultList {
     /**
      * 
-     * @type {number}
+     * @type {Array<Result>}
      * @memberof RestResultList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestResultList
-     */
-    maxResult?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestResultList
-     */
-    size?: number;
+    allElements?: Array<Result>;
     /**
      * 
      * @type {any}
@@ -14787,16 +15042,28 @@ export interface RestResultList {
     callback?: any | null;
     /**
      * 
+     * @type {number}
+     * @memberof RestResultList
+     */
+    maxResult?: number;
+    /**
+     * 
      * @type {Array<Result>}
      * @memberof RestResultList
      */
     results?: Array<Result>;
     /**
      * 
-     * @type {Array<Result>}
+     * @type {number}
      * @memberof RestResultList
      */
-    allElements?: Array<Result>;
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestResultList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -14806,16 +15073,16 @@ export interface RestResultList {
 export interface RestResultStatus {
     /**
      * 
-     * @type {string}
-     * @memberof RestResultStatus
-     */
-    planResultKey?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestResultStatus
      */
     finished?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestResultStatus
+     */
+    planResultKey?: string;
     /**
      * 
      * @type {string}
@@ -14837,12 +15104,6 @@ export interface RestResultStatus {
 export interface RestResults {
     /**
      * 
-     * @type {RestResultList}
-     * @memberof RestResults
-     */
-    results?: RestResultList;
-    /**
-     * 
      * @type {string}
      * @memberof RestResults
      */
@@ -14853,6 +15114,12 @@ export interface RestResults {
      * @memberof RestResults
      */
     link?: Link;
+    /**
+     * 
+     * @type {RestResultList}
+     * @memberof RestResults
+     */
+    results?: RestResultList;
 }
 /**
  * 
@@ -14865,12 +15132,6 @@ export interface RestRolePermission {
      * @type {string}
      * @memberof RestRolePermission
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRolePermission
-     */
     name?: string;
     /**
      * 
@@ -14878,6 +15139,12 @@ export interface RestRolePermission {
      * @memberof RestRolePermission
      */
     permissions?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRolePermission
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -14885,6 +15152,12 @@ export interface RestRolePermission {
  * @interface RestRssSecurityConfiguration
  */
 export interface RestRssSecurityConfiguration {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestRssSecurityConfiguration
+     */
+    dockerImage?: string;
     /**
      * 
      * @type {boolean}
@@ -14902,19 +15175,13 @@ export interface RestRssSecurityConfiguration {
      * @type {string}
      * @memberof RestRssSecurityConfiguration
      */
-    dockerImage?: string;
+    localMavenDirectory?: string;
     /**
      * 
      * @type {boolean}
      * @memberof RestRssSecurityConfiguration
      */
     mountLocalMavenDirectory?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestRssSecurityConfiguration
-     */
-    localMavenDirectory?: string;
 }
 /**
  * 
@@ -14955,10 +15222,16 @@ export interface RestScheduledJob {
 export interface RestSecuritySettings {
     /**
      * 
-     * @type {RestSignUp}
+     * @type {boolean}
      * @memberof RestSecuritySettings
      */
-    signUp?: RestSignUp;
+    agentAssignmentModificationByUsersAllowed?: boolean;
+    /**
+     * 
+     * @type {RestBruteForceProtection}
+     * @memberof RestSecuritySettings
+     */
+    bruteForceProtection?: RestBruteForceProtection;
     /**
      * 
      * @type {boolean}
@@ -14970,25 +15243,19 @@ export interface RestSecuritySettings {
      * @type {boolean}
      * @memberof RestSecuritySettings
      */
-    restrictedAdministratorRoleEnabled?: boolean;
+    manageAcceptedSshHostKeys?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {RestManualEncryptionConfiguration}
      * @memberof RestSecuritySettings
      */
-    soxComplianceModeEnabled?: boolean;
+    manualEncryptionConfiguration?: RestManualEncryptionConfiguration;
     /**
      * 
-     * @type {RestBruteForceProtection}
+     * @type {RestPersonalAccessTokensExpirationConfiguration}
      * @memberof RestSecuritySettings
      */
-    bruteForceProtection?: RestBruteForceProtection;
-    /**
-     * 
-     * @type {RestXsrfProtection}
-     * @memberof RestSecuritySettings
-     */
-    xsrfProtection?: RestXsrfProtection;
+    personalAccessTokensExpirationConfiguration?: RestPersonalAccessTokensExpirationConfiguration;
     /**
      * 
      * @type {boolean}
@@ -15000,25 +15267,7 @@ export interface RestSecuritySettings {
      * @type {boolean}
      * @memberof RestSecuritySettings
      */
-    manageAcceptedSshHostKeys?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSecuritySettings
-     */
-    showAuthorsDetailsToUsers?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSecuritySettings
-     */
-    unauthenticatedRemoteTriggerAllowed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSecuritySettings
-     */
-    agentAssignmentModificationByUsersAllowed?: boolean;
+    restrictedAdministratorRoleEnabled?: boolean;
     /**
      * 
      * @type {RestRssSecurityConfiguration}
@@ -15027,10 +15276,34 @@ export interface RestSecuritySettings {
     rssSecurityConfiguration?: RestRssSecurityConfiguration;
     /**
      * 
-     * @type {RestManualEncryptionConfiguration}
+     * @type {boolean}
      * @memberof RestSecuritySettings
      */
-    manualEncryptionConfiguration?: RestManualEncryptionConfiguration;
+    showAuthorsDetailsToUsers?: boolean;
+    /**
+     * 
+     * @type {RestSignUp}
+     * @memberof RestSecuritySettings
+     */
+    signUp?: RestSignUp;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSecuritySettings
+     */
+    soxComplianceModeEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestSecuritySettings
+     */
+    unauthenticatedRemoteTriggerAllowed?: boolean;
+    /**
+     * 
+     * @type {RestXsrfProtection}
+     * @memberof RestSecuritySettings
+     */
+    xsrfProtection?: RestXsrfProtection;
 }
 /**
  * 
@@ -15043,41 +15316,54 @@ export interface RestServerNodesInfo {
      * @type {string}
      * @memberof RestServerNodesInfo
      */
-    state?: RestServerNodesInfoStateEnum;
+    askedNodeState?: RestServerNodesInfoAskedNodeStateEnum;
     /**
      * 
      * @type {string}
      * @memberof RestServerNodesInfo
      */
-    setByUser?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestServerNodesInfo
-     */
-    reindexInProgress?: boolean;
+    clusterState?: RestServerNodesInfoClusterStateEnum;
     /**
      * 
      * @type {Array<RestNodeStatus>}
      * @memberof RestServerNodesInfo
      */
     nodeStatuses?: Array<RestNodeStatus>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestServerNodesInfo
+     */
+    reindexInProgress?: boolean;
 }
 
 
 /**
  * @export
  */
-export const RestServerNodesInfoStateEnum = {
+export const RestServerNodesInfoAskedNodeStateEnum = {
     Setup: 'SETUP',
     Starting: 'STARTING',
     Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
     Pausing: 'PAUSING',
+    Paused: 'PAUSED',
     PreparingForRestart: 'PREPARING_FOR_RESTART',
-    ReadyForRestart: 'READY_FOR_RESTART',
-    Paused: 'PAUSED'
+    ReadyForRestart: 'READY_FOR_RESTART'
 } as const;
-export type RestServerNodesInfoStateEnum = typeof RestServerNodesInfoStateEnum[keyof typeof RestServerNodesInfoStateEnum];
+export type RestServerNodesInfoAskedNodeStateEnum = typeof RestServerNodesInfoAskedNodeStateEnum[keyof typeof RestServerNodesInfoAskedNodeStateEnum];
+
+/**
+ * @export
+ */
+export const RestServerNodesInfoClusterStateEnum = {
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestServerNodesInfoClusterStateEnum = typeof RestServerNodesInfoClusterStateEnum[keyof typeof RestServerNodesInfoClusterStateEnum];
 
 /**
  * 
@@ -15090,13 +15376,13 @@ export interface RestServerStatusInfo {
      * @type {string}
      * @memberof RestServerStatusInfo
      */
-    state?: RestServerStatusInfoStateEnum;
+    askedNodeState?: RestServerStatusInfoAskedNodeStateEnum;
     /**
      * 
      * @type {string}
      * @memberof RestServerStatusInfo
      */
-    setByUser?: string;
+    clusterState?: RestServerStatusInfoClusterStateEnum;
     /**
      * 
      * @type {boolean}
@@ -15109,16 +15395,29 @@ export interface RestServerStatusInfo {
 /**
  * @export
  */
-export const RestServerStatusInfoStateEnum = {
+export const RestServerStatusInfoAskedNodeStateEnum = {
     Setup: 'SETUP',
     Starting: 'STARTING',
     Running: 'RUNNING',
+    RunningAsSecondary: 'RUNNING_AS_SECONDARY',
     Pausing: 'PAUSING',
+    Paused: 'PAUSED',
     PreparingForRestart: 'PREPARING_FOR_RESTART',
-    ReadyForRestart: 'READY_FOR_RESTART',
-    Paused: 'PAUSED'
+    ReadyForRestart: 'READY_FOR_RESTART'
 } as const;
-export type RestServerStatusInfoStateEnum = typeof RestServerStatusInfoStateEnum[keyof typeof RestServerStatusInfoStateEnum];
+export type RestServerStatusInfoAskedNodeStateEnum = typeof RestServerStatusInfoAskedNodeStateEnum[keyof typeof RestServerStatusInfoAskedNodeStateEnum];
+
+/**
+ * @export
+ */
+export const RestServerStatusInfoClusterStateEnum = {
+    Starting: 'STARTING',
+    Running: 'RUNNING',
+    Pausing: 'PAUSING',
+    Paused: 'PAUSED',
+    Unknown: 'UNKNOWN'
+} as const;
+export type RestServerStatusInfoClusterStateEnum = typeof RestServerStatusInfoClusterStateEnum[keyof typeof RestServerStatusInfoClusterStateEnum];
 
 /**
  * 
@@ -15128,10 +15427,10 @@ export type RestServerStatusInfoStateEnum = typeof RestServerStatusInfoStateEnum
 export interface RestSharedCredential {
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof RestSharedCredential
      */
-    readonly self?: string;
+    attributes?: object;
     /**
      * 
      * @type {number}
@@ -15152,10 +15451,10 @@ export interface RestSharedCredential {
     projectKey?: string;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof RestSharedCredential
      */
-    attributes?: object;
+    readonly self?: string;
 }
 /**
  * 
@@ -15184,58 +15483,10 @@ export interface RestSignUp {
 export interface RestStage {
     /**
      * 
-     * @type {string}
+     * @type {RestPlanList}
      * @memberof RestStage
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestStage
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestStage
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestStage
-     */
-    description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestStage
-     */
-    manual?: boolean;
-    /**
-     * 
-     * @type {RestPageModelRestJob}
-     * @memberof RestStage
-     */
-    jobs?: RestPageModelRestJob;
-    /**
-     * 
-     * @type {RestPlanConfig}
-     * @memberof RestStage
-     */
-    plan?: RestPlanConfig;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestStage
-     */
-    index?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestStage
-     */
-    _final?: boolean;
+    plans?: RestPlanList;
 }
 /**
  * 
@@ -15245,10 +15496,16 @@ export interface RestStage {
 export interface RestStageList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestStage>}
      * @memberof RestStageList
      */
-    startIndex?: number;
+    allElements?: Array<RestStage>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestStageList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -15263,22 +15520,16 @@ export interface RestStageList {
     size?: number;
     /**
      * 
-     * @type {any}
-     * @memberof RestStageList
-     */
-    callback?: any | null;
-    /**
-     * 
      * @type {Array<RestStage>}
      * @memberof RestStageList
      */
     stages?: Array<RestStage>;
     /**
      * 
-     * @type {Array<RestStage>}
+     * @type {number}
      * @memberof RestStageList
      */
-    allElements?: Array<RestStage>;
+    startIndex?: number;
 }
 /**
  * 
@@ -15301,10 +15552,16 @@ export interface RestStageResult {
 export interface RestStageResultList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestStageResult>}
      * @memberof RestStageResultList
      */
-    startIndex?: number;
+    allElements?: Array<RestStageResult>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestStageResultList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -15319,22 +15576,16 @@ export interface RestStageResultList {
     size?: number;
     /**
      * 
-     * @type {any}
-     * @memberof RestStageResultList
-     */
-    callback?: any | null;
-    /**
-     * 
      * @type {Array<RestStageResult>}
      * @memberof RestStageResultList
      */
     stages?: Array<RestStageResult>;
     /**
      * 
-     * @type {Array<RestStageResult>}
+     * @type {number}
      * @memberof RestStageResultList
      */
-    allElements?: Array<RestStageResult>;
+    startIndex?: number;
 }
 /**
  * 
@@ -15347,13 +15598,13 @@ export interface RestStorageConfiguration {
      * @type {number}
      * @memberof RestStorageConfiguration
      */
-    softLimit?: number;
+    hardLimit?: number;
     /**
      * 
      * @type {number}
      * @memberof RestStorageConfiguration
      */
-    hardLimit?: number;
+    softLimit?: number;
 }
 /**
  * 
@@ -15366,7 +15617,7 @@ export interface RestTrustedKey {
      * @type {string}
      * @memberof RestTrustedKey
      */
-    readonly self?: string;
+    host?: string;
     /**
      * 
      * @type {number}
@@ -15378,13 +15629,13 @@ export interface RestTrustedKey {
      * @type {string}
      * @memberof RestTrustedKey
      */
-    host?: string;
+    key?: string;
     /**
      * 
      * @type {string}
      * @memberof RestTrustedKey
      */
-    key?: string;
+    readonly self?: string;
 }
 /**
  * 
@@ -15422,13 +15673,7 @@ export interface RestUser {
      * @type {string}
      * @memberof RestUser
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestUser
-     */
-    name?: string;
+    email?: string;
     /**
      * 
      * @type {string}
@@ -15440,13 +15685,19 @@ export interface RestUser {
      * @type {string}
      * @memberof RestUser
      */
-    email?: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUser
      */
-    avatarUrl?: string;
+    sanitizedName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUser
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -15459,13 +15710,13 @@ export interface RestUserAlias {
      * @type {string}
      * @memberof RestUserAlias
      */
-    readonly self?: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUserAlias
      */
-    name?: string;
+    readonly self?: string;
 }
 /**
  * 
@@ -15475,16 +15726,16 @@ export interface RestUserAlias {
 export interface RestUserDarkFeature {
     /**
      * 
-     * @type {string}
-     * @memberof RestUserDarkFeature
-     */
-    key?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof RestUserDarkFeature
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUserDarkFeature
+     */
+    key?: string;
     /**
      * 
      * @type {string}
@@ -15503,13 +15754,7 @@ export interface RestUserDetails {
      * @type {string}
      * @memberof RestUserDetails
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestUserDetails
-     */
-    name?: string;
+    email?: string;
     /**
      * 
      * @type {string}
@@ -15521,13 +15766,19 @@ export interface RestUserDetails {
      * @type {string}
      * @memberof RestUserDetails
      */
-    email?: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUserDetails
      */
-    avatarUrl?: string;
+    sanitizedName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUserDetails
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -15565,13 +15816,7 @@ export interface RestUserPermission {
      * @type {string}
      * @memberof RestUserPermission
      */
-    readonly self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestUserPermission
-     */
-    name?: string;
+    email?: string;
     /**
      * 
      * @type {string}
@@ -15583,19 +15828,25 @@ export interface RestUserPermission {
      * @type {string}
      * @memberof RestUserPermission
      */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestUserPermission
-     */
-    avatarUrl?: string;
+    name?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof RestUserPermission
      */
     permissions?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUserPermission
+     */
+    sanitizedName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestUserPermission
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -15627,13 +15878,13 @@ export interface RestUserResponsible {
      * @type {string}
      * @memberof RestUserResponsible
      */
-    assignedUser?: string;
+    assignedBy?: string;
     /**
      * 
      * @type {string}
      * @memberof RestUserResponsible
      */
-    assignedBy?: string;
+    assignedUser?: string;
 }
 /**
  * 
@@ -15668,6 +15919,12 @@ export interface RestVariableDefinitionContext {
     key?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof RestVariableDefinitionContext
+     */
+    password?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof RestVariableDefinitionContext
      */
@@ -15678,12 +15935,6 @@ export interface RestVariableDefinitionContext {
      * @memberof RestVariableDefinitionContext
      */
     variableType?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestVariableDefinitionContext
-     */
-    password?: boolean;
 }
 /**
  * 
@@ -15691,6 +15942,24 @@ export interface RestVariableDefinitionContext {
  * @interface RestVariableDefinitionContextList
  */
 export interface RestVariableDefinitionContextList {
+    /**
+     * 
+     * @type {any}
+     * @memberof RestVariableDefinitionContextList
+     */
+    callback?: any | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestVariableDefinitionContextList
+     */
+    maxResults?: number;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestVariableDefinitionContextList
+     */
+    pagingCallback?: any | null;
     /**
      * 
      * @type {number}
@@ -15702,25 +15971,7 @@ export interface RestVariableDefinitionContextList {
      * @type {number}
      * @memberof RestVariableDefinitionContextList
      */
-    maxResults?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestVariableDefinitionContextList
-     */
     startIndex?: number;
-    /**
-     * 
-     * @type {any}
-     * @memberof RestVariableDefinitionContextList
-     */
-    pagingCallback?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof RestVariableDefinitionContextList
-     */
-    callback?: any | null;
 }
 /**
  * 
@@ -15730,10 +15981,16 @@ export interface RestVariableDefinitionContextList {
 export interface RestVariableList {
     /**
      * 
-     * @type {number}
+     * @type {Array<RestVariable>}
      * @memberof RestVariableList
      */
-    startIndex?: number;
+    allElements?: Array<RestVariable>;
+    /**
+     * 
+     * @type {any}
+     * @memberof RestVariableList
+     */
+    callback?: any | null;
     /**
      * 
      * @type {number}
@@ -15748,22 +16005,16 @@ export interface RestVariableList {
     size?: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof RestVariableList
      */
-    callback?: any | null;
+    startIndex?: number;
     /**
      * 
      * @type {Array<RestVariable>}
      * @memberof RestVariableList
      */
     variables?: Array<RestVariable>;
-    /**
-     * 
-     * @type {Array<RestVariable>}
-     * @memberof RestVariableList
-     */
-    allElements?: Array<RestVariable>;
 }
 /**
  * 
@@ -15771,42 +16022,6 @@ export interface RestVariableList {
  * @interface RestVcsLocationBambooSpecsState
  */
 export interface RestVcsLocationBambooSpecsState {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    vcsLocationId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    revision?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    specsExecutionDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    logFilename?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    specImportState?: RestVcsLocationBambooSpecsStateSpecImportStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestVcsLocationBambooSpecsState
-     */
-    specsNotFound?: boolean;
     /**
      * 
      * @type {string}
@@ -15819,6 +16034,48 @@ export interface RestVcsLocationBambooSpecsState {
      * @memberof RestVcsLocationBambooSpecsState
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    logFilename?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    logUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    revision?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    specImportState?: RestVcsLocationBambooSpecsStateSpecImportStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    specsExecutionDate?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    specsNotFound?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestVcsLocationBambooSpecsState
+     */
+    vcsLocationId?: number;
 }
 
 
@@ -15880,13 +16137,13 @@ export interface RestXsrfProtection {
      * @type {boolean}
      * @memberof RestXsrfProtection
      */
-    enabled?: boolean;
+    disableForHTTPGET?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof RestXsrfProtection
      */
-    disableForHTTPGET?: boolean;
+    enabled?: boolean;
 }
 /**
  * 
@@ -15896,100 +16153,16 @@ export interface RestXsrfProtection {
 export interface Result {
     /**
      * 
-     * @type {string}
+     * @type {RestBuildArtifactList}
      * @memberof Result
      */
-    expand?: string;
-    /**
-     * 
-     * @type {Link}
-     * @memberof Result
-     */
-    link?: Link;
-    /**
-     * 
-     * @type {Link}
-     * @memberof Result
-     */
-    parentLink?: Link;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    planName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    projectName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    stage?: string;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof Result
-     */
-    planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    buildState?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    lifeCycleState?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    buildNumber?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    buildStartedTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    prettyBuildStartedTime?: string;
+    artifacts?: RestBuildArtifactList;
     /**
      * 
      * @type {string}
      * @memberof Result
      */
     buildCompletedTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    prettyBuildCompletedTime?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    buildDurationInSeconds?: number;
     /**
      * 
      * @type {number}
@@ -16004,6 +16177,24 @@ export interface Result {
     buildDurationDescription?: string;
     /**
      * 
+     * @type {number}
+     * @memberof Result
+     */
+    buildDurationInSeconds?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    buildNumber?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    buildReason?: string;
+    /**
+     * 
      * @type {string}
      * @memberof Result
      */
@@ -16013,25 +16204,121 @@ export interface Result {
      * @type {string}
      * @memberof Result
      */
-    queueStartedTime?: string;
+    buildStartedTime?: string;
     /**
      * 
      * @type {string}
      * @memberof Result
      */
-    prettyQueueStartedTime?: string;
+    buildState?: string;
+    /**
+     * 
+     * @type {ImmutableResultsSummary}
+     * @memberof Result
+     */
+    buildSummary?: ImmutableResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    buildTestSummary?: string;
+    /**
+     * 
+     * @type {RestCommentList}
+     * @memberof Result
+     */
+    comments?: RestCommentList;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Result
+     */
+    continuable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    expand?: string;
     /**
      * 
      * @type {number}
      * @memberof Result
      */
-    queueTimeInSeconds?: number;
+    failedTestCount?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Result
+     */
+    hasExecutableAgents?: boolean;
     /**
      * 
      * @type {number}
      * @memberof Result
      */
-    queueDuration?: number;
+    id?: number;
+    /**
+     * 
+     * @type {RestJiraIssueList}
+     * @memberof Result
+     */
+    jiraIssues?: RestJiraIssueList;
+    /**
+     * 
+     * @type {RestBuildLabelList}
+     * @memberof Result
+     */
+    labels?: RestBuildLabelList;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    lifeCycleState?: string;
+    /**
+     * 
+     * @type {Link}
+     * @memberof Result
+     */
+    link?: Link;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Result
+     */
+    onceOff?: boolean;
+    /**
+     * 
+     * @type {Link}
+     * @memberof Result
+     */
+    parentLink?: Link;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof Result
+     */
+    planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    prettyBuildCompletedTime?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    prettyBuildStartedTime?: string;
     /**
      * 
      * @type {string}
@@ -16043,25 +16330,7 @@ export interface Result {
      * @type {string}
      * @memberof Result
      */
-    vcsUpdateStartedTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Result
-     */
-    prettyVcsUpdateStartedTime?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    vcsUpdateInSeconds?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    vcsUpdateDuration?: number;
+    prettyQueueStartedTime?: string;
     /**
      * 
      * @type {string}
@@ -16073,25 +16342,13 @@ export interface Result {
      * @type {string}
      * @memberof Result
      */
-    vcsRevisionKey?: string;
+    prettyVcsUpdateStartedTime?: string;
     /**
      * 
      * @type {string}
      * @memberof Result
      */
-    buildTestSummary?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    successfulTestCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Result
-     */
-    failedTestCount?: number;
+    projectName?: string;
     /**
      * 
      * @type {number}
@@ -16103,7 +16360,19 @@ export interface Result {
      * @type {number}
      * @memberof Result
      */
-    skippedTestCount?: number;
+    queueDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    queueStartedTime?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    queueTimeInSeconds?: number;
     /**
      * 
      * @type {number}
@@ -16115,67 +16384,19 @@ export interface Result {
      * @type {boolean}
      * @memberof Result
      */
-    continuable?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Result
-     */
-    onceOff?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Result
-     */
     restartable?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    skippedTestCount?: number;
     /**
      * 
      * @type {string}
      * @memberof Result
      */
-    buildReason?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Result
-     */
-    hasExecutableAgents?: boolean;
-    /**
-     * 
-     * @type {RestBuildArtifactList}
-     * @memberof Result
-     */
-    artifacts?: RestBuildArtifactList;
-    /**
-     * 
-     * @type {RestCommentList}
-     * @memberof Result
-     */
-    comments?: RestCommentList;
-    /**
-     * 
-     * @type {RestBuildLabelList}
-     * @memberof Result
-     */
-    labels?: RestBuildLabelList;
-    /**
-     * 
-     * @type {RestJiraIssueList}
-     * @memberof Result
-     */
-    jiraIssues?: RestJiraIssueList;
-    /**
-     * 
-     * @type {RestVariableList}
-     * @memberof Result
-     */
-    variables?: RestVariableList;
-    /**
-     * 
-     * @type {RestStageResultList}
-     * @memberof Result
-     */
-    stages?: RestStageResultList;
+    stage?: string;
     /**
      * 
      * @type {ChainStageResult}
@@ -16184,10 +16405,46 @@ export interface Result {
     stageResult?: ChainStageResult;
     /**
      * 
-     * @type {ImmutableResultsSummary}
+     * @type {RestStageResultList}
      * @memberof Result
      */
-    buildSummary?: ImmutableResultsSummary;
+    stages?: RestStageResultList;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    successfulTestCount?: number;
+    /**
+     * 
+     * @type {RestVariableList}
+     * @memberof Result
+     */
+    variables?: RestVariableList;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    vcsRevisionKey?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    vcsUpdateDuration?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Result
+     */
+    vcsUpdateInSeconds?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Result
+     */
+    vcsUpdateStartedTime?: string;
 }
 /**
  * 
@@ -16203,6 +16460,12 @@ export interface ResultKey {
     entityKey?: Key;
     /**
      * 
+     * @type {string}
+     * @memberof ResultKey
+     */
+    key?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ResultKey
      */
@@ -16213,12 +16476,6 @@ export interface ResultKey {
      * @memberof ResultKey
      */
     resultNumberLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultKey
-     */
-    key?: string;
 }
 /**
  * 
@@ -16228,358 +16485,10 @@ export interface ResultKey {
 export interface ResultsSummary {
     /**
      * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildResultKey?: string;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof ResultsSummary
-     */
-    immutablePlan?: ImmutablePlan;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {TriggerReason}
-     * @memberof ResultsSummary
-     */
-    triggerReason?: TriggerReason;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    deltaState?: ResultsSummaryDeltaStateEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof ResultsSummary
      */
-    onceOff?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    customBuild?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    rebuild?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    logSize?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    processingDuration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildCompletedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildCancelledDate?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    timeToFix?: number;
-    /**
-     * 
-     * @type {TestResultsSummary}
-     * @memberof ResultsSummary
-     */
-    testResultsSummary?: TestResultsSummary;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    queueTime?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    restartCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    buildAgentId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildAgentType?: ResultsSummaryBuildAgentTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    variableContextBaselineId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    formatVersion?: number;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof ResultsSummary
-     */
-    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ResultsSummary
-     */
-    substitutedVariablesEncrypted?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ResultsSummary
-     */
-    id?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {PlanKey}
-     * @memberof ResultsSummary
-     */
-    planKey?: PlanKey;
-    /**
-     * 
-     * @type {PlanResultKey}
-     * @memberof ResultsSummary
-     */
-    planResultKey?: PlanResultKey;
-    /**
-     * 
-     * @type {Array<RepositoryChangeset>}
-     * @memberof ResultsSummary
-     */
-    repositoryChangesets?: Array<RepositoryChangeset>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    planName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    successful?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    failed?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    notRunYet?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    notBuilt?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ResultsSummary
-     */
-    labelNames?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    lifeCycleState?: ResultsSummaryLifeCycleStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    inProgress?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    pending?: boolean;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof ResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
-     * @type {Array<ConsumedSubscription>}
-     * @memberof ResultsSummary
-     */
-    subscriptions?: Array<ConsumedSubscription>;
-    /**
-     * 
-     * @type {ImmutablePlan}
-     * @memberof ResultsSummary
-     */
-    planIfExists?: ImmutablePlan;
-    /**
-     * 
-     * @type {ImmutableChain}
-     * @memberof ResultsSummary
-     */
-    immutableChain?: ImmutableChain;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ResultsSummary
-     */
-    waiting?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof ResultsSummary
-     */
-    customBuildData?: object;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ResultsSummary
-     */
-    jiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ResultsSummary
-     */
-    fixingJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<LinkedJiraIssue>}
-     * @memberof ResultsSummary
-     */
-    relatedJiraIssues?: Set<LinkedJiraIssue>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof ResultsSummary
-     */
-    jiraIssueKeys?: Set<string>;
-    /**
-     * 
-     * @type {Set<Author>}
-     * @memberof ResultsSummary
-     */
-    uniqueAuthors?: Set<Author>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    durationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    processingDurationDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    shortReasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    reasonSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    relativeBuildDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    relativeQueueDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    relativeBuildStartedDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    testSummary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResultsSummary
-     */
-    buildTime?: string;
+    active?: boolean;
     /**
      * 
      * @type {Array<ArtifactLink>}
@@ -16594,28 +16503,70 @@ export interface ResultsSummary {
     artifactLinksThatExist?: Array<ArtifactLink>;
     /**
      * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    buildAgentId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildAgentType?: ResultsSummaryBuildAgentTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildCancelledDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildCompletedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildKey?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    buildNumber?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildResultKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildState?: ResultsSummaryBuildStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    buildTime?: string;
+    /**
+     * 
      * @type {string}
      * @memberof ResultsSummary
      */
     changesListSummary?: string;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ResultsSummary
-     */
-    substitutedVariables?: Array<VariableSubstitution>;
-    /**
-     * 
-     * @type {Array<VariableContextSnapshot>}
-     * @memberof ResultsSummary
-     */
-    variableContextLogs?: Array<VariableContextSnapshot>;
-    /**
-     * 
-     * @type {Array<VariableSubstitution>}
-     * @memberof ResultsSummary
-     */
-    manuallyOverriddenVariables?: Array<VariableSubstitution>;
     /**
      * 
      * @type {Array<Commit>}
@@ -16624,16 +16575,196 @@ export interface ResultsSummary {
     commits?: Array<Commit>;
     /**
      * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    customBuild?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ResultsSummary
+     */
+    customBuildData?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    deltaState?: ResultsSummaryDeltaStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    duration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    durationDescription?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    failed?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    finished?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ResultsSummary
+     */
+    fixingJiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    formatVersion?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ResultsSummary
      */
     fullPlanName?: string;
     /**
      * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    id?: number;
+    /**
+     * 
+     * @type {ImmutableChain}
+     * @memberof ResultsSummary
+     */
+    immutableChain?: ImmutableChain;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof ResultsSummary
+     */
+    immutablePlan?: ImmutablePlan;
+    /**
+     * 
      * @type {boolean}
      * @memberof ResultsSummary
      */
-    active?: boolean;
+    inProgress?: boolean;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof ResultsSummary
+     */
+    jiraIssueKeys?: Set<string>;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ResultsSummary
+     */
+    jiraIssues?: Set<LinkedJiraIssue>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ResultsSummary
+     */
+    labelNames?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    lifeCycleState?: ResultsSummaryLifeCycleStateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    logSize?: number;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ResultsSummary
+     */
+    manuallyOverriddenVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    markedForDeletion?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    notBuilt?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    notRunYet?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    onceOff?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    pending?: boolean;
+    /**
+     * 
+     * @type {ImmutablePlan}
+     * @memberof ResultsSummary
+     */
+    planIfExists?: ImmutablePlan;
+    /**
+     * 
+     * @type {PlanKey}
+     * @memberof ResultsSummary
+     */
+    planKey?: PlanKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    planName?: string;
+    /**
+     * 
+     * @type {PlanResultKey}
+     * @memberof ResultsSummary
+     */
+    planResultKey?: PlanResultKey;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    processingDuration?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    processingDurationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    queueTime?: string;
     /**
      * 
      * @type {boolean}
@@ -16645,21 +16776,162 @@ export interface ResultsSummary {
      * @type {string}
      * @memberof ResultsSummary
      */
-    statDate?: string;
+    reasonSummary?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    rebuild?: boolean;
+    /**
+     * 
+     * @type {Set<LinkedJiraIssue>}
+     * @memberof ResultsSummary
+     */
+    relatedJiraIssues?: Set<LinkedJiraIssue>;
     /**
      * 
      * @type {string}
      * @memberof ResultsSummary
      */
-    buildState?: ResultsSummaryBuildStateEnum;
+    relativeBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    relativeBuildStartedDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    relativeQueueDate?: string;
+    /**
+     * 
+     * @type {Array<RepositoryChangeset>}
+     * @memberof ResultsSummary
+     */
+    repositoryChangesets?: Array<RepositoryChangeset>;
     /**
      * 
      * @type {number}
      * @memberof ResultsSummary
      */
-    buildNumber?: number;
+    restartCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    shortReasonSummary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    statDate?: string;
+    /**
+     * 
+     * @type {Array<ConsumedSubscription>}
+     * @memberof ResultsSummary
+     */
+    subscriptions?: Array<ConsumedSubscription>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ResultsSummary
+     */
+    substitutedVariables?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {Array<VariableSubstitution>}
+     * @memberof ResultsSummary
+     */
+    substitutedVariablesEncrypted?: Array<VariableSubstitution>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    successful?: boolean;
+    /**
+     * 
+     * @type {TestResultsSummary}
+     * @memberof ResultsSummary
+     */
+    testResultsSummary?: TestResultsSummary;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResultsSummary
+     */
+    testSummary?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    timeToFix?: number;
+    /**
+     * 
+     * @type {TriggerReason}
+     * @memberof ResultsSummary
+     */
+    triggerReason?: TriggerReason;
+    /**
+     * 
+     * @type {Set<Author>}
+     * @memberof ResultsSummary
+     */
+    uniqueAuthors?: Set<Author>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResultsSummary
+     */
+    variableContextBaselineId?: number;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof ResultsSummary
+     */
+    variableContextLogs?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {Array<VariableContextSnapshot>}
+     * @memberof ResultsSummary
+     */
+    variableContextLogsEncrypted?: Array<VariableContextSnapshot>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
+    waiting?: boolean;
 }
 
+
+/**
+ * @export
+ */
+export const ResultsSummaryBuildAgentTypeEnum = {
+    Local: 'LOCAL',
+    Remote: 'REMOTE',
+    Elastic: 'ELASTIC',
+    Ephemeral: 'EPHEMERAL'
+} as const;
+export type ResultsSummaryBuildAgentTypeEnum = typeof ResultsSummaryBuildAgentTypeEnum[keyof typeof ResultsSummaryBuildAgentTypeEnum];
+
+/**
+ * @export
+ */
+export const ResultsSummaryBuildStateEnum = {
+    Unknown: 'Unknown',
+    Successful: 'Successful',
+    Failed: 'Failed'
+} as const;
+export type ResultsSummaryBuildStateEnum = typeof ResultsSummaryBuildStateEnum[keyof typeof ResultsSummaryBuildStateEnum];
 
 /**
  * @export
@@ -16676,17 +16948,6 @@ export type ResultsSummaryDeltaStateEnum = typeof ResultsSummaryDeltaStateEnum[k
 /**
  * @export
  */
-export const ResultsSummaryBuildAgentTypeEnum = {
-    Local: 'LOCAL',
-    Remote: 'REMOTE',
-    Elastic: 'ELASTIC',
-    Ephemeral: 'EPHEMERAL'
-} as const;
-export type ResultsSummaryBuildAgentTypeEnum = typeof ResultsSummaryBuildAgentTypeEnum[keyof typeof ResultsSummaryBuildAgentTypeEnum];
-
-/**
- * @export
- */
 export const ResultsSummaryLifeCycleStateEnum = {
     Pending: 'Pending',
     Queued: 'Queued',
@@ -16695,16 +16956,6 @@ export const ResultsSummaryLifeCycleStateEnum = {
     NotBuilt: 'NotBuilt'
 } as const;
 export type ResultsSummaryLifeCycleStateEnum = typeof ResultsSummaryLifeCycleStateEnum[keyof typeof ResultsSummaryLifeCycleStateEnum];
-
-/**
- * @export
- */
-export const ResultsSummaryBuildStateEnum = {
-    Unknown: 'Unknown',
-    Successful: 'Successful',
-    Failed: 'Failed'
-} as const;
-export type ResultsSummaryBuildStateEnum = typeof ResultsSummaryBuildStateEnum[keyof typeof ResultsSummaryBuildStateEnum];
 
 /**
  * 
@@ -16727,10 +16978,10 @@ export interface RunExpiryResponse {
 export interface SearchResult {
     /**
      * 
-     * @type {string}
+     * @type {SearchResultEntity}
      * @memberof SearchResult
      */
-    id?: string;
+    entity?: SearchResultEntity;
     /**
      * 
      * @type {string}
@@ -16739,10 +16990,10 @@ export interface SearchResult {
     entityType?: string;
     /**
      * 
-     * @type {SearchResultEntity}
+     * @type {string}
      * @memberof SearchResult
      */
-    entity?: SearchResultEntity;
+    id?: string;
 }
 /**
  * 
@@ -16774,25 +17025,25 @@ export interface SearchResultsList {
      * @type {number}
      * @memberof SearchResultsList
      */
-    startIndex?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SearchResultsList
-     */
     maxResult?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof SearchResultsList
      */
-    size?: number;
+    mayHaveMore?: boolean;
     /**
      * 
      * @type {Array<SearchResult>}
      * @memberof SearchResultsList
      */
     searchResults?: Array<SearchResult>;
+    /**
+     * 
+     * @type {number}
+     * @memberof SearchResultsList
+     */
+    startIndex?: number;
 }
 /**
  * 
@@ -16815,6 +17066,12 @@ export interface SecuritySettingsLink {
 export interface SimpleRestArtifactHandler {
     /**
      * 
+     * @type {boolean}
+     * @memberof SimpleRestArtifactHandler
+     */
+    nonsharedArtifactsEnabled?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof SimpleRestArtifactHandler
      */
@@ -16825,12 +17082,6 @@ export interface SimpleRestArtifactHandler {
      * @memberof SimpleRestArtifactHandler
      */
     sharedArtifactsEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SimpleRestArtifactHandler
-     */
-    nonsharedArtifactsEnabled?: boolean;
 }
 /**
  * 
@@ -16846,10 +17097,16 @@ export interface StageVariableContext {
     chainStageResult?: ChainStageResult;
     /**
      * 
+     * @type {number}
+     * @memberof StageVariableContext
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof StageVariableContext
      */
-    variableType?: StageVariableContextVariableTypeEnum;
+    key?: string;
     /**
      * 
      * @type {string}
@@ -16861,13 +17118,7 @@ export interface StageVariableContext {
      * @type {string}
      * @memberof StageVariableContext
      */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StageVariableContext
-     */
-    id?: number;
+    variableType?: StageVariableContextVariableTypeEnum;
 }
 
 
@@ -16892,34 +17143,21 @@ export type StageVariableContextVariableTypeEnum = typeof StageVariableContextVa
 /**
  * 
  * @export
- * @interface StartBuildRequest
- */
-export interface StartBuildRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof StartBuildRequest
-     */
-    fakeParam?: string;
-}
-/**
- * 
- * @export
  * @interface Status
  */
 export interface Status {
-    /**
-     * 
-     * @type {number}
-     * @memberof Status
-     */
-    statusCode?: number;
     /**
      * 
      * @type {string}
      * @memberof Status
      */
     message?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Status
+     */
+    statusCode?: number;
 }
 /**
  * 
@@ -16929,28 +17167,16 @@ export interface Status {
 export interface StrSubstitutor {
     /**
      * 
-     * @type {string}
-     * @memberof StrSubstitutor
-     */
-    escapeChar?: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof StrSubstitutor
-     */
-    variableResolver?: any | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof StrSubstitutor
      */
     enableSubstitutionInVariables?: boolean;
     /**
      * 
-     * @type {any}
+     * @type {string}
      * @memberof StrSubstitutor
      */
-    variablePrefixMatcher?: any | null;
+    escapeChar?: string;
     /**
      * 
      * @type {StrSubstitutor}
@@ -16962,13 +17188,25 @@ export interface StrSubstitutor {
      * @type {any}
      * @memberof StrSubstitutor
      */
-    variableSuffixMatcher?: any | null;
+    variablePrefixMatcher?: any | null;
+    /**
+     * 
+     * @type {any}
+     * @memberof StrSubstitutor
+     */
+    variableResolver?: any | null;
     /**
      * 
      * @type {StrSubstitutor}
      * @memberof StrSubstitutor
      */
     variableSuffix?: StrSubstitutor;
+    /**
+     * 
+     * @type {any}
+     * @memberof StrSubstitutor
+     */
+    variableSuffixMatcher?: any | null;
 }
 /**
  * 
@@ -16997,30 +17235,6 @@ export interface TaskConditionConfig {
 export interface TaskDefinition {
     /**
      * 
-     * @type {string}
-     * @memberof TaskDefinition
-     */
-    entityType?: TaskDefinitionEntityTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskDefinition
-     */
-    userDescription?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TaskDefinition
-     */
-    finalising?: boolean;
-    /**
-     * 
-     * @type {TaskRootDirectorySelector}
-     * @memberof TaskDefinition
-     */
-    rootDirectorySelector?: TaskRootDirectorySelector;
-    /**
-     * 
      * @type {Array<TaskConditionConfig>}
      * @memberof TaskDefinition
      */
@@ -17039,10 +17253,28 @@ export interface TaskDefinition {
     enabled?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof TaskDefinition
+     */
+    entityType?: TaskDefinitionEntityTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TaskDefinition
+     */
+    finalising?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof TaskDefinition
      */
     id?: number;
+    /**
+     * 
+     * @type {BambooEntityOid}
+     * @memberof TaskDefinition
+     */
+    oid?: BambooEntityOid;
     /**
      * 
      * @type {string}
@@ -17051,10 +17283,16 @@ export interface TaskDefinition {
     pluginKey?: string;
     /**
      * 
-     * @type {BambooEntityOid}
+     * @type {TaskRootDirectorySelector}
      * @memberof TaskDefinition
      */
-    oid?: BambooEntityOid;
+    rootDirectorySelector?: TaskRootDirectorySelector;
+    /**
+     * 
+     * @type {string}
+     * @memberof TaskDefinition
+     */
+    userDescription?: string;
 }
 
 
@@ -17084,16 +17322,16 @@ export type TaskDefinitionEntityTypeEnum = typeof TaskDefinitionEntityTypeEnum[k
 export interface TaskRootDirectorySelector {
     /**
      * 
-     * @type {string}
-     * @memberof TaskRootDirectorySelector
-     */
-    taskRootDirectoryType?: TaskRootDirectorySelectorTaskRootDirectoryTypeEnum;
-    /**
-     * 
      * @type {number}
      * @memberof TaskRootDirectorySelector
      */
     repositoryDefiningWorkingDirectory?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TaskRootDirectorySelector
+     */
+    taskRootDirectoryType?: TaskRootDirectorySelectorTaskRootDirectoryTypeEnum;
 }
 
 
@@ -17115,42 +17353,6 @@ export type TaskRootDirectorySelectorTaskRootDirectoryTypeEnum = typeof TaskRoot
 export interface TestCase {
     /**
      * 
-     * @type {TestClass}
-     * @memberof TestCase
-     */
-    testClass?: TestClass;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    successPercentage?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    totalTestRuns?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    numberOfSuccessRuns?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    numberOfSkippedRuns?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCase
-     */
-    numberOfFailedRuns?: number;
-    /**
-     * 
      * @type {number}
      * @memberof TestCase
      */
@@ -17163,12 +17365,6 @@ export interface TestCase {
     averageDurationInSeconds?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof TestCase
-     */
-    quarantined?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof TestCase
      */
@@ -17178,13 +17374,19 @@ export interface TestCase {
      * @type {number}
      * @memberof TestCase
      */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
     lastRanBuildNumber?: number;
     /**
      * 
-     * @type {QuarantineStatistics}
+     * @type {number}
      * @memberof TestCase
      */
-    quarantineStatistics?: QuarantineStatistics;
+    lastRecordedBuildNumber?: number;
     /**
      * 
      * @type {string}
@@ -17196,19 +17398,61 @@ export interface TestCase {
      * @type {string}
      * @memberof TestCase
      */
-    name?: string;
+    methodName?: string;
     /**
      * 
      * @type {string}
      * @memberof TestCase
      */
-    methodName?: string;
+    name?: string;
     /**
      * 
      * @type {number}
      * @memberof TestCase
      */
-    id?: number;
+    numberOfFailedRuns?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    numberOfSkippedRuns?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    numberOfSuccessRuns?: number;
+    /**
+     * 
+     * @type {QuarantineStatistics}
+     * @memberof TestCase
+     */
+    quarantineStatistics?: QuarantineStatistics;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestCase
+     */
+    quarantined?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    successPercentage?: number;
+    /**
+     * 
+     * @type {TestClass}
+     * @memberof TestCase
+     */
+    testClass?: TestClass;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCase
+     */
+    totalTestRuns?: number;
 }
 /**
  * 
@@ -17224,58 +17468,10 @@ export interface TestCaseResult {
     deltaState?: TestCaseResultDeltaStateEnum;
     /**
      * 
-     * @type {TestCase}
-     * @memberof TestCaseResult
-     */
-    testCase?: TestCase;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    prettyDuration?: string;
-    /**
-     * 
-     * @type {TestClassResult}
-     * @memberof TestCaseResult
-     */
-    testClassResult?: TestClassResult;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestCaseResult
-     */
-    failingSince?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TestCaseResult
-     */
-    quarantined?: boolean;
-    /**
-     * 
      * @type {number}
      * @memberof TestCaseResult
      */
     duration?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    state?: TestCaseResultStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestCaseResult
-     */
-    methodName?: string;
     /**
      * 
      * @type {Array<TestCaseResultError>}
@@ -17287,7 +17483,55 @@ export interface TestCaseResult {
      * @type {number}
      * @memberof TestCaseResult
      */
+    failingSince?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestCaseResult
+     */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    methodName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    prettyDuration?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestCaseResult
+     */
+    quarantined?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestCaseResult
+     */
+    state?: TestCaseResultStateEnum;
+    /**
+     * 
+     * @type {TestCase}
+     * @memberof TestCaseResult
+     */
+    testCase?: TestCase;
+    /**
+     * 
+     * @type {TestClassResult}
+     * @memberof TestCaseResult
+     */
+    testClassResult?: TestClassResult;
 }
 
 
@@ -17322,12 +17566,6 @@ export type TestCaseResultStateEnum = typeof TestCaseResultStateEnum[keyof typeo
 export interface TestCaseResultError {
     /**
      * 
-     * @type {TestCaseResult}
-     * @memberof TestCaseResultError
-     */
-    testCaseResult?: TestCaseResult;
-    /**
-     * 
      * @type {string}
      * @memberof TestCaseResultError
      */
@@ -17338,6 +17576,12 @@ export interface TestCaseResultError {
      * @memberof TestCaseResultError
      */
     id?: number;
+    /**
+     * 
+     * @type {TestCaseResult}
+     * @memberof TestCaseResultError
+     */
+    testCaseResult?: TestCaseResult;
 }
 /**
  * 
@@ -17347,16 +17591,10 @@ export interface TestCaseResultError {
 export interface TestClass {
     /**
      * 
-     * @type {Plan}
+     * @type {number}
      * @memberof TestClass
      */
-    plan?: Plan;
-    /**
-     * 
-     * @type {Array<TestCase>}
-     * @memberof TestClass
-     */
-    testCases?: Array<TestCase>;
+    id?: number;
     /**
      * 
      * @type {number}
@@ -17365,16 +17603,16 @@ export interface TestClass {
     masterJobId?: number;
     /**
      * 
-     * @type {Array<TestCase>}
-     * @memberof TestClass
-     */
-    testCaseCollection?: Array<TestCase>;
-    /**
-     * 
      * @type {string}
      * @memberof TestClass
      */
     name?: string;
+    /**
+     * 
+     * @type {Plan}
+     * @memberof TestClass
+     */
+    plan?: Plan;
     /**
      * 
      * @type {string}
@@ -17383,10 +17621,16 @@ export interface TestClass {
     shortName?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<TestCase>}
      * @memberof TestClass
      */
-    id?: number;
+    testCaseCollection?: Array<TestCase>;
+    /**
+     * 
+     * @type {Array<TestCase>}
+     * @memberof TestClass
+     */
+    testCases?: Array<TestCase>;
 }
 /**
  * 
@@ -17396,34 +17640,16 @@ export interface TestClass {
 export interface TestClassResult {
     /**
      * 
-     * @type {number}
-     * @memberof TestClassResult
-     */
-    duration?: number;
-    /**
-     * 
-     * @type {Array<TestCaseResult>}
-     * @memberof TestClassResult
-     */
-    testCaseResults?: Array<TestCaseResult>;
-    /**
-     * 
      * @type {BuildResultsSummary}
      * @memberof TestClassResult
      */
     buildResultsSummary?: BuildResultsSummary;
     /**
      * 
-     * @type {TestClass}
+     * @type {number}
      * @memberof TestClassResult
      */
-    testClass?: TestClass;
-    /**
-     * 
-     * @type {Set<TestCaseResult>}
-     * @memberof TestClassResult
-     */
-    testCaseResultsSet?: Set<TestCaseResult>;
+    duration?: number;
     /**
      * 
      * @type {number}
@@ -17435,13 +17661,7 @@ export interface TestClassResult {
      * @type {number}
      * @memberof TestClassResult
      */
-    successfulTestCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestClassResult
-     */
-    skippedTestCount?: number;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -17459,7 +17679,31 @@ export interface TestClassResult {
      * @type {number}
      * @memberof TestClassResult
      */
-    id?: number;
+    skippedTestCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestClassResult
+     */
+    successfulTestCount?: number;
+    /**
+     * 
+     * @type {Array<TestCaseResult>}
+     * @memberof TestClassResult
+     */
+    testCaseResults?: Array<TestCaseResult>;
+    /**
+     * 
+     * @type {Set<TestCaseResult>}
+     * @memberof TestClassResult
+     */
+    testCaseResultsSet?: Set<TestCaseResult>;
+    /**
+     * 
+     * @type {TestClass}
+     * @memberof TestClassResult
+     */
+    testClass?: TestClass;
 }
 /**
  * 
@@ -17467,12 +17711,6 @@ export interface TestClassResult {
  * @interface TestConnectionResultDto
  */
 export interface TestConnectionResultDto {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TestConnectionResultDto
-     */
-    success?: boolean;
     /**
      * 
      * @type {string}
@@ -17484,13 +17722,19 @@ export interface TestConnectionResultDto {
      * @type {string}
      * @memberof TestConnectionResultDto
      */
-    serverVersion?: string;
+    errorMessage?: string;
     /**
      * 
      * @type {string}
      * @memberof TestConnectionResultDto
      */
-    errorMessage?: string;
+    serverVersion?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestConnectionResultDto
+     */
+    success?: boolean;
 }
 /**
  * 
@@ -17498,36 +17742,6 @@ export interface TestConnectionResultDto {
  * @interface TestResultsSummary
  */
 export interface TestResultsSummary {
-    /**
-     * 
-     * @type {string}
-     * @memberof TestResultsSummary
-     */
-    testSummaryDescription?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResultsSummary
-     */
-    successfulTestCaseCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResultsSummary
-     */
-    failedTestCaseCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResultsSummary
-     */
-    totalTestCaseCount?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResultsSummary
-     */
-    newFailedTestCaseCount?: number;
     /**
      * 
      * @type {number}
@@ -17539,7 +17753,25 @@ export interface TestResultsSummary {
      * @type {number}
      * @memberof TestResultsSummary
      */
+    failedTestCaseCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
     fixedTestCaseCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
+    ignoredTestCaseCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
+    newFailedTestCaseCount?: number;
     /**
      * 
      * @type {number}
@@ -17557,7 +17789,19 @@ export interface TestResultsSummary {
      * @type {number}
      * @memberof TestResultsSummary
      */
-    ignoredTestCaseCount?: number;
+    successfulTestCaseCount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestResultsSummary
+     */
+    testSummaryDescription?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResultsSummary
+     */
+    totalTestCaseCount?: number;
     /**
      * 
      * @type {number}
@@ -17571,24 +17815,6 @@ export interface TestResultsSummary {
  * @interface TriggerDefinition
  */
 export interface TriggerDefinition {
-    /**
-     * 
-     * @type {string}
-     * @memberof TriggerDefinition
-     */
-    userDescription?: string;
-    /**
-     * 
-     * @type {Set<number>}
-     * @memberof TriggerDefinition
-     */
-    triggeringRepositories?: Set<number>;
-    /**
-     * 
-     * @type {object}
-     * @memberof TriggerDefinition
-     */
-    triggerConditionsConfiguration?: object;
     /**
      * 
      * @type {object}
@@ -17619,6 +17845,24 @@ export interface TriggerDefinition {
      * @memberof TriggerDefinition
      */
     pluginKey?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof TriggerDefinition
+     */
+    triggerConditionsConfiguration?: object;
+    /**
+     * 
+     * @type {Set<number>}
+     * @memberof TriggerDefinition
+     */
+    triggeringRepositories?: Set<number>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerDefinition
+     */
+    userDescription?: string;
 }
 /**
  * 
@@ -17631,7 +17875,7 @@ export interface TriggerReason {
      * @type {string}
      * @memberof TriggerReason
      */
-    nameForSentence?: string;
+    key?: string;
     /**
      * 
      * @type {string}
@@ -17643,7 +17887,7 @@ export interface TriggerReason {
      * @type {string}
      * @memberof TriggerReason
      */
-    key?: string;
+    nameForSentence?: string;
 }
 /**
  * 
@@ -17656,7 +17900,7 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    fullName?: string;
+    email?: string;
     /**
      * 
      * @type {boolean}
@@ -17668,7 +17912,7 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    email?: string;
+    fullName?: string;
     /**
      * 
      * @type {string}
@@ -17687,7 +17931,7 @@ export interface UserBean {
      * @type {string}
      * @memberof UserBean
      */
-    name?: string;
+    email?: string;
     /**
      * 
      * @type {string}
@@ -17699,7 +17943,7 @@ export interface UserBean {
      * @type {string}
      * @memberof UserBean
      */
-    email?: string;
+    name?: string;
 }
 /**
  * 
@@ -17707,6 +17951,18 @@ export interface UserBean {
  * @interface VariableContextSnapshot
  */
 export interface VariableContextSnapshot {
+    /**
+     * 
+     * @type {number}
+     * @memberof VariableContextSnapshot
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableContextSnapshot
+     */
+    key?: string;
     /**
      * 
      * @type {ResultsSummary}
@@ -17718,25 +17974,13 @@ export interface VariableContextSnapshot {
      * @type {string}
      * @memberof VariableContextSnapshot
      */
-    variableType?: VariableContextSnapshotVariableTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof VariableContextSnapshot
-     */
     value?: string;
     /**
      * 
      * @type {string}
      * @memberof VariableContextSnapshot
      */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VariableContextSnapshot
-     */
-    id?: number;
+    variableType?: VariableContextSnapshotVariableTypeEnum;
 }
 
 
@@ -17772,12 +18016,6 @@ export interface VariableDefinition {
     deploymentVersionId?: number;
     /**
      * 
-     * @type {Plan}
-     * @memberof VariableDefinition
-     */
-    plan?: Plan;
-    /**
-     * 
      * @type {number}
      * @memberof VariableDefinition
      */
@@ -17787,13 +18025,31 @@ export interface VariableDefinition {
      * @type {number}
      * @memberof VariableDefinition
      */
-    projectId?: number;
+    id?: number;
     /**
      * 
      * @type {string}
      * @memberof VariableDefinition
      */
-    variableType?: VariableDefinitionVariableTypeEnum;
+    key?: string;
+    /**
+     * 
+     * @type {Plan}
+     * @memberof VariableDefinition
+     */
+    plan?: Plan;
+    /**
+     * 
+     * @type {number}
+     * @memberof VariableDefinition
+     */
+    projectId?: number;
+    /**
+     * 
+     * @type {Plan}
+     * @memberof VariableDefinition
+     */
+    root?: Plan;
     /**
      * 
      * @type {string}
@@ -17805,13 +18061,7 @@ export interface VariableDefinition {
      * @type {string}
      * @memberof VariableDefinition
      */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VariableDefinition
-     */
-    id?: number;
+    variableType?: VariableDefinitionVariableTypeEnum;
 }
 
 
@@ -17841,16 +18091,22 @@ export type VariableDefinitionVariableTypeEnum = typeof VariableDefinitionVariab
 export interface VariableSubstitution {
     /**
      * 
-     * @type {ResultsSummary}
+     * @type {number}
      * @memberof VariableSubstitution
      */
-    resultSummary?: ResultsSummary;
+    id?: number;
     /**
      * 
      * @type {string}
      * @memberof VariableSubstitution
      */
-    variableType?: VariableSubstitutionVariableTypeEnum;
+    key?: string;
+    /**
+     * 
+     * @type {ResultsSummary}
+     * @memberof VariableSubstitution
+     */
+    resultSummary?: ResultsSummary;
     /**
      * 
      * @type {string}
@@ -17862,13 +18118,7 @@ export interface VariableSubstitution {
      * @type {string}
      * @memberof VariableSubstitution
      */
-    key?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VariableSubstitution
-     */
-    id?: number;
+    variableType?: VariableSubstitutionVariableTypeEnum;
 }
 
 
@@ -17901,7 +18151,7 @@ export interface VariableSubstitutionContext {
      * @type {string}
      * @memberof VariableSubstitutionContext
      */
-    variableType?: VariableSubstitutionContextVariableTypeEnum;
+    key?: string;
     /**
      * 
      * @type {string}
@@ -17913,7 +18163,7 @@ export interface VariableSubstitutionContext {
      * @type {string}
      * @memberof VariableSubstitutionContext
      */
-    key?: string;
+    variableType?: VariableSubstitutionContextVariableTypeEnum;
 }
 
 
@@ -17946,13 +18196,13 @@ export interface VcsBambooSpecsDetectionOptions {
      * @type {boolean}
      * @memberof VcsBambooSpecsDetectionOptions
      */
-    bambooSpecsDetectionEnabled?: boolean;
+    bambooSpecsDetection?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof VcsBambooSpecsDetectionOptions
      */
-    bambooSpecsDetection?: boolean;
+    bambooSpecsDetectionEnabled?: boolean;
     /**
      * 
      * @type {object}
@@ -17968,10 +18218,10 @@ export interface VcsBambooSpecsDetectionOptions {
 export interface VcsBambooSpecsSource {
     /**
      * 
-     * @type {VcsLocationBambooSpecsState}
+     * @type {number}
      * @memberof VcsBambooSpecsSource
      */
-    vcsLocationBambooSpecsState?: VcsLocationBambooSpecsState;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -17980,16 +18230,16 @@ export interface VcsBambooSpecsSource {
     sourceLocation?: string;
     /**
      * 
+     * @type {VcsLocationBambooSpecsState}
+     * @memberof VcsBambooSpecsSource
+     */
+    vcsLocationBambooSpecsState?: VcsLocationBambooSpecsState;
+    /**
+     * 
      * @type {boolean}
      * @memberof VcsBambooSpecsSource
      */
     yamlConfiguration?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof VcsBambooSpecsSource
-     */
-    id?: number;
 }
 /**
  * 
@@ -18018,16 +18268,16 @@ export interface VcsBranch {
 export interface VcsBranchDefinition {
     /**
      * 
-     * @type {VcsBranch}
-     * @memberof VcsBranchDefinition
-     */
-    vcsBranch?: VcsBranch;
-    /**
-     * 
      * @type {object}
      * @memberof VcsBranchDefinition
      */
     _configuration?: object;
+    /**
+     * 
+     * @type {VcsBranch}
+     * @memberof VcsBranchDefinition
+     */
+    vcsBranch?: VcsBranch;
 }
 /**
  * 
@@ -18050,22 +18300,10 @@ export interface VcsBranchDetectionOptions {
 export interface VcsChangeDetectionOptions {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof VcsChangeDetectionOptions
      */
-    quietPeriod?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VcsChangeDetectionOptions
-     */
-    quietPeriodEnabled?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof VcsChangeDetectionOptions
-     */
-    maxRetries?: number;
+    changesetFilterPatternRegex?: string;
     /**
      * 
      * @type {boolean}
@@ -18074,10 +18312,10 @@ export interface VcsChangeDetectionOptions {
     commitIsolationEnabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof VcsChangeDetectionOptions
      */
-    changesetFilterPatternRegex?: string;
+    _configuration?: object;
     /**
      * 
      * @type {string}
@@ -18092,10 +18330,22 @@ export interface VcsChangeDetectionOptions {
     filterFilePatternRegex?: string;
     /**
      * 
-     * @type {object}
+     * @type {number}
      * @memberof VcsChangeDetectionOptions
      */
-    _configuration?: object;
+    maxRetries?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VcsChangeDetectionOptions
+     */
+    quietPeriod?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VcsChangeDetectionOptions
+     */
+    quietPeriodEnabled?: boolean;
 }
 /**
  * 
@@ -18108,31 +18358,13 @@ export interface VcsLocationBambooSpecsState {
      * @type {string}
      * @memberof VcsLocationBambooSpecsState
      */
-    revision?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VcsLocationBambooSpecsState
-     */
-    specsNotFound?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof VcsLocationBambooSpecsState
-     */
     branch?: string;
     /**
      * 
      * @type {number}
      * @memberof VcsLocationBambooSpecsState
      */
-    vcsLocationId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof VcsLocationBambooSpecsState
-     */
-    specsExecutionDate?: string;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -18144,13 +18376,31 @@ export interface VcsLocationBambooSpecsState {
      * @type {string}
      * @memberof VcsLocationBambooSpecsState
      */
+    revision?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VcsLocationBambooSpecsState
+     */
     specImportState?: VcsLocationBambooSpecsStateSpecImportStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof VcsLocationBambooSpecsState
+     */
+    specsExecutionDate?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VcsLocationBambooSpecsState
+     */
+    specsNotFound?: boolean;
     /**
      * 
      * @type {number}
      * @memberof VcsLocationBambooSpecsState
      */
-    id?: number;
+    vcsLocationId?: number;
 }
 
 
@@ -18171,10 +18421,10 @@ export type VcsLocationBambooSpecsStateSpecImportStateEnum = typeof VcsLocationB
 export interface VcsLocationDefinition {
     /**
      * 
-     * @type {boolean}
+     * @type {object}
      * @memberof VcsLocationDefinition
      */
-    legacyRepository?: boolean;
+    _configuration?: object;
     /**
      * 
      * @type {string}
@@ -18183,10 +18433,10 @@ export interface VcsLocationDefinition {
     legacyConfigurationXml?: string;
     /**
      * 
-     * @type {object}
+     * @type {boolean}
      * @memberof VcsLocationDefinition
      */
-    _configuration?: object;
+    legacyRepository?: boolean;
 }
 /**
  * 
@@ -18194,6 +18444,12 @@ export interface VcsLocationDefinition {
  * @interface VcsRepositoryViewerDefinition
  */
 export interface VcsRepositoryViewerDefinition {
+    /**
+     * 
+     * @type {object}
+     * @memberof VcsRepositoryViewerDefinition
+     */
+    _configuration?: object;
     /**
      * 
      * @type {string}
@@ -18206,12 +18462,6 @@ export interface VcsRepositoryViewerDefinition {
      * @memberof VcsRepositoryViewerDefinition
      */
     legacyViewer?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof VcsRepositoryViewerDefinition
-     */
-    _configuration?: object;
     /**
      * 
      * @type {string}
@@ -18230,25 +18480,31 @@ export interface VersionPreview {
      * @type {number}
      * @memberof VersionPreview
      */
-    id?: number;
+    commitCount?: number;
     /**
      * 
      * @type {string}
      * @memberof VersionPreview
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VersionPreview
-     */
-    planBranchName?: string;
+    commitUrl?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VersionPreview
      */
     differentBranchAsPreviousRelease?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VersionPreview
+     */
+    differentBuildPlan?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof VersionPreview
+     */
+    id?: number;
     /**
      * 
      * @type {number}
@@ -18266,13 +18522,19 @@ export interface VersionPreview {
      * @type {number}
      * @memberof VersionPreview
      */
-    commitCount?: number;
+    lastCreatedVersionId?: number;
     /**
      * 
      * @type {string}
      * @memberof VersionPreview
      */
-    commitUrl?: string;
+    lastCreatedVersionName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VersionPreview
+     */
+    name?: string;
     /**
      * 
      * @type {number}
@@ -18284,31 +18546,19 @@ export interface VersionPreview {
      * @type {number}
      * @memberof VersionPreview
      */
-    numEnvironmentsDeployedSuccessful?: number;
+    numEnvironmentsDeployedFailed?: number;
     /**
      * 
      * @type {number}
      * @memberof VersionPreview
      */
-    numEnvironmentsDeployedFailed?: number;
-    /**
-     * 
-     * @type {RestDeploymentVersionStatus}
-     * @memberof VersionPreview
-     */
-    versionStatus?: RestDeploymentVersionStatus;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VersionPreview
-     */
-    rollback?: boolean;
+    numEnvironmentsDeployedSuccessful?: number;
     /**
      * 
      * @type {string}
      * @memberof VersionPreview
      */
-    previousVersionName?: string;
+    planBranchName?: string;
     /**
      * 
      * @type {number}
@@ -18320,20 +18570,39 @@ export interface VersionPreview {
      * @type {string}
      * @memberof VersionPreview
      */
-    lastCreatedVersionName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VersionPreview
-     */
-    lastCreatedVersionId?: number;
+    previousVersionName?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VersionPreview
      */
-    differentBuildPlan?: boolean;
+    rollback?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VersionPreview
+     */
+    versionGeneralState?: VersionPreviewVersionGeneralStateEnum;
+    /**
+     * 
+     * @type {Array<RestDeploymentVersionStatus>}
+     * @memberof VersionPreview
+     */
+    versionStatuses?: Array<RestDeploymentVersionStatus>;
 }
+
+
+/**
+ * @export
+ */
+export const VersionPreviewVersionGeneralStateEnum = {
+    Unknown: 'Unknown',
+    Approved: 'Approved',
+    Broken: 'Broken',
+    Incomplete: 'Incomplete'
+} as const;
+export type VersionPreviewVersionGeneralStateEnum = typeof VersionPreviewVersionGeneralStateEnum[keyof typeof VersionPreviewVersionGeneralStateEnum];
+
 /**
  * 
  * @export
@@ -18345,13 +18614,13 @@ export interface VersionVariables {
      * @type {Array<RestVariableDefinitionContext>}
      * @memberof VersionVariables
      */
-    incrementableVariables?: Array<RestVariableDefinitionContext>;
+    buildVariables?: Array<RestVariableDefinitionContext>;
     /**
      * 
      * @type {Array<RestVariableDefinitionContext>}
      * @memberof VersionVariables
      */
-    buildVariables?: Array<RestVariableDefinitionContext>;
+    incrementableVariables?: Array<RestVariableDefinitionContext>;
 }
 /**
  * 
@@ -18364,13 +18633,7 @@ export interface WebRepositoryViewer {
      * @type {string}
      * @memberof WebRepositoryViewer
      */
-    shortKey?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof WebRepositoryViewer
-     */
-    supportedRepositories?: Array<string>;
+    key?: string;
     /**
      * 
      * @type {string}
@@ -18382,7 +18645,13 @@ export interface WebRepositoryViewer {
      * @type {string}
      * @memberof WebRepositoryViewer
      */
-    key?: string;
+    shortKey?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WebRepositoryViewer
+     */
+    supportedRepositories?: Array<string>;
 }
 /**
  * 

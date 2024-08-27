@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AvatarApi';
 export * from './BuildApi';
+export * from './BuildNumberApi';
 export * from './CoreApi';
 export * from './DefaultApi';
 export * from './DeploymentApi';
