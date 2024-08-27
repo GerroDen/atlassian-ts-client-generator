@@ -15,24 +15,30 @@
 
 import * as runtime from '../runtime';
 import type {
-  StatusCategory,
+  ErrorCollection,
+  ProjectDataPolicies,
+  WorkspaceDataPolicy,
 } from '../models/index';
 
-export interface GetStatusCategoryRequest {
-    idOrKey: string;
+export interface GetPoliciesRequest {
+    ids?: string;
 }
 
 /**
  * 
  */
-export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
+export class AppDataPoliciesApi extends runtime.BaseAPI {
 
     /**
-     * Returns a list of all status categories.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get all status categories
+     * Returns data policies for the projects specified in the request.
+     * Get data policy for projects
      */
-    async getStatusCategoriesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StatusCategory>>> {
+    async getPoliciesRaw(requestParameters: GetPoliciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDataPolicies>> {
         const queryParameters: any = {};
+
+        if (requestParameters['ids'] != null) {
+            queryParameters['ids'] = requestParameters['ids'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -45,7 +51,7 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuscategory`,
+            path: `/rest/api/3/data-policy/project`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -55,26 +61,19 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all status categories.  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get all status categories
+     * Returns data policies for the projects specified in the request.
+     * Get data policy for projects
      */
-    async getStatusCategories(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StatusCategory>> {
-        const response = await this.getStatusCategoriesRaw(initOverrides);
+    async getPolicies(requestParameters: GetPoliciesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDataPolicies> {
+        const response = await this.getPoliciesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Returns a status category. Status categories provided a mechanism for categorizing [statuses](#api-rest-api-3-status-idOrName-get).  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get status category
+     * Returns data policy for the workspace.
+     * Get data policy for the workspace
      */
-    async getStatusCategoryRaw(requestParameters: GetStatusCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusCategory>> {
-        if (requestParameters['idOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'idOrKey',
-                'Required parameter "idOrKey" was null or undefined when calling getStatusCategory().'
-            );
-        }
-
+    async getPolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkspaceDataPolicy>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,7 +87,7 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuscategory/{idOrKey}`.replace(`{${"idOrKey"}}`, encodeURIComponent(String(requestParameters['idOrKey']))),
+            path: `/rest/api/3/data-policy`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -98,11 +97,11 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a status category. Status categories provided a mechanism for categorizing [statuses](#api-rest-api-3-status-idOrName-get).  **[Permissions](#permissions) required:** Permission to access Jira.
-     * Get status category
+     * Returns data policy for the workspace.
+     * Get data policy for the workspace
      */
-    async getStatusCategory(requestParameters: GetStatusCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StatusCategory> {
-        const response = await this.getStatusCategoryRaw(requestParameters, initOverrides);
+    async getPolicy(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkspaceDataPolicy> {
+        const response = await this.getPolicyRaw(initOverrides);
         return await response.value();
     }
 

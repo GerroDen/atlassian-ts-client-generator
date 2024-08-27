@@ -4,11 +4,13 @@
 README.md
 package.json
 src/apis/AnnouncementBannerApi.ts
+src/apis/AppDataPoliciesApi.ts
 src/apis/AppMigrationApi.ts
 src/apis/AppPropertiesApi.ts
 src/apis/ApplicationRolesApi.ts
 src/apis/AuditRecordsApi.ts
 src/apis/AvatarsApi.ts
+src/apis/ClassificationLevelsApi.ts
 src/apis/DashboardsApi.ts
 src/apis/DynamicModulesApi.ts
 src/apis/FilterSharingApi.ts
@@ -16,6 +18,7 @@ src/apis/FiltersApi.ts
 src/apis/GroupAndUserPickerApi.ts
 src/apis/GroupsApi.ts
 src/apis/IssueAttachmentsApi.ts
+src/apis/IssueBulkOperationsApi.ts
 src/apis/IssueCommentPropertiesApi.ts
 src/apis/IssueCommentsApi.ts
 src/apis/IssueCustomFieldConfigurationAppsApi.ts
@@ -54,8 +57,10 @@ src/apis/LicenseMetricsApi.ts
 src/apis/MyselfApi.ts
 src/apis/PermissionSchemesApi.ts
 src/apis/PermissionsApi.ts
+src/apis/PrioritySchemesApi.ts
 src/apis/ProjectAvatarsApi.ts
 src/apis/ProjectCategoriesApi.ts
+src/apis/ProjectClassificationLevelsApi.ts
 src/apis/ProjectComponentsApi.ts
 src/apis/ProjectEmailApi.ts
 src/apis/ProjectFeaturesApi.ts
@@ -72,6 +77,7 @@ src/apis/ScreenTabFieldsApi.ts
 src/apis/ScreenTabsApi.ts
 src/apis/ScreensApi.ts
 src/apis/ServerInfoApi.ts
+src/apis/ServiceRegistryApi.ts
 src/apis/StatusApi.ts
 src/apis/TasksApi.ts
 src/apis/TimeTrackingApi.ts

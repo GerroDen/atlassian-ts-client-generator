@@ -520,11 +520,11 @@ export interface AssociatedItemBean {
 export interface Attachment {
     [key: string]: any | any;
     /**
-     * 
-     * @type {AttachmentAuthor}
+     * Details of the user who added the attachment.
+     * @type {UserDetails}
      * @memberof Attachment
      */
-    author?: AttachmentAuthor;
+    readonly author?: UserDetails;
     /**
      * The content of the attachment.
      * @type {string}
@@ -736,84 +736,17 @@ export interface AttachmentArchiveMetadataReadable {
     readonly totalEntryCount?: number;
 }
 /**
- * Details of the user who added the attachment.
- * @export
- * @interface AttachmentAuthor
- */
-export interface AttachmentAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof AttachmentAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof AttachmentAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof AttachmentAuthor
-     */
-    readonly timeZone?: string;
-}
-/**
  * Metadata for an issue attachment.
  * @export
  * @interface AttachmentMetadata
  */
 export interface AttachmentMetadata {
     /**
-     * 
-     * @type {AttachmentMetadataAuthor}
+     * Details of the user who attached the file.
+     * @type {User}
      * @memberof AttachmentMetadata
      */
-    author?: AttachmentMetadataAuthor;
+    readonly author?: User;
     /**
      * The URL of the attachment.
      * @type {string}
@@ -869,114 +802,6 @@ export interface AttachmentMetadata {
      */
     readonly thumbnail?: string;
 }
-/**
- * Details of the user who attached the file.
- * @export
- * @interface AttachmentMetadataAuthor
- */
-export interface AttachmentMetadataAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly accountType?: AttachmentMetadataAuthorAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof AttachmentMetadataAuthor
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof AttachmentMetadataAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof AttachmentMetadataAuthor
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof AttachmentMetadataAuthor
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const AttachmentMetadataAuthorAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type AttachmentMetadataAuthorAccountTypeEnum = typeof AttachmentMetadataAuthorAccountTypeEnum[keyof typeof AttachmentMetadataAuthorAccountTypeEnum];
-
 /**
  * Details of the instance's attachment settings.
  * @export
@@ -1565,6 +1390,31 @@ export interface BulkEditActionError {
     errors: { [key: string]: string; };
 }
 /**
+ * Bulk Edit Get Fields Response.
+ * @export
+ * @interface BulkEditGetFields
+ */
+export interface BulkEditGetFields {
+    /**
+     * The end cursor for use in pagination.
+     * @type {string}
+     * @memberof BulkEditGetFields
+     */
+    readonly endingBefore?: string;
+    /**
+     * List of all the fields
+     * @type {Array<IssueBulkEditField>}
+     * @memberof BulkEditGetFields
+     */
+    readonly fields?: Array<IssueBulkEditField>;
+    /**
+     * The start cursor for use in pagination.
+     * @type {string}
+     * @memberof BulkEditGetFields
+     */
+    readonly startingAfter?: string;
+}
+/**
  * Details of a request to bulk edit shareable entity.
  * @export
  * @interface BulkEditShareableEntityRequest
@@ -1577,11 +1427,11 @@ export interface BulkEditShareableEntityRequest {
      */
     action: BulkEditShareableEntityRequestActionEnum;
     /**
-     * 
-     * @type {BulkEditShareableEntityRequestChangeOwnerDetails}
+     * The details of change owner action.
+     * @type {BulkChangeOwnerDetails}
      * @memberof BulkEditShareableEntityRequest
      */
-    changeOwnerDetails?: BulkEditShareableEntityRequestChangeOwnerDetails;
+    changeOwnerDetails?: BulkChangeOwnerDetails;
     /**
      * The id list of shareable entities to be changed.
      * @type {Set<number>}
@@ -1595,11 +1445,11 @@ export interface BulkEditShareableEntityRequest {
      */
     extendAdminPermissions?: boolean;
     /**
-     * 
-     * @type {BulkEditShareableEntityRequestPermissionDetails}
+     * The permission details to be changed.
+     * @type {PermissionDetails}
      * @memberof BulkEditShareableEntityRequest
      */
-    permissionDetails?: BulkEditShareableEntityRequestPermissionDetails;
+    permissionDetails?: PermissionDetails;
 }
 
 
@@ -1614,44 +1464,6 @@ export const BulkEditShareableEntityRequestActionEnum = {
 } as const;
 export type BulkEditShareableEntityRequestActionEnum = typeof BulkEditShareableEntityRequestActionEnum[keyof typeof BulkEditShareableEntityRequestActionEnum];
 
-/**
- * The details of change owner action.
- * @export
- * @interface BulkEditShareableEntityRequestChangeOwnerDetails
- */
-export interface BulkEditShareableEntityRequestChangeOwnerDetails {
-    /**
-     * Whether the name is fixed automatically if it's duplicated after changing owner.
-     * @type {boolean}
-     * @memberof BulkEditShareableEntityRequestChangeOwnerDetails
-     */
-    autofixName: boolean;
-    /**
-     * The account id of the new owner.
-     * @type {string}
-     * @memberof BulkEditShareableEntityRequestChangeOwnerDetails
-     */
-    newOwner: string;
-}
-/**
- * The permission details to be changed.
- * @export
- * @interface BulkEditShareableEntityRequestPermissionDetails
- */
-export interface BulkEditShareableEntityRequestPermissionDetails {
-    /**
-     * The edit permissions for the shareable entities.
-     * @type {Array<SharePermission>}
-     * @memberof BulkEditShareableEntityRequestPermissionDetails
-     */
-    editPermissions: Array<SharePermission>;
-    /**
-     * The share permissions for the shareable entities.
-     * @type {Array<SharePermission>}
-     * @memberof BulkEditShareableEntityRequestPermissionDetails
-     */
-    sharePermissions: Array<SharePermission>;
-}
 /**
  * Details of a request to bulk edit shareable entity.
  * @export
@@ -1710,11 +1522,11 @@ export interface BulkIssuePropertyUpdateRequest {
      */
     expression?: string;
     /**
-     * 
-     * @type {BulkIssuePropertyUpdateRequestFilter}
+     * The bulk operation filter.
+     * @type {IssueFilterForBulkPropertySet}
      * @memberof BulkIssuePropertyUpdateRequest
      */
-    filter?: BulkIssuePropertyUpdateRequestFilter;
+    filter?: IssueFilterForBulkPropertySet;
     /**
      * The value of the property. The value must be a [valid](https://tools.ietf.org/html/rfc4627), non-empty JSON blob. The maximum length is 32768 characters.
      * @type {any}
@@ -1723,29 +1535,17 @@ export interface BulkIssuePropertyUpdateRequest {
     value?: any | null;
 }
 /**
- * The bulk operation filter.
+ * 
  * @export
- * @interface BulkIssuePropertyUpdateRequestFilter
+ * @interface BulkOperationErrorResponse
  */
-export interface BulkIssuePropertyUpdateRequestFilter {
+export interface BulkOperationErrorResponse {
     /**
-     * The value of properties to perform the bulk operation on.
-     * @type {any}
-     * @memberof BulkIssuePropertyUpdateRequestFilter
+     * 
+     * @type {Array<ErrorMessage>}
+     * @memberof BulkOperationErrorResponse
      */
-    currentValue?: any | null;
-    /**
-     * List of issues to perform the bulk operation on.
-     * @type {Set<number>}
-     * @memberof BulkIssuePropertyUpdateRequestFilter
-     */
-    entityIds?: Array<number>;
-    /**
-     * Whether the bulk operation occurs only when the property is present on or absent from an issue.
-     * @type {boolean}
-     * @memberof BulkIssuePropertyUpdateRequestFilter
-     */
-    hasProperty?: boolean;
+    errors?: Array<ErrorMessage>;
 }
 /**
  * 
@@ -1772,6 +1572,95 @@ export interface BulkOperationErrorResult {
      */
     status?: number;
 }
+/**
+ * 
+ * @export
+ * @interface BulkOperationProgress
+ */
+export interface BulkOperationProgress {
+    /**
+     * A timestamp of when the task was submitted.
+     * @type {string}
+     * @memberof BulkOperationProgress
+     */
+    created?: string;
+    /**
+     * Map of issue IDs for which the operation failed and that the user has permission to view, to their one or more reasons for failure. These reasons are open-ended text descriptions of the error and are not selected from a predefined list of standard reasons.
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof BulkOperationProgress
+     */
+    failedAccessibleIssues?: { [key: string]: Array<string>; };
+    /**
+     * The number of issues that are either invalid or issues that the user doesn't have permission to view, regardless of the success or failure of the operation.
+     * @type {number}
+     * @memberof BulkOperationProgress
+     */
+    invalidOrInaccessibleIssueCount?: number;
+    /**
+     * List of issue IDs for which the operation was successful and that the user has permission to view.
+     * @type {Array<number>}
+     * @memberof BulkOperationProgress
+     */
+    processedAccessibleIssues?: Array<number>;
+    /**
+     * Progress of the task as a percentage.
+     * @type {number}
+     * @memberof BulkOperationProgress
+     */
+    progressPercent?: number;
+    /**
+     * A timestamp of when the task was started.
+     * @type {string}
+     * @memberof BulkOperationProgress
+     */
+    started?: string;
+    /**
+     * The status of the task.
+     * @type {string}
+     * @memberof BulkOperationProgress
+     */
+    status?: BulkOperationProgressStatusEnum;
+    /**
+     * 
+     * @type {User}
+     * @memberof BulkOperationProgress
+     */
+    submittedBy?: User;
+    /**
+     * The ID of the task.
+     * @type {string}
+     * @memberof BulkOperationProgress
+     */
+    readonly taskId?: string;
+    /**
+     * The number of issues that the bulk operation was attempted on.
+     * @type {number}
+     * @memberof BulkOperationProgress
+     */
+    totalIssueCount?: number;
+    /**
+     * A timestamp of when the task progress was last updated.
+     * @type {string}
+     * @memberof BulkOperationProgress
+     */
+    updated?: string;
+}
+
+
+/**
+ * @export
+ */
+export const BulkOperationProgressStatusEnum = {
+    Enqueued: 'ENQUEUED',
+    Running: 'RUNNING',
+    Complete: 'COMPLETE',
+    Failed: 'FAILED',
+    CancelRequested: 'CANCEL_REQUESTED',
+    Cancelled: 'CANCELLED',
+    Dead: 'DEAD'
+} as const;
+export type BulkOperationProgressStatusEnum = typeof BulkOperationProgressStatusEnum[keyof typeof BulkOperationProgressStatusEnum];
+
 /**
  * Details of global and project permissions granted to the user.
  * @export
@@ -2028,11 +1917,11 @@ export interface ChangedWorklogs {
  */
 export interface Changelog {
     /**
-     * 
-     * @type {ChangelogAuthor}
+     * The user who made the change.
+     * @type {UserDetails}
      * @memberof Changelog
      */
-    author?: ChangelogAuthor;
+    readonly author?: UserDetails;
     /**
      * The date on which the change took place.
      * @type {string}
@@ -2040,11 +1929,11 @@ export interface Changelog {
      */
     readonly created?: string;
     /**
-     * 
-     * @type {ChangelogHistoryMetadata}
+     * The history metadata associated with the changed.
+     * @type {HistoryMetadata}
      * @memberof Changelog
      */
-    historyMetadata?: ChangelogHistoryMetadata;
+    readonly historyMetadata?: HistoryMetadata;
     /**
      * The ID of the changelog.
      * @type {string}
@@ -2057,146 +1946,6 @@ export interface Changelog {
      * @memberof Changelog
      */
     readonly items?: Array<ChangeDetails>;
-}
-/**
- * The user who made the change.
- * @export
- * @interface ChangelogAuthor
- */
-export interface ChangelogAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ChangelogAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ChangelogAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly timeZone?: string;
-}
-/**
- * The history metadata associated with the changed.
- * @export
- * @interface ChangelogHistoryMetadata
- */
-export interface ChangelogHistoryMetadata {
-    /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    activityDescriptionKey?: string;
-    /**
-     * 
-     * @type {HistoryMetadataActor}
-     * @memberof ChangelogHistoryMetadata
-     */
-    actor?: HistoryMetadataActor;
-    /**
-     * 
-     * @type {HistoryMetadataCause}
-     * @memberof ChangelogHistoryMetadata
-     */
-    cause?: HistoryMetadataCause;
-    /**
-     * The description of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    description?: string;
-    /**
-     * The description key of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    descriptionKey?: string;
-    /**
-     * The description of the email address associated the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    emailDescription?: string;
-    /**
-     * The description key of the email address associated the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    emailDescriptionKey?: string;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof ChangelogHistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
-    /**
-     * 
-     * @type {HistoryMetadataGenerator}
-     * @memberof ChangelogHistoryMetadata
-     */
-    generator?: HistoryMetadataGenerator;
-    /**
-     * The type of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    type?: string;
 }
 /**
  * Details of an issue navigator column item.
@@ -2218,6 +1967,19 @@ export interface ColumnItem {
     value?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ColumnRequestBody
+ */
+export interface ColumnRequestBody {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ColumnRequestBody
+     */
+    columns?: Array<string>;
+}
+/**
  * A comment.
  * @export
  * @interface Comment
@@ -2225,11 +1987,11 @@ export interface ColumnItem {
 export interface Comment {
     [key: string]: any | any;
     /**
-     * 
-     * @type {CommentAuthor}
+     * The ID of the user who created the comment.
+     * @type {UserDetails}
      * @memberof Comment
      */
-    author?: CommentAuthor;
+    readonly author?: UserDetails;
     /**
      * The comment text in [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/).
      * @type {any}
@@ -2279,11 +2041,11 @@ export interface Comment {
      */
     readonly self?: string;
     /**
-     * 
-     * @type {CommentUpdateAuthor}
+     * The ID of the user who updated the comment last.
+     * @type {UserDetails}
      * @memberof Comment
      */
-    updateAuthor?: CommentUpdateAuthor;
+    readonly updateAuthor?: UserDetails;
     /**
      * The date and time at which the comment was updated last.
      * @type {string}
@@ -2291,182 +2053,12 @@ export interface Comment {
      */
     readonly updated?: string;
     /**
-     * 
-     * @type {CommentVisibility}
+     * The group or role to which this comment is visible. Optional on create and update.
+     * @type {Visibility}
      * @memberof Comment
      */
-    visibility?: CommentVisibility;
+    visibility?: Visibility;
 }
-/**
- * The ID of the user who created the comment.
- * @export
- * @interface CommentAuthor
- */
-export interface CommentAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof CommentAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof CommentAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof CommentAuthor
-     */
-    readonly timeZone?: string;
-}
-/**
- * The ID of the user who updated the comment last.
- * @export
- * @interface CommentUpdateAuthor
- */
-export interface CommentUpdateAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof CommentUpdateAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof CommentUpdateAuthor
-     */
-    readonly timeZone?: string;
-}
-/**
- * The group or role to which this comment is visible. Optional on create and update.
- * @export
- * @interface CommentVisibility
- */
-export interface CommentVisibility {
-    /**
-     * The ID of the group or the name of the role that visibility of this item is restricted to.
-     * @type {string}
-     * @memberof CommentVisibility
-     */
-    identifier?: string | null;
-    /**
-     * Whether visibility of this item is restricted to a group or role.
-     * @type {string}
-     * @memberof CommentVisibility
-     */
-    type?: CommentVisibilityTypeEnum;
-    /**
-     * The name of the group or role that visibility of this item is restricted to. Please note that the name of a group is mutable, to reliably identify a group use `identifier`.
-     * @type {string}
-     * @memberof CommentVisibility
-     */
-    value?: string;
-}
-
-
-/**
- * @export
- */
-export const CommentVisibilityTypeEnum = {
-    Group: 'group',
-    Role: 'role'
-} as const;
-export type CommentVisibilityTypeEnum = typeof CommentVisibilityTypeEnum[keyof typeof CommentVisibilityTypeEnum];
-
 /**
  * Count of issues assigned to a component.
  * @export
@@ -2487,17 +2079,61 @@ export interface ComponentIssuesCount {
     readonly self?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ComponentJsonBean
+ */
+export interface ComponentJsonBean {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {string}
+     * @memberof ComponentJsonBean
+     */
+    ari?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ComponentJsonBean
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ComponentJsonBean
+     */
+    id?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ComponentJsonBean
+     */
+    metadata?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ComponentJsonBean
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ComponentJsonBean
+     */
+    self?: string;
+}
+/**
  * Details about a component with a count of the issues it contains.
  * @export
  * @interface ComponentWithIssueCount
  */
 export interface ComponentWithIssueCount {
     /**
-     * 
-     * @type {ComponentWithIssueCountAssignee}
+     * The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
+     * @type {User}
      * @memberof ComponentWithIssueCount
      */
-    assignee?: ComponentWithIssueCountAssignee;
+    assignee?: User;
     /**
      * The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values:
      * 
@@ -2534,11 +2170,11 @@ export interface ComponentWithIssueCount {
      */
     readonly issueCount?: number;
     /**
-     * 
-     * @type {ComponentWithIssueCountLead}
+     * The user details for the component's lead user.
+     * @type {User}
      * @memberof ComponentWithIssueCount
      */
-    lead?: ComponentWithIssueCountLead;
+    lead?: User;
     /**
      * The name for the component.
      * @type {string}
@@ -2558,11 +2194,11 @@ export interface ComponentWithIssueCount {
      */
     readonly projectId?: number;
     /**
-     * 
-     * @type {ComponentWithIssueCountRealAssignee}
+     * The user assigned to issues created with this component, when `assigneeType` does not identify a valid assignee.
+     * @type {User}
      * @memberof ComponentWithIssueCount
      */
-    realAssignee?: ComponentWithIssueCountRealAssignee;
+    realAssignee?: User;
     /**
      * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
      * 
@@ -2604,330 +2240,6 @@ export const ComponentWithIssueCountRealAssigneeTypeEnum = {
     Unassigned: 'UNASSIGNED'
 } as const;
 export type ComponentWithIssueCountRealAssigneeTypeEnum = typeof ComponentWithIssueCountRealAssigneeTypeEnum[keyof typeof ComponentWithIssueCountRealAssigneeTypeEnum];
-
-/**
- * The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
- * @export
- * @interface ComponentWithIssueCountAssignee
- */
-export interface ComponentWithIssueCountAssignee {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly accountType?: ComponentWithIssueCountAssigneeAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountAssignee
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ComponentWithIssueCountAssigneeAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ComponentWithIssueCountAssigneeAccountTypeEnum = typeof ComponentWithIssueCountAssigneeAccountTypeEnum[keyof typeof ComponentWithIssueCountAssigneeAccountTypeEnum];
-
-/**
- * The user details for the component's lead user.
- * @export
- * @interface ComponentWithIssueCountLead
- */
-export interface ComponentWithIssueCountLead {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly accountType?: ComponentWithIssueCountLeadAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ComponentWithIssueCountLead
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ComponentWithIssueCountLead
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountLead
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ComponentWithIssueCountLeadAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ComponentWithIssueCountLeadAccountTypeEnum = typeof ComponentWithIssueCountLeadAccountTypeEnum[keyof typeof ComponentWithIssueCountLeadAccountTypeEnum];
-
-/**
- * The user assigned to issues created with this component, when `assigneeType` does not identify a valid assignee.
- * @export
- * @interface ComponentWithIssueCountRealAssignee
- */
-export interface ComponentWithIssueCountRealAssignee {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly accountType?: ComponentWithIssueCountRealAssigneeAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ComponentWithIssueCountRealAssignee
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ComponentWithIssueCountRealAssigneeAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ComponentWithIssueCountRealAssigneeAccountTypeEnum = typeof ComponentWithIssueCountRealAssigneeAccountTypeEnum[keyof typeof ComponentWithIssueCountRealAssigneeAccountTypeEnum];
 
 /**
  * A JQL query clause that consists of nested clauses. For example, `(labels in (urgent, blocker) OR lastCommentedBy = currentUser()). Note that, where nesting is not defined, the parser nests JQL clauses based on the operator precedence. For example, "A OR B AND C" is parsed as "(A OR B) AND C". See Setting the precedence of operators for more information about precedence in JQL queries.`
@@ -3031,60 +2343,6 @@ export const ConditionGroupUpdateOperationEnum = {
     All: 'ALL'
 } as const;
 export type ConditionGroupUpdateOperationEnum = typeof ConditionGroupUpdateOperationEnum[keyof typeof ConditionGroupUpdateOperationEnum];
-
-/**
- * The configuration of time tracking.
- * @export
- * @interface ConfigurationTimeTrackingConfiguration
- */
-export interface ConfigurationTimeTrackingConfiguration {
-    /**
-     * The default unit of time applied to logged time.
-     * @type {string}
-     * @memberof ConfigurationTimeTrackingConfiguration
-     */
-    defaultUnit: ConfigurationTimeTrackingConfigurationDefaultUnitEnum;
-    /**
-     * The format that will appear on an issue's *Time Spent* field.
-     * @type {string}
-     * @memberof ConfigurationTimeTrackingConfiguration
-     */
-    timeFormat: ConfigurationTimeTrackingConfigurationTimeFormatEnum;
-    /**
-     * The number of days in a working week.
-     * @type {number}
-     * @memberof ConfigurationTimeTrackingConfiguration
-     */
-    workingDaysPerWeek: number;
-    /**
-     * The number of hours in a working day.
-     * @type {number}
-     * @memberof ConfigurationTimeTrackingConfiguration
-     */
-    workingHoursPerDay: number;
-}
-
-
-/**
- * @export
- */
-export const ConfigurationTimeTrackingConfigurationDefaultUnitEnum = {
-    Minute: 'minute',
-    Hour: 'hour',
-    Day: 'day',
-    Week: 'week'
-} as const;
-export type ConfigurationTimeTrackingConfigurationDefaultUnitEnum = typeof ConfigurationTimeTrackingConfigurationDefaultUnitEnum[keyof typeof ConfigurationTimeTrackingConfigurationDefaultUnitEnum];
-
-/**
- * @export
- */
-export const ConfigurationTimeTrackingConfigurationTimeFormatEnum = {
-    Pretty: 'pretty',
-    Days: 'days',
-    Hours: 'hours'
-} as const;
-export type ConfigurationTimeTrackingConfigurationTimeFormatEnum = typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum[keyof typeof ConfigurationTimeTrackingConfigurationTimeFormatEnum];
 
 /**
  * A list of custom field details.
@@ -3285,11 +2543,11 @@ export interface Context {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {ContextScope}
+     * The scope of the context.
+     * @type {Scope}
      * @memberof Context
      */
-    scope?: ContextScope;
+    scope?: Scope;
 }
 /**
  * The project and issue type mapping with a matching custom field context.
@@ -3316,36 +2574,6 @@ export interface ContextForProjectAndIssueType {
      */
     projectId: string;
 }
-/**
- * The scope of the context.
- * @export
- * @interface ContextScope
- */
-export interface ContextScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof ContextScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ContextScope
-     */
-    readonly type?: ContextScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const ContextScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type ContextScopeTypeEnum = typeof ContextScopeTypeEnum[keyof typeof ContextScopeTypeEnum];
-
 /**
  * Details of the contextual configuration for a custom field.
  * @export
@@ -3532,10 +2760,63 @@ export const CreatePriorityDetailsIconUrlEnum = {
     MajorPng: '/images/icons/priorities/major.png',
     MediumPng: '/images/icons/priorities/medium.png',
     MinorPng: '/images/icons/priorities/minor.png',
-    TrivialPng: '/images/icons/priorities/trivial.png'
+    TrivialPng: '/images/icons/priorities/trivial.png',
+    BlockerNewPng: '/images/icons/priorities/blocker_new.png',
+    CriticalNewPng: '/images/icons/priorities/critical_new.png',
+    HighNewPng: '/images/icons/priorities/high_new.png',
+    HighestNewPng: '/images/icons/priorities/highest_new.png',
+    LowNewPng: '/images/icons/priorities/low_new.png',
+    LowestNewPng: '/images/icons/priorities/lowest_new.png',
+    MajorNewPng: '/images/icons/priorities/major_new.png',
+    MediumNewPng: '/images/icons/priorities/medium_new.png',
+    MinorNewPng: '/images/icons/priorities/minor_new.png',
+    TrivialNewPng: '/images/icons/priorities/trivial_new.png'
 } as const;
 export type CreatePriorityDetailsIconUrlEnum = typeof CreatePriorityDetailsIconUrlEnum[keyof typeof CreatePriorityDetailsIconUrlEnum];
 
+/**
+ * Details of a new priority scheme
+ * @export
+ * @interface CreatePrioritySchemeDetails
+ */
+export interface CreatePrioritySchemeDetails {
+    /**
+     * The ID of the default priority for the priority scheme.
+     * @type {number}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    defaultPriorityId: number;
+    /**
+     * The description of the priority scheme.
+     * @type {string}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    description?: string;
+    /**
+     * Mappings of issue priorities for issues being migrated in and out of this priority scheme.
+     * @type {PriorityMapping}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    mappings?: PriorityMapping;
+    /**
+     * The name of the priority scheme. Must be unique.
+     * @type {string}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    name: string;
+    /**
+     * The IDs of priorities in the scheme.
+     * @type {Array<number>}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    priorityIds: Array<number>;
+    /**
+     * The IDs of projects that will use the priority scheme.
+     * @type {Set<number>}
+     * @memberof CreatePrioritySchemeDetails
+     */
+    projectIds?: Array<number>;
+}
 /**
  * Details about the project.
  * @export
@@ -3672,6 +2953,7 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     PyxisGreenhopperJiraghSimplifiedKanbanClassic: 'com.pyxis.greenhopper.jira:gh-simplified-kanban-classic',
     PyxisGreenhopperJiraghSimplifiedScrumClassic: 'com.pyxis.greenhopper.jira:gh-simplified-scrum-classic',
     PyxisGreenhopperJiraghCrossTeamTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-template',
+    PyxisGreenhopperJiraghCrossTeamPlanningTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-planning-template',
     AtlassianServicedesksimplifiedItServiceManagement: 'com.atlassian.servicedesk:simplified-it-service-management',
     AtlassianServicedesksimplifiedGeneralServiceDesk: 'com.atlassian.servicedesk:simplified-general-service-desk',
     AtlassianServicedesksimplifiedGeneralServiceDeskIt: 'com.atlassian.servicedesk:simplified-general-service-desk-it',
@@ -3925,17 +3207,17 @@ export interface CreateWorkflowTransitionDetails {
      */
     properties?: { [key: string]: string; };
     /**
-     * 
-     * @type {CreateWorkflowTransitionDetailsRules}
+     * The rules of the transition.
+     * @type {CreateWorkflowTransitionRulesDetails}
      * @memberof CreateWorkflowTransitionDetails
      */
-    rules?: CreateWorkflowTransitionDetailsRules;
+    rules?: CreateWorkflowTransitionRulesDetails;
     /**
-     * 
-     * @type {CreateWorkflowTransitionDetailsScreen}
+     * The screen of the transition.
+     * @type {CreateWorkflowTransitionScreenDetails}
      * @memberof CreateWorkflowTransitionDetails
      */
-    screen?: CreateWorkflowTransitionDetailsScreen;
+    screen?: CreateWorkflowTransitionScreenDetails;
     /**
      * The status the transition goes to.
      * @type {string}
@@ -3962,101 +3244,6 @@ export const CreateWorkflowTransitionDetailsTypeEnum = {
 export type CreateWorkflowTransitionDetailsTypeEnum = typeof CreateWorkflowTransitionDetailsTypeEnum[keyof typeof CreateWorkflowTransitionDetailsTypeEnum];
 
 /**
- * The rules of the transition.
- * @export
- * @interface CreateWorkflowTransitionDetailsRules
- */
-export interface CreateWorkflowTransitionDetailsRules {
-    /**
-     * 
-     * @type {CreateWorkflowTransitionRulesDetailsConditions}
-     * @memberof CreateWorkflowTransitionDetailsRules
-     */
-    conditions?: CreateWorkflowTransitionRulesDetailsConditions;
-    /**
-     * The workflow post functions.
-     * 
-     * **Note:** The default post functions are always added to the *initial* transition, as in:
-     * 
-     *     "postFunctions": [
-     *         {
-     *             "type": "IssueCreateFunction"
-     *         },
-     *         {
-     *             "type": "IssueReindexFunction"
-     *         },
-     *         {
-     *             "type": "FireIssueEventFunction",
-     *             "configuration": {
-     *                 "event": {
-     *                     "id": "1",
-     *                     "name": "issue_created"
-     *                 }
-     *             }
-     *         }
-     *     ]
-     * 
-     * **Note:** The default post functions are always added to the *global* and *directed* transitions, as in:
-     * 
-     *     "postFunctions": [
-     *         {
-     *             "type": "UpdateIssueStatusFunction"
-     *         },
-     *         {
-     *             "type": "CreateCommentFunction"
-     *         },
-     *         {
-     *             "type": "GenerateChangeHistoryFunction"
-     *         },
-     *         {
-     *             "type": "IssueReindexFunction"
-     *         },
-     *         {
-     *             "type": "FireIssueEventFunction",
-     *             "configuration": {
-     *                 "event": {
-     *                     "id": "13",
-     *                     "name": "issue_generic"
-     *                 }
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionDetailsRules
-     */
-    postFunctions?: Array<CreateWorkflowTransitionRule>;
-    /**
-     * The workflow validators.
-     * 
-     * **Note:** The default permission validator is always added to the *initial* transition, as in:
-     * 
-     *     "validators": [
-     *         {
-     *             "type": "PermissionValidator",
-     *             "configuration": {
-     *                 "permissionKey": "CREATE_ISSUES"
-     *             }
-     *         }
-     *     ]
-     * @type {Array<CreateWorkflowTransitionRule>}
-     * @memberof CreateWorkflowTransitionDetailsRules
-     */
-    validators?: Array<CreateWorkflowTransitionRule>;
-}
-/**
- * The screen of the transition.
- * @export
- * @interface CreateWorkflowTransitionDetailsScreen
- */
-export interface CreateWorkflowTransitionDetailsScreen {
-    /**
-     * The ID of the screen.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionDetailsScreen
-     */
-    id: string;
-}
-/**
  * A workflow transition rule.
  * @export
  * @interface CreateWorkflowTransitionRule
@@ -4082,11 +3269,11 @@ export interface CreateWorkflowTransitionRule {
  */
 export interface CreateWorkflowTransitionRulesDetails {
     /**
-     * 
-     * @type {CreateWorkflowTransitionRulesDetailsConditions}
+     * The workflow conditions.
+     * @type {CreateWorkflowCondition}
      * @memberof CreateWorkflowTransitionRulesDetails
      */
-    conditions?: CreateWorkflowTransitionRulesDetailsConditions;
+    conditions?: CreateWorkflowCondition;
     /**
      * The workflow post functions.
      * 
@@ -4157,48 +3344,6 @@ export interface CreateWorkflowTransitionRulesDetails {
      */
     validators?: Array<CreateWorkflowTransitionRule>;
 }
-/**
- * The workflow conditions.
- * @export
- * @interface CreateWorkflowTransitionRulesDetailsConditions
- */
-export interface CreateWorkflowTransitionRulesDetailsConditions {
-    /**
-     * The list of workflow conditions.
-     * @type {Array<CreateWorkflowCondition>}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    conditions?: Array<CreateWorkflowCondition>;
-    /**
-     * EXPERIMENTAL. The configuration of the transition rule.
-     * @type {{ [key: string]: any; }}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    configuration?: { [key: string]: any; };
-    /**
-     * The compound condition operator.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    operator?: CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum;
-    /**
-     * The type of the transition rule.
-     * @type {string}
-     * @memberof CreateWorkflowTransitionRulesDetailsConditions
-     */
-    type?: string;
-}
-
-
-/**
- * @export
- */
-export const CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum = {
-    And: 'AND',
-    Or: 'OR'
-} as const;
-export type CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum = typeof CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum[keyof typeof CreateWorkflowTransitionRulesDetailsConditionsOperatorEnum];
-
 /**
  * The details of a transition screen.
  * @export
@@ -4237,67 +3382,17 @@ export interface CreatedIssue {
      */
     readonly self?: string;
     /**
-     * 
-     * @type {CreatedIssueTransition}
+     * The response code and messages related to any requested transition.
+     * @type {NestedResponse}
      * @memberof CreatedIssue
      */
-    transition?: CreatedIssueTransition;
+    readonly transition?: NestedResponse;
     /**
-     * 
-     * @type {CreatedIssueWatchers}
+     * The response code and messages related to any requested watchers.
+     * @type {NestedResponse}
      * @memberof CreatedIssue
      */
-    watchers?: CreatedIssueWatchers;
-}
-/**
- * The response code and messages related to any requested transition.
- * @export
- * @interface CreatedIssueTransition
- */
-export interface CreatedIssueTransition {
-    /**
-     * 
-     * @type {ErrorCollection}
-     * @memberof CreatedIssueTransition
-     */
-    errorCollection?: ErrorCollection;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreatedIssueTransition
-     */
-    status?: number;
-    /**
-     * 
-     * @type {WarningCollection}
-     * @memberof CreatedIssueTransition
-     */
-    warningCollection?: WarningCollection;
-}
-/**
- * The response code and messages related to any requested watchers.
- * @export
- * @interface CreatedIssueWatchers
- */
-export interface CreatedIssueWatchers {
-    /**
-     * 
-     * @type {ErrorCollection}
-     * @memberof CreatedIssueWatchers
-     */
-    errorCollection?: ErrorCollection;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreatedIssueWatchers
-     */
-    status?: number;
-    /**
-     * 
-     * @type {WarningCollection}
-     * @memberof CreatedIssueWatchers
-     */
-    warningCollection?: WarningCollection;
+    readonly watchers?: NestedResponse;
 }
 /**
  * Details about the issues created and the errors for requests that failed.
@@ -5430,11 +4525,11 @@ export interface Dashboard {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {DashboardOwner}
+     * The owner of the dashboard.
+     * @type {UserBean}
      * @memberof Dashboard
      */
-    owner?: DashboardOwner;
+    readonly owner?: UserBean;
     /**
      * The number of users who have this dashboard as a favorite.
      * @type {number}
@@ -5528,11 +4623,11 @@ export interface DashboardGadget {
      */
     readonly moduleKey?: string;
     /**
-     * 
+     * The position of the gadget.
      * @type {DashboardGadgetPosition}
      * @memberof DashboardGadget
      */
-    position: DashboardGadgetPosition;
+    readonly position: DashboardGadgetPosition;
     /**
      * The title of the gadget.
      * @type {string}
@@ -5564,7 +4659,7 @@ export const DashboardGadgetColorEnum = {
 export type DashboardGadgetColorEnum = typeof DashboardGadgetColorEnum[keyof typeof DashboardGadgetColorEnum];
 
 /**
- * The position of the gadget.
+ * Details of a gadget position.
  * @export
  * @interface DashboardGadgetPosition
  */
@@ -5620,11 +4715,11 @@ export interface DashboardGadgetSettings {
      */
     moduleKey?: string;
     /**
-     * 
-     * @type {DashboardGadgetSettingsPosition}
+     * The position of the gadget. When the gadget is placed into the position, other gadgets in the same column are moved down to accommodate it.
+     * @type {DashboardGadgetPosition}
      * @memberof DashboardGadgetSettings
      */
-    position?: DashboardGadgetSettingsPosition;
+    position?: DashboardGadgetPosition;
     /**
      * The title of the gadget.
      * @type {string}
@@ -5639,25 +4734,6 @@ export interface DashboardGadgetSettings {
     uri?: string;
 }
 /**
- * The position of the gadget. When the gadget is placed into the position, other gadgets in the same column are moved down to accommodate it.
- * @export
- * @interface DashboardGadgetSettingsPosition
- */
-export interface DashboardGadgetSettingsPosition {
-    /**
-     * 
-     * @type {number}
-     * @memberof DashboardGadgetSettingsPosition
-     */
-    theColumnPositionOfTheGadget: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof DashboardGadgetSettingsPosition
-     */
-    theRowPositionOfTheGadget: number;
-}
-/**
  * The details of the gadget to update.
  * @export
  * @interface DashboardGadgetUpdateRequest
@@ -5670,11 +4746,11 @@ export interface DashboardGadgetUpdateRequest {
      */
     color?: string;
     /**
-     * 
-     * @type {DashboardGadgetUpdateRequestPosition}
+     * The position of the gadget.
+     * @type {DashboardGadgetPosition}
      * @memberof DashboardGadgetUpdateRequest
      */
-    position?: DashboardGadgetUpdateRequestPosition;
+    position?: DashboardGadgetPosition;
     /**
      * The title of the gadget.
      * @type {string}
@@ -5683,74 +4759,66 @@ export interface DashboardGadgetUpdateRequest {
     title?: string;
 }
 /**
- * The position of the gadget.
+ * The data classification.
  * @export
- * @interface DashboardGadgetUpdateRequestPosition
+ * @interface DataClassificationLevelsBean
  */
-export interface DashboardGadgetUpdateRequestPosition {
+export interface DataClassificationLevelsBean {
     /**
-     * 
-     * @type {number}
-     * @memberof DashboardGadgetUpdateRequestPosition
+     * The data classifications.
+     * @type {Array<DataClassificationTagBean>}
+     * @memberof DataClassificationLevelsBean
      */
-    theColumnPositionOfTheGadget: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof DashboardGadgetUpdateRequestPosition
-     */
-    theRowPositionOfTheGadget: number;
+    classifications?: Array<DataClassificationTagBean>;
 }
 /**
- * The owner of the dashboard.
+ * The data classification.
  * @export
- * @interface DashboardOwner
+ * @interface DataClassificationTagBean
  */
-export interface DashboardOwner {
+export interface DataClassificationTagBean {
     /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * The color of the data classification object.
      * @type {string}
-     * @memberof DashboardOwner
+     * @memberof DataClassificationTagBean
      */
-    accountId?: string;
+    color?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof DashboardOwner
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {UserBeanAvatarUrls}
-     * @memberof DashboardOwner
-     */
-    avatarUrls?: UserBeanAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The description of the data classification object.
      * @type {string}
-     * @memberof DashboardOwner
+     * @memberof DataClassificationTagBean
      */
-    displayName?: string;
+    description?: string;
     /**
-     * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
-     * The key of the user.
+     * The guideline of the data classification object.
      * @type {string}
-     * @memberof DashboardOwner
+     * @memberof DataClassificationTagBean
      */
-    key?: string;
+    guideline?: string;
     /**
-     * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
-     * The username of the user.
+     * The ID of the data classification object.
      * @type {string}
-     * @memberof DashboardOwner
+     * @memberof DataClassificationTagBean
+     */
+    id: string;
+    /**
+     * The name of the data classification object.
+     * @type {string}
+     * @memberof DataClassificationTagBean
      */
     name?: string;
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof DashboardOwner
+     * The rank of the data classification object.
+     * @type {number}
+     * @memberof DataClassificationTagBean
      */
-    self?: string;
+    rank?: number;
+    /**
+     * The status of the data classification object.
+     * @type {string}
+     * @memberof DataClassificationTagBean
+     */
+    status: string;
 }
 /**
  * List issues archived within a specified date range.
@@ -5907,11 +4975,11 @@ export interface DeprecatedWorkflow {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {DeprecatedWorkflowScope}
+     * The scope where this workflow applies
+     * @type {Scope}
      * @memberof DeprecatedWorkflow
      */
-    scope?: DeprecatedWorkflowScope;
+    readonly scope?: Scope;
     /**
      * The number of steps included in the workflow.
      * @type {number}
@@ -5920,35 +4988,30 @@ export interface DeprecatedWorkflow {
     readonly steps?: number;
 }
 /**
- * The scope where this workflow applies
+ * 
  * @export
- * @interface DeprecatedWorkflowScope
+ * @interface DetailedErrorCollection
  */
-export interface DeprecatedWorkflowScope {
+export interface DetailedErrorCollection {
     /**
-     * 
-     * @type {ScopeProject}
-     * @memberof DeprecatedWorkflowScope
+     * Map of objects representing additional details for an error
+     * @type {{ [key: string]: any; }}
+     * @memberof DetailedErrorCollection
      */
-    project?: ScopeProject;
+    details?: { [key: string]: any; };
     /**
-     * The type of scope.
-     * @type {string}
-     * @memberof DeprecatedWorkflowScope
+     * The list of error messages produced by this operation. For example, "input parameter 'key' must be provided"
+     * @type {Array<string>}
+     * @memberof DetailedErrorCollection
      */
-    readonly type?: DeprecatedWorkflowScopeTypeEnum;
+    errorMessages?: Array<string>;
+    /**
+     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
+     * @type {{ [key: string]: string; }}
+     * @memberof DetailedErrorCollection
+     */
+    errors?: { [key: string]: string; };
 }
-
-
-/**
- * @export
- */
-export const DeprecatedWorkflowScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type DeprecatedWorkflowScopeTypeEnum = typeof DeprecatedWorkflowScopeTypeEnum[keyof typeof DeprecatedWorkflowScopeTypeEnum];
-
 /**
  * The current version details of this workflow scheme.
  * @export
@@ -5960,13 +5023,13 @@ export interface DocumentVersion {
      * @type {string}
      * @memberof DocumentVersion
      */
-    id?: string;
+    id: string;
     /**
      * The version number.
      * @type {number}
      * @memberof DocumentVersion
      */
-    versionNumber?: number;
+    versionNumber: number;
 }
 /**
  * An entity property, for more information see [Entity properties](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).
@@ -6044,11 +5107,11 @@ export interface ErrorCollection {
  */
 export interface ErrorMessage {
     /**
-     * The error message.
+     * 
      * @type {string}
      * @memberof ErrorMessage
      */
-    message: string;
+    message?: string;
 }
 /**
  * 
@@ -6080,6 +5143,12 @@ export interface Errors {
      * @memberof Errors
      */
     issuesNotFound?: Error;
+    /**
+     * 
+     * @type {Error}
+     * @memberof Errors
+     */
+    userDoesNotHavePermission?: Error;
 }
 /**
  * Details about a notification associated with an event.
@@ -6100,17 +5169,17 @@ export interface EventNotification {
      */
     expand?: string;
     /**
-     * 
-     * @type {EventNotificationField}
+     * The custom user or group field.
+     * @type {FieldDetails}
      * @memberof EventNotification
      */
-    field?: EventNotificationField;
+    field?: FieldDetails;
     /**
-     * 
-     * @type {EventNotificationGroup}
+     * The specified group.
+     * @type {GroupName}
      * @memberof EventNotification
      */
-    group?: EventNotificationGroup;
+    group?: GroupName;
     /**
      * The ID of the notification.
      * @type {number}
@@ -6136,11 +5205,11 @@ export interface EventNotification {
      */
     parameter?: string;
     /**
-     * 
-     * @type {EventNotificationProjectRole}
+     * The specified project role.
+     * @type {ProjectRole}
      * @memberof EventNotification
      */
-    projectRole?: EventNotificationProjectRole;
+    projectRole?: ProjectRole;
     /**
      * The identifier associated with the `notificationType` value that defines the receiver of the notification, where the receiver isn't implied by the `notificationType` value. So, when `notificationType` is:
      * 
@@ -6154,11 +5223,11 @@ export interface EventNotification {
      */
     recipient?: string;
     /**
-     * 
-     * @type {EventNotificationUser}
+     * The specified user.
+     * @type {UserDetails}
      * @memberof EventNotification
      */
-    user?: EventNotificationUser;
+    user?: UserDetails;
 }
 
 
@@ -6182,236 +5251,55 @@ export const EventNotificationNotificationTypeEnum = {
 export type EventNotificationNotificationTypeEnum = typeof EventNotificationNotificationTypeEnum[keyof typeof EventNotificationNotificationTypeEnum];
 
 /**
- * The custom user or group field.
+ * A priority scheme with less fields to be used in for an API expand response.
  * @export
- * @interface EventNotificationField
+ * @interface ExpandPrioritySchemeBean
  */
-export interface EventNotificationField {
+export interface ExpandPrioritySchemeBean {
     /**
-     * The names that can be used to reference the field in an advanced search. For more information, see [Advanced searching - fields reference](https://confluence.atlassian.com/x/gwORLQ).
-     * @type {Set<string>}
-     * @memberof EventNotificationField
-     */
-    clauseNames?: Array<string>;
-    /**
-     * Whether the field is a custom field.
-     * @type {boolean}
-     * @memberof EventNotificationField
-     */
-    custom?: boolean;
-    /**
-     * The ID of the field.
+     * The ID of the priority scheme.
      * @type {string}
-     * @memberof EventNotificationField
+     * @memberof ExpandPrioritySchemeBean
      */
-    id?: string;
+    readonly id?: string;
     /**
-     * The key of the field.
+     * The name of the priority scheme.
      * @type {string}
-     * @memberof EventNotificationField
-     */
-    key?: string;
-    /**
-     * The name of the field.
-     * @type {string}
-     * @memberof EventNotificationField
-     */
-    name?: string;
-    /**
-     * Whether the field can be used as a column on the issue navigator.
-     * @type {boolean}
-     * @memberof EventNotificationField
-     */
-    navigable?: boolean;
-    /**
-     * Whether the content of the field can be used to order lists.
-     * @type {boolean}
-     * @memberof EventNotificationField
-     */
-    orderable?: boolean;
-    /**
-     * 
-     * @type {FieldDetailsSchema}
-     * @memberof EventNotificationField
-     */
-    schema?: FieldDetailsSchema;
-    /**
-     * 
-     * @type {FieldDetailsScope}
-     * @memberof EventNotificationField
-     */
-    scope?: FieldDetailsScope;
-    /**
-     * Whether the content of the field can be searched.
-     * @type {boolean}
-     * @memberof EventNotificationField
-     */
-    searchable?: boolean;
-}
-/**
- * The specified group.
- * @export
- * @interface EventNotificationGroup
- */
-export interface EventNotificationGroup {
-    /**
-     * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
-     * @type {string}
-     * @memberof EventNotificationGroup
-     */
-    groupId?: string | null;
-    /**
-     * The name of group.
-     * @type {string}
-     * @memberof EventNotificationGroup
-     */
-    name?: string;
-    /**
-     * The URL for these group details.
-     * @type {string}
-     * @memberof EventNotificationGroup
-     */
-    readonly self?: string;
-}
-/**
- * The specified project role.
- * @export
- * @interface EventNotificationProjectRole
- */
-export interface EventNotificationProjectRole {
-    /**
-     * The list of users who act in this role.
-     * @type {Array<RoleActor>}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly actors?: Array<RoleActor>;
-    /**
-     * Whether this role is the admin role for the project.
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly admin?: boolean;
-    /**
-     * Whether the calling user is part of this role.
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    currentUserRole?: boolean;
-    /**
-     * Whether this role is the default role for the project
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly default?: boolean;
-    /**
-     * The description of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly description?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly id?: number;
-    /**
-     * The name of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    name?: string;
-    /**
-     * Whether the roles are configurable for this project.
-     * @type {boolean}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly roleConfigurable?: boolean;
-    /**
-     * 
-     * @type {ProjectRoleScope}
-     * @memberof EventNotificationProjectRole
-     */
-    scope?: ProjectRoleScope;
-    /**
-     * The URL the project role details.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    readonly self?: string;
-    /**
-     * The translated name of the project role.
-     * @type {string}
-     * @memberof EventNotificationProjectRole
-     */
-    translatedName?: string;
-}
-/**
- * The specified user.
- * @export
- * @interface EventNotificationUser
- */
-export interface EventNotificationUser {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof EventNotificationUser
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof EventNotificationUser
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof EventNotificationUser
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof EventNotificationUser
+     * @memberof ExpandPrioritySchemeBean
      */
     readonly name?: string;
     /**
-     * The URL of the user.
+     * The URL of the priority scheme.
      * @type {string}
-     * @memberof EventNotificationUser
+     * @memberof ExpandPrioritySchemeBean
      */
     readonly self?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ExpandPrioritySchemePage
+ */
+export interface ExpandPrioritySchemePage {
+    [key: string]: any | any;
     /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof EventNotificationUser
+     * 
+     * @type {number}
+     * @memberof ExpandPrioritySchemePage
      */
-    readonly timeZone?: string;
+    maxResults?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExpandPrioritySchemePage
+     */
+    startAt?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExpandPrioritySchemePage
+     */
+    total?: number;
 }
 /**
  * The response for status request for a running/completed export task.
@@ -6590,6 +5478,12 @@ export interface Field {
      * @memberof Field
      */
     searcherKey?: string;
+    /**
+     * The stable ID of the field.
+     * @type {string}
+     * @memberof Field
+     */
+    stableId?: string;
 }
 /**
  * A clause that asserts whether a field was changed. For example, `status CHANGED AFTER startOfMonth(-1M)`.See [CHANGED](https://confluence.atlassian.com/x/dgiiLQ#Advancedsearching-operatorsreference-CHANGEDCHANGED) for more information about the CHANGED operator.
@@ -6900,54 +5794,11 @@ export interface FieldCreateMetadata {
      */
     readonly required: boolean;
     /**
-     * 
-     * @type {FieldCreateMetadataSchema}
+     * The data type of the field.
+     * @type {JsonTypeBean}
      * @memberof FieldCreateMetadata
      */
-    schema: FieldCreateMetadataSchema;
-}
-/**
- * The data type of the field.
- * @export
- * @interface FieldCreateMetadataSchema
- */
-export interface FieldCreateMetadataSchema {
-    /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly configuration?: { [key: string]: any; };
-    /**
-     * If the field is a custom field, the URI of the field.
-     * @type {string}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly custom?: string;
-    /**
-     * If the field is a custom field, the custom ID of the field.
-     * @type {number}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly customId?: number;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly system?: string;
-    /**
-     * The data type of the field.
-     * @type {string}
-     * @memberof FieldCreateMetadataSchema
-     */
-    readonly type: string;
+    readonly schema: JsonTypeBean;
 }
 /**
  * Details about a field.
@@ -6998,17 +5849,17 @@ export interface FieldDetails {
      */
     orderable?: boolean;
     /**
-     * 
-     * @type {FieldDetailsSchema}
+     * The data schema for the field.
+     * @type {JsonTypeBean}
      * @memberof FieldDetails
      */
-    schema?: FieldDetailsSchema;
+    schema?: JsonTypeBean;
     /**
-     * 
-     * @type {FieldDetailsScope}
+     * The scope of the field.
+     * @type {Scope}
      * @memberof FieldDetails
      */
-    scope?: FieldDetailsScope;
+    scope?: Scope;
     /**
      * Whether the content of the field can be searched.
      * @type {boolean}
@@ -7016,79 +5867,6 @@ export interface FieldDetails {
      */
     searchable?: boolean;
 }
-/**
- * The data schema for the field.
- * @export
- * @interface FieldDetailsSchema
- */
-export interface FieldDetailsSchema {
-    /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldDetailsSchema
-     */
-    readonly configuration?: { [key: string]: any; };
-    /**
-     * If the field is a custom field, the URI of the field.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly custom?: string;
-    /**
-     * If the field is a custom field, the custom ID of the field.
-     * @type {number}
-     * @memberof FieldDetailsSchema
-     */
-    readonly customId?: number;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly system?: string;
-    /**
-     * The data type of the field.
-     * @type {string}
-     * @memberof FieldDetailsSchema
-     */
-    readonly type: string;
-}
-/**
- * The scope of the field.
- * @export
- * @interface FieldDetailsScope
- */
-export interface FieldDetailsScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof FieldDetailsScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof FieldDetailsScope
-     */
-    readonly type?: FieldDetailsScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const FieldDetailsScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type FieldDetailsScopeTypeEnum = typeof FieldDetailsScopeTypeEnum[keyof typeof FieldDetailsScopeTypeEnum];
-
 /**
  * Information about the most recent use of a field.
  * @export
@@ -7185,11 +5963,11 @@ export interface FieldMetadata {
      */
     readonly required: boolean;
     /**
-     * 
-     * @type {FieldCreateMetadataSchema}
+     * The data type of the field.
+     * @type {JsonTypeBean}
      * @memberof FieldMetadata
      */
-    schema: FieldCreateMetadataSchema;
+    readonly schema: JsonTypeBean;
 }
 /**
  * Details of a field that can be used in advanced searches.
@@ -7428,329 +6206,53 @@ export const FieldWasClauseOperatorEnum = {
 export type FieldWasClauseOperatorEnum = typeof FieldWasClauseOperatorEnum[keyof typeof FieldWasClauseOperatorEnum];
 
 /**
- * Key fields from the linked issue.
+ * Can contain multiple field values of following types depending on `type` key
  * @export
  * @interface Fields
  */
 export interface Fields {
     /**
-     * 
-     * @type {FieldsAssignee}
-     * @memberof Fields
-     */
-    assignee?: FieldsAssignee;
-    /**
-     * 
-     * @type {FieldsIssueType}
-     * @memberof Fields
-     */
-    issueType?: FieldsIssueType;
-    /**
-     * 
-     * @type {IssueTypeDetails}
-     * @memberof Fields
-     */
-    issuetype?: IssueTypeDetails;
-    /**
-     * 
-     * @type {FieldsPriority}
-     * @memberof Fields
-     */
-    priority?: FieldsPriority;
-    /**
-     * 
-     * @type {FieldsStatus}
-     * @memberof Fields
-     */
-    status?: FieldsStatus;
-    /**
-     * The summary description of the linked issue.
-     * @type {string}
-     * @memberof Fields
-     */
-    readonly summary?: string;
-    /**
-     * 
-     * @type {FieldsTimetracking}
-     * @memberof Fields
-     */
-    timetracking?: FieldsTimetracking;
-}
-/**
- * The assignee of the linked issue.
- * @export
- * @interface FieldsAssignee
- */
-export interface FieldsAssignee {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
+     * If `true`, will try to retain original non-null issue field values on move.
      * @type {boolean}
-     * @memberof FieldsAssignee
+     * @memberof Fields
      */
-    readonly active?: boolean;
+    retain?: boolean | null;
     /**
      * 
-     * @type {UserAvatarUrls}
-     * @memberof FieldsAssignee
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
      * @type {string}
-     * @memberof FieldsAssignee
+     * @memberof Fields
      */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof FieldsAssignee
-     */
-    readonly timeZone?: string;
-}
-/**
- * The type of the linked issue.
- * @export
- * @interface FieldsIssueType
- */
-export interface FieldsIssueType {
-    /**
-     * The ID of the issue type's avatar.
-     * @type {number}
-     * @memberof FieldsIssueType
-     */
-    readonly avatarId?: number;
-    /**
-     * The description of the issue type.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly description?: string;
-    /**
-     * Unique ID for next-gen projects.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly entityId?: string;
-    /**
-     * Hierarchy level of the issue type.
-     * @type {number}
-     * @memberof FieldsIssueType
-     */
-    readonly hierarchyLevel?: number;
-    /**
-     * The URL of the issue type's avatar.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly iconUrl?: string;
-    /**
-     * The ID of the issue type.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly id?: string;
-    /**
-     * The name of the issue type.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly name?: string;
+    type?: FieldsTypeEnum;
     /**
      * 
-     * @type {IssueTypeDetailsScope}
-     * @memberof FieldsIssueType
+     * @type {object}
+     * @memberof Fields
      */
-    scope?: IssueTypeDetailsScope;
-    /**
-     * The URL of these issue type details.
-     * @type {string}
-     * @memberof FieldsIssueType
-     */
-    readonly self?: string;
-    /**
-     * Whether this issue type is used to create subtasks.
-     * @type {boolean}
-     * @memberof FieldsIssueType
-     */
-    readonly subtask?: boolean;
+    value?: object;
 }
+
+
 /**
- * The priority of the linked issue.
  * @export
- * @interface FieldsPriority
  */
-export interface FieldsPriority {
-    /**
-     * The description of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    description?: string;
-    /**
-     * The URL of the icon for the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    iconUrl?: string;
-    /**
-     * The ID of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    id?: string;
-    /**
-     * Whether this priority is the default.
-     * @type {boolean}
-     * @memberof FieldsPriority
-     */
-    isDefault?: boolean;
-    /**
-     * The name of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    name?: string;
-    /**
-     * The URL of the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    self?: string;
-    /**
-     * The color used to indicate the issue priority.
-     * @type {string}
-     * @memberof FieldsPriority
-     */
-    statusColor?: string;
-}
-/**
- * The status of the linked issue.
- * @export
- * @interface FieldsStatus
- */
-export interface FieldsStatus {
-    /**
-     * The description of the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly description?: string;
-    /**
-     * The URL of the icon used to represent the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly iconUrl?: string;
-    /**
-     * The ID of the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly id?: string;
-    /**
-     * The name of the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly name?: string;
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof FieldsStatus
-     */
-    readonly self?: string;
-    /**
-     * 
-     * @type {StatusDetailsStatusCategory}
-     * @memberof FieldsStatus
-     */
-    statusCategory?: StatusDetailsStatusCategory;
-}
-/**
- * The time tracking of the linked issue.
- * @export
- * @interface FieldsTimetracking
- */
-export interface FieldsTimetracking {
-    /**
-     * The original estimate of time needed for this issue in readable format.
-     * @type {string}
-     * @memberof FieldsTimetracking
-     */
-    readonly originalEstimate?: string;
-    /**
-     * The original estimate of time needed for this issue in seconds.
-     * @type {number}
-     * @memberof FieldsTimetracking
-     */
-    readonly originalEstimateSeconds?: number;
-    /**
-     * The remaining estimate of time needed for this issue in readable format.
-     * @type {string}
-     * @memberof FieldsTimetracking
-     */
-    readonly remainingEstimate?: string;
-    /**
-     * The remaining estimate of time needed for this issue in seconds.
-     * @type {number}
-     * @memberof FieldsTimetracking
-     */
-    readonly remainingEstimateSeconds?: number;
-    /**
-     * Time worked on this issue in readable format.
-     * @type {string}
-     * @memberof FieldsTimetracking
-     */
-    readonly timeSpent?: string;
-    /**
-     * Time worked on this issue in seconds.
-     * @type {number}
-     * @memberof FieldsTimetracking
-     */
-    readonly timeSpentSeconds?: number;
-}
+export const FieldsTypeEnum = {
+    Adf: 'adf',
+    Raw: 'raw'
+} as const;
+export type FieldsTypeEnum = typeof FieldsTypeEnum[keyof typeof FieldsTypeEnum];
+
 /**
  * Details about a filter.
  * @export
  * @interface Filter
  */
 export interface Filter {
+    /**
+     * \[Experimental\] Approximate last used time. Returns the date and time when the filter was last used. Returns `null` if the filter hasn't been used after tracking was enabled. For performance reasons, timestamps aren't updated in real time and therefore may not be exactly accurate.
+     * @type {string}
+     * @memberof Filter
+     */
+    readonly approximateLastUsed?: string;
     /**
      * A description of the filter.
      * @type {string}
@@ -7794,11 +6296,11 @@ export interface Filter {
      */
     name: string;
     /**
-     * 
-     * @type {FilterOwner}
+     * The user who owns the filter. This is defaulted to the creator of the filter, however Jira administrators can change the owner of a shared filter in the admin settings.
+     * @type {User}
      * @memberof Filter
      */
-    owner?: FilterOwner;
+    readonly owner?: User;
     /**
      * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
      * @type {string}
@@ -7818,17 +6320,17 @@ export interface Filter {
      */
     sharePermissions?: Array<SharePermission>;
     /**
-     * 
-     * @type {FilterSharedUsers}
+     * A paginated list of the users that the filter is shared with. This includes users that are members of the groups or can browse the projects that the filter is shared with.
+     * @type {UserList}
      * @memberof Filter
      */
-    sharedUsers?: FilterSharedUsers;
+    readonly sharedUsers?: UserList;
     /**
-     * 
-     * @type {FilterSubscriptions}
+     * A paginated list of the users that are subscribed to the filter.
+     * @type {FilterSubscriptionsList}
      * @memberof Filter
      */
-    subscriptions?: FilterSubscriptions;
+    readonly subscriptions?: FilterSubscriptionsList;
     /**
      * A URL to view the filter results in Jira, using the ID of the filter. For example, *https://your-domain.atlassian.net/issues/?filter=10100*.
      * @type {string}
@@ -7842,6 +6344,12 @@ export interface Filter {
  * @interface FilterDetails
  */
 export interface FilterDetails {
+    /**
+     * \[Experimental\] Approximate last used time. Returns the date and time when the filter was last used. Returns `null` if the filter hasn't been used after tracking was enabled. For performance reasons, timestamps aren't updated in real time and therefore may not be exactly accurate.
+     * @type {string}
+     * @memberof FilterDetails
+     */
+    readonly approximateLastUsed?: string;
     /**
      * The description of the filter.
      * @type {string}
@@ -7891,11 +6399,11 @@ export interface FilterDetails {
      */
     name: string;
     /**
-     * 
-     * @type {FilterDetailsOwner}
+     * The user who owns the filter. Defaults to the creator of the filter, however, Jira administrators can change the owner of a shared filter in the admin settings.
+     * @type {User}
      * @memberof FilterDetails
      */
-    owner?: FilterDetailsOwner;
+    readonly owner?: User;
     /**
      * A URL to view the filter results in Jira, using the [Search for issues using JQL](#api-rest-api-3-filter-search-get) operation with the filter's JQL string to return the filter results. For example, *https://your-domain.atlassian.net/rest/api/3/search?jql=project+%3D+SSP+AND+issuetype+%3D+Bug*.
      * @type {string}
@@ -7928,270 +6436,17 @@ export interface FilterDetails {
     readonly viewUrl?: string;
 }
 /**
- * The user who owns the filter. Defaults to the creator of the filter, however, Jira administrators can change the owner of a shared filter in the admin settings.
- * @export
- * @interface FilterDetailsOwner
- */
-export interface FilterDetailsOwner {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly accountType?: FilterDetailsOwnerAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterDetailsOwner
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterDetailsOwner
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof FilterDetailsOwner
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof FilterDetailsOwner
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterDetailsOwner
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const FilterDetailsOwnerAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type FilterDetailsOwnerAccountTypeEnum = typeof FilterDetailsOwnerAccountTypeEnum[keyof typeof FilterDetailsOwnerAccountTypeEnum];
-
-/**
- * The user who owns the filter. This is defaulted to the creator of the filter, however Jira administrators can change the owner of a shared filter in the admin settings.
- * @export
- * @interface FilterOwner
- */
-export interface FilterOwner {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly accountType?: FilterOwnerAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterOwner
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterOwner
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof FilterOwner
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof FilterOwner
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterOwner
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const FilterOwnerAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type FilterOwnerAccountTypeEnum = typeof FilterOwnerAccountTypeEnum[keyof typeof FilterOwnerAccountTypeEnum];
-
-/**
- * A paginated list of the users that the filter is shared with. This includes users that are members of the groups or can browse the projects that the filter is shared with.
- * @export
- * @interface FilterSharedUsers
- */
-export interface FilterSharedUsers {
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof FilterSharedUsers
-     */
-    readonly endIndex?: number;
-    /**
-     * The list of items.
-     * @type {Array<User>}
-     * @memberof FilterSharedUsers
-     */
-    readonly items?: Array<User>;
-    /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof FilterSharedUsers
-     */
-    readonly maxResults?: number;
-    /**
-     * The number of items on the page.
-     * @type {number}
-     * @memberof FilterSharedUsers
-     */
-    readonly size?: number;
-    /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof FilterSharedUsers
-     */
-    readonly startIndex?: number;
-}
-/**
  * Details of a user or group subscribing to a filter.
  * @export
  * @interface FilterSubscription
  */
 export interface FilterSubscription {
     /**
-     * 
-     * @type {FilterSubscriptionGroup}
+     * The group subscribing to filter.
+     * @type {GroupName}
      * @memberof FilterSubscription
      */
-    group?: FilterSubscriptionGroup;
+    readonly group?: GroupName;
     /**
      * The ID of the filter subscription.
      * @type {number}
@@ -8199,181 +6454,11 @@ export interface FilterSubscription {
      */
     readonly id?: number;
     /**
-     * 
-     * @type {FilterSubscriptionUser}
+     * The user subscribing to filter.
+     * @type {User}
      * @memberof FilterSubscription
      */
-    user?: FilterSubscriptionUser;
-}
-/**
- * The group subscribing to filter.
- * @export
- * @interface FilterSubscriptionGroup
- */
-export interface FilterSubscriptionGroup {
-    /**
-     * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
-     * @type {string}
-     * @memberof FilterSubscriptionGroup
-     */
-    groupId?: string | null;
-    /**
-     * The name of group.
-     * @type {string}
-     * @memberof FilterSubscriptionGroup
-     */
-    name?: string;
-    /**
-     * The URL for these group details.
-     * @type {string}
-     * @memberof FilterSubscriptionGroup
-     */
-    readonly self?: string;
-}
-/**
- * The user subscribing to filter.
- * @export
- * @interface FilterSubscriptionUser
- */
-export interface FilterSubscriptionUser {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly accountType?: FilterSubscriptionUserAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof FilterSubscriptionUser
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof FilterSubscriptionUser
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof FilterSubscriptionUser
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof FilterSubscriptionUser
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const FilterSubscriptionUserAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type FilterSubscriptionUserAccountTypeEnum = typeof FilterSubscriptionUserAccountTypeEnum[keyof typeof FilterSubscriptionUserAccountTypeEnum];
-
-/**
- * A paginated list of the users that are subscribed to the filter.
- * @export
- * @interface FilterSubscriptions
- */
-export interface FilterSubscriptions {
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof FilterSubscriptions
-     */
-    readonly endIndex?: number;
-    /**
-     * The list of items.
-     * @type {Array<FilterSubscription>}
-     * @memberof FilterSubscriptions
-     */
-    readonly items?: Array<FilterSubscription>;
-    /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof FilterSubscriptions
-     */
-    readonly maxResults?: number;
-    /**
-     * The number of items on the page.
-     * @type {number}
-     * @memberof FilterSubscriptions
-     */
-    readonly size?: number;
-    /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof FilterSubscriptions
-     */
-    readonly startIndex?: number;
+    readonly user?: User;
 }
 /**
  * A paginated list of subscriptions to a filter.
@@ -8649,11 +6734,11 @@ export interface Group {
      */
     readonly self?: string;
     /**
-     * 
-     * @type {GroupUsers}
+     * A paginated list of the users that are members of the group. A maximum of 50 users is returned in the list, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 50 users, use`?expand=users[51:100]`.
+     * @type {PagedListUserDetailsApplicationUser}
      * @memberof Group
      */
-    users?: GroupUsers;
+    readonly users?: PagedListUserDetailsApplicationUser;
 }
 /**
  * Details about a group.
@@ -8737,43 +6822,6 @@ export interface GroupName {
     readonly self?: string;
 }
 /**
- * A paginated list of the users that are members of the group. A maximum of 50 users is returned in the list, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 50 users, use`?expand=users[51:100]`.
- * @export
- * @interface GroupUsers
- */
-export interface GroupUsers {
-    /**
-     * The index of the last item returned on the page.
-     * @type {number}
-     * @memberof GroupUsers
-     */
-    readonly endIndex?: number;
-    /**
-     * The list of items.
-     * @type {Array<UserDetails>}
-     * @memberof GroupUsers
-     */
-    readonly items?: Array<UserDetails>;
-    /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof GroupUsers
-     */
-    readonly maxResults?: number;
-    /**
-     * The number of items on the page.
-     * @type {number}
-     * @memberof GroupUsers
-     */
-    readonly size?: number;
-    /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof GroupUsers
-     */
-    readonly startIndex?: number;
-}
-/**
  * Jira instance health check results. Deprecated and no longer returned.
  * @export
  * @interface HealthCheckResult
@@ -8837,17 +6885,17 @@ export interface HistoryMetadata {
      */
     activityDescriptionKey?: string;
     /**
-     * 
-     * @type {HistoryMetadataActor}
+     * Details of the user whose action created the history record.
+     * @type {HistoryMetadataParticipant}
      * @memberof HistoryMetadata
      */
-    actor?: HistoryMetadataActor;
+    actor?: HistoryMetadataParticipant;
     /**
-     * 
-     * @type {HistoryMetadataCause}
+     * Details of the cause that triggered the creation the history record.
+     * @type {HistoryMetadataParticipant}
      * @memberof HistoryMetadata
      */
-    cause?: HistoryMetadataCause;
+    cause?: HistoryMetadataParticipant;
     /**
      * The description of the history record.
      * @type {string}
@@ -8879,146 +6927,17 @@ export interface HistoryMetadata {
      */
     extraData?: { [key: string]: string; };
     /**
-     * 
-     * @type {HistoryMetadataGenerator}
+     * Details of the system that generated the history record.
+     * @type {HistoryMetadataParticipant}
      * @memberof HistoryMetadata
      */
-    generator?: HistoryMetadataGenerator;
+    generator?: HistoryMetadataParticipant;
     /**
      * The type of the history record.
      * @type {string}
      * @memberof HistoryMetadata
      */
     type?: string;
-}
-/**
- * Details of the user whose action created the history record.
- * @export
- * @interface HistoryMetadataActor
- */
-export interface HistoryMetadataActor {
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    avatarUrl?: string;
-    /**
-     * The display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    displayName?: string;
-    /**
-     * The key of the display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    displayNameKey?: string;
-    /**
-     * The ID of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    id?: string;
-    /**
-     * The type of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    type?: string;
-    /**
-     * The URL of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataActor
-     */
-    url?: string;
-}
-/**
- * Details of the cause that triggered the creation the history record.
- * @export
- * @interface HistoryMetadataCause
- */
-export interface HistoryMetadataCause {
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    avatarUrl?: string;
-    /**
-     * The display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    displayName?: string;
-    /**
-     * The key of the display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    displayNameKey?: string;
-    /**
-     * The ID of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    id?: string;
-    /**
-     * The type of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    type?: string;
-    /**
-     * The URL of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataCause
-     */
-    url?: string;
-}
-/**
- * Details of the system that generated the history record.
- * @export
- * @interface HistoryMetadataGenerator
- */
-export interface HistoryMetadataGenerator {
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    avatarUrl?: string;
-    /**
-     * The display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    displayName?: string;
-    /**
-     * The key of the display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    displayNameKey?: string;
-    /**
-     * The ID of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    id?: string;
-    /**
-     * The type of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    type?: string;
-    /**
-     * The URL of the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataGenerator
-     */
-    url?: string;
 }
 /**
  * Details of user or system associated with a issue history metadata item.
@@ -9156,6 +7075,50 @@ export interface IdOrKeyBean {
 /**
  * 
  * @export
+ * @interface IdSearchRequestBean
+ */
+export interface IdSearchRequestBean {
+    /**
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. Order by clauses are not allowed.
+     * @type {string}
+     * @memberof IdSearchRequestBean
+     */
+    jql?: string;
+    /**
+     * The maximum number of items to return per page.
+     * @type {number}
+     * @memberof IdSearchRequestBean
+     */
+    maxResults?: number;
+    /**
+     * The continuation token to fetch the next page. This token is provided by the response of this endpoint.
+     * @type {string}
+     * @memberof IdSearchRequestBean
+     */
+    nextPageToken?: string;
+}
+/**
+ * Result of your JQL search. Returns a list of issue IDs and a token to fetch the next page if one exists.
+ * @export
+ * @interface IdSearchResults
+ */
+export interface IdSearchResults {
+    /**
+     * The list of issue IDs found by the search.
+     * @type {Array<number>}
+     * @memberof IdSearchResults
+     */
+    readonly issueIds?: Array<number>;
+    /**
+     * Continuation token to fetch the next page. If this result represents the last or the only page this token will be null.
+     * @type {string}
+     * @memberof IdSearchResults
+     */
+    readonly nextPageToken?: string;
+}
+/**
+ * 
+ * @export
  * @interface IncludedFields
  */
 export interface IncludedFields {
@@ -9177,6 +7140,19 @@ export interface IncludedFields {
      * @memberof IncludedFields
      */
     included?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface InputStreamSource
+ */
+export interface InputStreamSource {
+    /**
+     * 
+     * @type {object}
+     * @memberof InputStreamSource
+     */
+    inputStream?: object;
 }
 /**
  * List of Issue Ids Or Keys that are to be archived or unarchived
@@ -9217,17 +7193,17 @@ export interface IssueArchivalSyncResponse {
  */
 export interface IssueBean {
     /**
-     * 
-     * @type {IssueBeanChangelog}
+     * Details of changelogs associated with the issue.
+     * @type {PageOfChangelogs}
      * @memberof IssueBean
      */
-    changelog?: IssueBeanChangelog;
+    readonly changelog?: PageOfChangelogs;
     /**
-     * 
-     * @type {IssueBeanEditmeta}
+     * The metadata for the fields on the issue that can be amended.
+     * @type {IssueUpdateMetadata}
      * @memberof IssueBean
      */
-    editmeta?: IssueBeanEditmeta;
+    readonly editmeta?: IssueUpdateMetadata;
     /**
      * Expand options that include additional issue details in the response.
      * @type {string}
@@ -9265,11 +7241,11 @@ export interface IssueBean {
      */
     readonly names?: { [key: string]: string; };
     /**
-     * 
-     * @type {IssueBeanOperations}
+     * The operations that can be performed on the issue.
+     * @type {Operations}
      * @memberof IssueBean
      */
-    operations?: IssueBeanOperations;
+    readonly operations?: Operations;
     /**
      * Details of the issue properties identified in the request.
      * @type {{ [key: string]: any; }}
@@ -9308,61 +7284,138 @@ export interface IssueBean {
     readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
 }
 /**
- * Details of changelogs associated with the issue.
+ * 
  * @export
- * @interface IssueBeanChangelog
+ * @interface IssueBulkEditField
  */
-export interface IssueBeanChangelog {
+export interface IssueBulkEditField {
     /**
-     * The list of changelogs.
-     * @type {Array<Changelog>}
-     * @memberof IssueBeanChangelog
+     * Description of the field.
+     * @type {string}
+     * @memberof IssueBulkEditField
      */
-    readonly histories?: Array<Changelog>;
+    description?: string;
     /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof IssueBeanChangelog
+     * A list of options related to the field, applicable in contexts where multiple selections are allowed.
+     * @type {Array<object>}
+     * @memberof IssueBulkEditField
      */
-    readonly maxResults?: number;
+    fieldOptions?: Array<object>;
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof IssueBeanChangelog
+     * The unique ID of the field.
+     * @type {string}
+     * @memberof IssueBulkEditField
      */
-    readonly startAt?: number;
+    id?: string;
     /**
-     * The number of results on the page.
-     * @type {number}
-     * @memberof IssueBeanChangelog
+     * Indicates whether the field is mandatory for the operation.
+     * @type {boolean}
+     * @memberof IssueBulkEditField
      */
-    readonly total?: number;
+    isRequired?: boolean;
+    /**
+     * Specifies supported actions (like add, replace, remove) on multi-select fields via an enum.
+     * @type {Array<string>}
+     * @memberof IssueBulkEditField
+     */
+    multiSelectFieldOptions?: Array<IssueBulkEditFieldMultiSelectFieldOptionsEnum>;
+    /**
+     * The display name of the field.
+     * @type {string}
+     * @memberof IssueBulkEditField
+     */
+    name?: string;
+    /**
+     * A URL to fetch additional data for the field
+     * @type {string}
+     * @memberof IssueBulkEditField
+     */
+    searchUrl?: string;
+    /**
+     * The type of the field.
+     * @type {string}
+     * @memberof IssueBulkEditField
+     */
+    type?: string;
+    /**
+     * A message indicating why the field is unavailable for editing.
+     * @type {string}
+     * @memberof IssueBulkEditField
+     */
+    unavailableMessage?: string;
 }
+
+
 /**
- * The metadata for the fields on the issue that can be amended.
  * @export
- * @interface IssueBeanEditmeta
  */
-export interface IssueBeanEditmeta {
+export const IssueBulkEditFieldMultiSelectFieldOptionsEnum = {
+    Add: 'ADD',
+    Remove: 'REMOVE',
+    Replace: 'REPLACE',
+    RemoveAll: 'REMOVE_ALL'
+} as const;
+export type IssueBulkEditFieldMultiSelectFieldOptionsEnum = typeof IssueBulkEditFieldMultiSelectFieldOptionsEnum[keyof typeof IssueBulkEditFieldMultiSelectFieldOptionsEnum];
+
+/**
+ * Issue Bulk Edit Payload
+ * @export
+ * @interface IssueBulkEditPayload
+ */
+export interface IssueBulkEditPayload {
     /**
+     * An object that defines the values to be updated in specified fields of an issue. The structure and content of this parameter vary depending on the type of field being edited. Although the order is not significant, ensure that field IDs align with those in selectedActions.
+     * @type {JiraIssueFields}
+     * @memberof IssueBulkEditPayload
+     */
+    editedFieldsInput: JiraIssueFields;
+    /**
+     * List of all the field IDs that are to be bulk edited. Each field ID in this list corresponds to a specific attribute of an issue that is set to be modified in the bulk edit operation. The relevant field ID can be obtained by calling the Bulk Edit Get Fields REST API (documentation available on this page itself).
+     * @type {Array<string>}
+     * @memberof IssueBulkEditPayload
+     */
+    selectedActions: Array<string>;
+    /**
+     * List of issue IDs or keys which are to be bulk edited. These IDs or keys can be from different projects and issue types.
+     * @type {Array<string>}
+     * @memberof IssueBulkEditPayload
+     */
+    selectedIssueIdsOrKeys: Array<string>;
+    /**
+     * A boolean value that indicates whether to send a bulk change notification when the issues are being edited.
      * 
-     * @type {{ [key: string]: FieldMetadata; }}
-     * @memberof IssueBeanEditmeta
+     * If `true`, dispatches a bulk notification email to users about the updates.
+     * @type {boolean}
+     * @memberof IssueBulkEditPayload
      */
-    readonly fields?: { [key: string]: FieldMetadata; };
+    sendBulkNotification?: boolean | null;
 }
 /**
- * The operations that can be performed on the issue.
+ * Issue Bulk Move Payload
  * @export
- * @interface IssueBeanOperations
+ * @interface IssueBulkMovePayload
  */
-export interface IssueBeanOperations {
+export interface IssueBulkMovePayload {
     /**
-     * Details of the link groups defining issue operations.
-     * @type {Array<LinkGroup>}
-     * @memberof IssueBeanOperations
+     * A boolean value that indicates whether to send a bulk change notification when the issues are being moved.
+     * 
+     * If `true`, dispatches a bulk notification email to users about the updates.
+     * @type {boolean}
+     * @memberof IssueBulkMovePayload
      */
-    readonly linkGroups?: Array<LinkGroup>;
+    sendBulkNotification?: boolean | null;
+    /**
+     * An object representing the mapping of issues and data related to destination entities, like fields and statuses, that are required during a bulk move.
+     * 
+     * The key is a string that is created by concatenating the following three entities in order, separated by commas. The format is `<project ID or key>,<issueType ID>,<parent ID or key>`. It should be unique across mappings provided in the payload. If you provide multiple mappings for the same key, only one will be processed. However, the operation won't fail, so the error may be hard to track down.
+     * 
+     *  *  ***Destination project*** (Required): ID or key of the project to which the issues are being moved.
+     *  *  ***Destination issueType*** (Required): ID of the issueType to which the issues are being moved.
+     *  *  ***Destination parent ID or key*** (Optional): ID or key of the issue which will become the parent of the issues being moved. Only required when the destination issueType is a subtask.
+     * @type {{ [key: string]: TargetToSourcesMapping; }}
+     * @memberof IssueBulkMovePayload
+     */
+    targetToSourcesMapping?: { [key: string]: TargetToSourcesMapping; };
 }
 /**
  * A list of changelog IDs.
@@ -9535,11 +7588,11 @@ export interface IssueFieldOptionConfiguration {
      */
     attributes?: Array<IssueFieldOptionConfigurationAttributesEnum>;
     /**
-     * 
-     * @type {IssueFieldOptionConfigurationScope}
+     * Defines the projects that the option is available in. If the scope is not defined, then the option is available in all projects.
+     * @type {IssueFieldOptionScopeBean}
      * @memberof IssueFieldOptionConfiguration
      */
-    scope?: IssueFieldOptionConfigurationScope;
+    scope?: IssueFieldOptionScopeBean;
 }
 
 
@@ -9552,31 +7605,6 @@ export const IssueFieldOptionConfigurationAttributesEnum = {
 } as const;
 export type IssueFieldOptionConfigurationAttributesEnum = typeof IssueFieldOptionConfigurationAttributesEnum[keyof typeof IssueFieldOptionConfigurationAttributesEnum];
 
-/**
- * Defines the projects that the option is available in. If the scope is not defined, then the option is available in all projects.
- * @export
- * @interface IssueFieldOptionConfigurationScope
- */
-export interface IssueFieldOptionConfigurationScope {
-    /**
-     * 
-     * @type {IssueFieldOptionScopeBeanGlobal}
-     * @memberof IssueFieldOptionConfigurationScope
-     */
-    global?: IssueFieldOptionScopeBeanGlobal;
-    /**
-     * DEPRECATED
-     * @type {Set<number>}
-     * @memberof IssueFieldOptionConfigurationScope
-     */
-    projects?: Array<number>;
-    /**
-     * Defines the projects in which the option is available and the behavior of the option within each project. Specify one object per project. The behavior of the option in a project context overrides the behavior in the global context.
-     * @type {Set<ProjectScopeBean>}
-     * @memberof IssueFieldOptionConfigurationScope
-     */
-    projects2?: Array<ProjectScopeBean>;
-}
 /**
  * 
  * @export
@@ -9610,11 +7638,11 @@ export interface IssueFieldOptionCreateBean {
  */
 export interface IssueFieldOptionScopeBean {
     /**
-     * 
-     * @type {IssueFieldOptionScopeBeanGlobal}
+     * Defines the behavior of the option within the global context. If this property is set, even if set to an empty object, then the option is available in all projects.
+     * @type {GlobalScopeBean}
      * @memberof IssueFieldOptionScopeBean
      */
-    global?: IssueFieldOptionScopeBeanGlobal;
+    global?: GlobalScopeBean;
     /**
      * DEPRECATED
      * @type {Set<number>}
@@ -9628,30 +7656,6 @@ export interface IssueFieldOptionScopeBean {
      */
     projects2?: Array<ProjectScopeBean>;
 }
-/**
- * Defines the behavior of the option within the global context. If this property is set, even if set to an empty object, then the option is available in all projects.
- * @export
- * @interface IssueFieldOptionScopeBeanGlobal
- */
-export interface IssueFieldOptionScopeBeanGlobal {
-    /**
-     * Defines the behavior of the option in the global context.If notSelectable is set, the option cannot be set as the field's value. This is useful for archiving an option that has previously been selected but shouldn't be used anymore.If defaultValue is set, the option is selected by default.
-     * @type {Set<string>}
-     * @memberof IssueFieldOptionScopeBeanGlobal
-     */
-    attributes?: Array<IssueFieldOptionScopeBeanGlobalAttributesEnum>;
-}
-
-
-/**
- * @export
- */
-export const IssueFieldOptionScopeBeanGlobalAttributesEnum = {
-    NotSelectable: 'notSelectable',
-    DefaultValue: 'defaultValue'
-} as const;
-export type IssueFieldOptionScopeBeanGlobalAttributesEnum = typeof IssueFieldOptionScopeBeanGlobalAttributesEnum[keyof typeof IssueFieldOptionScopeBeanGlobalAttributesEnum];
-
 /**
  * Bulk operation filter details.
  * @export
@@ -9697,6 +7701,44 @@ export interface IssueFilterForBulkPropertySet {
     hasProperty?: boolean;
 }
 /**
+ * 
+ * @export
+ * @interface IssueLimitReportRequest
+ */
+export interface IssueLimitReportRequest {
+    /**
+     * A list of fields and their respective approaching limit threshold. Required for querying issues approaching limits. Optional for querying issues breaching limits. Accepted fields are: `comment`, `worklog`, `attachment`, `remoteIssueLinks`, and `issuelinks`. Example: `{"issuesApproachingLimitParams": {"comment": 4500, "attachment": 1800}}`
+     * @type {{ [key: string]: number; }}
+     * @memberof IssueLimitReportRequest
+     */
+    issuesApproachingLimitParams?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface IssueLimitReportResponseBean
+ */
+export interface IssueLimitReportResponseBean {
+    /**
+     * A list of ids of issues approaching the limit and their field count
+     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @memberof IssueLimitReportResponseBean
+     */
+    issuesApproachingLimit?: { [key: string]: { [key: string]: number; }; };
+    /**
+     * A list of ids of issues breaching the limit and their field count
+     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @memberof IssueLimitReportResponseBean
+     */
+    issuesBreachingLimit?: { [key: string]: { [key: string]: number; }; };
+    /**
+     * The fields and their defined limits
+     * @type {{ [key: string]: number; }}
+     * @memberof IssueLimitReportResponseBean
+     */
+    limits?: { [key: string]: number; };
+}
+/**
  * Details of a link between issues.
  * @export
  * @interface IssueLink
@@ -9709,17 +7751,17 @@ export interface IssueLink {
      */
     readonly id?: string;
     /**
-     * 
-     * @type {IssueLinkInwardIssue}
+     * Provides details about the linked issue. If presenting this link in a user interface, use the `inward` field of the issue link type to label the link.
+     * @type {LinkedIssue}
      * @memberof IssueLink
      */
-    inwardIssue: IssueLinkInwardIssue;
+    inwardIssue: LinkedIssue;
     /**
-     * 
-     * @type {IssueLinkOutwardIssue}
+     * Provides details about the linked issue. If presenting this link in a user interface, use the `outward` field of the issue link type to label the link.
+     * @type {LinkedIssue}
      * @memberof IssueLink
      */
-    outwardIssue: IssueLinkOutwardIssue;
+    outwardIssue: LinkedIssue;
     /**
      * The URL of the issue link.
      * @type {string}
@@ -9727,76 +7769,17 @@ export interface IssueLink {
      */
     readonly self?: string;
     /**
-     * 
+     * The type of link between the issues.
      * @type {IssueLinkType}
      * @memberof IssueLink
      */
     type: IssueLinkType;
 }
 /**
- * Provides details about the linked issue. If presenting this link in a user interface, use the `inward` field of the issue link type to label the link.
- * @export
- * @interface IssueLinkInwardIssue
- */
-export interface IssueLinkInwardIssue {
-    /**
-     * 
-     * @type {LinkedIssueFields}
-     * @memberof IssueLinkInwardIssue
-     */
-    fields?: LinkedIssueFields;
-    /**
-     * The ID of an issue. Required if `key` isn't provided.
-     * @type {string}
-     * @memberof IssueLinkInwardIssue
-     */
-    id?: string;
-    /**
-     * The key of an issue. Required if `id` isn't provided.
-     * @type {string}
-     * @memberof IssueLinkInwardIssue
-     */
-    key?: string;
-    /**
-     * The URL of the issue.
-     * @type {string}
-     * @memberof IssueLinkInwardIssue
-     */
-    readonly self?: string;
-}
-/**
- * Provides details about the linked issue. If presenting this link in a user interface, use the `outward` field of the issue link type to label the link.
- * @export
- * @interface IssueLinkOutwardIssue
- */
-export interface IssueLinkOutwardIssue {
-    /**
-     * 
-     * @type {LinkedIssueFields}
-     * @memberof IssueLinkOutwardIssue
-     */
-    fields?: LinkedIssueFields;
-    /**
-     * The ID of an issue. Required if `key` isn't provided.
-     * @type {string}
-     * @memberof IssueLinkOutwardIssue
-     */
-    id?: string;
-    /**
-     * The key of an issue. Required if `id` isn't provided.
-     * @type {string}
-     * @memberof IssueLinkOutwardIssue
-     */
-    key?: string;
-    /**
-     * The URL of the issue.
-     * @type {string}
-     * @memberof IssueLinkOutwardIssue
-     */
-    readonly self?: string;
-}
-/**
- * The type of link between the issues.
+ * This object is used as follows:
+ * 
+ *  *  In the [ issueLink](#api-rest-api-3-issueLink-post) resource it defines and reports on the type of link between the issues. Find a list of issue link types with [Get issue link types](#api-rest-api-3-issueLinkType-get).
+ *  *  In the [ issueLinkType](#api-rest-api-3-issueLinkType-post) resource it defines and reports on issue link types.
  * @export
  * @interface IssueLinkType
  */
@@ -9959,11 +7942,11 @@ export interface IssuePickerSuggestionsIssueType {
  */
 export interface IssueSecurityLevelMember {
     /**
-     * 
-     * @type {IssueSecurityLevelMemberHolder}
+     * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+     * @type {PermissionHolder}
      * @memberof IssueSecurityLevelMember
      */
-    holder: IssueSecurityLevelMemberHolder;
+    holder: PermissionHolder;
     /**
      * The ID of the issue security level member.
      * @type {number}
@@ -9982,37 +7965,6 @@ export interface IssueSecurityLevelMember {
      * @memberof IssueSecurityLevelMember
      */
     managed?: boolean;
-}
-/**
- * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
- * @export
- * @interface IssueSecurityLevelMemberHolder
- */
-export interface IssueSecurityLevelMemberHolder {
-    /**
-     * Expand options that include additional permission holder details in the response.
-     * @type {string}
-     * @memberof IssueSecurityLevelMemberHolder
-     */
-    readonly expand?: string;
-    /**
-     * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof IssueSecurityLevelMemberHolder
-     */
-    parameter?: string;
-    /**
-     * The type of permission holder.
-     * @type {string}
-     * @memberof IssueSecurityLevelMemberHolder
-     */
-    type: string;
-    /**
-     * The identifier associated with the `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof IssueSecurityLevelMemberHolder
-     */
-    value?: string;
 }
 /**
  * Details about an project using security scheme mapping.
@@ -10102,54 +8054,11 @@ export interface IssueTransition {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {IssueTransitionTo}
+     * Details of the issue status after the transition.
+     * @type {StatusDetails}
      * @memberof IssueTransition
      */
-    to?: IssueTransitionTo;
-}
-/**
- * Details of the issue status after the transition.
- * @export
- * @interface IssueTransitionTo
- */
-export interface IssueTransitionTo {
-    /**
-     * The description of the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly description?: string;
-    /**
-     * The URL of the icon used to represent the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly iconUrl?: string;
-    /**
-     * The ID of the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly id?: string;
-    /**
-     * The name of the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly name?: string;
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof IssueTransitionTo
-     */
-    readonly self?: string;
-    /**
-     * 
-     * @type {StatusDetailsStatusCategory}
-     * @memberof IssueTransitionTo
-     */
-    statusCategory?: StatusDetailsStatusCategory;
+    readonly to?: StatusDetails;
 }
 /**
  * 
@@ -10249,11 +8158,11 @@ export interface IssueTypeDetails {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {IssueTypeDetailsScope}
+     * Details of the next-gen projects the issue type is available in.
+     * @type {Scope}
      * @memberof IssueTypeDetails
      */
-    scope?: IssueTypeDetailsScope;
+    readonly scope?: Scope;
     /**
      * The URL of these issue type details.
      * @type {string}
@@ -10267,36 +8176,6 @@ export interface IssueTypeDetails {
      */
     readonly subtask?: boolean;
 }
-/**
- * Details of the next-gen projects the issue type is available in.
- * @export
- * @interface IssueTypeDetailsScope
- */
-export interface IssueTypeDetailsScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof IssueTypeDetailsScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof IssueTypeDetailsScope
-     */
-    readonly type?: IssueTypeDetailsScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const IssueTypeDetailsScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type IssueTypeDetailsScopeTypeEnum = typeof IssueTypeDetailsScopeTypeEnum[keyof typeof IssueTypeDetailsScopeTypeEnum];
-
 /**
  * The list of issue type IDs.
  * @export
@@ -10409,11 +8288,11 @@ export interface IssueTypeIssueCreateMetadata {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {IssueTypeDetailsScope}
+     * Details of the next-gen projects the issue type is available in.
+     * @type {Scope}
      * @memberof IssueTypeIssueCreateMetadata
      */
-    scope?: IssueTypeDetailsScope;
+    readonly scope?: Scope;
     /**
      * The URL of these issue type details.
      * @type {string}
@@ -10553,54 +8432,17 @@ export interface IssueTypeSchemeProjectAssociation {
  */
 export interface IssueTypeSchemeProjects {
     /**
-     * 
-     * @type {IssueTypeSchemeProjectsIssueTypeScheme}
+     * Details of an issue type scheme.
+     * @type {IssueTypeScheme}
      * @memberof IssueTypeSchemeProjects
      */
-    issueTypeScheme: IssueTypeSchemeProjectsIssueTypeScheme;
+    issueTypeScheme: IssueTypeScheme;
     /**
      * The IDs of the projects using the issue type scheme.
      * @type {Array<string>}
      * @memberof IssueTypeSchemeProjects
      */
     projectIds: Array<string>;
-}
-/**
- * Details of an issue type scheme.
- * @export
- * @interface IssueTypeSchemeProjectsIssueTypeScheme
- */
-export interface IssueTypeSchemeProjectsIssueTypeScheme {
-    /**
-     * The ID of the default issue type of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    defaultIssueTypeId?: string;
-    /**
-     * The description of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    description?: string;
-    /**
-     * The ID of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    id: string;
-    /**
-     * Whether the issue type scheme is the default.
-     * @type {boolean}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    isDefault?: boolean;
-    /**
-     * The name of the issue type scheme.
-     * @type {string}
-     * @memberof IssueTypeSchemeProjectsIssueTypeScheme
-     */
-    name: string;
 }
 /**
  * Details of the name, description, and default issue type for an issue type scheme.
@@ -10792,42 +8634,17 @@ export interface IssueTypeScreenSchemeUpdateDetails {
  */
 export interface IssueTypeScreenSchemesProjects {
     /**
-     * 
-     * @type {IssueTypeScreenSchemesProjectsIssueTypeScreenScheme}
+     * Details of an issue type screen scheme.
+     * @type {IssueTypeScreenScheme}
      * @memberof IssueTypeScreenSchemesProjects
      */
-    issueTypeScreenScheme: IssueTypeScreenSchemesProjectsIssueTypeScreenScheme;
+    issueTypeScreenScheme: IssueTypeScreenScheme;
     /**
      * The IDs of the projects using the issue type screen scheme.
      * @type {Array<string>}
      * @memberof IssueTypeScreenSchemesProjects
      */
     projectIds: Array<string>;
-}
-/**
- * Details of an issue type screen scheme.
- * @export
- * @interface IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
- */
-export interface IssueTypeScreenSchemesProjectsIssueTypeScreenScheme {
-    /**
-     * The description of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
-     */
-    description?: string;
-    /**
-     * The ID of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
-     */
-    id: string;
-    /**
-     * The name of the issue type screen scheme.
-     * @type {string}
-     * @memberof IssueTypeScreenSchemesProjectsIssueTypeScreenScheme
-     */
-    name: string;
 }
 /**
  * Mapping of an issue type to a context.
@@ -10986,11 +8803,11 @@ export interface IssueUpdateDetails {
      */
     fields?: { [key: string]: any; };
     /**
-     * 
-     * @type {IssueUpdateDetailsHistoryMetadata}
+     * Additional issue history details.
+     * @type {HistoryMetadata}
      * @memberof IssueUpdateDetails
      */
-    historyMetadata?: IssueUpdateDetailsHistoryMetadata;
+    historyMetadata?: HistoryMetadata;
     /**
      * Details of issue properties to be add or update.
      * @type {Array<EntityProperty>}
@@ -10998,163 +8815,17 @@ export interface IssueUpdateDetails {
      */
     properties?: Array<EntityProperty>;
     /**
-     * 
-     * @type {IssueUpdateDetailsTransition}
+     * Details of a transition. Required when performing a transition, optional when creating or editing an issue.
+     * @type {IssueTransition}
      * @memberof IssueUpdateDetails
      */
-    transition?: IssueUpdateDetailsTransition;
+    transition?: IssueTransition;
     /**
      * A Map containing the field field name and a list of operations to perform on the issue screen field. Note that fields included in here cannot be included in `fields`.
      * @type {{ [key: string]: Array<FieldUpdateOperation>; }}
      * @memberof IssueUpdateDetails
      */
     update?: { [key: string]: Array<FieldUpdateOperation>; };
-}
-/**
- * Additional issue history details.
- * @export
- * @interface IssueUpdateDetailsHistoryMetadata
- */
-export interface IssueUpdateDetailsHistoryMetadata {
-    /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    activityDescriptionKey?: string;
-    /**
-     * 
-     * @type {HistoryMetadataActor}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    actor?: HistoryMetadataActor;
-    /**
-     * 
-     * @type {HistoryMetadataCause}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    cause?: HistoryMetadataCause;
-    /**
-     * The description of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    description?: string;
-    /**
-     * The description key of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    descriptionKey?: string;
-    /**
-     * The description of the email address associated the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    emailDescription?: string;
-    /**
-     * The description key of the email address associated the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    emailDescriptionKey?: string;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
-    /**
-     * 
-     * @type {HistoryMetadataGenerator}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    generator?: HistoryMetadataGenerator;
-    /**
-     * The type of the history record.
-     * @type {string}
-     * @memberof IssueUpdateDetailsHistoryMetadata
-     */
-    type?: string;
-}
-/**
- * Details of a transition. Required when performing a transition, optional when creating or editing an issue.
- * @export
- * @interface IssueUpdateDetailsTransition
- */
-export interface IssueUpdateDetailsTransition {
-    /**
-     * Expand options that include additional transition details in the response.
-     * @type {string}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly expand?: string;
-    /**
-     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
-     * @type {{ [key: string]: FieldMetadata; }}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly fields?: { [key: string]: FieldMetadata; };
-    /**
-     * Whether there is a screen associated with the issue transition.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly hasScreen?: boolean;
-    /**
-     * The ID of the issue transition. Required when specifying a transition to undertake.
-     * @type {string}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    id?: string;
-    /**
-     * Whether the transition is available to be performed.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly isAvailable?: boolean;
-    /**
-     * Whether the issue has to meet criteria before the issue transition is applied.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly isConditional?: boolean;
-    /**
-     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly isGlobal?: boolean;
-    /**
-     * Whether this is the initial issue transition for the workflow.
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly isInitial?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    looped?: boolean;
-    /**
-     * The name of the issue transition.
-     * @type {string}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {IssueTransitionTo}
-     * @memberof IssueUpdateDetailsTransition
-     */
-    to?: IssueTransitionTo;
 }
 /**
  * A list of editable field details.
@@ -11253,6 +8924,32 @@ export interface IssuesUpdateBean {
     issueUpdates?: Array<IssueUpdateDetails>;
 }
 /**
+ * 
+ * @export
+ * @interface JQLCountRequestBean
+ */
+export interface JQLCountRequestBean {
+    /**
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. Requires where clause to be present.
+     * @type {string}
+     * @memberof JQLCountRequestBean
+     */
+    jql?: string;
+}
+/**
+ * 
+ * @export
+ * @interface JQLCountResultsBean
+ */
+export interface JQLCountResultsBean {
+    /**
+     * Number of issues matching JQL query.
+     * @type {number}
+     * @memberof JQLCountResultsBean
+     */
+    count?: number;
+}
+/**
  * The JQL queries to be converted.
  * @export
  * @interface JQLPersonalDataMigrationRequest
@@ -11316,55 +9013,12 @@ export interface JQLReferenceData {
  */
 export interface JexpIssues {
     /**
-     * 
-     * @type {JexpIssuesJql}
+     * The JQL query that specifies the set of issues available in the Jira expression.
+     * @type {JexpJqlIssues}
      * @memberof JexpIssues
      */
-    jql?: JexpIssuesJql;
+    jql?: JexpJqlIssues;
 }
-/**
- * The JQL query that specifies the set of issues available in the Jira expression.
- * @export
- * @interface JexpIssuesJql
- */
-export interface JexpIssuesJql {
-    /**
-     * The maximum number of issues to return from the JQL query. Inspect `meta.issues.jql.maxResults` in the response to ensure the maximum value has not been exceeded.
-     * @type {number}
-     * @memberof JexpIssuesJql
-     */
-    maxResults?: number;
-    /**
-     * The JQL query.
-     * @type {string}
-     * @memberof JexpIssuesJql
-     */
-    query?: string;
-    /**
-     * The index of the first issue to return from the JQL query.
-     * @type {number}
-     * @memberof JexpIssuesJql
-     */
-    startAt?: number;
-    /**
-     * Determines how to validate the JQL query and treat the validation results.
-     * @type {string}
-     * @memberof JexpIssuesJql
-     */
-    validation?: JexpIssuesJqlValidationEnum;
-}
-
-
-/**
- * @export
- */
-export const JexpIssuesJqlValidationEnum = {
-    Strict: 'strict',
-    Warn: 'warn',
-    None: 'none'
-} as const;
-export type JexpIssuesJqlValidationEnum = typeof JexpIssuesJqlValidationEnum[keyof typeof JexpIssuesJqlValidationEnum];
-
 /**
  * The JQL specifying the issues available in the evaluated Jira expression under the `issues` context variable. Not all issues returned by the JQL query are loaded, only those described by the `startAt` and `maxResults` properties. To determine whether it is necessary to iterate to ensure all the issues returned by the JQL query are evaluated, inspect `meta.issues.jql.count` in the response.
  * @export
@@ -11408,6 +9062,153 @@ export const JexpJqlIssuesValidationEnum = {
 } as const;
 export type JexpJqlIssuesValidationEnum = typeof JexpJqlIssuesValidationEnum[keyof typeof JexpJqlIssuesValidationEnum];
 
+/**
+ * 
+ * @export
+ * @interface JiraCascadingSelectField
+ */
+export interface JiraCascadingSelectField {
+    /**
+     * 
+     * @type {JiraSelectedOptionField}
+     * @memberof JiraCascadingSelectField
+     */
+    childOptionValue?: JiraSelectedOptionField;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraCascadingSelectField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraSelectedOptionField}
+     * @memberof JiraCascadingSelectField
+     */
+    parentOptionValue: JiraSelectedOptionField;
+}
+/**
+ * 
+ * @export
+ * @interface JiraColorField
+ */
+export interface JiraColorField {
+    /**
+     * 
+     * @type {JiraColorInput}
+     * @memberof JiraColorField
+     */
+    color: JiraColorInput;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraColorField
+     */
+    fieldId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraColorInput
+ */
+export interface JiraColorInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraColorInput
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraComponentField
+ */
+export interface JiraComponentField {
+    /**
+     * 
+     * @type {number}
+     * @memberof JiraComponentField
+     */
+    componentId: number;
+}
+/**
+ * 
+ * @export
+ * @interface JiraDateField
+ */
+export interface JiraDateField {
+    /**
+     * 
+     * @type {JiraDateInput}
+     * @memberof JiraDateField
+     */
+    date?: JiraDateInput;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraDateField
+     */
+    fieldId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraDateInput
+ */
+export interface JiraDateInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraDateInput
+     */
+    formattedDate: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraDateTimeField
+ */
+export interface JiraDateTimeField {
+    /**
+     * 
+     * @type {JiraDateTimeInput}
+     * @memberof JiraDateTimeField
+     */
+    dateTime: JiraDateTimeInput;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraDateTimeField
+     */
+    fieldId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraDateTimeInput
+ */
+export interface JiraDateTimeInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraDateTimeInput
+     */
+    formattedDateTime: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraDurationField
+ */
+export interface JiraDurationField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraDurationField
+     */
+    originalEstimateField: string;
+}
 /**
  * Details about the analysed Jira expression.
  * @export
@@ -11497,23 +9298,23 @@ export interface JiraExpressionEvalContextBean {
      */
     customerRequest?: number;
     /**
-     * 
-     * @type {JiraExpressionEvalContextBeanIssue}
+     * The issue that is available under the `issue` variable when evaluating the expression.
+     * @type {IdOrKeyBean}
      * @memberof JiraExpressionEvalContextBean
      */
-    issue?: JiraExpressionEvalContextBeanIssue;
+    issue?: IdOrKeyBean;
     /**
-     * 
-     * @type {JiraExpressionEvalContextBeanIssues}
+     * The collection of issues that is available under the `issues` variable when evaluating the expression.
+     * @type {JexpIssues}
      * @memberof JiraExpressionEvalContextBean
      */
-    issues?: JiraExpressionEvalContextBeanIssues;
+    issues?: JexpIssues;
     /**
-     * 
-     * @type {JiraExpressionEvalContextBeanProject}
+     * The project that is available under the `project` variable when evaluating the expression.
+     * @type {IdOrKeyBean}
      * @memberof JiraExpressionEvalContextBean
      */
-    project?: JiraExpressionEvalContextBeanProject;
+    project?: IdOrKeyBean;
     /**
      * The ID of the service desk that is available under the `serviceDesk` variable when evaluating the expression.
      * @type {number}
@@ -11526,57 +9327,6 @@ export interface JiraExpressionEvalContextBean {
      * @memberof JiraExpressionEvalContextBean
      */
     sprint?: number;
-}
-/**
- * The issue that is available under the `issue` variable when evaluating the expression.
- * @export
- * @interface JiraExpressionEvalContextBeanIssue
- */
-export interface JiraExpressionEvalContextBeanIssue {
-    /**
-     * The ID of the referenced item.
-     * @type {number}
-     * @memberof JiraExpressionEvalContextBeanIssue
-     */
-    id?: number;
-    /**
-     * The key of the referenced item.
-     * @type {string}
-     * @memberof JiraExpressionEvalContextBeanIssue
-     */
-    key?: string;
-}
-/**
- * The collection of issues that is available under the `issues` variable when evaluating the expression.
- * @export
- * @interface JiraExpressionEvalContextBeanIssues
- */
-export interface JiraExpressionEvalContextBeanIssues {
-    /**
-     * 
-     * @type {JexpIssuesJql}
-     * @memberof JiraExpressionEvalContextBeanIssues
-     */
-    jql?: JexpIssuesJql;
-}
-/**
- * The project that is available under the `project` variable when evaluating the expression.
- * @export
- * @interface JiraExpressionEvalContextBeanProject
- */
-export interface JiraExpressionEvalContextBeanProject {
-    /**
-     * The ID of the referenced item.
-     * @type {number}
-     * @memberof JiraExpressionEvalContextBeanProject
-     */
-    id?: number;
-    /**
-     * The key of the referenced item.
-     * @type {string}
-     * @memberof JiraExpressionEvalContextBeanProject
-     */
-    key?: string;
 }
 /**
  * 
@@ -11585,11 +9335,11 @@ export interface JiraExpressionEvalContextBeanProject {
  */
 export interface JiraExpressionEvalRequestBean {
     /**
-     * 
-     * @type {JiraExpressionEvalRequestBeanContext}
+     * The context in which the Jira expression is evaluated.
+     * @type {JiraExpressionEvalContextBean}
      * @memberof JiraExpressionEvalRequestBean
      */
-    context?: JiraExpressionEvalRequestBeanContext;
+    context?: JiraExpressionEvalContextBean;
     /**
      * The Jira expression to evaluate.
      * @type {string}
@@ -11598,127 +9348,23 @@ export interface JiraExpressionEvalRequestBean {
     expression: string;
 }
 /**
- * The context in which the Jira expression is evaluated.
- * @export
- * @interface JiraExpressionEvalRequestBeanContext
- */
-export interface JiraExpressionEvalRequestBeanContext {
-    /**
-     * The ID of the board that is available under the `board` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    board?: number;
-    /**
-     * Custom context variables and their types. These variable types are available for use in a custom context:
-     * 
-     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
-     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
-     *  *  `json`: A JSON object containing custom content.
-     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
-     * @type {Array<CustomContextVariable>}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    custom?: Array<CustomContextVariable>;
-    /**
-     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    customerRequest?: number;
-    /**
-     * 
-     * @type {JiraExpressionEvalContextBeanIssue}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    issue?: JiraExpressionEvalContextBeanIssue;
-    /**
-     * 
-     * @type {JiraExpressionEvalContextBeanIssues}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    issues?: JiraExpressionEvalContextBeanIssues;
-    /**
-     * 
-     * @type {JiraExpressionEvalContextBeanProject}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    project?: JiraExpressionEvalContextBeanProject;
-    /**
-     * The ID of the service desk that is available under the `serviceDesk` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    serviceDesk?: number;
-    /**
-     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
-     * @type {number}
-     * @memberof JiraExpressionEvalRequestBeanContext
-     */
-    sprint?: number;
-}
-/**
  * 
  * @export
  * @interface JiraExpressionEvaluationMetaDataBean
  */
 export interface JiraExpressionEvaluationMetaDataBean {
     /**
-     * 
-     * @type {JiraExpressionEvaluationMetaDataBeanComplexity}
+     * Contains information about the expression complexity. For example, the number of steps it took to evaluate the expression.
+     * @type {JiraExpressionsComplexityBean}
      * @memberof JiraExpressionEvaluationMetaDataBean
      */
-    complexity?: JiraExpressionEvaluationMetaDataBeanComplexity;
+    complexity?: JiraExpressionsComplexityBean;
     /**
-     * 
-     * @type {JiraExpressionEvaluationMetaDataBeanIssues}
+     * Contains information about the `issues` variable in the context. For example, is the issues were loaded with JQL, information about the page will be included here.
+     * @type {IssuesMetaBean}
      * @memberof JiraExpressionEvaluationMetaDataBean
      */
-    issues?: JiraExpressionEvaluationMetaDataBeanIssues;
-}
-/**
- * Contains information about the expression complexity. For example, the number of steps it took to evaluate the expression.
- * @export
- * @interface JiraExpressionEvaluationMetaDataBeanComplexity
- */
-export interface JiraExpressionEvaluationMetaDataBeanComplexity {
-    /**
-     * 
-     * @type {JiraExpressionsComplexityBeanBeans}
-     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
-     */
-    beans: JiraExpressionsComplexityBeanBeans;
-    /**
-     * 
-     * @type {JiraExpressionsComplexityBeanExpensiveOperations}
-     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
-     */
-    expensiveOperations: JiraExpressionsComplexityBeanExpensiveOperations;
-    /**
-     * 
-     * @type {JiraExpressionsComplexityBeanPrimitiveValues}
-     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
-     */
-    primitiveValues: JiraExpressionsComplexityBeanPrimitiveValues;
-    /**
-     * 
-     * @type {JiraExpressionsComplexityBeanSteps}
-     * @memberof JiraExpressionEvaluationMetaDataBeanComplexity
-     */
-    steps: JiraExpressionsComplexityBeanSteps;
-}
-/**
- * Contains information about the `issues` variable in the context. For example, is the issues were loaded with JQL, information about the page will be included here.
- * @export
- * @interface JiraExpressionEvaluationMetaDataBeanIssues
- */
-export interface JiraExpressionEvaluationMetaDataBeanIssues {
-    /**
-     * 
-     * @type {IssuesJqlMetaDataBean}
-     * @memberof JiraExpressionEvaluationMetaDataBeanIssues
-     */
-    jql?: IssuesJqlMetaDataBean;
+    issues?: IssuesMetaBean;
 }
 /**
  * Details of Jira expressions for analysis.
@@ -11746,36 +9392,17 @@ export interface JiraExpressionForAnalysis {
  */
 export interface JiraExpressionResult {
     /**
-     * 
-     * @type {JiraExpressionResultMeta}
+     * Contains various characteristics of the performed expression evaluation.
+     * @type {JiraExpressionEvaluationMetaDataBean}
      * @memberof JiraExpressionResult
      */
-    meta?: JiraExpressionResultMeta;
+    meta?: JiraExpressionEvaluationMetaDataBean;
     /**
      * The value of the evaluated expression. It may be a primitive JSON value or a Jira REST API object. (Some expressions do not produce any meaningful results—for example, an expression that returns a lambda function—if that's the case a simple string representation is returned. These string representations should not be relied upon and may change without notice.)
      * @type {any}
      * @memberof JiraExpressionResult
      */
     value: any | null;
-}
-/**
- * Contains various characteristics of the performed expression evaluation.
- * @export
- * @interface JiraExpressionResultMeta
- */
-export interface JiraExpressionResultMeta {
-    /**
-     * 
-     * @type {JiraExpressionEvaluationMetaDataBeanComplexity}
-     * @memberof JiraExpressionResultMeta
-     */
-    complexity?: JiraExpressionEvaluationMetaDataBeanComplexity;
-    /**
-     * 
-     * @type {JiraExpressionEvaluationMetaDataBeanIssues}
-     * @memberof JiraExpressionResultMeta
-     */
-    issues?: JiraExpressionEvaluationMetaDataBeanIssues;
 }
 /**
  * Details about syntax and type errors. The error details apply to the entire expression, unless the object includes:
@@ -11849,105 +9476,29 @@ export interface JiraExpressionsAnalysis {
  */
 export interface JiraExpressionsComplexityBean {
     /**
-     * 
-     * @type {JiraExpressionsComplexityBeanBeans}
+     * The number of Jira REST API beans returned in the response.
+     * @type {JiraExpressionsComplexityValueBean}
      * @memberof JiraExpressionsComplexityBean
      */
-    beans: JiraExpressionsComplexityBeanBeans;
+    beans: JiraExpressionsComplexityValueBean;
     /**
-     * 
-     * @type {JiraExpressionsComplexityBeanExpensiveOperations}
+     * The number of expensive operations executed while evaluating the expression. Expensive operations are those that load additional data, such as entity properties, comments, or custom fields.
+     * @type {JiraExpressionsComplexityValueBean}
      * @memberof JiraExpressionsComplexityBean
      */
-    expensiveOperations: JiraExpressionsComplexityBeanExpensiveOperations;
+    expensiveOperations: JiraExpressionsComplexityValueBean;
     /**
-     * 
-     * @type {JiraExpressionsComplexityBeanPrimitiveValues}
+     * The number of primitive values returned in the response.
+     * @type {JiraExpressionsComplexityValueBean}
      * @memberof JiraExpressionsComplexityBean
      */
-    primitiveValues: JiraExpressionsComplexityBeanPrimitiveValues;
+    primitiveValues: JiraExpressionsComplexityValueBean;
     /**
-     * 
-     * @type {JiraExpressionsComplexityBeanSteps}
+     * The number of steps it took to evaluate the expression, where a step is a high-level operation performed by the expression. A step is an operation such as arithmetic, accessing a property, accessing a context variable, or calling a function.
+     * @type {JiraExpressionsComplexityValueBean}
      * @memberof JiraExpressionsComplexityBean
      */
-    steps: JiraExpressionsComplexityBeanSteps;
-}
-/**
- * The number of Jira REST API beans returned in the response.
- * @export
- * @interface JiraExpressionsComplexityBeanBeans
- */
-export interface JiraExpressionsComplexityBeanBeans {
-    /**
-     * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanBeans
-     */
-    limit: number;
-    /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanBeans
-     */
-    value: number;
-}
-/**
- * The number of expensive operations executed while evaluating the expression. Expensive operations are those that load additional data, such as entity properties, comments, or custom fields.
- * @export
- * @interface JiraExpressionsComplexityBeanExpensiveOperations
- */
-export interface JiraExpressionsComplexityBeanExpensiveOperations {
-    /**
-     * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanExpensiveOperations
-     */
-    limit: number;
-    /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanExpensiveOperations
-     */
-    value: number;
-}
-/**
- * The number of primitive values returned in the response.
- * @export
- * @interface JiraExpressionsComplexityBeanPrimitiveValues
- */
-export interface JiraExpressionsComplexityBeanPrimitiveValues {
-    /**
-     * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanPrimitiveValues
-     */
-    limit: number;
-    /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanPrimitiveValues
-     */
-    value: number;
-}
-/**
- * The number of steps it took to evaluate the expression, where a step is a high-level operation performed by the expression. A step is an operation such as arithmetic, accessing a property, accessing a context variable, or calling a function.
- * @export
- * @interface JiraExpressionsComplexityBeanSteps
- */
-export interface JiraExpressionsComplexityBeanSteps {
-    /**
-     * The maximum allowed complexity. The evaluation will fail if this value is exceeded.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanSteps
-     */
-    limit: number;
-    /**
-     * The complexity value of the current expression.
-     * @type {number}
-     * @memberof JiraExpressionsComplexityBeanSteps
-     */
-    value: number;
+    steps: JiraExpressionsComplexityValueBean;
 }
 /**
  * 
@@ -11967,6 +9518,588 @@ export interface JiraExpressionsComplexityValueBean {
      * @memberof JiraExpressionsComplexityValueBean
      */
     value: number;
+}
+/**
+ * 
+ * @export
+ * @interface JiraGroupInput
+ */
+export interface JiraGroupInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraGroupInput
+     */
+    groupName: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraIssueFields
+ */
+export interface JiraIssueFields {
+    /**
+     * Add or clear a cascading select field:
+     * 
+     *  *  To add, specify `optionId` for both parent and child.
+     *  *  To clear the child, set its `optionId` to null.
+     *  *  To clear both, set the parent's `optionId` to null.
+     * @type {Array<JiraCascadingSelectField>}
+     * @memberof JiraIssueFields
+     */
+    cascadingSelectFields?: Array<JiraCascadingSelectField>;
+    /**
+     * Add or clear a number field:
+     * 
+     *  *  To add, specify a numeric `value`.
+     *  *  To clear, set `value` to `null`.
+     * @type {Array<JiraNumberField>}
+     * @memberof JiraIssueFields
+     */
+    clearableNumberFields?: Array<JiraNumberField>;
+    /**
+     * Add or clear a color field:
+     * 
+     *  *  To add, specify the color `name`. Available colors are: `purple`, `blue`, `green`, `teal`, `yellow`, `orange`, `grey`, `dark purple`, `dark blue`, `dark green`, `dark teal`, `dark yellow`, `dark orange`, `dark grey`.
+     *  *  To clear, set the color `name` to an empty string.
+     * @type {Array<JiraColorField>}
+     * @memberof JiraIssueFields
+     */
+    colorFields?: Array<JiraColorField>;
+    /**
+     * Add or clear a date picker field:
+     * 
+     *  *  To add, specify the date in `d/mmm/yy` format or ISO format `dd-mm-yyyy`.
+     *  *  To clear, set `formattedDate` to an empty string.
+     * @type {Array<JiraDateField>}
+     * @memberof JiraIssueFields
+     */
+    datePickerFields?: Array<JiraDateField>;
+    /**
+     * Add or clear the planned start date and time:
+     * 
+     *  *  To add, specify the date and time in ISO format for `formattedDateTime`.
+     *  *  To clear, provide an empty string for `formattedDateTime`.
+     * @type {Array<JiraDateTimeField>}
+     * @memberof JiraIssueFields
+     */
+    dateTimePickerFields?: Array<JiraDateTimeField>;
+    /**
+     * Set the issue type field by providing an `issueTypeId`.
+     * @type {JiraIssueTypeField}
+     * @memberof JiraIssueFields
+     */
+    issueType?: JiraIssueTypeField;
+    /**
+     * Edit a labels field:
+     * 
+     *  *  Options include `ADD`, `REPLACE`, `REMOVE`, or `REMOVE_ALL` for bulk edits.
+     *  *  To clear labels, use the `REMOVE_ALL` option with an empty `labels` array.
+     * @type {Array<JiraLabelsField>}
+     * @memberof JiraIssueFields
+     */
+    labelsFields?: Array<JiraLabelsField>;
+    /**
+     * Add or clear a multi-group picker field:
+     * 
+     *  *  To add groups, provide an array of groups with `groupName`s.
+     *  *  To clear all groups, use an empty `groups` array.
+     * @type {Array<JiraMultipleGroupPickerField>}
+     * @memberof JiraIssueFields
+     */
+    multipleGroupPickerFields?: Array<JiraMultipleGroupPickerField>;
+    /**
+     * Assign or unassign multiple users to/from a field:
+     * 
+     *  *  To assign, provide an array of user `accountId`s.
+     *  *  To clear, set `users` to `null`.
+     * @type {Array<JiraMultipleSelectUserPickerField>}
+     * @memberof JiraIssueFields
+     */
+    multipleSelectClearableUserPickerFields?: Array<JiraMultipleSelectUserPickerField>;
+    /**
+     * Add or clear a multi-select field:
+     * 
+     *  *  To add, provide an array of options with `optionId`s.
+     *  *  To clear, use an empty `options` array.
+     * @type {Array<JiraMultipleSelectField>}
+     * @memberof JiraIssueFields
+     */
+    multipleSelectFields?: Array<JiraMultipleSelectField>;
+    /**
+     * Edit a multi-version picker field like Fix Versions/Affects Versions:
+     * 
+     *  *  Options include `ADD`, `REPLACE`, `REMOVE`, or `REMOVE_ALL` for bulk edits.
+     *  *  To clear the field, use the `REMOVE_ALL` option with an empty `versions` array.
+     * @type {Array<JiraMultipleVersionPickerField>}
+     * @memberof JiraIssueFields
+     */
+    multipleVersionPickerFields?: Array<JiraMultipleVersionPickerField>;
+    /**
+     * Edit a multi select components field:
+     * 
+     *  *  Options include `ADD`, `REPLACE`, `REMOVE`, or `REMOVE_ALL` for bulk edits.
+     *  *  To clear, use the `REMOVE_ALL` option with an empty `components` array.
+     * @type {JiraMultiSelectComponentField}
+     * @memberof JiraIssueFields
+     */
+    multiselectComponents?: JiraMultiSelectComponentField;
+    /**
+     * Edit the original estimate field.
+     * @type {JiraDurationField}
+     * @memberof JiraIssueFields
+     */
+    originalEstimateField?: JiraDurationField;
+    /**
+     * Set the priority of an issue by specifying a `priorityId`.
+     * @type {JiraPriorityField}
+     * @memberof JiraIssueFields
+     */
+    priority?: JiraPriorityField;
+    /**
+     * Add or clear a rich text field:
+     * 
+     *  *  To add, provide `adfValue`. Note that rich text fields only support ADF values.
+     *  *  To clear, use an empty `richText` object.
+     * 
+     * For ADF format details, refer to: [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure).
+     * @type {Array<JiraRichTextField>}
+     * @memberof JiraIssueFields
+     */
+    richTextFields?: Array<JiraRichTextField>;
+    /**
+     * Add or clear a single group picker field:
+     * 
+     *  *  To add, specify the group with `groupName`.
+     *  *  To clear, set `groupName` to an empty string.
+     * @type {Array<JiraSingleGroupPickerField>}
+     * @memberof JiraIssueFields
+     */
+    singleGroupPickerFields?: Array<JiraSingleGroupPickerField>;
+    /**
+     * Add or clear a single line text field:
+     * 
+     *  *  To add, provide the `text` value.
+     *  *  To clear, set `text` to an empty string.
+     * @type {Array<JiraSingleLineTextField>}
+     * @memberof JiraIssueFields
+     */
+    singleLineTextFields?: Array<JiraSingleLineTextField>;
+    /**
+     * Edit assignment for single select user picker fields like Assignee/Reporter:
+     * 
+     *  *  To assign an issue, specify the user's `accountId`.
+     *  *  To unassign an issue, set `user` to `null`.
+     *  *  For automatic assignment, set `accountId` to `-1`.
+     * @type {Array<JiraSingleSelectUserPickerField>}
+     * @memberof JiraIssueFields
+     */
+    singleSelectClearableUserPickerFields?: Array<JiraSingleSelectUserPickerField>;
+    /**
+     * Add or clear a single select field:
+     * 
+     *  *  To add, specify the option with an `optionId`.
+     *  *  To clear, pass an option with `optionId` as `-1`.
+     * @type {Array<JiraSingleSelectField>}
+     * @memberof JiraIssueFields
+     */
+    singleSelectFields?: Array<JiraSingleSelectField>;
+    /**
+     * Add or clear a single version picker field:
+     * 
+     *  *  To add, specify the version with a `versionId`.
+     *  *  To clear, set `versionId` to `-1`.
+     * @type {Array<JiraSingleVersionPickerField>}
+     * @memberof JiraIssueFields
+     */
+    singleVersionPickerFields?: Array<JiraSingleVersionPickerField>;
+    /**
+     * Edit the time tracking field.
+     * @type {JiraTimeTrackingField}
+     * @memberof JiraIssueFields
+     */
+    timeTrackingField?: JiraTimeTrackingField;
+    /**
+     * Add or clear a URL field:
+     * 
+     *  *  To add, provide the `url` with the desired URL value.
+     *  *  To clear, set `url` to an empty string.
+     * @type {Array<JiraUrlField>}
+     * @memberof JiraIssueFields
+     */
+    urlFields?: Array<JiraUrlField>;
+}
+/**
+ * 
+ * @export
+ * @interface JiraIssueTypeField
+ */
+export interface JiraIssueTypeField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraIssueTypeField
+     */
+    issueTypeId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraLabelsField
+ */
+export interface JiraLabelsField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraLabelsField
+     */
+    bulkEditMultiSelectFieldOption: JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraLabelsField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraLabelsInput>}
+     * @memberof JiraLabelsField
+     */
+    labels: Array<JiraLabelsInput>;
+}
+
+
+/**
+ * @export
+ */
+export const JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum = {
+    Add: 'ADD',
+    Remove: 'REMOVE',
+    Replace: 'REPLACE',
+    RemoveAll: 'REMOVE_ALL'
+} as const;
+export type JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum = typeof JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum[keyof typeof JiraLabelsFieldBulkEditMultiSelectFieldOptionEnum];
+
+/**
+ * 
+ * @export
+ * @interface JiraLabelsInput
+ */
+export interface JiraLabelsInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraLabelsInput
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraMultiSelectComponentField
+ */
+export interface JiraMultiSelectComponentField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultiSelectComponentField
+     */
+    bulkEditMultiSelectFieldOption: JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum;
+    /**
+     * 
+     * @type {Array<JiraComponentField>}
+     * @memberof JiraMultiSelectComponentField
+     */
+    components: Array<JiraComponentField>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultiSelectComponentField
+     */
+    fieldId: string;
+}
+
+
+/**
+ * @export
+ */
+export const JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum = {
+    Add: 'ADD',
+    Remove: 'REMOVE',
+    Replace: 'REPLACE',
+    RemoveAll: 'REMOVE_ALL'
+} as const;
+export type JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum = typeof JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum[keyof typeof JiraMultiSelectComponentFieldBulkEditMultiSelectFieldOptionEnum];
+
+/**
+ * 
+ * @export
+ * @interface JiraMultipleGroupPickerField
+ */
+export interface JiraMultipleGroupPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultipleGroupPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraGroupInput>}
+     * @memberof JiraMultipleGroupPickerField
+     */
+    groups: Array<JiraGroupInput>;
+}
+/**
+ * 
+ * @export
+ * @interface JiraMultipleSelectField
+ */
+export interface JiraMultipleSelectField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultipleSelectField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraSelectedOptionField>}
+     * @memberof JiraMultipleSelectField
+     */
+    options: Array<JiraSelectedOptionField>;
+}
+/**
+ * 
+ * @export
+ * @interface JiraMultipleSelectUserPickerField
+ */
+export interface JiraMultipleSelectUserPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultipleSelectUserPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraUserField>}
+     * @memberof JiraMultipleSelectUserPickerField
+     */
+    users?: Array<JiraUserField>;
+}
+/**
+ * 
+ * @export
+ * @interface JiraMultipleVersionPickerField
+ */
+export interface JiraMultipleVersionPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultipleVersionPickerField
+     */
+    bulkEditMultiSelectFieldOption: JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraMultipleVersionPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraVersionField>}
+     * @memberof JiraMultipleVersionPickerField
+     */
+    versions: Array<JiraVersionField>;
+}
+
+
+/**
+ * @export
+ */
+export const JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum = {
+    Add: 'ADD',
+    Remove: 'REMOVE',
+    Replace: 'REPLACE',
+    RemoveAll: 'REMOVE_ALL'
+} as const;
+export type JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum = typeof JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum[keyof typeof JiraMultipleVersionPickerFieldBulkEditMultiSelectFieldOptionEnum];
+
+/**
+ * 
+ * @export
+ * @interface JiraNumberField
+ */
+export interface JiraNumberField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraNumberField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JiraNumberField
+     */
+    value?: number;
+}
+/**
+ * 
+ * @export
+ * @interface JiraPriorityField
+ */
+export interface JiraPriorityField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraPriorityField
+     */
+    priorityId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraRichTextField
+ */
+export interface JiraRichTextField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraRichTextField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraRichTextInput}
+     * @memberof JiraRichTextField
+     */
+    richText: JiraRichTextInput;
+}
+/**
+ * 
+ * @export
+ * @interface JiraRichTextInput
+ */
+export interface JiraRichTextInput {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JiraRichTextInput
+     */
+    adfValue?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface JiraSelectedOptionField
+ */
+export interface JiraSelectedOptionField {
+    /**
+     * 
+     * @type {number}
+     * @memberof JiraSelectedOptionField
+     */
+    optionId?: number;
+}
+/**
+ * 
+ * @export
+ * @interface JiraSingleGroupPickerField
+ */
+export interface JiraSingleGroupPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleGroupPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraGroupInput}
+     * @memberof JiraSingleGroupPickerField
+     */
+    group: JiraGroupInput;
+}
+/**
+ * 
+ * @export
+ * @interface JiraSingleLineTextField
+ */
+export interface JiraSingleLineTextField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleLineTextField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleLineTextField
+     */
+    text: string;
+}
+/**
+ * Add or clear a single select field:
+ * 
+ *  *  To add, specify the option with an `optionId`.
+ *  *  To clear, pass an option with `optionId` as `-1`.
+ * @export
+ * @interface JiraSingleSelectField
+ */
+export interface JiraSingleSelectField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleSelectField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraSelectedOptionField}
+     * @memberof JiraSingleSelectField
+     */
+    option: JiraSelectedOptionField;
+}
+/**
+ * 
+ * @export
+ * @interface JiraSingleSelectUserPickerField
+ */
+export interface JiraSingleSelectUserPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleSelectUserPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraUserField}
+     * @memberof JiraSingleSelectUserPickerField
+     */
+    user?: JiraUserField;
+}
+/**
+ * 
+ * @export
+ * @interface JiraSingleVersionPickerField
+ */
+export interface JiraSingleVersionPickerField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraSingleVersionPickerField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {JiraVersionField}
+     * @memberof JiraSingleVersionPickerField
+     */
+    version: JiraVersionField;
 }
 /**
  * Details of a status.
@@ -12030,6 +10163,64 @@ export const JiraStatusStatusCategoryEnum = {
 export type JiraStatusStatusCategoryEnum = typeof JiraStatusStatusCategoryEnum[keyof typeof JiraStatusStatusCategoryEnum];
 
 /**
+ * 
+ * @export
+ * @interface JiraTimeTrackingField
+ */
+export interface JiraTimeTrackingField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraTimeTrackingField
+     */
+    timeRemaining: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraUrlField
+ */
+export interface JiraUrlField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraUrlField
+     */
+    fieldId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraUrlField
+     */
+    url: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraUserField
+ */
+export interface JiraUserField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraUserField
+     */
+    accountId: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraVersionField
+ */
+export interface JiraVersionField {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraVersionField
+     */
+    versionId?: string;
+}
+/**
  * Details of a workflow.
  * @export
  * @interface JiraWorkflow
@@ -12084,7 +10275,7 @@ export interface JiraWorkflow {
      */
     taskId?: string | null;
     /**
-     * The transitions of the workflow.
+     * The transitions of the workflow. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
      * @type {Set<WorkflowTransitions>}
      * @memberof JiraWorkflow
      */
@@ -13112,11 +11303,11 @@ export interface LinkIssueRequestJsonBean {
  */
 export interface LinkedIssue {
     /**
-     * 
-     * @type {LinkedIssueFields}
+     * The fields associated with the issue.
+     * @type {Fields}
      * @memberof LinkedIssue
      */
-    fields?: LinkedIssueFields;
+    readonly fields?: Fields;
     /**
      * The ID of an issue. Required if `key` isn't provided.
      * @type {string}
@@ -13135,55 +11326,6 @@ export interface LinkedIssue {
      * @memberof LinkedIssue
      */
     readonly self?: string;
-}
-/**
- * The fields associated with the issue.
- * @export
- * @interface LinkedIssueFields
- */
-export interface LinkedIssueFields {
-    /**
-     * 
-     * @type {FieldsAssignee}
-     * @memberof LinkedIssueFields
-     */
-    assignee?: FieldsAssignee;
-    /**
-     * 
-     * @type {FieldsIssueType}
-     * @memberof LinkedIssueFields
-     */
-    issueType?: FieldsIssueType;
-    /**
-     * 
-     * @type {IssueTypeDetails}
-     * @memberof LinkedIssueFields
-     */
-    issuetype?: IssueTypeDetails;
-    /**
-     * 
-     * @type {FieldsPriority}
-     * @memberof LinkedIssueFields
-     */
-    priority?: FieldsPriority;
-    /**
-     * 
-     * @type {FieldsStatus}
-     * @memberof LinkedIssueFields
-     */
-    status?: FieldsStatus;
-    /**
-     * The summary description of the linked issue.
-     * @type {string}
-     * @memberof LinkedIssueFields
-     */
-    readonly summary?: string;
-    /**
-     * 
-     * @type {FieldsTimetracking}
-     * @memberof LinkedIssueFields
-     */
-    timetracking?: FieldsTimetracking;
 }
 /**
  * An operand that is a list of values.
@@ -13217,6 +11359,78 @@ export interface Locale {
      */
     locale?: string;
 }
+/**
+ * List of string of inputs
+ * @export
+ * @interface MandatoryFieldValue
+ */
+export interface MandatoryFieldValue {
+    /**
+     * If `true`, will try to retain original non-null issue field values on move.
+     * @type {boolean}
+     * @memberof MandatoryFieldValue
+     */
+    retain?: boolean | null;
+    /**
+     * Will treat as `MandatoryFieldValue` if type is `raw` or `empty`
+     * @type {string}
+     * @memberof MandatoryFieldValue
+     */
+    type?: MandatoryFieldValueTypeEnum | null;
+    /**
+     * Value for each field. Provide a `list of strings` for non-ADF fields.
+     * @type {Array<string>}
+     * @memberof MandatoryFieldValue
+     */
+    value: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const MandatoryFieldValueTypeEnum = {
+    Adf: 'adf',
+    Raw: 'raw'
+} as const;
+export type MandatoryFieldValueTypeEnum = typeof MandatoryFieldValueTypeEnum[keyof typeof MandatoryFieldValueTypeEnum];
+
+/**
+ * An object notation input
+ * @export
+ * @interface MandatoryFieldValueForADF
+ */
+export interface MandatoryFieldValueForADF {
+    /**
+     * If `true`, will try to retain original non-null issue field values on move.
+     * @type {boolean}
+     * @memberof MandatoryFieldValueForADF
+     */
+    retain?: boolean | null;
+    /**
+     * Will treat as `MandatoryFieldValueForADF` if type is `adf`
+     * @type {string}
+     * @memberof MandatoryFieldValueForADF
+     */
+    type: MandatoryFieldValueForADFTypeEnum;
+    /**
+     * Value for each field. Accepts Atlassian Document Format (ADF) for rich text fields like `description`, `environments`. For ADF format details, refer to: [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure)
+     * @type {object}
+     * @memberof MandatoryFieldValueForADF
+     */
+    value: object;
+}
+
+
+/**
+ * @export
+ */
+export const MandatoryFieldValueForADFTypeEnum = {
+    Adf: 'adf',
+    Raw: 'raw'
+} as const;
+export type MandatoryFieldValueForADFTypeEnum = typeof MandatoryFieldValueForADFTypeEnum[keyof typeof MandatoryFieldValueForADFTypeEnum];
+
 /**
  * Overrides, for the selected issue types, any status mappings provided in `statusMappingsByWorkflows`. Status mappings are required when the new workflow for an issue type doesn't contain all statuses that the old workflow has. Status mappings can be provided by a combination of `statusMappingsByWorkflows` and `statusMappingsByIssueTypeOverride`.
  * @export
@@ -13286,11 +11500,11 @@ export interface ModelConfiguration {
      */
     readonly subTasksEnabled?: boolean;
     /**
-     * 
-     * @type {ConfigurationTimeTrackingConfiguration}
+     * The configuration of time tracking.
+     * @type {TimeTrackingConfiguration}
      * @memberof ModelConfiguration
      */
-    timeTrackingConfiguration?: ConfigurationTimeTrackingConfiguration;
+    readonly timeTrackingConfiguration?: TimeTrackingConfiguration;
     /**
      * Whether the ability to track time is enabled. This property is deprecated.
      * @type {boolean}
@@ -13501,11 +11715,11 @@ export interface NewUserDetails {
      */
     password?: string;
     /**
-     * Products the new user has access to. Valid products are: jira-core, jira-servicedesk, jira-product-discovery, jira-software. If left empty, the user will get default product access. To create a user without product access, set this field to be an empty array.
+     * Products the new user has access to. Valid products are: jira-core, jira-servicedesk, jira-product-discovery, jira-software. To create a user without product access, set this field to be an empty array.
      * @type {Set<string>}
      * @memberof NewUserDetails
      */
-    products?: Array<string>;
+    products: Array<string>;
     /**
      * The URL of the user.
      * @type {string}
@@ -13527,11 +11741,11 @@ export interface Notification {
      */
     htmlBody?: string;
     /**
-     * 
-     * @type {NotificationRestrict}
+     * Restricts the notifications to users with the specified permissions.
+     * @type {NotificationRecipientsRestrictions}
      * @memberof Notification
      */
-    restrict?: NotificationRestrict;
+    restrict?: NotificationRecipientsRestrictions;
     /**
      * The subject of the email notification for the issue. If this is not specified, then the subject is set to the issue key and summary.
      * @type {string}
@@ -13545,11 +11759,11 @@ export interface Notification {
      */
     textBody?: string;
     /**
-     * 
-     * @type {NotificationTo}
+     * The recipients of the email notification for the issue.
+     * @type {NotificationRecipients}
      * @memberof Notification
      */
-    to?: NotificationTo;
+    to?: NotificationRecipients;
 }
 /**
  * Details about a notification event.
@@ -13576,42 +11790,11 @@ export interface NotificationEvent {
      */
     name?: string;
     /**
-     * 
-     * @type {NotificationEventTemplateEvent}
+     * The template of the event. Only custom events configured by Jira administrators have template.
+     * @type {NotificationEvent}
      * @memberof NotificationEvent
      */
-    templateEvent?: NotificationEventTemplateEvent;
-}
-/**
- * The template of the event. Only custom events configured by Jira administrators have template.
- * @export
- * @interface NotificationEventTemplateEvent
- */
-export interface NotificationEventTemplateEvent {
-    /**
-     * The description of the event.
-     * @type {string}
-     * @memberof NotificationEventTemplateEvent
-     */
-    description?: string;
-    /**
-     * The ID of the event. The event can be a [Jira system event](https://confluence.atlassian.com/x/8YdKLg#Creatinganotificationscheme-eventsEvents) or a [custom event](https://confluence.atlassian.com/x/AIlKLg).
-     * @type {number}
-     * @memberof NotificationEventTemplateEvent
-     */
-    id?: number;
-    /**
-     * The name of the event.
-     * @type {string}
-     * @memberof NotificationEventTemplateEvent
-     */
-    name?: string;
-    /**
-     * 
-     * @type {NotificationEventTemplateEvent}
-     * @memberof NotificationEventTemplateEvent
-     */
-    templateEvent?: NotificationEventTemplateEvent;
+    templateEvent?: NotificationEvent;
 }
 /**
  * Details of the users and groups to receive the notification.
@@ -13689,31 +11872,6 @@ export interface NotificationRecipientsRestrictions {
     permissions?: Array<RestrictedPermission>;
 }
 /**
- * Restricts the notifications to users with the specified permissions.
- * @export
- * @interface NotificationRestrict
- */
-export interface NotificationRestrict {
-    /**
-     * List of groupId memberships required to receive the notification.
-     * @type {Array<string>}
-     * @memberof NotificationRestrict
-     */
-    groupIds?: Array<string>;
-    /**
-     * List of group memberships required to receive the notification.
-     * @type {Array<GroupName>}
-     * @memberof NotificationRestrict
-     */
-    groups?: Array<GroupName>;
-    /**
-     * List of permissions required to receive the notification.
-     * @type {Array<RestrictedPermission>}
-     * @memberof NotificationRestrict
-     */
-    permissions?: Array<RestrictedPermission>;
-}
-/**
  * Details about a notification scheme.
  * @export
  * @interface NotificationScheme
@@ -13756,11 +11914,11 @@ export interface NotificationScheme {
      */
     projects?: Array<number>;
     /**
-     * 
-     * @type {NotificationSchemeScope}
+     * The scope of the notification scheme.
+     * @type {Scope}
      * @memberof NotificationScheme
      */
-    scope?: NotificationSchemeScope;
+    scope?: Scope;
     /**
      * 
      * @type {string}
@@ -13814,30 +11972,17 @@ export interface NotificationSchemeEvent {
 export interface NotificationSchemeEventDetails {
     [key: string]: any | any;
     /**
-     * 
-     * @type {NotificationSchemeEventDetailsEvent}
+     * The ID of the event.
+     * @type {NotificationSchemeEventTypeId}
      * @memberof NotificationSchemeEventDetails
      */
-    event: NotificationSchemeEventDetailsEvent;
+    event: NotificationSchemeEventTypeId;
     /**
      * The list of notifications mapped to a specified event.
      * @type {Array<NotificationSchemeNotificationDetails>}
      * @memberof NotificationSchemeEventDetails
      */
     notifications: Array<NotificationSchemeNotificationDetails>;
-}
-/**
- * The ID of the event.
- * @export
- * @interface NotificationSchemeEventDetailsEvent
- */
-export interface NotificationSchemeEventDetailsEvent {
-    /**
-     * The ID of the notification scheme event.
-     * @type {string}
-     * @memberof NotificationSchemeEventDetailsEvent
-     */
-    id: string;
 }
 /**
  * The ID of an event that is being mapped to notifications.
@@ -13886,85 +12031,6 @@ export interface NotificationSchemeNotificationDetails {
      * @memberof NotificationSchemeNotificationDetails
      */
     parameter?: string;
-}
-/**
- * The scope of the notification scheme.
- * @export
- * @interface NotificationSchemeScope
- */
-export interface NotificationSchemeScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof NotificationSchemeScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof NotificationSchemeScope
-     */
-    readonly type?: NotificationSchemeScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const NotificationSchemeScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type NotificationSchemeScopeTypeEnum = typeof NotificationSchemeScopeTypeEnum[keyof typeof NotificationSchemeScopeTypeEnum];
-
-/**
- * The recipients of the email notification for the issue.
- * @export
- * @interface NotificationTo
- */
-export interface NotificationTo {
-    /**
-     * Whether the notification should be sent to the issue's assignees.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    assignee?: boolean;
-    /**
-     * List of groupIds to receive the notification.
-     * @type {Array<string>}
-     * @memberof NotificationTo
-     */
-    groupIds?: Array<string>;
-    /**
-     * List of groups to receive the notification.
-     * @type {Array<GroupName>}
-     * @memberof NotificationTo
-     */
-    groups?: Array<GroupName>;
-    /**
-     * Whether the notification should be sent to the issue's reporter.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    reporter?: boolean;
-    /**
-     * List of users to receive the notification.
-     * @type {Array<UserDetails>}
-     * @memberof NotificationTo
-     */
-    users?: Array<UserDetails>;
-    /**
-     * Whether the notification should be sent to the issue's voters.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    voters?: boolean;
-    /**
-     * Whether the notification should be sent to the issue's watchers.
-     * @type {boolean}
-     * @memberof NotificationTo
-     */
-    watchers?: boolean;
 }
 /**
  * 
@@ -14090,6 +12156,55 @@ export const OrderOfIssueTypesPositionEnum = {
 } as const;
 export type OrderOfIssueTypesPositionEnum = typeof OrderOfIssueTypesPositionEnum[keyof typeof OrderOfIssueTypesPositionEnum];
 
+/**
+ * A page of items.
+ * @export
+ * @interface PageBean2ComponentJsonBean
+ */
+export interface PageBean2ComponentJsonBean {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<ComponentJsonBean>}
+     * @memberof PageBean2ComponentJsonBean
+     */
+    readonly values?: Array<ComponentJsonBean>;
+}
 /**
  * A page of items.
  * @export
@@ -15710,6 +13825,104 @@ export interface PageBeanPriority {
 /**
  * A page of items.
  * @export
+ * @interface PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+ */
+export interface PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<PrioritySchemeWithPaginatedPrioritiesAndProjects>}
+     * @memberof PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    readonly values?: Array<PrioritySchemeWithPaginatedPrioritiesAndProjects>;
+}
+/**
+ * A page of items.
+ * @export
+ * @interface PageBeanPriorityWithSequence
+ */
+export interface PageBeanPriorityWithSequence {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<PriorityWithSequence>}
+     * @memberof PageBeanPriorityWithSequence
+     */
+    readonly values?: Array<PriorityWithSequence>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanProject
  */
 export interface PageBeanProject {
@@ -17063,30 +15276,11 @@ export interface ParsedJqlQuery {
      */
     query: string;
     /**
-     * 
-     * @type {ParsedJqlQueryStructure}
+     * The syntax tree of the query. Empty if the query was invalid.
+     * @type {JqlQuery}
      * @memberof ParsedJqlQuery
      */
-    structure?: ParsedJqlQueryStructure;
-}
-/**
- * The syntax tree of the query. Empty if the query was invalid.
- * @export
- * @interface ParsedJqlQueryStructure
- */
-export interface ParsedJqlQueryStructure {
-    /**
-     * 
-     * @type {JqlQueryOrderByClause}
-     * @memberof ParsedJqlQueryStructure
-     */
-    orderBy?: JqlQueryOrderByClause;
-    /**
-     * 
-     * @type {JqlQueryClause}
-     * @memberof ParsedJqlQueryStructure
-     */
-    where?: JqlQueryClause;
+    structure?: JqlQuery;
 }
 /**
  * Details for permissions of shareable entities
@@ -17115,11 +15309,11 @@ export interface PermissionDetails {
 export interface PermissionGrant {
     [key: string]: any | any;
     /**
-     * 
-     * @type {PermissionGrantHolder}
+     * The user or group being granted the permission. It consists of a `type`, a type-dependent `parameter` and a type-dependent `value`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+     * @type {PermissionHolder}
      * @memberof PermissionGrant
      */
-    holder?: PermissionGrantHolder;
+    holder?: PermissionHolder;
     /**
      * The ID of the permission granted details.
      * @type {number}
@@ -17138,37 +15332,6 @@ export interface PermissionGrant {
      * @memberof PermissionGrant
      */
     readonly self?: string;
-}
-/**
- * The user or group being granted the permission. It consists of a `type`, a type-dependent `parameter` and a type-dependent `value`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
- * @export
- * @interface PermissionGrantHolder
- */
-export interface PermissionGrantHolder {
-    /**
-     * Expand options that include additional permission holder details in the response.
-     * @type {string}
-     * @memberof PermissionGrantHolder
-     */
-    readonly expand?: string;
-    /**
-     * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof PermissionGrantHolder
-     */
-    parameter?: string;
-    /**
-     * The type of permission holder.
-     * @type {string}
-     * @memberof PermissionGrantHolder
-     */
-    type: string;
-    /**
-     * The identifier associated with the `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof PermissionGrantHolder
-     */
-    value?: string;
 }
 /**
  * List of permission grants.
@@ -17258,11 +15421,11 @@ export interface PermissionScheme {
      */
     permissions?: Array<PermissionGrant>;
     /**
-     * 
-     * @type {PermissionSchemeScope}
+     * The scope of the permission scheme.
+     * @type {Scope}
      * @memberof PermissionScheme
      */
-    scope?: PermissionSchemeScope;
+    scope?: Scope;
     /**
      * The URL of the permission scheme.
      * @type {string}
@@ -17270,36 +15433,6 @@ export interface PermissionScheme {
      */
     readonly self?: string;
 }
-/**
- * The scope of the permission scheme.
- * @export
- * @interface PermissionSchemeScope
- */
-export interface PermissionSchemeScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof PermissionSchemeScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof PermissionSchemeScope
-     */
-    readonly type?: PermissionSchemeScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const PermissionSchemeScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type PermissionSchemeScopeTypeEnum = typeof PermissionSchemeScopeTypeEnum[keyof typeof PermissionSchemeScopeTypeEnum];
-
 /**
  * List of all permission schemes.
  * @export
@@ -17390,6 +15523,12 @@ export interface Priority {
      */
     name?: string;
     /**
+     * Priority schemes associated with the issue priority.
+     * @type {ExpandPrioritySchemePage}
+     * @memberof Priority
+     */
+    schemes?: ExpandPrioritySchemePage;
+    /**
      * The URL of the issue priority.
      * @type {string}
      * @memberof Priority
@@ -17417,6 +15556,193 @@ export interface PriorityId {
     readonly id: string;
 }
 /**
+ * Mapping of issue priorities for changes in priority schemes.
+ * @export
+ * @interface PriorityMapping
+ */
+export interface PriorityMapping {
+    /**
+     * The mapping of priorities for issues being migrated **into** this priority scheme. Key is the old priority ID, value is the new priority ID (must exist in this priority scheme).
+     * @type {{ [key: string]: number; }}
+     * @memberof PriorityMapping
+     */
+    _in?: { [key: string]: number; };
+    /**
+     * The mapping of priorities for issues being migrated **out of** this priority scheme. Key is the old priority ID (must exist in this priority scheme), value is the new priority ID (must exist in the default priority scheme). Required for updating an existing priority scheme. Not used when creating a new priority scheme.
+     * @type {{ [key: string]: number; }}
+     * @memberof PriorityMapping
+     */
+    out?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface PrioritySchemeChangesWithMappings
+ */
+export interface PrioritySchemeChangesWithMappings {
+    /**
+     * Affected entity ids.
+     * @type {Array<number>}
+     * @memberof PrioritySchemeChangesWithMappings
+     */
+    ids: Array<number>;
+    /**
+     * Instructions to migrate issues.
+     * @type {Array<PriorityMapping>}
+     * @memberof PrioritySchemeChangesWithMappings
+     */
+    mappings?: Array<PriorityMapping>;
+}
+/**
+ * 
+ * @export
+ * @interface PrioritySchemeChangesWithoutMappings
+ */
+export interface PrioritySchemeChangesWithoutMappings {
+    /**
+     * Affected entity ids.
+     * @type {Array<number>}
+     * @memberof PrioritySchemeChangesWithoutMappings
+     */
+    ids: Array<number>;
+}
+/**
+ * The ID of a priority scheme.
+ * @export
+ * @interface PrioritySchemeId
+ */
+export interface PrioritySchemeId {
+    /**
+     * The ID of the priority scheme.
+     * @type {string}
+     * @memberof PrioritySchemeId
+     */
+    readonly id?: string;
+    /**
+     * The in-progress issue migration task.
+     * @type {TaskProgressBeanJsonNode}
+     * @memberof PrioritySchemeId
+     */
+    readonly task?: TaskProgressBeanJsonNode;
+}
+/**
+ * A priority scheme with paginated priorities and projects.
+ * @export
+ * @interface PrioritySchemeWithPaginatedPrioritiesAndProjects
+ */
+export interface PrioritySchemeWithPaginatedPrioritiesAndProjects {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    default?: boolean;
+    /**
+     * The ID of the default issue priority.
+     * @type {string}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    defaultPriorityId?: string;
+    /**
+     * The description of the priority scheme
+     * @type {string}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    description?: string;
+    /**
+     * The ID of the priority scheme.
+     * @type {string}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    id: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    isDefault?: boolean;
+    /**
+     * The name of the priority scheme
+     * @type {string}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    name: string;
+    /**
+     * The paginated list of priorities.
+     * @type {PageBeanPriorityWithSequence}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    priorities?: PageBeanPriorityWithSequence;
+    /**
+     * The paginated list of projects.
+     * @type {PageBeanProjectDetails}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    projects?: PageBeanProjectDetails;
+    /**
+     * The URL of the priority scheme.
+     * @type {string}
+     * @memberof PrioritySchemeWithPaginatedPrioritiesAndProjects
+     */
+    self?: string;
+}
+/**
+ * An issue priority with sequence information.
+ * @export
+ * @interface PriorityWithSequence
+ */
+export interface PriorityWithSequence {
+    /**
+     * The description of the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    description?: string;
+    /**
+     * The URL of the icon for the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    iconUrl?: string;
+    /**
+     * The ID of the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    id?: string;
+    /**
+     * Whether this priority is the default.
+     * @type {boolean}
+     * @memberof PriorityWithSequence
+     */
+    isDefault?: boolean;
+    /**
+     * The name of the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    name?: string;
+    /**
+     * The URL of the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    self?: string;
+    /**
+     * The sequence of the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    sequence?: string;
+    /**
+     * The color used to indicate the issue priority.
+     * @type {string}
+     * @memberof PriorityWithSequence
+     */
+    statusColor?: string;
+}
+/**
  * Details about a project.
  * @export
  * @interface Project
@@ -17429,11 +15755,11 @@ export interface Project {
      */
     readonly archived?: boolean;
     /**
-     * 
-     * @type {ProjectArchivedBy}
+     * The user who archived the project.
+     * @type {User}
      * @memberof Project
      */
-    archivedBy?: ProjectArchivedBy;
+    readonly archivedBy?: User;
     /**
      * The date when the project was archived.
      * @type {string}
@@ -17447,11 +15773,11 @@ export interface Project {
      */
     readonly assigneeType?: ProjectAssigneeTypeEnum;
     /**
-     * 
-     * @type {ProjectAvatarUrls}
+     * The URLs of the project's avatars.
+     * @type {AvatarUrlsBean}
      * @memberof Project
      */
-    avatarUrls?: ProjectAvatarUrls;
+    readonly avatarUrls?: AvatarUrlsBean;
     /**
      * List of the components contained in the project.
      * @type {Array<ProjectComponent>}
@@ -17465,11 +15791,11 @@ export interface Project {
      */
     readonly deleted?: boolean;
     /**
-     * 
-     * @type {ProjectDeletedBy}
+     * The user who marked the project as deleted.
+     * @type {User}
      * @memberof Project
      */
-    deletedBy?: ProjectDeletedBy;
+    readonly deletedBy?: User;
     /**
      * The date when the project was marked as deleted.
      * @type {string}
@@ -17507,11 +15833,11 @@ export interface Project {
      */
     id?: string;
     /**
-     * 
+     * Insights about the project.
      * @type {ProjectInsight}
      * @memberof Project
      */
-    insight?: ProjectInsight;
+    readonly insight?: ProjectInsight;
     /**
      * Whether the project is private from the user's perspective. This means the user can't see the project or any associated issues.
      * @type {boolean}
@@ -17519,11 +15845,11 @@ export interface Project {
      */
     readonly isPrivate?: boolean;
     /**
-     * 
-     * @type {ProjectIssueTypeHierarchy}
+     * The issue type hierarchy for the project.
+     * @type {Hierarchy}
      * @memberof Project
      */
-    issueTypeHierarchy?: ProjectIssueTypeHierarchy;
+    readonly issueTypeHierarchy?: Hierarchy;
     /**
      * List of the issue types available in the project.
      * @type {Array<IssueTypeDetails>}
@@ -17537,17 +15863,17 @@ export interface Project {
      */
     readonly key?: string;
     /**
-     * 
+     * The project landing page info.
      * @type {ProjectLandingPageInfo}
      * @memberof Project
      */
-    landingPageInfo?: ProjectLandingPageInfo;
+    readonly landingPageInfo?: ProjectLandingPageInfo;
     /**
-     * 
-     * @type {ProjectLead}
+     * The username of the project lead.
+     * @type {User}
      * @memberof Project
      */
-    lead?: ProjectLead;
+    readonly lead?: User;
     /**
      * The name of the project.
      * @type {string}
@@ -17555,17 +15881,17 @@ export interface Project {
      */
     readonly name?: string;
     /**
-     * 
+     * User permissions on the project
      * @type {ProjectPermissions}
      * @memberof Project
      */
-    permissions?: ProjectPermissions;
+    readonly permissions?: ProjectPermissions;
     /**
-     * 
-     * @type {ProjectProjectCategory}
+     * The category the project belongs to.
+     * @type {ProjectCategory}
      * @memberof Project
      */
-    projectCategory?: ProjectProjectCategory;
+    readonly projectCategory?: ProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
      * @type {string}
@@ -17677,145 +16003,6 @@ export interface ProjectAndIssueTypePair {
     projectId: string;
 }
 /**
- * The user who archived the project.
- * @export
- * @interface ProjectArchivedBy
- */
-export interface ProjectArchivedBy {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly accountType?: ProjectArchivedByAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectArchivedBy
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectArchivedBy
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectArchivedBy
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectArchivedBy
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectArchivedBy
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ProjectArchivedByAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectArchivedByAccountTypeEnum = typeof ProjectArchivedByAccountTypeEnum[keyof typeof ProjectArchivedByAccountTypeEnum];
-
-/**
- * The URLs of the project's avatars.
- * @export
- * @interface ProjectAvatarUrls
- */
-export interface ProjectAvatarUrls {
-    /**
-     * The URL of the item's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof ProjectAvatarUrls
-     */
-    ["16x16"]?: string;
-    /**
-     * The URL of the item's 24x24 pixel avatar.
-     * @type {string}
-     * @memberof ProjectAvatarUrls
-     */
-    ["24x24"]?: string;
-    /**
-     * The URL of the item's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof ProjectAvatarUrls
-     */
-    ["32x32"]?: string;
-    /**
-     * The URL of the item's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof ProjectAvatarUrls
-     */
-    ["48x48"]?: string;
-}
-/**
  * List of project avatars.
  * @export
  * @interface ProjectAvatars
@@ -17878,11 +16065,11 @@ export interface ProjectComponent {
      */
     readonly ari?: string;
     /**
-     * 
-     * @type {ProjectComponentAssignee}
+     * The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
+     * @type {User}
      * @memberof ProjectComponent
      */
-    assignee?: ProjectComponentAssignee;
+    readonly assignee?: User;
     /**
      * The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Can take the following values:
      * 
@@ -17916,11 +16103,11 @@ export interface ProjectComponent {
      */
     readonly isAssigneeTypeValid?: boolean;
     /**
-     * 
-     * @type {ProjectComponentLead}
+     * The user details for the component's lead user.
+     * @type {User}
      * @memberof ProjectComponent
      */
-    lead?: ProjectComponentLead;
+    readonly lead?: User;
     /**
      * The accountId of the component's lead user. The accountId uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
@@ -17958,11 +16145,11 @@ export interface ProjectComponent {
      */
     readonly projectId?: number;
     /**
-     * 
-     * @type {ProjectComponentRealAssignee}
+     * The user assigned to issues created with this component, when `assigneeType` does not identify a valid assignee.
+     * @type {User}
      * @memberof ProjectComponent
      */
-    realAssignee?: ProjectComponentRealAssignee;
+    readonly realAssignee?: User;
     /**
      * The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values:
      * 
@@ -18006,437 +16193,31 @@ export const ProjectComponentRealAssigneeTypeEnum = {
 export type ProjectComponentRealAssigneeTypeEnum = typeof ProjectComponentRealAssigneeTypeEnum[keyof typeof ProjectComponentRealAssigneeTypeEnum];
 
 /**
- * The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
+ * Details about data policies for a list of projects.
  * @export
- * @interface ProjectComponentAssignee
+ * @interface ProjectDataPolicies
  */
-export interface ProjectComponentAssignee {
+export interface ProjectDataPolicies {
     /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
+     * List of projects with data policies.
+     * @type {Array<ProjectWithDataPolicy>}
+     * @memberof ProjectDataPolicies
      */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly accountType?: ProjectComponentAssigneeAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectComponentAssignee
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectComponentAssignee
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentAssignee
-     */
-    readonly timeZone?: string;
+    readonly projectDataPolicies?: Array<ProjectWithDataPolicy>;
 }
-
-
 /**
+ * Details about data policy.
  * @export
+ * @interface ProjectDataPolicy
  */
-export const ProjectComponentAssigneeAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectComponentAssigneeAccountTypeEnum = typeof ProjectComponentAssigneeAccountTypeEnum[keyof typeof ProjectComponentAssigneeAccountTypeEnum];
-
-/**
- * The user details for the component's lead user.
- * @export
- * @interface ProjectComponentLead
- */
-export interface ProjectComponentLead {
+export interface ProjectDataPolicy {
     /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly accountType?: ProjectComponentLeadAccountTypeEnum;
-    /**
-     * Whether the user is active.
+     * Whether the project contains any content inaccessible to the requesting application.
      * @type {boolean}
-     * @memberof ProjectComponentLead
+     * @memberof ProjectDataPolicy
      */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectComponentLead
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectComponentLead
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentLead
-     */
-    readonly timeZone?: string;
+    readonly anyContentBlocked?: boolean;
 }
-
-
-/**
- * @export
- */
-export const ProjectComponentLeadAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectComponentLeadAccountTypeEnum = typeof ProjectComponentLeadAccountTypeEnum[keyof typeof ProjectComponentLeadAccountTypeEnum];
-
-/**
- * The user assigned to issues created with this component, when `assigneeType` does not identify a valid assignee.
- * @export
- * @interface ProjectComponentRealAssignee
- */
-export interface ProjectComponentRealAssignee {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly accountType?: ProjectComponentRealAssigneeAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectComponentRealAssignee
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectComponentRealAssignee
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectComponentRealAssignee
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectComponentRealAssignee
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ProjectComponentRealAssigneeAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectComponentRealAssigneeAccountTypeEnum = typeof ProjectComponentRealAssigneeAccountTypeEnum[keyof typeof ProjectComponentRealAssigneeAccountTypeEnum];
-
-/**
- * The user who marked the project as deleted.
- * @export
- * @interface ProjectDeletedBy
- */
-export interface ProjectDeletedBy {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly accountType?: ProjectDeletedByAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectDeletedBy
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectDeletedBy
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectDeletedBy
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectDeletedBy
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectDeletedBy
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ProjectDeletedByAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectDeletedByAccountTypeEnum = typeof ProjectDeletedByAccountTypeEnum[keyof typeof ProjectDeletedByAccountTypeEnum];
-
 /**
  * Details about a project.
  * @export
@@ -18444,11 +16225,11 @@ export type ProjectDeletedByAccountTypeEnum = typeof ProjectDeletedByAccountType
  */
 export interface ProjectDetails {
     /**
-     * 
-     * @type {ProjectAvatarUrls}
+     * The URLs of the project's avatars.
+     * @type {AvatarUrlsBean}
      * @memberof ProjectDetails
      */
-    avatarUrls?: ProjectAvatarUrls;
+    readonly avatarUrls?: AvatarUrlsBean;
     /**
      * The ID of the project.
      * @type {string}
@@ -18468,11 +16249,11 @@ export interface ProjectDetails {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {ProjectDetailsProjectCategory}
+     * The category the project belongs to.
+     * @type {UpdatedProjectCategory}
      * @memberof ProjectDetails
      */
-    projectCategory?: ProjectDetailsProjectCategory;
+    readonly projectCategory?: UpdatedProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
      * @type {string}
@@ -18504,37 +16285,6 @@ export const ProjectDetailsProjectTypeKeyEnum = {
 } as const;
 export type ProjectDetailsProjectTypeKeyEnum = typeof ProjectDetailsProjectTypeKeyEnum[keyof typeof ProjectDetailsProjectTypeKeyEnum];
 
-/**
- * The category the project belongs to.
- * @export
- * @interface ProjectDetailsProjectCategory
- */
-export interface ProjectDetailsProjectCategory {
-    /**
-     * The name of the project category.
-     * @type {string}
-     * @memberof ProjectDetailsProjectCategory
-     */
-    readonly description?: string;
-    /**
-     * The ID of the project category.
-     * @type {string}
-     * @memberof ProjectDetailsProjectCategory
-     */
-    readonly id?: string;
-    /**
-     * The description of the project category.
-     * @type {string}
-     * @memberof ProjectDetailsProjectCategory
-     */
-    readonly name?: string;
-    /**
-     * The URL of the project category.
-     * @type {string}
-     * @memberof ProjectDetailsProjectCategory
-     */
-    readonly self?: string;
-}
 /**
  * A project's sender email address.
  * @export
@@ -18717,7 +16467,7 @@ export interface ProjectIds {
     projectIds: Array<string>;
 }
 /**
- * Insights about the project.
+ * Additional details about a project.
  * @export
  * @interface ProjectInsight
  */
@@ -18742,11 +16492,11 @@ export interface ProjectInsight {
  */
 export interface ProjectIssueCreateMetadata {
     /**
-     * 
-     * @type {ProjectIssueCreateMetadataAvatarUrls}
+     * List of the project's avatars, returning the avatar size and associated URL.
+     * @type {AvatarUrlsBean}
      * @memberof ProjectIssueCreateMetadata
      */
-    avatarUrls?: ProjectIssueCreateMetadataAvatarUrls;
+    readonly avatarUrls?: AvatarUrlsBean;
     /**
      * Expand options that include additional project issue create metadata details in the response.
      * @type {string}
@@ -18785,37 +16535,6 @@ export interface ProjectIssueCreateMetadata {
     readonly self?: string;
 }
 /**
- * List of the project's avatars, returning the avatar size and associated URL.
- * @export
- * @interface ProjectIssueCreateMetadataAvatarUrls
- */
-export interface ProjectIssueCreateMetadataAvatarUrls {
-    /**
-     * The URL of the item's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof ProjectIssueCreateMetadataAvatarUrls
-     */
-    ["16x16"]?: string;
-    /**
-     * The URL of the item's 24x24 pixel avatar.
-     * @type {string}
-     * @memberof ProjectIssueCreateMetadataAvatarUrls
-     */
-    ["24x24"]?: string;
-    /**
-     * The URL of the item's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof ProjectIssueCreateMetadataAvatarUrls
-     */
-    ["32x32"]?: string;
-    /**
-     * The URL of the item's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof ProjectIssueCreateMetadataAvatarUrls
-     */
-    ["48x48"]?: string;
-}
-/**
  * List of issue level security items in a project.
  * @export
  * @interface ProjectIssueSecurityLevels
@@ -18829,23 +16548,23 @@ export interface ProjectIssueSecurityLevels {
     readonly levels: Array<SecurityLevel>;
 }
 /**
- * The issue type hierarchy for the project.
+ * The hierarchy of issue types within a project.
  * @export
  * @interface ProjectIssueTypeHierarchy
  */
 export interface ProjectIssueTypeHierarchy {
     /**
-     * The ID of the base level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+     * Details of an issue type hierarchy level.
+     * @type {Array<ProjectIssueTypesHierarchyLevel>}
+     * @memberof ProjectIssueTypeHierarchy
+     */
+    readonly hierarchy?: Array<ProjectIssueTypesHierarchyLevel>;
+    /**
+     * The ID of the project.
      * @type {number}
      * @memberof ProjectIssueTypeHierarchy
      */
-    baseLevelId?: number;
-    /**
-     * Details about the hierarchy level.
-     * @type {Array<SimplifiedHierarchyLevel>}
-     * @memberof ProjectIssueTypeHierarchy
-     */
-    readonly levels?: Array<SimplifiedHierarchyLevel>;
+    readonly projectId?: number;
 }
 /**
  * The project and issue type mapping.
@@ -18887,10 +16606,10 @@ export interface ProjectIssueTypeMappings {
 export interface ProjectIssueTypes {
     /**
      * IDs of the issue types
-     * @type {Set<string>}
+     * @type {Set<string | null>}
      * @memberof ProjectIssueTypes
      */
-    issueTypes?: Array<string> | null;
+    issueTypes?: Array<string | null> | null;
     /**
      * 
      * @type {ProjectId}
@@ -18930,7 +16649,7 @@ export interface ProjectIssueTypesHierarchyLevel {
     readonly name?: string;
 }
 /**
- * The project landing page info.
+ * 
  * @export
  * @interface ProjectLandingPageInfo
  */
@@ -19003,115 +16722,7 @@ export interface ProjectLandingPageInfo {
     url?: string;
 }
 /**
- * The username of the project lead.
- * @export
- * @interface ProjectLead
- */
-export interface ProjectLead {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly accountType?: ProjectLeadAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ProjectLead
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof ProjectLead
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof ProjectLead
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof ProjectLead
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof ProjectLead
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const ProjectLeadAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type ProjectLeadAccountTypeEnum = typeof ProjectLeadAccountTypeEnum[keyof typeof ProjectLeadAccountTypeEnum];
-
-/**
- * User permissions on the project
+ * Permissions which a user has on a project.
  * @export
  * @interface ProjectPermissions
  */
@@ -19122,37 +16733,6 @@ export interface ProjectPermissions {
      * @memberof ProjectPermissions
      */
     readonly canEdit?: boolean;
-}
-/**
- * The category the project belongs to.
- * @export
- * @interface ProjectProjectCategory
- */
-export interface ProjectProjectCategory {
-    /**
-     * The description of the project category.
-     * @type {string}
-     * @memberof ProjectProjectCategory
-     */
-    description?: string;
-    /**
-     * The ID of the project category.
-     * @type {string}
-     * @memberof ProjectProjectCategory
-     */
-    readonly id?: string;
-    /**
-     * The name of the project category. Required on create, optional on update.
-     * @type {string}
-     * @memberof ProjectProjectCategory
-     */
-    name?: string;
-    /**
-     * The URL of the project category.
-     * @type {string}
-     * @memberof ProjectProjectCategory
-     */
-    readonly self?: string;
 }
 /**
  * Details about the roles in a project.
@@ -19209,11 +16789,11 @@ export interface ProjectRole {
      */
     readonly roleConfigurable?: boolean;
     /**
-     * 
-     * @type {ProjectRoleScope}
+     * The scope of the role. Indicated for roles associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
+     * @type {Scope}
      * @memberof ProjectRole
      */
-    scope?: ProjectRoleScope;
+    readonly scope?: Scope;
     /**
      * The URL the project role details.
      * @type {string}
@@ -19298,11 +16878,11 @@ export interface ProjectRoleDetails {
      */
     readonly roleConfigurable?: boolean;
     /**
-     * 
-     * @type {ProjectRoleScope}
+     * The scope of the role. Indicated for roles associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
+     * @type {Scope}
      * @memberof ProjectRoleDetails
      */
-    scope?: ProjectRoleScope;
+    readonly scope?: Scope;
     /**
      * The URL the project role details.
      * @type {string}
@@ -19341,36 +16921,6 @@ export interface ProjectRoleGroup {
      */
     name?: string;
 }
-/**
- * The scope of the role. Indicated for roles associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
- * @export
- * @interface ProjectRoleScope
- */
-export interface ProjectRoleScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof ProjectRoleScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ProjectRoleScope
-     */
-    readonly type?: ProjectRoleScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const ProjectRoleScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type ProjectRoleScopeTypeEnum = typeof ProjectRoleScopeTypeEnum[keyof typeof ProjectRoleScopeTypeEnum];
-
 /**
  * Details of the user associated with the role.
  * @export
@@ -19450,6 +17000,25 @@ export interface ProjectType {
      * @memberof ProjectType
      */
     readonly key?: string;
+}
+/**
+ * Details about data policies for a project.
+ * @export
+ * @interface ProjectWithDataPolicy
+ */
+export interface ProjectWithDataPolicy {
+    /**
+     * Data policy.
+     * @type {ProjectDataPolicy}
+     * @memberof ProjectWithDataPolicy
+     */
+    readonly dataPolicy?: ProjectDataPolicy;
+    /**
+     * The project ID.
+     * @type {number}
+     * @memberof ProjectWithDataPolicy
+     */
+    readonly id?: number;
 }
 /**
  * Property key details.
@@ -19541,11 +17110,11 @@ export interface RegisteredWebhook {
  */
 export interface RemoteIssueLink {
     /**
-     * 
-     * @type {RemoteIssueLinkApplication}
+     * Details of the remote application the linked item is in.
+     * @type {Application}
      * @memberof RemoteIssueLink
      */
-    application?: RemoteIssueLinkApplication;
+    application?: Application;
     /**
      * The global ID of the link, such as the ID of the item on the remote system.
      * @type {string}
@@ -19559,11 +17128,11 @@ export interface RemoteIssueLink {
      */
     id?: number;
     /**
-     * 
-     * @type {RemoteIssueLinkObject}
+     * Details of the item linked to.
+     * @type {RemoteObject}
      * @memberof RemoteIssueLink
      */
-    object?: RemoteIssueLinkObject;
+    object?: RemoteObject;
     /**
      * Description of the relationship between the issue and the linked item.
      * @type {string}
@@ -19576,25 +17145,6 @@ export interface RemoteIssueLink {
      * @memberof RemoteIssueLink
      */
     self?: string;
-}
-/**
- * Details of the remote application the linked item is in.
- * @export
- * @interface RemoteIssueLinkApplication
- */
-export interface RemoteIssueLinkApplication {
-    /**
-     * The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank items are excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link". Grouping and sorting of links may place links without an application name last.
-     * @type {string}
-     * @memberof RemoteIssueLinkApplication
-     */
-    name?: string;
-    /**
-     * The name-spaced type of the application, used by registered rendering apps.
-     * @type {string}
-     * @memberof RemoteIssueLinkApplication
-     */
-    type?: string;
 }
 /**
  * Details of the identifiers for a created or updated remote issue link.
@@ -19616,43 +17166,6 @@ export interface RemoteIssueLinkIdentifies {
     readonly self?: string;
 }
 /**
- * Details of the item linked to.
- * @export
- * @interface RemoteIssueLinkObject
- */
-export interface RemoteIssueLinkObject {
-    /**
-     * 
-     * @type {RemoteObjectIcon}
-     * @memberof RemoteIssueLinkObject
-     */
-    icon?: RemoteObjectIcon;
-    /**
-     * 
-     * @type {RemoteObjectStatus}
-     * @memberof RemoteIssueLinkObject
-     */
-    status?: RemoteObjectStatus;
-    /**
-     * The summary details of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    summary?: string;
-    /**
-     * The title of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    title: string;
-    /**
-     * The URL of the item.
-     * @type {string}
-     * @memberof RemoteIssueLinkObject
-     */
-    url: string;
-}
-/**
  * Details of a remote issue link.
  * @export
  * @interface RemoteIssueLinkRequest
@@ -19660,11 +17173,11 @@ export interface RemoteIssueLinkObject {
 export interface RemoteIssueLinkRequest {
     [key: string]: any | any;
     /**
-     * 
-     * @type {RemoteIssueLinkRequestApplication}
+     * Details of the remote application the linked item is in. For example, trello.
+     * @type {Application}
      * @memberof RemoteIssueLinkRequest
      */
-    application?: RemoteIssueLinkRequestApplication;
+    application?: Application;
     /**
      * An identifier for the remote item in the remote system. For example, the global ID for a remote item in Confluence would consist of the app ID and page ID, like this: `appId=456&pageId=123`.
      * 
@@ -19676,36 +17189,17 @@ export interface RemoteIssueLinkRequest {
      */
     globalId?: string;
     /**
-     * 
-     * @type {RemoteIssueLinkObject}
+     * Details of the item linked to.
+     * @type {RemoteObject}
      * @memberof RemoteIssueLinkRequest
      */
-    object: RemoteIssueLinkObject;
+    object: RemoteObject;
     /**
      * Description of the relationship between the issue and the linked item. If not set, the relationship description "links to" is used in Jira.
      * @type {string}
      * @memberof RemoteIssueLinkRequest
      */
     relationship?: string;
-}
-/**
- * Details of the remote application the linked item is in. For example, trello.
- * @export
- * @interface RemoteIssueLinkRequestApplication
- */
-export interface RemoteIssueLinkRequestApplication {
-    /**
-     * The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank items are excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link". Grouping and sorting of links may place links without an application name last.
-     * @type {string}
-     * @memberof RemoteIssueLinkRequestApplication
-     */
-    name?: string;
-    /**
-     * The name-spaced type of the application, used by registered rendering apps.
-     * @type {string}
-     * @memberof RemoteIssueLinkRequestApplication
-     */
-    type?: string;
 }
 /**
  * The linked item.
@@ -19715,17 +17209,17 @@ export interface RemoteIssueLinkRequestApplication {
 export interface RemoteObject {
     [key: string]: any | any;
     /**
-     * 
-     * @type {RemoteObjectIcon}
+     * Details of the icon for the item. If no icon is defined, the default link icon is used in Jira.
+     * @type {Icon}
      * @memberof RemoteObject
      */
-    icon?: RemoteObjectIcon;
+    icon?: Icon;
     /**
-     * 
-     * @type {RemoteObjectStatus}
+     * The status of the item.
+     * @type {Status}
      * @memberof RemoteObject
      */
-    status?: RemoteObjectStatus;
+    status?: Status;
     /**
      * The summary details of the item.
      * @type {string}
@@ -19746,64 +17240,17 @@ export interface RemoteObject {
     url: string;
 }
 /**
- * Details of the icon for the item. If no icon is defined, the default link icon is used in Jira.
- * @export
- * @interface RemoteObjectIcon
- */
-export interface RemoteObjectIcon {
-    /**
-     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
-     * @type {string}
-     * @memberof RemoteObjectIcon
-     */
-    link?: string;
-    /**
-     * The title of the icon. This is used as follows:
-     * 
-     *  *  For a status icon it is used as a tooltip on the icon. If not set, the status icon doesn't display a tooltip in Jira.
-     *  *  For the remote object icon it is used in conjunction with the application name to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank itemsare excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link".
-     * @type {string}
-     * @memberof RemoteObjectIcon
-     */
-    title?: string;
-    /**
-     * The URL of an icon that displays at 16x16 pixel in Jira.
-     * @type {string}
-     * @memberof RemoteObjectIcon
-     */
-    url16x16?: string;
-}
-/**
- * The status of the item.
- * @export
- * @interface RemoteObjectStatus
- */
-export interface RemoteObjectStatus {
-    /**
-     * 
-     * @type {StatusIcon}
-     * @memberof RemoteObjectStatus
-     */
-    icon?: StatusIcon;
-    /**
-     * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
-     * @type {boolean}
-     * @memberof RemoteObjectStatus
-     */
-    resolved?: boolean;
-}
-/**
  * 
  * @export
  * @interface RemoveOptionFromIssuesResult
  */
 export interface RemoveOptionFromIssuesResult {
     /**
-     * 
-     * @type {RemoveOptionFromIssuesResultErrors}
+     * A collection of errors related to unchanged issues. The collection size is limited, which means not all errors may be returned.
+     * @type {SimpleErrorCollection}
      * @memberof RemoveOptionFromIssuesResult
      */
-    errors?: RemoveOptionFromIssuesResultErrors;
+    errors?: SimpleErrorCollection;
     /**
      * The IDs of the modified issues.
      * @type {Array<number>}
@@ -19816,31 +17263,6 @@ export interface RemoveOptionFromIssuesResult {
      * @memberof RemoveOptionFromIssuesResult
      */
     unmodifiedIssues?: Array<number>;
-}
-/**
- * A collection of errors related to unchanged issues. The collection size is limited, which means not all errors may be returned.
- * @export
- * @interface RemoveOptionFromIssuesResultErrors
- */
-export interface RemoveOptionFromIssuesResultErrors {
-    /**
-     * The list of error messages produced by this operation. For example, "input parameter 'key' must be provided"
-     * @type {Array<string>}
-     * @memberof RemoveOptionFromIssuesResultErrors
-     */
-    errorMessages?: Array<string>;
-    /**
-     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
-     * @type {{ [key: string]: string; }}
-     * @memberof RemoveOptionFromIssuesResultErrors
-     */
-    errors?: { [key: string]: string; };
-    /**
-     * 
-     * @type {number}
-     * @memberof RemoveOptionFromIssuesResultErrors
-     */
-    httpStatusCode?: number;
 }
 /**
  * Change the order of issue priorities.
@@ -20025,6 +17447,61 @@ export interface ResolutionJsonBean {
     self?: string;
 }
 /**
+ * 
+ * @export
+ * @interface Resource
+ */
+export interface Resource {
+    /**
+     * 
+     * @type {string}
+     * @memberof Resource
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Blob}
+     * @memberof Resource
+     */
+    file?: Blob;
+    /**
+     * 
+     * @type {string}
+     * @memberof Resource
+     */
+    filename?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof Resource
+     */
+    inputStream?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Resource
+     */
+    open?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Resource
+     */
+    readable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Resource
+     */
+    uri?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Resource
+     */
+    url?: string;
+}
+/**
  * Details of the permission.
  * @export
  * @interface RestrictedPermission
@@ -20186,11 +17663,11 @@ export interface SanitizedJqlQuery {
      */
     accountId?: string | null;
     /**
-     * 
-     * @type {SanitizedJqlQueryErrors}
+     * The list of errors.
+     * @type {ErrorCollection}
      * @memberof SanitizedJqlQuery
      */
-    errors?: SanitizedJqlQueryErrors;
+    errors?: ErrorCollection;
     /**
      * The initial query.
      * @type {string}
@@ -20205,31 +17682,6 @@ export interface SanitizedJqlQuery {
     sanitizedQuery?: string | null;
 }
 /**
- * The list of errors.
- * @export
- * @interface SanitizedJqlQueryErrors
- */
-export interface SanitizedJqlQueryErrors {
-    /**
-     * The list of error messages produced by this operation. For example, "input parameter 'key' must be provided"
-     * @type {Array<string>}
-     * @memberof SanitizedJqlQueryErrors
-     */
-    errorMessages?: Array<string>;
-    /**
-     * The list of errors by parameter returned by the operation. For example,"projectKey": "Project keys must start with an uppercase letter, followed by one or more uppercase alphanumeric characters."
-     * @type {{ [key: string]: string; }}
-     * @memberof SanitizedJqlQueryErrors
-     */
-    errors?: { [key: string]: string; };
-    /**
-     * 
-     * @type {number}
-     * @memberof SanitizedJqlQueryErrors
-     */
-    status?: number;
-}
-/**
  * The projects the item is associated with. Indicated for items associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
  * @export
  * @interface Scope
@@ -20237,11 +17689,11 @@ export interface SanitizedJqlQueryErrors {
 export interface Scope {
     [key: string]: any | any;
     /**
-     * 
-     * @type {ScopeProject}
+     * The project the item has scope in.
+     * @type {ProjectDetails}
      * @memberof Scope
      */
-    project?: ScopeProject;
+    readonly project?: ProjectDetails;
     /**
      * The type of scope.
      * @type {string}
@@ -20259,73 +17711,6 @@ export const ScopeTypeEnum = {
     Template: 'TEMPLATE'
 } as const;
 export type ScopeTypeEnum = typeof ScopeTypeEnum[keyof typeof ScopeTypeEnum];
-
-/**
- * The project the item has scope in.
- * @export
- * @interface ScopeProject
- */
-export interface ScopeProject {
-    /**
-     * 
-     * @type {ProjectAvatarUrls}
-     * @memberof ScopeProject
-     */
-    avatarUrls?: ProjectAvatarUrls;
-    /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof ScopeProject
-     */
-    id?: string;
-    /**
-     * The key of the project.
-     * @type {string}
-     * @memberof ScopeProject
-     */
-    readonly key?: string;
-    /**
-     * The name of the project.
-     * @type {string}
-     * @memberof ScopeProject
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {ProjectDetailsProjectCategory}
-     * @memberof ScopeProject
-     */
-    projectCategory?: ProjectDetailsProjectCategory;
-    /**
-     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
-     * @memberof ScopeProject
-     */
-    readonly projectTypeKey?: ScopeProjectProjectTypeKeyEnum;
-    /**
-     * The URL of the project details.
-     * @type {string}
-     * @memberof ScopeProject
-     */
-    readonly self?: string;
-    /**
-     * Whether or not the project is simplified.
-     * @type {boolean}
-     * @memberof ScopeProject
-     */
-    readonly simplified?: boolean;
-}
-
-
-/**
- * @export
- */
-export const ScopeProjectProjectTypeKeyEnum = {
-    Software: 'software',
-    ServiceDesk: 'service_desk',
-    Business: 'business'
-} as const;
-export type ScopeProjectProjectTypeKeyEnum = typeof ScopeProjectProjectTypeKeyEnum[keyof typeof ScopeProjectProjectTypeKeyEnum];
 
 /**
  * A screen.
@@ -20352,11 +17737,11 @@ export interface Screen {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {ScreenScope}
+     * The scope of the screen.
+     * @type {Scope}
      * @memberof Screen
      */
-    scope?: ScreenScope;
+    scope?: Scope;
 }
 /**
  * Details of a screen.
@@ -20396,11 +17781,11 @@ export interface ScreenScheme {
      */
     id?: number;
     /**
-     * 
-     * @type {ScreenSchemeIssueTypeScreenSchemes}
+     * Details of the issue type screen schemes associated with the screen scheme.
+     * @type {PageBeanIssueTypeScreenScheme}
      * @memberof ScreenScheme
      */
-    issueTypeScreenSchemes?: ScreenSchemeIssueTypeScreenSchemes;
+    issueTypeScreenSchemes?: PageBeanIssueTypeScreenScheme;
     /**
      * The name of the screen scheme.
      * @type {string}
@@ -20408,11 +17793,11 @@ export interface ScreenScheme {
      */
     name?: string;
     /**
-     * 
-     * @type {ScreenSchemeScreens}
+     * The IDs of the screens for the screen types of the screen scheme.
+     * @type {ScreenTypes}
      * @memberof ScreenScheme
      */
-    screens?: ScreenSchemeScreens;
+    screens?: ScreenTypes;
 }
 /**
  * Details of a screen scheme.
@@ -20433,42 +17818,11 @@ export interface ScreenSchemeDetails {
      */
     name: string;
     /**
-     * 
-     * @type {ScreenSchemeDetailsScreens}
+     * The IDs of the screens for the screen types of the screen scheme. Only screens used in classic projects are accepted.
+     * @type {ScreenTypes}
      * @memberof ScreenSchemeDetails
      */
-    screens: ScreenSchemeDetailsScreens;
-}
-/**
- * The IDs of the screens for the screen types of the screen scheme. Only screens used in classic projects are accepted.
- * @export
- * @interface ScreenSchemeDetailsScreens
- */
-export interface ScreenSchemeDetailsScreens {
-    /**
-     * The ID of the create screen.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    create?: number;
-    /**
-     * The ID of the default screen. Required when creating a screen scheme.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    default?: number;
-    /**
-     * The ID of the edit screen.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    edit?: number;
-    /**
-     * The ID of the view screen.
-     * @type {number}
-     * @memberof ScreenSchemeDetailsScreens
-     */
-    view?: number;
+    screens: ScreenTypes;
 }
 /**
  * The ID of a screen scheme.
@@ -20483,116 +17837,6 @@ export interface ScreenSchemeId {
      */
     readonly id: number;
 }
-/**
- * Details of the issue type screen schemes associated with the screen scheme.
- * @export
- * @interface ScreenSchemeIssueTypeScreenSchemes
- */
-export interface ScreenSchemeIssueTypeScreenSchemes {
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly isLast?: boolean;
-    /**
-     * The maximum number of items that could be returned.
-     * @type {number}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly maxResults?: number;
-    /**
-     * If there is another page of results, the URL of the next page.
-     * @type {string}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly nextPage?: string;
-    /**
-     * The URL of the page.
-     * @type {string}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly self?: string;
-    /**
-     * The index of the first item returned.
-     * @type {number}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly startAt?: number;
-    /**
-     * The number of items returned.
-     * @type {number}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly total?: number;
-    /**
-     * The list of items.
-     * @type {Array<IssueTypeScreenScheme>}
-     * @memberof ScreenSchemeIssueTypeScreenSchemes
-     */
-    readonly values?: Array<IssueTypeScreenScheme>;
-}
-/**
- * The IDs of the screens for the screen types of the screen scheme.
- * @export
- * @interface ScreenSchemeScreens
- */
-export interface ScreenSchemeScreens {
-    /**
-     * The ID of the create screen.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    create?: number;
-    /**
-     * The ID of the default screen. Required when creating a screen scheme.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    default?: number;
-    /**
-     * The ID of the edit screen.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    edit?: number;
-    /**
-     * The ID of the view screen.
-     * @type {number}
-     * @memberof ScreenSchemeScreens
-     */
-    view?: number;
-}
-/**
- * The scope of the screen.
- * @export
- * @interface ScreenScope
- */
-export interface ScreenScope {
-    /**
-     * 
-     * @type {ScopeProject}
-     * @memberof ScreenScope
-     */
-    project?: ScopeProject;
-    /**
-     * The type of scope.
-     * @type {string}
-     * @memberof ScreenScope
-     */
-    readonly type?: ScreenScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const ScreenScopeTypeEnum = {
-    Project: 'PROJECT',
-    Template: 'TEMPLATE'
-} as const;
-export type ScreenScopeTypeEnum = typeof ScreenScopeTypeEnum[keyof typeof ScreenScopeTypeEnum];
-
 /**
  * The IDs of the screens for the screen types of the screen scheme.
  * @export
@@ -20610,7 +17854,7 @@ export interface ScreenTypes {
      * @type {number}
      * @memberof ScreenTypes
      */
-    default?: number;
+    default: number;
     /**
      * The ID of the edit screen.
      * @type {number}
@@ -20649,36 +17893,17 @@ export interface ScreenWithTab {
      */
     readonly name?: string;
     /**
-     * 
-     * @type {ScreenScope}
+     * The scope of the screen.
+     * @type {Scope}
      * @memberof ScreenWithTab
      */
-    scope?: ScreenScope;
+    scope?: Scope;
     /**
-     * 
-     * @type {ScreenWithTabTab}
+     * The tab for the screen.
+     * @type {ScreenableTab}
      * @memberof ScreenWithTab
      */
-    tab?: ScreenWithTabTab;
-}
-/**
- * The tab for the screen.
- * @export
- * @interface ScreenWithTabTab
- */
-export interface ScreenWithTabTab {
-    /**
-     * The ID of the screen tab.
-     * @type {number}
-     * @memberof ScreenWithTabTab
-     */
-    readonly id?: number;
-    /**
-     * The name of the screen tab. The maximum length is 255 characters.
-     * @type {string}
-     * @memberof ScreenWithTabTab
-     */
-    name: string;
+    tab?: ScreenableTab;
 }
 /**
  * A screen tab field.
@@ -20947,11 +18172,11 @@ export interface SecurityLevel {
 export interface SecurityLevelMember {
     [key: string]: any | any;
     /**
-     * 
-     * @type {SecurityLevelMemberHolder}
+     * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+     * @type {PermissionHolder}
      * @memberof SecurityLevelMember
      */
-    holder: SecurityLevelMemberHolder;
+    readonly holder: PermissionHolder;
     /**
      * The ID of the issue security level member.
      * @type {string}
@@ -20976,37 +18201,6 @@ export interface SecurityLevelMember {
      * @memberof SecurityLevelMember
      */
     managed?: boolean;
-}
-/**
- * The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
- * @export
- * @interface SecurityLevelMemberHolder
- */
-export interface SecurityLevelMemberHolder {
-    /**
-     * Expand options that include additional permission holder details in the response.
-     * @type {string}
-     * @memberof SecurityLevelMemberHolder
-     */
-    readonly expand?: string;
-    /**
-     * As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof SecurityLevelMemberHolder
-     */
-    parameter?: string;
-    /**
-     * The type of permission holder.
-     * @type {string}
-     * @memberof SecurityLevelMemberHolder
-     */
-    type: string;
-    /**
-     * The identifier associated with the `type` value that defines the holder of the permission.
-     * @type {string}
-     * @memberof SecurityLevelMemberHolder
-     */
-    value?: string;
 }
 /**
  * Details about a security scheme.
@@ -21222,6 +18416,12 @@ export interface ServerInformation {
      */
     displayUrl?: string;
     /**
+     * The display URL of Confluence.
+     * @type {string}
+     * @memberof ServerInformation
+     */
+    displayUrlConfluence?: string;
+    /**
      * The display URL of the Servicedesk Help Center.
      * @type {string}
      * @memberof ServerInformation
@@ -21327,6 +18527,86 @@ export interface ServiceManagementNavigationInfo {
     queueName?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ServiceRegistry
+ */
+export interface ServiceRegistry {
+    /**
+     * service description
+     * @type {string}
+     * @memberof ServiceRegistry
+     */
+    description?: string | null;
+    /**
+     * service ID
+     * @type {string}
+     * @memberof ServiceRegistry
+     */
+    id?: string;
+    /**
+     * service name
+     * @type {string}
+     * @memberof ServiceRegistry
+     */
+    name?: string;
+    /**
+     * organization ID
+     * @type {string}
+     * @memberof ServiceRegistry
+     */
+    organizationId?: string;
+    /**
+     * service revision
+     * @type {string}
+     * @memberof ServiceRegistry
+     */
+    revision?: string;
+    /**
+     * 
+     * @type {ServiceRegistryTier}
+     * @memberof ServiceRegistry
+     */
+    serviceTier?: ServiceRegistryTier;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceRegistryTier
+ */
+export interface ServiceRegistryTier {
+    /**
+     * tier description
+     * @type {string}
+     * @memberof ServiceRegistryTier
+     */
+    description?: string | null;
+    /**
+     * tier ID
+     * @type {string}
+     * @memberof ServiceRegistryTier
+     */
+    id?: string;
+    /**
+     * tier level
+     * @type {number}
+     * @memberof ServiceRegistryTier
+     */
+    level?: number;
+    /**
+     * tier name
+     * @type {string}
+     * @memberof ServiceRegistryTier
+     */
+    name?: string | null;
+    /**
+     * name key of the tier
+     * @type {string}
+     * @memberof ServiceRegistryTier
+     */
+    nameKey?: string;
+}
+/**
  * Details of new default levels.
  * @export
  * @interface SetDefaultLevelsRequest
@@ -21373,11 +18653,11 @@ export interface SetDefaultResolutionRequest {
  */
 export interface SharePermission {
     /**
-     * 
-     * @type {SharePermissionGroup}
+     * The group that the filter is shared with. For a request, specify the `groupId` or `name` property for the group. As a group's name can change, use of `groupId` is recommended.
+     * @type {GroupName}
      * @memberof SharePermission
      */
-    group?: SharePermissionGroup;
+    group?: GroupName;
     /**
      * The unique identifier of the share permission.
      * @type {number}
@@ -21385,17 +18665,19 @@ export interface SharePermission {
      */
     readonly id?: number;
     /**
-     * 
-     * @type {SharePermissionProject}
+     * The project that the filter is shared with. This is similar to the project object returned by [Get project](#api-rest-api-3-project-projectIdOrKey-get) but it contains a subset of the properties, which are: `self`, `id`, `key`, `assigneeType`, `name`, `roles`, `avatarUrls`, `projectType`, `simplified`.  
+     * For a request, specify the `id` for the project.
+     * @type {Project}
      * @memberof SharePermission
      */
-    project?: SharePermissionProject;
+    project?: Project;
     /**
-     * 
-     * @type {SharePermissionRole}
+     * The project role that the filter is shared with.  
+     * For a request, specify the `id` for the role. You must also specify the `project` object and `id` for the project that the role is in.
+     * @type {ProjectRole}
      * @memberof SharePermission
      */
-    role?: SharePermissionRole;
+    role?: ProjectRole;
     /**
      * The type of share permission:
      * 
@@ -21411,11 +18693,11 @@ export interface SharePermission {
      */
     type: SharePermissionTypeEnum;
     /**
-     * 
-     * @type {SharePermissionUser}
+     * The user account ID that the filter is shared with. For a request, specify the `accountId` property for the user.
+     * @type {UserBean}
      * @memberof SharePermission
      */
-    user?: SharePermissionUser;
+    user?: UserBean;
 }
 
 
@@ -21434,31 +18716,6 @@ export const SharePermissionTypeEnum = {
 } as const;
 export type SharePermissionTypeEnum = typeof SharePermissionTypeEnum[keyof typeof SharePermissionTypeEnum];
 
-/**
- * The group that the filter is shared with. For a request, specify the `groupId` or `name` property for the group. As a group's name can change, use of `groupId` is recommended.
- * @export
- * @interface SharePermissionGroup
- */
-export interface SharePermissionGroup {
-    /**
-     * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
-     * @type {string}
-     * @memberof SharePermissionGroup
-     */
-    groupId?: string | null;
-    /**
-     * The name of group.
-     * @type {string}
-     * @memberof SharePermissionGroup
-     */
-    name?: string;
-    /**
-     * The URL for these group details.
-     * @type {string}
-     * @memberof SharePermissionGroup
-     */
-    readonly self?: string;
-}
 /**
  * 
  * @export
@@ -21530,373 +18787,6 @@ export const SharePermissionInputBeanTypeEnum = {
 } as const;
 export type SharePermissionInputBeanTypeEnum = typeof SharePermissionInputBeanTypeEnum[keyof typeof SharePermissionInputBeanTypeEnum];
 
-/**
- * The project that the filter is shared with. This is similar to the project object returned by [Get project](#api-rest-api-3-project-projectIdOrKey-get) but it contains a subset of the properties, which are: `self`, `id`, `key`, `assigneeType`, `name`, `roles`, `avatarUrls`, `projectType`, `simplified`.  
- * For a request, specify the `id` for the project.
- * @export
- * @interface SharePermissionProject
- */
-export interface SharePermissionProject {
-    /**
-     * Whether the project is archived.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {ProjectArchivedBy}
-     * @memberof SharePermissionProject
-     */
-    archivedBy?: ProjectArchivedBy;
-    /**
-     * The date when the project was archived.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly archivedDate?: string;
-    /**
-     * The default assignee when creating issues for this project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly assigneeType?: SharePermissionProjectAssigneeTypeEnum;
-    /**
-     * 
-     * @type {ProjectAvatarUrls}
-     * @memberof SharePermissionProject
-     */
-    avatarUrls?: ProjectAvatarUrls;
-    /**
-     * List of the components contained in the project.
-     * @type {Array<ProjectComponent>}
-     * @memberof SharePermissionProject
-     */
-    readonly components?: Array<ProjectComponent>;
-    /**
-     * Whether the project is marked as deleted.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    readonly deleted?: boolean;
-    /**
-     * 
-     * @type {ProjectDeletedBy}
-     * @memberof SharePermissionProject
-     */
-    deletedBy?: ProjectDeletedBy;
-    /**
-     * The date when the project was marked as deleted.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly deletedDate?: string;
-    /**
-     * A brief description of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly description?: string;
-    /**
-     * An email address associated with the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    email?: string;
-    /**
-     * Expand options that include additional project details in the response.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly expand?: string;
-    /**
-     * Whether the project is selected as a favorite.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    favourite?: boolean;
-    /**
-     * The ID of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    id?: string;
-    /**
-     * 
-     * @type {ProjectInsight}
-     * @memberof SharePermissionProject
-     */
-    insight?: ProjectInsight;
-    /**
-     * Whether the project is private from the user's perspective. This means the user can't see the project or any associated issues.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    readonly isPrivate?: boolean;
-    /**
-     * 
-     * @type {ProjectIssueTypeHierarchy}
-     * @memberof SharePermissionProject
-     */
-    issueTypeHierarchy?: ProjectIssueTypeHierarchy;
-    /**
-     * List of the issue types available in the project.
-     * @type {Array<IssueTypeDetails>}
-     * @memberof SharePermissionProject
-     */
-    readonly issueTypes?: Array<IssueTypeDetails>;
-    /**
-     * The key of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly key?: string;
-    /**
-     * 
-     * @type {ProjectLandingPageInfo}
-     * @memberof SharePermissionProject
-     */
-    landingPageInfo?: ProjectLandingPageInfo;
-    /**
-     * 
-     * @type {ProjectLead}
-     * @memberof SharePermissionProject
-     */
-    lead?: ProjectLead;
-    /**
-     * The name of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {ProjectPermissions}
-     * @memberof SharePermissionProject
-     */
-    permissions?: ProjectPermissions;
-    /**
-     * 
-     * @type {ProjectProjectCategory}
-     * @memberof SharePermissionProject
-     */
-    projectCategory?: ProjectProjectCategory;
-    /**
-     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly projectTypeKey?: SharePermissionProjectProjectTypeKeyEnum;
-    /**
-     * Map of project properties
-     * @type {{ [key: string]: any; }}
-     * @memberof SharePermissionProject
-     */
-    readonly properties?: { [key: string]: any; };
-    /**
-     * The date when the project is deleted permanently.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly retentionTillDate?: string;
-    /**
-     * The name and self URL for each role defined in the project. For more information, see [Create project role](#api-rest-api-3-role-post).
-     * @type {{ [key: string]: string; }}
-     * @memberof SharePermissionProject
-     */
-    readonly roles?: { [key: string]: string; };
-    /**
-     * The URL of the project details.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly self?: string;
-    /**
-     * Whether the project is simplified.
-     * @type {boolean}
-     * @memberof SharePermissionProject
-     */
-    readonly simplified?: boolean;
-    /**
-     * The type of the project.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly style?: SharePermissionProjectStyleEnum;
-    /**
-     * A link to information about this project, such as project documentation.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly url?: string;
-    /**
-     * Unique ID for next-gen projects.
-     * @type {string}
-     * @memberof SharePermissionProject
-     */
-    readonly uuid?: string;
-    /**
-     * The versions defined in the project. For more information, see [Create version](#api-rest-api-3-version-post).
-     * @type {Array<Version>}
-     * @memberof SharePermissionProject
-     */
-    readonly versions?: Array<Version>;
-}
-
-
-/**
- * @export
- */
-export const SharePermissionProjectAssigneeTypeEnum = {
-    ProjectLead: 'PROJECT_LEAD',
-    Unassigned: 'UNASSIGNED'
-} as const;
-export type SharePermissionProjectAssigneeTypeEnum = typeof SharePermissionProjectAssigneeTypeEnum[keyof typeof SharePermissionProjectAssigneeTypeEnum];
-
-/**
- * @export
- */
-export const SharePermissionProjectProjectTypeKeyEnum = {
-    Software: 'software',
-    ServiceDesk: 'service_desk',
-    Business: 'business'
-} as const;
-export type SharePermissionProjectProjectTypeKeyEnum = typeof SharePermissionProjectProjectTypeKeyEnum[keyof typeof SharePermissionProjectProjectTypeKeyEnum];
-
-/**
- * @export
- */
-export const SharePermissionProjectStyleEnum = {
-    Classic: 'classic',
-    NextGen: 'next-gen'
-} as const;
-export type SharePermissionProjectStyleEnum = typeof SharePermissionProjectStyleEnum[keyof typeof SharePermissionProjectStyleEnum];
-
-/**
- * The project role that the filter is shared with.  
- * For a request, specify the `id` for the role. You must also specify the `project` object and `id` for the project that the role is in.
- * @export
- * @interface SharePermissionRole
- */
-export interface SharePermissionRole {
-    /**
-     * The list of users who act in this role.
-     * @type {Array<RoleActor>}
-     * @memberof SharePermissionRole
-     */
-    readonly actors?: Array<RoleActor>;
-    /**
-     * Whether this role is the admin role for the project.
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    readonly admin?: boolean;
-    /**
-     * Whether the calling user is part of this role.
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    currentUserRole?: boolean;
-    /**
-     * Whether this role is the default role for the project
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    readonly default?: boolean;
-    /**
-     * The description of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    readonly description?: string;
-    /**
-     * The ID of the project role.
-     * @type {number}
-     * @memberof SharePermissionRole
-     */
-    readonly id?: number;
-    /**
-     * The name of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    name?: string;
-    /**
-     * Whether the roles are configurable for this project.
-     * @type {boolean}
-     * @memberof SharePermissionRole
-     */
-    readonly roleConfigurable?: boolean;
-    /**
-     * 
-     * @type {ProjectRoleScope}
-     * @memberof SharePermissionRole
-     */
-    scope?: ProjectRoleScope;
-    /**
-     * The URL the project role details.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    readonly self?: string;
-    /**
-     * The translated name of the project role.
-     * @type {string}
-     * @memberof SharePermissionRole
-     */
-    translatedName?: string;
-}
-/**
- * The user account ID that the filter is shared with. For a request, specify the `accountId` property for the user.
- * @export
- * @interface SharePermissionUser
- */
-export interface SharePermissionUser {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    accountId?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof SharePermissionUser
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {UserBeanAvatarUrls}
-     * @memberof SharePermissionUser
-     */
-    avatarUrls?: UserBeanAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    displayName?: string;
-    /**
-     * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
-     * The key of the user.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    key?: string;
-    /**
-     * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
-     * The username of the user.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof SharePermissionUser
-     */
-    self?: string;
-}
 /**
  * 
  * @export
@@ -22183,11 +19073,11 @@ export interface SoftwareNavigationInfo {
 export interface Status {
     [key: string]: any | any;
     /**
-     * 
-     * @type {StatusIcon}
+     * Details of the icon representing the status. If not provided, no status icon displays in Jira.
+     * @type {Icon}
      * @memberof Status
      */
-    icon?: StatusIcon;
+    icon?: Icon;
     /**
      * Whether the item is resolved. If set to "true", the link to the issue is displayed in a strikethrough font, otherwise the link displays in normal font.
      * @type {boolean}
@@ -22321,82 +19211,23 @@ export interface StatusDetails {
      */
     readonly name?: string;
     /**
+     * The scope of the field.
+     * @type {Scope}
+     * @memberof StatusDetails
+     */
+    readonly scope?: Scope;
+    /**
      * The URL of the status.
      * @type {string}
      * @memberof StatusDetails
      */
     readonly self?: string;
     /**
-     * 
-     * @type {StatusDetailsStatusCategory}
+     * The category assigned to the status.
+     * @type {StatusCategory}
      * @memberof StatusDetails
      */
-    statusCategory?: StatusDetailsStatusCategory;
-}
-/**
- * The category assigned to the status.
- * @export
- * @interface StatusDetailsStatusCategory
- */
-export interface StatusDetailsStatusCategory {
-    /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly colorName?: string;
-    /**
-     * The ID of the status category.
-     * @type {number}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly id?: number;
-    /**
-     * The key of the status category.
-     * @type {string}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly key?: string;
-    /**
-     * The name of the status category.
-     * @type {string}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly name?: string;
-    /**
-     * The URL of the status category.
-     * @type {string}
-     * @memberof StatusDetailsStatusCategory
-     */
-    readonly self?: string;
-}
-/**
- * Details of the icon representing the status. If not provided, no status icon displays in Jira.
- * @export
- * @interface StatusIcon
- */
-export interface StatusIcon {
-    /**
-     * The URL of the tooltip, used only for a status icon. If not set, the status icon in Jira is not clickable.
-     * @type {string}
-     * @memberof StatusIcon
-     */
-    link?: string;
-    /**
-     * The title of the icon. This is used as follows:
-     * 
-     *  *  For a status icon it is used as a tooltip on the icon. If not set, the status icon doesn't display a tooltip in Jira.
-     *  *  For the remote object icon it is used in conjunction with the application name to display a tooltip for the link's icon. The tooltip takes the format "\[application name\] icon title". Blank itemsare excluded from the tooltip title. If both items are blank, the icon tooltop displays as "Web Link".
-     * @type {string}
-     * @memberof StatusIcon
-     */
-    title?: string;
-    /**
-     * The URL of an icon that displays at 16x16 pixel in Jira.
-     * @type {string}
-     * @memberof StatusIcon
-     */
-    url16x16?: string;
+    readonly statusCategory?: StatusCategory;
 }
 /**
  * The statuses associated with this workflow.
@@ -22666,1602 +19497,15 @@ export interface StatusesPerWorkflow {
 /**
  * 
  * @export
- * @interface StoreAvatarRequest
+ * @interface SubmittedBulkOperation
  */
-export interface StoreAvatarRequest {
+export interface SubmittedBulkOperation {
     /**
      * 
-     * @type {StoreAvatarRequestAsyncContext}
-     * @memberof StoreAvatarRequest
-     */
-    asyncContext?: StoreAvatarRequestAsyncContext;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    asyncStarted?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    asyncSupported?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequest
-     */
-    attributeNames?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    authType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    characterEncoding?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequest
-     */
-    contentLength?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequest
-     */
-    contentLengthLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    contentType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    contextPath?: string;
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestCookiesInner>}
-     * @memberof StoreAvatarRequest
-     */
-    cookies?: Array<StoreAvatarRequestCookiesInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    dispatcherType?: StoreAvatarRequestDispatcherTypeEnum;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequest
-     */
-    headerNames?: object;
-    /**
-     * 
-     * @type {StoreAvatarRequestHttpServletMapping}
-     * @memberof StoreAvatarRequest
-     */
-    httpServletMapping?: StoreAvatarRequestHttpServletMapping;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestInputStream}
-     * @memberof StoreAvatarRequest
-     */
-    inputStream?: StoreAvatarRequestAsyncContextRequestInputStream;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    localAddr?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    localName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequest
-     */
-    localPort?: number;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestLocale}
-     * @memberof StoreAvatarRequest
-     */
-    locale?: StoreAvatarRequestAsyncContextRequestLocale;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequest
-     */
-    locales?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    method?: string;
-    /**
-     * 
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof StoreAvatarRequest
-     */
-    parameterMap?: { [key: string]: Array<string>; };
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequest
-     */
-    parameterNames?: object;
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestPartsInner>}
-     * @memberof StoreAvatarRequest
-     */
-    parts?: Array<StoreAvatarRequestPartsInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    pathInfo?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    pathTranslated?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    protocol?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    queryString?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequest
-     */
-    reader?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    remoteAddr?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    remoteHost?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequest
-     */
-    remotePort?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    remoteUser?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    requestURI?: string;
-    /**
-     * 
-     * @type {StoreAvatarRequestRequestURL}
-     * @memberof StoreAvatarRequest
-     */
-    requestURL?: StoreAvatarRequestRequestURL;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    requestedSessionId?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    requestedSessionIdFromCookie?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    requestedSessionIdFromURL?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    requestedSessionIdFromUrl?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    requestedSessionIdValid?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    scheme?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    secure?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    serverName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequest
-     */
-    serverPort?: number;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
-     * @memberof StoreAvatarRequest
-     */
-    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequest
-     */
-    servletPath?: string;
-    /**
-     * 
-     * @type {StoreAvatarRequestSession}
-     * @memberof StoreAvatarRequest
-     */
-    session?: StoreAvatarRequestSession;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof StoreAvatarRequest
-     */
-    trailerFields?: { [key: string]: string; };
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequest
-     */
-    trailerFieldsReady?: boolean;
-    /**
-     * 
-     * @type {StoreAvatarRequestUserPrincipal}
-     * @memberof StoreAvatarRequest
-     */
-    userPrincipal?: StoreAvatarRequestUserPrincipal;
-}
-
-
-/**
- * @export
- */
-export const StoreAvatarRequestDispatcherTypeEnum = {
-    Forward: 'FORWARD',
-    Include: 'INCLUDE',
-    Request: 'REQUEST',
-    Async: 'ASYNC',
-    Error: 'ERROR'
-} as const;
-export type StoreAvatarRequestDispatcherTypeEnum = typeof StoreAvatarRequestDispatcherTypeEnum[keyof typeof StoreAvatarRequestDispatcherTypeEnum];
-
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContext
- */
-export interface StoreAvatarRequestAsyncContext {
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequest}
-     * @memberof StoreAvatarRequestAsyncContext
-     */
-    request?: StoreAvatarRequestAsyncContextRequest;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextResponse}
-     * @memberof StoreAvatarRequestAsyncContext
-     */
-    response?: StoreAvatarRequestAsyncContextResponse;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContext
-     */
-    timeout?: number;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequest
- */
-export interface StoreAvatarRequestAsyncContextRequest {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    asyncStarted?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    asyncSupported?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    attributeNames?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    characterEncoding?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    contentLength?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    contentLengthLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    contentType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    dispatcherType?: StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestInputStream}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    inputStream?: StoreAvatarRequestAsyncContextRequestInputStream;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    localAddr?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    localName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    localPort?: number;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestLocale}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    locale?: StoreAvatarRequestAsyncContextRequestLocale;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    locales?: object;
-    /**
-     * 
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    parameterMap?: { [key: string]: Array<string>; };
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    parameterNames?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    protocol?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    reader?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    remoteAddr?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    remoteHost?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    remotePort?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    scheme?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    secure?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    serverName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    serverPort?: number;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
-     * @memberof StoreAvatarRequestAsyncContextRequest
-     */
-    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
-}
-
-
-/**
- * @export
- */
-export const StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum = {
-    Forward: 'FORWARD',
-    Include: 'INCLUDE',
-    Request: 'REQUEST',
-    Async: 'ASYNC',
-    Error: 'ERROR'
-} as const;
-export type StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum = typeof StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum[keyof typeof StoreAvatarRequestAsyncContextRequestDispatcherTypeEnum];
-
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestInputStream
- */
-export interface StoreAvatarRequestAsyncContextRequestInputStream {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
-     */
-    finished?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
-     */
-    readListener?: object;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestInputStream
-     */
-    ready?: boolean;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestLocale
- */
-export interface StoreAvatarRequestAsyncContextRequestLocale {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    country?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    displayCountry?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    displayLanguage?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    displayScript?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    displayVariant?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    extensionKeys?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    iso3Country?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    iso3Language?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    language?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    script?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    unicodeLocaleAttributes?: Array<string>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    unicodeLocaleKeys?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestLocale
-     */
-    variant?: string;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContext
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContext {
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    attributeNames?: object;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoader}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    classLoader?: StoreAvatarRequestAsyncContextRequestServletContextClassLoader;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    contextPath?: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    defaultSessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum>;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    effectiveMajorVersion?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    effectiveMinorVersion?: number;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    effectiveSessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum>;
-    /**
-     * 
-     * @type {{ [key: string]: StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue; }}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    filterRegistrations?: { [key: string]: StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue; };
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    initParameterNames?: object;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    jspConfigDescriptor?: StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    majorVersion?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    minorVersion?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    requestCharacterEncoding?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    responseCharacterEncoding?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    serverInfo?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    servletContextName?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    servletNames?: object;
-    /**
-     * 
-     * @type {{ [key: string]: StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue; }}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    servletRegistrations?: { [key: string]: StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue; };
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    servlets?: object;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    sessionCookieConfig?: StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    sessionTimeout?: number;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    sessionTrackingModes?: Array<StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContext
-     */
-    virtualServerName?: string;
-}
-
-
-/**
- * @export
- */
-export const StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum = {
-    Cookie: 'COOKIE',
-    Url: 'URL',
-    Ssl: 'SSL'
-} as const;
-export type StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextDefaultSessionTrackingModesEnum];
-
-/**
- * @export
- */
-export const StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum = {
-    Cookie: 'COOKIE',
-    Url: 'URL',
-    Ssl: 'SSL'
-} as const;
-export type StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextEffectiveSessionTrackingModesEnum];
-
-/**
- * @export
- */
-export const StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum = {
-    Cookie: 'COOKIE',
-    Url: 'URL',
-    Ssl: 'SSL'
-} as const;
-export type StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum = typeof StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum[keyof typeof StoreAvatarRequestAsyncContextRequestServletContextSessionTrackingModesEnum];
-
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoader
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoader {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    defaultAssertionStatus?: boolean;
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    definedPackages?: Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    name?: string;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    parent?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    registeredAsParallelCapable?: boolean;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoader
-     */
-    unnamedModule?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    annotations?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    declaredAnnotations?: Array<object>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    implementationTitle?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    implementationVendor?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    implementationVersion?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    name?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    sealed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    specificationTitle?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    specificationVendor?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner
-     */
-    specificationVersion?: string;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
-     */
-    defaultAssertionStatus?: boolean;
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
-     */
-    definedPackages?: Array<StoreAvatarRequestAsyncContextRequestServletContextClassLoaderDefinedPackagesInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
-     */
-    name?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
-     */
-    registeredAsParallelCapable?: boolean;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParent
-     */
-    unnamedModule?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    annotations?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    declaredAnnotations?: Array<object>;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    descriptor?: StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    layer?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    name?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    named?: boolean;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModule
-     */
-    packages?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
-     */
-    automatic?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextClassLoaderParentUnnamedModuleDescriptor
-     */
-    open?: boolean;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
-     */
-    className?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
-     */
-    initParameters?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
-     */
-    name?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
-     */
-    servletNameMappings?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextFilterRegistrationsValue
-     */
-    urlPatternMappings?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor {
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
-     */
-    jspPropertyGroups?: Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner>;
-    /**
-     * 
-     * @type {Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptor
-     */
-    taglibs?: Array<StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner>;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    buffer?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    defaultContentType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    deferredSyntaxAllowedAsLiteral?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    elIgnored?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    errorOnUndeclaredNamespace?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    includeCodas?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    includePreludes?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    isXml?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    pageEncoding?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    scriptingInvalid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    trimDirectiveWhitespaces?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorJspPropertyGroupsInner
-     */
-    urlPatterns?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
-     */
-    taglibLocation?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextJspConfigDescriptorTaglibsInner
-     */
-    taglibURI?: string;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
-     */
-    className?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
-     */
-    initParameters?: { [key: string]: string; };
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
-     */
-    mappings?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextServletRegistrationsValue
-     */
-    runAsRole?: string;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
- */
-export interface StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    comment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    domain?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    httpOnly?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    maxAge?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    path?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextRequestServletContextSessionCookieConfig
-     */
-    secure?: boolean;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextResponse
- */
-export interface StoreAvatarRequestAsyncContextResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    bufferSize?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    characterEncoding?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    committed?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    contentLength?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    contentLengthLong?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    contentType?: string;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestLocale}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    locale?: StoreAvatarRequestAsyncContextRequestLocale;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextResponseOutputStream}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    outputStream?: StoreAvatarRequestAsyncContextResponseOutputStream;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextResponse
-     */
-    writer?: object;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestAsyncContextResponseOutputStream
- */
-export interface StoreAvatarRequestAsyncContextResponseOutputStream {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestAsyncContextResponseOutputStream
-     */
-    ready?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestAsyncContextResponseOutputStream
-     */
-    writeListener?: object;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestCookiesInner
- */
-export interface StoreAvatarRequestCookiesInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    comment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    domain?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    httpOnly?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    maxAge?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    path?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    secure?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    value?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestCookiesInner
-     */
-    version?: number;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestHttpServletMapping
- */
-export interface StoreAvatarRequestHttpServletMapping {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestHttpServletMapping
-     */
-    mappingMatch?: StoreAvatarRequestHttpServletMappingMappingMatchEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestHttpServletMapping
-     */
-    matchValue?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestHttpServletMapping
-     */
-    pattern?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestHttpServletMapping
-     */
-    servletName?: string;
-}
-
-
-/**
- * @export
- */
-export const StoreAvatarRequestHttpServletMappingMappingMatchEnum = {
-    ContextRoot: 'CONTEXT_ROOT',
-    Default: 'DEFAULT',
-    Exact: 'EXACT',
-    Extension: 'EXTENSION',
-    Path: 'PATH'
-} as const;
-export type StoreAvatarRequestHttpServletMappingMappingMatchEnum = typeof StoreAvatarRequestHttpServletMappingMappingMatchEnum[keyof typeof StoreAvatarRequestHttpServletMappingMappingMatchEnum];
-
-/**
- * 
- * @export
- * @interface StoreAvatarRequestPartsInner
- */
-export interface StoreAvatarRequestPartsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    contentType?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    headerNames?: Array<string>;
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    inputStream?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    size?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestPartsInner
-     */
-    submittedFileName?: string;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestRequestURL
- */
-export interface StoreAvatarRequestRequestURL {
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestRequestURL
-     */
-    length?: number;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestSession
- */
-export interface StoreAvatarRequestSession {
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestSession
-     */
-    attributeNames?: object;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestSession
-     */
-    creationTime?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreAvatarRequestSession
-     */
-    id?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestSession
-     */
-    lastAccessedTime?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreAvatarRequestSession
-     */
-    maxInactiveInterval?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreAvatarRequestSession
-     */
-    _new?: boolean;
-    /**
-     * 
-     * @type {StoreAvatarRequestAsyncContextRequestServletContext}
-     * @memberof StoreAvatarRequestSession
-     */
-    servletContext?: StoreAvatarRequestAsyncContextRequestServletContext;
-    /**
-     * 
-     * @type {StoreAvatarRequestSessionSessionContext}
-     * @memberof StoreAvatarRequestSession
-     */
-    sessionContext?: StoreAvatarRequestSessionSessionContext;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StoreAvatarRequestSession
-     */
-    valueNames?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestSessionSessionContext
- */
-export interface StoreAvatarRequestSessionSessionContext {
-    /**
-     * 
-     * @type {object}
-     * @memberof StoreAvatarRequestSessionSessionContext
-     */
-    ids?: object;
-}
-/**
- * 
- * @export
- * @interface StoreAvatarRequestUserPrincipal
- */
-export interface StoreAvatarRequestUserPrincipal {
-    /**
-     * 
      * @type {string}
-     * @memberof StoreAvatarRequestUserPrincipal
+     * @memberof SubmittedBulkOperation
      */
-    name?: string;
+    taskId?: string;
 }
 /**
  * An issue suggested for use in the issue picker auto-completion.
@@ -24307,6 +19551,75 @@ export interface SuggestedIssue {
     readonly summaryText?: string;
 }
 /**
+ * Details of changes to a priority scheme's priorities that require suggested priority mappings.
+ * @export
+ * @interface SuggestedMappingsForPrioritiesRequestBean
+ */
+export interface SuggestedMappingsForPrioritiesRequestBean {
+    /**
+     * The ids of priorities being removed from the scheme.
+     * @type {Array<number>}
+     * @memberof SuggestedMappingsForPrioritiesRequestBean
+     */
+    add?: Array<number>;
+    /**
+     * The ids of priorities being removed from the scheme.
+     * @type {Array<number>}
+     * @memberof SuggestedMappingsForPrioritiesRequestBean
+     */
+    remove?: Array<number>;
+}
+/**
+ * Details of changes to a priority scheme's projects that require suggested priority mappings.
+ * @export
+ * @interface SuggestedMappingsForProjectsRequestBean
+ */
+export interface SuggestedMappingsForProjectsRequestBean {
+    /**
+     * The ids of projects being added to the scheme.
+     * @type {Array<number>}
+     * @memberof SuggestedMappingsForProjectsRequestBean
+     */
+    add?: Array<number>;
+}
+/**
+ * Details of changes to a priority scheme that require suggested priority mappings.
+ * @export
+ * @interface SuggestedMappingsRequestBean
+ */
+export interface SuggestedMappingsRequestBean {
+    /**
+     * The maximum number of results that could be on the page.
+     * @type {number}
+     * @memberof SuggestedMappingsRequestBean
+     */
+    maxResults?: number;
+    /**
+     * The priority changes in the scheme.
+     * @type {SuggestedMappingsForPrioritiesRequestBean}
+     * @memberof SuggestedMappingsRequestBean
+     */
+    priorities?: SuggestedMappingsForPrioritiesRequestBean;
+    /**
+     * The project changes in the scheme.
+     * @type {SuggestedMappingsForProjectsRequestBean}
+     * @memberof SuggestedMappingsRequestBean
+     */
+    projects?: SuggestedMappingsForProjectsRequestBean;
+    /**
+     * The id of the priority scheme.
+     * @type {number}
+     * @memberof SuggestedMappingsRequestBean
+     */
+    schemeId?: number;
+    /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof SuggestedMappingsRequestBean
+     */
+    startAt?: number;
+}
+/**
  * List of system avatars.
  * @export
  * @interface SystemAvatars
@@ -24319,6 +19632,244 @@ export interface SystemAvatars {
      */
     readonly system?: Array<Avatar>;
 }
+/**
+ * Classification mapping for classifications in source issues to respective target classification.
+ * @export
+ * @interface TargetClassification
+ */
+export interface TargetClassification {
+    /**
+     * An object with the key as the ID of the target classification and value with the list of the IDs of the current source classifications.
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof TargetClassification
+     */
+    classifications: { [key: string]: Array<string>; };
+    /**
+     * ID of the source issueType to which issues present in `issueIdOrKeys` belongs.
+     * @type {string}
+     * @memberof TargetClassification
+     */
+    issueType?: string;
+    /**
+     * ID or key of the source project to which issues present in `issueIdOrKeys` belongs.
+     * @type {string}
+     * @memberof TargetClassification
+     */
+    projectKeyOrId?: string;
+}
+/**
+ * Field mapping for mandatory fields in target
+ * @export
+ * @interface TargetMandatoryFields
+ */
+export interface TargetMandatoryFields {
+    /**
+     * Contains the value of mandatory fields
+     * @type {{ [key: string]: Fields; }}
+     * @memberof TargetMandatoryFields
+     */
+    fields: { [key: string]: Fields; };
+}
+/**
+ * Status mapping for statuses in source workflow to respective target status in target workflow.
+ * @export
+ * @interface TargetStatus
+ */
+export interface TargetStatus {
+    /**
+     * An object with the key as the ID of the target status and value with the list of the IDs of the current source statuses.
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof TargetStatus
+     */
+    statuses: { [key: string]: Array<string>; };
+}
+/**
+ * An object representing the mapping of issues and data related to destination entities, like fields and statuses, that are required during a bulk move.
+ * @export
+ * @interface TargetToSourcesMapping
+ */
+export interface TargetToSourcesMapping {
+    /**
+     * If `true`, when issues are moved into this target group, they will adopt the target project's default classification, if they don't have a classification already. If they do have a classification, it will be kept the same even after the move. Leave `targetClassification` empty when using this.
+     * 
+     * If `false`, you must provide a `targetClassification` mapping for each classification associated with the selected issues.
+     * 
+     * [Benefit from data classification](https://support.atlassian.com/security-and-access-policies/docs/what-is-data-classification/)
+     * @type {boolean}
+     * @memberof TargetToSourcesMapping
+     */
+    inferClassificationDefaults: boolean;
+    /**
+     * If `true`, values from the source issues will be retained for the mandatory fields in the field configuration of the destination project. The `targetMandatoryFields` property shouldn't be defined.
+     * 
+     * If `false`, the user is required to set values for mandatory fields present in the field configuration of the destination project. Provide input by defining the `targetMandatoryFields` property
+     * @type {boolean}
+     * @memberof TargetToSourcesMapping
+     */
+    inferFieldDefaults: boolean;
+    /**
+     * If `true`, the statuses of issues being moved in this target group that are not present in the target workflow will be changed to the default status of the target workflow (see below). Leave `targetStatus` empty when using this.
+     * 
+     * If `false`, you must provide a `targetStatus` for each status not present in the target workflow.
+     * 
+     * The default status in a workflow is referred to as the "initial status". Each workflow has its own unique initial status. When an issue is created, it is automatically assigned to this initial status. Read more about configuring initial statuses: [Configure the initial status | Atlassian Support.](https://support.atlassian.com/jira-cloud-administration/docs/configure-the-initial-status/)
+     * @type {boolean}
+     * @memberof TargetToSourcesMapping
+     */
+    inferStatusDefaults: boolean;
+    /**
+     * When an issue is moved, its subtasks (if there are any) need to be moved with it. `inferSubtaskTypeDefault` helps with moving the subtasks by picking a random subtask type in the target project.
+     * 
+     * If `true`, subtasks will automatically move to the same project as their parent.
+     * 
+     * When they move:
+     * 
+     *  *  Their `issueType` will be set to the default for subtasks in the target project.
+     *  *  Values for mandatory fields will be retained from the source issues
+     *  *  Specifying separate mapping for implicit subtasks won’t be allowed.
+     * 
+     * If `false`, you must manually move the subtasks. They will retain the parent which they had in the current project after being moved.
+     * @type {boolean}
+     * @memberof TargetToSourcesMapping
+     */
+    inferSubtaskTypeDefault: boolean;
+    /**
+     * List of issue IDs or keys to be moved. These issues must be from the same project, have the same issue type, and be from the same parent (if they’re subtasks).
+     * @type {Array<string>}
+     * @memberof TargetToSourcesMapping
+     */
+    issueIdsOrKeys?: Array<string>;
+    /**
+     * List of the objects containing classifications in the source issues and their new values which need to be set during the bulk move operation.
+     * 
+     *  *  **You should only define this property when `inferClassificationDefaults` is `false`.**
+     *  *  **In order to provide mapping for issues which don't have a classification, use `"-1"`.**
+     * @type {Array<TargetClassification>}
+     * @memberof TargetToSourcesMapping
+     */
+    targetClassification?: Array<TargetClassification> | null;
+    /**
+     * List of objects containing mandatory fields in the target field configuration and new values that need to be set during the bulk move operation.
+     * 
+     * The new values will only be applied if the field is mandatory in the target project and at least one issue from the source has that field empty, or if the field context is different in the target project (e.g. project-scoped version fields).
+     * 
+     * **You should only define this property when `inferFieldDefaults` is `false`.**
+     * @type {Array<TargetMandatoryFields>}
+     * @memberof TargetToSourcesMapping
+     */
+    targetMandatoryFields?: Array<TargetMandatoryFields> | null;
+    /**
+     * List of the objects containing statuses in the source workflow and their new values which need to be set during the bulk move operation.
+     * 
+     * The new values will only be applied if the source status is invalid for the target project and issue type.
+     * 
+     * **You should only define this property when `inferStatusDefaults` is `false`.**
+     * @type {Array<TargetStatus>}
+     * @memberof TargetToSourcesMapping
+     */
+    targetStatus?: Array<TargetStatus> | null;
+}
+/**
+ * Details about a task.
+ * @export
+ * @interface TaskProgressBeanJsonNode
+ */
+export interface TaskProgressBeanJsonNode {
+    /**
+     * The description of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    description?: string;
+    /**
+     * The execution time of the task, in milliseconds.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    elapsedRuntime: number;
+    /**
+     * A timestamp recording when the task was finished.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    finished?: number;
+    /**
+     * The ID of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    id: string;
+    /**
+     * A timestamp recording when the task progress was last updated.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    lastUpdate: number;
+    /**
+     * Information about the progress of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    message?: string;
+    /**
+     * The progress of the task, as a percentage complete.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    progress: number;
+    /**
+     * The result of the task execution.
+     * @type {JsonNode}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    result?: JsonNode;
+    /**
+     * The URL of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    self: string;
+    /**
+     * A timestamp recording when the task was started.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    started?: number;
+    /**
+     * The status of the task.
+     * @type {string}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    status: TaskProgressBeanJsonNodeStatusEnum;
+    /**
+     * A timestamp recording when the task was submitted.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    submitted: number;
+    /**
+     * The ID of the user who submitted the task.
+     * @type {number}
+     * @memberof TaskProgressBeanJsonNode
+     */
+    submittedBy: number;
+}
+
+
+/**
+ * @export
+ */
+export const TaskProgressBeanJsonNodeStatusEnum = {
+    Enqueued: 'ENQUEUED',
+    Running: 'RUNNING',
+    Complete: 'COMPLETE',
+    Failed: 'FAILED',
+    CancelRequested: 'CANCEL_REQUESTED',
+    Cancelled: 'CANCELLED',
+    Dead: 'DEAD'
+} as const;
+export type TaskProgressBeanJsonNodeStatusEnum = typeof TaskProgressBeanJsonNodeStatusEnum[keyof typeof TaskProgressBeanJsonNodeStatusEnum];
+
 /**
  * Details about a task.
  * @export
@@ -24469,11 +20020,11 @@ export interface TaskProgressBeanRemoveOptionFromIssuesResult {
      */
     progress: number;
     /**
-     * 
-     * @type {TaskProgressBeanRemoveOptionFromIssuesResultResult}
+     * The result of the task execution.
+     * @type {RemoveOptionFromIssuesResult}
      * @memberof TaskProgressBeanRemoveOptionFromIssuesResult
      */
-    result?: TaskProgressBeanRemoveOptionFromIssuesResultResult;
+    result?: RemoveOptionFromIssuesResult;
     /**
      * The URL of the task.
      * @type {string}
@@ -24521,31 +20072,6 @@ export const TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum = {
 } as const;
 export type TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum = typeof TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum[keyof typeof TaskProgressBeanRemoveOptionFromIssuesResultStatusEnum];
 
-/**
- * The result of the task execution.
- * @export
- * @interface TaskProgressBeanRemoveOptionFromIssuesResultResult
- */
-export interface TaskProgressBeanRemoveOptionFromIssuesResultResult {
-    /**
-     * 
-     * @type {RemoveOptionFromIssuesResultErrors}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
-     */
-    errors?: RemoveOptionFromIssuesResultErrors;
-    /**
-     * The IDs of the modified issues.
-     * @type {Array<number>}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
-     */
-    modifiedIssues?: Array<number>;
-    /**
-     * The IDs of the unchanged issues, those issues where errors prevent modification.
-     * @type {Array<number>}
-     * @memberof TaskProgressBeanRemoveOptionFromIssuesResultResult
-     */
-    unmodifiedIssues?: Array<number>;
-}
 /**
  * Details of the time tracking configuration.
  * @export
@@ -24761,7 +20287,7 @@ export interface TransitionScreenDetails {
     name?: string;
 }
 /**
- * The transitions of this workflow.
+ * The transition update data. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
  * @export
  * @interface TransitionUpdateDTO
  */
@@ -24792,9 +20318,10 @@ export interface TransitionUpdateDTO {
      */
     description?: string;
     /**
-     * The statuses the transition can start from.
+     * The statuses and ports that the transition can start from. This field is deprecated - use `toStatusReference`/`links` instead.
      * @type {Array<StatusReferenceAndPort>}
      * @memberof TransitionUpdateDTO
+     * @deprecated
      */
     from?: Array<StatusReferenceAndPort>;
     /**
@@ -24803,6 +20330,12 @@ export interface TransitionUpdateDTO {
      * @memberof TransitionUpdateDTO
      */
     id: string;
+    /**
+     * The statuses the transition can start from, and the mapping of ports between the statuses.
+     * @type {Array<WorkflowTransitionLinks>}
+     * @memberof TransitionUpdateDTO
+     */
+    links?: Array<WorkflowTransitionLinks>;
     /**
      * The name of the transition.
      * @type {string}
@@ -24819,8 +20352,15 @@ export interface TransitionUpdateDTO {
      * 
      * @type {StatusReferenceAndPort}
      * @memberof TransitionUpdateDTO
+     * @deprecated
      */
     to?: StatusReferenceAndPort | null;
+    /**
+     * The status the transition goes to.
+     * @type {string}
+     * @memberof TransitionUpdateDTO
+     */
+    toStatusReference?: string;
     /**
      * 
      * @type {WorkflowRuleConfiguration}
@@ -25077,6 +20617,19 @@ export const UpdateCustomFieldDetailsSearcherKeyEnum = {
 export type UpdateCustomFieldDetailsSearcherKeyEnum = typeof UpdateCustomFieldDetailsSearcherKeyEnum[keyof typeof UpdateCustomFieldDetailsSearcherKeyEnum];
 
 /**
+ * The request for updating the default project classification level.
+ * @export
+ * @interface UpdateDefaultProjectClassificationBean
+ */
+export interface UpdateDefaultProjectClassificationBean {
+    /**
+     * The ID of the project classification.
+     * @type {string}
+     * @memberof UpdateDefaultProjectClassificationBean
+     */
+    id: string;
+}
+/**
  * The ID of a screen scheme.
  * @export
  * @interface UpdateDefaultScreenScheme
@@ -25168,6 +20721,26 @@ export interface UpdateNotificationSchemeDetails {
     name?: string;
 }
 /**
+ * Update priorities in a scheme
+ * @export
+ * @interface UpdatePrioritiesInSchemeRequestBean
+ */
+export interface UpdatePrioritiesInSchemeRequestBean {
+    [key: string]: any | any;
+    /**
+     * Priorities to add to a scheme
+     * @type {PrioritySchemeChangesWithoutMappings}
+     * @memberof UpdatePrioritiesInSchemeRequestBean
+     */
+    add?: PrioritySchemeChangesWithoutMappings;
+    /**
+     * Priorities to remove from a scheme
+     * @type {PrioritySchemeChangesWithMappings}
+     * @memberof UpdatePrioritiesInSchemeRequestBean
+     */
+    remove?: PrioritySchemeChangesWithMappings;
+}
+/**
  * Details of an issue priority.
  * @export
  * @interface UpdatePriorityDetails
@@ -25214,10 +20787,83 @@ export const UpdatePriorityDetailsIconUrlEnum = {
     MajorPng: '/images/icons/priorities/major.png',
     MediumPng: '/images/icons/priorities/medium.png',
     MinorPng: '/images/icons/priorities/minor.png',
-    TrivialPng: '/images/icons/priorities/trivial.png'
+    TrivialPng: '/images/icons/priorities/trivial.png',
+    BlockerNewPng: '/images/icons/priorities/blocker_new.png',
+    CriticalNewPng: '/images/icons/priorities/critical_new.png',
+    HighNewPng: '/images/icons/priorities/high_new.png',
+    HighestNewPng: '/images/icons/priorities/highest_new.png',
+    LowNewPng: '/images/icons/priorities/low_new.png',
+    LowestNewPng: '/images/icons/priorities/lowest_new.png',
+    MajorNewPng: '/images/icons/priorities/major_new.png',
+    MediumNewPng: '/images/icons/priorities/medium_new.png',
+    MinorNewPng: '/images/icons/priorities/minor_new.png',
+    TrivialNewPng: '/images/icons/priorities/trivial_new.png'
 } as const;
 export type UpdatePriorityDetailsIconUrlEnum = typeof UpdatePriorityDetailsIconUrlEnum[keyof typeof UpdatePriorityDetailsIconUrlEnum];
 
+/**
+ * Details of a priority scheme.
+ * @export
+ * @interface UpdatePrioritySchemeRequestBean
+ */
+export interface UpdatePrioritySchemeRequestBean {
+    /**
+     * The default priority of the scheme.
+     * @type {number}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    defaultPriorityId?: number;
+    /**
+     * The description of the priority scheme.
+     * @type {string}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    description?: string;
+    /**
+     * Instructions to migrate issues.
+     * @type {PriorityMapping}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    mappings?: PriorityMapping;
+    /**
+     * The name of the priority scheme. Must be unique.
+     * @type {string}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    name?: string;
+    /**
+     * The priorities in the scheme.
+     * @type {UpdatePrioritiesInSchemeRequestBean}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    priorities?: UpdatePrioritiesInSchemeRequestBean;
+    /**
+     * The projects in the scheme.
+     * @type {UpdateProjectsInSchemeRequestBean}
+     * @memberof UpdatePrioritySchemeRequestBean
+     */
+    projects?: UpdateProjectsInSchemeRequestBean;
+}
+/**
+ * Details of the updated priority scheme.
+ * @export
+ * @interface UpdatePrioritySchemeResponseBean
+ */
+export interface UpdatePrioritySchemeResponseBean {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {PrioritySchemeWithPaginatedPrioritiesAndProjects}
+     * @memberof UpdatePrioritySchemeResponseBean
+     */
+    priorityScheme?: PrioritySchemeWithPaginatedPrioritiesAndProjects;
+    /**
+     * The in-progress issue migration task.
+     * @type {TaskProgressBeanJsonNode}
+     * @memberof UpdatePrioritySchemeResponseBean
+     */
+    readonly task?: TaskProgressBeanJsonNode;
+}
 /**
  * Details about the project.
  * @export
@@ -25309,6 +20955,26 @@ export const UpdateProjectDetailsAssigneeTypeEnum = {
 export type UpdateProjectDetailsAssigneeTypeEnum = typeof UpdateProjectDetailsAssigneeTypeEnum[keyof typeof UpdateProjectDetailsAssigneeTypeEnum];
 
 /**
+ * Update projects in a scheme
+ * @export
+ * @interface UpdateProjectsInSchemeRequestBean
+ */
+export interface UpdateProjectsInSchemeRequestBean {
+    [key: string]: any | any;
+    /**
+     * Projects to add to a scheme
+     * @type {PrioritySchemeChangesWithoutMappings}
+     * @memberof UpdateProjectsInSchemeRequestBean
+     */
+    add?: PrioritySchemeChangesWithoutMappings;
+    /**
+     * Projects to remove from a scheme
+     * @type {PrioritySchemeChangesWithoutMappings}
+     * @memberof UpdateProjectsInSchemeRequestBean
+     */
+    remove?: PrioritySchemeChangesWithoutMappings;
+}
+/**
  * Details of an issue resolution.
  * @export
  * @interface UpdateResolutionDetails
@@ -25366,42 +21032,11 @@ export interface UpdateScreenSchemeDetails {
      */
     name?: string;
     /**
-     * 
-     * @type {UpdateScreenSchemeDetailsScreens}
+     * The IDs of the screens for the screen types of the screen scheme. Only screens used in classic projects are accepted.
+     * @type {UpdateScreenTypes}
      * @memberof UpdateScreenSchemeDetails
      */
-    screens?: UpdateScreenSchemeDetailsScreens;
-}
-/**
- * The IDs of the screens for the screen types of the screen scheme. Only screens used in classic projects are accepted.
- * @export
- * @interface UpdateScreenSchemeDetailsScreens
- */
-export interface UpdateScreenSchemeDetailsScreens {
-    /**
-     * The ID of the create screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    create?: string;
-    /**
-     * The ID of the default screen. When specified, must include a screen ID as a default screen is required.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    default?: string;
-    /**
-     * The ID of the edit screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    edit?: string;
-    /**
-     * The ID of the view screen. To remove the screen association, pass a null.
-     * @type {string}
-     * @memberof UpdateScreenSchemeDetailsScreens
-     */
-    view?: string;
+    screens?: UpdateScreenTypes;
 }
 /**
  * The IDs of the screens for the screen types of the screen scheme.
@@ -25549,17 +21184,17 @@ export interface User {
      */
     readonly active?: boolean;
     /**
-     * 
-     * @type {UserApplicationRoles}
+     * The application roles the user is assigned to.
+     * @type {SimpleListWrapperApplicationRole}
      * @memberof User
      */
-    applicationRoles?: UserApplicationRoles;
+    readonly applicationRoles?: SimpleListWrapperApplicationRole;
     /**
-     * 
-     * @type {UserAvatarUrls}
+     * The avatars of the user.
+     * @type {AvatarUrlsBean}
      * @memberof User
      */
-    avatarUrls?: UserAvatarUrls;
+    readonly avatarUrls?: AvatarUrlsBean;
     /**
      * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
      * @type {string}
@@ -25579,11 +21214,11 @@ export interface User {
      */
     readonly expand?: string;
     /**
-     * 
-     * @type {UserGroups}
+     * The groups that the user belongs to.
+     * @type {SimpleListWrapperGroupName}
      * @memberof User
      */
-    groups?: UserGroups;
+    readonly groups?: SimpleListWrapperGroupName;
     /**
      * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
@@ -25629,74 +21264,6 @@ export const UserAccountTypeEnum = {
 export type UserAccountTypeEnum = typeof UserAccountTypeEnum[keyof typeof UserAccountTypeEnum];
 
 /**
- * The application roles the user is assigned to.
- * @export
- * @interface UserApplicationRoles
- */
-export interface UserApplicationRoles {
-    /**
-     * 
-     * @type {object}
-     * @memberof UserApplicationRoles
-     */
-    callback?: object;
-    /**
-     * 
-     * @type {Array<ApplicationRole>}
-     * @memberof UserApplicationRoles
-     */
-    items?: Array<ApplicationRole>;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserApplicationRoles
-     */
-    maxResults?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof UserApplicationRoles
-     */
-    pagingCallback?: object;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserApplicationRoles
-     */
-    size?: number;
-}
-/**
- * The avatars of the user.
- * @export
- * @interface UserAvatarUrls
- */
-export interface UserAvatarUrls {
-    /**
-     * The URL of the item's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof UserAvatarUrls
-     */
-    ["16x16"]?: string;
-    /**
-     * The URL of the item's 24x24 pixel avatar.
-     * @type {string}
-     * @memberof UserAvatarUrls
-     */
-    ["24x24"]?: string;
-    /**
-     * The URL of the item's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof UserAvatarUrls
-     */
-    ["32x32"]?: string;
-    /**
-     * The URL of the item's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof UserAvatarUrls
-     */
-    ["48x48"]?: string;
-}
-/**
  * 
  * @export
  * @interface UserBean
@@ -25715,7 +21282,7 @@ export interface UserBean {
      */
     active?: boolean;
     /**
-     * 
+     * The avatars of the user.
      * @type {UserBeanAvatarUrls}
      * @memberof UserBean
      */
@@ -25748,7 +21315,7 @@ export interface UserBean {
     self?: string;
 }
 /**
- * The avatars of the user.
+ * 
  * @export
  * @interface UserBeanAvatarUrls
  */
@@ -25777,6 +21344,19 @@ export interface UserBeanAvatarUrls {
      * @memberof UserBeanAvatarUrls
      */
     ["48x48"]?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserColumnRequestBody
+ */
+export interface UserColumnRequestBody {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UserColumnRequestBody
+     */
+    columns?: Array<string>;
 }
 /**
  * A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
@@ -25826,11 +21406,11 @@ export interface UserDetails {
      */
     readonly active?: boolean;
     /**
-     * 
-     * @type {UserAvatarUrls}
+     * The avatars of the user.
+     * @type {AvatarUrlsBean}
      * @memberof UserDetails
      */
-    avatarUrls?: UserAvatarUrls;
+    readonly avatarUrls?: AvatarUrlsBean;
     /**
      * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
      * @type {string}
@@ -25892,43 +21472,6 @@ export interface UserFilter {
      * @memberof UserFilter
      */
     roleIds?: Array<number>;
-}
-/**
- * The groups that the user belongs to.
- * @export
- * @interface UserGroups
- */
-export interface UserGroups {
-    /**
-     * 
-     * @type {object}
-     * @memberof UserGroups
-     */
-    callback?: object;
-    /**
-     * 
-     * @type {Array<GroupName>}
-     * @memberof UserGroups
-     */
-    items?: Array<GroupName>;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserGroups
-     */
-    maxResults?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof UserGroups
-     */
-    pagingCallback?: object;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserGroups
-     */
-    size?: number;
 }
 /**
  * List of user account IDs.
@@ -26232,11 +21775,11 @@ export interface Version {
      */
     readonly id?: string;
     /**
-     * 
-     * @type {VersionIssuesStatusForFixVersion}
+     * If the expand option `issuesstatus` is used, returns the count of issues in this version for each of the status categories *to do*, *in progress*, *done*, and *unmapped*. The *unmapped* property contains a count of issues with a status other than *to do*, *in progress*, and *done*.
+     * @type {VersionIssuesStatus}
      * @memberof Version
      */
-    issuesStatusForFixVersion?: VersionIssuesStatusForFixVersion;
+    readonly issuesStatusForFixVersion?: VersionIssuesStatus;
     /**
      * The URL of the self link to the version to which all unfixed issues are moved when a version is released. Not applicable when creating a version. Optional when updating a version.
      * @type {string}
@@ -26412,37 +21955,6 @@ export interface VersionIssuesStatus {
     readonly unmapped?: number;
 }
 /**
- * If the expand option `issuesstatus` is used, returns the count of issues in this version for each of the status categories *to do*, *in progress*, *done*, and *unmapped*. The *unmapped* property contains a count of issues with a status other than *to do*, *in progress*, and *done*.
- * @export
- * @interface VersionIssuesStatusForFixVersion
- */
-export interface VersionIssuesStatusForFixVersion {
-    /**
-     * Count of issues with status *done*.
-     * @type {number}
-     * @memberof VersionIssuesStatusForFixVersion
-     */
-    readonly done?: number;
-    /**
-     * Count of issues with status *in progress*.
-     * @type {number}
-     * @memberof VersionIssuesStatusForFixVersion
-     */
-    readonly inProgress?: number;
-    /**
-     * Count of issues with status *to do*.
-     * @type {number}
-     * @memberof VersionIssuesStatusForFixVersion
-     */
-    readonly toDo?: number;
-    /**
-     * Count of issues with a status other than *to do*, *in progress*, and *done*.
-     * @type {number}
-     * @memberof VersionIssuesStatusForFixVersion
-     */
-    readonly unmapped?: number;
-}
-/**
  * 
  * @export
  * @interface VersionMoveBean
@@ -26485,9 +21997,9 @@ export interface VersionRelatedWork {
      * @type {string}
      * @memberof VersionRelatedWork
      */
-    readonly category: string;
+    category: string;
     /**
-     * The title of the related work
+     * The ID of the issue associated with the related work (if there is one). Cannot be updated via the Rest API.
      * @type {number}
      * @memberof VersionRelatedWork
      */
@@ -26503,13 +22015,13 @@ export interface VersionRelatedWork {
      * @type {string}
      * @memberof VersionRelatedWork
      */
-    readonly title?: string;
+    title?: string;
     /**
-     * The URL of the related work
+     * The URL of the related work. Will be null for the native release note related work item, but is otherwise required.
      * @type {string}
      * @memberof VersionRelatedWork
      */
-    readonly url?: string;
+    url?: string;
 }
 /**
  * Count of a version's unresolved issues.
@@ -26950,7 +22462,7 @@ export interface WorkflowCapabilities {
      * @type {Array<string>}
      * @memberof WorkflowCapabilities
      */
-    projectTypes?: WorkflowCapabilitiesProjectTypesEnum;
+    projectTypes?: Array<WorkflowCapabilitiesProjectTypesEnum>;
     /**
      * The Atlassian provided system rules available.
      * @type {Array<AvailableWorkflowSystemRule>}
@@ -27522,11 +23034,11 @@ export interface WorkflowScheme {
      */
     readonly lastModified?: string;
     /**
-     * 
-     * @type {WorkflowSchemeLastModifiedUser}
+     * The user that last modified the draft workflow scheme. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
+     * @type {User}
      * @memberof WorkflowScheme
      */
-    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
+    readonly lastModifiedUser?: User;
     /**
      * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
      * @type {string}
@@ -27596,102 +23108,11 @@ export interface WorkflowSchemeAssociations {
      */
     projectIds: Array<string>;
     /**
-     * 
-     * @type {WorkflowSchemeAssociationsWorkflowScheme}
+     * The workflow scheme.
+     * @type {WorkflowScheme}
      * @memberof WorkflowSchemeAssociations
      */
-    workflowScheme: WorkflowSchemeAssociationsWorkflowScheme;
-}
-/**
- * The workflow scheme.
- * @export
- * @interface WorkflowSchemeAssociationsWorkflowScheme
- */
-export interface WorkflowSchemeAssociationsWorkflowScheme {
-    /**
-     * The name of the default workflow for the workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira. If `defaultWorkflow` is not specified when creating a workflow scheme, it is set to *Jira Workflow (jira)*.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    defaultWorkflow?: string;
-    /**
-     * The description of the workflow scheme.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    description?: string;
-    /**
-     * Whether the workflow scheme is a draft or not.
-     * @type {boolean}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly draft?: boolean;
-    /**
-     * The ID of the workflow scheme.
-     * @type {number}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly id?: number;
-    /**
-     * The issue type to workflow mappings, where each mapping is an issue type ID and workflow name pair. Note that an issue type can only be mapped to one workflow in a workflow scheme.
-     * @type {{ [key: string]: string; }}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    issueTypeMappings?: { [key: string]: string; };
-    /**
-     * The issue types available in Jira.
-     * @type {{ [key: string]: IssueTypeDetails; }}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly issueTypes?: { [key: string]: IssueTypeDetails; };
-    /**
-     * The date-time that the draft workflow scheme was last modified. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly lastModified?: string;
-    /**
-     * 
-     * @type {WorkflowSchemeLastModifiedUser}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    lastModifiedUser?: WorkflowSchemeLastModifiedUser;
-    /**
-     * The name of the workflow scheme. The name must be unique. The maximum length is 255 characters. Required when creating a workflow scheme.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    name?: string;
-    /**
-     * For draft workflow schemes, this property is the name of the default workflow for the original workflow scheme. The default workflow has *All Unassigned Issue Types* assigned to it in Jira.
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly originalDefaultWorkflow?: string;
-    /**
-     * For draft workflow schemes, this property is the issue type to workflow mappings for the original workflow scheme, where each mapping is an issue type ID and workflow name pair. Note that an issue type can only be mapped to one workflow in a workflow scheme.
-     * @type {{ [key: string]: string; }}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly originalIssueTypeMappings?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    readonly self?: string;
-    /**
-     * Whether to create or update a draft workflow scheme when updating an active workflow scheme. An active workflow scheme is a workflow scheme that is used by at least one project. The following examples show how this property works:
-     * 
-     *  *  Update an active workflow scheme with `updateDraftIfNeeded` set to `true`: If a draft workflow scheme exists, it is updated. Otherwise, a draft workflow scheme is created.
-     *  *  Update an active workflow scheme with `updateDraftIfNeeded` set to `false`: An error is returned, as active workflow schemes cannot be updated.
-     *  *  Update an inactive workflow scheme with `updateDraftIfNeeded` set to `true`: The workflow scheme is updated, as inactive workflow schemes do not require drafts to update.
-     * 
-     * Defaults to `false`.
-     * @type {boolean}
-     * @memberof WorkflowSchemeAssociationsWorkflowScheme
-     */
-    updateDraftIfNeeded?: boolean;
+    workflowScheme: WorkflowScheme;
 }
 /**
  * The ID and the name of the workflow scheme.
@@ -27712,114 +23133,6 @@ export interface WorkflowSchemeIdName {
      */
     name: string;
 }
-/**
- * The user that last modified the draft workflow scheme. A modification is a change to the issue type-project mappings only. This property does not apply to non-draft workflows.
- * @export
- * @interface WorkflowSchemeLastModifiedUser
- */
-export interface WorkflowSchemeLastModifiedUser {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*. Required in requests.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    accountId?: string;
-    /**
-     * The user account type. Can take the following values:
-     * 
-     *  *  `atlassian` regular Atlassian user account
-     *  *  `app` system account used for Connect applications and OAuth to represent external systems
-     *  *  `customer` Jira Service Desk account representing an external service desk
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly accountType?: WorkflowSchemeLastModifiedUserAccountTypeEnum;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserApplicationRoles}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    applicationRoles?: UserApplicationRoles;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly emailAddress?: string;
-    /**
-     * Expand options that include additional user details in the response.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly expand?: string;
-    /**
-     * 
-     * @type {UserGroups}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    groups?: UserGroups;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    key?: string;
-    /**
-     * The locale of the user. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly locale?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
-     * @type {string}
-     * @memberof WorkflowSchemeLastModifiedUser
-     */
-    readonly timeZone?: string;
-}
-
-
-/**
- * @export
- */
-export const WorkflowSchemeLastModifiedUserAccountTypeEnum = {
-    Atlassian: 'atlassian',
-    App: 'app',
-    Customer: 'customer',
-    Unknown: 'unknown'
-} as const;
-export type WorkflowSchemeLastModifiedUserAccountTypeEnum = typeof WorkflowSchemeLastModifiedUserAccountTypeEnum[keyof typeof WorkflowSchemeLastModifiedUserAccountTypeEnum];
-
 /**
  * An associated workflow scheme and project.
  * @export
@@ -27847,16 +23160,16 @@ export interface WorkflowSchemeProjectAssociation {
 export interface WorkflowSchemeReadRequest {
     /**
      * The list of project IDs to query.
-     * @type {Array<string>}
+     * @type {Array<string | null>}
      * @memberof WorkflowSchemeReadRequest
      */
-    projectIds?: Array<string> | null;
+    projectIds?: Array<string | null> | null;
     /**
      * The list of workflow scheme IDs to query.
-     * @type {Array<string>}
+     * @type {Array<string | null>}
      * @memberof WorkflowSchemeReadRequest
      */
-    workflowSchemeIds?: Array<string> | null;
+    workflowSchemeIds?: Array<string | null> | null;
 }
 /**
  * 
@@ -28219,6 +23532,31 @@ export interface WorkflowTransition {
     name: string;
 }
 /**
+ * The statuses the transition can start from, and the mapping of ports between the statuses.
+ * @export
+ * @interface WorkflowTransitionLinks
+ */
+export interface WorkflowTransitionLinks {
+    /**
+     * The port that the transition starts from.
+     * @type {number}
+     * @memberof WorkflowTransitionLinks
+     */
+    fromPort?: number | null;
+    /**
+     * The status that the transition starts from.
+     * @type {string}
+     * @memberof WorkflowTransitionLinks
+     */
+    fromStatusReference?: string | null;
+    /**
+     * The port that the transition goes to.
+     * @type {number}
+     * @memberof WorkflowTransitionLinks
+     */
+    toPort?: number | null;
+}
+/**
  * Details about the server Jira is running on.
  * @export
  * @interface WorkflowTransitionProperty
@@ -28365,7 +23703,7 @@ export interface WorkflowTransitionRulesUpdateErrors {
     updateResults: Array<WorkflowTransitionRulesUpdateErrorDetails>;
 }
 /**
- * The transitions of the workflow.
+ * The transitions of the workflow. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
  * @export
  * @interface WorkflowTransitions
  */
@@ -28395,9 +23733,10 @@ export interface WorkflowTransitions {
      */
     description?: string;
     /**
-     * The statuses the transition can start from.
+     * The statuses and ports that the transition can start from. This field is deprecated - use `toStatusReference`/`links` instead.
      * @type {Array<WorkflowStatusAndPort>}
      * @memberof WorkflowTransitions
+     * @deprecated
      */
     from?: Array<WorkflowStatusAndPort>;
     /**
@@ -28406,6 +23745,12 @@ export interface WorkflowTransitions {
      * @memberof WorkflowTransitions
      */
     id?: string;
+    /**
+     * The statuses the transition can start from, and the mapping of ports between the statuses.
+     * @type {Array<WorkflowTransitionLinks>}
+     * @memberof WorkflowTransitions
+     */
+    links?: Array<WorkflowTransitionLinks>;
     /**
      * The name of the transition.
      * @type {string}
@@ -28422,8 +23767,15 @@ export interface WorkflowTransitions {
      * 
      * @type {WorkflowStatusAndPort}
      * @memberof WorkflowTransitions
+     * @deprecated
      */
     to?: WorkflowStatusAndPort | null;
+    /**
+     * The status the transition goes to.
+     * @type {string}
+     * @memberof WorkflowTransitions
+     */
+    toStatusReference?: string;
     /**
      * 
      * @type {WorkflowRuleConfiguration}
@@ -28723,11 +24075,11 @@ export interface WorkflowsWithTransitionRulesDetails {
 export interface Worklog {
     [key: string]: any | any;
     /**
-     * 
-     * @type {WorklogAuthor}
+     * Details of the user who created the worklog.
+     * @type {UserDetails}
      * @memberof Worklog
      */
-    author?: WorklogAuthor;
+    readonly author?: UserDetails;
     /**
      * A comment about the worklog in [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/). Optional when creating or updating a worklog.
      * @type {any}
@@ -28783,11 +24135,11 @@ export interface Worklog {
      */
     timeSpentSeconds?: number;
     /**
-     * 
-     * @type {WorklogUpdateAuthor}
+     * Details of the user who last updated the worklog.
+     * @type {UserDetails}
      * @memberof Worklog
      */
-    updateAuthor?: WorklogUpdateAuthor;
+    readonly updateAuthor?: UserDetails;
     /**
      * The datetime on which the worklog was last updated.
      * @type {string}
@@ -28795,78 +24147,11 @@ export interface Worklog {
      */
     readonly updated?: string;
     /**
-     * 
-     * @type {WorklogVisibility}
+     * Details about any restrictions in the visibility of the worklog. Optional when creating or updating a worklog.
+     * @type {Visibility}
      * @memberof Worklog
      */
-    visibility?: WorklogVisibility;
-}
-/**
- * Details of the user who created the worklog.
- * @export
- * @interface WorklogAuthor
- */
-export interface WorklogAuthor {
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    accountId?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly accountType?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof WorklogAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof WorklogAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof WorklogAuthor
-     */
-    readonly timeZone?: string;
+    visibility?: Visibility;
 }
 /**
  * 
@@ -28882,105 +24167,34 @@ export interface WorklogIdsRequestBean {
     ids: Array<number>;
 }
 /**
- * Details of the user who last updated the worklog.
+ * 
  * @export
- * @interface WorklogUpdateAuthor
+ * @interface WorklogsMoveRequestBean
  */
-export interface WorklogUpdateAuthor {
+export interface WorklogsMoveRequestBean {
     /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
+     * A list of worklog IDs.
+     * @type {Set<number>}
+     * @memberof WorklogsMoveRequestBean
      */
-    accountId?: string;
+    ids?: Array<number>;
     /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
+     * The issue id or key of the destination issue
      * @type {string}
-     * @memberof WorklogUpdateAuthor
+     * @memberof WorklogsMoveRequestBean
      */
-    readonly accountType?: string;
+    issueIdOrKey?: string;
+}
+/**
+ * Details about data policy.
+ * @export
+ * @interface WorkspaceDataPolicy
+ */
+export interface WorkspaceDataPolicy {
     /**
-     * Whether the user is active.
+     * Whether the workspace contains any content inaccessible to the requesting application.
      * @type {boolean}
-     * @memberof WorklogUpdateAuthor
+     * @memberof WorkspaceDataPolicy
      */
-    readonly active?: boolean;
-    /**
-     * 
-     * @type {UserAvatarUrls}
-     * @memberof WorklogUpdateAuthor
-     */
-    avatarUrls?: UserAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly displayName?: string;
-    /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly emailAddress?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly key?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly name?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly self?: string;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof WorklogUpdateAuthor
-     */
-    readonly timeZone?: string;
+    readonly anyContentBlocked?: boolean;
 }
-/**
- * Details about any restrictions in the visibility of the worklog. Optional when creating or updating a worklog.
- * @export
- * @interface WorklogVisibility
- */
-export interface WorklogVisibility {
-    /**
-     * The ID of the group or the name of the role that visibility of this item is restricted to.
-     * @type {string}
-     * @memberof WorklogVisibility
-     */
-    identifier?: string | null;
-    /**
-     * Whether visibility of this item is restricted to a group or role.
-     * @type {string}
-     * @memberof WorklogVisibility
-     */
-    type?: WorklogVisibilityTypeEnum;
-    /**
-     * The name of the group or role that visibility of this item is restricted to. Please note that the name of a group is mutable, to reliably identify a group use `identifier`.
-     * @type {string}
-     * @memberof WorklogVisibility
-     */
-    value?: string;
-}
-
-
-/**
- * @export
- */
-export const WorklogVisibilityTypeEnum = {
-    Group: 'group',
-    Role: 'role'
-} as const;
-export type WorklogVisibilityTypeEnum = typeof WorklogVisibilityTypeEnum[keyof typeof WorklogVisibilityTypeEnum];
-
