@@ -20,7 +20,7 @@ import type {
   Unauthorized,
   UsersAccountIdManageApiTokensGet403Response,
   UsersAccountIdManageProfilePatch400Response,
-} from '../models';
+} from '../models/index';
 
 export interface UsersAccountIdManageApiTokensGetRequest {
     accountId: string;
@@ -41,8 +41,11 @@ export class ApiTokensApi extends runtime.BaseAPI {
      * Get API tokens
      */
     async usersAccountIdManageApiTokensGetRaw(requestParameters: UsersAccountIdManageApiTokensGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiTokenModel>>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageApiTokensGet.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageApiTokensGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -58,7 +61,7 @@ export class ApiTokensApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/api-tokens`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/api-tokens`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -81,12 +84,18 @@ export class ApiTokensApi extends runtime.BaseAPI {
      * Delete API token
      */
     async usersAccountIdManageApiTokensTokenIdDeleteRaw(requestParameters: UsersAccountIdManageApiTokensTokenIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageApiTokensTokenIdDelete.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageApiTokensTokenIdDelete().'
+            );
         }
 
-        if (requestParameters.tokenId === null || requestParameters.tokenId === undefined) {
-            throw new runtime.RequiredError('tokenId','Required parameter requestParameters.tokenId was null or undefined when calling usersAccountIdManageApiTokensTokenIdDelete.');
+        if (requestParameters['tokenId'] == null) {
+            throw new runtime.RequiredError(
+                'tokenId',
+                'Required parameter "tokenId" was null or undefined when calling usersAccountIdManageApiTokensTokenIdDelete().'
+            );
         }
 
         const queryParameters: any = {};
@@ -102,7 +111,7 @@ export class ApiTokensApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/api-tokens/{tokenId}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters.tokenId))),
+            path: `/users/{account_id}/manage/api-tokens/{tokenId}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

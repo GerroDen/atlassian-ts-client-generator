@@ -19,7 +19,7 @@ import type {
   Unauthorized,
   UsersAccountIdManageGet200Response,
   UsersAccountIdManageGet403Response,
-} from '../models';
+} from '../models/index';
 
 export interface UsersAccountIdManageGetRequest {
     accountId: string;
@@ -36,14 +36,17 @@ export class ManageApi extends runtime.BaseAPI {
      * Get user management permissions
      */
     async usersAccountIdManageGetRaw(requestParameters: UsersAccountIdManageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageGet200Response>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageGet.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.privileges) {
-            queryParameters['privileges'] = requestParameters.privileges;
+        if (requestParameters['privileges'] != null) {
+            queryParameters['privileges'] = requestParameters['privileges'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -57,7 +60,7 @@ export class ManageApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

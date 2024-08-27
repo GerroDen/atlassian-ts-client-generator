@@ -51,6 +51,7 @@ export interface ApiTokenModel {
     label: string;
     /**
      * Timestamp last time the token was used to Authenticate as a UTC-ISO8601 string
+     * 
      * @type {string}
      * @memberof ApiTokenModel
      */
@@ -99,17 +100,25 @@ export interface AtlassianAccountUser {
      * _Constraints_
      * - `maxLength`: The maximum display name length is 100 characters
      * - `validCharacters`: Control and null characters are not allowed
+     * 
      * @type {string}
      * @memberof AtlassianAccountUser
      */
     name: string;
     /**
      * The absolute URI (RFC3986) to the avatar name of the user.
+     * 
      * @type {string}
      * @memberof AtlassianAccountUser
      */
     readonly picture: string;
     /**
+     * The email address of the user.
+     * 
+     * _Constraints_
+     * - `partMaxLength`: The maximum length of the user part and of any
+     *   subdomain is 255 characters.
+     * - `validCharacters`: Control and null characters are not allowed
      * 
      * @type {string}
      * @memberof AtlassianAccountUser
@@ -127,12 +136,14 @@ export interface AtlassianAccountUser {
      * _Constraints_
      * - `maxLength`: The maximum nickname length is 30 characters
      * - `validCharacters`: Control and null characters are not allowed
+     * 
      * @type {string}
      * @memberof AtlassianAccountUser
      */
     nickname: string;
     /**
      * A unix zoneinfo string describing the local timezone of the user
+     * 
      * @type {string}
      * @memberof AtlassianAccountUser
      */
@@ -150,41 +161,8 @@ export interface AtlassianAccountUser {
      */
     extendedProfile?: ExtendedProfile;
 }
-/**
- * 
- * @export
- * @interface AtlassianAccountUserAllOf
- */
-export interface AtlassianAccountUserAllOf {
-    /**
-     * A nickname for the user in content references to the user.
-     * 
-     * _Constraints_
-     * - `maxLength`: The maximum nickname length is 30 characters
-     * - `validCharacters`: Control and null characters are not allowed
-     * @type {string}
-     * @memberof AtlassianAccountUserAllOf
-     */
-    nickname: string;
-    /**
-     * A unix zoneinfo string describing the local timezone of the user
-     * @type {string}
-     * @memberof AtlassianAccountUserAllOf
-     */
-    zoneinfo?: string;
-    /**
-     * An IETF BCP 47 locale string
-     * @type {string}
-     * @memberof AtlassianAccountUserAllOf
-     */
-    locale?: string;
-    /**
-     * 
-     * @type {ExtendedProfile}
-     * @memberof AtlassianAccountUserAllOf
-     */
-    extendedProfile?: ExtendedProfile;
-}
+
+
 /**
  * 
  * @export
@@ -222,24 +200,28 @@ export type ConflictLifecycleErrorsKeyEnum = typeof ConflictLifecycleErrorsKeyEn
 export interface ExtendedProfile {
     /**
      * The job title of the user
+     * 
      * @type {string}
      * @memberof ExtendedProfile
      */
     jobTitle?: string;
     /**
      * The organisation to which the user belongs
+     * 
      * @type {string}
      * @memberof ExtendedProfile
      */
     organization?: string;
     /**
      * The department in which the user works
+     * 
      * @type {string}
      * @memberof ExtendedProfile
      */
     department?: string;
     /**
      * The physical location of the user
+     * 
      * @type {string}
      * @memberof ExtendedProfile
      */
@@ -297,6 +279,7 @@ export interface LifecycleErrorsContext {
 }
 /**
  * You are allowed to take or write the action/property
+ * 
  * @export
  * @interface ManageabilityAllowed
  */
@@ -306,18 +289,8 @@ export interface ManageabilityAllowed {
      * @type {boolean}
      * @memberof ManageabilityAllowed
      */
-    allowed: ManageabilityAllowedAllowedEnum;
+    allowed: boolean;
 }
-
-
-/**
- * @export
- */
-export const ManageabilityAllowedAllowedEnum = {
-    True: true
-} as const;
-export type ManageabilityAllowedAllowedEnum = typeof ManageabilityAllowedAllowedEnum[keyof typeof ManageabilityAllowedAllowedEnum];
-
 /**
  * 
  * @export
@@ -343,6 +316,7 @@ export interface ManageabilityRestrictionReason {
      *   available only to the user which the account belongs to
      * - _managedAccount_: The property or action is restricted because it is
      *   available only to the user's organisation administrator
+     * 
      * @type {string}
      * @memberof ManageabilityRestrictionReason
      */
@@ -373,6 +347,7 @@ export type ManageabilityRestrictionReasonKeyEnum = typeof ManageabilityRestrict
 export type ManageabilityRuleSimple = { allowed: 'false' } & ManageabilityUnallowed | { allowed: 'true' } & ManageabilityAllowed;
 /**
  * You are not allowed to take or write the action/property
+ * 
  * @export
  * @interface ManageabilityUnallowed
  */
@@ -382,7 +357,7 @@ export interface ManageabilityUnallowed {
      * @type {boolean}
      * @memberof ManageabilityUnallowed
      */
-    allowed: ManageabilityUnallowedAllowedEnum;
+    allowed: boolean;
     /**
      * 
      * @type {ManageabilityRestrictionReason}
@@ -390,16 +365,6 @@ export interface ManageabilityUnallowed {
      */
     reason: ManageabilityRestrictionReason;
 }
-
-
-/**
- * @export
- */
-export const ManageabilityUnallowedAllowedEnum = {
-    False: false
-} as const;
-export type ManageabilityUnallowedAllowedEnum = typeof ManageabilityUnallowedAllowedEnum[keyof typeof ManageabilityUnallowedAllowedEnum];
-
 /**
  * 
  * @export
@@ -409,6 +374,7 @@ export interface NotFoundAccount {
     /**
      * - _accountNotFound_: Requested accountId not found
      * - _notFound_: Requested resource not found
+     * 
      * @type {string}
      * @memberof NotFoundAccount
      */
@@ -427,6 +393,7 @@ export type NotFoundAccountKeyEnum = typeof NotFoundAccountKeyEnum[keyof typeof 
 
 /**
  * The body was not parsed successfully.
+ * 
  * @export
  * @interface ResponseBadRequestBodyParseFailure
  */
@@ -441,6 +408,7 @@ export interface ResponseBadRequestBodyParseFailure {
 /**
  * The submitted JSON entity had one or more invalid properties.
  * For each invalid field, a set of violated constraint keys are returned.
+ * 
  * @export
  * @interface ResponseBadRequestFieldConstraintsViolated
  */
@@ -499,6 +467,7 @@ export interface ResponseBadRequestFieldConstraintsViolatedContextFieldViolation
     /**
      * The key for a constraint that the submitted value has violated.
      * See documentation for any submittable model for a set of constraint keys and definitions.
+     * 
      * @type {string}
      * @memberof ResponseBadRequestFieldConstraintsViolatedContextFieldViolationsInnerViolationsInner
      */
@@ -535,6 +504,7 @@ export type ResponseForbiddenActionKeyEnum = typeof ResponseForbiddenActionKeyEn
 
 /**
  * You are not authorized to access this resource
+ * 
  * @export
  * @interface ResponseForbiddenBasic
  */
@@ -570,6 +540,7 @@ export interface ResponseForbiddenObjectMutability {
     key: ResponseForbiddenObjectMutabilityKeyEnum;
     /**
      * Describes your permissions to change the object. Each key should be a valid JSON path of the target object.
+     * 
      * @type {{ [key: string]: ManageabilityRuleSimple; }}
      * @memberof ResponseForbiddenObjectMutability
      */
@@ -587,6 +558,7 @@ export type ResponseForbiddenObjectMutabilityKeyEnum = typeof ResponseForbiddenO
 
 /**
  * Cannot manage an unverified target account
+ * 
  * @export
  * @interface ResponseForbiddenTargetUnverified
  */
@@ -717,17 +689,25 @@ export interface User {
      * _Constraints_
      * - `maxLength`: The maximum display name length is 100 characters
      * - `validCharacters`: Control and null characters are not allowed
+     * 
      * @type {string}
      * @memberof User
      */
     name: string;
     /**
      * The absolute URI (RFC3986) to the avatar name of the user.
+     * 
      * @type {string}
      * @memberof User
      */
     readonly picture: string;
     /**
+     * The email address of the user.
+     * 
+     * _Constraints_
+     * - `partMaxLength`: The maximum length of the user part and of any
+     *   subdomain is 255 characters.
+     * - `validCharacters`: Control and null characters are not allowed
      * 
      * @type {string}
      * @memberof User
@@ -740,6 +720,8 @@ export interface User {
      */
     characteristics?: AccountCharacteristics;
 }
+
+
 /**
  * @type UsersAccountIdManageApiTokensGet403Response
  * 
@@ -765,6 +747,7 @@ export interface UsersAccountIdManageEmailPutRequest {
      * - `partMaxLength`: The maximum length of the user part and of any
      *   subdomain is 255 characters.
      * - `validCharacters`: Control and null characters are not allowed
+     * 
      * @type {string}
      * @memberof UsersAccountIdManageEmailPutRequest
      */
@@ -778,12 +761,14 @@ export interface UsersAccountIdManageEmailPutRequest {
 export interface UsersAccountIdManageGet200Response {
     /**
      * Describes your permissions to change the object. Each key should be a valid JSON path of the target object.
+     * 
      * @type {{ [key: string]: ManageabilityRuleSimple; }}
      * @memberof UsersAccountIdManageGet200Response
      */
     profile?: { [key: string]: ManageabilityRuleSimple; };
     /**
      * Describes your permissions to change the object. Each key should be a valid JSON path of the target object.
+     * 
      * @type {{ [key: string]: ManageabilityRuleSimple; }}
      * @memberof UsersAccountIdManageGet200Response
      */

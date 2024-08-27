@@ -21,7 +21,7 @@ import type {
   Unauthorized,
   UsersAccountIdManageApiTokensGet403Response,
   UsersAccountIdManageLifecycleDisablePostRequest,
-} from '../models';
+} from '../models/index';
 
 export interface UsersAccountIdManageLifecycleCancelDeletePostRequest {
     accountId: string;
@@ -50,8 +50,11 @@ export class LifecycleApi extends runtime.BaseAPI {
      * Cancel delete account
      */
     async usersAccountIdManageLifecycleCancelDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleCancelDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageLifecycleCancelDeletePost.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageLifecycleCancelDeletePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -67,7 +70,7 @@ export class LifecycleApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/cancel-delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/lifecycle/cancel-delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -90,8 +93,11 @@ export class LifecycleApi extends runtime.BaseAPI {
      * Delete account
      */
     async usersAccountIdManageLifecycleDeletePostRaw(requestParameters: UsersAccountIdManageLifecycleDeletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResultMessage>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageLifecycleDeletePost.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageLifecycleDeletePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -107,7 +113,7 @@ export class LifecycleApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/lifecycle/delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -130,12 +136,18 @@ export class LifecycleApi extends runtime.BaseAPI {
      * Deactivate a user
      */
     async usersAccountIdManageLifecycleDisablePostRaw(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageLifecycleDisablePost.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageLifecycleDisablePost().'
+            );
         }
 
-        if (requestParameters.usersAccountIdManageLifecycleDisablePostRequest === null || requestParameters.usersAccountIdManageLifecycleDisablePostRequest === undefined) {
-            throw new runtime.RequiredError('usersAccountIdManageLifecycleDisablePostRequest','Required parameter requestParameters.usersAccountIdManageLifecycleDisablePostRequest was null or undefined when calling usersAccountIdManageLifecycleDisablePost.');
+        if (requestParameters['usersAccountIdManageLifecycleDisablePostRequest'] == null) {
+            throw new runtime.RequiredError(
+                'usersAccountIdManageLifecycleDisablePostRequest',
+                'Required parameter "usersAccountIdManageLifecycleDisablePostRequest" was null or undefined when calling usersAccountIdManageLifecycleDisablePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -153,11 +165,11 @@ export class LifecycleApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/disable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/lifecycle/disable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.usersAccountIdManageLifecycleDisablePostRequest,
+            body: requestParameters['usersAccountIdManageLifecycleDisablePostRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -176,8 +188,11 @@ export class LifecycleApi extends runtime.BaseAPI {
      * Activate a user
      */
     async usersAccountIdManageLifecycleEnablePostRaw(requestParameters: UsersAccountIdManageLifecycleEnablePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageLifecycleEnablePost.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageLifecycleEnablePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -193,7 +208,7 @@ export class LifecycleApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/enable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/lifecycle/enable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

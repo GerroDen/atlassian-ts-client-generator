@@ -20,7 +20,7 @@ import type {
   UsersAccountIdManageEmailPut403Response,
   UsersAccountIdManageEmailPutRequest,
   UsersAccountIdManageProfilePatch400Response,
-} from '../models';
+} from '../models/index';
 
 export interface UsersAccountIdManageEmailPutOperationRequest {
     accountId: string;
@@ -37,12 +37,18 @@ export class EmailApi extends runtime.BaseAPI {
      * Set email 
      */
     async usersAccountIdManageEmailPutRaw(requestParameters: UsersAccountIdManageEmailPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageEmailPut.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageEmailPut().'
+            );
         }
 
-        if (requestParameters.usersAccountIdManageEmailPutRequest === null || requestParameters.usersAccountIdManageEmailPutRequest === undefined) {
-            throw new runtime.RequiredError('usersAccountIdManageEmailPutRequest','Required parameter requestParameters.usersAccountIdManageEmailPutRequest was null or undefined when calling usersAccountIdManageEmailPut.');
+        if (requestParameters['usersAccountIdManageEmailPutRequest'] == null) {
+            throw new runtime.RequiredError(
+                'usersAccountIdManageEmailPutRequest',
+                'Required parameter "usersAccountIdManageEmailPutRequest" was null or undefined when calling usersAccountIdManageEmailPut().'
+            );
         }
 
         const queryParameters: any = {};
@@ -60,11 +66,11 @@ export class EmailApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/email`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/email`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.usersAccountIdManageEmailPutRequest,
+            body: requestParameters['usersAccountIdManageEmailPutRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

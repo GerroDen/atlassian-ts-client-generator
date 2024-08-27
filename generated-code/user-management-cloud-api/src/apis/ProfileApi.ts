@@ -22,7 +22,7 @@ import type {
   UsersAccountIdManageProfileGet200Response,
   UsersAccountIdManageProfilePatch400Response,
   UsersAccountIdManageProfilePatch403Response,
-} from '../models';
+} from '../models/index';
 
 export interface UsersAccountIdManageProfileGetRequest {
     accountId: string;
@@ -43,8 +43,11 @@ export class ProfileApi extends runtime.BaseAPI {
      * Get profile
      */
     async usersAccountIdManageProfileGetRaw(requestParameters: UsersAccountIdManageProfileGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageProfileGet.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageProfileGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -60,7 +63,7 @@ export class ProfileApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -83,12 +86,18 @@ export class ProfileApi extends runtime.BaseAPI {
      * Update profile
      */
     async usersAccountIdManageProfilePatchRaw(requestParameters: UsersAccountIdManageProfilePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersAccountIdManageProfileGet200Response>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling usersAccountIdManageProfilePatch.');
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling usersAccountIdManageProfilePatch().'
+            );
         }
 
-        if (requestParameters.atlassianAccountUser === null || requestParameters.atlassianAccountUser === undefined) {
-            throw new runtime.RequiredError('atlassianAccountUser','Required parameter requestParameters.atlassianAccountUser was null or undefined when calling usersAccountIdManageProfilePatch.');
+        if (requestParameters['atlassianAccountUser'] == null) {
+            throw new runtime.RequiredError(
+                'atlassianAccountUser',
+                'Required parameter "atlassianAccountUser" was null or undefined when calling usersAccountIdManageProfilePatch().'
+            );
         }
 
         const queryParameters: any = {};
@@ -106,11 +115,11 @@ export class ProfileApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.atlassianAccountUser,
+            body: requestParameters['atlassianAccountUser'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
