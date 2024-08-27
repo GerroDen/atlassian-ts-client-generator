@@ -7,10 +7,12 @@ src/apis/BacklogApi.ts
 src/apis/BoardApi.ts
 src/apis/BuildsApi.ts
 src/apis/DeploymentsApi.ts
+src/apis/DevOpsComponentsApi.ts
 src/apis/DevelopmentInformationApi.ts
 src/apis/EpicApi.ts
 src/apis/FeatureFlagsApi.ts
 src/apis/IssueApi.ts
+src/apis/OperationsApi.ts
 src/apis/RemoteLinksApi.ts
 src/apis/SecurityInformationApi.ts
 src/apis/SprintApi.ts

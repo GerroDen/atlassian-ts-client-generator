@@ -19,7 +19,7 @@ import type {
   MoveIssuesToBacklogForBoardRequest,
   SwapSprintRequest,
   UpdateSprintRequest,
-} from '../models';
+} from '../models/index';
 
 export interface CreateSprintOperationRequest {
     createSprintRequest: CreateSprintRequest;
@@ -70,6 +70,7 @@ export interface PartiallyUpdateSprintRequest {
 export interface SetPropertyRequest {
     sprintId: string;
     propertyKey: string;
+    body: any | null;
 }
 
 export interface SwapSprintOperationRequest {
@@ -92,8 +93,11 @@ export class SprintApi extends runtime.BaseAPI {
      * Create sprint
      */
     async createSprintRaw(requestParameters: CreateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.createSprintRequest === null || requestParameters.createSprintRequest === undefined) {
-            throw new runtime.RequiredError('createSprintRequest','Required parameter requestParameters.createSprintRequest was null or undefined when calling createSprint.');
+        if (requestParameters['createSprintRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createSprintRequest',
+                'Required parameter "createSprintRequest" was null or undefined when calling createSprint().'
+            );
         }
 
         const queryParameters: any = {};
@@ -112,7 +116,7 @@ export class SprintApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createSprintRequest,
+            body: requestParameters['createSprintRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -131,12 +135,18 @@ export class SprintApi extends runtime.BaseAPI {
      * Delete property
      */
     async deletePropertyRaw(requestParameters: DeletePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling deleteProperty.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling deleteProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling deleteProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -149,7 +159,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -171,8 +181,11 @@ export class SprintApi extends runtime.BaseAPI {
      * Delete sprint
      */
     async deleteSprintRaw(requestParameters: DeleteSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling deleteSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling deleteSprint().'
+            );
         }
 
         const queryParameters: any = {};
@@ -185,7 +198,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -207,34 +220,37 @@ export class SprintApi extends runtime.BaseAPI {
      * Get issues for sprint
      */
     async getIssuesForSprintRaw(requestParameters: GetIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling getIssuesForSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getIssuesForSprint().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -245,7 +261,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -267,8 +283,11 @@ export class SprintApi extends runtime.BaseAPI {
      * Get properties keys
      */
     async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling getPropertiesKeys.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getPropertiesKeys().'
+            );
         }
 
         const queryParameters: any = {};
@@ -281,7 +300,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/properties`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -303,12 +322,18 @@ export class SprintApi extends runtime.BaseAPI {
      * Get property
      */
     async getPropertyRaw(requestParameters: GetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling getProperty.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling getProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -321,7 +346,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -343,8 +368,11 @@ export class SprintApi extends runtime.BaseAPI {
      * Get sprint
      */
     async getSprintRaw(requestParameters: GetSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling getSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getSprint().'
+            );
         }
 
         const queryParameters: any = {};
@@ -357,7 +385,7 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -379,12 +407,18 @@ export class SprintApi extends runtime.BaseAPI {
      * Move issues to sprint and rank
      */
     async moveIssuesToSprintAndRankRaw(requestParameters: MoveIssuesToSprintAndRankRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling moveIssuesToSprintAndRank.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling moveIssuesToSprintAndRank().'
+            );
         }
 
-        if (requestParameters.moveIssuesToBacklogForBoardRequest === null || requestParameters.moveIssuesToBacklogForBoardRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogForBoardRequest','Required parameter requestParameters.moveIssuesToBacklogForBoardRequest was null or undefined when calling moveIssuesToSprintAndRank.');
+        if (requestParameters['moveIssuesToBacklogForBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogForBoardRequest',
+                'Required parameter "moveIssuesToBacklogForBoardRequest" was null or undefined when calling moveIssuesToSprintAndRank().'
+            );
         }
 
         const queryParameters: any = {};
@@ -399,11 +433,11 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogForBoardRequest,
+            body: requestParameters['moveIssuesToBacklogForBoardRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -418,16 +452,22 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  Sprints that are in a closed state cannot be updated.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
      * Partially update sprint
      */
     async partiallyUpdateSprintRaw(requestParameters: PartiallyUpdateSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling partiallyUpdateSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling partiallyUpdateSprint().'
+            );
         }
 
-        if (requestParameters.updateSprintRequest === null || requestParameters.updateSprintRequest === undefined) {
-            throw new runtime.RequiredError('updateSprintRequest','Required parameter requestParameters.updateSprintRequest was null or undefined when calling partiallyUpdateSprint.');
+        if (requestParameters['updateSprintRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateSprintRequest',
+                'Required parameter "updateSprintRequest" was null or undefined when calling partiallyUpdateSprint().'
+            );
         }
 
         const queryParameters: any = {};
@@ -442,18 +482,18 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateSprintRequest,
+            body: requestParameters['updateSprintRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  Sprints that are in a closed state cannot be updated.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
      * Partially update sprint
      */
     async partiallyUpdateSprint(requestParameters: PartiallyUpdateSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -464,53 +504,26 @@ export class SprintApi extends runtime.BaseAPI {
      * Sets the value of the specified sprint\'s property.  You can use this resource to store a custom data against the sprint identified by the id. The user who stores the data is required to have permissions to modify the sprint.
      * Set property
      */
-    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling setProperty.');
+    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling setProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling setProperty().'
+            );
         }
 
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
-        }
-
-        const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Sets the value of the specified sprint\'s property.  You can use this resource to store a custom data against the sprint identified by the id. The user who stores the data is required to have permissions to modify the sprint.
-     * Set property
-     */
-    async setProperty(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.setPropertyRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Swap the position of the sprint with the second sprint.
-     * Swap sprint
-     */
-    async swapSprintRaw(requestParameters: SwapSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling swapSprint.');
-        }
-
-        if (requestParameters.swapSprintRequest === null || requestParameters.swapSprintRequest === undefined) {
-            throw new runtime.RequiredError('swapSprintRequest','Required parameter requestParameters.swapSprintRequest was null or undefined when calling swapSprint.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling setProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -525,11 +538,65 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/swap`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Sets the value of the specified sprint\'s property.  You can use this resource to store a custom data against the sprint identified by the id. The user who stores the data is required to have permissions to modify the sprint.
+     * Set property
+     */
+    async setProperty(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setPropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Swap the position of the sprint with the second sprint.
+     * Swap sprint
+     */
+    async swapSprintRaw(requestParameters: SwapSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling swapSprint().'
+            );
+        }
+
+        if (requestParameters['swapSprintRequest'] == null) {
+            throw new runtime.RequiredError(
+                'swapSprintRequest',
+                'Required parameter "swapSprintRequest" was null or undefined when calling swapSprint().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
+        }
+
+        const response = await this.request({
+            path: `/rest/agile/1.0/sprint/{sprintId}/swap`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.swapSprintRequest,
+            body: requestParameters['swapSprintRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -544,16 +611,22 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  Sprints that are in a closed state cannot be updated.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
      * Update sprint
      */
     async updateSprintRaw(requestParameters: UpdateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling updateSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling updateSprint().'
+            );
         }
 
-        if (requestParameters.updateSprintRequest === null || requestParameters.updateSprintRequest === undefined) {
-            throw new runtime.RequiredError('updateSprintRequest','Required parameter requestParameters.updateSprintRequest was null or undefined when calling updateSprint.');
+        if (requestParameters['updateSprintRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateSprintRequest',
+                'Required parameter "updateSprintRequest" was null or undefined when calling updateSprint().'
+            );
         }
 
         const queryParameters: any = {};
@@ -568,18 +641,18 @@ export class SprintApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.updateSprintRequest,
+            body: requestParameters['updateSprintRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  Sprints that are in a closed state cannot be updated.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
      * Update sprint
      */
     async updateSprint(requestParameters: UpdateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

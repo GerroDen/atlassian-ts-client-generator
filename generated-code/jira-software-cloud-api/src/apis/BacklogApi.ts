@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   MoveIssuesToBacklogForBoardRequest,
   MoveIssuesToBacklogRequest,
-} from '../models';
+} from '../models/index';
 
 export interface MoveIssuesToBacklogOperationRequest {
     moveIssuesToBacklogRequest: MoveIssuesToBacklogRequest;
@@ -38,8 +38,11 @@ export class BacklogApi extends runtime.BaseAPI {
      * Move issues to backlog
      */
     async moveIssuesToBacklogRaw(requestParameters: MoveIssuesToBacklogOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.moveIssuesToBacklogRequest === null || requestParameters.moveIssuesToBacklogRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogRequest','Required parameter requestParameters.moveIssuesToBacklogRequest was null or undefined when calling moveIssuesToBacklog.');
+        if (requestParameters['moveIssuesToBacklogRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogRequest',
+                'Required parameter "moveIssuesToBacklogRequest" was null or undefined when calling moveIssuesToBacklog().'
+            );
         }
 
         const queryParameters: any = {};
@@ -58,7 +61,7 @@ export class BacklogApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogRequest,
+            body: requestParameters['moveIssuesToBacklogRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -77,12 +80,18 @@ export class BacklogApi extends runtime.BaseAPI {
      * Move issues to backlog for board
      */
     async moveIssuesToBacklogForBoardRaw(requestParameters: MoveIssuesToBacklogForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling moveIssuesToBacklogForBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling moveIssuesToBacklogForBoard().'
+            );
         }
 
-        if (requestParameters.moveIssuesToBacklogForBoardRequest === null || requestParameters.moveIssuesToBacklogForBoardRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogForBoardRequest','Required parameter requestParameters.moveIssuesToBacklogForBoardRequest was null or undefined when calling moveIssuesToBacklogForBoard.');
+        if (requestParameters['moveIssuesToBacklogForBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogForBoardRequest',
+                'Required parameter "moveIssuesToBacklogForBoardRequest" was null or undefined when calling moveIssuesToBacklogForBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -97,11 +106,11 @@ export class BacklogApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/backlog/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/backlog/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogForBoardRequest,
+            body: requestParameters['moveIssuesToBacklogForBoardRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

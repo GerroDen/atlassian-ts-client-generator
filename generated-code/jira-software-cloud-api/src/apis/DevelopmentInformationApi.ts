@@ -20,7 +20,7 @@ import type {
   ExistsForPropertiesResponse,
   Repository,
   StoreDevinfoResult,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteByPropertiesRequest {
     authorization: string;
@@ -62,24 +62,27 @@ export interface StoreDevelopmentInformationRequest {
 export class DevelopmentInformationApi extends runtime.BaseAPI {
 
     /**
-     * Deletes development information entities which have all the provided properties. Entities will be deleted that match ALL of the properties (i.e. treated as an AND). For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Special property `_updateSequenceId` can be used to delete all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to delete by. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
+     * Deletes development information entities which have all the provided properties. Repositories which have properties that match ALL of the properties (i.e. treated as an AND), and all their related development information (such as commits, branches and pull requests), will be deleted. For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Optional param `_updateSequenceId` is no longer supported. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
      * Delete development information by properties
      */
     async deleteByPropertiesRaw(requestParameters: DeleteByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteByProperties.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteByProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -93,7 +96,7 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes development information entities which have all the provided properties. Entities will be deleted that match ALL of the properties (i.e. treated as an AND). For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Special property `_updateSequenceId` can be used to delete all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to delete by. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
+     * Deletes development information entities which have all the provided properties. Repositories which have properties that match ALL of the properties (i.e. treated as an AND), and all their related development information (such as commits, branches and pull requests), will be deleted. For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Optional param `_updateSequenceId` is no longer supported. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
      * Delete development information by properties
      */
     async deleteByProperties(requestParameters: DeleteByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -105,36 +108,48 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
      * Delete development information entity
      */
     async deleteEntityRaw(requestParameters: DeleteEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.repositoryId === null || requestParameters.repositoryId === undefined) {
-            throw new runtime.RequiredError('repositoryId','Required parameter requestParameters.repositoryId was null or undefined when calling deleteEntity.');
+        if (requestParameters['repositoryId'] == null) {
+            throw new runtime.RequiredError(
+                'repositoryId',
+                'Required parameter "repositoryId" was null or undefined when calling deleteEntity().'
+            );
         }
 
-        if (requestParameters.entityType === null || requestParameters.entityType === undefined) {
-            throw new runtime.RequiredError('entityType','Required parameter requestParameters.entityType was null or undefined when calling deleteEntity.');
+        if (requestParameters['entityType'] == null) {
+            throw new runtime.RequiredError(
+                'entityType',
+                'Required parameter "entityType" was null or undefined when calling deleteEntity().'
+            );
         }
 
-        if (requestParameters.entityId === null || requestParameters.entityId === undefined) {
-            throw new runtime.RequiredError('entityId','Required parameter requestParameters.entityId was null or undefined when calling deleteEntity.');
+        if (requestParameters['entityId'] == null) {
+            throw new runtime.RequiredError(
+                'entityId',
+                'Required parameter "entityId" was null or undefined when calling deleteEntity().'
+            );
         }
 
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteEntity.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteEntity().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters.repositoryId))).replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters.entityType))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters.entityId))),
+            path: `/rest/devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))).replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType']))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -156,28 +171,34 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
      * Delete repository
      */
     async deleteRepositoryRaw(requestParameters: DeleteRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.repositoryId === null || requestParameters.repositoryId === undefined) {
-            throw new runtime.RequiredError('repositoryId','Required parameter requestParameters.repositoryId was null or undefined when calling deleteRepository.');
+        if (requestParameters['repositoryId'] == null) {
+            throw new runtime.RequiredError(
+                'repositoryId',
+                'Required parameter "repositoryId" was null or undefined when calling deleteRepository().'
+            );
         }
 
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteRepository.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteRepository().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters.repositoryId))),
+            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -195,24 +216,27 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks if development information which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one entity or repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
+     * Checks if repositories which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
      * Check if data exists for the supplied properties
      */
     async existsByPropertiesRaw(requestParameters: ExistsByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExistsForPropertiesResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling existsByProperties.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling existsByProperties().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -226,7 +250,7 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks if development information which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one entity or repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
+     * Checks if repositories which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
      * Check if data exists for the supplied properties
      */
     async existsByProperties(requestParameters: ExistsByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExistsForPropertiesResponse> {
@@ -239,24 +263,30 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
      * Get repository
      */
     async getRepositoryRaw(requestParameters: GetRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Repository>> {
-        if (requestParameters.repositoryId === null || requestParameters.repositoryId === undefined) {
-            throw new runtime.RequiredError('repositoryId','Required parameter requestParameters.repositoryId was null or undefined when calling getRepository.');
+        if (requestParameters['repositoryId'] == null) {
+            throw new runtime.RequiredError(
+                'repositoryId',
+                'Required parameter "repositoryId" was null or undefined when calling getRepository().'
+            );
         }
 
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getRepository.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getRepository().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters.repositoryId))),
+            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -279,12 +309,18 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
      * Store development information
      */
     async storeDevelopmentInformationRaw(requestParameters: StoreDevelopmentInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoreDevinfoResult>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling storeDevelopmentInformation.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling storeDevelopmentInformation().'
+            );
         }
 
-        if (requestParameters.devInformation === null || requestParameters.devInformation === undefined) {
-            throw new runtime.RequiredError('devInformation','Required parameter requestParameters.devInformation was null or undefined when calling storeDevelopmentInformation.');
+        if (requestParameters['devInformation'] == null) {
+            throw new runtime.RequiredError(
+                'devInformation',
+                'Required parameter "devInformation" was null or undefined when calling storeDevelopmentInformation().'
+            );
         }
 
         const queryParameters: any = {};
@@ -293,8 +329,8 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -302,7 +338,7 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.devInformation,
+            body: requestParameters['devInformation'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

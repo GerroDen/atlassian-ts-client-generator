@@ -19,7 +19,7 @@ import type {
   ErrorMessage,
   SubmitBuildsRequest,
   SubmitBuildsResponse,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteBuildByKeyRequest {
     authorization: string;
@@ -54,32 +54,41 @@ export class BuildsApi extends runtime.BaseAPI {
      * Delete a build by key
      */
     async deleteBuildByKeyRaw(requestParameters: DeleteBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteBuildByKey.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteBuildByKey().'
+            );
         }
 
-        if (requestParameters.pipelineId === null || requestParameters.pipelineId === undefined) {
-            throw new runtime.RequiredError('pipelineId','Required parameter requestParameters.pipelineId was null or undefined when calling deleteBuildByKey.');
+        if (requestParameters['pipelineId'] == null) {
+            throw new runtime.RequiredError(
+                'pipelineId',
+                'Required parameter "pipelineId" was null or undefined when calling deleteBuildByKey().'
+            );
         }
 
-        if (requestParameters.buildNumber === null || requestParameters.buildNumber === undefined) {
-            throw new runtime.RequiredError('buildNumber','Required parameter requestParameters.buildNumber was null or undefined when calling deleteBuildByKey.');
+        if (requestParameters['buildNumber'] == null) {
+            throw new runtime.RequiredError(
+                'buildNumber',
+                'Required parameter "buildNumber" was null or undefined when calling deleteBuildByKey().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters.pipelineId))).replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters.buildNumber))),
+            path: `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -101,20 +110,23 @@ export class BuildsApi extends runtime.BaseAPI {
      * Delete builds by Property
      */
     async deleteBuildsByPropertyRaw(requestParameters: DeleteBuildsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteBuildsByProperty.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteBuildsByProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -140,28 +152,37 @@ export class BuildsApi extends runtime.BaseAPI {
      * Get a build by key
      */
     async getBuildByKeyRaw(requestParameters: GetBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BuildData>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getBuildByKey.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getBuildByKey().'
+            );
         }
 
-        if (requestParameters.pipelineId === null || requestParameters.pipelineId === undefined) {
-            throw new runtime.RequiredError('pipelineId','Required parameter requestParameters.pipelineId was null or undefined when calling getBuildByKey.');
+        if (requestParameters['pipelineId'] == null) {
+            throw new runtime.RequiredError(
+                'pipelineId',
+                'Required parameter "pipelineId" was null or undefined when calling getBuildByKey().'
+            );
         }
 
-        if (requestParameters.buildNumber === null || requestParameters.buildNumber === undefined) {
-            throw new runtime.RequiredError('buildNumber','Required parameter requestParameters.buildNumber was null or undefined when calling getBuildByKey.');
+        if (requestParameters['buildNumber'] == null) {
+            throw new runtime.RequiredError(
+                'buildNumber',
+                'Required parameter "buildNumber" was null or undefined when calling getBuildByKey().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters.pipelineId))).replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters.buildNumber))),
+            path: `/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -184,12 +205,18 @@ export class BuildsApi extends runtime.BaseAPI {
      * Submit build data
      */
     async submitBuildsRaw(requestParameters: SubmitBuildsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitBuildsResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitBuilds.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitBuilds().'
+            );
         }
 
-        if (requestParameters.submitBuildsRequest === null || requestParameters.submitBuildsRequest === undefined) {
-            throw new runtime.RequiredError('submitBuildsRequest','Required parameter requestParameters.submitBuildsRequest was null or undefined when calling submitBuilds.');
+        if (requestParameters['submitBuildsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitBuildsRequest',
+                'Required parameter "submitBuildsRequest" was null or undefined when calling submitBuilds().'
+            );
         }
 
         const queryParameters: any = {};
@@ -198,8 +225,8 @@ export class BuildsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -207,7 +234,7 @@ export class BuildsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitBuildsRequest,
+            body: requestParameters['submitBuildsRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

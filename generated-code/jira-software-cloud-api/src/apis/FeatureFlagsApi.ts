@@ -19,7 +19,7 @@ import type {
   FeatureFlagData,
   SubmitFeatureFlagRequest,
   SubmitFeatureFlagsResponse,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteFeatureFlagByIdRequest {
     authorization: string;
@@ -52,28 +52,34 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
      * Delete a Feature Flag by ID
      */
     async deleteFeatureFlagByIdRaw(requestParameters: DeleteFeatureFlagByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteFeatureFlagById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteFeatureFlagById().'
+            );
         }
 
-        if (requestParameters.featureFlagId === null || requestParameters.featureFlagId === undefined) {
-            throw new runtime.RequiredError('featureFlagId','Required parameter requestParameters.featureFlagId was null or undefined when calling deleteFeatureFlagById.');
+        if (requestParameters['featureFlagId'] == null) {
+            throw new runtime.RequiredError(
+                'featureFlagId',
+                'Required parameter "featureFlagId" was null or undefined when calling deleteFeatureFlagById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/featureflags/0.1/flag/{featureFlagId}`.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters.featureFlagId))),
+            path: `/rest/featureflags/0.1/flag/{featureFlagId}`.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters['featureFlagId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -95,20 +101,23 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
      * Delete Feature Flags by Property
      */
     async deleteFeatureFlagsByPropertyRaw(requestParameters: DeleteFeatureFlagsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteFeatureFlagsByProperty.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteFeatureFlagsByProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceId !== undefined) {
-            queryParameters['_updateSequenceId'] = requestParameters.updateSequenceId;
+        if (requestParameters['updateSequenceId'] != null) {
+            queryParameters['_updateSequenceId'] = requestParameters['updateSequenceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -134,24 +143,30 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
      * Get a Feature Flag by ID
      */
     async getFeatureFlagByIdRaw(requestParameters: GetFeatureFlagByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FeatureFlagData>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getFeatureFlagById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getFeatureFlagById().'
+            );
         }
 
-        if (requestParameters.featureFlagId === null || requestParameters.featureFlagId === undefined) {
-            throw new runtime.RequiredError('featureFlagId','Required parameter requestParameters.featureFlagId was null or undefined when calling getFeatureFlagById.');
+        if (requestParameters['featureFlagId'] == null) {
+            throw new runtime.RequiredError(
+                'featureFlagId',
+                'Required parameter "featureFlagId" was null or undefined when calling getFeatureFlagById().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/featureflags/0.1/flag/{featureFlagId}`.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters.featureFlagId))),
+            path: `/rest/featureflags/0.1/flag/{featureFlagId}`.replace(`{${"featureFlagId"}}`, encodeURIComponent(String(requestParameters['featureFlagId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -174,12 +189,18 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
      * Submit Feature Flag data
      */
     async submitFeatureFlagsRaw(requestParameters: SubmitFeatureFlagsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitFeatureFlagsResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitFeatureFlags.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitFeatureFlags().'
+            );
         }
 
-        if (requestParameters.submitFeatureFlagRequest === null || requestParameters.submitFeatureFlagRequest === undefined) {
-            throw new runtime.RequiredError('submitFeatureFlagRequest','Required parameter requestParameters.submitFeatureFlagRequest was null or undefined when calling submitFeatureFlags.');
+        if (requestParameters['submitFeatureFlagRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitFeatureFlagRequest',
+                'Required parameter "submitFeatureFlagRequest" was null or undefined when calling submitFeatureFlags().'
+            );
         }
 
         const queryParameters: any = {};
@@ -188,8 +209,8 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -197,7 +218,7 @@ export class FeatureFlagsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitFeatureFlagRequest,
+            body: requestParameters['submitFeatureFlagRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

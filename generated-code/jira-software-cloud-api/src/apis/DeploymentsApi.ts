@@ -15,12 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeploymentData1,
+  DeploymentData,
   ErrorMessage1,
   SubmitDeploymentRequest,
   SubmitDeploymentsResponse,
   SubmitDeploymentsResponse1,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteDeploymentByKeyRequest {
     authorization: string;
@@ -63,36 +63,48 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Delete a deployment by key
      */
     async deleteDeploymentByKeyRaw(requestParameters: DeleteDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteDeploymentByKey.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.pipelineId === null || requestParameters.pipelineId === undefined) {
-            throw new runtime.RequiredError('pipelineId','Required parameter requestParameters.pipelineId was null or undefined when calling deleteDeploymentByKey.');
+        if (requestParameters['pipelineId'] == null) {
+            throw new runtime.RequiredError(
+                'pipelineId',
+                'Required parameter "pipelineId" was null or undefined when calling deleteDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.environmentId === null || requestParameters.environmentId === undefined) {
-            throw new runtime.RequiredError('environmentId','Required parameter requestParameters.environmentId was null or undefined when calling deleteDeploymentByKey.');
+        if (requestParameters['environmentId'] == null) {
+            throw new runtime.RequiredError(
+                'environmentId',
+                'Required parameter "environmentId" was null or undefined when calling deleteDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.deploymentSequenceNumber === null || requestParameters.deploymentSequenceNumber === undefined) {
-            throw new runtime.RequiredError('deploymentSequenceNumber','Required parameter requestParameters.deploymentSequenceNumber was null or undefined when calling deleteDeploymentByKey.');
+        if (requestParameters['deploymentSequenceNumber'] == null) {
+            throw new runtime.RequiredError(
+                'deploymentSequenceNumber',
+                'Required parameter "deploymentSequenceNumber" was null or undefined when calling deleteDeploymentByKey().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters.pipelineId))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters.environmentId))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters.deploymentSequenceNumber))),
+            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -114,20 +126,23 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Delete deployments by Property
      */
     async deleteDeploymentsByPropertyRaw(requestParameters: DeleteDeploymentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteDeploymentsByProperty.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteDeploymentsByProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -152,33 +167,45 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a deployment by key
      */
-    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getDeploymentByKey.');
+    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData>> {
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.pipelineId === null || requestParameters.pipelineId === undefined) {
-            throw new runtime.RequiredError('pipelineId','Required parameter requestParameters.pipelineId was null or undefined when calling getDeploymentByKey.');
+        if (requestParameters['pipelineId'] == null) {
+            throw new runtime.RequiredError(
+                'pipelineId',
+                'Required parameter "pipelineId" was null or undefined when calling getDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.environmentId === null || requestParameters.environmentId === undefined) {
-            throw new runtime.RequiredError('environmentId','Required parameter requestParameters.environmentId was null or undefined when calling getDeploymentByKey.');
+        if (requestParameters['environmentId'] == null) {
+            throw new runtime.RequiredError(
+                'environmentId',
+                'Required parameter "environmentId" was null or undefined when calling getDeploymentByKey().'
+            );
         }
 
-        if (requestParameters.deploymentSequenceNumber === null || requestParameters.deploymentSequenceNumber === undefined) {
-            throw new runtime.RequiredError('deploymentSequenceNumber','Required parameter requestParameters.deploymentSequenceNumber was null or undefined when calling getDeploymentByKey.');
+        if (requestParameters['deploymentSequenceNumber'] == null) {
+            throw new runtime.RequiredError(
+                'deploymentSequenceNumber',
+                'Required parameter "deploymentSequenceNumber" was null or undefined when calling getDeploymentByKey().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters.pipelineId))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters.environmentId))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters.deploymentSequenceNumber))),
+            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -191,7 +218,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a deployment by key
      */
-    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData1> {
+    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData> {
         const response = await this.getDeploymentByKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -201,16 +228,25 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Get deployment gating status by key
      */
     async getDeploymentGatingStatusByKeyRaw(requestParameters: GetDeploymentGatingStatusByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse1>> {
-        if (requestParameters.pipelineId === null || requestParameters.pipelineId === undefined) {
-            throw new runtime.RequiredError('pipelineId','Required parameter requestParameters.pipelineId was null or undefined when calling getDeploymentGatingStatusByKey.');
+        if (requestParameters['pipelineId'] == null) {
+            throw new runtime.RequiredError(
+                'pipelineId',
+                'Required parameter "pipelineId" was null or undefined when calling getDeploymentGatingStatusByKey().'
+            );
         }
 
-        if (requestParameters.environmentId === null || requestParameters.environmentId === undefined) {
-            throw new runtime.RequiredError('environmentId','Required parameter requestParameters.environmentId was null or undefined when calling getDeploymentGatingStatusByKey.');
+        if (requestParameters['environmentId'] == null) {
+            throw new runtime.RequiredError(
+                'environmentId',
+                'Required parameter "environmentId" was null or undefined when calling getDeploymentGatingStatusByKey().'
+            );
         }
 
-        if (requestParameters.deploymentSequenceNumber === null || requestParameters.deploymentSequenceNumber === undefined) {
-            throw new runtime.RequiredError('deploymentSequenceNumber','Required parameter requestParameters.deploymentSequenceNumber was null or undefined when calling getDeploymentGatingStatusByKey.');
+        if (requestParameters['deploymentSequenceNumber'] == null) {
+            throw new runtime.RequiredError(
+                'deploymentSequenceNumber',
+                'Required parameter "deploymentSequenceNumber" was null or undefined when calling getDeploymentGatingStatusByKey().'
+            );
         }
 
         const queryParameters: any = {};
@@ -218,7 +254,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters.pipelineId))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters.environmentId))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters.deploymentSequenceNumber))),
+            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -241,12 +277,18 @@ export class DeploymentsApi extends runtime.BaseAPI {
      * Submit deployment data
      */
     async submitDeploymentsRaw(requestParameters: SubmitDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitDeployments.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitDeployments().'
+            );
         }
 
-        if (requestParameters.submitDeploymentRequest === null || requestParameters.submitDeploymentRequest === undefined) {
-            throw new runtime.RequiredError('submitDeploymentRequest','Required parameter requestParameters.submitDeploymentRequest was null or undefined when calling submitDeployments.');
+        if (requestParameters['submitDeploymentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitDeploymentRequest',
+                'Required parameter "submitDeploymentRequest" was null or undefined when calling submitDeployments().'
+            );
         }
 
         const queryParameters: any = {};
@@ -255,8 +297,8 @@ export class DeploymentsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -264,7 +306,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitDeploymentRequest,
+            body: requestParameters['submitDeploymentRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

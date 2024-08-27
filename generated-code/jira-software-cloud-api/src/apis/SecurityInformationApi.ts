@@ -21,8 +21,8 @@ import type {
   SubmitSecurityWorkspacesRequest,
   SubmitVulnerabilitiesRequest,
   SubmitVulnerabilitiesResponse,
-  VulnerabilityDetails1,
-} from '../models';
+  VulnerabilityDetails,
+} from '../models/index';
 
 export interface DeleteLinkedWorkspacesRequest {
     authorization: string;
@@ -71,16 +71,19 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Delete linked Security Workspaces
      */
     async deleteLinkedWorkspacesRaw(requestParameters: DeleteLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteLinkedWorkspaces.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteLinkedWorkspaces().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -106,16 +109,19 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Delete Vulnerabilities by Property
      */
     async deleteVulnerabilitiesByPropertyRaw(requestParameters: DeleteVulnerabilitiesByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteVulnerabilitiesByProperty.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteVulnerabilitiesByProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -141,24 +147,30 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Delete a Vulnerability by ID
      */
     async deleteVulnerabilityByIdRaw(requestParameters: DeleteVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteVulnerabilityById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteVulnerabilityById().'
+            );
         }
 
-        if (requestParameters.vulnerabilityId === null || requestParameters.vulnerabilityId === undefined) {
-            throw new runtime.RequiredError('vulnerabilityId','Required parameter requestParameters.vulnerabilityId was null or undefined when calling deleteVulnerabilityById.');
+        if (requestParameters['vulnerabilityId'] == null) {
+            throw new runtime.RequiredError(
+                'vulnerabilityId',
+                'Required parameter "vulnerabilityId" was null or undefined when calling deleteVulnerabilityById().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters.vulnerabilityId))),
+            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -180,24 +192,30 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Get a linked Security Workspace by ID
      */
     async getLinkedWorkspaceByIdRaw(requestParameters: GetLinkedWorkspaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getLinkedWorkspaceById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getLinkedWorkspaceById().'
+            );
         }
 
-        if (requestParameters.workspaceId === null || requestParameters.workspaceId === undefined) {
-            throw new runtime.RequiredError('workspaceId','Required parameter requestParameters.workspaceId was null or undefined when calling getLinkedWorkspaceById.');
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling getLinkedWorkspaceById().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/security/1.0/linkedWorkspaces/{workspaceId}`.replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters.workspaceId))),
+            path: `/rest/security/1.0/linkedWorkspaces/{workspaceId}`.replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -220,16 +238,19 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Get linked Security Workspaces
      */
     async getLinkedWorkspacesRaw(requestParameters: GetLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceIds>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getLinkedWorkspaces.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getLinkedWorkspaces().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -255,25 +276,31 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a Vulnerability by ID
      */
-    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails1>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getVulnerabilityById.');
+    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails>> {
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getVulnerabilityById().'
+            );
         }
 
-        if (requestParameters.vulnerabilityId === null || requestParameters.vulnerabilityId === undefined) {
-            throw new runtime.RequiredError('vulnerabilityId','Required parameter requestParameters.vulnerabilityId was null or undefined when calling getVulnerabilityById.');
+        if (requestParameters['vulnerabilityId'] == null) {
+            throw new runtime.RequiredError(
+                'vulnerabilityId',
+                'Required parameter "vulnerabilityId" was null or undefined when calling getVulnerabilityById().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters.vulnerabilityId))),
+            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -286,7 +313,7 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
      * Get a Vulnerability by ID
      */
-    async getVulnerabilityById(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VulnerabilityDetails1> {
+    async getVulnerabilityById(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VulnerabilityDetails> {
         const response = await this.getVulnerabilityByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -296,12 +323,18 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Submit Vulnerability data
      */
     async submitVulnerabilitiesRaw(requestParameters: SubmitVulnerabilitiesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitVulnerabilitiesResponse>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitVulnerabilities.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitVulnerabilities().'
+            );
         }
 
-        if (requestParameters.submitVulnerabilitiesRequest === null || requestParameters.submitVulnerabilitiesRequest === undefined) {
-            throw new runtime.RequiredError('submitVulnerabilitiesRequest','Required parameter requestParameters.submitVulnerabilitiesRequest was null or undefined when calling submitVulnerabilities.');
+        if (requestParameters['submitVulnerabilitiesRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitVulnerabilitiesRequest',
+                'Required parameter "submitVulnerabilitiesRequest" was null or undefined when calling submitVulnerabilities().'
+            );
         }
 
         const queryParameters: any = {};
@@ -310,8 +343,8 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -319,7 +352,7 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitVulnerabilitiesRequest,
+            body: requestParameters['submitVulnerabilitiesRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -339,12 +372,18 @@ export class SecurityInformationApi extends runtime.BaseAPI {
      * Submit Security Workspaces to link
      */
     async submitWorkspacesRaw(requestParameters: SubmitWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitWorkspaces.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitWorkspaces().'
+            );
         }
 
-        if (requestParameters.submitSecurityWorkspacesRequest === null || requestParameters.submitSecurityWorkspacesRequest === undefined) {
-            throw new runtime.RequiredError('submitSecurityWorkspacesRequest','Required parameter requestParameters.submitSecurityWorkspacesRequest was null or undefined when calling submitWorkspaces.');
+        if (requestParameters['submitSecurityWorkspacesRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitSecurityWorkspacesRequest',
+                'Required parameter "submitSecurityWorkspacesRequest" was null or undefined when calling submitWorkspaces().'
+            );
         }
 
         const queryParameters: any = {};
@@ -353,8 +392,8 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -362,7 +401,7 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitSecurityWorkspacesRequest,
+            body: requestParameters['submitSecurityWorkspacesRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

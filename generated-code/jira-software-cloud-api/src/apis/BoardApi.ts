@@ -28,7 +28,7 @@ import type {
   MoveIssuesToBoard207Response,
   SearchResults,
   ToggleFeaturesRequest,
-} from '../models';
+} from '../models/index';
 
 export interface CreateBoardOperationRequest {
     createBoardRequest: CreateBoardRequest;
@@ -55,6 +55,7 @@ export interface GetAllBoardsRequest {
     negateLocationFiltering?: boolean;
     orderBy?: GetAllBoardsOrderByEnum;
     expand?: string;
+    projectTypeLocation?: Array<string>;
     filterId?: number;
 }
 
@@ -191,6 +192,7 @@ export interface MoveIssuesToBoardRequest {
 export interface SetBoardPropertyRequest {
     boardId: string;
     propertyKey: string;
+    body: any | null;
 }
 
 export interface ToggleFeaturesOperationRequest {
@@ -208,8 +210,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Create board
      */
     async createBoardRaw(requestParameters: CreateBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
-        if (requestParameters.createBoardRequest === null || requestParameters.createBoardRequest === undefined) {
-            throw new runtime.RequiredError('createBoardRequest','Required parameter requestParameters.createBoardRequest was null or undefined when calling createBoard.');
+        if (requestParameters['createBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createBoardRequest',
+                'Required parameter "createBoardRequest" was null or undefined when calling createBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -228,7 +233,7 @@ export class BoardApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.createBoardRequest,
+            body: requestParameters['createBoardRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -248,8 +253,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Delete board
      */
     async deleteBoardRaw(requestParameters: DeleteBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling deleteBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling deleteBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -262,7 +270,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -284,12 +292,18 @@ export class BoardApi extends runtime.BaseAPI {
      * Delete board property
      */
     async deleteBoardPropertyRaw(requestParameters: DeleteBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling deleteBoardProperty.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling deleteBoardProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteBoardProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling deleteBoardProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -302,7 +316,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -326,59 +340,63 @@ export class BoardApi extends runtime.BaseAPI {
     async getAllBoardsRaw(requestParameters: GetAllBoardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200Response>> {
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.type !== undefined) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
         }
 
-        if (requestParameters.projectKeyOrId !== undefined) {
-            queryParameters['projectKeyOrId'] = requestParameters.projectKeyOrId;
+        if (requestParameters['projectKeyOrId'] != null) {
+            queryParameters['projectKeyOrId'] = requestParameters['projectKeyOrId'];
         }
 
-        if (requestParameters.accountIdLocation !== undefined) {
-            queryParameters['accountIdLocation'] = requestParameters.accountIdLocation;
+        if (requestParameters['accountIdLocation'] != null) {
+            queryParameters['accountIdLocation'] = requestParameters['accountIdLocation'];
         }
 
-        if (requestParameters.projectLocation !== undefined) {
-            queryParameters['projectLocation'] = requestParameters.projectLocation;
+        if (requestParameters['projectLocation'] != null) {
+            queryParameters['projectLocation'] = requestParameters['projectLocation'];
         }
 
-        if (requestParameters.includePrivate !== undefined) {
-            queryParameters['includePrivate'] = requestParameters.includePrivate;
+        if (requestParameters['includePrivate'] != null) {
+            queryParameters['includePrivate'] = requestParameters['includePrivate'];
         }
 
-        if (requestParameters.negateLocationFiltering !== undefined) {
-            queryParameters['negateLocationFiltering'] = requestParameters.negateLocationFiltering;
+        if (requestParameters['negateLocationFiltering'] != null) {
+            queryParameters['negateLocationFiltering'] = requestParameters['negateLocationFiltering'];
         }
 
-        if (requestParameters.orderBy !== undefined) {
-            queryParameters['orderBy'] = requestParameters.orderBy;
+        if (requestParameters['orderBy'] != null) {
+            queryParameters['orderBy'] = requestParameters['orderBy'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
-        if (requestParameters.filterId !== undefined) {
-            queryParameters['filterId'] = requestParameters.filterId;
+        if (requestParameters['projectTypeLocation'] != null) {
+            queryParameters['projectTypeLocation'] = requestParameters['projectTypeLocation'];
+        }
+
+        if (requestParameters['filterId'] != null) {
+            queryParameters['filterId'] = requestParameters['filterId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.accessToken) {
             // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
         const response = await this.request({
@@ -405,18 +423,21 @@ export class BoardApi extends runtime.BaseAPI {
      * Get all quick filters
      */
     async getAllQuickFiltersRaw(requestParameters: GetAllQuickFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200Response>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getAllQuickFilters.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getAllQuickFilters().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -427,7 +448,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/quickfilter`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/quickfilter`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -450,22 +471,25 @@ export class BoardApi extends runtime.BaseAPI {
      * Get all sprints
      */
     async getAllSprintsRaw(requestParameters: GetAllSprintsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getAllSprints.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getAllSprints().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.state !== undefined) {
-            queryParameters['state'] = requestParameters.state;
+        if (requestParameters['state'] != null) {
+            queryParameters['state'] = requestParameters['state'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -476,7 +500,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/sprint`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/sprint`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -498,22 +522,25 @@ export class BoardApi extends runtime.BaseAPI {
      * Get all versions
      */
     async getAllVersionsRaw(requestParameters: GetAllVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getAllVersions.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getAllVersions().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.released !== undefined) {
-            queryParameters['released'] = requestParameters.released;
+        if (requestParameters['released'] != null) {
+            queryParameters['released'] = requestParameters['released'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -524,7 +551,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/version`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/version`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -546,8 +573,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board
      */
     async getBoardRaw(requestParameters: GetBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -560,7 +590,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -583,18 +613,21 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board by filter id
      */
     async getBoardByFilterIdRaw(requestParameters: GetBoardByFilterIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBoardByFilterId200Response>> {
-        if (requestParameters.filterId === null || requestParameters.filterId === undefined) {
-            throw new runtime.RequiredError('filterId','Required parameter requestParameters.filterId was null or undefined when calling getBoardByFilterId.');
+        if (requestParameters['filterId'] == null) {
+            throw new runtime.RequiredError(
+                'filterId',
+                'Required parameter "filterId" was null or undefined when calling getBoardByFilterId().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -605,7 +638,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/filter/{filterId}`.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters.filterId))),
+            path: `/rest/agile/1.0/board/filter/{filterId}`.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters['filterId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -628,38 +661,44 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board issues for epic
      */
     async getBoardIssuesForEpicRaw(requestParameters: GetBoardIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getBoardIssuesForEpic.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardIssuesForEpic().'
+            );
         }
 
-        if (requestParameters.epicId === null || requestParameters.epicId === undefined) {
-            throw new runtime.RequiredError('epicId','Required parameter requestParameters.epicId was null or undefined when calling getBoardIssuesForEpic.');
+        if (requestParameters['epicId'] == null) {
+            throw new runtime.RequiredError(
+                'epicId',
+                'Required parameter "epicId" was null or undefined when calling getBoardIssuesForEpic().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -670,7 +709,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic/{epicId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters.epicId))),
+            path: `/rest/agile/1.0/board/{boardId}/epic/{epicId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters['epicId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -692,38 +731,44 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board issues for sprint
      */
     async getBoardIssuesForSprintRaw(requestParameters: GetBoardIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getBoardIssuesForSprint.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardIssuesForSprint().'
+            );
         }
 
-        if (requestParameters.sprintId === null || requestParameters.sprintId === undefined) {
-            throw new runtime.RequiredError('sprintId','Required parameter requestParameters.sprintId was null or undefined when calling getBoardIssuesForSprint.');
+        if (requestParameters['sprintId'] == null) {
+            throw new runtime.RequiredError(
+                'sprintId',
+                'Required parameter "sprintId" was null or undefined when calling getBoardIssuesForSprint().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -734,7 +779,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters.sprintId))),
+            path: `/rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -756,12 +801,18 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board property
      */
     async getBoardPropertyRaw(requestParameters: GetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getBoardProperty.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getBoardProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling getBoardProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -774,7 +825,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
+            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -796,8 +847,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get board property keys
      */
     async getBoardPropertyKeysRaw(requestParameters: GetBoardPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getBoardPropertyKeys.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getBoardPropertyKeys().'
+            );
         }
 
         const queryParameters: any = {};
@@ -810,7 +864,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/properties`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -832,8 +886,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get configuration
      */
     async getConfigurationRaw(requestParameters: GetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfiguration200Response>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getConfiguration.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getConfiguration().'
+            );
         }
 
         const queryParameters: any = {};
@@ -846,7 +903,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/configuration`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/configuration`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -869,22 +926,25 @@ export class BoardApi extends runtime.BaseAPI {
      * Get epics
      */
     async getEpicsRaw(requestParameters: GetEpicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getEpics.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getEpics().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.done !== undefined) {
-            queryParameters['done'] = requestParameters.done;
+        if (requestParameters['done'] != null) {
+            queryParameters['done'] = requestParameters['done'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -895,7 +955,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/epic`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -917,8 +977,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get features for board
      */
     async getFeaturesForBoardRaw(requestParameters: GetFeaturesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getFeaturesForBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getFeaturesForBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -931,7 +994,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -954,34 +1017,37 @@ export class BoardApi extends runtime.BaseAPI {
      * Get issues for backlog
      */
     async getIssuesForBacklogRaw(requestParameters: GetIssuesForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getIssuesForBacklog.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesForBacklog().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -992,7 +1058,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/backlog`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/backlog`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1015,34 +1081,37 @@ export class BoardApi extends runtime.BaseAPI {
      * Get issues for board
      */
     async getIssuesForBoardRaw(requestParameters: GetIssuesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getIssuesForBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesForBoard().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1053,7 +1122,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1076,34 +1145,37 @@ export class BoardApi extends runtime.BaseAPI {
      * Get issues without epic for board
      */
     async getIssuesWithoutEpicForBoardRaw(requestParameters: GetIssuesWithoutEpicForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getIssuesWithoutEpicForBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getIssuesWithoutEpicForBoard().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1114,7 +1186,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic/none/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/epic/none/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1136,18 +1208,21 @@ export class BoardApi extends runtime.BaseAPI {
      * Get projects
      */
     async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getProjects.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getProjects().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1158,7 +1233,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/project`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/project`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1180,8 +1255,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get projects full
      */
     async getProjectsFullRaw(requestParameters: GetProjectsFullRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getProjectsFull.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getProjectsFull().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1194,7 +1272,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/project/full`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/project/full`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1216,12 +1294,18 @@ export class BoardApi extends runtime.BaseAPI {
      * Get quick filter
      */
     async getQuickFilterRaw(requestParameters: GetQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200ResponseValuesInner>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getQuickFilter.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getQuickFilter().'
+            );
         }
 
-        if (requestParameters.quickFilterId === null || requestParameters.quickFilterId === undefined) {
-            throw new runtime.RequiredError('quickFilterId','Required parameter requestParameters.quickFilterId was null or undefined when calling getQuickFilter.');
+        if (requestParameters['quickFilterId'] == null) {
+            throw new runtime.RequiredError(
+                'quickFilterId',
+                'Required parameter "quickFilterId" was null or undefined when calling getQuickFilter().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1234,7 +1318,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters.quickFilterId))),
+            path: `/rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters['quickFilterId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1257,8 +1341,11 @@ export class BoardApi extends runtime.BaseAPI {
      * Get reports for board
      */
     async getReportsForBoardRaw(requestParameters: GetReportsForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReportsForBoard200Response>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling getReportsForBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling getReportsForBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1271,7 +1358,7 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/reports`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/reports`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1294,12 +1381,18 @@ export class BoardApi extends runtime.BaseAPI {
      * Move issues to board
      */
     async moveIssuesToBoardRaw(requestParameters: MoveIssuesToBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling moveIssuesToBoard.');
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling moveIssuesToBoard().'
+            );
         }
 
-        if (requestParameters.moveIssuesToBacklogForBoardRequest === null || requestParameters.moveIssuesToBacklogForBoardRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogForBoardRequest','Required parameter requestParameters.moveIssuesToBacklogForBoardRequest was null or undefined when calling moveIssuesToBoard.');
+        if (requestParameters['moveIssuesToBacklogForBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogForBoardRequest',
+                'Required parameter "moveIssuesToBacklogForBoardRequest" was null or undefined when calling moveIssuesToBoard().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1314,11 +1407,11 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogForBoardRequest,
+            body: requestParameters['moveIssuesToBacklogForBoardRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1336,53 +1429,26 @@ export class BoardApi extends runtime.BaseAPI {
      * Sets the value of the specified board\'s property.  You can use this resource to store a custom data against the board identified by the id. The user who stores the data is required to have permissions to modify the board.
      * Set board property
      */
-    async setBoardPropertyRaw(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling setBoardProperty.');
+    async setBoardPropertyRaw(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling setBoardProperty().'
+            );
         }
 
-        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
-            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setBoardProperty.');
+        if (requestParameters['propertyKey'] == null) {
+            throw new runtime.RequiredError(
+                'propertyKey',
+                'Required parameter "propertyKey" was null or undefined when calling setBoardProperty().'
+            );
         }
 
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
-        }
-
-        const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Sets the value of the specified board\'s property.  You can use this resource to store a custom data against the board identified by the id. The user who stores the data is required to have permissions to modify the board.
-     * Set board property
-     */
-    async setBoardProperty(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.setBoardPropertyRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * 
-     * Toggle features
-     */
-    async toggleFeaturesRaw(requestParameters: ToggleFeaturesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
-        if (requestParameters.boardId === null || requestParameters.boardId === undefined) {
-            throw new runtime.RequiredError('boardId','Required parameter requestParameters.boardId was null or undefined when calling toggleFeatures.');
-        }
-
-        if (requestParameters.toggleFeaturesRequest === null || requestParameters.toggleFeaturesRequest === undefined) {
-            throw new runtime.RequiredError('toggleFeaturesRequest','Required parameter requestParameters.toggleFeaturesRequest was null or undefined when calling toggleFeatures.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling setBoardProperty().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1397,11 +1463,65 @@ export class BoardApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters.boardId))),
+            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.toggleFeaturesRequest,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Sets the value of the specified board\'s property.  You can use this resource to store a custom data against the board identified by the id. The user who stores the data is required to have permissions to modify the board.
+     * Set board property
+     */
+    async setBoardProperty(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setBoardPropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * 
+     * Toggle features
+     */
+    async toggleFeaturesRaw(requestParameters: ToggleFeaturesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
+        if (requestParameters['boardId'] == null) {
+            throw new runtime.RequiredError(
+                'boardId',
+                'Required parameter "boardId" was null or undefined when calling toggleFeatures().'
+            );
+        }
+
+        if (requestParameters['toggleFeaturesRequest'] == null) {
+            throw new runtime.RequiredError(
+                'toggleFeaturesRequest',
+                'Required parameter "toggleFeaturesRequest" was null or undefined when calling toggleFeatures().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
+        }
+
+        const response = await this.request({
+            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['toggleFeaturesRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -1423,7 +1543,7 @@ export class BoardApi extends runtime.BaseAPI {
  */
 export const GetAllBoardsOrderByEnum = {
     Name: 'name',
-    NameDesc: '-name',
-    NameAsc: '+name'
+    Name2Desc: '-name',
+    Name3Asc: '+name'
 } as const;
 export type GetAllBoardsOrderByEnum = typeof GetAllBoardsOrderByEnum[keyof typeof GetAllBoardsOrderByEnum];

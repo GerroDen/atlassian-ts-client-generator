@@ -18,7 +18,7 @@ import type {
   MoveIssuesToBacklogRequest,
   PartiallyUpdateEpicRequest,
   RankEpicsRequest,
-} from '../models';
+} from '../models/index';
 
 export interface GetEpicRequest {
     epicIdOrKey: string;
@@ -72,8 +72,11 @@ export class EpicApi extends runtime.BaseAPI {
      * Get epic
      */
     async getEpicRaw(requestParameters: GetEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.epicIdOrKey === null || requestParameters.epicIdOrKey === undefined) {
-            throw new runtime.RequiredError('epicIdOrKey','Required parameter requestParameters.epicIdOrKey was null or undefined when calling getEpic.');
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling getEpic().'
+            );
         }
 
         const queryParameters: any = {};
@@ -86,7 +89,7 @@ export class EpicApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters.epicIdOrKey))),
+            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -108,34 +111,37 @@ export class EpicApi extends runtime.BaseAPI {
      * Get issues for epic
      */
     async getIssuesForEpicRaw(requestParameters: GetIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.epicIdOrKey === null || requestParameters.epicIdOrKey === undefined) {
-            throw new runtime.RequiredError('epicIdOrKey','Required parameter requestParameters.epicIdOrKey was null or undefined when calling getIssuesForEpic.');
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling getIssuesForEpic().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -146,7 +152,7 @@ export class EpicApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters.epicIdOrKey))),
+            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -170,28 +176,28 @@ export class EpicApi extends runtime.BaseAPI {
     async getIssuesWithoutEpicRaw(requestParameters: GetIssuesWithoutEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
+        if (requestParameters['startAt'] != null) {
+            queryParameters['startAt'] = requestParameters['startAt'];
         }
 
-        if (requestParameters.maxResults !== undefined) {
-            queryParameters['maxResults'] = requestParameters.maxResults;
+        if (requestParameters['maxResults'] != null) {
+            queryParameters['maxResults'] = requestParameters['maxResults'];
         }
 
-        if (requestParameters.jql !== undefined) {
-            queryParameters['jql'] = requestParameters.jql;
+        if (requestParameters['jql'] != null) {
+            queryParameters['jql'] = requestParameters['jql'];
         }
 
-        if (requestParameters.validateQuery !== undefined) {
-            queryParameters['validateQuery'] = requestParameters.validateQuery;
+        if (requestParameters['validateQuery'] != null) {
+            queryParameters['validateQuery'] = requestParameters['validateQuery'];
         }
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -224,12 +230,18 @@ export class EpicApi extends runtime.BaseAPI {
      * Move issues to epic
      */
     async moveIssuesToEpicRaw(requestParameters: MoveIssuesToEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.epicIdOrKey === null || requestParameters.epicIdOrKey === undefined) {
-            throw new runtime.RequiredError('epicIdOrKey','Required parameter requestParameters.epicIdOrKey was null or undefined when calling moveIssuesToEpic.');
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling moveIssuesToEpic().'
+            );
         }
 
-        if (requestParameters.moveIssuesToBacklogRequest === null || requestParameters.moveIssuesToBacklogRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogRequest','Required parameter requestParameters.moveIssuesToBacklogRequest was null or undefined when calling moveIssuesToEpic.');
+        if (requestParameters['moveIssuesToBacklogRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogRequest',
+                'Required parameter "moveIssuesToBacklogRequest" was null or undefined when calling moveIssuesToEpic().'
+            );
         }
 
         const queryParameters: any = {};
@@ -244,11 +256,11 @@ export class EpicApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters.epicIdOrKey))),
+            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogRequest,
+            body: requestParameters['moveIssuesToBacklogRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -267,12 +279,18 @@ export class EpicApi extends runtime.BaseAPI {
      * Partially update epic
      */
     async partiallyUpdateEpicRaw(requestParameters: PartiallyUpdateEpicOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.epicIdOrKey === null || requestParameters.epicIdOrKey === undefined) {
-            throw new runtime.RequiredError('epicIdOrKey','Required parameter requestParameters.epicIdOrKey was null or undefined when calling partiallyUpdateEpic.');
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling partiallyUpdateEpic().'
+            );
         }
 
-        if (requestParameters.partiallyUpdateEpicRequest === null || requestParameters.partiallyUpdateEpicRequest === undefined) {
-            throw new runtime.RequiredError('partiallyUpdateEpicRequest','Required parameter requestParameters.partiallyUpdateEpicRequest was null or undefined when calling partiallyUpdateEpic.');
+        if (requestParameters['partiallyUpdateEpicRequest'] == null) {
+            throw new runtime.RequiredError(
+                'partiallyUpdateEpicRequest',
+                'Required parameter "partiallyUpdateEpicRequest" was null or undefined when calling partiallyUpdateEpic().'
+            );
         }
 
         const queryParameters: any = {};
@@ -287,11 +305,11 @@ export class EpicApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters.epicIdOrKey))),
+            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.partiallyUpdateEpicRequest,
+            body: requestParameters['partiallyUpdateEpicRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -310,12 +328,18 @@ export class EpicApi extends runtime.BaseAPI {
      * Rank epics
      */
     async rankEpicsRaw(requestParameters: RankEpicsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.epicIdOrKey === null || requestParameters.epicIdOrKey === undefined) {
-            throw new runtime.RequiredError('epicIdOrKey','Required parameter requestParameters.epicIdOrKey was null or undefined when calling rankEpics.');
+        if (requestParameters['epicIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'epicIdOrKey',
+                'Required parameter "epicIdOrKey" was null or undefined when calling rankEpics().'
+            );
         }
 
-        if (requestParameters.rankEpicsRequest === null || requestParameters.rankEpicsRequest === undefined) {
-            throw new runtime.RequiredError('rankEpicsRequest','Required parameter requestParameters.rankEpicsRequest was null or undefined when calling rankEpics.');
+        if (requestParameters['rankEpicsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'rankEpicsRequest',
+                'Required parameter "rankEpicsRequest" was null or undefined when calling rankEpics().'
+            );
         }
 
         const queryParameters: any = {};
@@ -330,11 +354,11 @@ export class EpicApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/rank`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters.epicIdOrKey))),
+            path: `/rest/agile/1.0/epic/{epicIdOrKey}/rank`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.rankEpicsRequest,
+            body: requestParameters['rankEpicsRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -353,8 +377,11 @@ export class EpicApi extends runtime.BaseAPI {
      * Remove issues from epic
      */
     async removeIssuesFromEpicRaw(requestParameters: RemoveIssuesFromEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.moveIssuesToBacklogRequest === null || requestParameters.moveIssuesToBacklogRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogRequest','Required parameter requestParameters.moveIssuesToBacklogRequest was null or undefined when calling removeIssuesFromEpic.');
+        if (requestParameters['moveIssuesToBacklogRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogRequest',
+                'Required parameter "moveIssuesToBacklogRequest" was null or undefined when calling removeIssuesFromEpic().'
+            );
         }
 
         const queryParameters: any = {};
@@ -373,7 +400,7 @@ export class EpicApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogRequest,
+            body: requestParameters['moveIssuesToBacklogRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

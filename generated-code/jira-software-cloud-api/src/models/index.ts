@@ -1,6 +1,37 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
+ * 
+ * @export
+ * @interface Associations
+ */
+export interface Associations {
+    /**
+     * the type of the association being made
+     * @type {string}
+     * @memberof Associations
+     */
+    associationType?: AssociationsAssociationTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Associations
+     */
+    values?: Array<string>;
+}
+
+
+/**
+ * @export
+ */
+export const AssociationsAssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys',
+    ServiceIdOrKeys: 'serviceIdOrKeys',
+    AticloudcompasseventSource: 'ati:cloud:compass:event-source'
+} as const;
+export type AssociationsAssociationTypeEnum = typeof AssociationsAssociationTypeEnum[keyof typeof AssociationsAssociationTypeEnum];
+
+/**
  * Describes the author of a particular entity
  * @export
  * @interface Author
@@ -75,41 +106,11 @@ export interface AvatarUrlsBean {
  */
 export interface Board {
     /**
-     * The ID of the board.
-     * @type {number}
-     * @memberof Board
-     */
-    id?: number;
-    /**
-     * The URL of the board.
-     * @type {string}
-     * @memberof Board
-     */
-    readonly self?: string;
-    /**
-     * The name of the board.
-     * @type {string}
-     * @memberof Board
-     */
-    name?: string;
-    /**
-     * The type the board.
-     * @type {string}
-     * @memberof Board
-     */
-    type?: string;
-    /**
      * 
-     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOf}
+     * @type {GetAllBoards200ResponseValuesInnerAdmins}
      * @memberof Board
      */
-    readonly admins?: GetAllBoards200ResponseValuesInnerAdminsAllOf;
-    /**
-     * 
-     * @type {GetAllBoards200ResponseValuesInnerLocation}
-     * @memberof Board
-     */
-    location?: GetAllBoards200ResponseValuesInnerLocation;
+    admins?: GetAllBoards200ResponseValuesInnerAdmins;
     /**
      * Whether the board can be edited.
      * @type {boolean}
@@ -117,17 +118,47 @@ export interface Board {
      */
     readonly canEdit?: boolean;
     /**
+     * Whether the board is selected as a favorite.
+     * @type {boolean}
+     * @memberof Board
+     */
+    readonly favourite?: boolean;
+    /**
+     * The ID of the board.
+     * @type {number}
+     * @memberof Board
+     */
+    id?: number;
+    /**
      * Whether the board is private.
      * @type {boolean}
      * @memberof Board
      */
     readonly isPrivate?: boolean;
     /**
-     * Whether the board is selected as a favorite.
-     * @type {boolean}
+     * 
+     * @type {GetAllBoards200ResponseValuesInnerLocation}
      * @memberof Board
      */
-    readonly favourite?: boolean;
+    location?: GetAllBoards200ResponseValuesInnerLocation;
+    /**
+     * The name of the board.
+     * @type {string}
+     * @memberof Board
+     */
+    name?: string;
+    /**
+     * The URL of the board.
+     * @type {string}
+     * @memberof Board
+     */
+    readonly self?: string;
+    /**
+     * The type the board.
+     * @type {string}
+     * @memberof Board
+     */
+    type?: string;
 }
 /**
  * The users and groups who own the board.
@@ -137,16 +168,16 @@ export interface Board {
 export interface BoardAdminsBean {
     /**
      * 
-     * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>}
-     * @memberof BoardAdminsBean
-     */
-    users?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>;
-    /**
-     * 
      * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfGroupsInner>}
      * @memberof BoardAdminsBean
      */
     groups?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfGroupsInner>;
+    /**
+     * 
+     * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>}
+     * @memberof BoardAdminsBean
+     */
+    users?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>;
 }
 /**
  * 
@@ -154,48 +185,6 @@ export interface BoardAdminsBean {
  * @interface BoardConfigBean
  */
 export interface BoardConfigBean {
-    /**
-     * 
-     * @type {number}
-     * @memberof BoardConfigBean
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardConfigBean
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardConfigBean
-     */
-    type?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardConfigBean
-     */
-    self?: string;
-    /**
-     * 
-     * @type {CreateBoardRequestLocation}
-     * @memberof BoardConfigBean
-     */
-    location?: CreateBoardRequestLocation;
-    /**
-     * 
-     * @type {GetConfiguration200ResponseFilter}
-     * @memberof BoardConfigBean
-     */
-    filter?: GetConfiguration200ResponseFilter;
-    /**
-     * 
-     * @type {GetConfiguration200ResponseSubQuery}
-     * @memberof BoardConfigBean
-     */
-    subQuery?: GetConfiguration200ResponseSubQuery;
     /**
      * 
      * @type {GetConfiguration200ResponseColumnConfig}
@@ -210,10 +199,52 @@ export interface BoardConfigBean {
     estimation?: GetConfiguration200ResponseEstimation;
     /**
      * 
+     * @type {GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner}
+     * @memberof BoardConfigBean
+     */
+    filter?: GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BoardConfigBean
+     */
+    id?: number;
+    /**
+     * 
+     * @type {CreateBoardRequestLocation}
+     * @memberof BoardConfigBean
+     */
+    location?: CreateBoardRequestLocation;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardConfigBean
+     */
+    name?: string;
+    /**
+     * 
      * @type {GetConfiguration200ResponseRanking}
      * @memberof BoardConfigBean
      */
     ranking?: GetConfiguration200ResponseRanking;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardConfigBean
+     */
+    self?: string;
+    /**
+     * 
+     * @type {GetConfiguration200ResponseSubQuery}
+     * @memberof BoardConfigBean
+     */
+    subQuery?: GetConfiguration200ResponseSubQuery;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardConfigBean
+     */
+    type?: string;
 }
 /**
  * 
@@ -221,18 +252,6 @@ export interface BoardConfigBean {
  * @interface BoardCreateBean
  */
 export interface BoardCreateBean {
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardCreateBean
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardCreateBean
-     */
-    type?: BoardCreateBeanTypeEnum;
     /**
      * 
      * @type {number}
@@ -245,6 +264,18 @@ export interface BoardCreateBean {
      * @memberof BoardCreateBean
      */
     location?: CreateBoardRequestLocation;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardCreateBean
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardCreateBean
+     */
+    type?: BoardCreateBeanTypeEnum;
 }
 
 
@@ -275,13 +306,13 @@ export interface BoardFilterBean {
      * @type {string}
      * @memberof BoardFilterBean
      */
-    self?: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof BoardFilterBean
      */
-    name?: string;
+    self?: string;
 }
 /**
  * The container that the board is located in.
@@ -289,48 +320,6 @@ export interface BoardFilterBean {
  * @interface BoardLocationBean
  */
 export interface BoardLocationBean {
-    /**
-     * 
-     * @type {number}
-     * @memberof BoardLocationBean
-     */
-    projectId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BoardLocationBean
-     */
-    userId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardLocationBean
-     */
-    userAccountId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardLocationBean
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardLocationBean
-     */
-    projectName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardLocationBean
-     */
-    projectKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BoardLocationBean
-     */
-    projectTypeKey?: string;
     /**
      * 
      * @type {string}
@@ -342,7 +331,49 @@ export interface BoardLocationBean {
      * @type {string}
      * @memberof BoardLocationBean
      */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardLocationBean
+     */
     name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BoardLocationBean
+     */
+    projectId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardLocationBean
+     */
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardLocationBean
+     */
+    projectName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardLocationBean
+     */
+    projectTypeKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoardLocationBean
+     */
+    userAccountId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BoardLocationBean
+     */
+    userId?: number;
 }
 /**
  * Represents a branch in the version control system
@@ -395,12 +426,14 @@ export interface Branch {
 }
 /**
  * Details about the commit the build was run against.
+ * 
  * @export
  * @interface BuildCommitReference
  */
 export interface BuildCommitReference {
     /**
      * The ID of the commit. E.g. for a Git repository this would be the SHA1 hash.
+     * 
      * @type {string}
      * @memberof BuildCommitReference
      */
@@ -412,6 +445,7 @@ export interface BuildCommitReference {
      * 
      * For cases where the build was executed against a local repository etc. this should be some identifier that is
      * unique to that repository.
+     * 
      * @type {string}
      * @memberof BuildCommitReference
      */
@@ -419,6 +453,7 @@ export interface BuildCommitReference {
 }
 /**
  * Data related to a single build
+ * 
  * @export
  * @interface BuildData
  */
@@ -427,6 +462,7 @@ export interface BuildData {
      * The schema version used for this data.
      * 
      * Placeholder to support potential schema changes in the future.
+     * 
      * @type {string}
      * @memberof BuildData
      */
@@ -436,6 +472,7 @@ export interface BuildData {
      * plan key etc. - whatever logical unit you use to group a sequence of builds.
      * 
      * The combination of `pipelineId` and `buildNumber` must uniquely identify a build you have provided.
+     * 
      * @type {string}
      * @memberof BuildData
      */
@@ -446,6 +483,7 @@ export interface BuildData {
      * Used to identify the 'most recent' build in that sequence of builds.
      * 
      * The combination of `pipelineId` and `buildNumber` must uniquely identify a build you have provided.
+     * 
      * @type {number}
      * @memberof BuildData
      */
@@ -459,6 +497,7 @@ export interface BuildData {
      * 
      * Updates for a build that is received with an `updateSqeuenceNumber` less than or equal to what is currently
      * stored will be ignored.
+     * 
      * @type {number}
      * @memberof BuildData
      */
@@ -467,6 +506,7 @@ export interface BuildData {
      * The human-readable name for the build.
      * 
      * Will be shown in the UI.
+     * 
      * @type {string}
      * @memberof BuildData
      */
@@ -475,18 +515,21 @@ export interface BuildData {
      * An optional description to attach to this build.
      * 
      * This may be anything that makes sense in your system.
+     * 
      * @type {string}
      * @memberof BuildData
      */
     description?: string;
     /**
      * A human-readable string that to provide information about the build.
+     * 
      * @type {string}
      * @memberof BuildData
      */
     label?: string;
     /**
      * The URL to this build in your system.
+     * 
      * @type {string}
      * @memberof BuildData
      */
@@ -500,12 +543,14 @@ export interface BuildData {
      * * `failed` - The build failed.
      * * `cancelled` - The build has been cancelled or stopped.
      * * `unknown` - The build is in an unknown state.
+     * 
      * @type {string}
      * @memberof BuildData
      */
     state: BuildDataStateEnum;
     /**
      * The last-updated timestamp to present to the user as a summary of the state of the build.
+     * 
      * @type {string}
      * @memberof BuildData
      */
@@ -516,6 +561,7 @@ export interface BuildData {
      * You are free to associate issue keys in any way you like. However, we recommend that you use the name
      * of the branch the build was executed on, and extract issue keys from that name using a simple regex. This has
      * the advantage that it provides an intuitive association of builds to issue keys.
+     * 
      * @type {Array<string>}
      * @memberof BuildData
      */
@@ -528,6 +574,7 @@ export interface BuildData {
     testInfo?: TestInfo;
     /**
      * Optional information that links a build to a commit, branch etc.
+     * 
      * @type {Array<BuildReferences>}
      * @memberof BuildData
      */
@@ -558,6 +605,7 @@ export type BuildDataStateEnum = typeof BuildDataStateEnum[keyof typeof BuildDat
 
 /**
  * Fields that uniquely reference a build.
+ * 
  * @export
  * @interface BuildKey
  */
@@ -567,6 +615,7 @@ export interface BuildKey {
      * plan key etc. - whatever logical unit you use to group a sequence of builds.
      * 
      * The combination of `pipelineId` and `buildNumber` must uniquely identify the build.
+     * 
      * @type {string}
      * @memberof BuildKey
      */
@@ -577,6 +626,7 @@ export interface BuildKey {
      * Used to identify the 'most recent' build in that sequence of builds.
      * 
      * The combination of `pipelineId` and `buildNumber` must uniquely identify the build.
+     * 
      * @type {number}
      * @memberof BuildKey
      */
@@ -584,12 +634,14 @@ export interface BuildKey {
 }
 /**
  * Details about the ref the build was run on.
+ * 
  * @export
  * @interface BuildRefReference
  */
 export interface BuildRefReference {
     /**
      * The name of the ref the build ran on
+     * 
      * @type {string}
      * @memberof BuildRefReference
      */
@@ -601,6 +653,7 @@ export interface BuildRefReference {
      * 
      * For cases where the build was executed against a local repository etc. this should be something that uniquely
      * identifies the ref.
+     * 
      * @type {string}
      * @memberof BuildRefReference
      */
@@ -611,6 +664,7 @@ export interface BuildRefReference {
  * 
  * Used to provide a richer user experience by enabling us to associate builds from your system with e.g.
  * branches / commits / tags etc. supplied by another app in the Jira UI.
+ * 
  * @export
  * @interface BuildReferences
  */
@@ -641,17 +695,17 @@ export interface ChangeDetails {
      */
     readonly field?: string;
     /**
-     * The type of the field changed.
-     * @type {string}
-     * @memberof ChangeDetails
-     */
-    readonly fieldtype?: string;
-    /**
      * The ID of the field changed.
      * @type {string}
      * @memberof ChangeDetails
      */
     readonly fieldId?: string;
+    /**
+     * The type of the field changed.
+     * @type {string}
+     * @memberof ChangeDetails
+     */
+    readonly fieldtype?: string;
     /**
      * The details of the original value.
      * @type {string}
@@ -678,17 +732,11 @@ export interface ChangeDetails {
     readonly toString?: string;
 }
 /**
- * A changelog.
+ * A log of changes made to issue fields. Changelogs related to workflow associations are currently being deprecated.
  * @export
  * @interface Changelog
  */
 export interface Changelog {
-    /**
-     * The ID of the changelog.
-     * @type {string}
-     * @memberof Changelog
-     */
-    readonly id?: string;
     /**
      * 
      * @type {ChangelogAuthor}
@@ -702,17 +750,23 @@ export interface Changelog {
      */
     readonly created?: string;
     /**
-     * The list of items changed.
-     * @type {Array<ChangelogItemsInner>}
-     * @memberof Changelog
-     */
-    readonly items?: Array<ChangelogItemsInner>;
-    /**
      * 
      * @type {ChangelogHistoryMetadata}
      * @memberof Changelog
      */
     historyMetadata?: ChangelogHistoryMetadata;
+    /**
+     * The ID of the changelog.
+     * @type {string}
+     * @memberof Changelog
+     */
+    readonly id?: string;
+    /**
+     * The list of items changed.
+     * @type {Array<ChangelogItemsInner>}
+     * @memberof Changelog
+     */
+    readonly items?: Array<ChangelogItemsInner>;
 }
 /**
  * The user who made the change.
@@ -721,35 +775,23 @@ export interface Changelog {
  */
 export interface ChangelogAuthor {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof ChangelogAuthor
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof ChangelogAuthor
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof ChangelogAuthor
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {ChangelogAuthorAllOfAvatarUrls}
@@ -763,94 +805,35 @@ export interface ChangelogAuthor {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ChangelogAuthor
-     */
-    readonly active?: boolean;
-    /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof ChangelogAuthor
-     */
-    readonly accountType?: string;
-}
-/**
- * User details permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:
- * 
- *  *  User record deleted from Atlassian: This occurs as the result of a right to be forgotten request. In this case, `displayName` provides an indication and other parameters have default values or are blank (for example, email is blank).
- *  *  User record corrupted: This occurs as a results of events such as a server import and can only happen to deleted users. In this case, `accountId` returns *unknown* and all other parameters have fallback values.
- *  *  User record unavailable: This usually occurs due to an internal service outage. In this case, all parameters have fallback values.
- * @export
- * @interface ChangelogAuthorAllOf
- */
-export interface ChangelogAuthorAllOf {
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOf
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOf
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOf
-     */
-    readonly key?: string;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOf
-     */
-    accountId?: string;
-    /**
      * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
-     * @memberof ChangelogAuthorAllOf
+     * @memberof ChangelogAuthor
      */
     readonly emailAddress?: string;
     /**
-     * 
-     * @type {ChangelogAuthorAllOfAvatarUrls}
-     * @memberof ChangelogAuthorAllOf
-     */
-    avatarUrls?: ChangelogAuthorAllOfAvatarUrls;
-    /**
-     * The display name of the user. Depending on the user’s privacy settings, this may return an alternative value.
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
      * @type {string}
-     * @memberof ChangelogAuthorAllOf
+     * @memberof ChangelogAuthor
      */
-    readonly displayName?: string;
+    readonly key?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof ChangelogAuthorAllOf
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof ChangelogAuthor
      */
-    readonly active?: boolean;
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof ChangelogAuthor
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
-     * @memberof ChangelogAuthorAllOf
+     * @memberof ChangelogAuthor
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof ChangelogAuthorAllOf
-     */
-    readonly accountType?: string;
 }
 /**
  * The avatars of the user.
@@ -884,48 +867,35 @@ export interface ChangelogAuthorAllOfAvatarUrls {
     ["48x48"]?: string;
 }
 /**
- * 
- * @export
- * @interface ChangelogAuthorAllOfAvatarUrlsAllOf
- */
-export interface ChangelogAuthorAllOfAvatarUrlsAllOf {
-    /**
-     * The URL of the item's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOfAvatarUrlsAllOf
-     */
-    ["16x16"]?: string;
-    /**
-     * The URL of the item's 24x24 pixel avatar.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOfAvatarUrlsAllOf
-     */
-    ["24x24"]?: string;
-    /**
-     * The URL of the item's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOfAvatarUrlsAllOf
-     */
-    ["32x32"]?: string;
-    /**
-     * The URL of the item's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof ChangelogAuthorAllOfAvatarUrlsAllOf
-     */
-    ["48x48"]?: string;
-}
-/**
  * The history metadata associated with the changed.
  * @export
  * @interface ChangelogHistoryMetadata
  */
 export interface ChangelogHistoryMetadata {
     /**
-     * The type of the history record.
+     * The activity described in the history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadata
      */
-    type?: string;
+    activityDescription?: string;
+    /**
+     * The key of the activity described in the history record.
+     * @type {string}
+     * @memberof ChangelogHistoryMetadata
+     */
+    activityDescriptionKey?: string;
+    /**
+     * 
+     * @type {ChangelogHistoryMetadataAllOfActor}
+     * @memberof ChangelogHistoryMetadata
+     */
+    actor?: ChangelogHistoryMetadataAllOfActor;
+    /**
+     * 
+     * @type {ChangelogHistoryMetadataAllOfCause}
+     * @memberof ChangelogHistoryMetadata
+     */
+    cause?: ChangelogHistoryMetadataAllOfCause;
     /**
      * The description of the history record.
      * @type {string}
@@ -939,18 +909,6 @@ export interface ChangelogHistoryMetadata {
      */
     descriptionKey?: string;
     /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadata
-     */
-    activityDescriptionKey?: string;
-    /**
      * The description of the email address associated the history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadata
@@ -963,103 +921,23 @@ export interface ChangelogHistoryMetadata {
      */
     emailDescriptionKey?: string;
     /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfActor}
+     * Additional arbitrary information about the history record.
+     * @type {{ [key: string]: string; }}
      * @memberof ChangelogHistoryMetadata
      */
-    actor?: ChangelogHistoryMetadataAllOfActor;
+    extraData?: { [key: string]: string; };
     /**
      * 
      * @type {ChangelogHistoryMetadataAllOfGenerator}
      * @memberof ChangelogHistoryMetadata
      */
     generator?: ChangelogHistoryMetadataAllOfGenerator;
-    /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfCause}
-     * @memberof ChangelogHistoryMetadata
-     */
-    cause?: ChangelogHistoryMetadataAllOfCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof ChangelogHistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
-}
-/**
- * Details of issue history metadata.
- * @export
- * @interface ChangelogHistoryMetadataAllOf
- */
-export interface ChangelogHistoryMetadataAllOf {
-    [key: string]: any | any;
     /**
      * The type of the history record.
      * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
+     * @memberof ChangelogHistoryMetadata
      */
     type?: string;
-    /**
-     * The description of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    description?: string;
-    /**
-     * The description key of the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    descriptionKey?: string;
-    /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    activityDescriptionKey?: string;
-    /**
-     * The description of the email address associated the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    emailDescription?: string;
-    /**
-     * The description key of the email address associated the history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    emailDescriptionKey?: string;
-    /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfActor}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    actor?: ChangelogHistoryMetadataAllOfActor;
-    /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfGenerator}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    generator?: ChangelogHistoryMetadataAllOfGenerator;
-    /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfCause}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    cause?: ChangelogHistoryMetadataAllOfCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof ChangelogHistoryMetadataAllOf
-     */
-    extraData?: { [key: string]: string; };
 }
 /**
  * Details of the user whose action created the history record.
@@ -1068,11 +946,11 @@ export interface ChangelogHistoryMetadataAllOf {
  */
 export interface ChangelogHistoryMetadataAllOfActor {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadataAllOfActor
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -1086,65 +964,21 @@ export interface ChangelogHistoryMetadataAllOfActor {
      */
     displayNameKey?: string;
     /**
-     * The type of the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActor
-     */
-    type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActor
-     */
-    avatarUrl?: string;
-    /**
-     * The URL of the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActor
-     */
-    url?: string;
-}
-/**
- * Details of user or system associated with a issue history metadata item.
- * @export
- * @interface ChangelogHistoryMetadataAllOfActorAllOf
- */
-export interface ChangelogHistoryMetadataAllOfActorAllOf {
-    [key: string]: any | any;
-    /**
      * The ID of the user or system associated with a history record.
      * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
+     * @memberof ChangelogHistoryMetadataAllOfActor
      */
     id?: string;
     /**
-     * The display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
-     */
-    displayName?: string;
-    /**
-     * The key of the display name of the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
-     */
-    displayNameKey?: string;
-    /**
      * The type of the user or system associated with a history record.
      * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
+     * @memberof ChangelogHistoryMetadataAllOfActor
      */
     type?: string;
     /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
-     */
-    avatarUrl?: string;
-    /**
      * The URL of the user or system associated with a history record.
      * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfActorAllOf
+     * @memberof ChangelogHistoryMetadataAllOfActor
      */
     url?: string;
 }
@@ -1155,11 +989,11 @@ export interface ChangelogHistoryMetadataAllOfActorAllOf {
  */
 export interface ChangelogHistoryMetadataAllOfCause {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadataAllOfCause
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -1173,17 +1007,17 @@ export interface ChangelogHistoryMetadataAllOfCause {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof ChangelogHistoryMetadataAllOfCause
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadataAllOfCause
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfCause
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -1198,11 +1032,11 @@ export interface ChangelogHistoryMetadataAllOfCause {
  */
 export interface ChangelogHistoryMetadataAllOfGenerator {
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadataAllOfGenerator
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -1216,17 +1050,17 @@ export interface ChangelogHistoryMetadataAllOfGenerator {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof ChangelogHistoryMetadataAllOfGenerator
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof ChangelogHistoryMetadataAllOfGenerator
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof ChangelogHistoryMetadataAllOfGenerator
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -1247,17 +1081,17 @@ export interface ChangelogItemsInner {
      */
     readonly field?: string;
     /**
-     * The type of the field changed.
-     * @type {string}
-     * @memberof ChangelogItemsInner
-     */
-    readonly fieldtype?: string;
-    /**
      * The ID of the field changed.
      * @type {string}
      * @memberof ChangelogItemsInner
      */
     readonly fieldId?: string;
+    /**
+     * The type of the field changed.
+     * @type {string}
+     * @memberof ChangelogItemsInner
+     */
+    readonly fieldtype?: string;
     /**
      * The details of the original value.
      * @type {string}
@@ -1327,16 +1161,10 @@ export type ColorBeanKeyEnum = typeof ColorBeanKeyEnum[keyof typeof ColorBeanKey
 export interface ColumnBean {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ColumnBean
      */
-    name?: string;
-    /**
-     * 
-     * @type {Array<GetConfiguration200ResponseFilter>}
-     * @memberof ColumnBean
-     */
-    statuses?: Array<GetConfiguration200ResponseFilter>;
+    max?: number;
     /**
      * 
      * @type {number}
@@ -1345,10 +1173,16 @@ export interface ColumnBean {
     min?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ColumnBean
      */
-    max?: number;
+    name?: string;
+    /**
+     * 
+     * @type {Array<GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner>}
+     * @memberof ColumnBean
+     */
+    statuses?: Array<GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner>;
 }
 /**
  * 
@@ -1372,12 +1206,14 @@ export interface ColumnConfigBean {
 /**
  * A command to be actioned for this Deployment
  * - command
+ * 
  * @export
  * @interface Command
  */
 export interface Command {
     /**
      * The command name.
+     * 
      * @type {string}
      * @memberof Command
      */
@@ -1473,23 +1309,144 @@ export const CommitFlagsEnum = {
 export type CommitFlagsEnum = typeof CommitFlagsEnum[keyof typeof CommitFlagsEnum];
 
 /**
+ * Data related to a specific component in a specific workspace that is affected by incidents.
+ * 
+ * @export
+ * @interface Component
+ */
+export interface Component {
+    /**
+     * The DevOpsComponentData schema version used for this devops component data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    schemaVersion: ComponentSchemaVersionEnum;
+    /**
+     * The identifier for the DevOps Component. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this DevOps Component in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each DevOps Component and increment that on each update to Jira).
+     * 
+     * Updates for a DevOps Component that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof Component
+     */
+    updateSequenceNumber: number;
+    /**
+     * The human-readable name for the DevOps Component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    name: string;
+    /**
+     * The human-readable name for the Provider that owns this DevOps Component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    providerName?: string;
+    /**
+     * A description of the DevOps Component in Markdown format. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this devops component, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the component in that project).
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    url: string;
+    /**
+     * A URL to display a logo representing this devops component, if available.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    avatarUrl: string;
+    /**
+     * The tier of the component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    tier: ComponentTierEnum;
+    /**
+     * The type of the component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    componentType: ComponentComponentTypeEnum;
+    /**
+     * The last-updated timestamp to present to the user the last time the DevOps Component was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    lastUpdated: string;
+}
+
+
+/**
+ * @export
+ */
+export const ComponentSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type ComponentSchemaVersionEnum = typeof ComponentSchemaVersionEnum[keyof typeof ComponentSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const ComponentTierEnum = {
+    _1: 'Tier 1',
+    _2: 'Tier 2',
+    _3: 'Tier 3',
+    _4: 'Tier 4'
+} as const;
+export type ComponentTierEnum = typeof ComponentTierEnum[keyof typeof ComponentTierEnum];
+
+/**
+ * @export
+ */
+export const ComponentComponentTypeEnum = {
+    Service: 'Service',
+    Application: 'Application',
+    Library: 'Library',
+    Capability: 'Capability',
+    CloudResource: 'Cloud resource',
+    DataPipeline: 'Data pipeline',
+    MachineLearningModel: 'Machine learning model',
+    UiElement: 'UI element',
+    Website: 'Website',
+    Other: 'Other'
+} as const;
+export type ComponentComponentTypeEnum = typeof ComponentComponentTypeEnum[keyof typeof ComponentComponentTypeEnum];
+
+/**
  * 
  * @export
  * @interface CreateBoardRequest
  */
 export interface CreateBoardRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBoardRequest
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBoardRequest
-     */
-    type?: CreateBoardRequestTypeEnum;
     /**
      * 
      * @type {number}
@@ -1502,6 +1459,18 @@ export interface CreateBoardRequest {
      * @memberof CreateBoardRequest
      */
     location?: CreateBoardRequestLocation;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBoardRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBoardRequest
+     */
+    type?: CreateBoardRequestTypeEnum;
 }
 
 
@@ -1526,13 +1495,13 @@ export interface CreateBoardRequestLocation {
      * @type {string}
      * @memberof CreateBoardRequestLocation
      */
-    type?: CreateBoardRequestLocationTypeEnum;
+    projectKeyOrId?: string;
     /**
      * 
      * @type {string}
      * @memberof CreateBoardRequestLocation
      */
-    projectKeyOrId?: string;
+    type?: CreateBoardRequestLocationTypeEnum;
 }
 
 
@@ -1556,19 +1525,19 @@ export interface CreateSprintRequest {
      * @type {string}
      * @memberof CreateSprintRequest
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSprintRequest
-     */
-    startDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSprintRequest
-     */
     endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSprintRequest
+     */
+    goal?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSprintRequest
+     */
+    name?: string;
     /**
      * 
      * @type {number}
@@ -1580,23 +1549,26 @@ export interface CreateSprintRequest {
      * @type {string}
      * @memberof CreateSprintRequest
      */
-    goal?: string;
+    startDate?: string;
 }
 /**
  * Data related to a specific deployment in a specific environment that the deployment is present in.
  * Must specify one of `issueKeys` or `associations`.
+ * 
  * @export
  * @interface DeploymentData
  */
 export interface DeploymentData {
     /**
      * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
+     * 
      * @type {number}
      * @memberof DeploymentData
      */
     deploymentSequenceNumber: number;
     /**
      * A number used to apply an order to the updates to the deployment, as identified by the deploymentSequenceNumber, in the case of out-of-order receipt of update requests. It must be a monotonically increasing number. For example, epoch time could be one way to generate the updateSequenceNumber.
+     * 
      * @type {number}
      * @memberof DeploymentData
      */
@@ -1604,6 +1576,7 @@ export interface DeploymentData {
     /**
      * Deprecated. The Jira issue keys to associate the Deployment information with.
      * Should replace this field with the "associations" field to associate Deployment information with issueKeys or other types of associations.
+     * 
      * @type {Array<string>}
      * @memberof DeploymentData
      * @deprecated
@@ -1612,42 +1585,56 @@ export interface DeploymentData {
     /**
      * The entities to associate the Deployment information with.
      * It must contain at least one of IssueIdOrKeysAssociation or ServiceIdOrKeysAssociation.
+     * 
      * @type {Array<DeploymentDataAssociationsInner>}
      * @memberof DeploymentData
      */
     associations?: Array<DeploymentDataAssociationsInner>;
     /**
      * The human-readable name for the deployment. Will be shown in the UI.
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     displayName: string;
     /**
      * A URL users can use to link to this deployment, in this environment.
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     url: string;
     /**
      * A short description of the deployment
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     description: string;
     /**
      * The last-updated timestamp to present to the user as a summary of the state of the deployment.
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     lastUpdated: string;
     /**
      * An (optional) additional label that may be displayed with deployment information. Can be used to display version information etc. for the deployment.
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     label?: string;
     /**
+     * The duration of the deployment (in seconds).
+     * 
+     * @type {number}
+     * @memberof DeploymentData
+     */
+    duration?: number;
+    /**
      * The state of the deployment
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
@@ -1666,6 +1653,7 @@ export interface DeploymentData {
     environment: Environment;
     /**
      * A list of commands to be actioned for this Deployment
+     * 
      * @type {Array<Command>}
      * @memberof DeploymentData
      */
@@ -1674,16 +1662,11 @@ export interface DeploymentData {
      * The DeploymentData schema version used for this deployment data.
      * 
      * Placeholder to support potential schema changes in the future.
+     * 
      * @type {string}
      * @memberof DeploymentData
      */
     schemaVersion?: DeploymentDataSchemaVersionEnum;
-    /**
-     * 
-     * @type {TriggeredBy}
-     * @memberof DeploymentData
-     */
-    triggeredBy?: TriggeredBy;
 }
 
 
@@ -1710,127 +1693,6 @@ export const DeploymentDataSchemaVersionEnum = {
 export type DeploymentDataSchemaVersionEnum = typeof DeploymentDataSchemaVersionEnum[keyof typeof DeploymentDataSchemaVersionEnum];
 
 /**
- * Data related to a specific deployment in a specific environment that the deployment is present in.
- * Must specify one of `issueKeys` or `associations`.
- * @export
- * @interface DeploymentData1
- */
-export interface DeploymentData1 {
-    /**
-     * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
-     * @type {number}
-     * @memberof DeploymentData1
-     */
-    deploymentSequenceNumber: number;
-    /**
-     * A number used to apply an order to the updates to the deployment, as identified by the deploymentSequenceNumber, in the case of out-of-order receipt of update requests. It must be a monotonically increasing number. For example, epoch time could be one way to generate the updateSequenceNumber.
-     * @type {number}
-     * @memberof DeploymentData1
-     */
-    updateSequenceNumber: number;
-    /**
-     * Deprecated. The Jira issue keys to associate the Deployment information with.
-     * Should replace this field with the "associations" field to associate Deployment information with issueKeys or other types of associations.
-     * @type {Array<string>}
-     * @memberof DeploymentData1
-     * @deprecated
-     */
-    issueKeys?: Array<string>;
-    /**
-     * The entities to associate the Deployment information with.
-     * It must contain at least one of IssueIdOrKeysAssociation or ServiceIdOrKeysAssociation.
-     * @type {Array<DeploymentDataAssociationsInner>}
-     * @memberof DeploymentData1
-     */
-    associations?: Array<DeploymentDataAssociationsInner>;
-    /**
-     * The human-readable name for the deployment. Will be shown in the UI.
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    displayName: string;
-    /**
-     * A URL users can use to link to this deployment, in this environment.
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    url: string;
-    /**
-     * A short description of the deployment
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    description: string;
-    /**
-     * The last-updated timestamp to present to the user as a summary of the state of the deployment.
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    lastUpdated: string;
-    /**
-     * An (optional) additional label that may be displayed with deployment information. Can be used to display version information etc. for the deployment.
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    label?: string;
-    /**
-     * The state of the deployment
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    state: DeploymentData1StateEnum;
-    /**
-     * 
-     * @type {Pipeline}
-     * @memberof DeploymentData1
-     */
-    pipeline: Pipeline;
-    /**
-     * 
-     * @type {Environment}
-     * @memberof DeploymentData1
-     */
-    environment: Environment;
-    /**
-     * A list of commands to be actioned for this Deployment
-     * @type {Array<Command>}
-     * @memberof DeploymentData1
-     */
-    commands?: Array<Command>;
-    /**
-     * The DeploymentData schema version used for this deployment data.
-     * 
-     * Placeholder to support potential schema changes in the future.
-     * @type {string}
-     * @memberof DeploymentData1
-     */
-    schemaVersion?: DeploymentData1SchemaVersionEnum;
-}
-
-
-/**
- * @export
- */
-export const DeploymentData1StateEnum = {
-    Unknown: 'unknown',
-    Pending: 'pending',
-    InProgress: 'in_progress',
-    Cancelled: 'cancelled',
-    Failed: 'failed',
-    RolledBack: 'rolled_back',
-    Successful: 'successful'
-} as const;
-export type DeploymentData1StateEnum = typeof DeploymentData1StateEnum[keyof typeof DeploymentData1StateEnum];
-
-/**
- * @export
- */
-export const DeploymentData1SchemaVersionEnum = {
-    _10: '1.0'
-} as const;
-export type DeploymentData1SchemaVersionEnum = typeof DeploymentData1SchemaVersionEnum[keyof typeof DeploymentData1SchemaVersionEnum];
-
-/**
  * 
  * @export
  * @interface DeploymentDataAssociationsInner
@@ -1838,6 +1700,7 @@ export type DeploymentData1SchemaVersionEnum = typeof DeploymentData1SchemaVersi
 export interface DeploymentDataAssociationsInner {
     /**
      * Defines the association type. Currently supported entities can be found in this field's value enums list.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInner
      */
@@ -1845,6 +1708,7 @@ export interface DeploymentDataAssociationsInner {
     /**
      * The entity keys that represent the entities to be associated.
      * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
+     * 
      * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
      * @memberof DeploymentDataAssociationsInner
      */
@@ -1856,18 +1720,21 @@ export interface DeploymentDataAssociationsInner {
  * @export
  */
 export const DeploymentDataAssociationsInnerAssociationTypeEnum = {
-    Commit: 'commit'
+    Commit: 'commit',
+    Repository: 'repository'
 } as const;
 export type DeploymentDataAssociationsInnerAssociationTypeEnum = typeof DeploymentDataAssociationsInnerAssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAssociationTypeEnum];
 
 /**
  * An association type referencing issues in Jira.
+ * 
  * @export
  * @interface DeploymentDataAssociationsInnerAnyOf
  */
 export interface DeploymentDataAssociationsInnerAnyOf {
     /**
      * Defines the asssociation type.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf
      */
@@ -1877,6 +1744,7 @@ export interface DeploymentDataAssociationsInnerAnyOf {
      * 
      * The number of values counted across all associationTypes (issueKeys,
      * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof DeploymentDataAssociationsInnerAnyOf
      */
@@ -1895,12 +1763,14 @@ export type DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum = typeof Dep
 
 /**
  * An association type referencing service id or keys.
+ * 
  * @export
  * @interface DeploymentDataAssociationsInnerAnyOf1
  */
 export interface DeploymentDataAssociationsInnerAnyOf1 {
     /**
      * Defines the asssociation type.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf1
      */
@@ -1910,6 +1780,7 @@ export interface DeploymentDataAssociationsInnerAnyOf1 {
      * 
      * The number of values counted across all associationTypes (issueKeys,
      * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof DeploymentDataAssociationsInnerAnyOf1
      */
@@ -1927,12 +1798,14 @@ export type DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum = typeof De
 
 /**
  * An association type referencing another DevOps entity. Initially only commit entities are supported for this type of association.
+ * 
  * @export
  * @interface DeploymentDataAssociationsInnerAnyOf2
  */
 export interface DeploymentDataAssociationsInnerAnyOf2 {
     /**
      * Defines the association type. Currently supported entities can be found in this field's value enums list.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf2
      */
@@ -1940,6 +1813,7 @@ export interface DeploymentDataAssociationsInnerAnyOf2 {
     /**
      * The entity keys that represent the entities to be associated.
      * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
+     * 
      * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
      * @memberof DeploymentDataAssociationsInnerAnyOf2
      */
@@ -1951,7 +1825,8 @@ export interface DeploymentDataAssociationsInnerAnyOf2 {
  * @export
  */
 export const DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum = {
-    Commit: 'commit'
+    Commit: 'commit',
+    Repository: 'repository'
 } as const;
 export type DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum = typeof DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum];
 
@@ -1963,12 +1838,13 @@ export type DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum = typeof De
 export interface DeploymentDataAssociationsInnerAnyOf2ValuesInner {
     /**
      * The hash for the Commit.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInner
      */
     commitHash: string;
     /**
-     * The ID of the Repository that the Commit belongs to.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInner
      */
@@ -1976,43 +1852,64 @@ export interface DeploymentDataAssociationsInnerAnyOf2ValuesInner {
 }
 /**
  * Identifies an individual commit in a repository.
+ * 
  * @export
  * @interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
  */
 export interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf {
     /**
      * The hash for the Commit.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
      */
     commitHash: string;
     /**
      * The ID of the Repository that the Commit belongs to.
+     * 
      * @type {string}
      * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
      */
     repositoryId: string;
 }
 /**
+ * Identifies an individual repository.
+ * 
+ * @export
+ * @interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1
+ */
+export interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1
+     */
+    repositoryId: string;
+}
+/**
  * Fields that uniquely reference a deployment.
+ * 
  * @export
  * @interface DeploymentKey
  */
 export interface DeploymentKey {
     /**
      * The identifier of a pipeline, must be unique for the provider.
+     * 
      * @type {string}
      * @memberof DeploymentKey
      */
     pipelineId: string;
     /**
      * The identifier of an environment, must be unique for the provider so that it can be shared across pipelines.
+     * 
      * @type {string}
      * @memberof DeploymentKey
      */
     environmentId: string;
     /**
      * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
+     * 
      * @type {number}
      * @memberof DeploymentKey
      */
@@ -2086,11 +1983,42 @@ export interface EntityError {
     errorMessages?: Array<ErrorMessage>;
 }
 /**
+ * IDs of entities grouped by entity type
+ * @export
+ * @interface EntityIds
+ */
+export interface EntityIds {
+    /**
+     * Commits IDs
+     * @type {Array<string>}
+     * @memberof EntityIds
+     */
+    commits?: Array<string>;
+    /**
+     * Branch IDs
+     * @type {Array<string>}
+     * @memberof EntityIds
+     */
+    branches?: Array<string>;
+    /**
+     * Pull request IDs
+     * @type {Array<string>}
+     * @memberof EntityIds
+     */
+    pullRequests?: Array<string>;
+}
+/**
  * 
  * @export
  * @interface Entry
  */
 export interface Entry {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Entry
+     */
+    errors?: Array<string>;
     /**
      * 
      * @type {number}
@@ -2109,33 +2037,31 @@ export interface Entry {
      * @memberof Entry
      */
     status?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Entry
-     */
-    errors?: Array<string>;
 }
 /**
  * The environment that the deployment is present in.
+ * 
  * @export
  * @interface Environment
  */
 export interface Environment {
     /**
      * The identifier of this environment, must be unique for the provider so that it can be shared across pipelines.
+     * 
      * @type {string}
      * @memberof Environment
      */
     id: string;
     /**
      * The name of the environment to present to the user.
+     * 
      * @type {string}
      * @memberof Environment
      */
     displayName: string;
     /**
      * The type of the environment.
+     * 
      * @type {string}
      * @memberof Environment
      */
@@ -2161,6 +2087,7 @@ export type EnvironmentTypeEnum = typeof EnvironmentTypeEnum[keyof typeof Enviro
  * At the simplest this must be the name of the environment.
  * 
  * Ideally there is also type information which may be used to group data from multiple Feature Flags and other entities for visualisation in the UI.
+ * 
  * @export
  * @interface EnvironmentDetails
  */
@@ -2202,13 +2129,13 @@ export interface EpicRankRequestBean {
      * @type {string}
      * @memberof EpicRankRequestBean
      */
-    rankBeforeEpic?: string;
+    rankAfterEpic?: string;
     /**
      * 
      * @type {string}
      * @memberof EpicRankRequestBean
      */
-    rankAfterEpic?: string;
+    rankBeforeEpic?: string;
     /**
      * 
      * @type {number}
@@ -2224,18 +2151,6 @@ export interface EpicRankRequestBean {
 export interface EpicUpdateBean {
     /**
      * 
-     * @type {string}
-     * @memberof EpicUpdateBean
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EpicUpdateBean
-     */
-    summary?: string;
-    /**
-     * 
      * @type {PartiallyUpdateEpicRequestColor}
      * @memberof EpicUpdateBean
      */
@@ -2246,6 +2161,18 @@ export interface EpicUpdateBean {
      * @memberof EpicUpdateBean
      */
     done?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EpicUpdateBean
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EpicUpdateBean
+     */
+    summary?: string;
 }
 /**
  * A message supplied in the case of an error.
@@ -2319,16 +2246,16 @@ export interface EstimateIssueForBoardRequest {
 export interface EstimationConfigBean {
     /**
      * 
-     * @type {string}
-     * @memberof EstimationConfigBean
-     */
-    type?: string;
-    /**
-     * 
      * @type {GetConfiguration200ResponseEstimationField}
      * @memberof EstimationConfigBean
      */
     field?: GetConfiguration200ResponseEstimationField;
+    /**
+     * 
+     * @type {string}
+     * @memberof EstimationConfigBean
+     */
+    type?: string;
 }
 /**
  * 
@@ -2341,7 +2268,7 @@ export interface EstimationConfigurationBean {
      * @type {string}
      * @memberof EstimationConfigurationBean
      */
-    value?: EstimationConfigurationBeanValueEnum;
+    localisedDescription?: string;
     /**
      * 
      * @type {string}
@@ -2353,7 +2280,7 @@ export interface EstimationConfigurationBean {
      * @type {string}
      * @memberof EstimationConfigurationBean
      */
-    localisedDescription?: string;
+    value?: EstimationConfigurationBeanValueEnum;
 }
 
 
@@ -2377,13 +2304,13 @@ export interface EstimationFieldBean {
      * @type {string}
      * @memberof EstimationFieldBean
      */
-    fieldId?: string;
+    displayName?: string;
     /**
      * 
      * @type {string}
      * @memberof EstimationFieldBean
      */
-    displayName?: string;
+    fieldId?: string;
 }
 /**
  * Whether there is data for the properties supplied in a query
@@ -2421,31 +2348,7 @@ export interface FeatureBean {
      * @type {string}
      * @memberof FeatureBean
      */
-    state?: FeatureBeanStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureBean
-     */
-    localisedName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureBean
-     */
-    localisedDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureBean
-     */
-    learnMoreLink?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureBean
-     */
-    imageUri?: string;
+    featureId?: string;
     /**
      * 
      * @type {string}
@@ -2457,7 +2360,37 @@ export interface FeatureBean {
      * @type {string}
      * @memberof FeatureBean
      */
+    imageUri?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureBean
+     */
+    learnMoreArticleId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureBean
+     */
+    learnMoreLink?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureBean
+     */
+    localisedDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureBean
+     */
     localisedGroup?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureBean
+     */
+    localisedName?: string;
     /**
      * 
      * @type {Array<GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner>}
@@ -2469,13 +2402,7 @@ export interface FeatureBean {
      * @type {string}
      * @memberof FeatureBean
      */
-    featureId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureBean
-     */
-    learnMoreArticleId?: string;
+    state?: FeatureBeanStateEnum;
     /**
      * 
      * @type {boolean}
@@ -2492,18 +2419,33 @@ export const FeatureBeanBoardFeatureEnum = {
     SimpleRoadmap: 'SIMPLE_ROADMAP',
     Backlog: 'BACKLOG',
     Sprints: 'SPRINTS',
+    Calendar: 'CALENDAR',
     Devtools: 'DEVTOOLS',
     Reports: 'REPORTS',
     Estimation: 'ESTIMATION',
     Pages: 'PAGES',
     Code: 'CODE',
+    Security: 'SECURITY',
+    Requests: 'REQUESTS',
+    Incidents: 'INCIDENTS',
     Releases: 'RELEASES',
     Deployments: 'DEPLOYMENTS',
     IssueNavigator: 'ISSUE_NAVIGATOR',
     OnCallSchedule: 'ON_CALL_SCHEDULE',
-    Board: 'BOARD'
+    Board: 'BOARD',
+    Goals: 'GOALS',
+    ListView: 'LIST_VIEW'
 } as const;
 export type FeatureBeanBoardFeatureEnum = typeof FeatureBeanBoardFeatureEnum[keyof typeof FeatureBeanBoardFeatureEnum];
+
+/**
+ * @export
+ */
+export const FeatureBeanFeatureTypeEnum = {
+    Basic: 'BASIC',
+    Estimation: 'ESTIMATION'
+} as const;
+export type FeatureBeanFeatureTypeEnum = typeof FeatureBeanFeatureTypeEnum[keyof typeof FeatureBeanFeatureTypeEnum];
 
 /**
  * @export
@@ -2516,16 +2458,8 @@ export const FeatureBeanStateEnum = {
 export type FeatureBeanStateEnum = typeof FeatureBeanStateEnum[keyof typeof FeatureBeanStateEnum];
 
 /**
- * @export
- */
-export const FeatureBeanFeatureTypeEnum = {
-    Basic: 'BASIC',
-    Estimation: 'ESTIMATION'
-} as const;
-export type FeatureBeanFeatureTypeEnum = typeof FeatureBeanFeatureTypeEnum[keyof typeof FeatureBeanFeatureTypeEnum];
-
-/**
  * Data related to a single Feature Flag, across any Environment that the flag is present in.
+ * 
  * @export
  * @interface FeatureFlagData
  */
@@ -2534,12 +2468,14 @@ export interface FeatureFlagData {
      * The FeatureFlagData schema version used for this flag data. 
      * 
      * Placeholder to support potential schema changes in the future.
+     * 
      * @type {string}
      * @memberof FeatureFlagData
      */
     schemaVersion?: FeatureFlagDataSchemaVersionEnum;
     /**
      * The identifier for the Feature Flag. Must be unique for a given Provider.
+     * 
      * @type {string}
      * @memberof FeatureFlagData
      */
@@ -2548,6 +2484,7 @@ export interface FeatureFlagData {
      * The identifier that users would use to reference the Feature Flag in their source code etc.
      * 
      * Will be made available via the UI for users to copy into their source code etc.
+     * 
      * @type {string}
      * @memberof FeatureFlagData
      */
@@ -2558,6 +2495,7 @@ export interface FeatureFlagData {
      * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Feature Flag and increment that on each update to Jira).
      * 
      * Updates for a Feature Flag that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
      * @type {number}
      * @memberof FeatureFlagData
      */
@@ -2566,12 +2504,14 @@ export interface FeatureFlagData {
      * The human-readable name for the Feature Flag. Will be shown in the UI.
      * 
      * If not provided, will use the ID for display.
+     * 
      * @type {string}
      * @memberof FeatureFlagData
      */
     displayName?: string;
     /**
      * The Jira issue keys to associate the Feature Flag information with.
+     * 
      * @type {Array<string>}
      * @memberof FeatureFlagData
      */
@@ -2586,6 +2526,7 @@ export interface FeatureFlagData {
      * Detail information for this Feature Flag.
      * 
      * This may be information for each environment the Feature Flag is defined in or a selection of environments made by the user, as appropriate.
+     * 
      * @type {Array<FeatureFlagDetails>}
      * @memberof FeatureFlagData
      */
@@ -2609,6 +2550,7 @@ export type FeatureFlagDataSchemaVersionEnum = typeof FeatureFlagDataSchemaVersi
 export interface FeatureFlagDetails {
     /**
      * A URL users can use to link to this Feature Flag, in this environment.
+     * 
      * @type {string}
      * @memberof FeatureFlagDetails
      */
@@ -2617,6 +2559,7 @@ export interface FeatureFlagDetails {
      * The last-updated timestamp for this Feature Flag, in this environment.
      * 
      * Expected format is an RFC3339 formatted string.
+     * 
      * @type {string}
      * @memberof FeatureFlagDetails
      */
@@ -2640,24 +2583,28 @@ export interface FeatureFlagDetails {
  * Only one of 'percentage', 'text', or 'rules' should be provided. They will be used in that order if multiple are present.
  * 
  * This information may be presented to the user in the UI.
+ * 
  * @export
  * @interface FeatureFlagRollout
  */
 export interface FeatureFlagRollout {
     /**
      * If the Feature Flag rollout is a simple percentage rollout
+     * 
      * @type {number}
      * @memberof FeatureFlagRollout
      */
     percentage?: number;
     /**
      * A text status to display that represents the rollout. This could be e.g. a named cohort.
+     * 
      * @type {string}
      * @memberof FeatureFlagRollout
      */
     text?: string;
     /**
      * A count of the number of rules active for this Feature Flag in an environment.
+     * 
      * @type {number}
      * @memberof FeatureFlagRollout
      */
@@ -2665,6 +2612,7 @@ export interface FeatureFlagRollout {
 }
 /**
  * Status information about a single Feature Flag.
+ * 
  * @export
  * @interface FeatureFlagStatus
  */
@@ -2673,6 +2621,7 @@ export interface FeatureFlagStatus {
      * Whether the Feature Flag is enabled in the given environment (or in summary).
      * 
      * Enabled may imply a partial rollout, which can be described using the 'rollout' field.
+     * 
      * @type {boolean}
      * @memberof FeatureFlagStatus
      */
@@ -2681,6 +2630,7 @@ export interface FeatureFlagStatus {
      * The value served by this Feature Flag when it is disabled. This could be the actual value or an alias, as appropriate.
      * 
      * This value may be presented to the user in the UI.
+     * 
      * @type {string}
      * @memberof FeatureFlagStatus
      */
@@ -2698,6 +2648,7 @@ export interface FeatureFlagStatus {
  * Providers may elect to provide information from a specific environment, or they may choose to 'roll up' information from across multiple environments - whatever makes most sense in the Provider system.
  * 
  * This is the summary information that will be presented to the user on e.g. the Jira issue screen.
+ * 
  * @export
  * @interface FeatureFlagSummary
  */
@@ -2706,6 +2657,7 @@ export interface FeatureFlagSummary {
      * A URL users can use to link to a summary view of this flag, if appropriate.
      * 
      * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific environment, it might make sense to link the user to the flag in that environment).
+     * 
      * @type {string}
      * @memberof FeatureFlagSummary
      */
@@ -2722,6 +2674,7 @@ export interface FeatureFlagSummary {
      * Providers may choose to supply the last-updated timestamp from a specific environment, or the 'most recent' last-updated timestamp across all environments - whatever makes sense in the Provider system.
      * 
      * Expected format is an RFC3339 formatted string.
+     * 
      * @type {string}
      * @memberof FeatureFlagSummary
      */
@@ -2754,16 +2707,16 @@ export interface FeatureToggleRequestBean {
     boardId?: number;
     /**
      * 
-     * @type {string}
-     * @memberof FeatureToggleRequestBean
-     */
-    feature?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof FeatureToggleRequestBean
      */
     enabling?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureToggleRequestBean
+     */
+    feature?: string;
 }
 /**
  * 
@@ -2785,6 +2738,54 @@ export interface FieldEditBean {
  */
 export interface FieldMetadata {
     /**
+     * The list of values allowed in the field.
+     * @type {Array<any>}
+     * @memberof FieldMetadata
+     */
+    readonly allowedValues?: Array<any>;
+    /**
+     * The URL that can be used to automatically complete the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly autoCompleteUrl?: string;
+    /**
+     * The configuration properties.
+     * @type {{ [key: string]: any; }}
+     * @memberof FieldMetadata
+     */
+    readonly configuration?: { [key: string]: any; };
+    /**
+     * The default value of the field.
+     * @type {any}
+     * @memberof FieldMetadata
+     */
+    readonly defaultValue?: any | null;
+    /**
+     * Whether the field has a default value.
+     * @type {boolean}
+     * @memberof FieldMetadata
+     */
+    readonly hasDefaultValue?: boolean;
+    /**
+     * The key of the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly key: string;
+    /**
+     * The name of the field.
+     * @type {string}
+     * @memberof FieldMetadata
+     */
+    readonly name: string;
+    /**
+     * The list of operations that can be performed on the field.
+     * @type {Array<string>}
+     * @memberof FieldMetadata
+     */
+    readonly operations: Array<string>;
+    /**
      * Whether the field is required.
      * @type {boolean}
      * @memberof FieldMetadata
@@ -2796,54 +2797,6 @@ export interface FieldMetadata {
      * @memberof FieldMetadata
      */
     schema: FieldMetadataSchema;
-    /**
-     * The name of the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly name: string;
-    /**
-     * The key of the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly key: string;
-    /**
-     * The URL that can be used to automatically complete the field.
-     * @type {string}
-     * @memberof FieldMetadata
-     */
-    readonly autoCompleteUrl?: string;
-    /**
-     * Whether the field has a default value.
-     * @type {boolean}
-     * @memberof FieldMetadata
-     */
-    readonly hasDefaultValue?: boolean;
-    /**
-     * The list of operations that can be performed on the field.
-     * @type {Array<string>}
-     * @memberof FieldMetadata
-     */
-    readonly operations: Array<string>;
-    /**
-     * The list of values allowed in the field.
-     * @type {Array<any>}
-     * @memberof FieldMetadata
-     */
-    readonly allowedValues?: Array<any>;
-    /**
-     * The default value of the field.
-     * @type {any}
-     * @memberof FieldMetadata
-     */
-    readonly defaultValue?: any | null;
-    /**
-     * The configuration properties.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldMetadata
-     */
-    readonly configuration?: { [key: string]: any; };
 }
 /**
  * The data type of the field.
@@ -2852,23 +2805,11 @@ export interface FieldMetadata {
  */
 export interface FieldMetadataSchema {
     /**
-     * The data type of the field.
-     * @type {string}
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
      * @memberof FieldMetadataSchema
      */
-    readonly type: string;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchema
-     */
-    readonly system?: string;
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -2882,54 +2823,23 @@ export interface FieldMetadataSchema {
      */
     readonly customId?: number;
     /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldMetadataSchema
-     */
-    readonly configuration?: { [key: string]: any; };
-}
-/**
- * The schema of a field.
- * @export
- * @interface FieldMetadataSchemaAllOf
- */
-export interface FieldMetadataSchemaAllOf {
-    /**
-     * The data type of the field.
-     * @type {string}
-     * @memberof FieldMetadataSchemaAllOf
-     */
-    readonly type: string;
-    /**
      * When the data type is an array, the name of the field items within the array.
      * @type {string}
-     * @memberof FieldMetadataSchemaAllOf
+     * @memberof FieldMetadataSchema
      */
     readonly items?: string;
     /**
      * If the field is a system field, the name of the field.
      * @type {string}
-     * @memberof FieldMetadataSchemaAllOf
+     * @memberof FieldMetadataSchema
      */
     readonly system?: string;
     /**
-     * If the field is a custom field, the URI of the field.
+     * The data type of the field.
      * @type {string}
-     * @memberof FieldMetadataSchemaAllOf
+     * @memberof FieldMetadataSchema
      */
-    readonly custom?: string;
-    /**
-     * If the field is a custom field, the custom ID of the field.
-     * @type {number}
-     * @memberof FieldMetadataSchemaAllOf
-     */
-    readonly customId?: number;
-    /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
-     * @memberof FieldMetadataSchemaAllOf
-     */
-    readonly configuration?: { [key: string]: any; };
+    readonly type: string;
 }
 /**
  * 
@@ -2937,6 +2847,12 @@ export interface FieldMetadataSchemaAllOf {
  * @interface GetAllBoards200Response
  */
 export interface GetAllBoards200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetAllBoards200Response
+     */
+    isLast?: boolean;
     /**
      * 
      * @type {number}
@@ -2957,12 +2873,6 @@ export interface GetAllBoards200Response {
     total?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof GetAllBoards200Response
-     */
-    isLast?: boolean;
-    /**
-     * 
      * @type {Array<GetAllBoards200ResponseValuesInner>}
      * @memberof GetAllBoards200Response
      */
@@ -2975,41 +2885,11 @@ export interface GetAllBoards200Response {
  */
 export interface GetAllBoards200ResponseValuesInner {
     /**
-     * The ID of the board.
-     * @type {number}
-     * @memberof GetAllBoards200ResponseValuesInner
-     */
-    id?: number;
-    /**
-     * The URL of the board.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInner
-     */
-    readonly self?: string;
-    /**
-     * The name of the board.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInner
-     */
-    name?: string;
-    /**
-     * The type the board.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInner
-     */
-    type?: string;
-    /**
      * 
-     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOf}
+     * @type {GetAllBoards200ResponseValuesInnerAdmins}
      * @memberof GetAllBoards200ResponseValuesInner
      */
-    readonly admins?: GetAllBoards200ResponseValuesInnerAdminsAllOf;
-    /**
-     * 
-     * @type {GetAllBoards200ResponseValuesInnerLocation}
-     * @memberof GetAllBoards200ResponseValuesInner
-     */
-    location?: GetAllBoards200ResponseValuesInnerLocation;
+    admins?: GetAllBoards200ResponseValuesInnerAdmins;
     /**
      * Whether the board can be edited.
      * @type {boolean}
@@ -3017,36 +2897,66 @@ export interface GetAllBoards200ResponseValuesInner {
      */
     readonly canEdit?: boolean;
     /**
+     * Whether the board is selected as a favorite.
+     * @type {boolean}
+     * @memberof GetAllBoards200ResponseValuesInner
+     */
+    readonly favourite?: boolean;
+    /**
+     * The ID of the board.
+     * @type {number}
+     * @memberof GetAllBoards200ResponseValuesInner
+     */
+    id?: number;
+    /**
      * Whether the board is private.
      * @type {boolean}
      * @memberof GetAllBoards200ResponseValuesInner
      */
     readonly isPrivate?: boolean;
     /**
-     * Whether the board is selected as a favorite.
-     * @type {boolean}
+     * 
+     * @type {GetAllBoards200ResponseValuesInnerLocation}
      * @memberof GetAllBoards200ResponseValuesInner
      */
-    readonly favourite?: boolean;
+    location?: GetAllBoards200ResponseValuesInnerLocation;
+    /**
+     * The name of the board.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInner
+     */
+    name?: string;
+    /**
+     * The URL of the board.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInner
+     */
+    readonly self?: string;
+    /**
+     * The type the board.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInner
+     */
+    type?: string;
 }
 /**
- * The users and groups who own the board.
+ * 
  * @export
- * @interface GetAllBoards200ResponseValuesInnerAdminsAllOf
+ * @interface GetAllBoards200ResponseValuesInnerAdmins
  */
-export interface GetAllBoards200ResponseValuesInnerAdminsAllOf {
-    /**
-     * 
-     * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOf
-     */
-    users?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>;
+export interface GetAllBoards200ResponseValuesInnerAdmins {
     /**
      * 
      * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfGroupsInner>}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOf
+     * @memberof GetAllBoards200ResponseValuesInnerAdmins
      */
     groups?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfGroupsInner>;
+    /**
+     * 
+     * @type {Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>}
+     * @memberof GetAllBoards200ResponseValuesInnerAdmins
+     */
+    users?: Array<GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner>;
 }
 /**
  * 
@@ -3074,18 +2984,36 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfGroupsInner {
  */
 export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner {
     /**
+     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
+     */
+    accountId?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls}
+     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
+     */
+    avatarUrls?: GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls;
+    /**
+     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
+     */
+    displayName?: string;
+    /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The key of the user.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
      */
     key?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
-     */
-    self?: string;
     /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The username of the user.
@@ -3094,29 +3022,11 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner {
      */
     name?: string;
     /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The URL of the user.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
      */
-    displayName?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
-     */
-    active?: boolean;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
-     */
-    accountId?: string;
-    /**
-     * 
-     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner
-     */
-    avatarUrls?: GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls;
+    self?: string;
 }
 /**
  * The avatars of the user.
@@ -3125,6 +3035,12 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInner {
  */
 export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls {
     /**
+     * The URL of the user's 16x16 pixel avatar.
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
+     */
+    ["16x16"]?: string;
+    /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
@@ -3142,43 +3058,6 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUr
      * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
      */
     ["48x48"]?: string;
-    /**
-     * The URL of the user's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls
-     */
-    ["16x16"]?: string;
-}
-/**
- * 
- * @export
- * @interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf
- */
-export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf {
-    /**
-     * The URL of the user's 24x24 pixel avatar.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf
-     */
-    ["24x24"]?: string;
-    /**
-     * The URL of the user's 32x32 pixel avatar.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf
-     */
-    ["32x32"]?: string;
-    /**
-     * The URL of the user's 48x48 pixel avatar.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf
-     */
-    ["48x48"]?: string;
-    /**
-     * The URL of the user's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrlsAllOf
-     */
-    ["16x16"]?: string;
 }
 /**
  * The container that the board is located in.
@@ -3186,48 +3065,6 @@ export interface GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUr
  * @interface GetAllBoards200ResponseValuesInnerLocation
  */
 export interface GetAllBoards200ResponseValuesInnerLocation {
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    projectId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    userId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    userAccountId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    projectName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    projectKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetAllBoards200ResponseValuesInnerLocation
-     */
-    projectTypeKey?: string;
     /**
      * 
      * @type {string}
@@ -3239,7 +3076,49 @@ export interface GetAllBoards200ResponseValuesInnerLocation {
      * @type {string}
      * @memberof GetAllBoards200ResponseValuesInnerLocation
      */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
     name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    projectId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    projectName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    projectTypeKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    userAccountId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAllBoards200ResponseValuesInnerLocation
+     */
+    userId?: number;
 }
 /**
  * 
@@ -3247,6 +3126,12 @@ export interface GetAllBoards200ResponseValuesInnerLocation {
  * @interface GetAllQuickFilters200Response
  */
 export interface GetAllQuickFilters200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetAllQuickFilters200Response
+     */
+    isLast?: boolean;
     /**
      * 
      * @type {number}
@@ -3265,12 +3150,6 @@ export interface GetAllQuickFilters200Response {
      * @memberof GetAllQuickFilters200Response
      */
     total?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetAllQuickFilters200Response
-     */
-    isLast?: boolean;
     /**
      * 
      * @type {Array<GetAllQuickFilters200ResponseValuesInner>}
@@ -3289,19 +3168,19 @@ export interface GetAllQuickFilters200ResponseValuesInner {
      * @type {number}
      * @memberof GetAllQuickFilters200ResponseValuesInner
      */
-    id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAllQuickFilters200ResponseValuesInner
-     */
     boardId?: number;
     /**
      * 
      * @type {string}
      * @memberof GetAllQuickFilters200ResponseValuesInner
      */
-    name?: string;
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetAllQuickFilters200ResponseValuesInner
+     */
+    id?: number;
     /**
      * 
      * @type {string}
@@ -3313,7 +3192,7 @@ export interface GetAllQuickFilters200ResponseValuesInner {
      * @type {string}
      * @memberof GetAllQuickFilters200ResponseValuesInner
      */
-    description?: string;
+    name?: string;
     /**
      * 
      * @type {number}
@@ -3327,6 +3206,12 @@ export interface GetAllQuickFilters200ResponseValuesInner {
  * @interface GetBoardByFilterId200Response
  */
 export interface GetBoardByFilterId200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetBoardByFilterId200Response
+     */
+    isLast?: boolean;
     /**
      * 
      * @type {number}
@@ -3345,12 +3230,6 @@ export interface GetBoardByFilterId200Response {
      * @memberof GetBoardByFilterId200Response
      */
     total?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetBoardByFilterId200Response
-     */
-    isLast?: boolean;
     /**
      * 
      * @type {Array<GetBoardByFilterId200ResponseValuesInner>}
@@ -3375,62 +3254,153 @@ export interface GetBoardByFilterId200ResponseValuesInner {
      * @type {string}
      * @memberof GetBoardByFilterId200ResponseValuesInner
      */
-    self?: string;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof GetBoardByFilterId200ResponseValuesInner
      */
-    name?: string;
+    self?: string;
 }
+/**
+ * Data related to a specific component in a specific workspace that is affected by incidents.
+ * 
+ * @export
+ * @interface GetComponentById200Response
+ */
+export interface GetComponentById200Response {
+    /**
+     * The DevOpsComponentData schema version used for this devops component data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    schemaVersion: GetComponentById200ResponseSchemaVersionEnum;
+    /**
+     * The identifier for the DevOps Component. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this DevOps Component in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each DevOps Component and increment that on each update to Jira).
+     * 
+     * Updates for a DevOps Component that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof GetComponentById200Response
+     */
+    updateSequenceNumber: number;
+    /**
+     * The human-readable name for the DevOps Component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    name: string;
+    /**
+     * The human-readable name for the Provider that owns this DevOps Component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    providerName?: string;
+    /**
+     * A description of the DevOps Component in Markdown format. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this devops component, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the component in that project).
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    url: string;
+    /**
+     * A URL to display a logo representing this devops component, if available.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    avatarUrl: string;
+    /**
+     * The tier of the component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    tier: GetComponentById200ResponseTierEnum;
+    /**
+     * The type of the component. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    componentType: GetComponentById200ResponseComponentTypeEnum;
+    /**
+     * The last-updated timestamp to present to the user the last time the DevOps Component was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof GetComponentById200Response
+     */
+    lastUpdated: string;
+}
+
+
+/**
+ * @export
+ */
+export const GetComponentById200ResponseSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type GetComponentById200ResponseSchemaVersionEnum = typeof GetComponentById200ResponseSchemaVersionEnum[keyof typeof GetComponentById200ResponseSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const GetComponentById200ResponseTierEnum = {
+    _1: 'Tier 1',
+    _2: 'Tier 2',
+    _3: 'Tier 3',
+    _4: 'Tier 4'
+} as const;
+export type GetComponentById200ResponseTierEnum = typeof GetComponentById200ResponseTierEnum[keyof typeof GetComponentById200ResponseTierEnum];
+
+/**
+ * @export
+ */
+export const GetComponentById200ResponseComponentTypeEnum = {
+    Service: 'Service',
+    Application: 'Application',
+    Library: 'Library',
+    Capability: 'Capability',
+    CloudResource: 'Cloud resource',
+    DataPipeline: 'Data pipeline',
+    MachineLearningModel: 'Machine learning model',
+    UiElement: 'UI element',
+    Website: 'Website',
+    Other: 'Other'
+} as const;
+export type GetComponentById200ResponseComponentTypeEnum = typeof GetComponentById200ResponseComponentTypeEnum[keyof typeof GetComponentById200ResponseComponentTypeEnum];
+
 /**
  * 
  * @export
  * @interface GetConfiguration200Response
  */
 export interface GetConfiguration200Response {
-    /**
-     * 
-     * @type {number}
-     * @memberof GetConfiguration200Response
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetConfiguration200Response
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetConfiguration200Response
-     */
-    type?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetConfiguration200Response
-     */
-    self?: string;
-    /**
-     * 
-     * @type {CreateBoardRequestLocation}
-     * @memberof GetConfiguration200Response
-     */
-    location?: CreateBoardRequestLocation;
-    /**
-     * 
-     * @type {GetConfiguration200ResponseFilter}
-     * @memberof GetConfiguration200Response
-     */
-    filter?: GetConfiguration200ResponseFilter;
-    /**
-     * 
-     * @type {GetConfiguration200ResponseSubQuery}
-     * @memberof GetConfiguration200Response
-     */
-    subQuery?: GetConfiguration200ResponseSubQuery;
     /**
      * 
      * @type {GetConfiguration200ResponseColumnConfig}
@@ -3445,10 +3415,52 @@ export interface GetConfiguration200Response {
     estimation?: GetConfiguration200ResponseEstimation;
     /**
      * 
+     * @type {GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner}
+     * @memberof GetConfiguration200Response
+     */
+    filter?: GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetConfiguration200Response
+     */
+    id?: number;
+    /**
+     * 
+     * @type {CreateBoardRequestLocation}
+     * @memberof GetConfiguration200Response
+     */
+    location?: CreateBoardRequestLocation;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200Response
+     */
+    name?: string;
+    /**
+     * 
      * @type {GetConfiguration200ResponseRanking}
      * @memberof GetConfiguration200Response
      */
     ranking?: GetConfiguration200ResponseRanking;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200Response
+     */
+    self?: string;
+    /**
+     * 
+     * @type {GetConfiguration200ResponseSubQuery}
+     * @memberof GetConfiguration200Response
+     */
+    subQuery?: GetConfiguration200ResponseSubQuery;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200Response
+     */
+    type?: string;
 }
 /**
  * 
@@ -3477,16 +3489,10 @@ export interface GetConfiguration200ResponseColumnConfig {
 export interface GetConfiguration200ResponseColumnConfigColumnsInner {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetConfiguration200ResponseColumnConfigColumnsInner
      */
-    name?: string;
-    /**
-     * 
-     * @type {Array<GetConfiguration200ResponseFilter>}
-     * @memberof GetConfiguration200ResponseColumnConfigColumnsInner
-     */
-    statuses?: Array<GetConfiguration200ResponseFilter>;
+    max?: number;
     /**
      * 
      * @type {number}
@@ -3495,10 +3501,35 @@ export interface GetConfiguration200ResponseColumnConfigColumnsInner {
     min?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetConfiguration200ResponseColumnConfigColumnsInner
      */
-    max?: number;
+    name?: string;
+    /**
+     * 
+     * @type {Array<GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner>}
+     * @memberof GetConfiguration200ResponseColumnConfigColumnsInner
+     */
+    statuses?: Array<GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner
+ */
+export interface GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200ResponseColumnConfigColumnsInnerStatusesInner
+     */
+    self?: string;
 }
 /**
  * 
@@ -3508,16 +3539,16 @@ export interface GetConfiguration200ResponseColumnConfigColumnsInner {
 export interface GetConfiguration200ResponseEstimation {
     /**
      * 
-     * @type {string}
-     * @memberof GetConfiguration200ResponseEstimation
-     */
-    type?: string;
-    /**
-     * 
      * @type {GetConfiguration200ResponseEstimationField}
      * @memberof GetConfiguration200ResponseEstimation
      */
     field?: GetConfiguration200ResponseEstimationField;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetConfiguration200ResponseEstimation
+     */
+    type?: string;
 }
 /**
  * 
@@ -3530,32 +3561,13 @@ export interface GetConfiguration200ResponseEstimationField {
      * @type {string}
      * @memberof GetConfiguration200ResponseEstimationField
      */
-    fieldId?: string;
+    displayName?: string;
     /**
      * 
      * @type {string}
      * @memberof GetConfiguration200ResponseEstimationField
      */
-    displayName?: string;
-}
-/**
- * 
- * @export
- * @interface GetConfiguration200ResponseFilter
- */
-export interface GetConfiguration200ResponseFilter {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetConfiguration200ResponseFilter
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetConfiguration200ResponseFilter
-     */
-    self?: string;
+    fieldId?: string;
 }
 /**
  * 
@@ -3619,31 +3631,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInner {
      * @type {string}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
-    state?: GetFeaturesForBoard200ResponseFeaturesInnerStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
-     */
-    localisedName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
-     */
-    localisedDescription?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
-     */
-    learnMoreLink?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
-     */
-    imageUri?: string;
+    featureId?: string;
     /**
      * 
      * @type {string}
@@ -3655,7 +3643,37 @@ export interface GetFeaturesForBoard200ResponseFeaturesInner {
      * @type {string}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
+    imageUri?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
+     */
+    learnMoreArticleId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
+     */
+    learnMoreLink?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
+     */
+    localisedDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
+     */
     localisedGroup?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
+     */
+    localisedName?: string;
     /**
      * 
      * @type {Array<GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner>}
@@ -3667,13 +3685,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInner {
      * @type {string}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
-    featureId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetFeaturesForBoard200ResponseFeaturesInner
-     */
-    learnMoreArticleId?: string;
+    state?: GetFeaturesForBoard200ResponseFeaturesInnerStateEnum;
     /**
      * 
      * @type {boolean}
@@ -3690,18 +3702,33 @@ export const GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum = {
     SimpleRoadmap: 'SIMPLE_ROADMAP',
     Backlog: 'BACKLOG',
     Sprints: 'SPRINTS',
+    Calendar: 'CALENDAR',
     Devtools: 'DEVTOOLS',
     Reports: 'REPORTS',
     Estimation: 'ESTIMATION',
     Pages: 'PAGES',
     Code: 'CODE',
+    Security: 'SECURITY',
+    Requests: 'REQUESTS',
+    Incidents: 'INCIDENTS',
     Releases: 'RELEASES',
     Deployments: 'DEPLOYMENTS',
     IssueNavigator: 'ISSUE_NAVIGATOR',
     OnCallSchedule: 'ON_CALL_SCHEDULE',
-    Board: 'BOARD'
+    Board: 'BOARD',
+    Goals: 'GOALS',
+    ListView: 'LIST_VIEW'
 } as const;
 export type GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum = typeof GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum[keyof typeof GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum];
+
+/**
+ * @export
+ */
+export const GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum = {
+    Basic: 'BASIC',
+    Estimation: 'ESTIMATION'
+} as const;
+export type GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum = typeof GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum[keyof typeof GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum];
 
 /**
  * @export
@@ -3714,15 +3741,6 @@ export const GetFeaturesForBoard200ResponseFeaturesInnerStateEnum = {
 export type GetFeaturesForBoard200ResponseFeaturesInnerStateEnum = typeof GetFeaturesForBoard200ResponseFeaturesInnerStateEnum[keyof typeof GetFeaturesForBoard200ResponseFeaturesInnerStateEnum];
 
 /**
- * @export
- */
-export const GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum = {
-    Basic: 'BASIC',
-    Estimation: 'ESTIMATION'
-} as const;
-export type GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum = typeof GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum[keyof typeof GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum];
-
-/**
  * 
  * @export
  * @interface GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner
@@ -3733,7 +3751,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimatio
      * @type {string}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner
      */
-    value?: GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum;
+    localisedDescription?: string;
     /**
      * 
      * @type {string}
@@ -3745,7 +3763,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimatio
      * @type {string}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner
      */
-    localisedDescription?: string;
+    value?: GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum;
 }
 
 
@@ -3757,6 +3775,131 @@ export const GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTyp
     OriginalEstimate: 'ORIGINAL_ESTIMATE'
 } as const;
 export type GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum = typeof GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum[keyof typeof GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum];
+
+/**
+ * Data related to a specific incident in a specific container that the incident is present in. Must specify at least one association to a component.
+ * 
+ * @export
+ * @interface GetIncidentById200Response
+ */
+export interface GetIncidentById200Response {
+    /**
+     * The IncidentData schema version used for this incident data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    schemaVersion: GetIncidentById200ResponseSchemaVersionEnum;
+    /**
+     * The identifier for the Incident. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Incident in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Incident and increment that on each update to Jira).
+     * 
+     * Updates for a Incident that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof GetIncidentById200Response
+     */
+    updateSequenceNumber: number;
+    /**
+     * The IDs of the Components impacted by this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<string>}
+     * @memberof GetIncidentById200Response
+     */
+    affectedComponents: Array<string>;
+    /**
+     * The human-readable summary for the Incident. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    summary: string;
+    /**
+     * A description of the issue in Markdown format. Will be shown in the UI and used when creating Jira Issues.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this incident, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the incident in that project).
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    url: string;
+    /**
+     * The timestamp to present to the user that shows when the Incident was raised.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    createdDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Incident was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    lastUpdated: string;
+    /**
+     * 
+     * @type {IncidentSeverity}
+     * @memberof GetIncidentById200Response
+     */
+    severity?: IncidentSeverity;
+    /**
+     * The current status of the Incident.
+     * 
+     * @type {string}
+     * @memberof GetIncidentById200Response
+     */
+    status: GetIncidentById200ResponseStatusEnum;
+    /**
+     * The IDs of the Jira issues related to this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<Associations>}
+     * @memberof GetIncidentById200Response
+     */
+    associations?: Array<Associations>;
+}
+
+
+/**
+ * @export
+ */
+export const GetIncidentById200ResponseSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type GetIncidentById200ResponseSchemaVersionEnum = typeof GetIncidentById200ResponseSchemaVersionEnum[keyof typeof GetIncidentById200ResponseSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const GetIncidentById200ResponseStatusEnum = {
+    Open: 'open',
+    Resolved: 'resolved',
+    Unknown: 'unknown'
+} as const;
+export type GetIncidentById200ResponseStatusEnum = typeof GetIncidentById200ResponseStatusEnum[keyof typeof GetIncidentById200ResponseStatusEnum];
 
 /**
  * 
@@ -3771,6 +3914,126 @@ export interface GetReportsForBoard200Response {
      */
     reports?: Array<object>;
 }
+/**
+ * Data related to a specific post-incident review. Must specify at least one association to an incident.
+ * 
+ * @export
+ * @interface GetReviewById200Response
+ */
+export interface GetReviewById200Response {
+    /**
+     * The PostIncidentReviewData schema version used for this post-incident review data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    schemaVersion: GetReviewById200ResponseSchemaVersionEnum;
+    /**
+     * The identifier for the Review. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Review in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Review and increment that on each update to Jira).
+     * 
+     * Updates for a Review that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof GetReviewById200Response
+     */
+    updateSequenceNumber: number;
+    /**
+     * The IDs of the Incidents covered by this Review. Must be unique for a given Provider.
+     * 
+     * @type {Array<string>}
+     * @memberof GetReviewById200Response
+     */
+    reviews: Array<string>;
+    /**
+     * The human-readable summary for the Post-Incident Review. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    summary: string;
+    /**
+     * A description of the review in Markdown format. Will be shown in the UI and used when creating Jira Issues.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this review, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the review in that project).
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    url: string;
+    /**
+     * The timestamp to present to the user that shows when the Review was raised.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    createdDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Review was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    lastUpdated: string;
+    /**
+     * The current status of the Post-Incident Review.
+     * 
+     * @type {string}
+     * @memberof GetReviewById200Response
+     */
+    status: GetReviewById200ResponseStatusEnum;
+    /**
+     * The IDs of the Jira issues related to this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<Associations>}
+     * @memberof GetReviewById200Response
+     */
+    associations?: Array<Associations>;
+}
+
+
+/**
+ * @export
+ */
+export const GetReviewById200ResponseSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type GetReviewById200ResponseSchemaVersionEnum = typeof GetReviewById200ResponseSchemaVersionEnum[keyof typeof GetReviewById200ResponseSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const GetReviewById200ResponseStatusEnum = {
+    InProgress: 'in progress',
+    OutstandingActions: 'outstanding actions',
+    Completed: 'completed',
+    Unknown: 'unknown'
+} as const;
+export type GetReviewById200ResponseStatusEnum = typeof GetReviewById200ResponseStatusEnum[keyof typeof GetReviewById200ResponseStatusEnum];
+
 /**
  * 
  * @export
@@ -3798,11 +4061,29 @@ export interface GroupBean {
 export interface HistoryMetadata {
     [key: string]: any | any;
     /**
-     * The type of the history record.
+     * The activity described in the history record.
      * @type {string}
      * @memberof HistoryMetadata
      */
-    type?: string;
+    activityDescription?: string;
+    /**
+     * The key of the activity described in the history record.
+     * @type {string}
+     * @memberof HistoryMetadata
+     */
+    activityDescriptionKey?: string;
+    /**
+     * 
+     * @type {ChangelogHistoryMetadataAllOfActor}
+     * @memberof HistoryMetadata
+     */
+    actor?: ChangelogHistoryMetadataAllOfActor;
+    /**
+     * 
+     * @type {ChangelogHistoryMetadataAllOfCause}
+     * @memberof HistoryMetadata
+     */
+    cause?: ChangelogHistoryMetadataAllOfCause;
     /**
      * The description of the history record.
      * @type {string}
@@ -3816,18 +4097,6 @@ export interface HistoryMetadata {
      */
     descriptionKey?: string;
     /**
-     * The activity described in the history record.
-     * @type {string}
-     * @memberof HistoryMetadata
-     */
-    activityDescription?: string;
-    /**
-     * The key of the activity described in the history record.
-     * @type {string}
-     * @memberof HistoryMetadata
-     */
-    activityDescriptionKey?: string;
-    /**
      * The description of the email address associated the history record.
      * @type {string}
      * @memberof HistoryMetadata
@@ -3840,11 +4109,11 @@ export interface HistoryMetadata {
      */
     emailDescriptionKey?: string;
     /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfActor}
+     * Additional arbitrary information about the history record.
+     * @type {{ [key: string]: string; }}
      * @memberof HistoryMetadata
      */
-    actor?: ChangelogHistoryMetadataAllOfActor;
+    extraData?: { [key: string]: string; };
     /**
      * 
      * @type {ChangelogHistoryMetadataAllOfGenerator}
@@ -3852,17 +4121,11 @@ export interface HistoryMetadata {
      */
     generator?: ChangelogHistoryMetadataAllOfGenerator;
     /**
-     * 
-     * @type {ChangelogHistoryMetadataAllOfCause}
+     * The type of the history record.
+     * @type {string}
      * @memberof HistoryMetadata
      */
-    cause?: ChangelogHistoryMetadataAllOfCause;
-    /**
-     * Additional arbitrary information about the history record.
-     * @type {{ [key: string]: string; }}
-     * @memberof HistoryMetadata
-     */
-    extraData?: { [key: string]: string; };
+    type?: string;
 }
 /**
  * Details of user or system associated with a issue history metadata item.
@@ -3872,11 +4135,11 @@ export interface HistoryMetadata {
 export interface HistoryMetadataParticipant {
     [key: string]: any | any;
     /**
-     * The ID of the user or system associated with a history record.
+     * The URL to an avatar for the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataParticipant
      */
-    id?: string;
+    avatarUrl?: string;
     /**
      * The display name of the user or system associated with a history record.
      * @type {string}
@@ -3890,17 +4153,17 @@ export interface HistoryMetadataParticipant {
      */
     displayNameKey?: string;
     /**
+     * The ID of the user or system associated with a history record.
+     * @type {string}
+     * @memberof HistoryMetadataParticipant
+     */
+    id?: string;
+    /**
      * The type of the user or system associated with a history record.
      * @type {string}
      * @memberof HistoryMetadataParticipant
      */
     type?: string;
-    /**
-     * The URL to an avatar for the user or system associated with a history record.
-     * @type {string}
-     * @memberof HistoryMetadataParticipant
-     */
-    avatarUrl?: string;
     /**
      * The URL of the user or system associated with a history record.
      * @type {string}
@@ -3910,35 +4173,188 @@ export interface HistoryMetadataParticipant {
 }
 /**
  * The identifiers object that contains public/private information identifying the Vulnerability.
+ * 
  * @export
  * @interface Identifier
  */
 export interface Identifier {
     /**
      * The display name of the Vulnerability identified.
+     * 
      * @type {string}
      * @memberof Identifier
      */
     displayName: string;
     /**
      * A URL users can use to link to the definition of the Vulnerability identified.
+     * 
      * @type {string}
      * @memberof Identifier
      */
     url: string;
 }
 /**
+ * Data related to a specific incident in a specific container that the incident is present in. Must specify at least one association to a component.
+ * 
+ * @export
+ * @interface Incident
+ */
+export interface Incident {
+    /**
+     * The IncidentData schema version used for this incident data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    schemaVersion: IncidentSchemaVersionEnum;
+    /**
+     * The identifier for the Incident. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Incident in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Incident and increment that on each update to Jira).
+     * 
+     * Updates for a Incident that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof Incident
+     */
+    updateSequenceNumber: number;
+    /**
+     * The IDs of the Components impacted by this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<string>}
+     * @memberof Incident
+     */
+    affectedComponents: Array<string>;
+    /**
+     * The human-readable summary for the Incident. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    summary: string;
+    /**
+     * A description of the issue in Markdown format. Will be shown in the UI and used when creating Jira Issues.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this incident, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the incident in that project).
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    url: string;
+    /**
+     * The timestamp to present to the user that shows when the Incident was raised.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    createdDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Incident was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    lastUpdated: string;
+    /**
+     * 
+     * @type {IncidentSeverity}
+     * @memberof Incident
+     */
+    severity?: IncidentSeverity;
+    /**
+     * The current status of the Incident.
+     * 
+     * @type {string}
+     * @memberof Incident
+     */
+    status: IncidentStatusEnum;
+    /**
+     * The IDs of the Jira issues related to this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<Associations>}
+     * @memberof Incident
+     */
+    associations?: Array<Associations>;
+}
+
+
+/**
+ * @export
+ */
+export const IncidentSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type IncidentSchemaVersionEnum = typeof IncidentSchemaVersionEnum[keyof typeof IncidentSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const IncidentStatusEnum = {
+    Open: 'open',
+    Resolved: 'resolved',
+    Unknown: 'unknown'
+} as const;
+export type IncidentStatusEnum = typeof IncidentStatusEnum[keyof typeof IncidentStatusEnum];
+
+/**
+ * Severity information for a single Incident.
+ * 
+ * This is the severity information that will be presented to the user on e.g. the Jira Incidents screen.
+ * 
+ * @export
+ * @interface IncidentSeverity
+ */
+export interface IncidentSeverity {
+    /**
+     * The severity level of the Incident with P1 being the highest and P5 being the lowest
+     * @type {string}
+     * @memberof IncidentSeverity
+     */
+    level: IncidentSeverityLevelEnum;
+}
+
+
+/**
+ * @export
+ */
+export const IncidentSeverityLevelEnum = {
+    P1: 'P1',
+    P2: 'P2',
+    P3: 'P3',
+    P4: 'P4',
+    P5: 'P5',
+    Unknown: 'unknown'
+} as const;
+export type IncidentSeverityLevelEnum = typeof IncidentSeverityLevelEnum[keyof typeof IncidentSeverityLevelEnum];
+
+/**
  * 
  * @export
  * @interface IncludedFields
  */
 export interface IncludedFields {
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof IncludedFields
-     */
-    included?: Array<string>;
     /**
      * 
      * @type {Set<string>}
@@ -3951,6 +4367,12 @@ export interface IncludedFields {
      * @memberof IncludedFields
      */
     excluded?: Array<string>;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof IncludedFields
+     */
+    included?: Array<string>;
 }
 /**
  * 
@@ -3972,65 +4394,11 @@ export interface IssueAssignRequestBean {
  */
 export interface IssueBean {
     /**
-     * Expand options that include additional issue details in the response.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly expand?: string;
-    /**
-     * The ID of the issue.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly id?: string;
-    /**
-     * The URL of the issue details.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly self?: string;
-    /**
-     * The key of the issue.
-     * @type {string}
-     * @memberof IssueBean
-     */
-    readonly key?: string;
-    /**
-     * The rendered value of each field present on the issue.
-     * @type {{ [key: string]: any; }}
-     * @memberof IssueBean
-     */
-    readonly renderedFields?: { [key: string]: any; };
-    /**
-     * Details of the issue properties identified in the request.
-     * @type {{ [key: string]: any; }}
-     * @memberof IssueBean
-     */
-    readonly properties?: { [key: string]: any; };
-    /**
-     * The ID and name of each field present on the issue.
-     * @type {{ [key: string]: string; }}
-     * @memberof IssueBean
-     */
-    readonly names?: { [key: string]: string; };
-    /**
-     * The schema describing each field present on the issue.
-     * @type {{ [key: string]: FieldMetadataSchemaAllOf; }}
-     * @memberof IssueBean
-     */
-    readonly schema?: { [key: string]: FieldMetadataSchemaAllOf; };
-    /**
-     * The transitions that can be performed on the issue.
-     * @type {Array<IssueBeanTransitionsInner>}
-     * @memberof IssueBean
-     */
-    readonly transitions?: Array<IssueBeanTransitionsInner>;
-    /**
      * 
-     * @type {IssueBeanOperations}
+     * @type {IssueBeanChangelog}
      * @memberof IssueBean
      */
-    operations?: IssueBeanOperations;
+    changelog?: IssueBeanChangelog;
     /**
      * 
      * @type {IssueBeanEditmeta}
@@ -4038,17 +4406,17 @@ export interface IssueBean {
      */
     editmeta?: IssueBeanEditmeta;
     /**
-     * 
-     * @type {IssueBeanChangelog}
+     * Expand options that include additional issue details in the response.
+     * @type {string}
      * @memberof IssueBean
      */
-    changelog?: IssueBeanChangelog;
+    readonly expand?: string;
     /**
-     * The versions of each field on the issue.
-     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * 
+     * @type {{ [key: string]: any; }}
      * @memberof IssueBean
      */
-    readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
+    fields?: { [key: string]: any; };
     /**
      * 
      * @type {IssueBeanFieldsToInclude}
@@ -4056,11 +4424,65 @@ export interface IssueBean {
      */
     fieldsToInclude?: IssueBeanFieldsToInclude;
     /**
-     * 
+     * The ID of the issue.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly id?: string;
+    /**
+     * The key of the issue.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly key?: string;
+    /**
+     * The ID and name of each field present on the issue.
+     * @type {{ [key: string]: string; }}
+     * @memberof IssueBean
+     */
+    readonly names?: { [key: string]: string; };
+    /**
+     * The operations that can be performed on the issue.
+     * @type {Operations}
+     * @memberof IssueBean
+     */
+    readonly operations?: Operations;
+    /**
+     * Details of the issue properties identified in the request.
      * @type {{ [key: string]: any; }}
      * @memberof IssueBean
      */
-    fields?: { [key: string]: any; };
+    readonly properties?: { [key: string]: any; };
+    /**
+     * The rendered value of each field present on the issue.
+     * @type {{ [key: string]: any; }}
+     * @memberof IssueBean
+     */
+    readonly renderedFields?: { [key: string]: any; };
+    /**
+     * The schema describing each field present on the issue.
+     * @type {{ [key: string]: IssueBeanSchemaValue; }}
+     * @memberof IssueBean
+     */
+    readonly schema?: { [key: string]: IssueBeanSchemaValue; };
+    /**
+     * The URL of the issue details.
+     * @type {string}
+     * @memberof IssueBean
+     */
+    readonly self?: string;
+    /**
+     * The transitions that can be performed on the issue.
+     * @type {Array<IssueBeanTransitionsInner>}
+     * @memberof IssueBean
+     */
+    readonly transitions?: Array<IssueBeanTransitionsInner>;
+    /**
+     * The versions of each field on the issue.
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof IssueBean
+     */
+    readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
 }
 /**
  * Details of changelogs associated with the issue.
@@ -4069,11 +4491,11 @@ export interface IssueBean {
  */
 export interface IssueBeanChangelog {
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
+     * The list of changelogs.
+     * @type {Array<IssueBeanChangelogAllOfHistoriesInner>}
      * @memberof IssueBeanChangelog
      */
-    readonly startAt?: number;
+    readonly histories?: Array<IssueBeanChangelogAllOfHistoriesInner>;
     /**
      * The maximum number of results that could be on the page.
      * @type {number}
@@ -4081,61 +4503,24 @@ export interface IssueBeanChangelog {
      */
     readonly maxResults?: number;
     /**
-     * The number of results on the page.
-     * @type {number}
-     * @memberof IssueBeanChangelog
-     */
-    readonly total?: number;
-    /**
-     * The list of changelogs.
-     * @type {Array<IssueBeanChangelogAllOfHistoriesInner>}
-     * @memberof IssueBeanChangelog
-     */
-    readonly histories?: Array<IssueBeanChangelogAllOfHistoriesInner>;
-}
-/**
- * A page of changelogs.
- * @export
- * @interface IssueBeanChangelogAllOf
- */
-export interface IssueBeanChangelogAllOf {
-    /**
      * The index of the first item returned on the page.
      * @type {number}
-     * @memberof IssueBeanChangelogAllOf
+     * @memberof IssueBeanChangelog
      */
     readonly startAt?: number;
     /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof IssueBeanChangelogAllOf
-     */
-    readonly maxResults?: number;
-    /**
      * The number of results on the page.
      * @type {number}
-     * @memberof IssueBeanChangelogAllOf
+     * @memberof IssueBeanChangelog
      */
     readonly total?: number;
-    /**
-     * The list of changelogs.
-     * @type {Array<IssueBeanChangelogAllOfHistoriesInner>}
-     * @memberof IssueBeanChangelogAllOf
-     */
-    readonly histories?: Array<IssueBeanChangelogAllOfHistoriesInner>;
 }
 /**
- * A changelog.
+ * A log of changes made to issue fields. Changelogs related to workflow associations are currently being deprecated.
  * @export
  * @interface IssueBeanChangelogAllOfHistoriesInner
  */
 export interface IssueBeanChangelogAllOfHistoriesInner {
-    /**
-     * The ID of the changelog.
-     * @type {string}
-     * @memberof IssueBeanChangelogAllOfHistoriesInner
-     */
-    readonly id?: string;
     /**
      * 
      * @type {ChangelogAuthor}
@@ -4149,17 +4534,23 @@ export interface IssueBeanChangelogAllOfHistoriesInner {
      */
     readonly created?: string;
     /**
-     * The list of items changed.
-     * @type {Array<ChangelogItemsInner>}
-     * @memberof IssueBeanChangelogAllOfHistoriesInner
-     */
-    readonly items?: Array<ChangelogItemsInner>;
-    /**
      * 
      * @type {ChangelogHistoryMetadata}
      * @memberof IssueBeanChangelogAllOfHistoriesInner
      */
     historyMetadata?: ChangelogHistoryMetadata;
+    /**
+     * The ID of the changelog.
+     * @type {string}
+     * @memberof IssueBeanChangelogAllOfHistoriesInner
+     */
+    readonly id?: string;
+    /**
+     * The list of items changed.
+     * @type {Array<ChangelogItemsInner>}
+     * @memberof IssueBeanChangelogAllOfHistoriesInner
+     */
+    readonly items?: Array<ChangelogItemsInner>;
 }
 /**
  * The metadata for the fields on the issue that can be amended.
@@ -4169,23 +4560,77 @@ export interface IssueBeanChangelogAllOfHistoriesInner {
 export interface IssueBeanEditmeta {
     /**
      * 
-     * @type {{ [key: string]: IssueBeanTransitionsInnerFieldsValue; }}
+     * @type {{ [key: string]: IssueBeanEditmetaAllOfFieldsValue; }}
      * @memberof IssueBeanEditmeta
      */
-    readonly fields?: { [key: string]: IssueBeanTransitionsInnerFieldsValue; };
+    readonly fields?: { [key: string]: IssueBeanEditmetaAllOfFieldsValue; };
 }
 /**
- * A list of editable field details.
+ * The metadata describing an issue field.
  * @export
- * @interface IssueBeanEditmetaAllOf
+ * @interface IssueBeanEditmetaAllOfFieldsValue
  */
-export interface IssueBeanEditmetaAllOf {
+export interface IssueBeanEditmetaAllOfFieldsValue {
+    /**
+     * The list of values allowed in the field.
+     * @type {Array<any>}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly allowedValues?: Array<any>;
+    /**
+     * The URL that can be used to automatically complete the field.
+     * @type {string}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly autoCompleteUrl?: string;
+    /**
+     * The configuration properties.
+     * @type {{ [key: string]: any; }}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly configuration?: { [key: string]: any; };
+    /**
+     * The default value of the field.
+     * @type {any}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly defaultValue?: any | null;
+    /**
+     * Whether the field has a default value.
+     * @type {boolean}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly hasDefaultValue?: boolean;
+    /**
+     * The key of the field.
+     * @type {string}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly key: string;
+    /**
+     * The name of the field.
+     * @type {string}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly name: string;
+    /**
+     * The list of operations that can be performed on the field.
+     * @type {Array<string>}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly operations: Array<string>;
+    /**
+     * Whether the field is required.
+     * @type {boolean}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
+     */
+    readonly required: boolean;
     /**
      * 
-     * @type {{ [key: string]: IssueBeanTransitionsInnerFieldsValue; }}
-     * @memberof IssueBeanEditmetaAllOf
+     * @type {FieldMetadataSchema}
+     * @memberof IssueBeanEditmetaAllOfFieldsValue
      */
-    readonly fields?: { [key: string]: IssueBeanTransitionsInnerFieldsValue; };
+    schema: FieldMetadataSchema;
 }
 /**
  * 
@@ -4198,12 +4643,6 @@ export interface IssueBeanFieldsToInclude {
      * @type {Set<string>}
      * @memberof IssueBeanFieldsToInclude
      */
-    included?: Array<string>;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof IssueBeanFieldsToInclude
-     */
     actuallyIncluded?: Array<string>;
     /**
      * 
@@ -4211,19 +4650,55 @@ export interface IssueBeanFieldsToInclude {
      * @memberof IssueBeanFieldsToInclude
      */
     excluded?: Array<string>;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof IssueBeanFieldsToInclude
+     */
+    included?: Array<string>;
 }
 /**
- * The operations that can be performed on the issue.
+ * The schema of a field.
  * @export
- * @interface IssueBeanOperations
+ * @interface IssueBeanSchemaValue
  */
-export interface IssueBeanOperations {
+export interface IssueBeanSchemaValue {
     /**
-     * Details of the link groups defining issue operations.
-     * @type {Array<LinkGroup>}
-     * @memberof IssueBeanOperations
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
+     * @memberof IssueBeanSchemaValue
      */
-    readonly linkGroups?: Array<LinkGroup>;
+    readonly configuration?: { [key: string]: any; };
+    /**
+     * If the field is a custom field, the URI of the field.
+     * @type {string}
+     * @memberof IssueBeanSchemaValue
+     */
+    readonly custom?: string;
+    /**
+     * If the field is a custom field, the custom ID of the field.
+     * @type {number}
+     * @memberof IssueBeanSchemaValue
+     */
+    readonly customId?: number;
+    /**
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
+     * @memberof IssueBeanSchemaValue
+     */
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof IssueBeanSchemaValue
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof IssueBeanSchemaValue
+     */
+    readonly type: string;
 }
 /**
  * Details of an issue transition.
@@ -4233,23 +4708,17 @@ export interface IssueBeanOperations {
 export interface IssueBeanTransitionsInner {
     [key: string]: any | any;
     /**
-     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * Expand options that include additional transition details in the response.
      * @type {string}
      * @memberof IssueBeanTransitionsInner
      */
-    id?: string;
+    readonly expand?: string;
     /**
-     * The name of the issue transition.
-     * @type {string}
+     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
+     * @type {{ [key: string]: IssueBeanEditmetaAllOfFieldsValue; }}
      * @memberof IssueBeanTransitionsInner
      */
-    readonly name?: string;
-    /**
-     * 
-     * @type {IssueBeanTransitionsInnerTo}
-     * @memberof IssueBeanTransitionsInner
-     */
-    to?: IssueBeanTransitionsInnerTo;
+    readonly fields?: { [key: string]: IssueBeanEditmetaAllOfFieldsValue; };
     /**
      * Whether there is a screen associated with the issue transition.
      * @type {boolean}
@@ -4257,17 +4726,11 @@ export interface IssueBeanTransitionsInner {
      */
     readonly hasScreen?: boolean;
     /**
-     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
-     * @type {boolean}
+     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * @type {string}
      * @memberof IssueBeanTransitionsInner
      */
-    readonly isGlobal?: boolean;
-    /**
-     * Whether this is the initial issue transition for the workflow.
-     * @type {boolean}
-     * @memberof IssueBeanTransitionsInner
-     */
-    readonly isInitial?: boolean;
+    id?: string;
     /**
      * Whether the transition is available to be performed.
      * @type {boolean}
@@ -4281,90 +4744,35 @@ export interface IssueBeanTransitionsInner {
      */
     readonly isConditional?: boolean;
     /**
-     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
-     * @type {{ [key: string]: IssueBeanTransitionsInnerFieldsValue; }}
+     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
+     * @type {boolean}
      * @memberof IssueBeanTransitionsInner
      */
-    readonly fields?: { [key: string]: IssueBeanTransitionsInnerFieldsValue; };
+    readonly isGlobal?: boolean;
     /**
-     * Expand options that include additional transition details in the response.
-     * @type {string}
+     * Whether this is the initial issue transition for the workflow.
+     * @type {boolean}
      * @memberof IssueBeanTransitionsInner
      */
-    readonly expand?: string;
+    readonly isInitial?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof IssueBeanTransitionsInner
      */
     looped?: boolean;
-}
-/**
- * The metadata describing an issue field.
- * @export
- * @interface IssueBeanTransitionsInnerFieldsValue
- */
-export interface IssueBeanTransitionsInnerFieldsValue {
     /**
-     * Whether the field is required.
-     * @type {boolean}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
+     * The name of the issue transition.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInner
      */
-    readonly required: boolean;
+    readonly name?: string;
     /**
      * 
-     * @type {FieldMetadataSchema}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
+     * @type {IssueBeanTransitionsInnerTo}
+     * @memberof IssueBeanTransitionsInner
      */
-    schema: FieldMetadataSchema;
-    /**
-     * The name of the field.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly name: string;
-    /**
-     * The key of the field.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly key: string;
-    /**
-     * The URL that can be used to automatically complete the field.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly autoCompleteUrl?: string;
-    /**
-     * Whether the field has a default value.
-     * @type {boolean}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly hasDefaultValue?: boolean;
-    /**
-     * The list of operations that can be performed on the field.
-     * @type {Array<string>}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly operations: Array<string>;
-    /**
-     * The list of values allowed in the field.
-     * @type {Array<any>}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly allowedValues?: Array<any>;
-    /**
-     * The default value of the field.
-     * @type {any}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly defaultValue?: any | null;
-    /**
-     * The configuration properties.
-     * @type {{ [key: string]: any; }}
-     * @memberof IssueBeanTransitionsInnerFieldsValue
-     */
-    readonly configuration?: { [key: string]: any; };
+    to?: IssueBeanTransitionsInnerTo;
 }
 /**
  * Details of the issue status after the transition.
@@ -4373,12 +4781,6 @@ export interface IssueBeanTransitionsInnerFieldsValue {
  */
 export interface IssueBeanTransitionsInnerTo {
     /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerTo
-     */
-    readonly self?: string;
-    /**
      * The description of the status.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerTo
@@ -4391,17 +4793,29 @@ export interface IssueBeanTransitionsInnerTo {
      */
     readonly iconUrl?: string;
     /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerTo
+     */
+    readonly id?: string;
+    /**
      * The name of the status.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerTo
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScope}
+     * @memberof IssueBeanTransitionsInnerTo
+     */
+    scope?: IssueBeanTransitionsInnerToAllOfScope;
+    /**
+     * The URL of the status.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerTo
      */
-    readonly id?: string;
+    readonly self?: string;
     /**
      * 
      * @type {IssueBeanTransitionsInnerToAllOfStatusCategory}
@@ -4410,48 +4824,163 @@ export interface IssueBeanTransitionsInnerTo {
     statusCategory?: IssueBeanTransitionsInnerToAllOfStatusCategory;
 }
 /**
- * A status.
+ * The scope of the field.
  * @export
- * @interface IssueBeanTransitionsInnerToAllOf
+ * @interface IssueBeanTransitionsInnerToAllOfScope
  */
-export interface IssueBeanTransitionsInnerToAllOf {
-    [key: string]: any | any;
+export interface IssueBeanTransitionsInnerToAllOfScope {
     /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProject}
+     * @memberof IssueBeanTransitionsInnerToAllOfScope
      */
-    readonly self?: string;
+    project?: IssueBeanTransitionsInnerToAllOfScopeAllOfProject;
     /**
-     * The description of the status.
+     * The type of scope.
      * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * @memberof IssueBeanTransitionsInnerToAllOfScope
      */
-    readonly description?: string;
+    readonly type?: IssueBeanTransitionsInnerToAllOfScopeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const IssueBeanTransitionsInnerToAllOfScopeTypeEnum = {
+    Project: 'PROJECT',
+    Template: 'TEMPLATE'
+} as const;
+export type IssueBeanTransitionsInnerToAllOfScopeTypeEnum = typeof IssueBeanTransitionsInnerToAllOfScopeTypeEnum[keyof typeof IssueBeanTransitionsInnerToAllOfScopeTypeEnum];
+
+/**
+ * The project the item has scope in.
+ * @export
+ * @interface IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+ */
+export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProject {
     /**
-     * The URL of the icon used to represent the status.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
      */
-    readonly iconUrl?: string;
+    avatarUrls?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls;
     /**
-     * The name of the status.
+     * The ID of the project.
      * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    id?: string;
+    /**
+     * The key of the project.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    readonly key?: string;
+    /**
+     * The name of the project.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    projectCategory?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory;
+    /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
      * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    readonly projectTypeKey?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum;
+    /**
+     * The URL of the project details.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    readonly self?: string;
+    /**
+     * Whether or not the project is simplified.
+     * @type {boolean}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
+     */
+    readonly simplified?: boolean;
+}
+
+
+/**
+ * @export
+ */
+export const IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum = {
+    Software: 'software',
+    ServiceDesk: 'service_desk',
+    Business: 'business'
+} as const;
+export type IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum = typeof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum[keyof typeof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum];
+
+/**
+ * The URLs of the project's avatars.
+ * @export
+ * @interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
+ */
+export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls {
+    /**
+     * The URL of the item's 16x16 pixel avatar.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
+     */
+    ["16x16"]?: string;
+    /**
+     * The URL of the item's 24x24 pixel avatar.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
+     */
+    ["24x24"]?: string;
+    /**
+     * The URL of the item's 32x32 pixel avatar.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
+     */
+    ["32x32"]?: string;
+    /**
+     * The URL of the item's 48x48 pixel avatar.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls
+     */
+    ["48x48"]?: string;
+}
+/**
+ * The category the project belongs to.
+ * @export
+ * @interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory
+ */
+export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory {
+    /**
+     * The name of the project category.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory
+     */
+    readonly description?: string;
+    /**
+     * The ID of the project category.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory
      */
     readonly id?: string;
     /**
-     * 
-     * @type {IssueBeanTransitionsInnerToAllOfStatusCategory}
-     * @memberof IssueBeanTransitionsInnerToAllOf
+     * The description of the project category.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory
      */
-    statusCategory?: IssueBeanTransitionsInnerToAllOfStatusCategory;
+    readonly name?: string;
+    /**
+     * The URL of the project category.
+     * @type {string}
+     * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory
+     */
+    readonly self?: string;
 }
 /**
  * The category assigned to the status.
@@ -4460,11 +4989,11 @@ export interface IssueBeanTransitionsInnerToAllOf {
  */
 export interface IssueBeanTransitionsInnerToAllOfStatusCategory {
     /**
-     * The URL of the status category.
+     * The name of the color used to represent the status category.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfStatusCategory
      */
-    readonly self?: string;
+    readonly colorName?: string;
     /**
      * The ID of the status category.
      * @type {number}
@@ -4478,64 +5007,28 @@ export interface IssueBeanTransitionsInnerToAllOfStatusCategory {
      */
     readonly key?: string;
     /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategory
-     */
-    readonly colorName?: string;
-    /**
      * The name of the status category.
      * @type {string}
      * @memberof IssueBeanTransitionsInnerToAllOfStatusCategory
      */
     readonly name?: string;
-}
-/**
- * A status category.
- * @export
- * @interface IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
- */
-export interface IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf {
-    [key: string]: any | any;
     /**
      * The URL of the status category.
      * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
+     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategory
      */
     readonly self?: string;
-    /**
-     * The ID of the status category.
-     * @type {number}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
-     */
-    readonly id?: number;
-    /**
-     * The key of the status category.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
-     */
-    readonly key?: string;
-    /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
-     */
-    readonly colorName?: string;
-    /**
-     * The name of the status category.
-     * @type {string}
-     * @memberof IssueBeanTransitionsInnerToAllOfStatusCategoryAllOf
-     */
-    readonly name?: string;
 }
 /**
  * An association type referencing Jira issue id or keys.
+ * 
  * @export
  * @interface IssueIdOrKeysAssociation
  */
 export interface IssueIdOrKeysAssociation {
     /**
      * Defines the association type.
+     * 
      * @type {string}
      * @memberof IssueIdOrKeysAssociation
      */
@@ -4544,6 +5037,7 @@ export interface IssueIdOrKeysAssociation {
      * The Jira issue id or keys to associate the Security information with.
      * 
      * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof IssueIdOrKeysAssociation
      */
@@ -4560,44 +5054,15 @@ export const IssueIdOrKeysAssociationAssociationTypeEnum = {
 export type IssueIdOrKeysAssociationAssociationTypeEnum = typeof IssueIdOrKeysAssociationAssociationTypeEnum[keyof typeof IssueIdOrKeysAssociationAssociationTypeEnum];
 
 /**
- * An association type referencing Jira issue id or keys.
- * @export
- * @interface IssueIdOrKeysAssociation1
- */
-export interface IssueIdOrKeysAssociation1 {
-    /**
-     * Defines the association type.
-     * @type {string}
-     * @memberof IssueIdOrKeysAssociation1
-     */
-    associationType: IssueIdOrKeysAssociation1AssociationTypeEnum;
-    /**
-     * The Jira issue id or keys to associate the Security information with.
-     * 
-     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
-     * @type {Array<string>}
-     * @memberof IssueIdOrKeysAssociation1
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const IssueIdOrKeysAssociation1AssociationTypeEnum = {
-    IssueIdOrKeys: 'issueIdOrKeys'
-} as const;
-export type IssueIdOrKeysAssociation1AssociationTypeEnum = typeof IssueIdOrKeysAssociation1AssociationTypeEnum[keyof typeof IssueIdOrKeysAssociation1AssociationTypeEnum];
-
-/**
  * An association type referencing issues in Jira.
+ * 
  * @export
  * @interface IssueKeysAssociation
  */
 export interface IssueKeysAssociation {
     /**
      * Defines the asssociation type.
+     * 
      * @type {string}
      * @memberof IssueKeysAssociation
      */
@@ -4607,6 +5072,7 @@ export interface IssueKeysAssociation {
      * 
      * The number of values counted across all associationTypes (issueKeys,
      * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof IssueKeysAssociation
      */
@@ -4639,13 +5105,13 @@ export interface IssueRankRequestBean {
      * @type {string}
      * @memberof IssueRankRequestBean
      */
-    rankBeforeIssue?: string;
+    rankAfterIssue?: string;
     /**
      * 
      * @type {string}
      * @memberof IssueRankRequestBean
      */
-    rankAfterIssue?: string;
+    rankBeforeIssue?: string;
     /**
      * 
      * @type {number}
@@ -4661,23 +5127,17 @@ export interface IssueRankRequestBean {
 export interface IssueTransition {
     [key: string]: any | any;
     /**
-     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * Expand options that include additional transition details in the response.
      * @type {string}
      * @memberof IssueTransition
      */
-    id?: string;
+    readonly expand?: string;
     /**
-     * The name of the issue transition.
-     * @type {string}
+     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
+     * @type {{ [key: string]: IssueBeanEditmetaAllOfFieldsValue; }}
      * @memberof IssueTransition
      */
-    readonly name?: string;
-    /**
-     * 
-     * @type {IssueBeanTransitionsInnerTo}
-     * @memberof IssueTransition
-     */
-    to?: IssueBeanTransitionsInnerTo;
+    readonly fields?: { [key: string]: IssueBeanEditmetaAllOfFieldsValue; };
     /**
      * Whether there is a screen associated with the issue transition.
      * @type {boolean}
@@ -4685,17 +5145,11 @@ export interface IssueTransition {
      */
     readonly hasScreen?: boolean;
     /**
-     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
-     * @type {boolean}
+     * The ID of the issue transition. Required when specifying a transition to undertake.
+     * @type {string}
      * @memberof IssueTransition
      */
-    readonly isGlobal?: boolean;
-    /**
-     * Whether this is the initial issue transition for the workflow.
-     * @type {boolean}
-     * @memberof IssueTransition
-     */
-    readonly isInitial?: boolean;
+    id?: string;
     /**
      * Whether the transition is available to be performed.
      * @type {boolean}
@@ -4709,23 +5163,35 @@ export interface IssueTransition {
      */
     readonly isConditional?: boolean;
     /**
-     * Details of the fields associated with the issue transition screen. Use this information to populate `fields` and `update` in a transition request.
-     * @type {{ [key: string]: IssueBeanTransitionsInnerFieldsValue; }}
+     * Whether the issue transition is global, that is, the transition is applied to issues regardless of their status.
+     * @type {boolean}
      * @memberof IssueTransition
      */
-    readonly fields?: { [key: string]: IssueBeanTransitionsInnerFieldsValue; };
+    readonly isGlobal?: boolean;
     /**
-     * Expand options that include additional transition details in the response.
-     * @type {string}
+     * Whether this is the initial issue transition for the workflow.
+     * @type {boolean}
      * @memberof IssueTransition
      */
-    readonly expand?: string;
+    readonly isInitial?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof IssueTransition
      */
     looped?: boolean;
+    /**
+     * The name of the issue transition.
+     * @type {string}
+     * @memberof IssueTransition
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {IssueBeanTransitionsInnerTo}
+     * @memberof IssueTransition
+     */
+    to?: IssueBeanTransitionsInnerTo;
 }
 /**
  * A list of editable field details.
@@ -4735,10 +5201,10 @@ export interface IssueTransition {
 export interface IssueUpdateMetadata {
     /**
      * 
-     * @type {{ [key: string]: IssueBeanTransitionsInnerFieldsValue; }}
+     * @type {{ [key: string]: IssueBeanEditmetaAllOfFieldsValue; }}
      * @memberof IssueUpdateMetadata
      */
-    readonly fields?: { [key: string]: IssueBeanTransitionsInnerFieldsValue; };
+    readonly fields?: { [key: string]: IssueBeanEditmetaAllOfFieldsValue; };
 }
 /**
  * The schema of a field.
@@ -4747,23 +5213,11 @@ export interface IssueUpdateMetadata {
  */
 export interface JsonTypeBean {
     /**
-     * The data type of the field.
-     * @type {string}
+     * If the field is a custom field, the configuration of the field.
+     * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly type: string;
-    /**
-     * When the data type is an array, the name of the field items within the array.
-     * @type {string}
-     * @memberof JsonTypeBean
-     */
-    readonly items?: string;
-    /**
-     * If the field is a system field, the name of the field.
-     * @type {string}
-     * @memberof JsonTypeBean
-     */
-    readonly system?: string;
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -4777,11 +5231,23 @@ export interface JsonTypeBean {
      */
     readonly customId?: number;
     /**
-     * If the field is a custom field, the configuration of the field.
-     * @type {{ [key: string]: any; }}
+     * When the data type is an array, the name of the field items within the array.
+     * @type {string}
      * @memberof JsonTypeBean
      */
-    readonly configuration?: { [key: string]: any; };
+    readonly items?: string;
+    /**
+     * If the field is a system field, the name of the field.
+     * @type {string}
+     * @memberof JsonTypeBean
+     */
+    readonly system?: string;
+    /**
+     * The data type of the field.
+     * @type {string}
+     * @memberof JsonTypeBean
+     */
+    readonly type: string;
 }
 /**
  * Details a link group, which defines issue operations.
@@ -4791,16 +5257,10 @@ export interface JsonTypeBean {
 export interface LinkGroup {
     /**
      * 
-     * @type {string}
+     * @type {Array<LinkGroup>}
      * @memberof LinkGroup
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LinkGroup
-     */
-    styleClass?: string;
+    groups?: Array<LinkGroup>;
     /**
      * 
      * @type {LinkGroupHeader}
@@ -4809,10 +5269,10 @@ export interface LinkGroup {
     header?: LinkGroupHeader;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof LinkGroup
      */
-    weight?: number;
+    id?: string;
     /**
      * 
      * @type {Array<LinkGroupHeader>}
@@ -4821,10 +5281,16 @@ export interface LinkGroup {
     links?: Array<LinkGroupHeader>;
     /**
      * 
-     * @type {Array<LinkGroup>}
+     * @type {string}
      * @memberof LinkGroup
      */
-    groups?: Array<LinkGroup>;
+    styleClass?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LinkGroup
+     */
+    weight?: number;
 }
 /**
  * Details about the operations available in this version.
@@ -4837,13 +5303,7 @@ export interface LinkGroupHeader {
      * @type {string}
      * @memberof LinkGroupHeader
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LinkGroupHeader
-     */
-    styleClass?: string;
+    href?: string;
     /**
      * 
      * @type {string}
@@ -4855,19 +5315,25 @@ export interface LinkGroupHeader {
      * @type {string}
      * @memberof LinkGroupHeader
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LinkGroupHeader
+     */
     label?: string;
     /**
      * 
      * @type {string}
      * @memberof LinkGroupHeader
      */
-    title?: string;
+    styleClass?: string;
     /**
      * 
      * @type {string}
      * @memberof LinkGroupHeader
      */
-    href?: string;
+    title?: string;
     /**
      * 
      * @type {number}
@@ -4886,13 +5352,13 @@ export interface LocationBean {
      * @type {string}
      * @memberof LocationBean
      */
-    type?: LocationBeanTypeEnum;
+    projectKeyOrId?: string;
     /**
      * 
      * @type {string}
      * @memberof LocationBean
      */
-    projectKeyOrId?: string;
+    type?: LocationBeanTypeEnum;
 }
 
 
@@ -4974,13 +5440,13 @@ export interface MoveIssuesToBacklogForBoardRequest {
      * @type {string}
      * @memberof MoveIssuesToBacklogForBoardRequest
      */
-    rankBeforeIssue?: string;
+    rankAfterIssue?: string;
     /**
      * 
      * @type {string}
      * @memberof MoveIssuesToBacklogForBoardRequest
      */
-    rankAfterIssue?: string;
+    rankBeforeIssue?: string;
     /**
      * 
      * @type {number}
@@ -5022,6 +5488,12 @@ export interface MoveIssuesToBoard207Response {
 export interface MoveIssuesToBoard207ResponseEntriesInner {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof MoveIssuesToBoard207ResponseEntriesInner
+     */
+    errors?: Array<string>;
+    /**
+     * 
      * @type {number}
      * @memberof MoveIssuesToBoard207ResponseEntriesInner
      */
@@ -5038,12 +5510,6 @@ export interface MoveIssuesToBoard207ResponseEntriesInner {
      * @memberof MoveIssuesToBoard207ResponseEntriesInner
      */
     status?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MoveIssuesToBoard207ResponseEntriesInner
-     */
-    errors?: Array<string>;
 }
 /**
  * Details of the operations that can be performed on the issue.
@@ -5060,11 +5526,31 @@ export interface Operations {
     readonly linkGroups?: Array<LinkGroup>;
 }
 /**
+ * The payload of Operations Workspace Ids.
+ * @export
+ * @interface OperationsWorkspaceIds
+ */
+export interface OperationsWorkspaceIds {
+    /**
+     * The IDs of Operations Workspaces that are available to this Jira site.
+     * 
+     * @type {Array<string>}
+     * @memberof OperationsWorkspaceIds
+     */
+    workspaceIds: Array<string>;
+}
+/**
  * 
  * @export
  * @interface PageBeanBoard
  */
 export interface PageBeanBoard {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageBeanBoard
+     */
+    isLast?: boolean;
     /**
      * 
      * @type {number}
@@ -5083,12 +5569,6 @@ export interface PageBeanBoard {
      * @memberof PageBeanBoard
      */
     total?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PageBeanBoard
-     */
-    isLast?: boolean;
     /**
      * 
      * @type {Array<GetAllBoards200ResponseValuesInner>}
@@ -5104,6 +5584,12 @@ export interface PageBeanBoard {
 export interface PageBeanBoardFilterBean {
     /**
      * 
+     * @type {boolean}
+     * @memberof PageBeanBoardFilterBean
+     */
+    isLast?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof PageBeanBoardFilterBean
      */
@@ -5120,12 +5606,6 @@ export interface PageBeanBoardFilterBean {
      * @memberof PageBeanBoardFilterBean
      */
     total?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PageBeanBoardFilterBean
-     */
-    isLast?: boolean;
     /**
      * 
      * @type {Array<GetBoardByFilterId200ResponseValuesInner>}
@@ -5141,6 +5621,12 @@ export interface PageBeanBoardFilterBean {
 export interface PageBeanQuickFilterBean {
     /**
      * 
+     * @type {boolean}
+     * @memberof PageBeanQuickFilterBean
+     */
+    isLast?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof PageBeanQuickFilterBean
      */
@@ -5159,12 +5645,6 @@ export interface PageBeanQuickFilterBean {
     total?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof PageBeanQuickFilterBean
-     */
-    isLast?: boolean;
-    /**
-     * 
      * @type {Array<GetAllQuickFilters200ResponseValuesInner>}
      * @memberof PageBeanQuickFilterBean
      */
@@ -5177,11 +5657,11 @@ export interface PageBeanQuickFilterBean {
  */
 export interface PageOfChangelogs {
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
+     * The list of changelogs.
+     * @type {Array<IssueBeanChangelogAllOfHistoriesInner>}
      * @memberof PageOfChangelogs
      */
-    readonly startAt?: number;
+    readonly histories?: Array<IssueBeanChangelogAllOfHistoriesInner>;
     /**
      * The maximum number of results that could be on the page.
      * @type {number}
@@ -5189,17 +5669,17 @@ export interface PageOfChangelogs {
      */
     readonly maxResults?: number;
     /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof PageOfChangelogs
+     */
+    readonly startAt?: number;
+    /**
      * The number of results on the page.
      * @type {number}
      * @memberof PageOfChangelogs
      */
     readonly total?: number;
-    /**
-     * The list of changelogs.
-     * @type {Array<IssueBeanChangelogAllOfHistoriesInner>}
-     * @memberof PageOfChangelogs
-     */
-    readonly histories?: Array<IssueBeanChangelogAllOfHistoriesInner>;
 }
 /**
  * 
@@ -5222,18 +5702,6 @@ export interface PartialSuccessBean {
 export interface PartiallyUpdateEpicRequest {
     /**
      * 
-     * @type {string}
-     * @memberof PartiallyUpdateEpicRequest
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PartiallyUpdateEpicRequest
-     */
-    summary?: string;
-    /**
-     * 
      * @type {PartiallyUpdateEpicRequestColor}
      * @memberof PartiallyUpdateEpicRequest
      */
@@ -5244,6 +5712,18 @@ export interface PartiallyUpdateEpicRequest {
      * @memberof PartiallyUpdateEpicRequest
      */
     done?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartiallyUpdateEpicRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartiallyUpdateEpicRequest
+     */
+    summary?: string;
 }
 /**
  * 
@@ -5285,29 +5765,100 @@ export type PartiallyUpdateEpicRequestColorKeyEnum = typeof PartiallyUpdateEpicR
  * This object models the Continuous Delivery (CD) Pipeline concept, an automated process (usually comprised of multiple stages)
  * 
  * for getting software from version control right through to the production environment.
+ * 
  * @export
  * @interface Pipeline
  */
 export interface Pipeline {
     /**
      * The identifier of this pipeline, must be unique for the provider.
+     * 
      * @type {string}
      * @memberof Pipeline
      */
     id: string;
     /**
      * The name of the pipeline to present to the user.
+     * 
      * @type {string}
      * @memberof Pipeline
      */
     displayName: string;
     /**
      * A URL users can use to link to this deployment pipeline.
+     * 
      * @type {string}
      * @memberof Pipeline
      */
     url: string;
 }
+/**
+ * Details about a project.
+ * @export
+ * @interface ProjectDetails
+ */
+export interface ProjectDetails {
+    /**
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls}
+     * @memberof ProjectDetails
+     */
+    avatarUrls?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfAvatarUrls;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    id?: string;
+    /**
+     * The key of the project.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    readonly key?: string;
+    /**
+     * The name of the project.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory}
+     * @memberof ProjectDetails
+     */
+    projectCategory?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory;
+    /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    readonly projectTypeKey?: ProjectDetailsProjectTypeKeyEnum;
+    /**
+     * The URL of the project details.
+     * @type {string}
+     * @memberof ProjectDetails
+     */
+    readonly self?: string;
+    /**
+     * Whether or not the project is simplified.
+     * @type {boolean}
+     * @memberof ProjectDetails
+     */
+    readonly simplified?: boolean;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectDetailsProjectTypeKeyEnum = {
+    Software: 'software',
+    ServiceDesk: 'service_desk',
+    Business: 'business'
+} as const;
+export type ProjectDetailsProjectTypeKeyEnum = typeof ProjectDetailsProjectTypeKeyEnum[keyof typeof ProjectDetailsProjectTypeKeyEnum];
+
 /**
  * Information about the provider. This is useful for auditing, logging, debugging, and other internal uses. It is not considered private information. Hence, it may not contain personally identifiable information.
  * @export
@@ -5325,6 +5876,7 @@ export interface ProviderMetadata {
  * Information about the provider. This is useful for auditing, logging, debugging,
  * and other internal uses. It is not considered private information. Hence, it may not contain personally
  * identifiable information.
+ * 
  * @export
  * @interface ProviderMetadata1
  */
@@ -5340,6 +5892,7 @@ export interface ProviderMetadata1 {
  * Information about the provider. This is useful for auditing, logging, debugging,
  * and other internal uses. It is not considered private information. Hence, it may not contain personally
  * identifiable information.
+ * 
  * @export
  * @interface ProviderMetadata2
  */
@@ -5355,6 +5908,7 @@ export interface ProviderMetadata2 {
  * Information about the provider. This is useful for auditing, logging, debugging,
  * and other internal uses. It is not considered private information. Hence, it may not contain personally
  * identifiable information.
+ * 
  * @export
  * @interface ProviderMetadata3
  */
@@ -5369,6 +5923,7 @@ export interface ProviderMetadata3 {
 /**
  * Information about the provider. This is useful for auditing, logging, debugging, and other internal uses. It is
  * not considered private information. Hence, it may not contain personally identifiable information.
+ * 
  * @export
  * @interface ProviderMetadata4
  */
@@ -5383,6 +5938,7 @@ export interface ProviderMetadata4 {
 /**
  * Information about the provider. This is useful for auditing, logging, debugging,
  * and other internal uses. Information in this property is not considered private, so it should not contain personally identifiable information
+ * 
  * @export
  * @interface ProviderMetadata5
  */
@@ -5391,6 +5947,22 @@ export interface ProviderMetadata5 {
      * An optional name of the source of the vulnerabilities.
      * @type {string}
      * @memberof ProviderMetadata5
+     */
+    product?: string;
+}
+/**
+ * Information about the provider. This is useful for auditing, logging, debugging,
+ * and other internal uses. It is not considered private information. Hence, it may not contain personally
+ * identifiable information.
+ * 
+ * @export
+ * @interface ProviderMetadata6
+ */
+export interface ProviderMetadata6 {
+    /**
+     * An optional name of the source of the incidents.
+     * @type {string}
+     * @memberof ProviderMetadata6
      */
     product?: string;
 }
@@ -5419,7 +5991,7 @@ export interface PullRequest {
      */
     updateSequenceId: number;
     /**
-     * The status of the pull request. In the case of concurrent updates, priority is given in the order OPEN, MERGED, DECLINED, DRAFT, UNKNOWN
+     * The status of the pull request. In the case of concurrent updates, priority is given in the order OPEN, MERGED, DECLINED, UNKNOWN
      * @type {string}
      * @memberof PullRequest
      */
@@ -5490,12 +6062,6 @@ export interface PullRequest {
      * @memberof PullRequest
      */
     displayId: string;
-    /**
-     * The number of tasks on the pull request
-     * @type {number}
-     * @memberof PullRequest
-     */
-    taskCount?: number;
 }
 
 
@@ -5506,7 +6072,6 @@ export const PullRequestStatusEnum = {
     Open: 'OPEN',
     Merged: 'MERGED',
     Declined: 'DECLINED',
-    Draft: 'DRAFT',
     Unknown: 'UNKNOWN'
 } as const;
 export type PullRequestStatusEnum = typeof PullRequestStatusEnum[keyof typeof PullRequestStatusEnum];
@@ -5522,19 +6087,19 @@ export interface QuickFilterBean {
      * @type {number}
      * @memberof QuickFilterBean
      */
-    id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuickFilterBean
-     */
     boardId?: number;
     /**
      * 
      * @type {string}
      * @memberof QuickFilterBean
      */
-    name?: string;
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof QuickFilterBean
+     */
+    id?: number;
     /**
      * 
      * @type {string}
@@ -5546,7 +6111,7 @@ export interface QuickFilterBean {
      * @type {string}
      * @memberof QuickFilterBean
      */
-    description?: string;
+    name?: string;
     /**
      * 
      * @type {number}
@@ -5565,13 +6130,13 @@ export interface RankEpicsRequest {
      * @type {string}
      * @memberof RankEpicsRequest
      */
-    rankBeforeEpic?: string;
+    rankAfterEpic?: string;
     /**
      * 
      * @type {string}
      * @memberof RankEpicsRequest
      */
-    rankAfterEpic?: string;
+    rankBeforeEpic?: string;
     /**
      * 
      * @type {number}
@@ -5596,6 +6161,7 @@ export interface RankingConfigBean {
  * A build that has not been accepted for submission, usually due to a problem with the request data.
  * 
  * The object is comprised of the key of the rejected build and the corresponding error messages.
+ * 
  * @export
  * @interface RejectedBuild
  */
@@ -5617,6 +6183,7 @@ export interface RejectedBuild {
  * A deployment that has not been accepted for submission, usually due to a problem with the request data.
  * 
  * The object is comprised of the key of the rejected deployment and the corresponding error messages.
+ * 
  * @export
  * @interface RejectedDeployment
  */
@@ -5655,6 +6222,7 @@ export interface RelationBean {
 }
 /**
  * Data related to a single Remote Link.
+ * 
  * @export
  * @interface RemoteLinkData
  */
@@ -5663,12 +6231,14 @@ export interface RemoteLinkData {
      * The schema version used for this data.
      * 
      * Placeholder to support potential schema changes in the future.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
     schemaVersion?: RemoteLinkDataSchemaVersionEnum;
     /**
      * The identifier for the Remote Link. Must be unique for a given Provider.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
@@ -5682,6 +6252,7 @@ export interface RemoteLinkData {
      * 
      * Updates for a Remote Link that is received with an `updateSqeuenceNumber` less than or equal to what is currently
      * stored will be ignored.
+     * 
      * @type {number}
      * @memberof RemoteLinkData
      */
@@ -5690,12 +6261,14 @@ export interface RemoteLinkData {
      * The human-readable name for the Remote Link.
      * 
      * Will be shown in the UI.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
     displayName: string;
     /**
      * The URL to this Remote Link in your system.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
@@ -5703,6 +6276,7 @@ export interface RemoteLinkData {
     /**
      * The type of the Remote Link. The current supported types are 'document', 'alert', 'test',
      * 'security', 'logFile', 'prototype', 'coverage', 'bugReport' and 'other'
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
@@ -5711,18 +6285,21 @@ export interface RemoteLinkData {
      * An optional description to attach to this Remote Link.
      * 
      * This may be anything that makes sense in your system.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
     description?: string;
     /**
      * The last-updated timestamp to present to the user as a summary of when Remote Link was last updated.
+     * 
      * @type {string}
      * @memberof RemoteLinkData
      */
     lastUpdated: string;
     /**
      * The entities to associate the Remote Link information with.
+     * 
      * @type {Array<RemoteLinkDataAssociationsInner>}
      * @memberof RemoteLinkData
      */
@@ -5738,6 +6315,7 @@ export interface RemoteLinkData {
      * registered. Indicates which actions this Remote Link has.
      * 
      * If any actions have a templateUrl that requires string substitution, then `attributeMap` must be passed in.
+     * 
      * @type {Array<string>}
      * @memberof RemoteLinkData
      */
@@ -5745,6 +6323,7 @@ export interface RemoteLinkData {
     /**
      * Map of key/values (string to string mapping). This is used to build the urls for actions from the
      * templateUrl the provider registered their available actions with.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof RemoteLinkData
      */
@@ -5784,6 +6363,7 @@ export type RemoteLinkDataTypeEnum = typeof RemoteLinkDataTypeEnum[keyof typeof 
 export interface RemoteLinkDataAssociationsInner {
     /**
      * Defines the asssociation type.
+     * 
      * @type {string}
      * @memberof RemoteLinkDataAssociationsInner
      */
@@ -5793,6 +6373,7 @@ export interface RemoteLinkDataAssociationsInner {
      * 
      * The number of values counted across all associationTypes (issueKeys,
      * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof RemoteLinkDataAssociationsInner
      */
@@ -5810,6 +6391,7 @@ export type RemoteLinkDataAssociationsInnerAssociationTypeEnum = typeof RemoteLi
 
 /**
  * The status of a Remote Link.
+ * 
  * @export
  * @interface RemoteLinkStatus
  */
@@ -5818,6 +6400,7 @@ export interface RemoteLinkStatus {
      * Appearance is a fixed set of appearance types affecting the colour
      * of the status lozenge in the UI. The colours they correspond to are
      * equivalent to atlaskit's [Lozenge](https://atlaskit.atlassian.com/packages/core/lozenge) component.
+     * 
      * @type {string}
      * @memberof RemoteLinkStatus
      */
@@ -5826,6 +6409,7 @@ export interface RemoteLinkStatus {
      * The human-readable description for the Remote Link status.
      * 
      * Will be shown in the UI.
+     * 
      * @type {string}
      * @memberof RemoteLinkStatus
      */
@@ -5934,6 +6518,157 @@ export interface Repository {
     updateSequenceId: number;
 }
 /**
+ * Represents errors related to a particular repository and its entities
+ * @export
+ * @interface RepositoryErrors
+ */
+export interface RepositoryErrors {
+    /**
+     * Repository errors
+     * @type {Array<ErrorMessage>}
+     * @memberof RepositoryErrors
+     */
+    errorMessages?: Array<ErrorMessage>;
+    /**
+     * Commits errors
+     * @type {Array<EntityError>}
+     * @memberof RepositoryErrors
+     */
+    commits?: Array<EntityError>;
+    /**
+     * Branches errors
+     * @type {Array<EntityError>}
+     * @memberof RepositoryErrors
+     */
+    branches?: Array<EntityError>;
+    /**
+     * Pull requests errors
+     * @type {Array<EntityError>}
+     * @memberof RepositoryErrors
+     */
+    pullRequests?: Array<EntityError>;
+}
+/**
+ * Data related to a specific post-incident review. Must specify at least one association to an incident.
+ * 
+ * @export
+ * @interface Review
+ */
+export interface Review {
+    /**
+     * The PostIncidentReviewData schema version used for this post-incident review data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    schemaVersion: ReviewSchemaVersionEnum;
+    /**
+     * The identifier for the Review. Must be unique for a given Provider.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    id: string;
+    /**
+     * An ID used to apply an ordering to updates for this Review in the case of out-of-order receipt of update requests.
+     * 
+     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Review and increment that on each update to Jira).
+     * 
+     * Updates for a Review that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * 
+     * @type {number}
+     * @memberof Review
+     */
+    updateSequenceNumber: number;
+    /**
+     * The IDs of the Incidents covered by this Review. Must be unique for a given Provider.
+     * 
+     * @type {Array<string>}
+     * @memberof Review
+     */
+    reviews: Array<string>;
+    /**
+     * The human-readable summary for the Post-Incident Review. Will be shown in the UI.
+     * 
+     * If not provided, will use the ID for display.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    summary: string;
+    /**
+     * A description of the review in Markdown format. Will be shown in the UI and used when creating Jira Issues.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    description: string;
+    /**
+     * A URL users can use to link to a summary view of this review, if appropriate.
+     * 
+     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the review in that project).
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    url: string;
+    /**
+     * The timestamp to present to the user that shows when the Review was raised.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    createdDate: string;
+    /**
+     * The last-updated timestamp to present to the user the last time the Review was updated.
+     * 
+     * Expected format is an RFC3339 formatted string.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    lastUpdated: string;
+    /**
+     * The current status of the Post-Incident Review.
+     * 
+     * @type {string}
+     * @memberof Review
+     */
+    status: ReviewStatusEnum;
+    /**
+     * The IDs of the Jira issues related to this Incident. Must be unique for a given Provider.
+     * 
+     * @type {Array<Associations>}
+     * @memberof Review
+     */
+    associations?: Array<Associations>;
+}
+
+
+/**
+ * @export
+ */
+export const ReviewSchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type ReviewSchemaVersionEnum = typeof ReviewSchemaVersionEnum[keyof typeof ReviewSchemaVersionEnum];
+
+/**
+ * @export
+ */
+export const ReviewStatusEnum = {
+    InProgress: 'in progress',
+    OutstandingActions: 'outstanding actions',
+    Completed: 'completed',
+    Unknown: 'unknown'
+} as const;
+export type ReviewStatusEnum = typeof ReviewStatusEnum[keyof typeof ReviewStatusEnum];
+
+/**
  * The reviewer of a pull request
  * @export
  * @interface Reviewer
@@ -5983,10 +6718,40 @@ export interface Reviewer {
  */
 export const ReviewerApprovalStatusEnum = {
     Approved: 'APPROVED',
-    Needswork: 'NEEDSWORK',
     Unapproved: 'UNAPPROVED'
 } as const;
 export type ReviewerApprovalStatusEnum = typeof ReviewerApprovalStatusEnum[keyof typeof ReviewerApprovalStatusEnum];
+
+/**
+ * The projects the item is associated with. Indicated for items associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
+ * @export
+ * @interface Scope
+ */
+export interface Scope {
+    [key: string]: any | any;
+    /**
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProject}
+     * @memberof Scope
+     */
+    project?: IssueBeanTransitionsInnerToAllOfScopeAllOfProject;
+    /**
+     * The type of scope.
+     * @type {string}
+     * @memberof Scope
+     */
+    readonly type?: ScopeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ScopeTypeEnum = {
+    Project: 'PROJECT',
+    Template: 'TEMPLATE'
+} as const;
+export type ScopeTypeEnum = typeof ScopeTypeEnum[keyof typeof ScopeTypeEnum];
 
 /**
  * The result of a JQL search.
@@ -6001,35 +6766,17 @@ export interface SearchResults {
      */
     readonly expand?: string;
     /**
-     * The index of the first item returned on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly startAt?: number;
-    /**
-     * The maximum number of results that could be on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly maxResults?: number;
-    /**
-     * The number of results on the page.
-     * @type {number}
-     * @memberof SearchResults
-     */
-    readonly total?: number;
-    /**
      * The list of issues found by the search.
      * @type {Array<IssueBean>}
      * @memberof SearchResults
      */
     readonly issues?: Array<IssueBean>;
     /**
-     * Any warnings related to the JQL query.
-     * @type {Array<string>}
+     * The maximum number of results that could be on the page.
+     * @type {number}
      * @memberof SearchResults
      */
-    readonly warningMessages?: Array<string>;
+    readonly maxResults?: number;
     /**
      * The ID and name of each field in the search results.
      * @type {{ [key: string]: string; }}
@@ -6038,10 +6785,28 @@ export interface SearchResults {
     readonly names?: { [key: string]: string; };
     /**
      * The schema describing the field types in the search results.
-     * @type {{ [key: string]: FieldMetadataSchemaAllOf; }}
+     * @type {{ [key: string]: IssueBeanSchemaValue; }}
      * @memberof SearchResults
      */
-    readonly schema?: { [key: string]: FieldMetadataSchemaAllOf; };
+    readonly schema?: { [key: string]: IssueBeanSchemaValue; };
+    /**
+     * The index of the first item returned on the page.
+     * @type {number}
+     * @memberof SearchResults
+     */
+    readonly startAt?: number;
+    /**
+     * The number of results on the page.
+     * @type {number}
+     * @memberof SearchResults
+     */
+    readonly total?: number;
+    /**
+     * Any warnings related to the JQL query.
+     * @type {Array<string>}
+     * @memberof SearchResults
+     */
+    readonly warningMessages?: Array<string>;
 }
 /**
  * The payload of linked Security Workspace IDs.
@@ -6051,6 +6816,7 @@ export interface SearchResults {
 export interface SecurityWorkspaceIds {
     /**
      * The IDs of Security Workspaces that are linked to this Jira site.
+     * 
      * @type {Array<string>}
      * @memberof SecurityWorkspaceIds
      */
@@ -6064,12 +6830,14 @@ export interface SecurityWorkspaceIds {
 export interface SecurityWorkspaceResponse {
     /**
      * The Security Workspace ID
+     * 
      * @type {string}
      * @memberof SecurityWorkspaceResponse
      */
     workspaceId: string;
     /**
      * Latest date and time that the Security Workspace was updated in Jira.
+     * 
      * @type {string}
      * @memberof SecurityWorkspaceResponse
      */
@@ -6077,12 +6845,14 @@ export interface SecurityWorkspaceResponse {
 }
 /**
  * An association type referencing service id or keys.
+ * 
  * @export
  * @interface ServiceIdOrKeysAssociation
  */
 export interface ServiceIdOrKeysAssociation {
     /**
      * Defines the asssociation type.
+     * 
      * @type {string}
      * @memberof ServiceIdOrKeysAssociation
      */
@@ -6092,6 +6862,7 @@ export interface ServiceIdOrKeysAssociation {
      * 
      * The number of values counted across all associationTypes (issueKeys,
      * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof ServiceIdOrKeysAssociation
      */
@@ -6108,37 +6879,6 @@ export const ServiceIdOrKeysAssociationAssociationTypeEnum = {
 export type ServiceIdOrKeysAssociationAssociationTypeEnum = typeof ServiceIdOrKeysAssociationAssociationTypeEnum[keyof typeof ServiceIdOrKeysAssociationAssociationTypeEnum];
 
 /**
- * An association type referencing service id or keys.
- * @export
- * @interface ServiceIdOrKeysAssociation1
- */
-export interface ServiceIdOrKeysAssociation1 {
-    /**
-     * Defines the association type.
-     * @type {string}
-     * @memberof ServiceIdOrKeysAssociation1
-     */
-    associationType: ServiceIdOrKeysAssociation1AssociationTypeEnum;
-    /**
-     * The service id or keys to associate the Security information with.
-     * 
-     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
-     * @type {Array<string>}
-     * @memberof ServiceIdOrKeysAssociation1
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const ServiceIdOrKeysAssociation1AssociationTypeEnum = {
-    ServiceIdOrKeys: 'serviceIdOrKeys'
-} as const;
-export type ServiceIdOrKeysAssociation1AssociationTypeEnum = typeof ServiceIdOrKeysAssociation1AssociationTypeEnum[keyof typeof ServiceIdOrKeysAssociation1AssociationTypeEnum];
-
-/**
  * Details about the operations available in this version.
  * @export
  * @interface SimpleLink
@@ -6149,13 +6889,7 @@ export interface SimpleLink {
      * @type {string}
      * @memberof SimpleLink
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimpleLink
-     */
-    styleClass?: string;
+    href?: string;
     /**
      * 
      * @type {string}
@@ -6167,19 +6901,25 @@ export interface SimpleLink {
      * @type {string}
      * @memberof SimpleLink
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimpleLink
+     */
     label?: string;
     /**
      * 
      * @type {string}
      * @memberof SimpleLink
      */
-    title?: string;
+    styleClass?: string;
     /**
      * 
      * @type {string}
      * @memberof SimpleLink
      */
-    href?: string;
+    title?: string;
     /**
      * 
      * @type {number}
@@ -6195,42 +6935,6 @@ export interface SimpleLink {
 export interface SprintBean {
     /**
      * 
-     * @type {number}
-     * @memberof SprintBean
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintBean
-     */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintBean
-     */
-    state?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintBean
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintBean
-     */
-    startDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintBean
-     */
-    endDate?: string;
-    /**
-     * 
      * @type {string}
      * @memberof SprintBean
      */
@@ -6243,6 +6947,30 @@ export interface SprintBean {
     createdDate?: string;
     /**
      * 
+     * @type {string}
+     * @memberof SprintBean
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintBean
+     */
+    goal?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SprintBean
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintBean
+     */
+    name?: string;
+    /**
+     * 
      * @type {number}
      * @memberof SprintBean
      */
@@ -6252,7 +6980,19 @@ export interface SprintBean {
      * @type {string}
      * @memberof SprintBean
      */
-    goal?: string;
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintBean
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintBean
+     */
+    state?: string;
 }
 /**
  * 
@@ -6265,19 +7005,19 @@ export interface SprintCreateBean {
      * @type {string}
      * @memberof SprintCreateBean
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintCreateBean
-     */
-    startDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SprintCreateBean
-     */
     endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintCreateBean
+     */
+    goal?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SprintCreateBean
+     */
+    name?: string;
     /**
      * 
      * @type {number}
@@ -6289,7 +7029,7 @@ export interface SprintCreateBean {
      * @type {string}
      * @memberof SprintCreateBean
      */
-    goal?: string;
+    startDate?: string;
 }
 /**
  * 
@@ -6312,11 +7052,11 @@ export interface SprintSwapBean {
 export interface StatusCategory {
     [key: string]: any | any;
     /**
-     * The URL of the status category.
+     * The name of the color used to represent the status category.
      * @type {string}
      * @memberof StatusCategory
      */
-    readonly self?: string;
+    readonly colorName?: string;
     /**
      * The ID of the status category.
      * @type {number}
@@ -6330,17 +7070,17 @@ export interface StatusCategory {
      */
     readonly key?: string;
     /**
-     * The name of the color used to represent the status category.
-     * @type {string}
-     * @memberof StatusCategory
-     */
-    readonly colorName?: string;
-    /**
      * The name of the status category.
      * @type {string}
      * @memberof StatusCategory
      */
     readonly name?: string;
+    /**
+     * The URL of the status category.
+     * @type {string}
+     * @memberof StatusCategory
+     */
+    readonly self?: string;
 }
 /**
  * A status.
@@ -6349,12 +7089,6 @@ export interface StatusCategory {
  */
 export interface StatusDetails {
     [key: string]: any | any;
-    /**
-     * The URL of the status.
-     * @type {string}
-     * @memberof StatusDetails
-     */
-    readonly self?: string;
     /**
      * The description of the status.
      * @type {string}
@@ -6368,17 +7102,29 @@ export interface StatusDetails {
      */
     readonly iconUrl?: string;
     /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof StatusDetails
+     */
+    readonly id?: string;
+    /**
      * The name of the status.
      * @type {string}
      * @memberof StatusDetails
      */
     readonly name?: string;
     /**
-     * The ID of the status.
+     * 
+     * @type {IssueBeanTransitionsInnerToAllOfScope}
+     * @memberof StatusDetails
+     */
+    scope?: IssueBeanTransitionsInnerToAllOfScope;
+    /**
+     * The URL of the status.
      * @type {string}
      * @memberof StatusDetails
      */
-    readonly id?: string;
+    readonly self?: string;
     /**
      * 
      * @type {IssueBeanTransitionsInnerToAllOfStatusCategory}
@@ -6394,78 +7140,22 @@ export interface StatusDetails {
 export interface StoreDevinfoResult {
     /**
      * The IDs of devinfo entities that have been accepted for submission grouped by their repository IDs. Note that a devinfo entity that isn't updated due to it's updateSequenceId being out of order is not considered a failed submission.
-     * @type {{ [key: string]: StoreDevinfoResultAcceptedDevinfoEntitiesValue; }}
+     * @type {{ [key: string]: EntityIds; }}
      * @memberof StoreDevinfoResult
      */
-    acceptedDevinfoEntities?: { [key: string]: StoreDevinfoResultAcceptedDevinfoEntitiesValue; };
+    acceptedDevinfoEntities?: { [key: string]: EntityIds; };
     /**
      * IDs of devinfo entities that have not been accepted for submission and caused error descriptions, usually due to a problem with the request data. The entities (if present) will be grouped by their repository id and type. Entity IDs are listed with errors associated with that devinfo entity that have prevented it being submitted. 
-     * @type {{ [key: string]: StoreDevinfoResultFailedDevinfoEntitiesValue; }}
+     * @type {{ [key: string]: RepositoryErrors; }}
      * @memberof StoreDevinfoResult
      */
-    failedDevinfoEntities?: { [key: string]: StoreDevinfoResultFailedDevinfoEntitiesValue; };
+    failedDevinfoEntities?: { [key: string]: RepositoryErrors; };
     /**
      * Issue keys that are not known on this Jira instance (if any). These may be invalid keys (e.g. `UTF-8` is sometimes incorrectly identified as a Jira issue key), or they may be for projects that no longer exist. If a devinfo entity has been associated with issue keys other than those in this array it will still be stored against those valid keys. 
      * @type {Array<string>}
      * @memberof StoreDevinfoResult
      */
     unknownIssueKeys?: Array<string>;
-}
-/**
- * IDs of entities grouped by entity type
- * @export
- * @interface StoreDevinfoResultAcceptedDevinfoEntitiesValue
- */
-export interface StoreDevinfoResultAcceptedDevinfoEntitiesValue {
-    /**
-     * Commits IDs
-     * @type {Array<string>}
-     * @memberof StoreDevinfoResultAcceptedDevinfoEntitiesValue
-     */
-    commits?: Array<string>;
-    /**
-     * Branch IDs
-     * @type {Array<string>}
-     * @memberof StoreDevinfoResultAcceptedDevinfoEntitiesValue
-     */
-    branches?: Array<string>;
-    /**
-     * Pull request IDs
-     * @type {Array<string>}
-     * @memberof StoreDevinfoResultAcceptedDevinfoEntitiesValue
-     */
-    pullRequests?: Array<string>;
-}
-/**
- * Represents errors related to a particular repository and its entities
- * @export
- * @interface StoreDevinfoResultFailedDevinfoEntitiesValue
- */
-export interface StoreDevinfoResultFailedDevinfoEntitiesValue {
-    /**
-     * Repository errors
-     * @type {Array<ErrorMessage>}
-     * @memberof StoreDevinfoResultFailedDevinfoEntitiesValue
-     */
-    errorMessages?: Array<ErrorMessage>;
-    /**
-     * Commits errors
-     * @type {Array<EntityError>}
-     * @memberof StoreDevinfoResultFailedDevinfoEntitiesValue
-     */
-    commits?: Array<EntityError>;
-    /**
-     * Branches errors
-     * @type {Array<EntityError>}
-     * @memberof StoreDevinfoResultFailedDevinfoEntitiesValue
-     */
-    branches?: Array<EntityError>;
-    /**
-     * Pull requests errors
-     * @type {Array<EntityError>}
-     * @memberof StoreDevinfoResultFailedDevinfoEntitiesValue
-     */
-    pullRequests?: Array<EntityError>;
 }
 /**
  * The payload used to submit (update / insert) build data.
@@ -6485,6 +7175,7 @@ export interface SubmitBuildsRequest {
      * 
      * Properties are supplied as key/value pairs, a maximum of 5 properties can be supplied, and keys must not
      * contain ':' or start with '_'.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof SubmitBuildsRequest
      */
@@ -6494,6 +7185,7 @@ export interface SubmitBuildsRequest {
      * 
      * Each build may be associated with one or more Jira issue keys, and will be associated with any properties
      * included in this request.
+     * 
      * @type {Array<BuildData>}
      * @memberof SubmitBuildsRequest
      */
@@ -6507,6 +7199,7 @@ export interface SubmitBuildsRequest {
 }
 /**
  * The result of a successful `submitBuilds` request.
+ * 
  * @export
  * @interface SubmitBuildsResponse
  */
@@ -6520,6 +7213,7 @@ export interface SubmitBuildsResponse {
      * 
      * Note that a build that isn't updated due to it's `updateSequenceNumber` being out of order is not
      * considered a failed submission.
+     * 
      * @type {Array<BuildKey>}
      * @memberof SubmitBuildsResponse
      */
@@ -6529,6 +7223,7 @@ export interface SubmitBuildsResponse {
      * 
      * A build may be rejected if it was only associated with unknown issue keys, or if the submitted data for the
      * build does not match the required schema.
+     * 
      * @type {Array<RejectedBuild>}
      * @memberof SubmitBuildsResponse
      */
@@ -6541,6 +7236,7 @@ export interface SubmitBuildsResponse {
      * 
      * If a build has been associated with issue keys other than those in this array it will still be stored against
      * those valid keys. If a build was only associated with issue keys deemed to be invalid it won't be persisted.
+     * 
      * @type {Array<string>}
      * @memberof SubmitBuildsResponse
      */
@@ -6558,6 +7254,7 @@ export interface SubmitDeploymentRequest {
      * Examples might be an account or user ID that can then be used to clean up data if an account is removed from the Provider system.
      * 
      * Properties are supplied as key/value pairs, and a maximum of 5 properties can be supplied, keys cannot contain ':' or start with '_'.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof SubmitDeploymentRequest
      */
@@ -6566,6 +7263,7 @@ export interface SubmitDeploymentRequest {
      * A list of deployments to submit to Jira.
      * 
      * Each deployment may be associated with one or more Jira issue keys, and will be associated with any properties included in this request.
+     * 
      * @type {Array<DeploymentData>}
      * @memberof SubmitDeploymentRequest
      */
@@ -6579,6 +7277,7 @@ export interface SubmitDeploymentRequest {
 }
 /**
  * The result of a successful submitDeployments request.
+ * 
  * @export
  * @interface SubmitDeploymentsResponse
  */
@@ -6589,6 +7288,7 @@ export interface SubmitDeploymentsResponse {
      * A deployment may be rejected if it was only associated with unknown issue keys.
      * 
      * Note that a deployment that isn't updated due to it's updateSequenceNumber being out of order is not considered a failed submission.
+     * 
      * @type {Array<DeploymentKey>}
      * @memberof SubmitDeploymentsResponse
      */
@@ -6597,6 +7297,7 @@ export interface SubmitDeploymentsResponse {
      * Details of deployments that have not been accepted for submission, usually due to a problem with the request data.
      * 
      * The object will contain the deployment key and any errors associated with that deployment that have prevented it being submitted.
+     * 
      * @type {Array<RejectedDeployment>}
      * @memberof SubmitDeploymentsResponse
      */
@@ -6608,6 +7309,7 @@ export interface SubmitDeploymentsResponse {
      * 
      * If a deployment has been associated with issue keys other than those in this array it will still be stored against those valid keys.
      * If a deployment was only associated with issue keys deemed to be invalid it won't be persisted.
+     * 
      * @type {Array<string>}
      * @memberof SubmitDeploymentsResponse
      */
@@ -6619,6 +7321,7 @@ export interface SubmitDeploymentsResponse {
      * 
      * If a deployment has been associated with any other association other than those in this array it will still be stored against those valid associations.
      * If a deployment was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
+     * 
      * @type {Array<SubmitDeploymentsResponseUnknownAssociationsInner>}
      * @memberof SubmitDeploymentsResponse
      */
@@ -6626,36 +7329,42 @@ export interface SubmitDeploymentsResponse {
 }
 /**
  * The current gating status for the given Deployment.
+ * 
  * @export
  * @interface SubmitDeploymentsResponse1
  */
 export interface SubmitDeploymentsResponse1 {
     /**
      * This is the identifier for the Deployment.
+     * 
      * @type {number}
      * @memberof SubmitDeploymentsResponse1
      */
     deploymentSequenceNumber?: number;
     /**
      * The ID of the Deployment's pipeline.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1
      */
     pipelineId?: string;
     /**
      * The ID of the Deployment's environment.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1
      */
     environmentId?: string;
     /**
      * Time the deployment gating status was updated.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1
      */
     updatedTimestamp?: string;
     /**
      * The gating status
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1
      */
@@ -6682,24 +7391,28 @@ export type SubmitDeploymentsResponse1GatingStatusEnum = typeof SubmitDeployment
 
 /**
  * Details related to the gating status
+ * 
  * @export
  * @interface SubmitDeploymentsResponse1DetailsInner
  */
 export interface SubmitDeploymentsResponse1DetailsInner {
     /**
      * The type of the gating status details.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1DetailsInner
      */
     type: SubmitDeploymentsResponse1DetailsInnerTypeEnum;
     /**
      * An issue key that references an issue in Jira.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1DetailsInner
      */
     issueKey: string;
     /**
      * A full HTTPS link to the Jira issue for the change request gating this Deployment. This field is provided if the details type is issue.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponse1DetailsInner
      */
@@ -6723,6 +7436,7 @@ export type SubmitDeploymentsResponse1DetailsInnerTypeEnum = typeof SubmitDeploy
 export interface SubmitDeploymentsResponseUnknownAssociationsInner {
     /**
      * Defines the association type. Currently supported entities can be found in this field's value enums list.
+     * 
      * @type {string}
      * @memberof SubmitDeploymentsResponseUnknownAssociationsInner
      */
@@ -6730,6 +7444,7 @@ export interface SubmitDeploymentsResponseUnknownAssociationsInner {
     /**
      * The entity keys that represent the entities to be associated.
      * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
+     * 
      * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
      * @memberof SubmitDeploymentsResponseUnknownAssociationsInner
      */
@@ -6741,10 +7456,81 @@ export interface SubmitDeploymentsResponseUnknownAssociationsInner {
  * @export
  */
 export const SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum = {
-    Commit: 'commit'
+    Commit: 'commit',
+    Repository: 'repository'
 } as const;
 export type SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum = typeof SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum[keyof typeof SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum];
 
+/**
+ * The payload used to submit (update / insert) DevOps Component data.
+ * @export
+ * @interface SubmitDevopsComponentsRequest
+ */
+export interface SubmitDevopsComponentsRequest {
+    /**
+     * Properties assigned to incidents/components/review data that can then be used for delete / query operations.
+     * 
+     * Examples might be an account or user ID that can then be used to clean up data if an account is removed from the Provider system.
+     * 
+     * Properties are supplied as key/value pairs, and a maximum of 5 properties can be supplied, keys cannot contain ':' or start with '_'.
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof SubmitDevopsComponentsRequest
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<Component>}
+     * @memberof SubmitDevopsComponentsRequest
+     */
+    components: Array<Component>;
+    /**
+     * 
+     * @type {ProviderMetadata6}
+     * @memberof SubmitDevopsComponentsRequest
+     */
+    providerMetadata?: ProviderMetadata6;
+}
+/**
+ * The result of a successful submitDevopsComponents request.
+ * 
+ * @export
+ * @interface SubmitDevopsComponentsResponse
+ */
+export interface SubmitDevopsComponentsResponse {
+    /**
+     * The IDs of Components that have been accepted for submission.
+     * 
+     * A Component may be rejected if it was only associated with unknown project keys.
+     * 
+     * Note that a Component that isn't updated due to it's updateSequenceNumber being out of order is not considered a failed submission.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitDevopsComponentsResponse
+     */
+    acceptedComponents?: Array<string>;
+    /**
+     * Details of Components that have not been accepted for submission, usually due to a problem with the request data.
+     * 
+     * The object (if present) will be keyed by Component ID and include any errors associated with that Component that have prevented it being submitted.
+     * 
+     * @type {{ [key: string]: Array<ErrorMessage1>; }}
+     * @memberof SubmitDevopsComponentsResponse
+     */
+    failedComponents?: { [key: string]: Array<ErrorMessage1>; };
+    /**
+     * Project keys that are not known on this Jira instance (if any).
+     * 
+     * These may be invalid keys (e.g. `UTF` is sometimes incorrectly identified as a Jira project key), or they may be for projects that no longer exist.
+     * 
+     * If a Component has been associated with project keys other than those in this array it will still be stored against those valid keys.
+     * If a Component was only associated with project keys deemed to be invalid it won't be persisted.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitDevopsComponentsResponse
+     */
+    unknownProjectKeys?: Array<string>;
+}
 /**
  * The payload used to submit (update / insert) Feature Flag data.
  * @export
@@ -6759,6 +7545,7 @@ export interface SubmitFeatureFlagRequest {
      * Note that these properties will never be returned with Feature Flag data. They are not intended for use as metadata to associate with a Feature Flag. Internally they are stored as a hash so that personal information etc. is never stored within Jira.
      * 
      * Properties are supplied as key/value pairs, a maximum of 5 properties can be supplied, and keys must not contain ':' or start with '_'.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof SubmitFeatureFlagRequest
      */
@@ -6767,6 +7554,7 @@ export interface SubmitFeatureFlagRequest {
      * A list of Feature Flags to submit to Jira.
      * 
      * Each Feature Flag may be associated with 1 or more Jira issue keys, and will be associated with any properties included in this request.
+     * 
      * @type {Array<FeatureFlagData>}
      * @memberof SubmitFeatureFlagRequest
      */
@@ -6780,6 +7568,7 @@ export interface SubmitFeatureFlagRequest {
 }
 /**
  * The result of a successful submitFeatureFlags request.
+ * 
  * @export
  * @interface SubmitFeatureFlagsResponse
  */
@@ -6790,6 +7579,7 @@ export interface SubmitFeatureFlagsResponse {
      * A Feature Flag may be rejected if it was only associated with unknown issue keys.
      * 
      * Note that a Feature Flag that isn't updated due to it's updateSequenceId being out of order is not considered a failed submission.
+     * 
      * @type {Array<string>}
      * @memberof SubmitFeatureFlagsResponse
      */
@@ -6798,6 +7588,7 @@ export interface SubmitFeatureFlagsResponse {
      * Details of Feature Flags that have not been accepted for submission, usually due to a problem with the request data.
      * 
      * The object (if present) will be keyed by Feature Flag ID and include any errors associated with that Feature Flag that have prevented it being submitted.
+     * 
      * @type {{ [key: string]: Array<ErrorMessage1>; }}
      * @memberof SubmitFeatureFlagsResponse
      */
@@ -6809,13 +7600,146 @@ export interface SubmitFeatureFlagsResponse {
      * 
      * If a Feature Flag has been associated with issue keys other than those in this array it will still be stored against those valid keys.
      * If a Feature Flag was only associated with issue keys deemed to be invalid it won't be persisted.
+     * 
      * @type {Array<string>}
      * @memberof SubmitFeatureFlagsResponse
      */
     unknownIssueKeys?: Array<string>;
 }
 /**
+ * The payload used to submit (update / insert) Incident data.
+ * @export
+ * @interface SubmitIncidentsRequest
+ */
+export interface SubmitIncidentsRequest {
+    /**
+     * Properties assigned to incidents/components/review data that can then be used for delete / query operations.
+     * 
+     * Examples might be an account or user ID that can then be used to clean up data if an account is removed from the Provider system.
+     * 
+     * Properties are supplied as key/value pairs, and a maximum of 5 properties can be supplied, keys cannot contain ':' or start with '_'.
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof SubmitIncidentsRequest
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {ProviderMetadata6}
+     * @memberof SubmitIncidentsRequest
+     */
+    providerMetadata?: ProviderMetadata6;
+    /**
+     * 
+     * @type {Array<Incident>}
+     * @memberof SubmitIncidentsRequest
+     */
+    incidents?: Array<Incident>;
+    /**
+     * 
+     * @type {Array<Review>}
+     * @memberof SubmitIncidentsRequest
+     */
+    reviews?: Array<Review>;
+}
+/**
+ * 
+ * @export
+ * @interface SubmitIncidentsRequestAnyOf
+ */
+export interface SubmitIncidentsRequestAnyOf {
+    /**
+     * 
+     * @type {Array<Incident>}
+     * @memberof SubmitIncidentsRequestAnyOf
+     */
+    incidents?: Array<Incident>;
+}
+/**
+ * 
+ * @export
+ * @interface SubmitIncidentsRequestAnyOf1
+ */
+export interface SubmitIncidentsRequestAnyOf1 {
+    /**
+     * 
+     * @type {Array<Review>}
+     * @memberof SubmitIncidentsRequestAnyOf1
+     */
+    reviews?: Array<Review>;
+}
+/**
+ * The result of a successful submitIncidents request.
+ * 
+ * @export
+ * @interface SubmitIncidentsResponse
+ */
+export interface SubmitIncidentsResponse {
+    /**
+     * The IDs of Incidents that have been accepted for submission.
+     * 
+     * A Incident may be rejected if it was only associated with unknown project keys.
+     * 
+     * Note that a Incident that isn't updated due to it's updateSequenceNumber being out of order is not considered a failed submission.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitIncidentsResponse
+     */
+    acceptedIncidents?: Array<string>;
+    /**
+     * Details of Incidents that have not been accepted for submission, usually due to a problem with the request data.
+     * 
+     * The object (if present) will be keyed by Incident ID and include any errors associated with that Incident that have prevented it being submitted.
+     * 
+     * @type {{ [key: string]: Array<ErrorMessage1>; }}
+     * @memberof SubmitIncidentsResponse
+     */
+    failedIncidents?: { [key: string]: Array<ErrorMessage1>; };
+    /**
+     * Project keys that are not known on this Jira instance (if any).
+     * 
+     * These may be invalid keys (e.g. `UTF` is sometimes incorrectly identified as a Jira project key), or they may be for projects that no longer exist.
+     * 
+     * If a Incident has been associated with project keys other than those in this array it will still be stored against those valid keys.
+     * If a Incident was only associated with project keys deemed to be invalid it won't be persisted.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitIncidentsResponse
+     */
+    unknownProjectKeys?: Array<string>;
+}
+/**
+ * The payload used to submit (update / insert) Operations Workspace ids.
+ * @export
+ * @interface SubmitOperationsWorkspacesRequest
+ */
+export interface SubmitOperationsWorkspacesRequest {
+    /**
+     * The IDs of Operations Workspaces that are available to this Jira site.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitOperationsWorkspacesRequest
+     */
+    workspaceIds: Array<string>;
+}
+/**
+ * The result of a successful submitOperationsWorkspaces request.
+ * 
+ * @export
+ * @interface SubmitOperationsWorkspacesResponse
+ */
+export interface SubmitOperationsWorkspacesResponse {
+    /**
+     * The IDs of Operations Workspaces that have been linked to the Jira site in this request.
+     * 
+     * @type {Array<string>}
+     * @memberof SubmitOperationsWorkspacesResponse
+     */
+    acceptedWorkspaceIds?: Array<string>;
+}
+/**
  * The result of a successful `submitRemoteLinks` request.
+ * 
  * @export
  * @interface SubmitRemoteLinks202Response
  */
@@ -6828,6 +7752,7 @@ export interface SubmitRemoteLinks202Response {
      * 
      * Note that a Remote Link that isn't updated due to it's `updateSequenceNumber` being out of order is not
      * considered a failed submission.
+     * 
      * @type {Array<string>}
      * @memberof SubmitRemoteLinks202Response
      */
@@ -6840,12 +7765,14 @@ export interface SubmitRemoteLinks202Response {
      * 
      * The object (if present) will be keyed by Remote Link ID and include any errors associated with that
      * Remote Link that have prevented it being submitted.
+     * 
      * @type {{ [key: string]: Array<SubmitRemoteLinks202ResponseRejectedRemoteLinksValueInner>; }}
      * @memberof SubmitRemoteLinks202Response
      */
     rejectedRemoteLinks?: { [key: string]: Array<SubmitRemoteLinks202ResponseRejectedRemoteLinksValueInner>; };
     /**
      * Issue keys or services IDs or keys that are not known on this Jira instance (if any).
+     * 
      * @type {Array<RemoteLinkDataAssociationsInner>}
      * @memberof SubmitRemoteLinks202Response
      */
@@ -6884,6 +7811,7 @@ export interface SubmitRemoteLinksRequest {
      * 
      * Properties are supplied as key/value pairs, a maximum of 5 properties can be supplied, and keys must not
      * contain ':' or start with '_'.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof SubmitRemoteLinksRequest
      */
@@ -6893,6 +7821,7 @@ export interface SubmitRemoteLinksRequest {
      * 
      * Each Remote Link may be associated with one or more Jira issue keys, and will be associated with any properties
      * included in this request.
+     * 
      * @type {Array<RemoteLinkData>}
      * @memberof SubmitRemoteLinksRequest
      */
@@ -6912,6 +7841,7 @@ export interface SubmitRemoteLinksRequest {
 export interface SubmitSecurityWorkspacesRequest {
     /**
      * The IDs of Security Workspaces to link to this Jira site. These must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(\/[a-zA-Z0-9\\-_.~@:{}=]+)*`
+     * 
      * @type {Array<string>}
      * @memberof SubmitSecurityWorkspacesRequest
      */
@@ -6925,6 +7855,7 @@ export interface SubmitSecurityWorkspacesRequest {
 export interface SubmitVulnerabilitiesRequest {
     /**
      * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during real-time, user-triggered actions (e.g. user closed or updated a vulnerability). "SCAN" - Data sent through some automated process (e.g. some periodically scheduled repository scan). "BACKFILL" - Data received while backfilling existing data (e.g. pushing historical vulnerabilities when re-connect a workspace). Default is "NORMAL". "NORMAL" traffic has higher priority but tighter rate limits, "SCAN" traffic has medium priority and looser limits, "BACKFILL" has lower priority and much looser limits
+     * 
      * @type {string}
      * @memberof SubmitVulnerabilitiesRequest
      */
@@ -6935,6 +7866,7 @@ export interface SubmitVulnerabilitiesRequest {
      * Examples might be an account or user ID that can then be used to clean up data if an account is removed from the Provider system.
      * 
      * Properties are supplied as key/value pairs, and a maximum of 5 properties can be supplied, keys cannot contain ':' or start with '_'.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof SubmitVulnerabilitiesRequest
      */
@@ -6966,6 +7898,7 @@ export type SubmitVulnerabilitiesRequestOperationTypeEnum = typeof SubmitVulnera
 
 /**
  * The result of a successful submitVulnerabilities request.
+ * 
  * @export
  * @interface SubmitVulnerabilitiesResponse
  */
@@ -6976,6 +7909,7 @@ export interface SubmitVulnerabilitiesResponse {
      * A Vulnerability may be rejected if it was only associated with unknown project keys.
      * 
      * Note that a Vulnerability that isn't updated due to it's updateSequenceNumber being out of order is not considered a failed submission.
+     * 
      * @type {Array<string>}
      * @memberof SubmitVulnerabilitiesResponse
      */
@@ -6984,6 +7918,7 @@ export interface SubmitVulnerabilitiesResponse {
      * Details of Vulnerabilities that have not been accepted for submission, usually due to a problem with the request data.
      * 
      * The object (if present) will be keyed by Vulnerability ID and include any errors associated with that Vulnerability that have prevented it being submitted.
+     * 
      * @type {{ [key: string]: Array<ErrorMessage1>; }}
      * @memberof SubmitVulnerabilitiesResponse
      */
@@ -6993,42 +7928,12 @@ export interface SubmitVulnerabilitiesResponse {
      * 
      * If a Vulnerability has been associated with any other association other than those in this array it will still be stored against those valid associations.
      * If a Vulnerability was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
-     * @type {Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>}
+     * 
+     * @type {Array<VulnerabilityDetailsAddAssociationsInner>}
      * @memberof SubmitVulnerabilitiesResponse
      */
-    unknownAssociations?: Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>;
+    unknownAssociations?: Array<VulnerabilityDetailsAddAssociationsInner>;
 }
-/**
- * 
- * @export
- * @interface SubmitVulnerabilitiesResponseUnknownAssociationsInner
- */
-export interface SubmitVulnerabilitiesResponseUnknownAssociationsInner {
-    /**
-     * Defines the association type.
-     * @type {string}
-     * @memberof SubmitVulnerabilitiesResponseUnknownAssociationsInner
-     */
-    associationType: SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum;
-    /**
-     * The service id or keys to associate the Security information with.
-     * 
-     * The number of values counted across all associationTypes (serviceIdOrKeys) must not exceed a limit of 500.
-     * @type {Array<string>}
-     * @memberof SubmitVulnerabilitiesResponseUnknownAssociationsInner
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum = {
-    ServiceIdOrKeys: 'serviceIdOrKeys'
-} as const;
-export type SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum = typeof SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum[keyof typeof SubmitVulnerabilitiesResponseUnknownAssociationsInnerAssociationTypeEnum];
-
 /**
  * 
  * @export
@@ -7057,30 +7962,35 @@ export interface SwapSprintRequest {
 }
 /**
  * Information about tests that were executed during a build.
+ * 
  * @export
  * @interface TestInfo
  */
 export interface TestInfo {
     /**
      * The total number of tests considered during a build.
+     * 
      * @type {number}
      * @memberof TestInfo
      */
     totalNumber: number;
     /**
      * The number of tests that passed during a build.
+     * 
      * @type {number}
      * @memberof TestInfo
      */
     numberPassed: number;
     /**
      * The number of tests that failed during a build.
+     * 
      * @type {number}
      * @memberof TestInfo
      */
     numberFailed: number;
     /**
      * The number of tests that were skipped during a build.
+     * 
      * @type {number}
      * @memberof TestInfo
      */
@@ -7100,29 +8010,16 @@ export interface ToggleFeaturesRequest {
     boardId?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ToggleFeaturesRequest
-     */
-    feature?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof ToggleFeaturesRequest
      */
     enabling?: boolean;
-}
-/**
- * Describes the user who triggered the deployment
- * @export
- * @interface TriggeredBy
- */
-export interface TriggeredBy {
     /**
-     * The email address of the user. Used to associate the user with a Jira user. Max length is 255 characters.
+     * 
      * @type {string}
-     * @memberof TriggeredBy
+     * @memberof ToggleFeaturesRequest
      */
-    email?: string;
+    feature?: string;
 }
 /**
  * 
@@ -7130,42 +8027,6 @@ export interface TriggeredBy {
  * @interface UpdateSprintRequest
  */
 export interface UpdateSprintRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateSprintRequest
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSprintRequest
-     */
-    self?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSprintRequest
-     */
-    state?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSprintRequest
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSprintRequest
-     */
-    startDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSprintRequest
-     */
-    endDate?: string;
     /**
      * 
      * @type {string}
@@ -7180,6 +8041,30 @@ export interface UpdateSprintRequest {
     createdDate?: string;
     /**
      * 
+     * @type {string}
+     * @memberof UpdateSprintRequest
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateSprintRequest
+     */
+    goal?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateSprintRequest
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateSprintRequest
+     */
+    name?: string;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateSprintRequest
      */
@@ -7189,7 +8074,50 @@ export interface UpdateSprintRequest {
      * @type {string}
      * @memberof UpdateSprintRequest
      */
-    goal?: string;
+    self?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateSprintRequest
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateSprintRequest
+     */
+    state?: string;
+}
+/**
+ * A project category.
+ * @export
+ * @interface UpdatedProjectCategory
+ */
+export interface UpdatedProjectCategory {
+    /**
+     * The name of the project category.
+     * @type {string}
+     * @memberof UpdatedProjectCategory
+     */
+    readonly description?: string;
+    /**
+     * The ID of the project category.
+     * @type {string}
+     * @memberof UpdatedProjectCategory
+     */
+    readonly id?: string;
+    /**
+     * The description of the project category.
+     * @type {string}
+     * @memberof UpdatedProjectCategory
+     */
+    readonly name?: string;
+    /**
+     * The URL of the project category.
+     * @type {string}
+     * @memberof UpdatedProjectCategory
+     */
+    readonly self?: string;
 }
 /**
  * 
@@ -7198,18 +8126,36 @@ export interface UpdateSprintRequest {
  */
 export interface UserBean {
     /**
+     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+     * @type {string}
+     * @memberof UserBean
+     */
+    accountId?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof UserBean
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls}
+     * @memberof UserBean
+     */
+    avatarUrls?: GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls;
+    /**
+     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * @type {string}
+     * @memberof UserBean
+     */
+    displayName?: string;
+    /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The key of the user.
      * @type {string}
      * @memberof UserBean
      */
     key?: string;
-    /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof UserBean
-     */
-    self?: string;
     /**
      * This property is deprecated in favor of `accountId` because of privacy changes. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.  
      * The username of the user.
@@ -7218,29 +8164,11 @@ export interface UserBean {
      */
     name?: string;
     /**
-     * The display name of the user. Depending on the user’s privacy setting, this may return an alternative value.
+     * The URL of the user.
      * @type {string}
      * @memberof UserBean
      */
-    displayName?: string;
-    /**
-     * Whether the user is active.
-     * @type {boolean}
-     * @memberof UserBean
-     */
-    active?: boolean;
-    /**
-     * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
-     * @type {string}
-     * @memberof UserBean
-     */
-    accountId?: string;
-    /**
-     * 
-     * @type {GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls}
-     * @memberof UserBean
-     */
-    avatarUrls?: GetAllBoards200ResponseValuesInnerAdminsAllOfUsersInnerAvatarUrls;
+    self?: string;
 }
 /**
  * 
@@ -7248,6 +8176,12 @@ export interface UserBean {
  * @interface UserBeanAvatarUrls
  */
 export interface UserBeanAvatarUrls {
+    /**
+     * The URL of the user's 16x16 pixel avatar.
+     * @type {string}
+     * @memberof UserBeanAvatarUrls
+     */
+    ["16x16"]?: string;
     /**
      * The URL of the user's 24x24 pixel avatar.
      * @type {string}
@@ -7266,12 +8200,6 @@ export interface UserBeanAvatarUrls {
      * @memberof UserBeanAvatarUrls
      */
     ["48x48"]?: string;
-    /**
-     * The URL of the user's 16x16 pixel avatar.
-     * @type {string}
-     * @memberof UserBeanAvatarUrls
-     */
-    ["16x16"]?: string;
 }
 /**
  * User details permitted by the user's Atlassian Account privacy settings. However, be aware of these exceptions:
@@ -7284,35 +8212,23 @@ export interface UserBeanAvatarUrls {
  */
 export interface UserDetails {
     /**
-     * The URL of the user.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly self?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly name?: string;
-    /**
-     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly key?: string;
-    /**
      * The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
      * @type {string}
      * @memberof UserDetails
      */
     accountId?: string;
     /**
-     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
      * @type {string}
      * @memberof UserDetails
      */
-    readonly emailAddress?: string;
+    readonly accountType?: string;
+    /**
+     * Whether the user is active.
+     * @type {boolean}
+     * @memberof UserDetails
+     */
+    readonly active?: boolean;
     /**
      * 
      * @type {ChangelogAuthorAllOfAvatarUrls}
@@ -7326,38 +8242,53 @@ export interface UserDetails {
      */
     readonly displayName?: string;
     /**
-     * Whether the user is active.
-     * @type {boolean}
+     * The email address of the user. Depending on the user’s privacy settings, this may be returned as null.
+     * @type {string}
      * @memberof UserDetails
      */
-    readonly active?: boolean;
+    readonly emailAddress?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly key?: string;
+    /**
+     * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly name?: string;
+    /**
+     * The URL of the user.
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly self?: string;
     /**
      * The time zone specified in the user's profile. Depending on the user’s privacy settings, this may be returned as null.
      * @type {string}
      * @memberof UserDetails
      */
     readonly timeZone?: string;
-    /**
-     * The type of account represented by this user. This will be one of 'atlassian' (normal users), 'app' (application user) or 'customer' (Jira Service Desk customer user)
-     * @type {string}
-     * @memberof UserDetails
-     */
-    readonly accountType?: string;
 }
 /**
  * Extra information (optional). This data will be shown in the security feature under the vulnerability displayName.
+ * 
  * @export
  * @interface VulnerabilityAdditionalInfo
  */
 export interface VulnerabilityAdditionalInfo {
     /**
      * The content of the additionalInfo.
+     * 
      * @type {string}
      * @memberof VulnerabilityAdditionalInfo
      */
     content: string;
     /**
      * Optional URL linking to the information
+     * 
      * @type {string}
      * @memberof VulnerabilityAdditionalInfo
      */
@@ -7365,6 +8296,7 @@ export interface VulnerabilityAdditionalInfo {
 }
 /**
  * Data related to a specific vulnerability in a specific workspace that the vulnerability is present in. Must specify at least one association.
+ * 
  * @export
  * @interface VulnerabilityDetails
  */
@@ -7373,12 +8305,14 @@ export interface VulnerabilityDetails {
      * The VulnerabilityData schema version used for this vulnerability data.
      * 
      * Placeholder to support potential schema changes in the future.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
     schemaVersion: VulnerabilityDetailsSchemaVersionEnum;
     /**
      * The identifier for the Vulnerability. Must be unique for a given Provider.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7389,12 +8323,14 @@ export interface VulnerabilityDetails {
      * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Vulnerability and increment that on each update to Jira).
      * 
      * Updates for a Vulnerability that are received with an updateSequenceId lower than what is currently stored will be ignored.
+     * 
      * @type {number}
      * @memberof VulnerabilityDetails
      */
     updateSequenceNumber: number;
     /**
      * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider. This must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(/[a-zA-Z0-9\\-_.~@:{}=]+)*`
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7403,12 +8339,14 @@ export interface VulnerabilityDetails {
      * The human-readable name for the Vulnerability. Will be shown in the UI.
      * 
      * If not provided, will use the ID for display.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
     displayName: string;
     /**
      * A description of the issue in markdown format that will be shown in the UI and used when creating Jira Issues. HTML tags are not supported in the markdown format. For creating a new line `\n` can be used. Read more about the accepted markdown transformations [here](https://atlaskit.atlassian.com/packages/editor/editor-markdown-transformer).
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7417,6 +8355,7 @@ export interface VulnerabilityDetails {
      * A URL users can use to link to a summary view of this vulnerability, if appropriate.
      * 
      * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the vulnerability in that project).
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7431,6 +8370,7 @@ export interface VulnerabilityDetails {
      * The timestamp to present to the user that shows when the Vulnerability was introduced.
      * 
      * Expected format is an RFC3339 formatted string.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7439,6 +8379,7 @@ export interface VulnerabilityDetails {
      * The last-updated timestamp to present to the user the last time the Vulnerability was updated.
      * 
      * Expected format is an RFC3339 formatted string.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7451,12 +8392,14 @@ export interface VulnerabilityDetails {
     severity: VulnerabilitySeverity;
     /**
      * The identifying information for the Vulnerability.
+     * 
      * @type {Array<Identifier>}
      * @memberof VulnerabilityDetails
      */
     identifiers?: Array<Identifier>;
     /**
      * The current status of the Vulnerability.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7469,20 +8412,23 @@ export interface VulnerabilityDetails {
     additionalInfo?: VulnerabilityAdditionalInfo;
     /**
      * The associations (e.g. Jira issue) to add in addition to the currently stored associations of the Security Vulnerability.
+     * 
      * @type {Array<VulnerabilityDetailsAddAssociationsInner>}
      * @memberof VulnerabilityDetails
      */
     addAssociations?: Array<VulnerabilityDetailsAddAssociationsInner>;
     /**
      * The associations (e.g. Jira issue) to remove from currently stored associations of the Security Vulnerability.
-     * @type {Array<VulnerabilityDetailsRemoveAssociationsInner>}
+     * 
+     * @type {Array<VulnerabilityDetailsAddAssociationsInner>}
      * @memberof VulnerabilityDetails
      */
-    removeAssociations?: Array<VulnerabilityDetailsRemoveAssociationsInner>;
+    removeAssociations?: Array<VulnerabilityDetailsAddAssociationsInner>;
     /**
      * An ISO-8601 Date-time string representing the last time the provider updated associations on this entity.
      * 
      * Expected format is an RFC3339 formatted string.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetails
      */
@@ -7492,9 +8438,10 @@ export interface VulnerabilityDetails {
      * 
      * This can be any monotonically increasing number. A highly recommended implementation is to use epoch millis.
      * 
-     * If it is not provided it will default to being equal to the corresponding entity's `updateSequenceNumber`.
+     * This is an optional field. If it is not provided it will default to being equal to the corresponding entity's `updateSequenceNumber`.
      * 
      * Associations are written following a LastWriteWins strategy, association that are received with an associationsUpdateSequenceNumber lower than what is currently stored will be ignored.
+     * 
      * @type {number}
      * @memberof VulnerabilityDetails
      */
@@ -7533,149 +8480,6 @@ export const VulnerabilityDetailsStatusEnum = {
 export type VulnerabilityDetailsStatusEnum = typeof VulnerabilityDetailsStatusEnum[keyof typeof VulnerabilityDetailsStatusEnum];
 
 /**
- * Data related to a specific vulnerability in a specific workspace that the vulnerability is present in. Must specify at least one association.
- * @export
- * @interface VulnerabilityDetails1
- */
-export interface VulnerabilityDetails1 {
-    /**
-     * The VulnerabilityData schema version used for this vulnerability data.
-     * 
-     * Placeholder to support potential schema changes in the future.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    schemaVersion: VulnerabilityDetails1SchemaVersionEnum;
-    /**
-     * The identifier for the Vulnerability. Must be unique for a given Provider.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    id: string;
-    /**
-     * An ID used to apply an ordering to updates for this Vulnerability in the case of out-of-order receipt of update requests.
-     * 
-     * This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the Provider system, but other alternatives are valid (e.g. a Provider could store a counter against each Vulnerability and increment that on each update to Jira).
-     * 
-     * Updates for a Vulnerability that are received with an updateSequenceId lower than what is currently stored will be ignored.
-     * @type {number}
-     * @memberof VulnerabilityDetails1
-     */
-    updateSequenceNumber: number;
-    /**
-     * The identifier of the Container where this Vulnerability was found. Must be unique for a given Provider. This must follow this regex pattern: `[a-zA-Z0-9\\-_.~@:{}=]+(/[a-zA-Z0-9\\-_.~@:{}=]+)*`
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    containerId: string;
-    /**
-     * The human-readable name for the Vulnerability. Will be shown in the UI.
-     * 
-     * If not provided, will use the ID for display.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    displayName: string;
-    /**
-     * A description of the issue in markdown format that will be shown in the UI and used when creating Jira Issues. HTML tags are not supported in the markdown format. For creating a new line `\n` can be used. Read more about the accepted markdown transformations [here](https://atlaskit.atlassian.com/packages/editor/editor-markdown-transformer).
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    description: string;
-    /**
-     * A URL users can use to link to a summary view of this vulnerability, if appropriate.
-     * 
-     * This could be any location that makes sense in the Provider system (e.g. if the summary information comes from a specific project, it might make sense to link the user to the vulnerability in that project).
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    url: string;
-    /**
-     * The type of Vulnerability detected.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    type: VulnerabilityDetails1TypeEnum;
-    /**
-     * The timestamp to present to the user that shows when the Vulnerability was introduced.
-     * 
-     * Expected format is an RFC3339 formatted string.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    introducedDate: string;
-    /**
-     * The last-updated timestamp to present to the user the last time the Vulnerability was updated.
-     * 
-     * Expected format is an RFC3339 formatted string.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    lastUpdated: string;
-    /**
-     * 
-     * @type {VulnerabilitySeverity}
-     * @memberof VulnerabilityDetails1
-     */
-    severity: VulnerabilitySeverity;
-    /**
-     * The identifying information for the Vulnerability.
-     * @type {Array<Identifier>}
-     * @memberof VulnerabilityDetails1
-     */
-    identifiers?: Array<Identifier>;
-    /**
-     * The current status of the Vulnerability.
-     * @type {string}
-     * @memberof VulnerabilityDetails1
-     */
-    status: VulnerabilityDetails1StatusEnum;
-    /**
-     * 
-     * @type {VulnerabilityAdditionalInfo}
-     * @memberof VulnerabilityDetails1
-     */
-    additionalInfo?: VulnerabilityAdditionalInfo;
-    /**
-     * The entities to associate the Security Vulnerability information with.
-     * @type {Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>}
-     * @memberof VulnerabilityDetails1
-     */
-    associations?: Array<SubmitVulnerabilitiesResponseUnknownAssociationsInner>;
-}
-
-
-/**
- * @export
- */
-export const VulnerabilityDetails1SchemaVersionEnum = {
-    _10: '1.0'
-} as const;
-export type VulnerabilityDetails1SchemaVersionEnum = typeof VulnerabilityDetails1SchemaVersionEnum[keyof typeof VulnerabilityDetails1SchemaVersionEnum];
-
-/**
- * @export
- */
-export const VulnerabilityDetails1TypeEnum = {
-    Sca: 'sca',
-    Sast: 'sast',
-    Dast: 'dast',
-    Unknown: 'unknown'
-} as const;
-export type VulnerabilityDetails1TypeEnum = typeof VulnerabilityDetails1TypeEnum[keyof typeof VulnerabilityDetails1TypeEnum];
-
-/**
- * @export
- */
-export const VulnerabilityDetails1StatusEnum = {
-    Open: 'open',
-    Closed: 'closed',
-    Ignored: 'ignored',
-    Unknown: 'unknown'
-} as const;
-export type VulnerabilityDetails1StatusEnum = typeof VulnerabilityDetails1StatusEnum[keyof typeof VulnerabilityDetails1StatusEnum];
-
-/**
  * 
  * @export
  * @interface VulnerabilityDetailsAddAssociationsInner
@@ -7683,6 +8487,7 @@ export type VulnerabilityDetails1StatusEnum = typeof VulnerabilityDetails1Status
 export interface VulnerabilityDetailsAddAssociationsInner {
     /**
      * Defines the association type.
+     * 
      * @type {string}
      * @memberof VulnerabilityDetailsAddAssociationsInner
      */
@@ -7691,6 +8496,7 @@ export interface VulnerabilityDetailsAddAssociationsInner {
      * The Jira issue id or keys to associate the Security information with.
      * 
      * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * 
      * @type {Array<string>}
      * @memberof VulnerabilityDetailsAddAssociationsInner
      */
@@ -7707,40 +8513,10 @@ export const VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum = {
 export type VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum];
 
 /**
- * 
- * @export
- * @interface VulnerabilityDetailsRemoveAssociationsInner
- */
-export interface VulnerabilityDetailsRemoveAssociationsInner {
-    /**
-     * Defines the association type.
-     * @type {string}
-     * @memberof VulnerabilityDetailsRemoveAssociationsInner
-     */
-    associationType: VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum;
-    /**
-     * The Jira issue id or keys to associate the Security information with.
-     * 
-     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
-     * @type {Array<string>}
-     * @memberof VulnerabilityDetailsRemoveAssociationsInner
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum = {
-    IssueIdOrKeys: 'issueIdOrKeys'
-} as const;
-export type VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum = typeof VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum[keyof typeof VulnerabilityDetailsRemoveAssociationsInnerAssociationTypeEnum];
-
-/**
  * Severity information for a single Vulnerability.
  * 
  * This is the severity information that will be presented to the user on e.g. the Jira Security screen.
+ * 
  * @export
  * @interface VulnerabilitySeverity
  */

@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EstimateIssueForBoardRequest,
   MoveIssuesToBacklogForBoardRequest,
-} from '../models';
+} from '../models/index';
 
 export interface EstimateIssueForBoardOperationRequest {
     issueIdOrKey: string;
@@ -51,18 +51,24 @@ export class IssueApi extends runtime.BaseAPI {
      * Estimate issue for board
      */
     async estimateIssueForBoardRaw(requestParameters: EstimateIssueForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
-            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling estimateIssueForBoard.');
+        if (requestParameters['issueIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'issueIdOrKey',
+                'Required parameter "issueIdOrKey" was null or undefined when calling estimateIssueForBoard().'
+            );
         }
 
-        if (requestParameters.estimateIssueForBoardRequest === null || requestParameters.estimateIssueForBoardRequest === undefined) {
-            throw new runtime.RequiredError('estimateIssueForBoardRequest','Required parameter requestParameters.estimateIssueForBoardRequest was null or undefined when calling estimateIssueForBoard.');
+        if (requestParameters['estimateIssueForBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'estimateIssueForBoardRequest',
+                'Required parameter "estimateIssueForBoardRequest" was null or undefined when calling estimateIssueForBoard().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.boardId !== undefined) {
-            queryParameters['boardId'] = requestParameters.boardId;
+        if (requestParameters['boardId'] != null) {
+            queryParameters['boardId'] = requestParameters['boardId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -75,11 +81,11 @@ export class IssueApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
+            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.estimateIssueForBoardRequest,
+            body: requestParameters['estimateIssueForBoardRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -98,22 +104,25 @@ export class IssueApi extends runtime.BaseAPI {
      * Get issue
      */
     async getIssueRaw(requestParameters: GetIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
-            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssue.');
+        if (requestParameters['issueIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'issueIdOrKey',
+                'Required parameter "issueIdOrKey" was null or undefined when calling getIssue().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.fields) {
-            queryParameters['fields'] = requestParameters.fields;
+        if (requestParameters['fields'] != null) {
+            queryParameters['fields'] = requestParameters['fields'];
         }
 
-        if (requestParameters.expand !== undefined) {
-            queryParameters['expand'] = requestParameters.expand;
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand'];
         }
 
-        if (requestParameters.updateHistory !== undefined) {
-            queryParameters['updateHistory'] = requestParameters.updateHistory;
+        if (requestParameters['updateHistory'] != null) {
+            queryParameters['updateHistory'] = requestParameters['updateHistory'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -124,7 +133,7 @@ export class IssueApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
+            path: `/rest/agile/1.0/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -146,14 +155,17 @@ export class IssueApi extends runtime.BaseAPI {
      * Get issue estimation for board
      */
     async getIssueEstimationForBoardRaw(requestParameters: GetIssueEstimationForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
-            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssueEstimationForBoard.');
+        if (requestParameters['issueIdOrKey'] == null) {
+            throw new runtime.RequiredError(
+                'issueIdOrKey',
+                'Required parameter "issueIdOrKey" was null or undefined when calling getIssueEstimationForBoard().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.boardId !== undefined) {
-            queryParameters['boardId'] = requestParameters.boardId;
+        if (requestParameters['boardId'] != null) {
+            queryParameters['boardId'] = requestParameters['boardId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -164,7 +176,7 @@ export class IssueApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
+            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -186,8 +198,11 @@ export class IssueApi extends runtime.BaseAPI {
      * Rank issues
      */
     async rankIssuesRaw(requestParameters: RankIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.moveIssuesToBacklogForBoardRequest === null || requestParameters.moveIssuesToBacklogForBoardRequest === undefined) {
-            throw new runtime.RequiredError('moveIssuesToBacklogForBoardRequest','Required parameter requestParameters.moveIssuesToBacklogForBoardRequest was null or undefined when calling rankIssues.');
+        if (requestParameters['moveIssuesToBacklogForBoardRequest'] == null) {
+            throw new runtime.RequiredError(
+                'moveIssuesToBacklogForBoardRequest',
+                'Required parameter "moveIssuesToBacklogForBoardRequest" was null or undefined when calling rankIssues().'
+            );
         }
 
         const queryParameters: any = {};
@@ -206,7 +221,7 @@ export class IssueApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.moveIssuesToBacklogForBoardRequest,
+            body: requestParameters['moveIssuesToBacklogForBoardRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

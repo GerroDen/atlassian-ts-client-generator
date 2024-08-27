@@ -19,7 +19,7 @@ import type {
   SubmitRemoteLinks202Response,
   SubmitRemoteLinks202ResponseRejectedRemoteLinksValueInner,
   SubmitRemoteLinksRequest,
-} from '../models';
+} from '../models/index';
 
 export interface DeleteRemoteLinkByIdRequest {
     authorization: string;
@@ -53,28 +53,34 @@ export class RemoteLinksApi extends runtime.BaseAPI {
      * Delete a Remote Link by ID
      */
     async deleteRemoteLinkByIdRaw(requestParameters: DeleteRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteRemoteLinkById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteRemoteLinkById().'
+            );
         }
 
-        if (requestParameters.remoteLinkId === null || requestParameters.remoteLinkId === undefined) {
-            throw new runtime.RequiredError('remoteLinkId','Required parameter requestParameters.remoteLinkId was null or undefined when calling deleteRemoteLinkById.');
+        if (requestParameters['remoteLinkId'] == null) {
+            throw new runtime.RequiredError(
+                'remoteLinkId',
+                'Required parameter "remoteLinkId" was null or undefined when calling deleteRemoteLinkById().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters.remoteLinkId))),
+            path: `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -96,24 +102,27 @@ export class RemoteLinksApi extends runtime.BaseAPI {
      * Delete Remote Links by Property
      */
     async deleteRemoteLinksByPropertyRaw(requestParameters: DeleteRemoteLinksByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling deleteRemoteLinksByProperty.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling deleteRemoteLinksByProperty().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.updateSequenceNumber !== undefined) {
-            queryParameters['_updateSequenceNumber'] = requestParameters.updateSequenceNumber;
+        if (requestParameters['updateSequenceNumber'] != null) {
+            queryParameters['_updateSequenceNumber'] = requestParameters['updateSequenceNumber'];
         }
 
-        if (requestParameters.params !== undefined) {
-            queryParameters['params'] = requestParameters.params;
+        if (requestParameters['params'] != null) {
+            queryParameters['params'] = requestParameters['params'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -139,24 +148,30 @@ export class RemoteLinksApi extends runtime.BaseAPI {
      * Get a Remote Link by ID
      */
     async getRemoteLinkByIdRaw(requestParameters: GetRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteLinkData>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling getRemoteLinkById.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling getRemoteLinkById().'
+            );
         }
 
-        if (requestParameters.remoteLinkId === null || requestParameters.remoteLinkId === undefined) {
-            throw new runtime.RequiredError('remoteLinkId','Required parameter requestParameters.remoteLinkId was null or undefined when calling getRemoteLinkById.');
+        if (requestParameters['remoteLinkId'] == null) {
+            throw new runtime.RequiredError(
+                'remoteLinkId',
+                'Required parameter "remoteLinkId" was null or undefined when calling getRemoteLinkById().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
-            path: `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters.remoteLinkId))),
+            path: `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -179,12 +194,18 @@ export class RemoteLinksApi extends runtime.BaseAPI {
      * Submit Remote Link data
      */
     async submitRemoteLinksRaw(requestParameters: SubmitRemoteLinksOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitRemoteLinks202Response>> {
-        if (requestParameters.authorization === null || requestParameters.authorization === undefined) {
-            throw new runtime.RequiredError('authorization','Required parameter requestParameters.authorization was null or undefined when calling submitRemoteLinks.');
+        if (requestParameters['authorization'] == null) {
+            throw new runtime.RequiredError(
+                'authorization',
+                'Required parameter "authorization" was null or undefined when calling submitRemoteLinks().'
+            );
         }
 
-        if (requestParameters.submitRemoteLinksRequest === null || requestParameters.submitRemoteLinksRequest === undefined) {
-            throw new runtime.RequiredError('submitRemoteLinksRequest','Required parameter requestParameters.submitRemoteLinksRequest was null or undefined when calling submitRemoteLinks.');
+        if (requestParameters['submitRemoteLinksRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitRemoteLinksRequest',
+                'Required parameter "submitRemoteLinksRequest" was null or undefined when calling submitRemoteLinks().'
+            );
         }
 
         const queryParameters: any = {};
@@ -193,8 +214,8 @@ export class RemoteLinksApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.authorization !== undefined && requestParameters.authorization !== null) {
-            headerParameters['Authorization'] = String(requestParameters.authorization);
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
         const response = await this.request({
@@ -202,7 +223,7 @@ export class RemoteLinksApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.submitRemoteLinksRequest,
+            body: requestParameters['submitRemoteLinksRequest'],
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
