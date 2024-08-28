@@ -1,0 +1,8 @@
+{
+  "name": "migration-api",
+  "version": "1.0.0",
+  "description": "OpenAPI client for migration-api",
+  "author": "OpenAPI-Generator",
+  "private": true,
+  "main": "src/index.ts"
+}
