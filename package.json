@@ -13,6 +13,7 @@
     "fetch:confluence-cloud-api-v1": "curl -o confluence-cloud-api-v1/swagger.json https://developer.atlassian.com/cloud/confluence/swagger.v3.json",
     "fetch:confluence-cloud-api-v2": "curl -o confluence-cloud-api-v2/swagger.json https://developer.atlassian.com/cloud/confluence/openapi-v2.v3.json",
     "fetch:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
+    "fetch:jira-cloud-service-management-api": "curl -o jira-cloud-service-management-api/swagger.json https://dac-static.atlassian.com/cloud/jira/service-desk/swagger.v3.json?_v=1.7471.0-0.1310.0",
     "fetch:jira-software-cloud-api": "curl -o jira-software-cloud-api/swagger.json https://developer.atlassian.com/cloud/jira/software/swagger.v3.json",
     "fetch:migration-api": "curl -o migration-api/swagger.json https://dac-static.atlassian.com/platform/app-migration/swagger.v3.json",
     "fetch:teams-cloud-api": "curl -o teams-cloud-api/swagger.json https://dac-static.atlassian.com/platform/teams/swagger-public-api-v1.v3.json",
