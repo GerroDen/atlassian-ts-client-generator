@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   PublicApiOverallCodedError,
   PublicApiTeamCreationPayload,
+  PublicApiTeamPaginationResult,
   PublicApiTeamResponse,
   PublicApiTeamResponseWithMembers,
   PublicApiTeamUpdatePayload,
@@ -36,6 +37,13 @@ export interface GetTeam2Request {
     orgId: string;
     teamId: string;
     siteId?: string;
+}
+
+export interface QueryTeamsRequest {
+    orgId: string;
+    siteId?: string;
+    size?: number;
+    cursor?: string;
 }
 
 export interface RestoreTeamRequest {
@@ -184,6 +192,53 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
      */
     async getTeam2(requestParameters: GetTeam2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiTeamResponse> {
         const response = await this.getTeam2Raw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * This returns a list of all teams contained under an organization. This may be used as an option to export teams data within your organization.
+     * Get a list of teams.
+     */
+    async queryTeamsRaw(requestParameters: QueryTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamPaginationResult>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling queryTeams().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['siteId'] != null) {
+            queryParameters['siteId'] = requestParameters['siteId'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/gateway/api/public/teams/v1/org/{orgId}/teams`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * This returns a list of all teams contained under an organization. This may be used as an option to export teams data within your organization.
+     * Get a list of teams.
+     */
+    async queryTeams(requestParameters: QueryTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicApiTeamPaginationResult> {
+        const response = await this.queryTeamsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

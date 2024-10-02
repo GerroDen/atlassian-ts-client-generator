@@ -35,11 +35,11 @@ interface AddKeyRequest {
 }
 
 interface BulkAddExemptRepositoriesRequest {
-    restRepositorySelector?: Set<RestRepositorySelector>;
+    restRepositorySelector?: Array<RestRepositorySelector>;
 }
 
 interface BulkAddExemptRepositories1Request {
-    restRepositorySelector?: Set<RestRepositorySelector>;
+    restRepositorySelector?: Array<RestRepositorySelector>;
 }
 
 interface CreateAllowlistRuleRequest {

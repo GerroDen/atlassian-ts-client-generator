@@ -256,6 +256,55 @@ export interface PublicApiRemoveMemberError {
 /**
  * 
  * @export
+ * @interface PublicApiTeam
+ */
+export interface PublicApiTeam {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    description: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    displayName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    teamId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    teamType: PublicApiTeamTeamTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const PublicApiTeamTeamTypeEnum = {
+    Open: 'OPEN',
+    MemberInvite: 'MEMBER_INVITE',
+    External: 'EXTERNAL'
+} as const;
+export type PublicApiTeamTeamTypeEnum = typeof PublicApiTeamTeamTypeEnum[keyof typeof PublicApiTeamTeamTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface PublicApiTeamCreationPayload
  */
 export interface PublicApiTeamCreationPayload {
@@ -291,10 +340,30 @@ export interface PublicApiTeamCreationPayload {
  */
 export const PublicApiTeamCreationPayloadTeamTypeEnum = {
     Open: 'OPEN',
-    MemberInvite: 'MEMBER_INVITE'
+    MemberInvite: 'MEMBER_INVITE',
+    External: 'EXTERNAL'
 } as const;
 export type PublicApiTeamCreationPayloadTeamTypeEnum = typeof PublicApiTeamCreationPayloadTeamTypeEnum[keyof typeof PublicApiTeamCreationPayloadTeamTypeEnum];
 
+/**
+ * Cursor pagination result for PublicApiTeam
+ * @export
+ * @interface PublicApiTeamPaginationResult
+ */
+export interface PublicApiTeamPaginationResult {
+    /**
+     * The cursor for pagination
+     * @type {string}
+     * @memberof PublicApiTeamPaginationResult
+     */
+    cursor?: string;
+    /**
+     * The list of teams
+     * @type {Array<PublicApiTeam>}
+     * @memberof PublicApiTeamPaginationResult
+     */
+    entities: Array<PublicApiTeam>;
+}
 /**
  * 
  * @export
@@ -345,7 +414,8 @@ export interface PublicApiTeamResponse {
  */
 export const PublicApiTeamResponseTeamTypeEnum = {
     Open: 'OPEN',
-    MemberInvite: 'MEMBER_INVITE'
+    MemberInvite: 'MEMBER_INVITE',
+    External: 'EXTERNAL'
 } as const;
 export type PublicApiTeamResponseTeamTypeEnum = typeof PublicApiTeamResponseTeamTypeEnum[keyof typeof PublicApiTeamResponseTeamTypeEnum];
 
@@ -405,7 +475,8 @@ export interface PublicApiTeamResponseWithMembers {
  */
 export const PublicApiTeamResponseWithMembersTeamTypeEnum = {
     Open: 'OPEN',
-    MemberInvite: 'MEMBER_INVITE'
+    MemberInvite: 'MEMBER_INVITE',
+    External: 'EXTERNAL'
 } as const;
 export type PublicApiTeamResponseWithMembersTeamTypeEnum = typeof PublicApiTeamResponseWithMembersTeamTypeEnum[keyof typeof PublicApiTeamResponseWithMembersTeamTypeEnum];
 

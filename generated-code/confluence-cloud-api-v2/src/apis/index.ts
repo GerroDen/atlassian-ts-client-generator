@@ -11,6 +11,7 @@ export * from './ContentPropertiesApi';
 export * from './CustomContentApi';
 export * from './DataPoliciesApi';
 export * from './DatabaseApi';
+export * from './FolderApi';
 export * from './LabelApi';
 export * from './LikeApi';
 export * from './OperationApi';

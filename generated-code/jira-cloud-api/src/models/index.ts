@@ -387,6 +387,91 @@ export interface ApplicationRole {
     userCountDescription?: string;
 }
 /**
+ * The approval configuration of a status within a workflow. Applies only to Jira Service Management approvals.
+ * @export
+ * @interface ApprovalConfiguration
+ */
+export interface ApprovalConfiguration {
+    /**
+     * Whether the approval configuration is active.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    active: ApprovalConfigurationActiveEnum;
+    /**
+     * How the required approval count is calculated. It may be configured to require a specific number of approvals, or approval by a percentage of approvers. If the approvers source field is Approver groups, you can configure how many approvals per group are required for the request to be approved. The number will be the same across all groups.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    conditionType: ApprovalConfigurationConditionTypeEnum;
+    /**
+     * The number or percentage of approvals required for a request to be approved. If `conditionType` is `number`, the value must be 20 or less. If `conditionType` is `percent`, the value must be 100 or less.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    conditionValue: string;
+    /**
+     * A list of roles that should be excluded as possible approvers.
+     * @type {Array<string | null>}
+     * @memberof ApprovalConfiguration
+     */
+    exclude?: ApprovalConfigurationExcludeEnum | null;
+    /**
+     * The custom field ID of the "Approvers" or "Approver Groups" field.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    fieldId: string;
+    /**
+     * The custom field ID of the field used to pre-populate the Approver field. Only supports the "Affected Services" field.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    prePopulatedFieldId?: string | null;
+    /**
+     * The numeric ID of the transition to be executed if the request is approved.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    transitionApproved: string;
+    /**
+     * The numeric ID of the transition to be executed if the request is declined.
+     * @type {string}
+     * @memberof ApprovalConfiguration
+     */
+    transitionRejected: string;
+}
+
+
+/**
+ * @export
+ */
+export const ApprovalConfigurationActiveEnum = {
+    True: 'true',
+    False: 'false'
+} as const;
+export type ApprovalConfigurationActiveEnum = typeof ApprovalConfigurationActiveEnum[keyof typeof ApprovalConfigurationActiveEnum];
+
+/**
+ * @export
+ */
+export const ApprovalConfigurationConditionTypeEnum = {
+    Number: 'number',
+    Percent: 'percent',
+    NumberPerPrincipal: 'numberPerPrincipal'
+} as const;
+export type ApprovalConfigurationConditionTypeEnum = typeof ApprovalConfigurationConditionTypeEnum[keyof typeof ApprovalConfigurationConditionTypeEnum];
+
+/**
+ * @export
+ */
+export const ApprovalConfigurationExcludeEnum = {
+    Assignee: 'assignee',
+    Reporter: 'reporter'
+} as const;
+export type ApprovalConfigurationExcludeEnum = typeof ApprovalConfigurationExcludeEnum[keyof typeof ApprovalConfigurationExcludeEnum];
+
+/**
  * 
  * @export
  * @interface ArchiveIssueAsyncRequest
@@ -1345,6 +1430,43 @@ export interface BulkChangeOwnerDetails {
     newOwner: string;
 }
 /**
+ * Details of the contextual configuration for a custom field.
+ * @export
+ * @interface BulkContextualConfiguration
+ */
+export interface BulkContextualConfiguration {
+    /**
+     * The field configuration.
+     * @type {any}
+     * @memberof BulkContextualConfiguration
+     */
+    configuration?: any | null;
+    /**
+     * The ID of the custom field.
+     * @type {string}
+     * @memberof BulkContextualConfiguration
+     */
+    customFieldId: string;
+    /**
+     * The ID of the field context the configuration is associated with.
+     * @type {string}
+     * @memberof BulkContextualConfiguration
+     */
+    readonly fieldContextId: string;
+    /**
+     * The ID of the configuration.
+     * @type {string}
+     * @memberof BulkContextualConfiguration
+     */
+    id: string;
+    /**
+     * The field value schema.
+     * @type {any}
+     * @memberof BulkContextualConfiguration
+     */
+    schema?: any | null;
+}
+/**
  * Details of the options to create for a custom field.
  * @export
  * @interface BulkCustomFieldOptionCreateRequest
@@ -1497,6 +1619,64 @@ export const BulkEditShareableEntityResponseActionEnum = {
 export type BulkEditShareableEntityResponseActionEnum = typeof BulkEditShareableEntityResponseActionEnum[keyof typeof BulkEditShareableEntityResponseActionEnum];
 
 /**
+ * 
+ * @export
+ * @interface BulkFetchIssueRequestBean
+ */
+export interface BulkFetchIssueRequestBean {
+    /**
+     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * 
+     *  *  `renderedFields` Returns field values rendered in HTML format.
+     *  *  `names` Returns the display name of each field.
+     *  *  `schema` Returns the schema describing a field type.
+     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     * @type {Array<string>}
+     * @memberof BulkFetchIssueRequestBean
+     */
+    expand?: Array<string>;
+    /**
+     * A list of fields to return for each issue, use it to retrieve a subset of fields. This parameter accepts a comma-separated list. Expand options include:
+     * 
+     *  *  `*all` Returns all fields.
+     *  *  `*navigable` Returns navigable fields.
+     *  *  Any issue field, prefixed with a minus to exclude.
+     * 
+     * The default is `*navigable`.
+     * 
+     * Examples:
+     * 
+     *  *  `summary,comment` Returns the summary and comments fields only.
+     *  *  `-description` Returns all navigable (default) fields except description.
+     *  *  `*all,-comment` Returns all fields except comments.
+     * 
+     * Multiple `fields` parameters can be included in a request.
+     * 
+     * Note: All navigable fields are returned by default. This differs from [GET issue](#api-rest-api-3-issue-issueIdOrKey-get) where the default is all fields.
+     * @type {Array<string>}
+     * @memberof BulkFetchIssueRequestBean
+     */
+    fields?: Array<string>;
+    /**
+     * Reference fields by their key (rather than ID). The default is `false`.
+     * @type {boolean}
+     * @memberof BulkFetchIssueRequestBean
+     */
+    fieldsByKeys?: boolean;
+    /**
+     * An array of issue IDs or issue keys to fetch. You can mix issue IDs and keys in the same query.
+     * @type {Array<string>}
+     * @memberof BulkFetchIssueRequestBean
+     */
+    issueIdsOrKeys: Array<string>;
+    /**
+     * A list of issue property keys of issue properties to be included in the results. A maximum of 5 issue property keys can be specified.
+     * @type {Array<string>}
+     * @memberof BulkFetchIssueRequestBean
+     */
+    properties?: Array<string>;
+}
+/**
  * A container for the watch status of a list of issues.
  * @export
  * @interface BulkIssueIsWatching
@@ -1533,6 +1713,25 @@ export interface BulkIssuePropertyUpdateRequest {
      * @memberof BulkIssuePropertyUpdateRequest
      */
     value?: any | null;
+}
+/**
+ * The list of requested issues & fields.
+ * @export
+ * @interface BulkIssueResults
+ */
+export interface BulkIssueResults {
+    /**
+     * When Jira can't return an issue enumerated in a request due to a retriable error or payload constraint, we'll return the respective issue ID with a corresponding error message. This list is empty when there are no errors Issues which aren't found or that the user doesn't have permission to view won't be returned in this list.
+     * @type {Array<IssueError>}
+     * @memberof BulkIssueResults
+     */
+    readonly issueErrors?: Array<IssueError>;
+    /**
+     * The list of issues.
+     * @type {Array<IssueBean>}
+     * @memberof BulkIssueResults
+     */
+    readonly issues?: Array<IssueBean>;
 }
 /**
  * 
@@ -2345,6 +2544,19 @@ export const ConditionGroupUpdateOperationEnum = {
 export type ConditionGroupUpdateOperationEnum = typeof ConditionGroupUpdateOperationEnum[keyof typeof ConditionGroupUpdateOperationEnum];
 
 /**
+ * List of custom fields identifiers which will be used to filter configurations
+ * @export
+ * @interface ConfigurationsListParameters
+ */
+export interface ConfigurationsListParameters {
+    /**
+     * List of IDs or keys of the custom fields. It can be a mix of IDs and keys in the same query.
+     * @type {Array<string>}
+     * @memberof ConfigurationsListParameters
+     */
+    fieldIdsOrKeys: Array<string>;
+}
+/**
  * A list of custom field details.
  * @export
  * @interface ConnectCustomFieldValue
@@ -2721,17 +2933,23 @@ export interface CreateNotificationSchemeDetails {
 export interface CreatePriorityDetails {
     [key: string]: any | any;
     /**
+     * The ID for the avatar for the priority. Either the iconUrl or avatarId must be defined, but not both. This parameter is nullable and will become mandatory once the iconUrl parameter is deprecated.
+     * @type {number}
+     * @memberof CreatePriorityDetails
+     */
+    avatarId?: number;
+    /**
      * The description of the priority.
      * @type {string}
      * @memberof CreatePriorityDetails
      */
-    description?: string;
+    description?: string | null;
     /**
-     * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+     * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used. Either the iconUrl or avatarId must be defined, but not both.
      * @type {string}
      * @memberof CreatePriorityDetails
      */
-    iconUrl?: CreatePriorityDetailsIconUrlEnum;
+    iconUrl?: CreatePriorityDetailsIconUrlEnum | null;
     /**
      * The name of the priority. Must be unique.
      * @type {string}
@@ -2955,6 +3173,7 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     PyxisGreenhopperJiraghCrossTeamTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-template',
     PyxisGreenhopperJiraghCrossTeamPlanningTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-planning-template',
     AtlassianServicedesksimplifiedItServiceManagement: 'com.atlassian.servicedesk:simplified-it-service-management',
+    AtlassianServicedesksimplifiedItServiceManagementBasic: 'com.atlassian.servicedesk:simplified-it-service-management-basic',
     AtlassianServicedesksimplifiedGeneralServiceDesk: 'com.atlassian.servicedesk:simplified-general-service-desk',
     AtlassianServicedesksimplifiedGeneralServiceDeskIt: 'com.atlassian.servicedesk:simplified-general-service-desk-it',
     AtlassianServicedesksimplifiedGeneralServiceDeskBusiness: 'com.atlassian.servicedesk:simplified-general-service-desk-business',
@@ -7526,6 +7745,25 @@ export interface IssueEntityPropertiesForMultiUpdate {
     properties?: { [key: string]: any; };
 }
 /**
+ * Describes the error that occurred when retrieving data for a particular issue.
+ * @export
+ * @interface IssueError
+ */
+export interface IssueError {
+    /**
+     * The error that occurred when fetching this issue.
+     * @type {string}
+     * @memberof IssueError
+     */
+    readonly errorMessage?: string;
+    /**
+     * The ID of the issue.
+     * @type {string}
+     * @memberof IssueError
+     */
+    readonly id?: string;
+}
+/**
  * Details about an issue event.
  * @export
  * @interface IssueEvent
@@ -8924,13 +9162,77 @@ export interface IssuesUpdateBean {
     issueUpdates?: Array<IssueUpdateDetails>;
 }
 /**
+ * The description of the page of issues loaded by the provided JQL query.This bean will be replacing IssuesJqlMetaDataBean bean as part of new `evaluate` endpoint
+ * @export
+ * @interface JExpEvaluateIssuesJqlMetaDataBean
+ */
+export interface JExpEvaluateIssuesJqlMetaDataBean {
+    /**
+     * Next Page token for the next page of issues.
+     * @type {string}
+     * @memberof JExpEvaluateIssuesJqlMetaDataBean
+     */
+    nextPageToken: string;
+}
+/**
+ * Meta data describing the `issues` context variable.This bean will be replacing IssuesMetaBean bean as part of new `evaluate` endpoint
+ * @export
+ * @interface JExpEvaluateIssuesMetaBean
+ */
+export interface JExpEvaluateIssuesMetaBean {
+    /**
+     * 
+     * @type {JExpEvaluateIssuesJqlMetaDataBean}
+     * @memberof JExpEvaluateIssuesMetaBean
+     */
+    jql?: JExpEvaluateIssuesJqlMetaDataBean;
+}
+/**
+ * The result of evaluating a Jira expression.This bean will be replacing `JiraExpressionResultBean` bean as part of new evaluate endpoint
+ * @export
+ * @interface JExpEvaluateJiraExpressionResultBean
+ */
+export interface JExpEvaluateJiraExpressionResultBean {
+    /**
+     * Contains various characteristics of the performed expression evaluation.
+     * @type {JExpEvaluateMetaDataBean}
+     * @memberof JExpEvaluateJiraExpressionResultBean
+     */
+    meta?: JExpEvaluateMetaDataBean;
+    /**
+     * The value of the evaluated expression. It may be a primitive JSON value or a Jira REST API object. (Some expressions do not produce any meaningful results—for example, an expression that returns a lambda function—if that's the case a simple string representation is returned. These string representations should not be relied upon and may change without notice.)
+     * @type {any}
+     * @memberof JExpEvaluateJiraExpressionResultBean
+     */
+    value: any | null;
+}
+/**
+ * Contains information about the expression evaluation. This bean will be replacing `JiraExpressionEvaluationMetaDataBean` bean as part of new `evaluate` endpoint
+ * @export
+ * @interface JExpEvaluateMetaDataBean
+ */
+export interface JExpEvaluateMetaDataBean {
+    /**
+     * Contains information about the expression complexity. For example, the number of steps it took to evaluate the expression.
+     * @type {JiraExpressionsComplexityBean}
+     * @memberof JExpEvaluateMetaDataBean
+     */
+    complexity?: JiraExpressionsComplexityBean;
+    /**
+     * Contains information about the `issues` variable in the context. For example, is the issues were loaded with JQL, information about the page will be included here.
+     * @type {JExpEvaluateIssuesMetaBean}
+     * @memberof JExpEvaluateMetaDataBean
+     */
+    issues?: JExpEvaluateIssuesMetaBean;
+}
+/**
  * 
  * @export
  * @interface JQLCountRequestBean
  */
 export interface JQLCountRequestBean {
     /**
-     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. Requires where clause to be present.
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this field requires a bounded query. A bounded query is a query with a search restriction.
      * @type {string}
      * @memberof JQLCountRequestBean
      */
@@ -9005,6 +9307,44 @@ export interface JQLReferenceData {
      * @memberof JQLReferenceData
      */
     visibleFunctionNames?: Array<FunctionReferenceData>;
+}
+/**
+ * The JQL specifying the issues available in the evaluated Jira expression under the `issues` context variable. This bean will be replacing `JexpIssues` bean as part of new `evaluate` endpoint
+ * @export
+ * @interface JexpEvaluateCtxIssues
+ */
+export interface JexpEvaluateCtxIssues {
+    /**
+     * The JQL query that specifies the set of issues available in the Jira expression.
+     * @type {JexpEvaluateCtxJqlIssues}
+     * @memberof JexpEvaluateCtxIssues
+     */
+    jql?: JexpEvaluateCtxJqlIssues;
+}
+/**
+ * The JQL specifying the issues available in the evaluated Jira expression under the `issues` context variable. Not all issues returned by the JQL query are loaded, only those described by the `nextPageToken` and `maxResults` properties. This bean will be replacing JexpJqlIssues bean as part of new `evaluate` endpoint
+ * @export
+ * @interface JexpEvaluateCtxJqlIssues
+ */
+export interface JexpEvaluateCtxJqlIssues {
+    /**
+     * The maximum number of issues to return from the JQL query. max results value considered may be lower than the number specific here.
+     * @type {number}
+     * @memberof JexpEvaluateCtxJqlIssues
+     */
+    maxResults?: number;
+    /**
+     * The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.
+     * @type {string}
+     * @memberof JexpEvaluateCtxJqlIssues
+     */
+    nextPageToken?: string;
+    /**
+     * The JQL query, required to be bounded.
+     * @type {string}
+     * @memberof JexpEvaluateCtxJqlIssues
+     */
+    query?: string;
 }
 /**
  * The JQL specifying the issues available in the evaluated Jira expression under the `issues` context variable.
@@ -9344,6 +9684,85 @@ export interface JiraExpressionEvalRequestBean {
      * The Jira expression to evaluate.
      * @type {string}
      * @memberof JiraExpressionEvalRequestBean
+     */
+    expression: string;
+}
+/**
+ * 
+ * @export
+ * @interface JiraExpressionEvaluateContextBean
+ */
+export interface JiraExpressionEvaluateContextBean {
+    /**
+     * The ID of the board that is available under the `board` variable when evaluating the expression.
+     * @type {number}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    board?: number;
+    /**
+     * Custom context variables and their types. These variable types are available for use in a custom context:
+     * 
+     *  *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.
+     *  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.
+     *  *  `json`: A JSON object containing custom content.
+     *  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.
+     * @type {Array<CustomContextVariable>}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    custom?: Array<CustomContextVariable>;
+    /**
+     * The ID of the customer request that is available under the `customerRequest` variable when evaluating the expression. This is the same as the ID of the underlying Jira issue, but the customer request context variable will have a different type.
+     * @type {number}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    customerRequest?: number;
+    /**
+     * The issue that is available under the `issue` variable when evaluating the expression.
+     * @type {IdOrKeyBean}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    issue?: IdOrKeyBean;
+    /**
+     * The collection of issues that is available under the `issues` variable when evaluating the expression.
+     * @type {JexpEvaluateCtxIssues}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    issues?: JexpEvaluateCtxIssues;
+    /**
+     * The project that is available under the `project` variable when evaluating the expression.
+     * @type {IdOrKeyBean}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    project?: IdOrKeyBean;
+    /**
+     * The ID of the service desk that is available under the `serviceDesk` variable when evaluating the expression.
+     * @type {number}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    serviceDesk?: number;
+    /**
+     * The ID of the sprint that is available under the `sprint` variable when evaluating the expression.
+     * @type {number}
+     * @memberof JiraExpressionEvaluateContextBean
+     */
+    sprint?: number;
+}
+/**
+ * The request to evaluate a Jira expression. This bean will be replacing `JiraExpressionEvaluateRequest` as part of new `evaluate` endpoint
+ * @export
+ * @interface JiraExpressionEvaluateRequestBean
+ */
+export interface JiraExpressionEvaluateRequestBean {
+    /**
+     * The context in which the Jira expression is evaluated.
+     * @type {JiraExpressionEvaluateContextBean}
+     * @memberof JiraExpressionEvaluateRequestBean
+     */
+    context?: JiraExpressionEvaluateContextBean;
+    /**
+     * The Jira expression to evaluate.
+     * @type {string}
+     * @memberof JiraExpressionEvaluateRequestBean
      */
     expression: string;
 }
@@ -12204,6 +12623,55 @@ export interface PageBean2ComponentJsonBean {
      * @memberof PageBean2ComponentJsonBean
      */
     readonly values?: Array<ComponentJsonBean>;
+}
+/**
+ * A page of items.
+ * @export
+ * @interface PageBeanBulkContextualConfiguration
+ */
+export interface PageBeanBulkContextualConfiguration {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<BulkContextualConfiguration>}
+     * @memberof PageBeanBulkContextualConfiguration
+     */
+    readonly values?: Array<BulkContextualConfiguration>;
 }
 /**
  * A page of items.
@@ -15493,6 +15961,12 @@ export interface PermittedProjects {
 export interface Priority {
     [key: string]: any | any;
     /**
+     * The avatarId of the avatar for the issue priority. This parameter is nullable and when set, this avatar references the universal avatar APIs.
+     * @type {number}
+     * @memberof Priority
+     */
+    avatarId?: number;
+    /**
      * The description of the issue priority.
      * @type {string}
      * @memberof Priority
@@ -17944,6 +18418,116 @@ export interface ScreenableTab {
     name: string;
 }
 /**
+ * 
+ * @export
+ * @interface SearchAndReconcileRequestBean
+ */
+export interface SearchAndReconcileRequestBean {
+    /**
+     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * 
+     *  *  `renderedFields` Returns field values rendered in HTML format.
+     *  *  `names` Returns the display name of each field.
+     *  *  `schema` Returns the schema describing a field type.
+     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     * @type {string}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    expand?: string;
+    /**
+     * A list of fields to return for each issue. Use it to retrieve a subset of fields. This parameter accepts a comma-separated list. Expand options include:
+     * 
+     *  *  `*all` Returns all fields.
+     *  *  `*navigable` Returns navigable fields.
+     *  *  `id` Returns only issue IDs.
+     *  *  Any issue field, prefixed with a dash to exclude.
+     * 
+     * The default is `id`.
+     * 
+     * Examples:
+     * 
+     *  *  `summary,comment` Returns the summary and comments fields only.
+     *  *  `*all,-comment` Returns all fields except comments.
+     * 
+     * Multiple `fields` parameters can be included in a request.
+     * 
+     * Note: By default, this resource returns IDs only. This differs from [GET issue](#api-rest-api-3-issue-issueIdOrKey-get) where the default is all fields.
+     * @type {Array<string>}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    fields?: Array<string>;
+    /**
+     * Reference fields by their key (rather than ID). The default is `false`.
+     * @type {boolean}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    fieldsByKeys?: boolean;
+    /**
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this field requires a bounded query. A bounded query is a query with a search restriction.
+     * 
+     *  *  Example of an unbounded query: `order by key desc`.
+     *  *  Example of a bounded query: `assignee = currentUser() order by key`.
+     * @type {string}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    jql?: string;
+    /**
+     * The maximum number of items to return. Depending on search criteria, real number of items returned may be smaller.
+     * @type {number}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    maxResults?: number;
+    /**
+     * The continuation token to fetch the next page. This token is provided by the response of this endpoint.
+     * @type {string}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    nextPageToken?: string;
+    /**
+     * A list of up to 5 issue properties to include in the results. This parameter accepts a comma-separated list.
+     * @type {Array<string>}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    properties?: Array<string>;
+    /**
+     * Strong consistency issue ids to be reconciled with search results. Accepts max 50 ids. All issues must exist.
+     * @type {Array<number>}
+     * @memberof SearchAndReconcileRequestBean
+     */
+    reconcileIssues?: Array<number>;
+}
+/**
+ * The result of a JQL search with issues reconsilation.
+ * @export
+ * @interface SearchAndReconcileResults
+ */
+export interface SearchAndReconcileResults {
+    /**
+     * The list of issues found by the search or reconsiliation.
+     * @type {Array<IssueBean>}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly issues?: Array<IssueBean>;
+    /**
+     * The ID and name of each field in the search results.
+     * @type {{ [key: string]: string; }}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly names?: { [key: string]: string; };
+    /**
+     * Continuation token to fetch the next page. If this result represents the last or the only page this token will be null. This token will expire in 7 days.
+     * @type {string}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly nextPageToken?: string;
+    /**
+     * The schema describing the field types in the search results.
+     * @type {{ [key: string]: JsonTypeBean; }}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly schema?: { [key: string]: JsonTypeBean; };
+}
+/**
  * Details of how to filter and list search auto complete information.
  * @export
  * @interface SearchAutoCompleteFilter
@@ -19238,6 +19822,12 @@ export interface StatusLayoutUpdate {
     [key: string]: any | any;
     /**
      * 
+     * @type {ApprovalConfiguration}
+     * @memberof StatusLayoutUpdate
+     */
+    approvalConfiguration?: ApprovalConfiguration | null;
+    /**
+     * 
      * @type {WorkflowLayout}
      * @memberof StatusLayoutUpdate
      */
@@ -20448,7 +21038,7 @@ export interface UiModificationContextDetails {
      */
     projectId?: string;
     /**
-     * The view type of the context. Only `GIC`(Global Issue Create) and `IssueView` are supported. Null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each UI modification context can have a maximum of one wildcard.
+     * The view type of the context. Only `GIC`(Global Issue Create), `IssueView` and `IssueTransition` are supported. Null is treated as a wildcard, meaning the UI modification will be applied to all view types. Each UI modification context can have a maximum of one wildcard.
      * @type {string}
      * @memberof UiModificationContextDetails
      */
@@ -20461,7 +21051,8 @@ export interface UiModificationContextDetails {
  */
 export const UiModificationContextDetailsViewTypeEnum = {
     Gic: 'GIC',
-    IssueView: 'IssueView'
+    IssueView: 'IssueView',
+    IssueTransition: 'IssueTransition'
 } as const;
 export type UiModificationContextDetailsViewTypeEnum = typeof UiModificationContextDetailsViewTypeEnum[keyof typeof UiModificationContextDetailsViewTypeEnum];
 
@@ -20748,29 +21339,35 @@ export interface UpdatePrioritiesInSchemeRequestBean {
 export interface UpdatePriorityDetails {
     [key: string]: any | any;
     /**
+     * The ID for the avatar for the priority. This parameter is nullable and both iconUrl and avatarId cannot be defined.
+     * @type {number}
+     * @memberof UpdatePriorityDetails
+     */
+    avatarId?: number;
+    /**
      * The description of the priority.
      * @type {string}
      * @memberof UpdatePriorityDetails
      */
-    description?: string;
+    description?: string | null;
     /**
-     * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+     * The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used. Both iconUrl and avatarId cannot be defined.
      * @type {string}
      * @memberof UpdatePriorityDetails
      */
-    iconUrl?: UpdatePriorityDetailsIconUrlEnum;
+    iconUrl?: UpdatePriorityDetailsIconUrlEnum | null;
     /**
      * The name of the priority. Must be unique.
      * @type {string}
      * @memberof UpdatePriorityDetails
      */
-    name?: string;
+    name?: string | null;
     /**
      * The status color of the priority in 3-digit or 6-digit hexadecimal format.
      * @type {string}
      * @memberof UpdatePriorityDetails
      */
-    statusColor?: string;
+    statusColor?: string | null;
 }
 
 
@@ -22860,6 +23457,12 @@ export interface WorkflowReadResponse {
  * @interface WorkflowReferenceStatus
  */
 export interface WorkflowReferenceStatus {
+    /**
+     * 
+     * @type {ApprovalConfiguration}
+     * @memberof WorkflowReferenceStatus
+     */
+    approvalConfiguration?: ApprovalConfiguration | null;
     /**
      * Indicates if the status is deprecated.
      * @type {boolean}

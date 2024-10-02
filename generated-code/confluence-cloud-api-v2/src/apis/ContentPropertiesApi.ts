@@ -47,6 +47,11 @@ export interface CreateDatabasePropertyRequest {
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
 }
 
+export interface CreateFolderPropertyRequest {
+    id: number;
+    contentPropertyCreateRequest: ContentPropertyCreateRequest;
+}
+
 export interface CreatePagePropertyRequest {
     pageId: number;
     contentPropertyCreateRequest: ContentPropertyCreateRequest;
@@ -84,6 +89,11 @@ export interface DeleteCustomContentPropertyByIdRequest {
 
 export interface DeleteDatabasePropertyByIdRequest {
     databaseId: number;
+    propertyId: number;
+}
+
+export interface DeleteFolderPropertyByIdRequest {
+    folderId: number;
     propertyId: number;
 }
 
@@ -167,6 +177,19 @@ export interface GetDatabaseContentPropertiesByIdRequest {
     propertyId: number;
 }
 
+export interface GetFolderContentPropertiesRequest {
+    id: number;
+    key?: string;
+    sort?: ContentPropertySortOrder;
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetFolderContentPropertiesByIdRequest {
+    folderId: number;
+    propertyId: number;
+}
+
 export interface GetPageContentPropertiesRequest {
     pageId: number;
     key?: string;
@@ -232,6 +255,12 @@ export interface UpdateCustomContentPropertyByIdRequest {
 
 export interface UpdateDatabasePropertyByIdRequest {
     databaseId: number;
+    propertyId: number;
+    contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
+}
+
+export interface UpdateFolderPropertyByIdRequest {
+    folderId: number;
     propertyId: number;
     contentPropertyUpdateRequest: ContentPropertyUpdateRequest;
 }
@@ -521,6 +550,59 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      */
     async createDatabaseProperty(requestParameters: CreateDatabasePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.createDatabasePropertyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates a new content property for a folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the folder.
+     * Create content property for folder
+     */
+    async createFolderPropertyRaw(requestParameters: CreateFolderPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createFolderProperty().'
+            );
+        }
+
+        if (requestParameters['contentPropertyCreateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyCreateRequest',
+                'Required parameter "contentPropertyCreateRequest" was null or undefined when calling createFolderProperty().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyCreateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a new content property for a folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the folder.
+     * Create content property for folder
+     */
+    async createFolderProperty(requestParameters: CreateFolderPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.createFolderPropertyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -926,6 +1008,55 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      */
     async deleteDatabasePropertyById(requestParameters: DeleteDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteDatabasePropertyByIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Deletes a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Delete content property for folder by id
+     */
+    async deleteFolderPropertyByIdRaw(requestParameters: DeleteFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['folderId'] == null) {
+            throw new runtime.RequiredError(
+                'folderId',
+                'Required parameter "folderId" was null or undefined when calling deleteFolderPropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling deleteFolderPropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Delete content property for folder by id
+     */
+    async deleteFolderPropertyById(requestParameters: DeleteFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteFolderPropertyByIdRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -1621,6 +1752,115 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves Content Properties tied to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content properties for folder
+     */
+    async getFolderContentPropertiesRaw(requestParameters: GetFolderContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFolderContentProperties().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['key'] != null) {
+            queryParameters['key'] = requestParameters['key'];
+        }
+
+        if (requestParameters['sort'] != null) {
+            queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content properties for folder
+     */
+    async getFolderContentProperties(requestParameters: GetFolderContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultContentProperty> {
+        const response = await this.getFolderContentPropertiesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content property for folder by id
+     */
+    async getFolderContentPropertiesByIdRaw(requestParameters: GetFolderContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['folderId'] == null) {
+            throw new runtime.RequiredError(
+                'folderId',
+                'Required parameter "folderId" was null or undefined when calling getFolderContentPropertiesById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling getFolderContentPropertiesById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content property for folder by id
+     */
+    async getFolderContentPropertiesById(requestParameters: GetFolderContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.getFolderContentPropertiesByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Retrieves Content Properties tied to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
      * Get content properties for page
      */
@@ -2244,6 +2484,66 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
      */
     async updateDatabasePropertyById(requestParameters: UpdateDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
         const response = await this.updateDatabasePropertyByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Update content property for folder by id
+     */
+    async updateFolderPropertyByIdRaw(requestParameters: UpdateFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        if (requestParameters['folderId'] == null) {
+            throw new runtime.RequiredError(
+                'folderId',
+                'Required parameter "folderId" was null or undefined when calling updateFolderPropertyById().'
+            );
+        }
+
+        if (requestParameters['propertyId'] == null) {
+            throw new runtime.RequiredError(
+                'propertyId',
+                'Required parameter "propertyId" was null or undefined when calling updateFolderPropertyById().'
+            );
+        }
+
+        if (requestParameters['contentPropertyUpdateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'contentPropertyUpdateRequest',
+                'Required parameter "contentPropertyUpdateRequest" was null or undefined when calling updateFolderPropertyById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['contentPropertyUpdateRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Update a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Update content property for folder by id
+     */
+    async updateFolderPropertyById(requestParameters: UpdateFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentProperty> {
+        const response = await this.updateFolderPropertyByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

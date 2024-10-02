@@ -81,7 +81,8 @@ export const AncestorType = {
     Page: 'page',
     Whiteboard: 'whiteboard',
     Database: 'database',
-    Embed: 'embed'
+    Embed: 'embed',
+    Folder: 'folder'
 } as const;
 export type AncestorType = typeof AncestorType[keyof typeof AncestorType];
 
@@ -2076,6 +2077,112 @@ export interface CreateDatabaseRequest {
 /**
  * 
  * @export
+ * @interface CreateFolder200Response
+ */
+export interface CreateFolder200Response {
+    /**
+     * ID of the folder.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    id?: string;
+    /**
+     * The content type of the object.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    type?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof CreateFolder200Response
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the folder.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    title?: string;
+    /**
+     * ID of the parent content, or null if there is no parent content.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    parentId?: string;
+    /**
+     * 
+     * @type {ParentContentType}
+     * @memberof CreateFolder200Response
+     */
+    parentType?: ParentContentType;
+    /**
+     * Position of the folder within the given parent page tree.
+     * @type {number}
+     * @memberof CreateFolder200Response
+     */
+    position?: number | null;
+    /**
+     * The account ID of the user who created this folder.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    authorId?: string;
+    /**
+     * The account ID of the user who owns this folder.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    ownerId?: string;
+    /**
+     * Date and time when the folder was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof CreateFolder200Response
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {GetAttachmentById200ResponseAllOfLinks}
+     * @memberof CreateFolder200Response
+     */
+    links?: GetAttachmentById200ResponseAllOfLinks;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreateFolderRequest
+ */
+export interface CreateFolderRequest {
+    /**
+     * ID of the space.
+     * @type {string}
+     * @memberof CreateFolderRequest
+     */
+    spaceId: string;
+    /**
+     * Title of the folder.
+     * @type {string}
+     * @memberof CreateFolderRequest
+     */
+    title?: string;
+    /**
+     * The parent content ID of the folder.
+     * @type {string}
+     * @memberof CreateFolderRequest
+     */
+    parentId?: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateFooterComment201Response
  */
 export interface CreateFooterComment201Response {
@@ -2640,6 +2747,12 @@ export interface CreateSmartLink200Response {
      * @memberof CreateSmartLink200Response
      */
     createdAt?: string;
+    /**
+     * The embedded URL of the Smart Link. If the Smart Link does not have an embedded URL, this property will not be included in the response.
+     * @type {string}
+     * @memberof CreateSmartLink200Response
+     */
+    embedUrl?: string;
     /**
      * 
      * @type {Version}
@@ -3500,6 +3613,100 @@ export interface DetailedVersion {
      */
     nextVersion?: number;
 }
+/**
+ * 
+ * @export
+ * @interface FolderLinks
+ */
+export interface FolderLinks {
+    /**
+     * Web UI link of the content.
+     * @type {string}
+     * @memberof FolderLinks
+     */
+    webui?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FolderSingle
+ */
+export interface FolderSingle {
+    /**
+     * ID of the folder.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    id?: string;
+    /**
+     * The content type of the object.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    type?: string;
+    /**
+     * 
+     * @type {ContentStatus}
+     * @memberof FolderSingle
+     */
+    status?: ContentStatus;
+    /**
+     * Title of the folder.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    title?: string;
+    /**
+     * ID of the parent content, or null if there is no parent content.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    parentId?: string;
+    /**
+     * 
+     * @type {ParentContentType}
+     * @memberof FolderSingle
+     */
+    parentType?: ParentContentType;
+    /**
+     * Position of the folder within the given parent page tree.
+     * @type {number}
+     * @memberof FolderSingle
+     */
+    position?: number | null;
+    /**
+     * The account ID of the user who created this folder.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    authorId?: string;
+    /**
+     * The account ID of the user who owns this folder.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    ownerId?: string;
+    /**
+     * Date and time when the folder was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {Version}
+     * @memberof FolderSingle
+     */
+    version?: Version;
+    /**
+     * 
+     * @type {FolderLinks}
+     * @memberof FolderSingle
+     */
+    links?: FolderLinks;
+}
+
+
 /**
  * 
  * @export
@@ -5314,7 +5521,8 @@ export const ParentContentType = {
     Page: 'page',
     Whiteboard: 'whiteboard',
     Database: 'database',
-    Embed: 'embed'
+    Embed: 'embed',
+    Folder: 'folder'
 } as const;
 export type ParentContentType = typeof ParentContentType[keyof typeof ParentContentType];
 
@@ -5543,6 +5751,12 @@ export interface SmartLinkSingle {
      * @memberof SmartLinkSingle
      */
     createdAt?: string;
+    /**
+     * The embedded URL of the Smart Link. If the Smart Link does not have an embedded URL, this property will not be included in the response.
+     * @type {string}
+     * @memberof SmartLinkSingle
+     */
+    embedUrl?: string;
     /**
      * 
      * @type {Version}
@@ -5778,6 +5992,7 @@ export const SpacePermissionOperationTargetTypeEnum = {
     Whiteboard: 'whiteboard',
     Database: 'database',
     Embed: 'embed',
+    Folder: 'folder',
     Space: 'space',
     Application: 'application',
     UserProfile: 'userProfile'

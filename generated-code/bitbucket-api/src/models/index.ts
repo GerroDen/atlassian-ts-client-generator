@@ -562,7 +562,7 @@ export interface EnrichedRepository {
      * @type {boolean}
      * @memberof EnrichedRepository
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {object}
@@ -2639,7 +2639,7 @@ export interface GroupAndUsers {
      * @type {Set<string>}
      * @memberof GroupAndUsers
      */
-    users: Set<string>;
+    users: Array<string>;
 }
 /**
  * 
@@ -2843,7 +2843,7 @@ export interface Project {
      * @type {boolean}
      * @memberof Project
      */
-    _public?: boolean;
+    public?: boolean;
     /**
      * 
      * @type {string}
@@ -2939,7 +2939,7 @@ export interface PullRequest {
      * @type {Set<PullRequestParticipant>}
      * @memberof PullRequest
      */
-    participants?: Set<PullRequestParticipant>;
+    participants?: Array<PullRequestParticipant>;
     /**
      * 
      * @type {object}
@@ -2951,7 +2951,7 @@ export interface PullRequest {
      * @type {Set<PullRequestParticipant>}
      * @memberof PullRequest
      */
-    reviewers?: Set<PullRequestParticipant>;
+    reviewers?: Array<PullRequestParticipant>;
     /**
      * 
      * @type {string}
@@ -3180,7 +3180,7 @@ export interface Repository {
      * @type {boolean}
      * @memberof Repository
      */
-    _public?: boolean;
+    public?: boolean;
     /**
      * 
      * @type {boolean}
@@ -3266,7 +3266,7 @@ export interface RepositoryHookDetails {
      * @type {Set<string>}
      * @memberof RepositoryHookDetails
      */
-    supportedScopes?: Set<RepositoryHookDetailsSupportedScopesEnum>;
+    supportedScopes?: Array<RepositoryHookDetailsSupportedScopesEnum>;
     /**
      * 
      * @type {string}
@@ -3350,7 +3350,7 @@ export interface RestAccessTokenRequest {
      * @type {Set<string>}
      * @memberof RestAccessTokenRequest
      */
-    permissions?: Set<string>;
+    permissions?: Array<string>;
 }
 /**
  * 
@@ -4649,7 +4649,7 @@ export interface RestBulkUserRateLimitSettingsUpdateRequest {
      * @type {Set<string>}
      * @memberof RestBulkUserRateLimitSettingsUpdateRequest
      */
-    usernames?: Set<string>;
+    usernames?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -5650,7 +5650,7 @@ export interface RestCommentAnchorPullRequestFromRefRepository {
      * @type {boolean}
      * @memberof RestCommentAnchorPullRequestFromRefRepository
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {object}
@@ -5772,7 +5772,7 @@ export interface RestCommentAnchorPullRequestFromRefRepositoryOrigin {
      * @type {boolean}
      * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {object}
@@ -5876,7 +5876,7 @@ export interface RestCommentAnchorPullRequestFromRefRepositoryOriginProject {
      * @type {boolean}
      * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {string}
@@ -7238,7 +7238,7 @@ export interface RestExportRequestRepositoriesRequest {
      * @type {Set<RestRepositorySelector>}
      * @memberof RestExportRequestRepositoriesRequest
      */
-    includes: Set<RestRepositorySelector>;
+    includes: Array<RestRepositorySelector>;
 }
 /**
  * 
@@ -7481,7 +7481,7 @@ export interface RestHookScriptConfig {
      * @type {Set<string>}
      * @memberof RestHookScriptConfig
      */
-    triggerIds?: Set<string>;
+    triggerIds?: Array<string>;
 }
 /**
  * 
@@ -7560,7 +7560,7 @@ export interface RestHookScriptTriggers {
      * @type {Set<string>}
      * @memberof RestHookScriptTriggers
      */
-    triggerIds?: Set<string>;
+    triggerIds?: Array<string>;
 }
 /**
  * 
@@ -8003,7 +8003,7 @@ export interface RestLabelable {
      * @type {boolean}
      * @memberof RestLabelable
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {object}
@@ -8190,13 +8190,13 @@ export interface RestMeshMigrationRequest {
      * @type {Set<number>}
      * @memberof RestMeshMigrationRequest
      */
-    projectIds?: Set<number>;
+    projectIds?: Array<number>;
     /**
      * 
      * @type {Set<number>}
      * @memberof RestMeshMigrationRequest
      */
-    repositoryIds?: Set<number>;
+    repositoryIds?: Array<number>;
 }
 /**
  * 
@@ -9195,7 +9195,7 @@ export interface RestProject {
      * @type {boolean}
      * @memberof RestProject
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {string}
@@ -10832,7 +10832,7 @@ export interface RestRepositoriesExportRequest {
      * @type {Set<RestRepositorySelector>}
      * @memberof RestRepositoriesExportRequest
      */
-    includes: Set<RestRepositorySelector>;
+    includes: Array<RestRepositorySelector>;
 }
 /**
  * 
@@ -10911,7 +10911,7 @@ export interface RestRepository {
      * @type {boolean}
      * @memberof RestRepository
      */
-    readonly _public?: boolean;
+    readonly public?: boolean;
     /**
      * 
      * @type {object}
@@ -12233,7 +12233,7 @@ export interface RestUpstreamSettings {
      * @type {Set<string>}
      * @memberof RestUpstreamSettings
      */
-    projectIds?: Set<string>;
+    projectIds?: Array<string>;
 }
 
 
@@ -12552,7 +12552,7 @@ export interface RestWebhook {
      * @type {Set<string>}
      * @memberof RestWebhook
      */
-    events?: Set<string>;
+    events?: Array<string>;
     /**
      * 
      * @type {string}
@@ -12977,13 +12977,13 @@ export interface StartMeshMigrationRequest {
      * @type {Set<number>}
      * @memberof StartMeshMigrationRequest
      */
-    projectIds?: Set<number>;
+    projectIds?: Array<number>;
     /**
      * 
      * @type {Set<number>}
      * @memberof StartMeshMigrationRequest
      */
-    repositoryIds?: Set<number>;
+    repositoryIds?: Array<number>;
 }
 /**
  * 
@@ -13160,7 +13160,7 @@ export interface UserAndGroups {
      * @type {Set<string>}
      * @memberof UserAndGroups
      */
-    groups: Set<string>;
+    groups: Array<string>;
     /**
      * 
      * @type {string}

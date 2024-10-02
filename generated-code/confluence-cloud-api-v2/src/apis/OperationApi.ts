@@ -34,6 +34,10 @@ export interface GetDatabaseOperationsRequest {
     id: number;
 }
 
+export interface GetFolderOperationsRequest {
+    id: number;
+}
+
 export interface GetFooterCommentOperationsRequest {
     id: number;
 }
@@ -232,6 +236,49 @@ export class OperationApi extends runtime.BaseAPI {
      */
     async getDatabaseOperations(requestParameters: GetDatabaseOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
         const response = await this.getDatabaseOperationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the permitted operations on specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
+     * Get permitted operations for a folder
+     */
+    async getFolderOperationsRaw(requestParameters: GetFolderOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getFolderOperations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence"]);
+        }
+
+        const response = await this.request({
+            path: `/folders/{id}/operations`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Returns the permitted operations on specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
+     * Get permitted operations for a folder
+     */
+    async getFolderOperations(requestParameters: GetFolderOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PermittedOperationsResponse> {
+        const response = await this.getFolderOperationsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -14,6 +14,7 @@ src/apis/ContentPropertiesApi.ts
 src/apis/CustomContentApi.ts
 src/apis/DataPoliciesApi.ts
 src/apis/DatabaseApi.ts
+src/apis/FolderApi.ts
 src/apis/LabelApi.ts
 src/apis/LikeApi.ts
 src/apis/OperationApi.ts
