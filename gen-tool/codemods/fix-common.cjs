@@ -1,17 +1,13 @@
+const reservedKeywords = ["_configuration", "_default", "_public"];
+
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, { j }) => {
   const source = j(file.source);
   source
     .find(j.TSPropertySignature)
-    .filter((path) => path.node.key?.name === "_configuration")
+    .filter((path) => reservedKeywords.includes(path.node.key?.name))
     .forEach((path) => {
-      path.node.key.name = "configuration";
-    });
-  source
-    .find(j.TSPropertySignature)
-    .filter((path) => path.node.key?.name === "_default")
-    .forEach((path) => {
-      path.node.key.name = "default";
+      path.node.key.name = path.node.key.name.slice(1);
     });
   source
     .find(j.TSTypeReference)

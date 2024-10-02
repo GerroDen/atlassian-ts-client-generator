@@ -5,13 +5,15 @@ const transformer = await import("./fix-common.cjs");
 describe("fix-common", () => {
   const options = Object.freeze({ parser: "ts" });
 
-  it("replaces 'configuration' key in object properties", () => {
+  it("replaces reserved keywords in object properties", () => {
     const result = applyTransform(
       transformer,
       options,
       {
         source: `export interface FieldDetailsSchema {
   readonly _configuration?: { [key: string]: any; };
+  readonly _default?: { [key: string]: any; };
+  readonly _public?: boolean;
 }`,
       },
       options,
@@ -19,23 +21,8 @@ describe("fix-common", () => {
 
     expect(result).toBe(`export interface FieldDetailsSchema {
   readonly configuration?: { [key: string]: any; };
-}`);
-  });
-
-  it("replaces 'default' key in object properties", () => {
-    const result = applyTransform(
-      transformer,
-      options,
-      {
-        source: `interface ScreenSchemeDetailsScreens {
-  _default?: number;
-}`,
-      },
-      options,
-    );
-
-    expect(result).toBe(`interface ScreenSchemeDetailsScreens {
-  default?: number;
+  readonly default?: { [key: string]: any; };
+  readonly public?: boolean;
 }`);
   });
 
