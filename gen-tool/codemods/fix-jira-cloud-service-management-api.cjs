@@ -17,6 +17,7 @@ const transformer = (file, api) => {
   const { j } = api;
   const source = j(file.source);
   file.source = require("./fix-common.cjs")(file, api);
+  file.source = require("./fix-jira-cloud-common-api.cjs")(file, api);
   if (file.path.endsWith("apis/ServicedeskApi.ts")) {
     source
       .find(Identifier)
