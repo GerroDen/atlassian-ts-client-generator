@@ -196,7 +196,7 @@ export interface AttachmentCreateDTO {
      * @type {boolean}
      * @memberof AttachmentCreateDTO
      */
-    _public?: boolean;
+    public?: boolean;
     /**
      * List of IDs for the temporary attachments to be added to the customer request.
      * @type {Array<string>}
@@ -308,25 +308,25 @@ export interface AvatarUrlsBean {
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _16x16?: string;
+    ["16x16"]?: string;
     /**
      * The URL of the item's 24x24 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _24x24?: string;
+    ["24x24"]?: string;
     /**
      * The URL of the item's 32x32 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _32x32?: string;
+    ["32x32"]?: string;
     /**
      * The URL of the item's 48x48 pixel avatar.
      * @type {string}
      * @memberof AvatarUrlsBean
      */
-    _48x48?: string;
+    ["48x48"]?: string;
 }
 /**
  * 
@@ -456,7 +456,7 @@ export interface CommentCreateDTO {
      * @type {boolean}
      * @memberof CommentCreateDTO
      */
-    _public?: boolean;
+    public?: boolean;
 }
 /**
  * 
@@ -511,7 +511,7 @@ export interface CommentDTO {
      * @type {boolean}
      * @memberof CommentDTO
      */
-    _public?: boolean;
+    public?: boolean;
     /**
      * The rendered body of the comment.
      * @type {RenderedValueDTO}
@@ -1003,7 +1003,7 @@ export interface FieldMetadata {
      * @type {{ [key: string]: any; }}
      * @memberof FieldMetadata
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * The default value of the field.
      * @type {any}
@@ -1258,19 +1258,19 @@ export interface IncludedFields {
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    actuallyIncluded?: Set<string>;
+    actuallyIncluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    excluded?: Set<string>;
+    excluded?: Array<string>;
     /**
      * 
      * @type {Set<string>}
      * @memberof IncludedFields
      */
-    included?: Set<string>;
+    included?: Array<string>;
 }
 /**
  * 
@@ -1731,7 +1731,7 @@ export interface JsonTypeBean {
      * @type {{ [key: string]: any; }}
      * @memberof JsonTypeBean
      */
-    readonly _configuration?: { [key: string]: any; };
+    readonly configuration?: { [key: string]: any; };
     /**
      * If the field is a custom field, the URI of the field.
      * @type {string}
@@ -3471,13 +3471,13 @@ export interface ServiceDeskCustomerDTO {
      * @type {Set<string>}
      * @memberof ServiceDeskCustomerDTO
      */
-    accountIds?: Set<string>;
+    accountIds?: Array<string>;
     /**
      * This property is no longer available and will be removed from the documentation soon. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details. Use `accountIds` instead.
      * @type {Set<string>}
      * @memberof ServiceDeskCustomerDTO
      */
-    usernames?: Set<string>;
+    usernames?: Array<string>;
 }
 /**
  * 

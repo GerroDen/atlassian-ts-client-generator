@@ -144,7 +144,7 @@ export interface GetRequestCommentByIdRequest {
 
 export interface GetRequestCommentsRequest {
     issueIdOrKey: string;
-    _public?: boolean;
+    public?: boolean;
     internal?: boolean;
     expand?: Array<string>;
     start?: number;
