@@ -13,6 +13,12 @@ const transformer = (file, { j }) => {
     .forEach((path) => {
       path.node.key.name = "default";
     });
+  source
+    .find(j.TSTypeReference)
+    .filter((path) => path.node.typeName?.name === "Set")
+    .forEach((path) => {
+      path.node.typeName = j.identifier("Array");
+    });
   return source.toSource();
 };
 

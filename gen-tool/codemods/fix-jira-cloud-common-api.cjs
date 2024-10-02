@@ -22,12 +22,6 @@ const transformer = (file, api) => {
       const value = path.node.key.name.substring(1);
       path.node.key.name = `["${value}"]`;
     });
-  source
-    .find(j.TSTypeReference)
-    .filter((path) => path.node.typeName?.name === "Set")
-    .forEach((path) => {
-      path.node.typeName = j.identifier("Array");
-    });
   return source.toSource();
 };
 

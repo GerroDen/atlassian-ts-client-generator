@@ -48,21 +48,4 @@ describe("fix-jira-cloud-common-api", () => {
   ["48x48"]?: string;
 }`);
   });
-
-  it("replaces sets in requests with arrays", () => {
-    const result = applyTransform(
-      transformer,
-      options,
-      {
-        source: `interface BulkAddExemptRepositoriesRequest {
-  restRepositorySelector?: Set<RestRepositorySelector>;
-}`,
-      },
-      options,
-    );
-
-    expect(result).toBe(`interface BulkAddExemptRepositoriesRequest {
-  restRepositorySelector?: Array<RestRepositorySelector>;
-}`);
-  });
 });
