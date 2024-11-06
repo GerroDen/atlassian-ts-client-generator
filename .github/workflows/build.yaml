@@ -1,7 +1,7 @@
 name: Build
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -11,7 +11,7 @@ jobs:
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
       - run: npm ci
       - run: npm run lint
   test:
@@ -22,17 +22,30 @@ jobs:
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
       - run: npm ci
       - run: npm run test
   gen:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api:
+          - bamboo-api
+          - bitbucket-api
+          - confluence-cloud-api-v1
+          - confluence-cloud-api-v2
+          - jira-cloud-api
+          - jira-cloud-service-management-api
+          - jira-software-cloud-api
+          - migration-api
+          - teams-cloud-api
+          - user-management-cloud-api
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "22.x"
       - run: npm ci
-      - run: npm run gen
+      - run: npm run gen:${{ matrix.api }}
