@@ -35,4 +35,4 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run gengen
+      - run: npm run gen
