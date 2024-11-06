@@ -28,6 +28,7 @@ jobs:
   gen:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         api:
           - bamboo-api
