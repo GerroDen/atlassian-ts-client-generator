@@ -60,6 +60,12 @@ export interface AddSshKeyRequest {
      * @memberof AddSshKeyRequest
      */
     text?: string;
+    /**
+     * Contains a warning about the key, for example that it's deprecated
+     * @type {string}
+     * @memberof AddSshKeyRequest
+     */
+    readonly warning?: string;
 }
 /**
  * 
@@ -146,6 +152,112 @@ export const ApplicationUserTypeEnum = {
 } as const;
 export type ApplicationUserTypeEnum = typeof ApplicationUserTypeEnum[keyof typeof ApplicationUserTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface AuthenticationEntity
+ */
+export interface AuthenticationEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationEntity
+     */
+    captchaChallenge?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationEntity
+     */
+    captchaId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationEntity
+     */
+    password?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AuthenticationEntity
+     */
+    rememberMe?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationEntity
+     */
+    targetUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationEntity
+     */
+    username?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AuthenticationResponse
+ */
+export interface AuthenticationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthenticationResponse
+     */
+    next?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BasicAuthConfigEntity
+ */
+export interface BasicAuthConfigEntity {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BasicAuthConfigEntity
+     */
+    allowedPaths?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BasicAuthConfigEntity
+     */
+    allowedUsers?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BasicAuthConfigEntity
+     */
+    blockRequests?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BasicAuthConfigEntity
+     */
+    showWarningMessage?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CaptchaDataEntity
+ */
+export interface CaptchaDataEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof CaptchaDataEntity
+     */
+    captchaId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CaptchaDataEntity
+     */
+    captchaImageUrl?: string;
+}
 /**
  * 
  * @export
@@ -409,6 +521,36 @@ export interface CommentThreadDiffAnchor {
      * @type {boolean}
      * @memberof CommentThreadDiffAnchor
      */
+    multilineAnchor?: boolean;
+    /**
+     * 
+     * @type {LineNumberRange}
+     * @memberof CommentThreadDiffAnchor
+     */
+    multilineDestinationRange?: LineNumberRange;
+    /**
+     * 
+     * @type {LineNumberRange}
+     * @memberof CommentThreadDiffAnchor
+     */
+    multilineSourceRange?: LineNumberRange;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentThreadDiffAnchor
+     */
+    multilineStartLine?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentThreadDiffAnchor
+     */
+    multilineStartLineType?: CommentThreadDiffAnchorMultilineStartLineTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CommentThreadDiffAnchor
+     */
     orphaned?: boolean;
     /**
      * 
@@ -461,6 +603,16 @@ export const CommentThreadDiffAnchorLineTypeEnum = {
 export type CommentThreadDiffAnchorLineTypeEnum = typeof CommentThreadDiffAnchorLineTypeEnum[keyof typeof CommentThreadDiffAnchorLineTypeEnum];
 
 /**
+ * @export
+ */
+export const CommentThreadDiffAnchorMultilineStartLineTypeEnum = {
+    Added: 'ADDED',
+    Context: 'CONTEXT',
+    Removed: 'REMOVED'
+} as const;
+export type CommentThreadDiffAnchorMultilineStartLineTypeEnum = typeof CommentThreadDiffAnchorMultilineStartLineTypeEnum[keyof typeof CommentThreadDiffAnchorMultilineStartLineTypeEnum];
+
+/**
  * 
  * @export
  * @interface Context
@@ -474,11 +626,67 @@ export interface Context {
     commitMessage?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ConversationDTO
+ */
+export interface ConversationDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationDTO
+     */
+    conversationId?: string;
+}
+/**
  * @type Credentials
  * 
  * @export
  */
 export type Credentials = RestBearerTokenCredentials | RestSshCredentials | RestUsernamePasswordCredentials;
+/**
+ * 
+ * @export
+ * @interface CredentialsCheckFailedDTO
+ */
+export interface CredentialsCheckFailedDTO {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CredentialsCheckFailedDTO
+     */
+    captchaRequired?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CredentialsCheckFailedDTO
+     */
+    message?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ElevationMethodRestDTO
+ */
+export interface ElevationMethodRestDTO {
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof ElevationMethodRestDTO
+     */
+    elevationMethods?: Array<ElevationMethodRestDTOElevationMethodsEnum>;
+}
+
+
+/**
+ * @export
+ */
+export const ElevationMethodRestDTOElevationMethodsEnum = {
+    Password: 'PASSWORD',
+    Totp: 'TOTP'
+} as const;
+export type ElevationMethodRestDTOElevationMethodsEnum = typeof ElevationMethodRestDTOElevationMethodsEnum[keyof typeof ElevationMethodRestDTOElevationMethodsEnum];
+
 /**
  * 
  * @export
@@ -535,10 +743,10 @@ export interface EnrichedRepository {
     name?: string;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
+     * @type {RestChangesetRepositoryOrigin}
      * @memberof EnrichedRepository
      */
-    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
+    origin?: RestChangesetRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -547,10 +755,10 @@ export interface EnrichedRepository {
     readonly partition?: number;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof EnrichedRepository
      */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    project?: RestChangesetRepositoryOriginProject;
     /**
      * 
      * @type {EnrichedRepositoryProperties}
@@ -637,6 +845,19 @@ export interface EnrichedRepositoryProperties {
      * @memberof EnrichedRepositoryProperties
      */
     metadataHash?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ErrorEntity
+ */
+export interface ErrorEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof ErrorEntity
+     */
+    message?: string;
 }
 /**
  * 
@@ -1838,6 +2059,43 @@ export interface GetHistory200Response {
 /**
  * 
  * @export
+ * @interface GetIdps200Response
+ */
+export interface GetIdps200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetIdps200Response
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetIdps200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<IdpConfigEntity>}
+     * @memberof GetIdps200Response
+     */
+    results?: Array<IdpConfigEntity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetIdps200Response
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetIdps200Response
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
  * @interface GetKeysForUser200Response
  */
 export interface GetKeysForUser200Response {
@@ -1963,6 +2221,43 @@ export interface GetLabels200Response {
      * @memberof GetLabels200Response
      */
     values?: Array<RestLabel>;
+}
+/**
+ * 
+ * @export
+ * @interface GetLoginOptions200Response
+ */
+export interface GetLoginOptions200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetLoginOptions200Response
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLoginOptions200Response
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<LoginOptionEntity>}
+     * @memberof GetLoginOptions200Response
+     */
+    results?: Array<LoginOptionEntity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLoginOptions200Response
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetLoginOptions200Response
+     */
+    start?: number;
 }
 /**
  * 
@@ -2663,6 +2958,265 @@ export interface GroupPickerContext {
 /**
  * 
  * @export
+ * @interface IdpConfigEntity
+ */
+export interface IdpConfigEntity {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IdpConfigEntity
+     */
+    additionalScopes?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    authorizationEndpoint?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    buttonText?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    certificate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    clientId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    clientSecret?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    crowdUrl?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdpConfigEntity
+     */
+    discoveryEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdpConfigEntity
+     */
+    enableRememberMe?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdpConfigEntity
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof IdpConfigEntity
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    idpType?: IdpConfigEntityIdpTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdpConfigEntity
+     */
+    includeCustomerLogins?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    issuerUrl?: string;
+    /**
+     * 
+     * @type {JitConfigEntity}
+     * @memberof IdpConfigEntity
+     */
+    jitConfiguration?: JitConfigEntity;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    ssoIssuer?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    ssoType?: IdpConfigEntitySsoTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    ssoUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    tokenEndpoint?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    userinfoEndpoint?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    usernameAttribute?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdpConfigEntity
+     */
+    usernameClaim?: string;
+}
+
+
+/**
+ * @export
+ */
+export const IdpConfigEntityIdpTypeEnum = {
+    Generic: 'GENERIC',
+    Crowd: 'CROWD'
+} as const;
+export type IdpConfigEntityIdpTypeEnum = typeof IdpConfigEntityIdpTypeEnum[keyof typeof IdpConfigEntityIdpTypeEnum];
+
+/**
+ * @export
+ */
+export const IdpConfigEntitySsoTypeEnum = {
+    None: 'NONE',
+    Saml: 'SAML',
+    Oidc: 'OIDC'
+} as const;
+export type IdpConfigEntitySsoTypeEnum = typeof IdpConfigEntitySsoTypeEnum[keyof typeof IdpConfigEntitySsoTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface JitConfigEntity
+ */
+export interface JitConfigEntity {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JitConfigEntity
+     */
+    additionalOpenidScopes?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JitConfigEntity
+     */
+    mappingDisplayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JitConfigEntity
+     */
+    mappingEmail?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JitConfigEntity
+     */
+    mappingGroups?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof JitConfigEntity
+     */
+    userProvisioningEnabled?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface JitUserEntity
+ */
+export interface JitUserEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof JitUserEntity
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JitUserEntity
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JitUserEntity
+     */
+    username?: string;
+}
+/**
+ * 
+ * @export
+ * @interface LineNumberRange
+ */
+export interface LineNumberRange {
+    /**
+     * 
+     * @type {number}
+     * @memberof LineNumberRange
+     */
+    maximum?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LineNumberRange
+     */
+    minimum?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LineNumberRange
+     */
+    singleLine?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface ListMirrors200Response
  */
 export interface ListMirrors200Response {
@@ -2792,6 +3346,114 @@ export interface ListRequests200Response {
 /**
  * 
  * @export
+ * @interface LoginOptionEntity
+ */
+export interface LoginOptionEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginOptionEntity
+     */
+    buttonText?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LoginOptionEntity
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginOptionEntity
+     */
+    loginLink?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginOptionEntity
+     */
+    type?: LoginOptionEntityTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const LoginOptionEntityTypeEnum = {
+    LoginForm: 'LOGIN_FORM',
+    Idp: 'IDP',
+    LegacyLoginForm: 'LEGACY_LOGIN_FORM'
+} as const;
+export type LoginOptionEntityTypeEnum = typeof LoginOptionEntityTypeEnum[keyof typeof LoginOptionEntityTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MethodStateDTO
+ */
+export interface MethodStateDTO {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MethodStateDTO
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MethodStateDTO
+     */
+    enabledAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MethodStateDTO
+     */
+    type?: MethodStateDTOTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const MethodStateDTOTypeEnum = {
+    Totp: 'TOTP'
+} as const;
+export type MethodStateDTOTypeEnum = typeof MethodStateDTOTypeEnum[keyof typeof MethodStateDTOTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface NextLoginStepDTO
+ */
+export interface NextLoginStepDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof NextLoginStepDTO
+     */
+    conversationId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NextLoginStepDTO
+     */
+    nextLoginStep?: NextLoginStepDTONextLoginStepEnum;
+}
+
+
+/**
+ * @export
+ */
+export const NextLoginStepDTONextLoginStepEnum = {
+    Enrollment: 'ENROLLMENT',
+    TotpCodeVerification: 'TOTP_CODE_VERIFICATION'
+} as const;
+export type NextLoginStepDTONextLoginStepEnum = typeof NextLoginStepDTONextLoginStepEnum[keyof typeof NextLoginStepDTONextLoginStepEnum];
+
+/**
+ * 
+ * @export
  * @interface PageRequestImpl
  */
 export interface PageRequestImpl {
@@ -2807,6 +3469,19 @@ export interface PageRequestImpl {
      * @memberof PageRequestImpl
      */
     start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PasswordElevationRestDTO
+ */
+export interface PasswordElevationRestDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof PasswordElevationRestDTO
+     */
+    password?: string;
 }
 /**
  * 
@@ -3372,10 +4047,10 @@ export interface RestAggregateRejectCounter {
     rejectCount?: number;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestAggregateRejectCounter
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 /**
  * 
@@ -3627,10 +4302,10 @@ export type RestApplicationUserWithPermissionsTypeEnum = typeof RestApplicationU
 export interface RestApplySuggestionRequest {
     /**
      * 
-     * @type {RestApplySuggestionRequestCommentVersion}
+     * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    commentVersion?: RestApplySuggestionRequestCommentVersion;
+    commentVersion?: number;
     /**
      * 
      * @type {string}
@@ -3639,73 +4314,16 @@ export interface RestApplySuggestionRequest {
     commitMessage?: string;
     /**
      * 
-     * @type {RestApplySuggestionRequestPullRequestVersion}
+     * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    pullRequestVersion?: RestApplySuggestionRequestPullRequestVersion;
+    pullRequestVersion?: number;
     /**
      * 
-     * @type {RestApplySuggestionRequestSuggestionIndex}
+     * @type {number}
      * @memberof RestApplySuggestionRequest
      */
-    suggestionIndex?: RestApplySuggestionRequestSuggestionIndex;
-}
-/**
- * 
- * @export
- * @interface RestApplySuggestionRequestCommentVersion
- */
-export interface RestApplySuggestionRequestCommentVersion {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestApplySuggestionRequestCommentVersion
-     */
-    asInt?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestApplySuggestionRequestCommentVersion
-     */
-    present?: boolean;
-}
-/**
- * 
- * @export
- * @interface RestApplySuggestionRequestPullRequestVersion
- */
-export interface RestApplySuggestionRequestPullRequestVersion {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestApplySuggestionRequestPullRequestVersion
-     */
-    asInt?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestApplySuggestionRequestPullRequestVersion
-     */
-    present?: boolean;
-}
-/**
- * 
- * @export
- * @interface RestApplySuggestionRequestSuggestionIndex
- */
-export interface RestApplySuggestionRequestSuggestionIndex {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestApplySuggestionRequestSuggestionIndex
-     */
-    asInt?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestApplySuggestionRequestSuggestionIndex
-     */
-    present?: boolean;
+    suggestionIndex?: number;
 }
 /**
  * 
@@ -3771,10 +4389,10 @@ export interface RestAutoDeclineSettings {
     inactivityWeeks?: number;
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {RestReviewerGroupScope}
      * @memberof RestAutoDeclineSettings
      */
-    scope?: RestAutoDeclineSettingsScope;
+    scope?: RestReviewerGroupScope;
 }
 /**
  * 
@@ -3795,37 +4413,6 @@ export interface RestAutoDeclineSettingsRequest {
      */
     inactivityWeeks?: number;
 }
-/**
- * 
- * @export
- * @interface RestAutoDeclineSettingsScope
- */
-export interface RestAutoDeclineSettingsScope {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestAutoDeclineSettingsScope
-     */
-    resourceId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestAutoDeclineSettingsScope
-     */
-    type?: RestAutoDeclineSettingsScopeTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const RestAutoDeclineSettingsScopeTypeEnum = {
-    Global: 'GLOBAL',
-    Project: 'PROJECT',
-    Repository: 'REPOSITORY'
-} as const;
-export type RestAutoDeclineSettingsScopeTypeEnum = typeof RestAutoDeclineSettingsScopeTypeEnum[keyof typeof RestAutoDeclineSettingsScopeTypeEnum];
-
 /**
  * 
  * @export
@@ -3866,6 +4453,12 @@ export type RestAutoMergeProcessingResultAutoMergeProcessingStatusEnum = typeof 
  * @interface RestAutoMergeProcessingResultPullRequest
  */
 export interface RestAutoMergeProcessingResultPullRequest {
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestAutoMergeProcessingResultPullRequest
+     */
+    author?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {boolean}
@@ -4467,7 +5060,19 @@ export interface RestBuildStatus {
      * @type {string}
      * @memberof RestBuildStatus
      */
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildStatus
+     */
     ref?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestBuildStatus
+     */
+    repositorySlug?: string;
     /**
      * 
      * @type {string}
@@ -4859,10 +5464,10 @@ export interface RestChangeset {
     links?: object;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestChangeset
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {RestChangesetToCommit}
@@ -4932,6 +5537,334 @@ export interface RestChangesetFromCommit {
      */
     id?: string;
 }
+/**
+ * 
+ * @export
+ * @interface RestChangesetRepository
+ */
+export interface RestChangesetRepository {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepository
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepository
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepository
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepository
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    name?: string;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOrigin}
+     * @memberof RestChangesetRepository
+     */
+    origin?: RestChangesetRepositoryOrigin;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepository
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestChangesetRepository
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepository
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepository
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    readonly state?: RestChangesetRepositoryStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepository
+     */
+    readonly statusMessage?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangesetRepositoryStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestChangesetRepositoryStateEnum = typeof RestChangesetRepositoryStateEnum[keyof typeof RestChangesetRepositoryStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestChangesetRepositoryOrigin
+ */
+export interface RestChangesetRepositoryOrigin {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly archived?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    defaultBranch?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly forkable?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly hierarchyId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly partition?: number;
+    /**
+     * 
+     * @type {RestChangesetRepositoryOriginProject}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    project?: RestChangesetRepositoryOriginProject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly relatedLinks?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    scmId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly state?: RestChangesetRepositoryOriginStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOrigin
+     */
+    readonly statusMessage?: string;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangesetRepositoryOriginStateEnum = {
+    Available: 'AVAILABLE',
+    InitialisationFailed: 'INITIALISATION_FAILED',
+    Initialising: 'INITIALISING',
+    Offline: 'OFFLINE'
+} as const;
+export type RestChangesetRepositoryOriginStateEnum = typeof RestChangesetRepositoryOriginStateEnum[keyof typeof RestChangesetRepositoryOriginStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestChangesetRepositoryOriginProject
+ */
+export interface RestChangesetRepositoryOriginProject {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    avatar?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    key: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly public?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly scope?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestChangesetRepositoryOriginProject
+     */
+    readonly type?: RestChangesetRepositoryOriginProjectTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestChangesetRepositoryOriginProjectTypeEnum = {
+    Normal: 'NORMAL',
+    Personal: 'PERSONAL'
+} as const;
+export type RestChangesetRepositoryOriginProjectTypeEnum = typeof RestChangesetRepositoryOriginProjectTypeEnum[keyof typeof RestChangesetRepositoryOriginProjectTypeEnum];
+
 /**
  * 
  * @export
@@ -5295,16 +6228,22 @@ export interface RestCommentAnchor {
     line?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestCommentAnchor
-     */
-    readonly lineComment?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestCommentAnchor
      */
     lineType?: RestCommentAnchorLineTypeEnum;
+    /**
+     * 
+     * @type {RestCommentAnchorMultilineMarker}
+     * @memberof RestCommentAnchor
+     */
+    multilineMarker?: RestCommentAnchorMultilineMarker;
+    /**
+     * 
+     * @type {RestCommentAnchorMultilineSpan}
+     * @memberof RestCommentAnchor
+     */
+    multilineSpan?: RestCommentAnchorMultilineSpan;
     /**
      * 
      * @type {RestCommentAnchorPath}
@@ -5364,6 +6303,68 @@ export type RestCommentAnchorLineTypeEnum = typeof RestCommentAnchorLineTypeEnum
 /**
  * 
  * @export
+ * @interface RestCommentAnchorMultilineMarker
+ */
+export interface RestCommentAnchorMultilineMarker {
+    /**
+     * The line number where the multiline comment will begin
+     * @type {number}
+     * @memberof RestCommentAnchorMultilineMarker
+     */
+    startLine?: number;
+    /**
+     * The segment type of the start line of the multiline comment
+     * @type {string}
+     * @memberof RestCommentAnchorMultilineMarker
+     */
+    startLineType: RestCommentAnchorMultilineMarkerStartLineTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorMultilineMarkerStartLineTypeEnum = {
+    Added: 'ADDED',
+    Context: 'CONTEXT',
+    Removed: 'REMOVED'
+} as const;
+export type RestCommentAnchorMultilineMarkerStartLineTypeEnum = typeof RestCommentAnchorMultilineMarkerStartLineTypeEnum[keyof typeof RestCommentAnchorMultilineMarkerStartLineTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestCommentAnchorMultilineSpan
+ */
+export interface RestCommentAnchorMultilineSpan {
+    /**
+     * The line number of the last line on the right-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestCommentAnchorMultilineSpan
+     */
+    readonly dstSpanEnd?: number;
+    /**
+     * The line number of the first line on the right-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestCommentAnchorMultilineSpan
+     */
+    readonly dstSpanStart?: number;
+    /**
+     * The line number of the last line on the left-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestCommentAnchorMultilineSpan
+     */
+    readonly srcSpanEnd?: number;
+    /**
+     * The line number of the first line on the left-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestCommentAnchorMultilineSpan
+     */
+    readonly srcSpanStart?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestCommentAnchorPath
  */
 export interface RestCommentAnchorPath {
@@ -5398,6 +6399,12 @@ export interface RestCommentAnchorPath {
  * @interface RestCommentAnchorPullRequest
  */
 export interface RestCommentAnchorPullRequest {
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestCommentAnchorPullRequest
+     */
+    author?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {boolean}
@@ -5528,6 +6535,137 @@ export type RestCommentAnchorPullRequestStateEnum = typeof RestCommentAnchorPull
 /**
  * 
  * @export
+ * @interface RestCommentAnchorPullRequestAuthor
+ */
+export interface RestCommentAnchorPullRequestAuthor {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestAuthor
+     */
+    approved?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthor
+     */
+    lastReviewedCommit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthor
+     */
+    role?: RestCommentAnchorPullRequestAuthorRoleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthor
+     */
+    status?: RestCommentAnchorPullRequestAuthorStatusEnum;
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthorUser}
+     * @memberof RestCommentAnchorPullRequestAuthor
+     */
+    user?: RestCommentAnchorPullRequestAuthorUser;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestAuthorRoleEnum = {
+    Author: 'AUTHOR',
+    Reviewer: 'REVIEWER',
+    Participant: 'PARTICIPANT'
+} as const;
+export type RestCommentAnchorPullRequestAuthorRoleEnum = typeof RestCommentAnchorPullRequestAuthorRoleEnum[keyof typeof RestCommentAnchorPullRequestAuthorRoleEnum];
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestAuthorStatusEnum = {
+    Unapproved: 'UNAPPROVED',
+    NeedsWork: 'NEEDS_WORK',
+    Approved: 'APPROVED'
+} as const;
+export type RestCommentAnchorPullRequestAuthorStatusEnum = typeof RestCommentAnchorPullRequestAuthorStatusEnum[keyof typeof RestCommentAnchorPullRequestAuthorStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestCommentAnchorPullRequestAuthorUser
+ */
+export interface RestCommentAnchorPullRequestAuthorUser {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    active?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    emailAddress?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    readonly id?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    links?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    slug?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestCommentAnchorPullRequestAuthorUser
+     */
+    type?: RestCommentAnchorPullRequestAuthorUserTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestCommentAnchorPullRequestAuthorUserTypeEnum = {
+    Normal: 'NORMAL',
+    Service: 'SERVICE'
+} as const;
+export type RestCommentAnchorPullRequestAuthorUserTypeEnum = typeof RestCommentAnchorPullRequestAuthorUserTypeEnum[keyof typeof RestCommentAnchorPullRequestAuthorUserTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface RestCommentAnchorPullRequestFromRef
  */
 export interface RestCommentAnchorPullRequestFromRef {
@@ -5551,10 +6689,10 @@ export interface RestCommentAnchorPullRequestFromRef {
     latestCommit?: string;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {string}
@@ -5572,334 +6710,6 @@ export const RestCommentAnchorPullRequestFromRefTypeEnum = {
     Tag: 'TAG'
 } as const;
 export type RestCommentAnchorPullRequestFromRefTypeEnum = typeof RestCommentAnchorPullRequestFromRefTypeEnum[keyof typeof RestCommentAnchorPullRequestFromRefTypeEnum];
-
-/**
- * 
- * @export
- * @interface RestCommentAnchorPullRequestFromRefRepository
- */
-export interface RestCommentAnchorPullRequestFromRefRepository {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    defaultBranch?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly forkable?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly hierarchyId?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    name?: string;
-    /**
-     * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly relatedLinks?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly state?: RestCommentAnchorPullRequestFromRefRepositoryStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepository
-     */
-    readonly statusMessage?: string;
-}
-
-
-/**
- * @export
- */
-export const RestCommentAnchorPullRequestFromRefRepositoryStateEnum = {
-    Available: 'AVAILABLE',
-    InitialisationFailed: 'INITIALISATION_FAILED',
-    Initialising: 'INITIALISING',
-    Offline: 'OFFLINE'
-} as const;
-export type RestCommentAnchorPullRequestFromRefRepositoryStateEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryStateEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryStateEnum];
-
-/**
- * 
- * @export
- * @interface RestCommentAnchorPullRequestFromRefRepositoryOrigin
- */
-export interface RestCommentAnchorPullRequestFromRefRepositoryOrigin {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly archived?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    defaultBranch?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly forkable?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly hierarchyId?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly partition?: number;
-    /**
-     * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly relatedLinks?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    scmId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly state?: RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOrigin
-     */
-    readonly statusMessage?: string;
-}
-
-
-/**
- * @export
- */
-export const RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum = {
-    Available: 'AVAILABLE',
-    InitialisationFailed: 'INITIALISATION_FAILED',
-    Initialising: 'INITIALISING',
-    Offline: 'OFFLINE'
-} as const;
-export type RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryOriginStateEnum];
-
-/**
- * 
- * @export
- * @interface RestCommentAnchorPullRequestFromRefRepositoryOriginProject
- */
-export interface RestCommentAnchorPullRequestFromRefRepositoryOriginProject {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    avatar?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    avatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    key: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly name?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly public?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly scope?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestCommentAnchorPullRequestFromRefRepositoryOriginProject
-     */
-    readonly type?: RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum = {
-    Normal: 'NORMAL',
-    Personal: 'PERSONAL'
-} as const;
-export type RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum = typeof RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum[keyof typeof RestCommentAnchorPullRequestFromRefRepositoryOriginProjectTypeEnum];
 
 /**
  * 
@@ -6151,16 +6961,22 @@ export interface RestCommentThreadDiffAnchor {
     line?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestCommentThreadDiffAnchor
-     */
-    readonly lineComment?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestCommentThreadDiffAnchor
      */
     lineType?: RestCommentThreadDiffAnchorLineTypeEnum;
+    /**
+     * 
+     * @type {RestCommentAnchorMultilineMarker}
+     * @memberof RestCommentThreadDiffAnchor
+     */
+    multilineMarker?: RestCommentAnchorMultilineMarker;
+    /**
+     * 
+     * @type {RestCommentAnchorMultilineSpan}
+     * @memberof RestCommentThreadDiffAnchor
+     */
+    multilineSpan?: RestCommentAnchorMultilineSpan;
     /**
      * 
      * @type {RestCommentAnchorPath}
@@ -6452,6 +7268,12 @@ export interface RestDefaultReviewersRequest {
     requiredApprovals?: number;
     /**
      * 
+     * @type {Array<RestReviewerGroup>}
+     * @memberof RestDefaultReviewersRequest
+     */
+    reviewerGroups?: Array<RestReviewerGroup>;
+    /**
+     * 
      * @type {Array<RestApplicationUser>}
      * @memberof RestDefaultReviewersRequest
      */
@@ -6522,6 +7344,31 @@ export interface RestDefaultTaskRequest {
 /**
  * 
  * @export
+ * @interface RestDelayedSyncRepository
+ */
+export interface RestDelayedSyncRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDelayedSyncRepository
+     */
+    projectKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDelayedSyncRepository
+     */
+    repositoryId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestDelayedSyncRepository
+     */
+    repositorySlug?: string;
+}
+/**
+ * 
+ * @export
  * @interface RestDeployment
  */
 export interface RestDeployment {
@@ -6569,10 +7416,10 @@ export interface RestDeployment {
     lastUpdated?: number;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestDeployment
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {string}
@@ -7466,10 +8313,10 @@ export type RestHookScriptTypeEnum = typeof RestHookScriptTypeEnum[keyof typeof 
 export interface RestHookScriptConfig {
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {RestReviewerGroupScope}
      * @memberof RestHookScriptConfig
      */
-    scope?: RestAutoDeclineSettingsScope;
+    scope?: RestReviewerGroupScope;
     /**
      * 
      * @type {RestHookScriptConfigScript}
@@ -7779,10 +8626,10 @@ export interface RestJob {
     id?: number;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestJob
      */
-    initiator?: RestPullRequestParticipantUser;
+    initiator?: RestCommentAnchorPullRequestAuthorUser;
     /**
      * 
      * @type {string}
@@ -7982,10 +8829,10 @@ export interface RestLabelable {
     name?: string;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
+     * @type {RestChangesetRepositoryOrigin}
      * @memberof RestLabelable
      */
-    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
+    origin?: RestChangesetRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -7994,10 +8841,10 @@ export interface RestLabelable {
     readonly partition?: number;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof RestLabelable
      */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    project?: RestChangesetRepositoryOriginProject;
     /**
      * 
      * @type {boolean}
@@ -8074,6 +8921,25 @@ export interface RestLogLevel {
      * @memberof RestLogLevel
      */
     logLevel?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestLoggingSettings
+ */
+export interface RestLoggingSettings {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestLoggingSettings
+     */
+    debugLoggingEnabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestLoggingSettings
+     */
+    profilingEnabled?: boolean;
 }
 /**
  * 
@@ -8258,6 +9124,12 @@ export interface RestMeshNode {
      * @type {string}
      * @memberof RestMeshNode
      */
+    availabilityZone?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestMeshNode
+     */
     id?: string;
     /**
      * 
@@ -8324,10 +9196,10 @@ export interface RestMigrationRepository {
     migrationState?: RestMigrationRepositoryMigrationStateEnum;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestMigrationRepository
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
 }
 
 
@@ -8787,6 +9659,68 @@ export type RestMirroringRequestStateEnum = typeof RestMirroringRequestStateEnum
 /**
  * 
  * @export
+ * @interface RestMultilineCommentMarker
+ */
+export interface RestMultilineCommentMarker {
+    /**
+     * The line number where the multiline comment will begin
+     * @type {number}
+     * @memberof RestMultilineCommentMarker
+     */
+    startLine?: number;
+    /**
+     * The segment type of the start line of the multiline comment
+     * @type {string}
+     * @memberof RestMultilineCommentMarker
+     */
+    startLineType?: RestMultilineCommentMarkerStartLineTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestMultilineCommentMarkerStartLineTypeEnum = {
+    Added: 'ADDED',
+    Context: 'CONTEXT',
+    Removed: 'REMOVED'
+} as const;
+export type RestMultilineCommentMarkerStartLineTypeEnum = typeof RestMultilineCommentMarkerStartLineTypeEnum[keyof typeof RestMultilineCommentMarkerStartLineTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RestMultilineCommentSpan
+ */
+export interface RestMultilineCommentSpan {
+    /**
+     * The line number of the last line on the right-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestMultilineCommentSpan
+     */
+    readonly dstSpanEnd?: number;
+    /**
+     * The line number of the first line on the right-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestMultilineCommentSpan
+     */
+    readonly dstSpanStart?: number;
+    /**
+     * The line number of the last line on the left-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestMultilineCommentSpan
+     */
+    readonly srcSpanEnd?: number;
+    /**
+     * The line number of the first line on the left-hand side of the diff that the comment spans
+     * @type {number}
+     * @memberof RestMultilineCommentSpan
+     */
+    readonly srcSpanStart?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestNamedLink
  */
 export interface RestNamedLink {
@@ -8941,6 +9875,80 @@ export interface RestNodeConnectivitySummarySummary {
 /**
  * 
  * @export
+ * @interface RestPageIdpConfigEntity
+ */
+export interface RestPageIdpConfigEntity {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPageIdpConfigEntity
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageIdpConfigEntity
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<IdpConfigEntity>}
+     * @memberof RestPageIdpConfigEntity
+     */
+    results?: Array<IdpConfigEntity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageIdpConfigEntity
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageIdpConfigEntity
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RestPageLoginOptionEntity
+ */
+export interface RestPageLoginOptionEntity {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestPageLoginOptionEntity
+     */
+    isLastPage?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageLoginOptionEntity
+     */
+    limit?: number;
+    /**
+     * 
+     * @type {Array<LoginOptionEntity>}
+     * @memberof RestPageLoginOptionEntity
+     */
+    results?: Array<LoginOptionEntity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageLoginOptionEntity
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestPageLoginOptionEntity
+     */
+    start?: number;
+}
+/**
+ * 
+ * @export
  * @interface RestPageRestChange
  */
 export interface RestPageRestChange {
@@ -9071,10 +10079,10 @@ export interface RestPermittedUser {
     permission?: RestPermittedUserPermissionEnum;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestPermittedUser
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 
 
@@ -9252,10 +10260,10 @@ export interface RestProjectSettingsRestriction {
     processedState?: RestProjectSettingsRestrictionProcessedStateEnum;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof RestProjectSettingsRestriction
      */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    project?: RestChangesetRepositoryOriginProject;
 }
 
 
@@ -9326,6 +10334,12 @@ export interface RestProperties {
  * @interface RestPullRequest
  */
 export interface RestPullRequest {
+    /**
+     * 
+     * @type {RestCommentAnchorPullRequestAuthor}
+     * @memberof RestPullRequest
+     */
+    author?: RestCommentAnchorPullRequestAuthor;
     /**
      * 
      * @type {boolean}
@@ -9479,10 +10493,10 @@ export interface RestPullRequestActivity {
     id?: number;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestPullRequestActivity
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 
 
@@ -9523,10 +10537,10 @@ export interface RestPullRequestAssignParticipantRoleRequest {
     role?: RestPullRequestAssignParticipantRoleRequestRoleEnum;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestPullRequestAssignParticipantRoleRequest
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 
 
@@ -9610,10 +10624,16 @@ export interface RestPullRequestCondition {
     requiredApprovals?: number;
     /**
      * 
-     * @type {Array<RestApplicationUser>}
+     * @type {Array<RestReviewerGroup>}
      * @memberof RestPullRequestCondition
      */
-    reviewers?: Array<RestApplicationUser>;
+    reviewerGroups?: Array<RestReviewerGroup>;
+    /**
+     * 
+     * @type {Array<RestReviewerGroup>}
+     * @memberof RestPullRequestCondition
+     */
+    reviewers?: Array<RestReviewerGroup>;
     /**
      * 
      * @type {RestPullRequestConditionScope}
@@ -9969,10 +10989,10 @@ export interface RestPullRequestParticipant {
     status?: RestPullRequestParticipantStatusEnum;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestPullRequestParticipant
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 
 
@@ -9995,78 +11015,6 @@ export const RestPullRequestParticipantStatusEnum = {
     Approved: 'APPROVED'
 } as const;
 export type RestPullRequestParticipantStatusEnum = typeof RestPullRequestParticipantStatusEnum[keyof typeof RestPullRequestParticipantStatusEnum];
-
-/**
- * 
- * @export
- * @interface RestPullRequestParticipantUser
- */
-export interface RestPullRequestParticipantUser {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestPullRequestParticipantUser
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    avatarUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    emailAddress?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestPullRequestParticipantUser
-     */
-    readonly id?: number;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestPullRequestParticipantUser
-     */
-    links?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    slug?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestPullRequestParticipantUser
-     */
-    type?: RestPullRequestParticipantUserTypeEnum;
-}
-
-
-/**
- * @export
- */
-export const RestPullRequestParticipantUserTypeEnum = {
-    Normal: 'NORMAL',
-    Service: 'SERVICE'
-} as const;
-export type RestPullRequestParticipantUserTypeEnum = typeof RestPullRequestParticipantUserTypeEnum[keyof typeof RestPullRequestParticipantUserTypeEnum];
 
 /**
  * 
@@ -10218,10 +11166,10 @@ export interface RestPullRequestRef {
     latestCommit?: string;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestPullRequestRef
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {string}
@@ -10329,10 +11277,10 @@ export interface RestPullRequestSuggestion {
     refChange?: RestPullRequestRebaseResultRefChange;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestPullRequestSuggestion
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {RestPullRequestRebaseResultRefChangeRef}
@@ -10890,10 +11838,10 @@ export interface RestRepository {
     name?: string;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOrigin}
+     * @type {RestChangesetRepositoryOrigin}
      * @memberof RestRepository
      */
-    origin?: RestCommentAnchorPullRequestFromRefRepositoryOrigin;
+    origin?: RestChangesetRepositoryOrigin;
     /**
      * 
      * @type {number}
@@ -10902,10 +11850,10 @@ export interface RestRepository {
     readonly partition?: number;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof RestRepository
      */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    project?: RestChangesetRepositoryOriginProject;
     /**
      * 
      * @type {boolean}
@@ -10988,10 +11936,10 @@ export interface RestRepositoryHook {
     enabled?: boolean;
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {RestReviewerGroupScope}
      * @memberof RestRepositoryHook
      */
-    scope?: RestAutoDeclineSettingsScope;
+    scope?: RestReviewerGroupScope;
 }
 /**
  * 
@@ -11011,6 +11959,43 @@ export interface RestRepositoryHookVeto {
      * @memberof RestRepositoryHookVeto
      */
     summaryMessage?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RestRepositoryLockOwner
+ */
+export interface RestRepositoryLockOwner {
+    /**
+     * The repository ID for which the lock is held
+     * @type {string}
+     * @memberof RestRepositoryLockOwner
+     */
+    externalRepositoryId?: string;
+    /**
+     * The time at which lock was last acquired
+     * @type {string}
+     * @memberof RestRepositoryLockOwner
+     */
+    lockAcquireTime?: string;
+    /**
+     * The ID of the mirror node on which the lock is being held
+     * @type {string}
+     * @memberof RestRepositoryLockOwner
+     */
+    nodeId?: string;
+    /**
+     * The unique ID of the request for which the lock is being held
+     * @type {string}
+     * @memberof RestRepositoryLockOwner
+     */
+    requestId?: string;
+    /**
+     * Name of the thread that is holding the lock
+     * @type {string}
+     * @memberof RestRepositoryLockOwner
+     */
+    threadName?: string;
 }
 /**
  * 
@@ -11168,10 +12153,10 @@ export interface RestRepositoryRefChangeActivity {
     refChange?: RestRepositoryRefChangeActivityRefChange;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestRepositoryRefChangeActivity
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
     /**
      * 
      * @type {string}
@@ -11180,10 +12165,10 @@ export interface RestRepositoryRefChangeActivity {
     trigger?: string;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestRepositoryRefChangeActivity
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 /**
  * 
@@ -11315,16 +12300,16 @@ export interface RestRequiredBuildConditionSetRequest {
     buildParentKeys: Array<string>;
     /**
      * 
-     * @type {RestRefMatcher}
-     * @memberof RestRequiredBuildConditionSetRequest
-     */
-    exemptRefMatcher?: RestRefMatcher;
-    /**
-     * 
      * @type {UpdatePullRequestCondition1RequestSourceMatcher}
      * @memberof RestRequiredBuildConditionSetRequest
      */
-    refMatcher: UpdatePullRequestCondition1RequestSourceMatcher;
+    exemptRefMatcher?: UpdatePullRequestCondition1RequestSourceMatcher;
+    /**
+     * 
+     * @type {RestRefMatcher}
+     * @memberof RestRequiredBuildConditionSetRequest
+     */
+    refMatcher: RestRefMatcher;
 }
 /**
  * 
@@ -11425,10 +12410,10 @@ export interface RestReviewerGroup {
     name?: string;
     /**
      * 
-     * @type {RestAutoDeclineSettingsScope}
+     * @type {RestReviewerGroupScope}
      * @memberof RestReviewerGroup
      */
-    scope?: RestAutoDeclineSettingsScope;
+    scope?: RestReviewerGroupScope;
     /**
      * 
      * @type {Array<ApplicationUser>}
@@ -11436,6 +12421,37 @@ export interface RestReviewerGroup {
      */
     users?: Array<ApplicationUser>;
 }
+/**
+ * 
+ * @export
+ * @interface RestReviewerGroupScope
+ */
+export interface RestReviewerGroupScope {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestReviewerGroupScope
+     */
+    resourceId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestReviewerGroupScope
+     */
+    type?: RestReviewerGroupScopeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestReviewerGroupScopeTypeEnum = {
+    Global: 'GLOBAL',
+    Project: 'PROJECT',
+    Repository: 'REPOSITORY'
+} as const;
+export type RestReviewerGroupScopeTypeEnum = typeof RestReviewerGroupScopeTypeEnum[keyof typeof RestReviewerGroupScopeTypeEnum];
+
 /**
  * 
  * @export
@@ -11784,16 +12800,16 @@ export interface RestSshAccessKey {
     permission?: RestSshAccessKeyPermissionEnum;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepositoryOriginProject}
+     * @type {RestChangesetRepositoryOriginProject}
      * @memberof RestSshAccessKey
      */
-    project?: RestCommentAnchorPullRequestFromRefRepositoryOriginProject;
+    project?: RestChangesetRepositoryOriginProject;
     /**
      * 
-     * @type {RestCommentAnchorPullRequestFromRefRepository}
+     * @type {RestChangesetRepository}
      * @memberof RestSshAccessKey
      */
-    repository?: RestCommentAnchorPullRequestFromRefRepository;
+    repository?: RestChangesetRepository;
 }
 
 
@@ -11921,6 +12937,12 @@ export interface RestSshKey {
      * @memberof RestSshKey
      */
     text?: string;
+    /**
+     * Contains a warning about the key, for example that it's deprecated
+     * @type {string}
+     * @memberof RestSshKey
+     */
+    readonly warning?: string;
 }
 /**
  * 
@@ -11936,29 +12958,10 @@ export interface RestSshKeySettings {
     keyTypeRestrictions?: Array<RestSshKeyTypeRestriction>;
     /**
      * 
-     * @type {RestSshKeySettingsMaxExpiryDays}
+     * @type {number}
      * @memberof RestSshKeySettings
      */
-    maxExpiryDays?: RestSshKeySettingsMaxExpiryDays;
-}
-/**
- * 
- * @export
- * @interface RestSshKeySettingsMaxExpiryDays
- */
-export interface RestSshKeySettingsMaxExpiryDays {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestSshKeySettingsMaxExpiryDays
-     */
-    asInt?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSshKeySettingsMaxExpiryDays
-     */
-    present?: boolean;
+    maxExpiryDays?: number;
 }
 /**
  * 
@@ -11980,29 +12983,10 @@ export interface RestSshKeyTypeRestriction {
     allowed?: boolean;
     /**
      * 
-     * @type {RestSshKeyTypeRestrictionMinKeyLength}
+     * @type {number}
      * @memberof RestSshKeyTypeRestriction
      */
-    minKeyLength?: RestSshKeyTypeRestrictionMinKeyLength;
-}
-/**
- * 
- * @export
- * @interface RestSshKeyTypeRestrictionMinKeyLength
- */
-export interface RestSshKeyTypeRestrictionMinKeyLength {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestSshKeyTypeRestrictionMinKeyLength
-     */
-    asInt?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RestSshKeyTypeRestrictionMinKeyLength
-     */
-    present?: boolean;
+    minKeyLength?: number;
 }
 /**
  * 
@@ -12291,10 +13275,10 @@ export interface RestUserRateLimitSettings {
     settings?: RestBulkUserRateLimitSettingsUpdateRequestSettings;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestUserRateLimitSettings
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
     /**
      * 
      * @type {boolean}
@@ -12341,10 +13325,10 @@ export interface RestUserReaction {
     emoticon?: RestUserReactionEmoticon;
     /**
      * 
-     * @type {RestPullRequestParticipantUser}
+     * @type {RestCommentAnchorPullRequestAuthorUser}
      * @memberof RestUserReaction
      */
-    user?: RestPullRequestParticipantUser;
+    user?: RestCommentAnchorPullRequestAuthorUser;
 }
 /**
  * 
@@ -12938,6 +13922,25 @@ export type SetMailConfigRequestProtocolEnum = typeof SetMailConfigRequestProtoc
 /**
  * 
  * @export
+ * @interface SetSettings2Request
+ */
+export interface SetSettings2Request {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SetSettings2Request
+     */
+    debugLoggingEnabled: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SetSettings2Request
+     */
+    profilingEnabled: boolean;
+}
+/**
+ * 
+ * @export
  * @interface SimpleSshKeyFingerprint
  */
 export interface SimpleSshKeyFingerprint {
@@ -12953,6 +13956,56 @@ export interface SimpleSshKeyFingerprint {
      * @memberof SimpleSshKeyFingerprint
      */
     value?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SsoConfigEntity
+ */
+export interface SsoConfigEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof SsoConfigEntity
+     */
+    discoveryRefreshCron?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SsoConfigEntity
+     */
+    enableAuthenticationFallback?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SsoConfigEntity
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SsoConfigEntity
+     */
+    showLoginForm?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SsoConfigEntity
+     */
+    showLoginFormForJsm?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SsoManagementStatusDTO
+ */
+export interface SsoManagementStatusDTO {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SsoManagementStatusDTO
+     */
+    isManaged?: boolean;
 }
 /**
  * 
@@ -13007,6 +14060,31 @@ export interface StartMeshMigrationRequestMaxBytesPerSecond {
 /**
  * 
  * @export
+ * @interface StatusDTO
+ */
+export interface StatusDTO {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StatusDTO
+     */
+    isTwoSVActive?: boolean;
+    /**
+     * 
+     * @type {Array<MethodStateDTO>}
+     * @memberof StatusDTO
+     */
+    methods?: Array<MethodStateDTO>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StatusDTO
+     */
+    twoSVActive?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface StreamFiles200Response
  */
 export interface StreamFiles200Response {
@@ -13050,6 +14128,101 @@ export interface StreamFiles200Response {
 /**
  * 
  * @export
+ * @interface TotpCodeVerificationDTO
+ */
+export interface TotpCodeVerificationDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpCodeVerificationDTO
+     */
+    conversationId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpCodeVerificationDTO
+     */
+    totpCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TotpElevationRestDTO
+ */
+export interface TotpElevationRestDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpElevationRestDTO
+     */
+    totpCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TotpRecoveryCodeAuthenticationDTO
+ */
+export interface TotpRecoveryCodeAuthenticationDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpRecoveryCodeAuthenticationDTO
+     */
+    conversationId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpRecoveryCodeAuthenticationDTO
+     */
+    recoveryCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TotpRecoveryCodeDTO
+ */
+export interface TotpRecoveryCodeDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpRecoveryCodeDTO
+     */
+    recoveryCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TotpUserEnrollmentDTO
+ */
+export interface TotpUserEnrollmentDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpUserEnrollmentDTO
+     */
+    conversationId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpUserEnrollmentDTO
+     */
+    secret?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpUserEnrollmentDTO
+     */
+    url?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TotpUserEnrollmentDTO
+     */
+    userName?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdatePullRequestCondition1Request
  */
 export interface UpdatePullRequestCondition1Request {
@@ -13059,6 +14232,12 @@ export interface UpdatePullRequestCondition1Request {
      * @memberof UpdatePullRequestCondition1Request
      */
     requiredApprovals?: number;
+    /**
+     * 
+     * @type {Array<RestReviewerGroup>}
+     * @memberof UpdatePullRequestCondition1Request
+     */
+    reviewerGroups?: Array<RestReviewerGroup>;
     /**
      * 
      * @type {Array<RestApplicationUser>}
@@ -13255,4 +14434,35 @@ export interface UserUpdate {
      * @memberof UserUpdate
      */
     name?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserUpdateWithCredentials
+ */
+export interface UserUpdateWithCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateWithCredentials
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateWithCredentials
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateWithCredentials
+     */
+    name?: string;
+    /**
+     * The user's password, which the system may require when users update their email.
+     * @type {string}
+     * @memberof UserUpdateWithCredentials
+     */
+    password?: string;
 }
