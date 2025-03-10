@@ -57,4 +57,30 @@ describe("fix-jira-cloud-api", () => {
   typeKey?: "business" | "service_desk" | "software";
 }`);
   });
+
+  it("fixes name clash of CreateCustomFieldRequest", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        path: "foo/apis/IssueFieldsApi.ts",
+        source: `export interface CreateCustomFieldRequest {
+}
+
+export class IssueFieldsApi extends runtime.BaseAPI {
+    async createCustomField(requestParameters: CreateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FieldDetails> {
+    }
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface ICreateCustomFieldRequest {
+}
+
+export class IssueFieldsApi extends runtime.BaseAPI {
+    async createCustomField(requestParameters: ICreateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FieldDetails> {
+    }
+}`);
+  });
 });

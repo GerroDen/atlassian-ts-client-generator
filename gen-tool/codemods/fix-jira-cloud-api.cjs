@@ -1,3 +1,4 @@
+const { Identifier } = require("jscodeshift");
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, api) => {
   const { j } = api;
@@ -41,6 +42,12 @@ const transformer = (file, api) => {
         j.tsLiteralType(j.stringLiteral("software")),
       ]);
     });
+  if (file.path?.endsWith("apis/IssueFieldsApi.ts")) {
+    source
+      .find(j.Identifier)
+      .filter((node) => node.value.name === "CreateCustomFieldRequest")
+      .replaceWith(j.identifier("ICreateCustomFieldRequest"));
+  }
   return source.toSource();
 };
 
