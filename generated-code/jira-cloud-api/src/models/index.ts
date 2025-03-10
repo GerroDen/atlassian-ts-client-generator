@@ -53,6 +53,54 @@ export interface ActorsMap {
 /**
  * 
  * @export
+ * @interface AddAtlassianTeamRequest
+ */
+export interface AddAtlassianTeamRequest {
+    /**
+     * The capacity for the Atlassian team.
+     * @type {number}
+     * @memberof AddAtlassianTeamRequest
+     */
+    capacity?: number;
+    /**
+     * The Atlassian team ID.
+     * @type {string}
+     * @memberof AddAtlassianTeamRequest
+     */
+    id: string;
+    /**
+     * The ID of the issue source for the Atlassian team.
+     * @type {number}
+     * @memberof AddAtlassianTeamRequest
+     */
+    issueSourceId?: number;
+    /**
+     * The planning style for the Atlassian team. This must be "Scrum" or "Kanban".
+     * @type {string}
+     * @memberof AddAtlassianTeamRequest
+     */
+    planningStyle: AddAtlassianTeamRequestPlanningStyleEnum;
+    /**
+     * The sprint length for the Atlassian team.
+     * @type {number}
+     * @memberof AddAtlassianTeamRequest
+     */
+    sprintLength?: number;
+}
+
+
+/**
+ * @export
+ */
+export const AddAtlassianTeamRequestPlanningStyleEnum = {
+    Scrum: 'Scrum',
+    Kanban: 'Kanban'
+} as const;
+export type AddAtlassianTeamRequestPlanningStyleEnum = typeof AddAtlassianTeamRequestPlanningStyleEnum[keyof typeof AddAtlassianTeamRequestPlanningStyleEnum];
+
+/**
+ * 
+ * @export
  * @interface AddFieldBean
  */
 export interface AddFieldBean {
@@ -1430,6 +1478,56 @@ export interface BulkChangeOwnerDetails {
     newOwner: string;
 }
 /**
+ * Request bean for bulk changelog retrieval
+ * @export
+ * @interface BulkChangelogRequestBean
+ */
+export interface BulkChangelogRequestBean {
+    /**
+     * List of field IDs to filter changelogs
+     * @type {Set<string>}
+     * @memberof BulkChangelogRequestBean
+     */
+    fieldIds?: Array<string>;
+    /**
+     * List of issue IDs/keys to fetch changelogs for
+     * @type {Array<string>}
+     * @memberof BulkChangelogRequestBean
+     */
+    issueIdsOrKeys: Array<string>;
+    /**
+     * The maximum number of items to return per page
+     * @type {number}
+     * @memberof BulkChangelogRequestBean
+     */
+    maxResults?: number;
+    /**
+     * The cursor for pagination
+     * @type {string}
+     * @memberof BulkChangelogRequestBean
+     */
+    nextPageToken?: string;
+}
+/**
+ * A page of changelogs which is designed to handle multiple issues
+ * @export
+ * @interface BulkChangelogResponseBean
+ */
+export interface BulkChangelogResponseBean {
+    /**
+     * The list of issues changelogs.
+     * @type {Array<IssueChangeLog>}
+     * @memberof BulkChangelogResponseBean
+     */
+    readonly issueChangeLogs?: Array<IssueChangeLog>;
+    /**
+     * Continuation token to fetch the next page. If this result represents the last or the only page, this token will be null.
+     * @type {string}
+     * @memberof BulkChangelogResponseBean
+     */
+    readonly nextPageToken?: string;
+}
+/**
  * Details of the contextual configuration for a custom field.
  * @export
  * @interface BulkContextualConfiguration
@@ -1625,12 +1723,16 @@ export type BulkEditShareableEntityResponseActionEnum = typeof BulkEditShareable
  */
 export interface BulkFetchIssueRequestBean {
     /**
-     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * Use [expand](#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
      * 
      *  *  `renderedFields` Returns field values rendered in HTML format.
      *  *  `names` Returns the display name of each field.
      *  *  `schema` Returns the schema describing a field type.
+     *  *  `transitions` Returns all possible transitions for the issue.
+     *  *  `operations` Returns all possible operations for the issue.
+     *  *  `editmeta` Returns information about how each field can be edited.
      *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
      * @type {Array<string>}
      * @memberof BulkFetchIssueRequestBean
      */
@@ -1953,6 +2055,50 @@ export interface BulkProjectPermissions {
      * @memberof BulkProjectPermissions
      */
     projects?: Array<number>;
+}
+/**
+ * Bulk Transition Get Available Transitions Response.
+ * @export
+ * @interface BulkTransitionGetAvailableTransitions
+ */
+export interface BulkTransitionGetAvailableTransitions {
+    /**
+     * List of available transitions for bulk transition operation for requested issues grouped by workflow
+     * @type {Array<IssueBulkTransitionForWorkflow>}
+     * @memberof BulkTransitionGetAvailableTransitions
+     */
+    readonly availableTransitions?: Array<IssueBulkTransitionForWorkflow>;
+    /**
+     * The end cursor for use in pagination.
+     * @type {string}
+     * @memberof BulkTransitionGetAvailableTransitions
+     */
+    readonly endingBefore?: string;
+    /**
+     * The start cursor for use in pagination.
+     * @type {string}
+     * @memberof BulkTransitionGetAvailableTransitions
+     */
+    readonly startingAfter?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BulkTransitionSubmitInput
+ */
+export interface BulkTransitionSubmitInput {
+    /**
+     * List of all the issue IDs or keys that are to be bulk transitioned.
+     * @type {Array<string>}
+     * @memberof BulkTransitionSubmitInput
+     */
+    selectedIssueIdsOrKeys: Array<string>;
+    /**
+     * The ID of the transition that is to be performed on the issues.
+     * @type {string}
+     * @memberof BulkTransitionSubmitInput
+     */
+    transitionId: string;
 }
 /**
  * A change item.
@@ -2837,6 +2983,25 @@ export interface ConvertedJQLQueries {
     queryStrings?: Array<string>;
 }
 /**
+ * 
+ * @export
+ * @interface CreateCrossProjectReleaseRequest
+ */
+export interface CreateCrossProjectReleaseRequest {
+    /**
+     * The cross-project release name.
+     * @type {string}
+     * @memberof CreateCrossProjectReleaseRequest
+     */
+    name: string;
+    /**
+     * The IDs of the releases to include in the cross-project release.
+     * @type {Set<number>}
+     * @memberof CreateCrossProjectReleaseRequest
+     */
+    releaseIds?: Array<number>;
+}
+/**
  * The details of a created custom field context.
  * @export
  * @interface CreateCustomFieldContext
@@ -2874,6 +3039,100 @@ export interface CreateCustomFieldContext {
     projectIds?: Array<string>;
 }
 /**
+ * 
+ * @export
+ * @interface CreateCustomFieldRequest
+ */
+export interface CreateCustomFieldRequest {
+    /**
+     * The custom field ID.
+     * @type {number}
+     * @memberof CreateCustomFieldRequest
+     */
+    customFieldId: number;
+    /**
+     * Allows filtering issues based on their values for the custom field.
+     * @type {boolean}
+     * @memberof CreateCustomFieldRequest
+     */
+    filter?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CreateDateFieldRequest
+ */
+export interface CreateDateFieldRequest {
+    /**
+     * A date custom field ID. This is required if the type is "DateCustomField".
+     * @type {number}
+     * @memberof CreateDateFieldRequest
+     */
+    dateCustomFieldId?: number;
+    /**
+     * The date field type. This must be "DueDate", "TargetStartDate", "TargetEndDate" or "DateCustomField".
+     * @type {string}
+     * @memberof CreateDateFieldRequest
+     */
+    type: CreateDateFieldRequestTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const CreateDateFieldRequestTypeEnum = {
+    DueDate: 'DueDate',
+    TargetStartDate: 'TargetStartDate',
+    TargetEndDate: 'TargetEndDate',
+    DateCustomField: 'DateCustomField'
+} as const;
+export type CreateDateFieldRequestTypeEnum = typeof CreateDateFieldRequestTypeEnum[keyof typeof CreateDateFieldRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreateExclusionRulesRequest
+ */
+export interface CreateExclusionRulesRequest {
+    /**
+     * The IDs of the issues to exclude from the plan.
+     * @type {Set<number>}
+     * @memberof CreateExclusionRulesRequest
+     */
+    issueIds?: Array<number>;
+    /**
+     * The IDs of the issue types to exclude from the plan.
+     * @type {Set<number>}
+     * @memberof CreateExclusionRulesRequest
+     */
+    issueTypeIds?: Array<number>;
+    /**
+     * Issues completed this number of days ago will be excluded from the plan.
+     * @type {number}
+     * @memberof CreateExclusionRulesRequest
+     */
+    numberOfDaysToShowCompletedIssues?: number;
+    /**
+     * The IDs of the releases to exclude from the plan.
+     * @type {Set<number>}
+     * @memberof CreateExclusionRulesRequest
+     */
+    releaseIds?: Array<number>;
+    /**
+     * The IDs of the work status categories to exclude from the plan.
+     * @type {Set<number>}
+     * @memberof CreateExclusionRulesRequest
+     */
+    workStatusCategoryIds?: Array<number>;
+    /**
+     * The IDs of the work statuses to exclude from the plan.
+     * @type {Set<number>}
+     * @memberof CreateExclusionRulesRequest
+     */
+    workStatusIds?: Array<number>;
+}
+/**
  * Issue security scheme and it's details
  * @export
  * @interface CreateIssueSecuritySchemeDetails
@@ -2900,6 +3159,37 @@ export interface CreateIssueSecuritySchemeDetails {
     name: string;
 }
 /**
+ * 
+ * @export
+ * @interface CreateIssueSourceRequest
+ */
+export interface CreateIssueSourceRequest {
+    /**
+     * The issue source type. This must be "Board", "Project" or "Filter".
+     * @type {string}
+     * @memberof CreateIssueSourceRequest
+     */
+    type: CreateIssueSourceRequestTypeEnum;
+    /**
+     * The issue source value. This must be a board ID if the type is "Board", a project ID if the type is "Project" or a filter ID if the type is "Filter".
+     * @type {number}
+     * @memberof CreateIssueSourceRequest
+     */
+    value: number;
+}
+
+
+/**
+ * @export
+ */
+export const CreateIssueSourceRequestTypeEnum = {
+    Board: 'Board',
+    Project: 'Project',
+    Filter: 'Filter'
+} as const;
+export type CreateIssueSourceRequestTypeEnum = typeof CreateIssueSourceRequestTypeEnum[keyof typeof CreateIssueSourceRequestTypeEnum];
+
+/**
  * Details of an notification scheme.
  * @export
  * @interface CreateNotificationSchemeDetails
@@ -2924,6 +3214,175 @@ export interface CreateNotificationSchemeDetails {
      * @memberof CreateNotificationSchemeDetails
      */
     notificationSchemeEvents?: Array<NotificationSchemeEventDetails>;
+}
+/**
+ * 
+ * @export
+ * @interface CreatePermissionHolderRequest
+ */
+export interface CreatePermissionHolderRequest {
+    /**
+     * The permission holder type. This must be "Group" or "AccountId".
+     * @type {string}
+     * @memberof CreatePermissionHolderRequest
+     */
+    type: CreatePermissionHolderRequestTypeEnum;
+    /**
+     * The permission holder value. This must be a group name if the type is "Group" or an account ID if the type is "AccountId".
+     * @type {string}
+     * @memberof CreatePermissionHolderRequest
+     */
+    value: string;
+}
+
+
+/**
+ * @export
+ */
+export const CreatePermissionHolderRequestTypeEnum = {
+    Group: 'Group',
+    AccountId: 'AccountId'
+} as const;
+export type CreatePermissionHolderRequestTypeEnum = typeof CreatePermissionHolderRequestTypeEnum[keyof typeof CreatePermissionHolderRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreatePermissionRequest
+ */
+export interface CreatePermissionRequest {
+    /**
+     * The permission holder.
+     * @type {CreatePermissionHolderRequest}
+     * @memberof CreatePermissionRequest
+     */
+    holder: CreatePermissionHolderRequest;
+    /**
+     * The permission type. This must be "View" or "Edit".
+     * @type {string}
+     * @memberof CreatePermissionRequest
+     */
+    type: CreatePermissionRequestTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const CreatePermissionRequestTypeEnum = {
+    View: 'View',
+    Edit: 'Edit'
+} as const;
+export type CreatePermissionRequestTypeEnum = typeof CreatePermissionRequestTypeEnum[keyof typeof CreatePermissionRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreatePlanOnlyTeamRequest
+ */
+export interface CreatePlanOnlyTeamRequest {
+    /**
+     * The capacity for the plan-only team.
+     * @type {number}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    capacity?: number;
+    /**
+     * The ID of the issue source for the plan-only team.
+     * @type {number}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    issueSourceId?: number;
+    /**
+     * The account IDs of the plan-only team members.
+     * @type {Set<string>}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    memberAccountIds?: Array<string>;
+    /**
+     * The plan-only team name.
+     * @type {string}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    name: string;
+    /**
+     * The planning style for the plan-only team. This must be "Scrum" or "Kanban".
+     * @type {string}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    planningStyle: CreatePlanOnlyTeamRequestPlanningStyleEnum;
+    /**
+     * The sprint length for the plan-only team.
+     * @type {number}
+     * @memberof CreatePlanOnlyTeamRequest
+     */
+    sprintLength?: number;
+}
+
+
+/**
+ * @export
+ */
+export const CreatePlanOnlyTeamRequestPlanningStyleEnum = {
+    Scrum: 'Scrum',
+    Kanban: 'Kanban'
+} as const;
+export type CreatePlanOnlyTeamRequestPlanningStyleEnum = typeof CreatePlanOnlyTeamRequestPlanningStyleEnum[keyof typeof CreatePlanOnlyTeamRequestPlanningStyleEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreatePlanRequest
+ */
+export interface CreatePlanRequest {
+    /**
+     * The cross-project releases to include in the plan.
+     * @type {Set<CreateCrossProjectReleaseRequest>}
+     * @memberof CreatePlanRequest
+     */
+    crossProjectReleases?: Array<CreateCrossProjectReleaseRequest>;
+    /**
+     * The custom fields for the plan.
+     * @type {Set<CreateCustomFieldRequest>}
+     * @memberof CreatePlanRequest
+     */
+    customFields?: Array<CreateCustomFieldRequest>;
+    /**
+     * The exclusion rules for the plan.
+     * @type {CreateExclusionRulesRequest}
+     * @memberof CreatePlanRequest
+     */
+    exclusionRules?: CreateExclusionRulesRequest;
+    /**
+     * The issue sources to include in the plan.
+     * @type {Set<CreateIssueSourceRequest>}
+     * @memberof CreatePlanRequest
+     */
+    issueSources: Array<CreateIssueSourceRequest>;
+    /**
+     * The account ID of the plan lead.
+     * @type {string}
+     * @memberof CreatePlanRequest
+     */
+    leadAccountId?: string;
+    /**
+     * The plan name.
+     * @type {string}
+     * @memberof CreatePlanRequest
+     */
+    name: string;
+    /**
+     * The permissions for the plan.
+     * @type {Set<CreatePermissionRequest>}
+     * @memberof CreatePlanRequest
+     */
+    permissions?: Array<CreatePermissionRequest>;
+    /**
+     * The scheduling settings for the plan.
+     * @type {CreateSchedulingRequest}
+     * @memberof CreatePlanRequest
+     */
+    scheduling: CreateSchedulingRequest;
 }
 /**
  * Details of an issue priority.
@@ -3011,7 +3470,20 @@ export interface CreatePrioritySchemeDetails {
      */
     description?: string;
     /**
-     * Mappings of issue priorities for issues being migrated in and out of this priority scheme.
+     * Instructions to migrate the priorities of issues.
+     * 
+     * `in` mappings are used to migrate the priorities of issues to priorities used within the priority scheme.
+     * 
+     * `out` mappings are used to migrate the priorities of issues to priorities not used within the priority scheme.
+     * 
+     *  *  When **priorities** are **added** to the new priority scheme, no mapping needs to be provided as the new priorities are not used by any issues.
+     *  *  When **priorities** are **removed** from the new priority scheme, no mapping needs to be provided as the removed priorities are not used by any issues.
+     *  *  When **projects** are **added** to the priority scheme, the priorities of issues in those projects might need to be migrated to new priorities used by the priority scheme. This can occur when the current scheme does not use all the priorities in the project(s)' priority scheme(s).
+     *     
+     *      *  An `in` mapping must be provided for each of these priorities.
+     *  *  When **projects** are **removed** from the priority scheme, no mapping needs to be provided as the removed projects are not using the priorities of the new priority scheme.
+     * 
+     * For more information on `in` and `out` mappings, see the child properties documentation for the `PriorityMapping` object below.
      * @type {PriorityMapping}
      * @memberof CreatePrioritySchemeDetails
      */
@@ -3174,6 +3646,7 @@ export const CreateProjectDetailsProjectTemplateKeyEnum = {
     PyxisGreenhopperJiraghCrossTeamPlanningTemplate: 'com.pyxis.greenhopper.jira:gh-cross-team-planning-template',
     AtlassianServicedesksimplifiedItServiceManagement: 'com.atlassian.servicedesk:simplified-it-service-management',
     AtlassianServicedesksimplifiedItServiceManagementBasic: 'com.atlassian.servicedesk:simplified-it-service-management-basic',
+    AtlassianServicedesksimplifiedItServiceManagementOperations: 'com.atlassian.servicedesk:simplified-it-service-management-operations',
     AtlassianServicedesksimplifiedGeneralServiceDesk: 'com.atlassian.servicedesk:simplified-general-service-desk',
     AtlassianServicedesksimplifiedGeneralServiceDeskIt: 'com.atlassian.servicedesk:simplified-general-service-desk-it',
     AtlassianServicedesksimplifiedGeneralServiceDeskBusiness: 'com.atlassian.servicedesk:simplified-general-service-desk-business',
@@ -3243,6 +3716,74 @@ export interface CreateResolutionDetails {
      */
     name: string;
 }
+/**
+ * 
+ * @export
+ * @interface CreateSchedulingRequest
+ */
+export interface CreateSchedulingRequest {
+    /**
+     * The dependencies for the plan. This must be "Sequential" or "Concurrent".
+     * @type {string}
+     * @memberof CreateSchedulingRequest
+     */
+    dependencies?: CreateSchedulingRequestDependenciesEnum;
+    /**
+     * The end date field for the plan.
+     * @type {CreateDateFieldRequest}
+     * @memberof CreateSchedulingRequest
+     */
+    endDate?: CreateDateFieldRequest;
+    /**
+     * The estimation unit for the plan. This must be "StoryPoints", "Days" or "Hours".
+     * @type {string}
+     * @memberof CreateSchedulingRequest
+     */
+    estimation: CreateSchedulingRequestEstimationEnum;
+    /**
+     * The inferred dates for the plan. This must be "None", "SprintDates" or "ReleaseDates".
+     * @type {string}
+     * @memberof CreateSchedulingRequest
+     */
+    inferredDates?: CreateSchedulingRequestInferredDatesEnum;
+    /**
+     * The start date field for the plan.
+     * @type {CreateDateFieldRequest}
+     * @memberof CreateSchedulingRequest
+     */
+    startDate?: CreateDateFieldRequest;
+}
+
+
+/**
+ * @export
+ */
+export const CreateSchedulingRequestDependenciesEnum = {
+    Sequential: 'Sequential',
+    Concurrent: 'Concurrent'
+} as const;
+export type CreateSchedulingRequestDependenciesEnum = typeof CreateSchedulingRequestDependenciesEnum[keyof typeof CreateSchedulingRequestDependenciesEnum];
+
+/**
+ * @export
+ */
+export const CreateSchedulingRequestEstimationEnum = {
+    StoryPoints: 'StoryPoints',
+    Days: 'Days',
+    Hours: 'Hours'
+} as const;
+export type CreateSchedulingRequestEstimationEnum = typeof CreateSchedulingRequestEstimationEnum[keyof typeof CreateSchedulingRequestEstimationEnum];
+
+/**
+ * @export
+ */
+export const CreateSchedulingRequestInferredDatesEnum = {
+    None: 'None',
+    SprintDates: 'SprintDates',
+    ReleaseDates: 'ReleaseDates'
+} as const;
+export type CreateSchedulingRequestInferredDatesEnum = typeof CreateSchedulingRequestInferredDatesEnum[keyof typeof CreateSchedulingRequestInferredDatesEnum];
+
 /**
  * The details of a UI modification.
  * @export
@@ -4586,7 +5127,7 @@ export interface CustomFieldOptionCreate {
      */
     disabled?: boolean;
     /**
-     * For cascading options, the ID of the custom field object containing the cascading option.
+     * For cascading options, the ID of a parent option.
      * @type {string}
      * @memberof CustomFieldOptionCreate
      */
@@ -5242,13 +5783,26 @@ export interface DocumentVersion {
      * @type {string}
      * @memberof DocumentVersion
      */
-    id: string;
+    id?: string;
     /**
      * The version number.
      * @type {number}
      * @memberof DocumentVersion
      */
-    versionNumber: number;
+    versionNumber?: number;
+}
+/**
+ * 
+ * @export
+ * @interface DuplicatePlanRequest
+ */
+export interface DuplicatePlanRequest {
+    /**
+     * The plan name.
+     * @type {string}
+     * @memberof DuplicatePlanRequest
+     */
+    name: string;
 }
 /**
  * An entity property, for more information see [Entity properties](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).
@@ -6901,6 +7455,551 @@ export type FunctionReferenceDataSupportsListAndSingleValueOperatorsEnum = typeo
 /**
  * 
  * @export
+ * @interface GetAtlassianTeamResponse
+ */
+export interface GetAtlassianTeamResponse {
+    /**
+     * The capacity for the Atlassian team.
+     * @type {number}
+     * @memberof GetAtlassianTeamResponse
+     */
+    capacity?: number;
+    /**
+     * The Atlassian team ID.
+     * @type {string}
+     * @memberof GetAtlassianTeamResponse
+     */
+    id: string;
+    /**
+     * The ID of the issue source for the Atlassian team.
+     * @type {number}
+     * @memberof GetAtlassianTeamResponse
+     */
+    issueSourceId?: number;
+    /**
+     * The planning style for the Atlassian team. This is "Scrum" or "Kanban".
+     * @type {string}
+     * @memberof GetAtlassianTeamResponse
+     */
+    planningStyle: GetAtlassianTeamResponsePlanningStyleEnum;
+    /**
+     * The sprint length for the Atlassian team.
+     * @type {number}
+     * @memberof GetAtlassianTeamResponse
+     */
+    sprintLength?: number;
+}
+
+
+/**
+ * @export
+ */
+export const GetAtlassianTeamResponsePlanningStyleEnum = {
+    Scrum: 'Scrum',
+    Kanban: 'Kanban'
+} as const;
+export type GetAtlassianTeamResponsePlanningStyleEnum = typeof GetAtlassianTeamResponsePlanningStyleEnum[keyof typeof GetAtlassianTeamResponsePlanningStyleEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetCrossProjectReleaseResponse
+ */
+export interface GetCrossProjectReleaseResponse {
+    /**
+     * The cross-project release name.
+     * @type {string}
+     * @memberof GetCrossProjectReleaseResponse
+     */
+    name?: string;
+    /**
+     * The IDs of the releases included in the cross-project release.
+     * @type {Set<number>}
+     * @memberof GetCrossProjectReleaseResponse
+     */
+    releaseIds?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface GetCustomFieldResponse
+ */
+export interface GetCustomFieldResponse {
+    /**
+     * The custom field ID.
+     * @type {number}
+     * @memberof GetCustomFieldResponse
+     */
+    customFieldId: number;
+    /**
+     * Allows filtering issues based on their values for the custom field.
+     * @type {boolean}
+     * @memberof GetCustomFieldResponse
+     */
+    filter?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface GetDateFieldResponse
+ */
+export interface GetDateFieldResponse {
+    /**
+     * A date custom field ID. This is returned if the type is "DateCustomField".
+     * @type {number}
+     * @memberof GetDateFieldResponse
+     */
+    dateCustomFieldId?: number;
+    /**
+     * The date field type. This is "DueDate", "TargetStartDate", "TargetEndDate" or "DateCustomField".
+     * @type {string}
+     * @memberof GetDateFieldResponse
+     */
+    type: GetDateFieldResponseTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetDateFieldResponseTypeEnum = {
+    DueDate: 'DueDate',
+    TargetStartDate: 'TargetStartDate',
+    TargetEndDate: 'TargetEndDate',
+    DateCustomField: 'DateCustomField'
+} as const;
+export type GetDateFieldResponseTypeEnum = typeof GetDateFieldResponseTypeEnum[keyof typeof GetDateFieldResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetExclusionRulesResponse
+ */
+export interface GetExclusionRulesResponse {
+    /**
+     * The IDs of the issues excluded from the plan.
+     * @type {Set<number>}
+     * @memberof GetExclusionRulesResponse
+     */
+    issueIds?: Array<number>;
+    /**
+     * The IDs of the issue types excluded from the plan.
+     * @type {Set<number>}
+     * @memberof GetExclusionRulesResponse
+     */
+    issueTypeIds?: Array<number>;
+    /**
+     * Issues completed this number of days ago are excluded from the plan.
+     * @type {number}
+     * @memberof GetExclusionRulesResponse
+     */
+    numberOfDaysToShowCompletedIssues: number;
+    /**
+     * The IDs of the releases excluded from the plan.
+     * @type {Set<number>}
+     * @memberof GetExclusionRulesResponse
+     */
+    releaseIds?: Array<number>;
+    /**
+     * The IDs of the work status categories excluded from the plan.
+     * @type {Set<number>}
+     * @memberof GetExclusionRulesResponse
+     */
+    workStatusCategoryIds?: Array<number>;
+    /**
+     * The IDs of the work statuses excluded from the plan.
+     * @type {Set<number>}
+     * @memberof GetExclusionRulesResponse
+     */
+    workStatusIds?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface GetIssueSourceResponse
+ */
+export interface GetIssueSourceResponse {
+    /**
+     * The issue source type. This is "Board", "Project" or "Filter".
+     * @type {string}
+     * @memberof GetIssueSourceResponse
+     */
+    type: GetIssueSourceResponseTypeEnum;
+    /**
+     * The issue source value. This is a board ID if the type is "Board", a project ID if the type is "Project" or a filter ID if the type is "Filter".
+     * @type {number}
+     * @memberof GetIssueSourceResponse
+     */
+    value: number;
+}
+
+
+/**
+ * @export
+ */
+export const GetIssueSourceResponseTypeEnum = {
+    Board: 'Board',
+    Project: 'Project',
+    Filter: 'Filter',
+    Custom: 'Custom'
+} as const;
+export type GetIssueSourceResponseTypeEnum = typeof GetIssueSourceResponseTypeEnum[keyof typeof GetIssueSourceResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetPermissionHolderResponse
+ */
+export interface GetPermissionHolderResponse {
+    /**
+     * The permission holder type. This is "Group" or "AccountId".
+     * @type {string}
+     * @memberof GetPermissionHolderResponse
+     */
+    type: GetPermissionHolderResponseTypeEnum;
+    /**
+     * The permission holder value. This is a group name if the type is "Group" or an account ID if the type is "AccountId".
+     * @type {string}
+     * @memberof GetPermissionHolderResponse
+     */
+    value: string;
+}
+
+
+/**
+ * @export
+ */
+export const GetPermissionHolderResponseTypeEnum = {
+    Group: 'Group',
+    AccountId: 'AccountId'
+} as const;
+export type GetPermissionHolderResponseTypeEnum = typeof GetPermissionHolderResponseTypeEnum[keyof typeof GetPermissionHolderResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetPermissionResponse
+ */
+export interface GetPermissionResponse {
+    /**
+     * The permission holder.
+     * @type {GetPermissionHolderResponse}
+     * @memberof GetPermissionResponse
+     */
+    holder: GetPermissionHolderResponse;
+    /**
+     * The permission type. This is "View" or "Edit".
+     * @type {string}
+     * @memberof GetPermissionResponse
+     */
+    type: GetPermissionResponseTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetPermissionResponseTypeEnum = {
+    View: 'View',
+    Edit: 'Edit'
+} as const;
+export type GetPermissionResponseTypeEnum = typeof GetPermissionResponseTypeEnum[keyof typeof GetPermissionResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetPlanOnlyTeamResponse
+ */
+export interface GetPlanOnlyTeamResponse {
+    /**
+     * The capacity for the plan-only team.
+     * @type {number}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    capacity?: number;
+    /**
+     * The plan-only team ID.
+     * @type {number}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    id: number;
+    /**
+     * The ID of the issue source for the plan-only team.
+     * @type {number}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    issueSourceId?: number;
+    /**
+     * The account IDs of the plan-only team members.
+     * @type {Array<string>}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    memberAccountIds?: Array<string>;
+    /**
+     * The plan-only team name.
+     * @type {string}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    name: string;
+    /**
+     * The planning style for the plan-only team. This is "Scrum" or "Kanban".
+     * @type {string}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    planningStyle: GetPlanOnlyTeamResponsePlanningStyleEnum;
+    /**
+     * The sprint length for the plan-only team.
+     * @type {number}
+     * @memberof GetPlanOnlyTeamResponse
+     */
+    sprintLength?: number;
+}
+
+
+/**
+ * @export
+ */
+export const GetPlanOnlyTeamResponsePlanningStyleEnum = {
+    Scrum: 'Scrum',
+    Kanban: 'Kanban'
+} as const;
+export type GetPlanOnlyTeamResponsePlanningStyleEnum = typeof GetPlanOnlyTeamResponsePlanningStyleEnum[keyof typeof GetPlanOnlyTeamResponsePlanningStyleEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetPlanResponse
+ */
+export interface GetPlanResponse {
+    /**
+     * The cross-project releases included in the plan.
+     * @type {Array<GetCrossProjectReleaseResponse>}
+     * @memberof GetPlanResponse
+     */
+    crossProjectReleases?: Array<GetCrossProjectReleaseResponse>;
+    /**
+     * The custom fields for the plan.
+     * @type {Array<GetCustomFieldResponse>}
+     * @memberof GetPlanResponse
+     */
+    customFields?: Array<GetCustomFieldResponse>;
+    /**
+     * The exclusion rules for the plan.
+     * @type {GetExclusionRulesResponse}
+     * @memberof GetPlanResponse
+     */
+    exclusionRules?: GetExclusionRulesResponse;
+    /**
+     * The plan ID.
+     * @type {number}
+     * @memberof GetPlanResponse
+     */
+    id: number;
+    /**
+     * The issue sources included in the plan.
+     * @type {Array<GetIssueSourceResponse>}
+     * @memberof GetPlanResponse
+     */
+    issueSources?: Array<GetIssueSourceResponse>;
+    /**
+     * The date when the plan was last saved in UTC.
+     * @type {string}
+     * @memberof GetPlanResponse
+     */
+    lastSaved?: string;
+    /**
+     * The account ID of the plan lead.
+     * @type {string}
+     * @memberof GetPlanResponse
+     */
+    leadAccountId?: string;
+    /**
+     * The plan name.
+     * @type {string}
+     * @memberof GetPlanResponse
+     */
+    name?: string;
+    /**
+     * The permissions for the plan.
+     * @type {Array<GetPermissionResponse>}
+     * @memberof GetPlanResponse
+     */
+    permissions?: Array<GetPermissionResponse>;
+    /**
+     * The scheduling settings for the plan.
+     * @type {GetSchedulingResponse}
+     * @memberof GetPlanResponse
+     */
+    scheduling: GetSchedulingResponse;
+    /**
+     * The plan status. This is "Active", "Trashed" or "Archived".
+     * @type {string}
+     * @memberof GetPlanResponse
+     */
+    status: GetPlanResponseStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetPlanResponseStatusEnum = {
+    Active: 'Active',
+    Trashed: 'Trashed',
+    Archived: 'Archived'
+} as const;
+export type GetPlanResponseStatusEnum = typeof GetPlanResponseStatusEnum[keyof typeof GetPlanResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetPlanResponseForPage
+ */
+export interface GetPlanResponseForPage {
+    /**
+     * The plan ID.
+     * @type {string}
+     * @memberof GetPlanResponseForPage
+     */
+    id: string;
+    /**
+     * The issue sources included in the plan.
+     * @type {Set<GetIssueSourceResponse>}
+     * @memberof GetPlanResponseForPage
+     */
+    issueSources?: Array<GetIssueSourceResponse>;
+    /**
+     * The plan name.
+     * @type {string}
+     * @memberof GetPlanResponseForPage
+     */
+    name: string;
+    /**
+     * The plan status. This is "Active", "Trashed" or "Archived".
+     * @type {string}
+     * @memberof GetPlanResponseForPage
+     */
+    status: GetPlanResponseForPageStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetPlanResponseForPageStatusEnum = {
+    Active: 'Active',
+    Trashed: 'Trashed',
+    Archived: 'Archived'
+} as const;
+export type GetPlanResponseForPageStatusEnum = typeof GetPlanResponseForPageStatusEnum[keyof typeof GetPlanResponseForPageStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetSchedulingResponse
+ */
+export interface GetSchedulingResponse {
+    /**
+     * The dependencies for the plan. This is "Sequential" or "Concurrent".
+     * @type {string}
+     * @memberof GetSchedulingResponse
+     */
+    dependencies: GetSchedulingResponseDependenciesEnum;
+    /**
+     * The end date field for the plan.
+     * @type {GetDateFieldResponse}
+     * @memberof GetSchedulingResponse
+     */
+    endDate: GetDateFieldResponse;
+    /**
+     * The estimation unit for the plan. This is "StoryPoints", "Days" or "Hours".
+     * @type {string}
+     * @memberof GetSchedulingResponse
+     */
+    estimation: GetSchedulingResponseEstimationEnum;
+    /**
+     * The inferred dates for the plan. This is "None", "SprintDates" or "ReleaseDates".
+     * @type {string}
+     * @memberof GetSchedulingResponse
+     */
+    inferredDates: GetSchedulingResponseInferredDatesEnum;
+    /**
+     * The start date field for the plan.
+     * @type {GetDateFieldResponse}
+     * @memberof GetSchedulingResponse
+     */
+    startDate: GetDateFieldResponse;
+}
+
+
+/**
+ * @export
+ */
+export const GetSchedulingResponseDependenciesEnum = {
+    Sequential: 'Sequential',
+    Concurrent: 'Concurrent'
+} as const;
+export type GetSchedulingResponseDependenciesEnum = typeof GetSchedulingResponseDependenciesEnum[keyof typeof GetSchedulingResponseDependenciesEnum];
+
+/**
+ * @export
+ */
+export const GetSchedulingResponseEstimationEnum = {
+    StoryPoints: 'StoryPoints',
+    Days: 'Days',
+    Hours: 'Hours'
+} as const;
+export type GetSchedulingResponseEstimationEnum = typeof GetSchedulingResponseEstimationEnum[keyof typeof GetSchedulingResponseEstimationEnum];
+
+/**
+ * @export
+ */
+export const GetSchedulingResponseInferredDatesEnum = {
+    None: 'None',
+    SprintDates: 'SprintDates',
+    ReleaseDates: 'ReleaseDates'
+} as const;
+export type GetSchedulingResponseInferredDatesEnum = typeof GetSchedulingResponseInferredDatesEnum[keyof typeof GetSchedulingResponseInferredDatesEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetTeamResponseForPage
+ */
+export interface GetTeamResponseForPage {
+    /**
+     * The team ID.
+     * @type {string}
+     * @memberof GetTeamResponseForPage
+     */
+    id: string;
+    /**
+     * The team name. This is returned if the type is "PlanOnly".
+     * @type {string}
+     * @memberof GetTeamResponseForPage
+     */
+    name?: string;
+    /**
+     * The team type. This is "PlanOnly" or "Atlassian".
+     * @type {string}
+     * @memberof GetTeamResponseForPage
+     */
+    type: GetTeamResponseForPageTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetTeamResponseForPageTypeEnum = {
+    PlanOnly: 'PlanOnly',
+    Atlassian: 'Atlassian'
+} as const;
+export type GetTeamResponseForPageTypeEnum = typeof GetTeamResponseForPageTypeEnum[keyof typeof GetTeamResponseForPageTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface GlobalScopeBean
  */
 export interface GlobalScopeBean {
@@ -7503,6 +8602,27 @@ export interface IssueBean {
     readonly versionedRepresentations?: { [key: string]: { [key: string]: any; }; };
 }
 /**
+ * Issue Bulk Delete Payload
+ * @export
+ * @interface IssueBulkDeletePayload
+ */
+export interface IssueBulkDeletePayload {
+    /**
+     * List of issue IDs or keys which are to be bulk deleted. These IDs or keys can be from different projects and issue types.
+     * @type {Array<string>}
+     * @memberof IssueBulkDeletePayload
+     */
+    selectedIssueIdsOrKeys: Array<string>;
+    /**
+     * A boolean value that indicates whether to send a bulk change notification when the issues are being deleted.
+     * 
+     * If `true`, dispatches a bulk notification email to users about the updates.
+     * @type {boolean}
+     * @memberof IssueBulkDeletePayload
+     */
+    sendBulkNotification?: boolean | null;
+}
+/**
  * 
  * @export
  * @interface IssueBulkEditField
@@ -7635,6 +8755,97 @@ export interface IssueBulkMovePayload {
      * @memberof IssueBulkMovePayload
      */
     targetToSourcesMapping?: { [key: string]: TargetToSourcesMapping; };
+}
+/**
+ * 
+ * @export
+ * @interface IssueBulkTransitionForWorkflow
+ */
+export interface IssueBulkTransitionForWorkflow {
+    /**
+     * Indicates whether all the transitions of this workflow are available in the transitions list or not.
+     * @type {boolean}
+     * @memberof IssueBulkTransitionForWorkflow
+     */
+    readonly isTransitionsFiltered?: boolean;
+    /**
+     * List of issue keys from the request which are associated with this workflow.
+     * @type {Array<string>}
+     * @memberof IssueBulkTransitionForWorkflow
+     */
+    readonly issues?: Array<string>;
+    /**
+     * List of transitions available for issues from the request which are associated with this workflow.
+     * 
+     *  **This list includes only those transitions that are common across the issues in this workflow and do not involve any additional field updates.** 
+     * @type {Array<SimplifiedIssueTransition>}
+     * @memberof IssueBulkTransitionForWorkflow
+     */
+    readonly transitions?: Array<SimplifiedIssueTransition>;
+}
+/**
+ * Issue Bulk Transition Payload
+ * @export
+ * @interface IssueBulkTransitionPayload
+ */
+export interface IssueBulkTransitionPayload {
+    /**
+     * List of objects and each object has two properties:
+     * 
+     *  *  Issues that will be bulk transitioned.
+     *  *  TransitionId that corresponds to a specific transition of issues that share the same workflow.
+     * @type {Array<BulkTransitionSubmitInput>}
+     * @memberof IssueBulkTransitionPayload
+     */
+    bulkTransitionInputs: Array<BulkTransitionSubmitInput>;
+    /**
+     * A boolean value that indicates whether to send a bulk change notification when the issues are being transitioned.
+     * 
+     * If `true`, dispatches a bulk notification email to users about the updates.
+     * @type {boolean}
+     * @memberof IssueBulkTransitionPayload
+     */
+    sendBulkNotification?: boolean | null;
+}
+/**
+ * Issue Bulk Watch Or Unwatch Payload
+ * @export
+ * @interface IssueBulkWatchOrUnwatchPayload
+ */
+export interface IssueBulkWatchOrUnwatchPayload {
+    /**
+     * List of issue IDs or keys which are to be bulk watched or unwatched. These IDs or keys can be from different projects and issue types.
+     * @type {Array<string>}
+     * @memberof IssueBulkWatchOrUnwatchPayload
+     */
+    selectedIssueIdsOrKeys: Array<string>;
+    /**
+     * A boolean value that indicates whether to send a bulk change notification when the issues are being watched or unwatched.
+     * 
+     * If `true`, dispatches a bulk notification email to users about the updates.
+     * @type {boolean}
+     * @memberof IssueBulkWatchOrUnwatchPayload
+     */
+    sendBulkNotification?: boolean | null;
+}
+/**
+ * List of changelogs that belong to single issue
+ * @export
+ * @interface IssueChangeLog
+ */
+export interface IssueChangeLog {
+    /**
+     * List of changelogs that belongs to given issueId.
+     * @type {Array<Changelog>}
+     * @memberof IssueChangeLog
+     */
+    readonly changeHistories?: Array<Changelog>;
+    /**
+     * The ID of the issue.
+     * @type {string}
+     * @memberof IssueChangeLog
+     */
+    readonly issueId?: string;
 }
 /**
  * A list of changelog IDs.
@@ -7941,19 +9152,6 @@ export interface IssueFilterForBulkPropertySet {
 /**
  * 
  * @export
- * @interface IssueLimitReportRequest
- */
-export interface IssueLimitReportRequest {
-    /**
-     * A list of fields and their respective approaching limit threshold. Required for querying issues approaching limits. Optional for querying issues breaching limits. Accepted fields are: `comment`, `worklog`, `attachment`, `remoteIssueLinks`, and `issuelinks`. Example: `{"issuesApproachingLimitParams": {"comment": 4500, "attachment": 1800}}`
-     * @type {{ [key: string]: number; }}
-     * @memberof IssueLimitReportRequest
-     */
-    issuesApproachingLimitParams?: { [key: string]: number; };
-}
-/**
- * 
- * @export
  * @interface IssueLimitReportResponseBean
  */
 export interface IssueLimitReportResponseBean {
@@ -8197,12 +9395,6 @@ export interface IssueSecurityLevelMember {
      * @memberof IssueSecurityLevelMember
      */
     issueSecurityLevelId: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof IssueSecurityLevelMember
-     */
-    managed?: boolean;
 }
 /**
  * Details about an project using security scheme mapping.
@@ -8297,6 +9489,25 @@ export interface IssueTransition {
      * @memberof IssueTransition
      */
     readonly to?: StatusDetails;
+}
+/**
+ * 
+ * @export
+ * @interface IssueTransitionStatus
+ */
+export interface IssueTransitionStatus {
+    /**
+     * The unique ID of the status.
+     * @type {number}
+     * @memberof IssueTransitionStatus
+     */
+    readonly statusId?: number;
+    /**
+     * The name of the status.
+     * @type {string}
+     * @memberof IssueTransitionStatus
+     */
+    readonly statusName?: string;
 }
 /**
  * 
@@ -9232,7 +10443,7 @@ export interface JExpEvaluateMetaDataBean {
  */
 export interface JQLCountRequestBean {
     /**
-     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this field requires a bounded query. A bounded query is a query with a search restriction.
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this parameter requires a bounded query. A bounded query is a query with a search restriction.
      * @type {string}
      * @memberof JQLCountRequestBean
      */
@@ -9340,7 +10551,7 @@ export interface JexpEvaluateCtxJqlIssues {
      */
     nextPageToken?: string;
     /**
-     * The JQL query, required to be bounded.
+     * The JQL query, required to be bounded. Additionally, `orderBy` clause can contain a maximum of 7 fields
      * @type {string}
      * @memberof JexpEvaluateCtxJqlIssues
      */
@@ -10557,17 +11768,21 @@ export interface JiraStatus {
      */
     statusCategory?: JiraStatusStatusCategoryEnum;
     /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
      * @type {Set<ProjectIssueTypes>}
      * @memberof JiraStatus
      */
-    usages?: Array<ProjectIssueTypes>;
+    usages?: Array<ProjectIssueTypes> | null;
     /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
      * @type {Set<WorkflowUsages>}
      * @memberof JiraStatus
      */
-    workflowUsages?: Array<WorkflowUsages>;
+    workflowUsages?: Array<WorkflowUsages> | null;
 }
 
 
@@ -10646,6 +11861,12 @@ export interface JiraVersionField {
  */
 export interface JiraWorkflow {
     /**
+     * The creation date of the workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    created?: string | null;
+    /**
      * The description of the workflow.
      * @type {string}
      * @memberof JiraWorkflow
@@ -10700,11 +11921,19 @@ export interface JiraWorkflow {
      */
     transitions?: Array<WorkflowTransitions>;
     /**
+     * The last edited date of the workflow.
+     * @type {string}
+     * @memberof JiraWorkflow
+     */
+    updated?: string | null;
+    /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
      * @type {Set<ProjectIssueTypes>}
      * @memberof JiraWorkflow
      */
-    usages?: Array<ProjectIssueTypes>;
+    usages?: Array<ProjectIssueTypes> | null;
     /**
      * 
      * @type {DocumentVersion}
@@ -10755,11 +11984,13 @@ export interface JiraWorkflowStatus {
      */
     statusReference?: string;
     /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * The `statuses.usages` expand is an optional parameter that can be used when reading and updating statuses in Jira. It provides additional information about the projects and issue types associated with the requested statuses.
      * @type {Set<ProjectIssueTypes>}
      * @memberof JiraWorkflowStatus
      */
-    usages?: Array<ProjectIssueTypes>;
+    usages?: Array<ProjectIssueTypes> | null;
 }
 
 
@@ -10847,6 +12078,38 @@ export interface JqlFunctionPrecomputationBean {
     readonly value?: string;
 }
 /**
+ * Request to fetch precomputations by ID.
+ * @export
+ * @interface JqlFunctionPrecomputationGetByIdRequest
+ */
+export interface JqlFunctionPrecomputationGetByIdRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JqlFunctionPrecomputationGetByIdRequest
+     */
+    precomputationIDs?: Array<string>;
+}
+/**
+ * Get precomputations by ID response.
+ * @export
+ * @interface JqlFunctionPrecomputationGetByIdResponse
+ */
+export interface JqlFunctionPrecomputationGetByIdResponse {
+    /**
+     * List of precomputations that were not found.
+     * @type {Array<string>}
+     * @memberof JqlFunctionPrecomputationGetByIdResponse
+     */
+    readonly notFoundPrecomputationIDs?: Array<string>;
+    /**
+     * The list of precomputations.
+     * @type {Array<JqlFunctionPrecomputationBean>}
+     * @memberof JqlFunctionPrecomputationGetByIdResponse
+     */
+    readonly precomputations?: Array<JqlFunctionPrecomputationBean>;
+}
+/**
  * Precomputation id and its new value.
  * @export
  * @interface JqlFunctionPrecomputationUpdateBean
@@ -10872,6 +12135,25 @@ export interface JqlFunctionPrecomputationUpdateBean {
     value?: string;
 }
 /**
+ * Error response returned updating JQL Function precomputations fails.
+ * @export
+ * @interface JqlFunctionPrecomputationUpdateErrorResponse
+ */
+export interface JqlFunctionPrecomputationUpdateErrorResponse {
+    /**
+     * The list of error messages produced by this operation.
+     * @type {Array<string>}
+     * @memberof JqlFunctionPrecomputationUpdateErrorResponse
+     */
+    readonly errorMessages?: Array<string>;
+    /**
+     * List of precomputations that were not found.
+     * @type {Set<string>}
+     * @memberof JqlFunctionPrecomputationUpdateErrorResponse
+     */
+    readonly notFoundPrecomputationIDs?: Array<string>;
+}
+/**
  * List of pairs (id and value) for precomputation updates.
  * @export
  * @interface JqlFunctionPrecomputationUpdateRequestBean
@@ -10883,6 +12165,19 @@ export interface JqlFunctionPrecomputationUpdateRequestBean {
      * @memberof JqlFunctionPrecomputationUpdateRequestBean
      */
     values?: Array<JqlFunctionPrecomputationUpdateBean>;
+}
+/**
+ * Result of updating JQL Function precomputations.
+ * @export
+ * @interface JqlFunctionPrecomputationUpdateResponse
+ */
+export interface JqlFunctionPrecomputationUpdateResponse {
+    /**
+     * List of precomputations that were not found and skipped. Only returned if the request passed skipNotFoundPrecomputations=true.
+     * @type {Set<string>}
+     * @memberof JqlFunctionPrecomputationUpdateResponse
+     */
+    readonly notFoundPrecomputationIDs?: Array<string>;
 }
 /**
  * A list of JQL queries to parse.
@@ -12627,6 +13922,55 @@ export interface PageBean2ComponentJsonBean {
 /**
  * A page of items.
  * @export
+ * @interface PageBean2JqlFunctionPrecomputationBean
+ */
+export interface PageBean2JqlFunctionPrecomputationBean {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly startAt?: number;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly total?: number;
+    /**
+     * The list of items.
+     * @type {Array<JqlFunctionPrecomputationBean>}
+     * @memberof PageBean2JqlFunctionPrecomputationBean
+     */
+    readonly values?: Array<JqlFunctionPrecomputationBean>;
+}
+/**
+ * A page of items.
+ * @export
  * @interface PageBeanBulkContextualConfiguration
  */
 export interface PageBeanBulkContextualConfiguration {
@@ -14097,55 +15441,6 @@ export interface PageBeanIssueTypeToContextMapping {
 /**
  * A page of items.
  * @export
- * @interface PageBeanJqlFunctionPrecomputationBean
- */
-export interface PageBeanJqlFunctionPrecomputationBean {
-    /**
-     * Whether this is the last page.
-     * @type {boolean}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly isLast?: boolean;
-    /**
-     * The maximum number of items that could be returned.
-     * @type {number}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly maxResults?: number;
-    /**
-     * If there is another page of results, the URL of the next page.
-     * @type {string}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly nextPage?: string;
-    /**
-     * The URL of the page.
-     * @type {string}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly self?: string;
-    /**
-     * The index of the first item returned.
-     * @type {number}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly startAt?: number;
-    /**
-     * The number of items returned.
-     * @type {number}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly total?: number;
-    /**
-     * The list of items.
-     * @type {Array<JqlFunctionPrecomputationBean>}
-     * @memberof PageBeanJqlFunctionPrecomputationBean
-     */
-    readonly values?: Array<JqlFunctionPrecomputationBean>;
-}
-/**
- * A page of items.
- * @export
  * @interface PageBeanNotificationScheme
  */
 export interface PageBeanNotificationScheme {
@@ -15583,6 +16878,92 @@ export interface PageOfWorklogs {
     readonly worklogs?: Array<Worklog>;
 }
 /**
+ * 
+ * @export
+ * @interface PageWithCursorGetPlanResponseForPage
+ */
+export interface PageWithCursorGetPlanResponseForPage {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    cursor?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    last?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    nextPageCursor?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    total?: number;
+    /**
+     * 
+     * @type {Array<GetPlanResponseForPage>}
+     * @memberof PageWithCursorGetPlanResponseForPage
+     */
+    values?: Array<GetPlanResponseForPage>;
+}
+/**
+ * 
+ * @export
+ * @interface PageWithCursorGetTeamResponseForPage
+ */
+export interface PageWithCursorGetTeamResponseForPage {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    cursor?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    last?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    nextPageCursor?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    total?: number;
+    /**
+     * 
+     * @type {Array<GetTeamResponseForPage>}
+     * @memberof PageWithCursorGetTeamResponseForPage
+     */
+    values?: Array<GetTeamResponseForPage>;
+}
+/**
  * A paged list. To access additional details append `[start-index:end-index]` to the expand request. For example, `?expand=sharedUsers[10:40]` returns a list starting at item 10 and finishing at item 40.
  * @export
  * @interface PagedListUserDetailsApplicationUser
@@ -16037,35 +17418,20 @@ export interface PriorityId {
 export interface PriorityMapping {
     /**
      * The mapping of priorities for issues being migrated **into** this priority scheme. Key is the old priority ID, value is the new priority ID (must exist in this priority scheme).
+     * 
+     * E.g. The current priority scheme has priority ID `10001`. Issues with priority ID `10000` are being migrated into this priority scheme will need mapping to new priorities. The `in` mapping would be `{"10000": 10001}`.
      * @type {{ [key: string]: number; }}
      * @memberof PriorityMapping
      */
     _in?: { [key: string]: number; };
     /**
      * The mapping of priorities for issues being migrated **out of** this priority scheme. Key is the old priority ID (must exist in this priority scheme), value is the new priority ID (must exist in the default priority scheme). Required for updating an existing priority scheme. Not used when creating a new priority scheme.
+     * 
+     * E.g. The current priority scheme has priority ID `10001`. Issues with priority ID `10001` are being migrated out of this priority scheme will need mapping to new priorities. The `out` mapping would be `{"10001": 10000}`.
      * @type {{ [key: string]: number; }}
      * @memberof PriorityMapping
      */
     out?: { [key: string]: number; };
-}
-/**
- * 
- * @export
- * @interface PrioritySchemeChangesWithMappings
- */
-export interface PrioritySchemeChangesWithMappings {
-    /**
-     * Affected entity ids.
-     * @type {Array<number>}
-     * @memberof PrioritySchemeChangesWithMappings
-     */
-    ids: Array<number>;
-    /**
-     * Instructions to migrate issues.
-     * @type {Array<PriorityMapping>}
-     * @memberof PrioritySchemeChangesWithMappings
-     */
-    mappings?: Array<PriorityMapping>;
 }
 /**
  * 
@@ -17073,6 +18439,8 @@ export interface ProjectIssueTypeMappings {
     mappings: Array<ProjectIssueTypeMapping>;
 }
 /**
+ * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+ * 
  * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
  * @export
  * @interface ProjectIssueTypes
@@ -17474,6 +18842,38 @@ export interface ProjectType {
      * @memberof ProjectType
      */
     readonly key?: string;
+}
+/**
+ * The project.
+ * @export
+ * @interface ProjectUsage
+ */
+export interface ProjectUsage {
+    /**
+     * The project ID.
+     * @type {string}
+     * @memberof ProjectUsage
+     */
+    id?: string;
+}
+/**
+ * A page of projects.
+ * @export
+ * @interface ProjectUsagePage
+ */
+export interface ProjectUsagePage {
+    /**
+     * Page token for the next page of project usages.
+     * @type {string}
+     * @memberof ProjectUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of projects.
+     * @type {Array<ProjectUsage>}
+     * @memberof ProjectUsagePage
+     */
+    values?: Array<ProjectUsage>;
 }
 /**
  * Details about data policies for a project.
@@ -18424,12 +19824,18 @@ export interface ScreenableTab {
  */
 export interface SearchAndReconcileRequestBean {
     /**
-     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * Use [expand](#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a comma-delimited string of values. The expand options are:
      * 
      *  *  `renderedFields` Returns field values rendered in HTML format.
      *  *  `names` Returns the display name of each field.
      *  *  `schema` Returns the schema describing a field type.
+     *  *  `transitions` Returns all possible transitions for the issue.
+     *  *  `operations` Returns all possible operations for the issue.
+     *  *  `editmeta` Returns information about how each field can be edited.
      *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
+     * 
+     * Examples: `"names,changelog"` Returns the display name of each field as well as a list of recent updates to an issue.
      * @type {string}
      * @memberof SearchAndReconcileRequestBean
      */
@@ -18463,22 +19869,24 @@ export interface SearchAndReconcileRequestBean {
      */
     fieldsByKeys?: boolean;
     /**
-     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this field requires a bounded query. A bounded query is a query with a search restriction.
+     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. For performance reasons, this parameter requires a bounded query. A bounded query is a query with a search restriction.
      * 
      *  *  Example of an unbounded query: `order by key desc`.
      *  *  Example of a bounded query: `assignee = currentUser() order by key`.
+     * 
+     * Additionally, `orderBy` clause can contain a maximum of 7 fields.
      * @type {string}
      * @memberof SearchAndReconcileRequestBean
      */
     jql?: string;
     /**
-     * The maximum number of items to return. Depending on search criteria, real number of items returned may be smaller.
+     * The maximum number of items to return per page. To manage page size, API may return fewer items per page where a large number of fields are requested. The greatest number of items returned per page is achieved when requesting `id` or `key` only. It returns max 5000 issues.
      * @type {number}
      * @memberof SearchAndReconcileRequestBean
      */
     maxResults?: number;
     /**
-     * The continuation token to fetch the next page. This token is provided by the response of this endpoint.
+     * The token for a page to fetch that is not the first page. The first page has a `nextPageToken` of `null`. Use the `nextPageToken` to fetch the next page of issues.
      * @type {string}
      * @memberof SearchAndReconcileRequestBean
      */
@@ -18553,7 +19961,7 @@ export interface SearchAutoCompleteFilter {
  */
 export interface SearchRequestBean {
     /**
-     * Use [expand](em>#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
+     * Use [expand](#expansion) to include additional information about issues in the response. Note that, unlike the majority of instances where `expand` is specified, `expand` is defined as a list of values. The expand options are:
      * 
      *  *  `renderedFields` Returns field values rendered in HTML format.
      *  *  `names` Returns the display name of each field.
@@ -18887,7 +20295,7 @@ export interface SecuritySchemeLevelMemberBean {
      */
     parameter?: string;
     /**
-     * The issue security level member type, e.g `reporter`, `group`, `user`.
+     * The issue security level member type, e.g `reporter`, `group`, `user`, `projectrole`, `applicationRole`.
      * @type {string}
      * @memberof SecuritySchemeLevelMemberBean
      */
@@ -19030,11 +20438,11 @@ export interface ServerInformation {
      */
     serverTime?: string;
     /**
-     * 
-     * @type {ServerInformationServerTimeZone}
+     * The default timezone of the Jira server. In a format known as Olson Time Zones, IANA Time Zones or TZ Database Time Zones.
+     * @type {string}
      * @memberof ServerInformation
      */
-    serverTimeZone?: ServerInformationServerTimeZone;
+    serverTimeZone?: string;
     /**
      * The name of the Jira instance.
      * @type {string}
@@ -19053,37 +20461,6 @@ export interface ServerInformation {
      * @memberof ServerInformation
      */
     versionNumbers?: Array<number>;
-}
-/**
- * The default timezone of the Jira server. In a format known as Olson Time Zones, IANA Time Zones or TZ Database Time Zones.
- * @export
- * @interface ServerInformationServerTimeZone
- */
-export interface ServerInformationServerTimeZone {
-    /**
-     * 
-     * @type {string}
-     * @memberof ServerInformationServerTimeZone
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ServerInformationServerTimeZone
-     */
-    dstsavings?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ServerInformationServerTimeZone
-     */
-    id?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ServerInformationServerTimeZone
-     */
-    rawOffset?: number;
 }
 /**
  * 
@@ -19621,6 +20998,31 @@ export interface SimplifiedHierarchyLevel {
 /**
  * 
  * @export
+ * @interface SimplifiedIssueTransition
+ */
+export interface SimplifiedIssueTransition {
+    /**
+     * The issue status change of the transition.
+     * @type {IssueTransitionStatus}
+     * @memberof SimplifiedIssueTransition
+     */
+    readonly to?: IssueTransitionStatus;
+    /**
+     * The unique ID of the transition.
+     * @type {number}
+     * @memberof SimplifiedIssueTransition
+     */
+    readonly transitionId?: number;
+    /**
+     * The name of the transition.
+     * @type {string}
+     * @memberof SimplifiedIssueTransition
+     */
+    readonly transitionName?: string;
+}
+/**
+ * 
+ * @export
  * @interface SoftwareNavigationInfo
  */
 export interface SoftwareNavigationInfo {
@@ -19954,6 +21356,114 @@ export interface StatusMigration {
     oldStatusReference: string;
 }
 /**
+ * The list of issue types.
+ * @export
+ * @interface StatusProjectIssueTypeUsage
+ */
+export interface StatusProjectIssueTypeUsage {
+    /**
+     * The issue type ID.
+     * @type {string}
+     * @memberof StatusProjectIssueTypeUsage
+     */
+    id?: string;
+}
+/**
+ * The issue types using this status in a project.
+ * @export
+ * @interface StatusProjectIssueTypeUsageDTO
+ */
+export interface StatusProjectIssueTypeUsageDTO {
+    /**
+     * 
+     * @type {StatusProjectIssueTypeUsagePage}
+     * @memberof StatusProjectIssueTypeUsageDTO
+     */
+    issueTypes?: StatusProjectIssueTypeUsagePage;
+    /**
+     * The project ID.
+     * @type {string}
+     * @memberof StatusProjectIssueTypeUsageDTO
+     */
+    projectId?: string;
+    /**
+     * The status ID.
+     * @type {string}
+     * @memberof StatusProjectIssueTypeUsageDTO
+     */
+    statusId?: string;
+}
+/**
+ * A page of issue types.
+ * @export
+ * @interface StatusProjectIssueTypeUsagePage
+ */
+export interface StatusProjectIssueTypeUsagePage {
+    /**
+     * Page token for the next page of issue type usages.
+     * @type {string}
+     * @memberof StatusProjectIssueTypeUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of issue types.
+     * @type {Array<StatusProjectIssueTypeUsage>}
+     * @memberof StatusProjectIssueTypeUsagePage
+     */
+    values?: Array<StatusProjectIssueTypeUsage>;
+}
+/**
+ * The project.
+ * @export
+ * @interface StatusProjectUsage
+ */
+export interface StatusProjectUsage {
+    /**
+     * The project ID.
+     * @type {string}
+     * @memberof StatusProjectUsage
+     */
+    id?: string;
+}
+/**
+ * The projects using this status.
+ * @export
+ * @interface StatusProjectUsageDTO
+ */
+export interface StatusProjectUsageDTO {
+    /**
+     * 
+     * @type {StatusProjectUsagePage}
+     * @memberof StatusProjectUsageDTO
+     */
+    projects?: StatusProjectUsagePage;
+    /**
+     * The status ID.
+     * @type {string}
+     * @memberof StatusProjectUsageDTO
+     */
+    statusId?: string;
+}
+/**
+ * A page of projects.
+ * @export
+ * @interface StatusProjectUsagePage
+ */
+export interface StatusProjectUsagePage {
+    /**
+     * Page token for the next page of issue type usages.
+     * @type {string}
+     * @memberof StatusProjectUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of projects.
+     * @type {Array<StatusProjectUsage>}
+     * @memberof StatusProjectUsagePage
+     */
+    values?: Array<StatusProjectUsage>;
+}
+/**
  * The status reference and port that a transition is connected to.
  * @export
  * @interface StatusReferenceAndPort
@@ -20058,6 +21568,57 @@ export interface StatusUpdateRequest {
      * @memberof StatusUpdateRequest
      */
     statuses: Array<StatusUpdate>;
+}
+/**
+ * Workflows using the status.
+ * @export
+ * @interface StatusWorkflowUsageDTO
+ */
+export interface StatusWorkflowUsageDTO {
+    /**
+     * The status ID.
+     * @type {string}
+     * @memberof StatusWorkflowUsageDTO
+     */
+    statusId?: string;
+    /**
+     * 
+     * @type {StatusWorkflowUsagePage}
+     * @memberof StatusWorkflowUsageDTO
+     */
+    workflows?: StatusWorkflowUsagePage;
+}
+/**
+ * A page of workflows.
+ * @export
+ * @interface StatusWorkflowUsagePage
+ */
+export interface StatusWorkflowUsagePage {
+    /**
+     * Page token for the next page of issue type usages.
+     * @type {string}
+     * @memberof StatusWorkflowUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of statuses.
+     * @type {Array<StatusWorkflowUsageWorkflow>}
+     * @memberof StatusWorkflowUsagePage
+     */
+    values?: Array<StatusWorkflowUsageWorkflow>;
+}
+/**
+ * The worflow.
+ * @export
+ * @interface StatusWorkflowUsageWorkflow
+ */
+export interface StatusWorkflowUsageWorkflow {
+    /**
+     * The workflow ID.
+     * @type {string}
+     * @memberof StatusWorkflowUsageWorkflow
+     */
+    id?: string;
 }
 /**
  * The statuses associated with each workflow.
@@ -21326,10 +22887,10 @@ export interface UpdatePrioritiesInSchemeRequestBean {
     add?: PrioritySchemeChangesWithoutMappings;
     /**
      * Priorities to remove from a scheme
-     * @type {PrioritySchemeChangesWithMappings}
+     * @type {PrioritySchemeChangesWithoutMappings}
      * @memberof UpdatePrioritiesInSchemeRequestBean
      */
-    remove?: PrioritySchemeChangesWithMappings;
+    remove?: PrioritySchemeChangesWithoutMappings;
 }
 /**
  * Details of an issue priority.
@@ -21417,7 +22978,24 @@ export interface UpdatePrioritySchemeRequestBean {
      */
     description?: string;
     /**
-     * Instructions to migrate issues.
+     * Instructions to migrate the priorities of issues.
+     * 
+     * `in` mappings are used to migrate the priorities of issues to priorities used within the priority scheme.
+     * 
+     * `out` mappings are used to migrate the priorities of issues to priorities not used within the priority scheme.
+     * 
+     *  *  When **priorities** are **added** to the priority scheme, no mapping needs to be provided as the new priorities are not used by any issues.
+     *  *  When **priorities** are **removed** from the priority scheme, issues that are using those priorities must be migrated to new priorities used by the priority scheme.
+     *     
+     *      *  An `in` mapping must be provided for each of these priorities.
+     *  *  When **projects** are **added** to the priority scheme, the priorities of issues in those projects might need to be migrated to new priorities used by the priority scheme. This can occur when the current scheme does not use all the priorities in the project(s)' priority scheme(s).
+     *     
+     *      *  An `in` mapping must be provided for each of these priorities.
+     *  *  When **projects** are **removed** from the priority scheme, the priorities of issues in those projects might need to be migrated to new priorities within the **Default Priority Scheme** that are not used by the priority scheme. This can occur when the **Default Priority Scheme** does not use all the priorities within the current scheme.
+     *     
+     *      *  An `out` mapping must be provided for each of these priorities.
+     * 
+     * For more information on `in` and `out` mappings, see the child properties documentation for the `PriorityMapping` object below.
      * @type {PriorityMapping}
      * @memberof UpdatePrioritySchemeRequestBean
      */
@@ -21533,6 +23111,12 @@ export interface UpdateProjectDetails {
      * @memberof UpdateProjectDetails
      */
     permissionScheme?: number;
+    /**
+     * Previous project keys to be released from the current project. Released keys must belong to the current project and not contain the current project key
+     * @type {Set<string>}
+     * @memberof UpdateProjectDetails
+     */
+    releasedProjectKeys?: Array<string>;
     /**
      * A link to information about this project, such as project documentation
      * @type {string}
@@ -21841,7 +23425,7 @@ export interface User {
      */
     readonly self?: string;
     /**
-     * The time zone specified in the user's profile. Depending on the user’s privacy setting, this may be returned as null.
+     * The time zone specified in the user's profile. If the user's time zone is not visible to the current user (due to user's profile setting), or if a time zone has not been set, the instance's default time zone will be returned.
      * @type {string}
      * @memberof User
      */
@@ -23376,11 +24960,13 @@ export interface WorkflowMetadataRestModel {
      */
     name: string;
     /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the workflows in the workflow scheme.
      * @type {Array<SimpleUsage>}
      * @memberof WorkflowMetadataRestModel
      */
-    usage: Array<SimpleUsage>;
+    usage: Array<SimpleUsage> | null;
     /**
      * 
      * @type {DocumentVersion}
@@ -23406,6 +24992,82 @@ export interface WorkflowOperations {
      * @memberof WorkflowOperations
      */
     canEdit: boolean;
+}
+/**
+ * The issue type.
+ * @export
+ * @interface WorkflowProjectIssueTypeUsage
+ */
+export interface WorkflowProjectIssueTypeUsage {
+    /**
+     * The ID of the issue type.
+     * @type {string}
+     * @memberof WorkflowProjectIssueTypeUsage
+     */
+    id?: string;
+}
+/**
+ * Issue types associated with the workflow for a project.
+ * @export
+ * @interface WorkflowProjectIssueTypeUsageDTO
+ */
+export interface WorkflowProjectIssueTypeUsageDTO {
+    /**
+     * 
+     * @type {WorkflowProjectIssueTypeUsagePage}
+     * @memberof WorkflowProjectIssueTypeUsageDTO
+     */
+    issueTypes?: WorkflowProjectIssueTypeUsagePage;
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof WorkflowProjectIssueTypeUsageDTO
+     */
+    projectId?: string;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof WorkflowProjectIssueTypeUsageDTO
+     */
+    workflowId?: string;
+}
+/**
+ * A page of issue types.
+ * @export
+ * @interface WorkflowProjectIssueTypeUsagePage
+ */
+export interface WorkflowProjectIssueTypeUsagePage {
+    /**
+     * Token for the next page of issue type usages.
+     * @type {string}
+     * @memberof WorkflowProjectIssueTypeUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of issue types.
+     * @type {Array<WorkflowProjectIssueTypeUsage>}
+     * @memberof WorkflowProjectIssueTypeUsagePage
+     */
+    values?: Array<WorkflowProjectIssueTypeUsage>;
+}
+/**
+ * Projects using the workflow.
+ * @export
+ * @interface WorkflowProjectUsageDTO
+ */
+export interface WorkflowProjectUsageDTO {
+    /**
+     * 
+     * @type {ProjectUsagePage}
+     * @memberof WorkflowProjectUsageDTO
+     */
+    projects?: ProjectUsagePage;
+    /**
+     * The workflow ID.
+     * @type {string}
+     * @memberof WorkflowProjectUsageDTO
+     */
+    workflowId?: string;
 }
 /**
  * 
@@ -23756,6 +25418,25 @@ export interface WorkflowSchemeProjectAssociation {
     workflowSchemeId?: string;
 }
 /**
+ * Projects using the workflow scheme.
+ * @export
+ * @interface WorkflowSchemeProjectUsageDTO
+ */
+export interface WorkflowSchemeProjectUsageDTO {
+    /**
+     * 
+     * @type {ProjectUsagePage}
+     * @memberof WorkflowSchemeProjectUsageDTO
+     */
+    projects?: ProjectUsagePage;
+    /**
+     * The workflow scheme ID.
+     * @type {string}
+     * @memberof WorkflowSchemeProjectUsageDTO
+     */
+    workflowSchemeId?: string;
+}
+/**
  * The workflow scheme read request body.
  * @export
  * @interface WorkflowSchemeReadRequest
@@ -23805,11 +25486,13 @@ export interface WorkflowSchemeReadResponse {
      */
     name: string;
     /**
+     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+     * 
      * The IDs of projects using the workflow scheme.
-     * @type {Array<string>}
+     * @type {Array<string | null>}
      * @memberof WorkflowSchemeReadResponse
      */
-    projectIdsUsingScheme: Array<string>;
+    projectIdsUsingScheme?: Array<string | null> | null;
     /**
      * 
      * @type {WorkflowScope}
@@ -23948,6 +25631,57 @@ export interface WorkflowSchemeUpdateRequiredMappingsResponse {
     statusesPerWorkflow?: Array<StatusesPerWorkflow>;
 }
 /**
+ * The worflow scheme.
+ * @export
+ * @interface WorkflowSchemeUsage
+ */
+export interface WorkflowSchemeUsage {
+    /**
+     * The workflow scheme ID.
+     * @type {string}
+     * @memberof WorkflowSchemeUsage
+     */
+    id?: string;
+}
+/**
+ * Workflow schemes using the workflow.
+ * @export
+ * @interface WorkflowSchemeUsageDTO
+ */
+export interface WorkflowSchemeUsageDTO {
+    /**
+     * The workflow ID.
+     * @type {string}
+     * @memberof WorkflowSchemeUsageDTO
+     */
+    workflowId?: string;
+    /**
+     * 
+     * @type {WorkflowSchemeUsagePage}
+     * @memberof WorkflowSchemeUsageDTO
+     */
+    workflowSchemes?: WorkflowSchemeUsagePage;
+}
+/**
+ * A page of workflow schemes.
+ * @export
+ * @interface WorkflowSchemeUsagePage
+ */
+export interface WorkflowSchemeUsagePage {
+    /**
+     * Token for the next page of issue type usages.
+     * @type {string}
+     * @memberof WorkflowSchemeUsagePage
+     */
+    nextPageToken?: string;
+    /**
+     * The list of workflow schemes.
+     * @type {Array<WorkflowSchemeUsage>}
+     * @memberof WorkflowSchemeUsagePage
+     */
+    values?: Array<WorkflowSchemeUsage>;
+}
+/**
  * The scope of the workflow.
  * @export
  * @interface WorkflowScope
@@ -23964,7 +25698,7 @@ export interface WorkflowScope {
      * @type {string}
      * @memberof WorkflowScope
      */
-    type: WorkflowScopeTypeEnum;
+    type?: WorkflowScopeTypeEnum;
 }
 
 
@@ -23977,6 +25711,61 @@ export const WorkflowScopeTypeEnum = {
 } as const;
 export type WorkflowScopeTypeEnum = typeof WorkflowScopeTypeEnum[keyof typeof WorkflowScopeTypeEnum];
 
+/**
+ * Page of items, including workflows and related statuses.
+ * @export
+ * @interface WorkflowSearchResponse
+ */
+export interface WorkflowSearchResponse {
+    /**
+     * Whether this is the last page.
+     * @type {boolean}
+     * @memberof WorkflowSearchResponse
+     */
+    isLast?: boolean;
+    /**
+     * The maximum number of items that could be returned.
+     * @type {number}
+     * @memberof WorkflowSearchResponse
+     */
+    maxResults?: number;
+    /**
+     * If there is another page of results, the URL of the next page.
+     * @type {string}
+     * @memberof WorkflowSearchResponse
+     */
+    nextPage?: string;
+    /**
+     * The URL of the page.
+     * @type {string}
+     * @memberof WorkflowSearchResponse
+     */
+    self?: string;
+    /**
+     * The index of the first item returned.
+     * @type {number}
+     * @memberof WorkflowSearchResponse
+     */
+    startAt?: number;
+    /**
+     * List of statuses.
+     * @type {Array<JiraWorkflowStatus>}
+     * @memberof WorkflowSearchResponse
+     */
+    statuses?: Array<JiraWorkflowStatus>;
+    /**
+     * The number of items returned.
+     * @type {number}
+     * @memberof WorkflowSearchResponse
+     */
+    total?: number;
+    /**
+     * List of workflows.
+     * @type {Array<JiraWorkflow>}
+     * @memberof WorkflowSearchResponse
+     */
+    values?: Array<JiraWorkflow>;
+}
 /**
  * A workflow transition rule condition. This object returns `nodeType` as `simple`.
  * @export
@@ -24561,6 +26350,8 @@ export interface WorkflowUpdateValidateRequestBean {
     validationOptions?: ValidationOptionsForUpdate;
 }
 /**
+ * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
+ * 
  * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
  * @export
  * @interface WorkflowUsages

@@ -1,4 +1,4 @@
-## jira-cloud-api@1001.0.0-SNAPSHOT-b3300bcdd36d8c214940b3035162ea6fa1d58aa8
+## jira-cloud-api@1001.0.0-SNAPSHOT-006326f44f7f2ca50c1f9c8c88f70b27eb18a140
 
 This generator creates TypeScript/JavaScript client that utilizes [Fetch API](https://fetch.spec.whatwg.org/). The generated Node module can be used in the following environments:
 
@@ -36,7 +36,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install jira-cloud-api@1001.0.0-SNAPSHOT-b3300bcdd36d8c214940b3035162ea6fa1d58aa8 --save
+npm install jira-cloud-api@1001.0.0-SNAPSHOT-006326f44f7f2ca50c1f9c8c88f70b27eb18a140 --save
 ```
 
 _unPublished (not recommended):_

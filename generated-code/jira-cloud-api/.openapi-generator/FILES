@@ -57,6 +57,7 @@ src/apis/LicenseMetricsApi.ts
 src/apis/MyselfApi.ts
 src/apis/PermissionSchemesApi.ts
 src/apis/PermissionsApi.ts
+src/apis/PlansApi.ts
 src/apis/PrioritySchemesApi.ts
 src/apis/ProjectAvatarsApi.ts
 src/apis/ProjectCategoriesApi.ts
@@ -80,6 +81,7 @@ src/apis/ServerInfoApi.ts
 src/apis/ServiceRegistryApi.ts
 src/apis/StatusApi.ts
 src/apis/TasksApi.ts
+src/apis/TeamsInPlanApi.ts
 src/apis/TimeTrackingApi.ts
 src/apis/UIModificationsAppsApi.ts
 src/apis/UserPropertiesApi.ts
