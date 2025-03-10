@@ -9,7 +9,7 @@
   "scripts": {
     "fetch": "run-s 'fetch:*'",
     "fetch:bamboo-api": "curl -o bamboo-api/swagger.json https://dac-static.atlassian.com/server/bamboo/swagger.v3.json",
-    "fetch:bitbucket-api": "curl -o bitbucket-api/swagger.json https://dac-static.atlassian.com/server/bitbucket/9.2.swagger.v3.json",
+    "fetch:bitbucket-api": "curl -o bitbucket-api/swagger.json https://dac-static.atlassian.com/server/bitbucket/9.5.swagger.v3.json",
     "fetch:confluence-cloud-api-v1": "curl -o confluence-cloud-api-v1/swagger.json https://dac-static.atlassian.com/cloud/confluence/swagger.v3.json",
     "fetch:confluence-cloud-api-v2": "curl -o confluence-cloud-api-v2/swagger.json https://dac-static.atlassian.com/cloud/confluence/openapi-v2.v3.json",
     "fetch:jira-cloud-api": "curl -o jira-cloud-api/swagger.json https://dac-static.atlassian.com/cloud/jira/platform/swagger-v3.v3.json",
