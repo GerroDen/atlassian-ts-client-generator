@@ -35,12 +35,6 @@ export interface AgentStatus {
      * @type {string}
      * @memberof AgentStatus
      */
-    imagePath?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgentStatus
-     */
     label?: string;
     /**
      * 
@@ -103,12 +97,6 @@ export interface ArtifactLink {
      * @memberof ArtifactLink
      */
     sharedArtifact?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ArtifactLink
-     */
-    size?: number;
     /**
      * 
      * @type {Array<ConsumedSubscription>}
@@ -935,6 +923,12 @@ export interface BuildResultsSummary {
      * @type {boolean}
      * @memberof BuildResultsSummary
      */
+    finalized?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BuildResultsSummary
+     */
     finished?: boolean;
     /**
      * 
@@ -996,6 +990,12 @@ export interface BuildResultsSummary {
      * @memberof BuildResultsSummary
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof BuildResultsSummary
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {string}
@@ -1445,6 +1445,12 @@ export interface ChainResultsSummary {
      * @type {boolean}
      * @memberof ChainResultsSummary
      */
+    finalized?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChainResultsSummary
+     */
     finished?: boolean;
     /**
      * 
@@ -1514,6 +1520,12 @@ export interface ChainResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof ChainResultsSummary
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {string}
      * @memberof ChainResultsSummary
      */
@@ -1560,12 +1572,6 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     onceOff?: boolean;
-    /**
-     * 
-     * @type {Array<ResultsSummary>}
-     * @memberof ChainResultsSummary
-     */
-    orderedJobResultSummaries?: Array<ResultsSummary>;
     /**
      * 
      * @type {boolean}
@@ -1722,12 +1728,6 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     successful?: boolean;
-    /**
-     * 
-     * @type {FilteredTestResultsTestClassResultDescriptor}
-     * @memberof ChainResultsSummary
-     */
-    testResults?: FilteredTestResultsTestClassResultDescriptor;
     /**
      * 
      * @type {TestResultsSummary}
@@ -2114,86 +2114,6 @@ export interface CommitFile {
      * @memberof CommitFile
      */
     revisionKnown?: boolean;
-}
-/**
- * 
- * @export
- * @interface ConfigurationInterpolator
- */
-export interface ConfigurationInterpolator {
-    /**
-     * 
-     * @type {any}
-     * @memberof ConfigurationInterpolator
-     */
-    defaultLookup?: any | null;
-}
-/**
- * 
- * @export
- * @interface ConfigurationNode
- */
-export interface ConfigurationNode {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ConfigurationNode
-     */
-    attribute?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConfigurationNode
-     */
-    attributeCount?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ConfigurationNode
-     */
-    attributes?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ConfigurationNode
-     */
-    children?: Array<object>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConfigurationNode
-     */
-    childrenCount?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ConfigurationNode
-     */
-    defined?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConfigurationNode
-     */
-    name?: string;
-    /**
-     * 
-     * @type {ConfigurationNode}
-     * @memberof ConfigurationNode
-     */
-    parentNode?: ConfigurationNode;
-    /**
-     * 
-     * @type {object}
-     * @memberof ConfigurationNode
-     */
-    reference?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof ConfigurationNode
-     */
-    value?: object;
 }
 /**
  * 
@@ -2736,6 +2656,12 @@ export interface Environment {
      * @memberof Environment
      */
     triggerDefinitionsSupplier?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    version?: number;
 }
 
 
@@ -2802,6 +2728,12 @@ export interface EphemeralAgentsConfigurationDTO {
      * @memberof EphemeralAgentsConfigurationDTO
      */
     podsCleanup?: PodsCleanup;
+    /**
+     * 
+     * @type {number}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    waitForEphemeralAgentDuration?: number;
 }
 /**
  * 
@@ -2960,61 +2892,6 @@ export interface FilteredTestResultsTestClassResult {
      * 
      * @type {any}
      * @memberof FilteredTestResultsTestClassResult
-     */
-    skippedTests?: any | null;
-}
-/**
- * 
- * @export
- * @interface FilteredTestResultsTestClassResultDescriptor
- */
-export interface FilteredTestResultsTestClassResultDescriptor {
-    /**
-     * 
-     * @type {Array<TestCaseResult>}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    allFailedTestList?: Array<TestCaseResult>;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    allFailedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    existingFailedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    fixedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    newFailedTests?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    quarantinedTests?: any | null;
-    /**
-     * 
-     * @type {Array<TestCaseResult>}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
-     */
-    skippedTestList?: Array<TestCaseResult>;
-    /**
-     * 
-     * @type {any}
-     * @memberof FilteredTestResultsTestClassResultDescriptor
      */
     skippedTests?: any | null;
 }
@@ -3623,91 +3500,6 @@ export interface GetUserTokens200Response {
 /**
  * 
  * @export
- * @interface HierarchicalConfiguration
- */
-export interface HierarchicalConfiguration {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof HierarchicalConfiguration
-     */
-    configurationListeners?: Array<object>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof HierarchicalConfiguration
-     */
-    delimiterParsingDisabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof HierarchicalConfiguration
-     */
-    detailEvents?: boolean;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof HierarchicalConfiguration
-     */
-    errorListeners?: Array<object>;
-    /**
-     * 
-     * @type {any}
-     * @memberof HierarchicalConfiguration
-     */
-    expressionEngine?: any | null;
-    /**
-     * 
-     * @type {ConfigurationInterpolator}
-     * @memberof HierarchicalConfiguration
-     */
-    interpolator?: ConfigurationInterpolator;
-    /**
-     * 
-     * @type {object}
-     * @memberof HierarchicalConfiguration
-     */
-    keys?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof HierarchicalConfiguration
-     */
-    listDelimiter?: string;
-    /**
-     * 
-     * @type {Log}
-     * @memberof HierarchicalConfiguration
-     */
-    logger?: Log;
-    /**
-     * 
-     * @type {Node}
-     * @memberof HierarchicalConfiguration
-     */
-    root?: Node;
-    /**
-     * 
-     * @type {ConfigurationNode}
-     * @memberof HierarchicalConfiguration
-     */
-    rootNode?: ConfigurationNode;
-    /**
-     * 
-     * @type {StrSubstitutor}
-     * @memberof HierarchicalConfiguration
-     */
-    substitutor?: StrSubstitutor;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof HierarchicalConfiguration
-     */
-    throwExceptionOnMissing?: boolean;
-}
-/**
- * 
- * @export
  * @interface ImmutableArtifactDefinition
  */
 export interface ImmutableArtifactDefinition {
@@ -3899,12 +3691,6 @@ export interface ImmutableChain {
      * @memberof ImmutableChain
      */
     description?: string;
-    /**
-     * 
-     * @type {Array<RepositoryDefinition>}
-     * @memberof ImmutableChain
-     */
-    effectiveRepositoryDefinitions?: Array<RepositoryDefinition>;
     /**
      * 
      * @type {Array<VariableDefinition>}
@@ -4802,6 +4588,12 @@ export type ImmutableRequirementTypeOfMatchEnum = typeof ImmutableRequirementTyp
 export interface ImmutableRequirementSet {
     /**
      * 
+     * @type {number}
+     * @memberof ImmutableRequirementSet
+     */
+    id?: number;
+    /**
+     * 
      * @type {Set<ImmutableRequirement>}
      * @memberof ImmutableRequirementSet
      */
@@ -4932,6 +4724,12 @@ export interface ImmutableResultsSummary {
      * @type {boolean}
      * @memberof ImmutableResultsSummary
      */
+    finalized?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImmutableResultsSummary
+     */
     finished?: boolean;
     /**
      * 
@@ -4987,6 +4785,12 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof ImmutableResultsSummary
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {string}
@@ -6449,49 +6253,6 @@ export interface ListUserPermissions200Response {
 /**
  * 
  * @export
- * @interface Log
- */
-export interface Log {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    debugEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    errorEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    fatalEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    infoEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    traceEnabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Log
-     */
-    warnEnabled?: boolean;
-}
-/**
- * 
- * @export
  * @interface ManualEncryptionRequest
  */
 export interface ManualEncryptionRequest {
@@ -6709,79 +6470,6 @@ export interface NextBuildNumber {
      * @memberof NextBuildNumber
      */
     nextBuildNumber?: number;
-}
-/**
- * 
- * @export
- * @interface Node
- */
-export interface Node {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Node
-     */
-    attribute?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    attributeCount?: number;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Node
-     */
-    attributes?: Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof Node
-     */
-    children?: Array<object>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    childrenCount?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Node
-     */
-    defined?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    name?: string;
-    /**
-     * 
-     * @type {Node}
-     * @memberof Node
-     */
-    parent?: Node;
-    /**
-     * 
-     * @type {ConfigurationNode}
-     * @memberof Node
-     */
-    parentNode?: ConfigurationNode;
-    /**
-     * 
-     * @type {object}
-     * @memberof Node
-     */
-    reference?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof Node
-     */
-    value?: object;
 }
 /**
  * 
@@ -7126,12 +6814,6 @@ export interface NotificationRule {
     notificationSet?: NotificationSet;
     /**
      * 
-     * @type {object}
-     * @memberof NotificationRule
-     */
-    notificationTypeForView?: object;
-    /**
-     * 
      * @type {string}
      * @memberof NotificationRule
      */
@@ -7264,6 +6946,12 @@ export interface Operations {
      * @type {boolean}
      * @memberof Operations
      */
+    admin?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
     allowedToCreateVersion?: boolean;
     /**
      * 
@@ -7277,6 +6965,12 @@ export interface Operations {
      * @memberof Operations
      */
     allowedToSetVersionStatus?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Operations
+     */
+    canClone?: boolean;
     /**
      * 
      * @type {boolean}
@@ -7368,6 +7062,12 @@ export interface PipelineDefinition {
      * @memberof PipelineDefinition
      */
     lastModificationDate?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PipelineDefinition
+     */
+    manuallyNamed?: boolean;
     /**
      * 
      * @type {string}
@@ -7695,12 +7395,6 @@ export interface PlanRepositoryDefinition {
      * @type {boolean}
      * @memberof PlanRepositoryDefinition
      */
-    legacyRepository?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PlanRepositoryDefinition
-     */
     linked?: boolean;
     /**
      * 
@@ -7941,12 +7635,6 @@ export interface Project {
      * @type {string}
      * @memberof Project
      */
-    currentStatus?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     description?: string;
     /**
      * 
@@ -7968,12 +7656,6 @@ export interface Project {
     key?: string;
     /**
      * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
      * @type {boolean}
      * @memberof Project
      */
@@ -7990,12 +7672,6 @@ export interface Project {
      * @memberof Project
      */
     oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof Project
-     */
-    relatedLabellings?: Array<Labelling>;
     /**
      * 
      * @type {VcsBambooSpecsSource}
@@ -8066,49 +7742,6 @@ export interface ReindexBean {
      * @memberof ReindexBean
      */
     reindexPending?: boolean;
-}
-/**
- * 
- * @export
- * @interface Repository
- */
-export interface Repository {
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    host?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    locationIdentifier?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repository
-     */
-    shortKey?: string;
 }
 /**
  * 
@@ -8267,117 +7900,6 @@ export type RepositoryDataEntityEntityTypeEnum = typeof RepositoryDataEntityEnti
 /**
  * 
  * @export
- * @interface RepositoryDefinition
- */
-export interface RepositoryDefinition {
-    /**
-     * 
-     * @type {HierarchicalConfiguration}
-     * @memberof RepositoryDefinition
-     */
-    _configuration?: HierarchicalConfiguration;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    entityType?: RepositoryDefinitionEntityTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RepositoryDefinition
-     */
-    global?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof RepositoryDefinition
-     */
-    id?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RepositoryDefinition
-     */
-    markedForDeletion?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    name?: string;
-    /**
-     * 
-     * @type {Repository}
-     * @memberof RepositoryDefinition
-     */
-    newRepositoryInstance?: Repository;
-    /**
-     * 
-     * @type {BambooEntityOid}
-     * @memberof RepositoryDefinition
-     */
-    oid?: BambooEntityOid;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    pluginKey?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RepositoryDefinition
-     */
-    position?: number;
-    /**
-     * 
-     * @type {Repository}
-     * @memberof RepositoryDefinition
-     */
-    repository?: Repository;
-    /**
-     * 
-     * @type {string}
-     * @memberof RepositoryDefinition
-     */
-    webRepositoryPluginKey?: string;
-    /**
-     * 
-     * @type {WebRepositoryViewer}
-     * @memberof RepositoryDefinition
-     */
-    webRepositoryViewer?: WebRepositoryViewer;
-}
-
-
-/**
- * @export
- */
-export const RepositoryDefinitionEntityTypeEnum = {
-    Chain: 'CHAIN',
-    Stage: 'STAGE',
-    Job: 'JOB',
-    Repository: 'REPOSITORY',
-    ChainBranch: 'CHAIN_BRANCH',
-    JobBranch: 'JOB_BRANCH',
-    Task: 'TASK',
-    Project: 'PROJECT',
-    ArtifactDefinition: 'ARTIFACT_DEFINITION',
-    DeploymentProject: 'DEPLOYMENT_PROJECT',
-    SharedCredential: 'SHARED_CREDENTIAL'
-} as const;
-export type RepositoryDefinitionEntityTypeEnum = typeof RepositoryDefinitionEntityTypeEnum[keyof typeof RepositoryDefinitionEntityTypeEnum];
-
-/**
- * 
- * @export
  * @interface Requirement
  */
 export interface Requirement {
@@ -8393,12 +7915,6 @@ export interface Requirement {
      * @memberof Requirement
      */
     key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Requirement
-     */
-    matchType?: string;
     /**
      * 
      * @type {string}
@@ -9349,6 +8865,24 @@ export interface RestBuildMonitoring {
      * @type {boolean}
      * @memberof RestBuildMonitoring
      */
+    enableLogLineCountLimit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBuildMonitoring
+     */
+    enableLogLineLengthLimit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBuildMonitoring
+     */
+    enableLogSizeLimit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestBuildMonitoring
+     */
     forceStopHangingBuilds?: boolean;
     /**
      * 
@@ -9362,6 +8896,24 @@ export interface RestBuildMonitoring {
      * @memberof RestBuildMonitoring
      */
     logQuietMinutesTimeDefault?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildMonitoring
+     */
+    maxLogLineCount?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildMonitoring
+     */
+    maxLogLineLength?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestBuildMonitoring
+     */
+    maxLogSizeKilobytes?: number;
 }
 /**
  * 
@@ -11684,12 +11236,6 @@ export interface RestGeneralConfiguration {
     instanceName?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof RestGeneralConfiguration
-     */
-    quietPeriodGloballyDisabled?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RestGeneralConfiguration
      */
@@ -12387,6 +11933,12 @@ export interface RestNodeStatus {
      * @type {string}
      * @memberof RestNodeStatus
      */
+    buildNumber?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestNodeStatus
+     */
     hostname?: string;
     /**
      * 
@@ -12422,9 +11974,67 @@ export interface RestNodeStatus {
 /**
  * 
  * @export
+ * @interface RestOfflineAgentRemovalConfig
+ */
+export interface RestOfflineAgentRemovalConfig {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestOfflineAgentRemovalConfig
+     */
+    offlineElasticAgentRemovalIntervalHours?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestOfflineAgentRemovalConfig
+     */
+    offlineElasticAgentRemovalPolicy?: RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestOfflineAgentRemovalConfig
+     */
+    offlineRemoteAgentRemovalIntervalHours?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestOfflineAgentRemovalConfig
+     */
+    offlineRemoteAgentRemovalPolicy?: RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum = {
+    Disabled: 'DISABLED',
+    Timeout: 'TIMEOUT'
+} as const;
+export type RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum = typeof RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum[keyof typeof RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum];
+
+/**
+ * @export
+ */
+export const RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum = {
+    Disabled: 'DISABLED',
+    Immediate: 'IMMEDIATE',
+    Timeout: 'TIMEOUT'
+} as const;
+export type RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum = typeof RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum[keyof typeof RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum];
+
+/**
+ * 
+ * @export
  * @interface RestOperations
  */
 export interface RestOperations {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    admin?: boolean;
     /**
      * 
      * @type {boolean}
@@ -12443,6 +12053,12 @@ export interface RestOperations {
      * @memberof RestOperations
      */
     allowedToSetVersionStatus?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RestOperations
+     */
+    canClone?: boolean;
     /**
      * 
      * @type {boolean}
@@ -16614,6 +16230,12 @@ export interface ResultsSummary {
      * @type {boolean}
      * @memberof ResultsSummary
      */
+    finalized?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResultsSummary
+     */
     finished?: boolean;
     /**
      * 
@@ -16675,6 +16297,12 @@ export interface ResultsSummary {
      * @memberof ResultsSummary
      */
     labelNames?: Array<string>;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof ResultsSummary
+     */
+    labellings?: Array<Labelling>;
     /**
      * 
      * @type {string}
@@ -17158,55 +16786,6 @@ export interface Status {
      * @memberof Status
      */
     statusCode?: number;
-}
-/**
- * 
- * @export
- * @interface StrSubstitutor
- */
-export interface StrSubstitutor {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StrSubstitutor
-     */
-    enableSubstitutionInVariables?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StrSubstitutor
-     */
-    escapeChar?: string;
-    /**
-     * 
-     * @type {StrSubstitutor}
-     * @memberof StrSubstitutor
-     */
-    variablePrefix?: StrSubstitutor;
-    /**
-     * 
-     * @type {any}
-     * @memberof StrSubstitutor
-     */
-    variablePrefixMatcher?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof StrSubstitutor
-     */
-    variableResolver?: any | null;
-    /**
-     * 
-     * @type {StrSubstitutor}
-     * @memberof StrSubstitutor
-     */
-    variableSuffix?: StrSubstitutor;
-    /**
-     * 
-     * @type {any}
-     * @memberof StrSubstitutor
-     */
-    variableSuffixMatcher?: any | null;
 }
 /**
  * 
@@ -18328,24 +17907,6 @@ export interface VcsChangeDetectionOptions {
      * @memberof VcsChangeDetectionOptions
      */
     filterFilePatternRegex?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VcsChangeDetectionOptions
-     */
-    maxRetries?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VcsChangeDetectionOptions
-     */
-    quietPeriod?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VcsChangeDetectionOptions
-     */
-    quietPeriodEnabled?: boolean;
 }
 /**
  * 
@@ -18621,37 +18182,6 @@ export interface VersionVariables {
      * @memberof VersionVariables
      */
     incrementableVariables?: Array<RestVariableDefinitionContext>;
-}
-/**
- * 
- * @export
- * @interface WebRepositoryViewer
- */
-export interface WebRepositoryViewer {
-    /**
-     * 
-     * @type {string}
-     * @memberof WebRepositoryViewer
-     */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebRepositoryViewer
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebRepositoryViewer
-     */
-    shortKey?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof WebRepositoryViewer
-     */
-    supportedRepositories?: Array<string>;
 }
 /**
  * 
