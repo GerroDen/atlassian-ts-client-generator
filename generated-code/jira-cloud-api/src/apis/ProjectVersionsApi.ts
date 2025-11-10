@@ -22,15 +22,15 @@ import type {
   VersionMoveBean,
   VersionRelatedWork,
   VersionUnresolvedIssuesCount,
-} from '../models/index';
+} from '../models';
 
 export interface CreateRelatedWorkRequest {
     id: string;
-    versionRelatedWork: Omit<VersionRelatedWork, 'issueId'|'relatedWorkId'>;
+    versionRelatedWork: VersionRelatedWork;
 }
 
 export interface CreateVersionRequest {
-    version: Omit<Version, 'approvers'|'driver'|'id'|'issuesStatusForFixVersion'|'operations'|'overdue'|'self'|'userReleaseDate'|'userStartDate'>;
+    version: Version;
 }
 
 export interface DeleteAndReplaceVersionRequest {
@@ -93,12 +93,12 @@ export interface MoveVersionRequest {
 
 export interface UpdateRelatedWorkRequest {
     id: string;
-    versionRelatedWork: Omit<VersionRelatedWork, 'issueId'|'relatedWorkId'>;
+    versionRelatedWork: VersionRelatedWork;
 }
 
 export interface UpdateVersionRequest {
     id: string;
-    version: Omit<Version, 'approvers'|'driver'|'id'|'issuesStatusForFixVersion'|'operations'|'overdue'|'self'|'userReleaseDate'|'userStartDate'>;
+    version: Version;
 }
 
 /**
@@ -111,18 +111,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Create related work
      */
     async createRelatedWorkRaw(requestParameters: CreateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling createRelatedWork().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createRelatedWork.');
         }
 
-        if (requestParameters['versionRelatedWork'] == null) {
-            throw new runtime.RequiredError(
-                'versionRelatedWork',
-                'Required parameter "versionRelatedWork" was null or undefined when calling createRelatedWork().'
-            );
+        if (requestParameters.versionRelatedWork === null || requestParameters.versionRelatedWork === undefined) {
+            throw new runtime.RequiredError('versionRelatedWork','Required parameter requestParameters.versionRelatedWork was null or undefined when calling createRelatedWork.');
         }
 
         const queryParameters: any = {};
@@ -140,11 +134,11 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['versionRelatedWork'],
+            body: requestParameters.versionRelatedWork,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -164,11 +158,8 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Create version
      */
     async createVersionRaw(requestParameters: CreateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters['version'] == null) {
-            throw new runtime.RequiredError(
-                'version',
-                'Required parameter "version" was null or undefined when calling createVersion().'
-            );
+        if (requestParameters.version === null || requestParameters.version === undefined) {
+            throw new runtime.RequiredError('version','Required parameter requestParameters.version was null or undefined when calling createVersion.');
         }
 
         const queryParameters: any = {};
@@ -190,7 +181,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['version'],
+            body: requestParameters.version,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -210,18 +201,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Delete and replace version
      */
     async deleteAndReplaceVersionRaw(requestParameters: DeleteAndReplaceVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteAndReplaceVersion().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAndReplaceVersion.');
         }
 
-        if (requestParameters['deleteAndReplaceVersionBean'] == null) {
-            throw new runtime.RequiredError(
-                'deleteAndReplaceVersionBean',
-                'Required parameter "deleteAndReplaceVersionBean" was null or undefined when calling deleteAndReplaceVersion().'
-            );
+        if (requestParameters.deleteAndReplaceVersionBean === null || requestParameters.deleteAndReplaceVersionBean === undefined) {
+            throw new runtime.RequiredError('deleteAndReplaceVersionBean','Required parameter requestParameters.deleteAndReplaceVersionBean was null or undefined when calling deleteAndReplaceVersion.');
         }
 
         const queryParameters: any = {};
@@ -239,11 +224,11 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/removeAndSwap`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/removeAndSwap`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['deleteAndReplaceVersionBean'],
+            body: requestParameters.deleteAndReplaceVersionBean,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -267,18 +252,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Delete related work
      */
     async deleteRelatedWorkRaw(requestParameters: DeleteRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['versionId'] == null) {
-            throw new runtime.RequiredError(
-                'versionId',
-                'Required parameter "versionId" was null or undefined when calling deleteRelatedWork().'
-            );
+        if (requestParameters.versionId === null || requestParameters.versionId === undefined) {
+            throw new runtime.RequiredError('versionId','Required parameter requestParameters.versionId was null or undefined when calling deleteRelatedWork.');
         }
 
-        if (requestParameters['relatedWorkId'] == null) {
-            throw new runtime.RequiredError(
-                'relatedWorkId',
-                'Required parameter "relatedWorkId" was null or undefined when calling deleteRelatedWork().'
-            );
+        if (requestParameters.relatedWorkId === null || requestParameters.relatedWorkId === undefined) {
+            throw new runtime.RequiredError('relatedWorkId','Required parameter requestParameters.relatedWorkId was null or undefined when calling deleteRelatedWork.');
         }
 
         const queryParameters: any = {};
@@ -294,7 +273,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{versionId}/relatedwork/{relatedWorkId}`.replace(`{${"versionId"}}`, encodeURIComponent(String(requestParameters['versionId']))).replace(`{${"relatedWorkId"}}`, encodeURIComponent(String(requestParameters['relatedWorkId']))),
+            path: `/rest/api/3/version/{versionId}/relatedwork/{relatedWorkId}`.replace(`{${"versionId"}}`, encodeURIComponent(String(requestParameters.versionId))).replace(`{${"relatedWorkId"}}`, encodeURIComponent(String(requestParameters.relatedWorkId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -314,24 +293,20 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     /**
      * Deletes a project version.  Deprecated, use [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) that supports swapping version values in custom fields, in addition to the swapping for `fixVersion` and `affectedVersion` provided in this resource.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion` or `affectedVersion`. If alternatives are not provided, occurrences of `fixVersion` and `affectedVersion` that contain the deleted version are cleared.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
      * Delete version
-     * @deprecated
      */
     async deleteVersionRaw(requestParameters: DeleteVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteVersion().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteVersion.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['moveFixIssuesTo'] != null) {
-            queryParameters['moveFixIssuesTo'] = requestParameters['moveFixIssuesTo'];
+        if (requestParameters.moveFixIssuesTo !== undefined) {
+            queryParameters['moveFixIssuesTo'] = requestParameters.moveFixIssuesTo;
         }
 
-        if (requestParameters['moveAffectedIssuesTo'] != null) {
-            queryParameters['moveAffectedIssuesTo'] = requestParameters['moveAffectedIssuesTo'];
+        if (requestParameters.moveAffectedIssuesTo !== undefined) {
+            queryParameters['moveAffectedIssuesTo'] = requestParameters.moveAffectedIssuesTo;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -345,7 +320,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -357,7 +332,6 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
     /**
      * Deletes a project version.  Deprecated, use [ Delete and replace version](#api-rest-api-3-version-id-removeAndSwap-post) that supports swapping version values in custom fields, in addition to the swapping for `fixVersion` and `affectedVersion` provided in this resource.  Alternative versions can be provided to update issues that use the deleted version in `fixVersion` or `affectedVersion`. If alternatives are not provided, occurrences of `fixVersion` and `affectedVersion` that contain the deleted version are cleared.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) or *Administer Projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project that contains the version.
      * Delete version
-     * @deprecated
      */
     async deleteVersion(requestParameters: DeleteVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteVersionRaw(requestParameters, initOverrides);
@@ -368,17 +342,14 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get project versions
      */
     async getProjectVersionsRaw(requestParameters: GetProjectVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Version>>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectVersions().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectVersions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -392,7 +363,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/versions`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/versions`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -415,37 +386,34 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get project versions paginated
      */
     async getProjectVersionsPaginatedRaw(requestParameters: GetProjectVersionsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanVersion>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectVersionsPaginated().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectVersionsPaginated.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -459,7 +427,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/version`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/version`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -482,11 +450,8 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get related work
      */
     async getRelatedWorkRaw(requestParameters: GetRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VersionRelatedWork>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getRelatedWork().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getRelatedWork.');
         }
 
         const queryParameters: any = {};
@@ -502,7 +467,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -525,17 +490,14 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get version
      */
     async getVersionRaw(requestParameters: GetVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getVersion().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVersion.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -549,7 +511,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -572,11 +534,8 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get version\'s related issues count
      */
     async getVersionRelatedIssuesRaw(requestParameters: GetVersionRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionIssueCounts>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getVersionRelatedIssues().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVersionRelatedIssues.');
         }
 
         const queryParameters: any = {};
@@ -592,7 +551,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/relatedIssueCounts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/relatedIssueCounts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -615,11 +574,8 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Get version\'s unresolved issues count
      */
     async getVersionUnresolvedIssuesRaw(requestParameters: GetVersionUnresolvedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionUnresolvedIssuesCount>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getVersionUnresolvedIssues().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVersionUnresolvedIssues.');
         }
 
         const queryParameters: any = {};
@@ -635,7 +591,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/unresolvedIssueCount`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/unresolvedIssueCount`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -658,18 +614,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Merge versions
      */
     async mergeVersionsRaw(requestParameters: MergeVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling mergeVersions().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling mergeVersions.');
         }
 
-        if (requestParameters['moveIssuesTo'] == null) {
-            throw new runtime.RequiredError(
-                'moveIssuesTo',
-                'Required parameter "moveIssuesTo" was null or undefined when calling mergeVersions().'
-            );
+        if (requestParameters.moveIssuesTo === null || requestParameters.moveIssuesTo === undefined) {
+            throw new runtime.RequiredError('moveIssuesTo','Required parameter requestParameters.moveIssuesTo was null or undefined when calling mergeVersions.');
         }
 
         const queryParameters: any = {};
@@ -685,7 +635,7 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/mergeto/{moveIssuesTo}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"moveIssuesTo"}}`, encodeURIComponent(String(requestParameters['moveIssuesTo']))),
+            path: `/rest/api/3/version/{id}/mergeto/{moveIssuesTo}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"moveIssuesTo"}}`, encodeURIComponent(String(requestParameters.moveIssuesTo))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -712,18 +662,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Move version
      */
     async moveVersionRaw(requestParameters: MoveVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling moveVersion().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling moveVersion.');
         }
 
-        if (requestParameters['versionMoveBean'] == null) {
-            throw new runtime.RequiredError(
-                'versionMoveBean',
-                'Required parameter "versionMoveBean" was null or undefined when calling moveVersion().'
-            );
+        if (requestParameters.versionMoveBean === null || requestParameters.versionMoveBean === undefined) {
+            throw new runtime.RequiredError('versionMoveBean','Required parameter requestParameters.versionMoveBean was null or undefined when calling moveVersion.');
         }
 
         const queryParameters: any = {};
@@ -741,11 +685,11 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/move`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/move`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['versionMoveBean'],
+            body: requestParameters.versionMoveBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -765,18 +709,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Update related work
      */
     async updateRelatedWorkRaw(requestParameters: UpdateRelatedWorkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionRelatedWork>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateRelatedWork().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateRelatedWork.');
         }
 
-        if (requestParameters['versionRelatedWork'] == null) {
-            throw new runtime.RequiredError(
-                'versionRelatedWork',
-                'Required parameter "versionRelatedWork" was null or undefined when calling updateRelatedWork().'
-            );
+        if (requestParameters.versionRelatedWork === null || requestParameters.versionRelatedWork === undefined) {
+            throw new runtime.RequiredError('versionRelatedWork','Required parameter requestParameters.versionRelatedWork was null or undefined when calling updateRelatedWork.');
         }
 
         const queryParameters: any = {};
@@ -794,11 +732,11 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}/relatedwork`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['versionRelatedWork'],
+            body: requestParameters.versionRelatedWork,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -818,18 +756,12 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
      * Update version
      */
     async updateVersionRaw(requestParameters: UpdateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateVersion().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateVersion.');
         }
 
-        if (requestParameters['version'] == null) {
-            throw new runtime.RequiredError(
-                'version',
-                'Required parameter "version" was null or undefined when calling updateVersion().'
-            );
+        if (requestParameters.version === null || requestParameters.version === undefined) {
+            throw new runtime.RequiredError('version','Required parameter requestParameters.version was null or undefined when calling updateVersion.');
         }
 
         const queryParameters: any = {};
@@ -847,11 +779,11 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/version/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['version'],
+            body: requestParameters.version,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -873,19 +805,19 @@ export class ProjectVersionsApi extends runtime.BaseAPI {
  */
 export const GetProjectVersionsPaginatedOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     ReleaseDate: 'releaseDate',
-    ReleaseDate2Desc: '-releaseDate',
-    ReleaseDate3Asc: '+releaseDate',
+    ReleaseDateDesc: '-releaseDate',
+    ReleaseDateAsc: '+releaseDate',
     Sequence: 'sequence',
-    Sequence2Desc: '-sequence',
-    Sequence3Asc: '+sequence',
+    SequenceDesc: '-sequence',
+    SequenceAsc: '+sequence',
     StartDate: 'startDate',
-    StartDate2Desc: '-startDate',
-    StartDate3Asc: '+startDate'
+    StartDateDesc: '-startDate',
+    StartDateAsc: '+startDate'
 } as const;
 export type GetProjectVersionsPaginatedOrderByEnum = typeof GetProjectVersionsPaginatedOrderByEnum[keyof typeof GetProjectVersionsPaginatedOrderByEnum];

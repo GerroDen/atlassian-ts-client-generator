@@ -18,7 +18,7 @@ import type {
   ErrorCollection,
   License,
   LicenseMetric,
-} from '../models/index';
+} from '../models';
 
 export interface GetApproximateApplicationLicenseCountRequest {
     applicationKey: GetApproximateApplicationLicenseCountApplicationKeyEnum;
@@ -34,11 +34,8 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
      * Get approximate application license count
      */
     async getApproximateApplicationLicenseCountRaw(requestParameters: GetApproximateApplicationLicenseCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LicenseMetric>> {
-        if (requestParameters['applicationKey'] == null) {
-            throw new runtime.RequiredError(
-                'applicationKey',
-                'Required parameter "applicationKey" was null or undefined when calling getApproximateApplicationLicenseCount().'
-            );
+        if (requestParameters.applicationKey === null || requestParameters.applicationKey === undefined) {
+            throw new runtime.RequiredError('applicationKey','Required parameter requestParameters.applicationKey was null or undefined when calling getApproximateApplicationLicenseCount.');
         }
 
         const queryParameters: any = {};
@@ -54,7 +51,7 @@ export class LicenseMetricsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/license/approximateLicenseCount/product/{applicationKey}`.replace(`{${"applicationKey"}}`, encodeURIComponent(String(requestParameters['applicationKey']))),
+            path: `/rest/api/3/license/approximateLicenseCount/product/{applicationKey}`.replace(`{${"applicationKey"}}`, encodeURIComponent(String(requestParameters.applicationKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -17,10 +17,10 @@ import * as runtime from '../runtime';
 import type {
   TimeTrackingConfiguration,
   TimeTrackingProvider,
-} from '../models/index';
+} from '../models';
 
 export interface SelectTimeTrackingImplementationRequest {
-    timeTrackingProvider: Omit<TimeTrackingProvider, 'url'>;
+    timeTrackingProvider: TimeTrackingProvider;
 }
 
 export interface SetSharedTimeTrackingConfigurationRequest {
@@ -145,11 +145,8 @@ export class TimeTrackingApi extends runtime.BaseAPI {
      * Select time tracking provider
      */
     async selectTimeTrackingImplementationRaw(requestParameters: SelectTimeTrackingImplementationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['timeTrackingProvider'] == null) {
-            throw new runtime.RequiredError(
-                'timeTrackingProvider',
-                'Required parameter "timeTrackingProvider" was null or undefined when calling selectTimeTrackingImplementation().'
-            );
+        if (requestParameters.timeTrackingProvider === null || requestParameters.timeTrackingProvider === undefined) {
+            throw new runtime.RequiredError('timeTrackingProvider','Required parameter requestParameters.timeTrackingProvider was null or undefined when calling selectTimeTrackingImplementation.');
         }
 
         const queryParameters: any = {};
@@ -171,7 +168,7 @@ export class TimeTrackingApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['timeTrackingProvider'],
+            body: requestParameters.timeTrackingProvider,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -195,11 +192,8 @@ export class TimeTrackingApi extends runtime.BaseAPI {
      * Set time tracking settings
      */
     async setSharedTimeTrackingConfigurationRaw(requestParameters: SetSharedTimeTrackingConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimeTrackingConfiguration>> {
-        if (requestParameters['timeTrackingConfiguration'] == null) {
-            throw new runtime.RequiredError(
-                'timeTrackingConfiguration',
-                'Required parameter "timeTrackingConfiguration" was null or undefined when calling setSharedTimeTrackingConfiguration().'
-            );
+        if (requestParameters.timeTrackingConfiguration === null || requestParameters.timeTrackingConfiguration === undefined) {
+            throw new runtime.RequiredError('timeTrackingConfiguration','Required parameter requestParameters.timeTrackingConfiguration was null or undefined when calling setSharedTimeTrackingConfiguration.');
         }
 
         const queryParameters: any = {};
@@ -221,7 +215,7 @@ export class TimeTrackingApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['timeTrackingConfiguration'],
+            body: requestParameters.timeTrackingConfiguration,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

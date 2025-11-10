@@ -21,7 +21,7 @@ import type {
   ErrorCollection,
   Filter,
   PageBeanFilterDetails,
-} from '../models/index';
+} from '../models';
 
 export interface ChangeFilterOwnerRequest {
     id: number;
@@ -29,7 +29,7 @@ export interface ChangeFilterOwnerRequest {
 }
 
 export interface CreateFilterRequest {
-    filter: Omit<Filter, 'approximateLastUsed'|'favouritedCount'|'id'|'owner'|'searchUrl'|'self'|'sharedUsers'|'subscriptions'|'viewUrl'>;
+    filter: Filter;
     expand?: string;
     overrideSharePermissions?: boolean;
 }
@@ -94,7 +94,7 @@ export interface SetFavouriteForFilterRequest {
 
 export interface UpdateFilterRequest {
     id: number;
-    filter: Omit<Filter, 'approximateLastUsed'|'favouritedCount'|'id'|'owner'|'searchUrl'|'self'|'sharedUsers'|'subscriptions'|'viewUrl'>;
+    filter: Filter;
     expand?: string;
     overrideSharePermissions?: boolean;
 }
@@ -109,18 +109,12 @@ export class FiltersApi extends runtime.BaseAPI {
      * Change filter owner
      */
     async changeFilterOwnerRaw(requestParameters: ChangeFilterOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling changeFilterOwner().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling changeFilterOwner.');
         }
 
-        if (requestParameters['changeFilterOwner'] == null) {
-            throw new runtime.RequiredError(
-                'changeFilterOwner',
-                'Required parameter "changeFilterOwner" was null or undefined when calling changeFilterOwner().'
-            );
+        if (requestParameters.changeFilterOwner === null || requestParameters.changeFilterOwner === undefined) {
+            throw new runtime.RequiredError('changeFilterOwner','Required parameter requestParameters.changeFilterOwner was null or undefined when calling changeFilterOwner.');
         }
 
         const queryParameters: any = {};
@@ -138,11 +132,11 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/owner`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/owner`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['changeFilterOwner'],
+            body: requestParameters.changeFilterOwner,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -166,21 +160,18 @@ export class FiltersApi extends runtime.BaseAPI {
      * Create filter
      */
     async createFilterRaw(requestParameters: CreateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
-        if (requestParameters['filter'] == null) {
-            throw new runtime.RequiredError(
-                'filter',
-                'Required parameter "filter" was null or undefined when calling createFilter().'
-            );
+        if (requestParameters.filter === null || requestParameters.filter === undefined) {
+            throw new runtime.RequiredError('filter','Required parameter requestParameters.filter was null or undefined when calling createFilter.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideSharePermissions'] != null) {
-            queryParameters['overrideSharePermissions'] = requestParameters['overrideSharePermissions'];
+        if (requestParameters.overrideSharePermissions !== undefined) {
+            queryParameters['overrideSharePermissions'] = requestParameters.overrideSharePermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -200,7 +191,7 @@ export class FiltersApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['filter'],
+            body: requestParameters.filter,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -220,17 +211,14 @@ export class FiltersApi extends runtime.BaseAPI {
      * Remove filter as favorite
      */
     async deleteFavouriteForFilterRaw(requestParameters: DeleteFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteFavouriteForFilter().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteFavouriteForFilter.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -244,7 +232,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/favourite`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/favourite`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -267,11 +255,8 @@ export class FiltersApi extends runtime.BaseAPI {
      * Delete filter
      */
     async deleteFilterRaw(requestParameters: DeleteFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteFilter().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteFilter.');
         }
 
         const queryParameters: any = {};
@@ -287,7 +272,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -309,11 +294,8 @@ export class FiltersApi extends runtime.BaseAPI {
      * Get columns
      */
     async getColumnsRaw(requestParameters: GetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getColumns().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getColumns.');
         }
 
         const queryParameters: any = {};
@@ -329,7 +311,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -354,8 +336,8 @@ export class FiltersApi extends runtime.BaseAPI {
     async getFavouriteFiltersRaw(requestParameters: GetFavouriteFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -392,21 +374,18 @@ export class FiltersApi extends runtime.BaseAPI {
      * Get filter
      */
     async getFilterRaw(requestParameters: GetFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getFilter().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFilter.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideSharePermissions'] != null) {
-            queryParameters['overrideSharePermissions'] = requestParameters['overrideSharePermissions'];
+        if (requestParameters.overrideSharePermissions !== undefined) {
+            queryParameters['overrideSharePermissions'] = requestParameters.overrideSharePermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -420,7 +399,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -445,56 +424,56 @@ export class FiltersApi extends runtime.BaseAPI {
     async getFiltersPaginatedRaw(requestParameters: GetFiltersPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFilterDetails>> {
         const queryParameters: any = {};
 
-        if (requestParameters['filterName'] != null) {
-            queryParameters['filterName'] = requestParameters['filterName'];
+        if (requestParameters.filterName !== undefined) {
+            queryParameters['filterName'] = requestParameters.filterName;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['owner'] != null) {
-            queryParameters['owner'] = requestParameters['owner'];
+        if (requestParameters.owner !== undefined) {
+            queryParameters['owner'] = requestParameters.owner;
         }
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideSharePermissions'] != null) {
-            queryParameters['overrideSharePermissions'] = requestParameters['overrideSharePermissions'];
+        if (requestParameters.overrideSharePermissions !== undefined) {
+            queryParameters['overrideSharePermissions'] = requestParameters.overrideSharePermissions;
         }
 
-        if (requestParameters['isSubstringMatch'] != null) {
-            queryParameters['isSubstringMatch'] = requestParameters['isSubstringMatch'];
+        if (requestParameters.isSubstringMatch !== undefined) {
+            queryParameters['isSubstringMatch'] = requestParameters.isSubstringMatch;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -533,12 +512,12 @@ export class FiltersApi extends runtime.BaseAPI {
     async getMyFiltersRaw(requestParameters: GetMyFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Filter>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['includeFavourites'] != null) {
-            queryParameters['includeFavourites'] = requestParameters['includeFavourites'];
+        if (requestParameters.includeFavourites !== undefined) {
+            queryParameters['includeFavourites'] = requestParameters.includeFavourites;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -575,11 +554,8 @@ export class FiltersApi extends runtime.BaseAPI {
      * Reset columns
      */
     async resetColumnsRaw(requestParameters: ResetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling resetColumns().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling resetColumns.');
         }
 
         const queryParameters: any = {};
@@ -595,7 +571,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -617,18 +593,12 @@ export class FiltersApi extends runtime.BaseAPI {
      * Set columns
      */
     async setColumnsRaw(requestParameters: SetColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setColumns().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setColumns.');
         }
 
-        if (requestParameters['columnRequestBody'] == null) {
-            throw new runtime.RequiredError(
-                'columnRequestBody',
-                'Required parameter "columnRequestBody" was null or undefined when calling setColumns().'
-            );
+        if (requestParameters.columnRequestBody === null || requestParameters.columnRequestBody === undefined) {
+            throw new runtime.RequiredError('columnRequestBody','Required parameter requestParameters.columnRequestBody was null or undefined when calling setColumns.');
         }
 
         const queryParameters: any = {};
@@ -646,11 +616,11 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/columns`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['columnRequestBody'],
+            body: requestParameters.columnRequestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -674,17 +644,14 @@ export class FiltersApi extends runtime.BaseAPI {
      * Add filter as favorite
      */
     async setFavouriteForFilterRaw(requestParameters: SetFavouriteForFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setFavouriteForFilter().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setFavouriteForFilter.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -698,7 +665,7 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/favourite`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/favourite`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -721,28 +688,22 @@ export class FiltersApi extends runtime.BaseAPI {
      * Update filter
      */
     async updateFilterRaw(requestParameters: UpdateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Filter>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateFilter().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateFilter.');
         }
 
-        if (requestParameters['filter'] == null) {
-            throw new runtime.RequiredError(
-                'filter',
-                'Required parameter "filter" was null or undefined when calling updateFilter().'
-            );
+        if (requestParameters.filter === null || requestParameters.filter === undefined) {
+            throw new runtime.RequiredError('filter','Required parameter requestParameters.filter was null or undefined when calling updateFilter.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideSharePermissions'] != null) {
-            queryParameters['overrideSharePermissions'] = requestParameters['overrideSharePermissions'];
+        if (requestParameters.overrideSharePermissions !== undefined) {
+            queryParameters['overrideSharePermissions'] = requestParameters.overrideSharePermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -758,11 +719,11 @@ export class FiltersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['filter'],
+            body: requestParameters.filter,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -784,25 +745,25 @@ export class FiltersApi extends runtime.BaseAPI {
  */
 export const GetFiltersPaginatedOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     FavouriteCount: 'favourite_count',
-    FavouriteCount2Desc: '-favourite_count',
-    FavouriteCount3Asc: '+favourite_count',
+    FavouriteCountDesc: '-favourite_count',
+    FavouriteCountAsc: '+favourite_count',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id',
+    IdDesc: '-id',
+    IdAsc: '+id',
     IsFavourite: 'is_favourite',
-    IsFavourite2Desc: '-is_favourite',
-    IsFavourite3Asc: '+is_favourite',
+    IsFavouriteDesc: '-is_favourite',
+    IsFavouriteAsc: '+is_favourite',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Owner: 'owner',
-    Owner2Desc: '-owner',
-    Owner3Asc: '+owner',
+    OwnerDesc: '-owner',
+    OwnerAsc: '+owner',
     IsShared: 'is_shared',
-    IsShared2Desc: '-is_shared',
-    IsShared3Asc: '+is_shared'
+    IsSharedDesc: '-is_shared',
+    IsSharedAsc: '+is_shared'
 } as const;
 export type GetFiltersPaginatedOrderByEnum = typeof GetFiltersPaginatedOrderByEnum[keyof typeof GetFiltersPaginatedOrderByEnum];

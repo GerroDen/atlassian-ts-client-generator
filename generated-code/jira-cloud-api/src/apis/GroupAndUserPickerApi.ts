@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   FoundUsersAndGroups,
-} from '../models/index';
+} from '../models';
 
 export interface FindUsersAndGroupsRequest {
     query: string;
@@ -40,49 +40,46 @@ export class GroupAndUserPickerApi extends runtime.BaseAPI {
      * Find users and groups
      */
     async findUsersAndGroupsRaw(requestParameters: FindUsersAndGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundUsersAndGroups>> {
-        if (requestParameters['query'] == null) {
-            throw new runtime.RequiredError(
-                'query',
-                'Required parameter "query" was null or undefined when calling findUsersAndGroups().'
-            );
+        if (requestParameters.query === null || requestParameters.query === undefined) {
+            throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling findUsersAndGroups.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['showAvatar'] != null) {
-            queryParameters['showAvatar'] = requestParameters['showAvatar'];
+        if (requestParameters.showAvatar !== undefined) {
+            queryParameters['showAvatar'] = requestParameters.showAvatar;
         }
 
-        if (requestParameters['fieldId'] != null) {
-            queryParameters['fieldId'] = requestParameters['fieldId'];
+        if (requestParameters.fieldId !== undefined) {
+            queryParameters['fieldId'] = requestParameters.fieldId;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['issueTypeId'] != null) {
-            queryParameters['issueTypeId'] = requestParameters['issueTypeId'];
+        if (requestParameters.issueTypeId) {
+            queryParameters['issueTypeId'] = requestParameters.issueTypeId;
         }
 
-        if (requestParameters['avatarSize'] != null) {
-            queryParameters['avatarSize'] = requestParameters['avatarSize'];
+        if (requestParameters.avatarSize !== undefined) {
+            queryParameters['avatarSize'] = requestParameters.avatarSize;
         }
 
-        if (requestParameters['caseInsensitive'] != null) {
-            queryParameters['caseInsensitive'] = requestParameters['caseInsensitive'];
+        if (requestParameters.caseInsensitive !== undefined) {
+            queryParameters['caseInsensitive'] = requestParameters.caseInsensitive;
         }
 
-        if (requestParameters['excludeConnectAddons'] != null) {
-            queryParameters['excludeConnectAddons'] = requestParameters['excludeConnectAddons'];
+        if (requestParameters.excludeConnectAddons !== undefined) {
+            queryParameters['excludeConnectAddons'] = requestParameters.excludeConnectAddons;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

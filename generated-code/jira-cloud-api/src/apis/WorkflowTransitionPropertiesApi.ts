@@ -16,13 +16,13 @@
 import * as runtime from '../runtime';
 import type {
   WorkflowTransitionProperty,
-} from '../models/index';
+} from '../models';
 
 export interface CreateWorkflowTransitionPropertyRequest {
     transitionId: number;
     key: string;
     workflowName: string;
-    workflowTransitionProperty: Omit<WorkflowTransitionProperty, 'id'|'key'>;
+    requestBody: { [key: string]: any; };
     workflowMode?: CreateWorkflowTransitionPropertyWorkflowModeEnum;
 }
 
@@ -45,7 +45,7 @@ export interface UpdateWorkflowTransitionPropertyRequest {
     transitionId: number;
     key: string;
     workflowName: string;
-    workflowTransitionProperty: Omit<WorkflowTransitionProperty, 'id'|'key'>;
+    requestBody: { [key: string]: any; };
     workflowMode?: UpdateWorkflowTransitionPropertyWorkflowModeEnum;
 }
 
@@ -57,49 +57,36 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); add transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Adds a property to a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create workflow transition property
-     * @deprecated
      */
     async createWorkflowTransitionPropertyRaw(requestParameters: CreateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
-        if (requestParameters['transitionId'] == null) {
-            throw new runtime.RequiredError(
-                'transitionId',
-                'Required parameter "transitionId" was null or undefined when calling createWorkflowTransitionProperty().'
-            );
+        if (requestParameters.transitionId === null || requestParameters.transitionId === undefined) {
+            throw new runtime.RequiredError('transitionId','Required parameter requestParameters.transitionId was null or undefined when calling createWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling createWorkflowTransitionProperty().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling createWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling createWorkflowTransitionProperty().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling createWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['workflowTransitionProperty'] == null) {
-            throw new runtime.RequiredError(
-                'workflowTransitionProperty',
-                'Required parameter "workflowTransitionProperty" was null or undefined when calling createWorkflowTransitionProperty().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createWorkflowTransitionProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
-        if (requestParameters['workflowMode'] != null) {
-            queryParameters['workflowMode'] = requestParameters['workflowMode'];
+        if (requestParameters.workflowMode !== undefined) {
+            queryParameters['workflowMode'] = requestParameters.workflowMode;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -115,11 +102,11 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId']))),
+            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters.transitionId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowTransitionProperty'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -128,7 +115,6 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); add transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Adds a property to a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create workflow transition property
-     * @deprecated
      */
     async createWorkflowTransitionProperty(requestParameters: CreateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkflowTransitionProperty> {
         const response = await this.createWorkflowTransitionPropertyRaw(requestParameters, initOverrides);
@@ -138,42 +124,32 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); delete transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Deletes a property from a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Delete workflow transition property
-     * @deprecated
      */
     async deleteWorkflowTransitionPropertyRaw(requestParameters: DeleteWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['transitionId'] == null) {
-            throw new runtime.RequiredError(
-                'transitionId',
-                'Required parameter "transitionId" was null or undefined when calling deleteWorkflowTransitionProperty().'
-            );
+        if (requestParameters.transitionId === null || requestParameters.transitionId === undefined) {
+            throw new runtime.RequiredError('transitionId','Required parameter requestParameters.transitionId was null or undefined when calling deleteWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling deleteWorkflowTransitionProperty().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling deleteWorkflowTransitionProperty().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling deleteWorkflowTransitionProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
-        if (requestParameters['workflowMode'] != null) {
-            queryParameters['workflowMode'] = requestParameters['workflowMode'];
+        if (requestParameters.workflowMode !== undefined) {
+            queryParameters['workflowMode'] = requestParameters.workflowMode;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -187,7 +163,7 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId']))),
+            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters.transitionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -199,7 +175,6 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); delete transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Deletes a property from a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Delete workflow transition property
-     * @deprecated
      */
     async deleteWorkflowTransitionProperty(requestParameters: DeleteWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteWorkflowTransitionPropertyRaw(requestParameters, initOverrides);
@@ -208,39 +183,32 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); fetch transition properties from [Bulk get workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-post) instead.  Returns the properties on a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get workflow transition properties
-     * @deprecated
      */
     async getWorkflowTransitionPropertiesRaw(requestParameters: GetWorkflowTransitionPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
-        if (requestParameters['transitionId'] == null) {
-            throw new runtime.RequiredError(
-                'transitionId',
-                'Required parameter "transitionId" was null or undefined when calling getWorkflowTransitionProperties().'
-            );
+        if (requestParameters.transitionId === null || requestParameters.transitionId === undefined) {
+            throw new runtime.RequiredError('transitionId','Required parameter requestParameters.transitionId was null or undefined when calling getWorkflowTransitionProperties.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling getWorkflowTransitionProperties().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling getWorkflowTransitionProperties.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['includeReservedKeys'] != null) {
-            queryParameters['includeReservedKeys'] = requestParameters['includeReservedKeys'];
+        if (requestParameters.includeReservedKeys !== undefined) {
+            queryParameters['includeReservedKeys'] = requestParameters.includeReservedKeys;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
-        if (requestParameters['workflowMode'] != null) {
-            queryParameters['workflowMode'] = requestParameters['workflowMode'];
+        if (requestParameters.workflowMode !== undefined) {
+            queryParameters['workflowMode'] = requestParameters.workflowMode;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -254,7 +222,7 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId']))),
+            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters.transitionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -266,7 +234,6 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); fetch transition properties from [Bulk get workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-post) instead.  Returns the properties on a workflow transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get workflow transition properties
-     * @deprecated
      */
     async getWorkflowTransitionProperties(requestParameters: GetWorkflowTransitionPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkflowTransitionProperty> {
         const response = await this.getWorkflowTransitionPropertiesRaw(requestParameters, initOverrides);
@@ -276,49 +243,36 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); update transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Updates a workflow transition by changing the property value. Trying to update a property that does not exist results in a new property being added to the transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update workflow transition property
-     * @deprecated
      */
     async updateWorkflowTransitionPropertyRaw(requestParameters: UpdateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionProperty>> {
-        if (requestParameters['transitionId'] == null) {
-            throw new runtime.RequiredError(
-                'transitionId',
-                'Required parameter "transitionId" was null or undefined when calling updateWorkflowTransitionProperty().'
-            );
+        if (requestParameters.transitionId === null || requestParameters.transitionId === undefined) {
+            throw new runtime.RequiredError('transitionId','Required parameter requestParameters.transitionId was null or undefined when calling updateWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling updateWorkflowTransitionProperty().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling updateWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling updateWorkflowTransitionProperty().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling updateWorkflowTransitionProperty.');
         }
 
-        if (requestParameters['workflowTransitionProperty'] == null) {
-            throw new runtime.RequiredError(
-                'workflowTransitionProperty',
-                'Required parameter "workflowTransitionProperty" was null or undefined when calling updateWorkflowTransitionProperty().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateWorkflowTransitionProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
-        if (requestParameters['workflowMode'] != null) {
-            queryParameters['workflowMode'] = requestParameters['workflowMode'];
+        if (requestParameters.workflowMode !== undefined) {
+            queryParameters['workflowMode'] = requestParameters.workflowMode;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -334,11 +288,11 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters['transitionId']))),
+            path: `/rest/api/3/workflow/transitions/{transitionId}/properties`.replace(`{${"transitionId"}}`, encodeURIComponent(String(requestParameters.transitionId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowTransitionProperty'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -347,7 +301,6 @@ export class WorkflowTransitionPropertiesApi extends runtime.BaseAPI {
     /**
      * This will be removed on [June 1, 2026](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2570); update transition properties using [Bulk update workflows](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/#api-rest-api-3-workflows-update-post) instead.  Updates a workflow transition by changing the property value. Trying to update a property that does not exist results in a new property being added to the transition. Transition properties are used to change the behavior of a transition. For more information, see [Transition properties](https://confluence.atlassian.com/x/zIhKLg#Advancedworkflowconfiguration-transitionproperties) and [Workflow properties](https://confluence.atlassian.com/x/JYlKLg).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update workflow transition property
-     * @deprecated
      */
     async updateWorkflowTransitionProperty(requestParameters: UpdateWorkflowTransitionPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkflowTransitionProperty> {
         const response = await this.updateWorkflowTransitionPropertyRaw(requestParameters, initOverrides);

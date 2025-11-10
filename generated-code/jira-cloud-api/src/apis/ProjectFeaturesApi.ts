@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ContainerForProjectFeatures,
   ProjectFeatureState,
-} from '../models/index';
+} from '../models';
 
 export interface GetFeaturesForProjectRequest {
     projectIdOrKey: string;
@@ -39,11 +39,8 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
      * Get project features
      */
     async getFeaturesForProjectRaw(requestParameters: GetFeaturesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getFeaturesForProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getFeaturesForProject.');
         }
 
         const queryParameters: any = {};
@@ -59,7 +56,7 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/features`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/features`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -82,25 +79,16 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
      * Set project feature state
      */
     async toggleFeatureForProjectRaw(requestParameters: ToggleFeatureForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForProjectFeatures>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling toggleFeatureForProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling toggleFeatureForProject.');
         }
 
-        if (requestParameters['featureKey'] == null) {
-            throw new runtime.RequiredError(
-                'featureKey',
-                'Required parameter "featureKey" was null or undefined when calling toggleFeatureForProject().'
-            );
+        if (requestParameters.featureKey === null || requestParameters.featureKey === undefined) {
+            throw new runtime.RequiredError('featureKey','Required parameter requestParameters.featureKey was null or undefined when calling toggleFeatureForProject.');
         }
 
-        if (requestParameters['projectFeatureState'] == null) {
-            throw new runtime.RequiredError(
-                'projectFeatureState',
-                'Required parameter "projectFeatureState" was null or undefined when calling toggleFeatureForProject().'
-            );
+        if (requestParameters.projectFeatureState === null || requestParameters.projectFeatureState === undefined) {
+            throw new runtime.RequiredError('projectFeatureState','Required parameter requestParameters.projectFeatureState was null or undefined when calling toggleFeatureForProject.');
         }
 
         const queryParameters: any = {};
@@ -118,11 +106,11 @@ export class ProjectFeaturesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/features/{featureKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"featureKey"}}`, encodeURIComponent(String(requestParameters['featureKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/features/{featureKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"featureKey"}}`, encodeURIComponent(String(requestParameters.featureKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectFeatureState'],
+            body: requestParameters.projectFeatureState,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

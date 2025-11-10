@@ -20,7 +20,7 @@ import type {
   ErrorCollection,
   GetPlanResponse,
   PageWithCursorGetPlanResponseForPage,
-} from '../models/index';
+} from '../models';
 
 export interface ArchivePlanRequest {
     planId: number;
@@ -68,11 +68,8 @@ export class PlansApi extends runtime.BaseAPI {
      * Archive plan
      */
     async archivePlanRaw(requestParameters: ArchivePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling archivePlan().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling archivePlan.');
         }
 
         const queryParameters: any = {};
@@ -88,7 +85,7 @@ export class PlansApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/archive`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/archive`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -115,17 +112,14 @@ export class PlansApi extends runtime.BaseAPI {
      * Create plan
      */
     async createPlanRaw(requestParameters: CreatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters['createPlanRequest'] == null) {
-            throw new runtime.RequiredError(
-                'createPlanRequest',
-                'Required parameter "createPlanRequest" was null or undefined when calling createPlan().'
-            );
+        if (requestParameters.createPlanRequest === null || requestParameters.createPlanRequest === undefined) {
+            throw new runtime.RequiredError('createPlanRequest','Required parameter requestParameters.createPlanRequest was null or undefined when calling createPlan.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['useGroupId'] != null) {
-            queryParameters['useGroupId'] = requestParameters['useGroupId'];
+        if (requestParameters.useGroupId !== undefined) {
+            queryParameters['useGroupId'] = requestParameters.useGroupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -145,7 +139,7 @@ export class PlansApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createPlanRequest'],
+            body: requestParameters.createPlanRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -169,18 +163,12 @@ export class PlansApi extends runtime.BaseAPI {
      * Duplicate plan
      */
     async duplicatePlanRaw(requestParameters: DuplicatePlanOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling duplicatePlan().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling duplicatePlan.');
         }
 
-        if (requestParameters['duplicatePlanRequest'] == null) {
-            throw new runtime.RequiredError(
-                'duplicatePlanRequest',
-                'Required parameter "duplicatePlanRequest" was null or undefined when calling duplicatePlan().'
-            );
+        if (requestParameters.duplicatePlanRequest === null || requestParameters.duplicatePlanRequest === undefined) {
+            throw new runtime.RequiredError('duplicatePlanRequest','Required parameter requestParameters.duplicatePlanRequest was null or undefined when calling duplicatePlan.');
         }
 
         const queryParameters: any = {};
@@ -198,11 +186,11 @@ export class PlansApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/duplicate`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/duplicate`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['duplicatePlanRequest'],
+            body: requestParameters.duplicatePlanRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -226,17 +214,14 @@ export class PlansApi extends runtime.BaseAPI {
      * Get plan
      */
     async getPlanRaw(requestParameters: GetPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanResponse>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling getPlan().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling getPlan.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['useGroupId'] != null) {
-            queryParameters['useGroupId'] = requestParameters['useGroupId'];
+        if (requestParameters.useGroupId !== undefined) {
+            queryParameters['useGroupId'] = requestParameters.useGroupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -250,7 +235,7 @@ export class PlansApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -275,20 +260,20 @@ export class PlansApi extends runtime.BaseAPI {
     async getPlansRaw(requestParameters: GetPlansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetPlanResponseForPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters['includeTrashed'] != null) {
-            queryParameters['includeTrashed'] = requestParameters['includeTrashed'];
+        if (requestParameters.includeTrashed !== undefined) {
+            queryParameters['includeTrashed'] = requestParameters.includeTrashed;
         }
 
-        if (requestParameters['includeArchived'] != null) {
-            queryParameters['includeArchived'] = requestParameters['includeArchived'];
+        if (requestParameters.includeArchived !== undefined) {
+            queryParameters['includeArchived'] = requestParameters.includeArchived;
         }
 
-        if (requestParameters['cursor'] != null) {
-            queryParameters['cursor'] = requestParameters['cursor'];
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -325,11 +310,8 @@ export class PlansApi extends runtime.BaseAPI {
      * Trash plan
      */
     async trashPlanRaw(requestParameters: TrashPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling trashPlan().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling trashPlan.');
         }
 
         const queryParameters: any = {};
@@ -345,7 +327,7 @@ export class PlansApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/trash`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/trash`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -372,24 +354,18 @@ export class PlansApi extends runtime.BaseAPI {
      * Update plan
      */
     async updatePlanRaw(requestParameters: UpdatePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling updatePlan().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling updatePlan.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling updatePlan().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updatePlan.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['useGroupId'] != null) {
-            queryParameters['useGroupId'] = requestParameters['useGroupId'];
+        if (requestParameters.useGroupId !== undefined) {
+            queryParameters['useGroupId'] = requestParameters.useGroupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -405,11 +381,11 @@ export class PlansApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

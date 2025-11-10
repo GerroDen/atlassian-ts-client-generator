@@ -20,11 +20,11 @@ import type {
   Worklog,
   WorklogIdsRequestBean,
   WorklogsMoveRequestBean,
-} from '../models/index';
+} from '../models';
 
 export interface AddWorklogRequest {
     issueIdOrKey: string;
-    worklog: Omit<Worklog, 'author'|'created'|'id'|'issueId'|'self'|'updateAuthor'|'updated'>;
+    requestBody: { [key: string]: any; };
     notifyUsers?: boolean;
     adjustEstimate?: AddWorklogAdjustEstimateEnum;
     newEstimate?: string;
@@ -89,7 +89,7 @@ export interface GetWorklogsForIdsRequest {
 export interface UpdateWorklogRequest {
     issueIdOrKey: string;
     id: string;
-    worklog: Omit<Worklog, 'author'|'created'|'id'|'issueId'|'self'|'updateAuthor'|'updated'>;
+    requestBody: { [key: string]: any; };
     notifyUsers?: boolean;
     adjustEstimate?: UpdateWorklogAdjustEstimateEnum;
     newEstimate?: string;
@@ -107,44 +107,38 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Add worklog
      */
     async addWorklogRaw(requestParameters: AddWorklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Worklog>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling addWorklog().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling addWorklog.');
         }
 
-        if (requestParameters['worklog'] == null) {
-            throw new runtime.RequiredError(
-                'worklog',
-                'Required parameter "worklog" was null or undefined when calling addWorklog().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling addWorklog.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['notifyUsers'] != null) {
-            queryParameters['notifyUsers'] = requestParameters['notifyUsers'];
+        if (requestParameters.notifyUsers !== undefined) {
+            queryParameters['notifyUsers'] = requestParameters.notifyUsers;
         }
 
-        if (requestParameters['adjustEstimate'] != null) {
-            queryParameters['adjustEstimate'] = requestParameters['adjustEstimate'];
+        if (requestParameters.adjustEstimate !== undefined) {
+            queryParameters['adjustEstimate'] = requestParameters.adjustEstimate;
         }
 
-        if (requestParameters['newEstimate'] != null) {
-            queryParameters['newEstimate'] = requestParameters['newEstimate'];
+        if (requestParameters.newEstimate !== undefined) {
+            queryParameters['newEstimate'] = requestParameters.newEstimate;
         }
 
-        if (requestParameters['reduceBy'] != null) {
-            queryParameters['reduceBy'] = requestParameters['reduceBy'];
+        if (requestParameters.reduceBy !== undefined) {
+            queryParameters['reduceBy'] = requestParameters.reduceBy;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -160,11 +154,11 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['worklog'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -184,28 +178,22 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Bulk delete worklogs
      */
     async bulkDeleteWorklogsRaw(requestParameters: BulkDeleteWorklogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling bulkDeleteWorklogs().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling bulkDeleteWorklogs.');
         }
 
-        if (requestParameters['worklogIdsRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'worklogIdsRequestBean',
-                'Required parameter "worklogIdsRequestBean" was null or undefined when calling bulkDeleteWorklogs().'
-            );
+        if (requestParameters.worklogIdsRequestBean === null || requestParameters.worklogIdsRequestBean === undefined) {
+            throw new runtime.RequiredError('worklogIdsRequestBean','Required parameter requestParameters.worklogIdsRequestBean was null or undefined when calling bulkDeleteWorklogs.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['adjustEstimate'] != null) {
-            queryParameters['adjustEstimate'] = requestParameters['adjustEstimate'];
+        if (requestParameters.adjustEstimate !== undefined) {
+            queryParameters['adjustEstimate'] = requestParameters.adjustEstimate;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -221,11 +209,11 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['worklogIdsRequestBean'],
+            body: requestParameters.worklogIdsRequestBean,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -244,28 +232,22 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Bulk move worklogs
      */
     async bulkMoveWorklogsRaw(requestParameters: BulkMoveWorklogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling bulkMoveWorklogs().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling bulkMoveWorklogs.');
         }
 
-        if (requestParameters['worklogsMoveRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'worklogsMoveRequestBean',
-                'Required parameter "worklogsMoveRequestBean" was null or undefined when calling bulkMoveWorklogs().'
-            );
+        if (requestParameters.worklogsMoveRequestBean === null || requestParameters.worklogsMoveRequestBean === undefined) {
+            throw new runtime.RequiredError('worklogsMoveRequestBean','Required parameter requestParameters.worklogsMoveRequestBean was null or undefined when calling bulkMoveWorklogs.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['adjustEstimate'] != null) {
-            queryParameters['adjustEstimate'] = requestParameters['adjustEstimate'];
+        if (requestParameters.adjustEstimate !== undefined) {
+            queryParameters['adjustEstimate'] = requestParameters.adjustEstimate;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -281,11 +263,11 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/move`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/move`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['worklogsMoveRequestBean'],
+            body: requestParameters.worklogsMoveRequestBean,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -304,40 +286,34 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Delete worklog
      */
     async deleteWorklogRaw(requestParameters: DeleteWorklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteWorklog().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteWorklog.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteWorklog().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteWorklog.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['notifyUsers'] != null) {
-            queryParameters['notifyUsers'] = requestParameters['notifyUsers'];
+        if (requestParameters.notifyUsers !== undefined) {
+            queryParameters['notifyUsers'] = requestParameters.notifyUsers;
         }
 
-        if (requestParameters['adjustEstimate'] != null) {
-            queryParameters['adjustEstimate'] = requestParameters['adjustEstimate'];
+        if (requestParameters.adjustEstimate !== undefined) {
+            queryParameters['adjustEstimate'] = requestParameters.adjustEstimate;
         }
 
-        if (requestParameters['newEstimate'] != null) {
-            queryParameters['newEstimate'] = requestParameters['newEstimate'];
+        if (requestParameters.newEstimate !== undefined) {
+            queryParameters['newEstimate'] = requestParameters.newEstimate;
         }
 
-        if (requestParameters['increaseBy'] != null) {
-            queryParameters['increaseBy'] = requestParameters['increaseBy'];
+        if (requestParameters.increaseBy !== undefined) {
+            queryParameters['increaseBy'] = requestParameters.increaseBy;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -351,7 +327,7 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -375,8 +351,8 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
     async getIdsOfWorklogsDeletedSinceRaw(requestParameters: GetIdsOfWorklogsDeletedSinceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChangedWorklogs>> {
         const queryParameters: any = {};
 
-        if (requestParameters['since'] != null) {
-            queryParameters['since'] = requestParameters['since'];
+        if (requestParameters.since !== undefined) {
+            queryParameters['since'] = requestParameters.since;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -415,12 +391,12 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
     async getIdsOfWorklogsModifiedSinceRaw(requestParameters: GetIdsOfWorklogsModifiedSinceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChangedWorklogs>> {
         const queryParameters: any = {};
 
-        if (requestParameters['since'] != null) {
-            queryParameters['since'] = requestParameters['since'];
+        if (requestParameters.since !== undefined) {
+            queryParameters['since'] = requestParameters.since;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -457,33 +433,30 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Get issue worklogs
      */
     async getIssueWorklogRaw(requestParameters: GetIssueWorklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfWorklogs>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getIssueWorklog().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssueWorklog.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['startedAfter'] != null) {
-            queryParameters['startedAfter'] = requestParameters['startedAfter'];
+        if (requestParameters.startedAfter !== undefined) {
+            queryParameters['startedAfter'] = requestParameters.startedAfter;
         }
 
-        if (requestParameters['startedBefore'] != null) {
-            queryParameters['startedBefore'] = requestParameters['startedBefore'];
+        if (requestParameters.startedBefore !== undefined) {
+            queryParameters['startedBefore'] = requestParameters.startedBefore;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -497,7 +470,7 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -520,24 +493,18 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Get worklog
      */
     async getWorklogRaw(requestParameters: GetWorklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Worklog>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getWorklog().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getWorklog.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getWorklog().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWorklog.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -551,7 +518,7 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -574,17 +541,14 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Get worklogs
      */
     async getWorklogsForIdsRaw(requestParameters: GetWorklogsForIdsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Worklog>>> {
-        if (requestParameters['worklogIdsRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'worklogIdsRequestBean',
-                'Required parameter "worklogIdsRequestBean" was null or undefined when calling getWorklogsForIds().'
-            );
+        if (requestParameters.worklogIdsRequestBean === null || requestParameters.worklogIdsRequestBean === undefined) {
+            throw new runtime.RequiredError('worklogIdsRequestBean','Required parameter requestParameters.worklogIdsRequestBean was null or undefined when calling getWorklogsForIds.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -604,7 +568,7 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['worklogIdsRequestBean'],
+            body: requestParameters.worklogIdsRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -624,47 +588,38 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
      * Update worklog
      */
     async updateWorklogRaw(requestParameters: UpdateWorklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Worklog>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling updateWorklog().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling updateWorklog.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateWorklog().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateWorklog.');
         }
 
-        if (requestParameters['worklog'] == null) {
-            throw new runtime.RequiredError(
-                'worklog',
-                'Required parameter "worklog" was null or undefined when calling updateWorklog().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateWorklog.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['notifyUsers'] != null) {
-            queryParameters['notifyUsers'] = requestParameters['notifyUsers'];
+        if (requestParameters.notifyUsers !== undefined) {
+            queryParameters['notifyUsers'] = requestParameters.notifyUsers;
         }
 
-        if (requestParameters['adjustEstimate'] != null) {
-            queryParameters['adjustEstimate'] = requestParameters['adjustEstimate'];
+        if (requestParameters.adjustEstimate !== undefined) {
+            queryParameters['adjustEstimate'] = requestParameters.adjustEstimate;
         }
 
-        if (requestParameters['newEstimate'] != null) {
-            queryParameters['newEstimate'] = requestParameters['newEstimate'];
+        if (requestParameters.newEstimate !== undefined) {
+            queryParameters['newEstimate'] = requestParameters.newEstimate;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -680,11 +635,11 @@ export class IssueWorklogsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['worklog'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

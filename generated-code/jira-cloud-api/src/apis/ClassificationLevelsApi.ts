@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   DataClassificationLevelsBean,
-} from '../models/index';
+} from '../models';
 
 export interface GetAllUserDataClassificationLevelsRequest {
     status?: Array<GetAllUserDataClassificationLevelsStatusEnum>;
@@ -35,12 +35,12 @@ export class ClassificationLevelsApi extends runtime.BaseAPI {
     async getAllUserDataClassificationLevelsRaw(requestParameters: GetAllUserDataClassificationLevelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DataClassificationLevelsBean>> {
         const queryParameters: any = {};
 
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,7 +88,7 @@ export type GetAllUserDataClassificationLevelsStatusEnum = typeof GetAllUserData
  */
 export const GetAllUserDataClassificationLevelsOrderByEnum = {
     Rank: 'rank',
-    Rank2Desc: '-rank',
-    Rank3Asc: '+rank'
+    RankDesc: '-rank',
+    RankAsc: '+rank'
 } as const;
 export type GetAllUserDataClassificationLevelsOrderByEnum = typeof GetAllUserDataClassificationLevelsOrderByEnum[keyof typeof GetAllUserDataClassificationLevelsOrderByEnum];

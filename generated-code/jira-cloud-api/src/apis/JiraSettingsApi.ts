@@ -19,7 +19,7 @@ import type {
   ErrorCollection,
   ModelConfiguration,
   SimpleApplicationPropertyBean,
-} from '../models/index';
+} from '../models';
 
 export interface GetApplicationPropertyRequest {
     key?: string;
@@ -80,16 +80,16 @@ export class JiraSettingsApi extends runtime.BaseAPI {
     async getApplicationPropertyRaw(requestParameters: GetApplicationPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApplicationProperty>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['permissionLevel'] != null) {
-            queryParameters['permissionLevel'] = requestParameters['permissionLevel'];
+        if (requestParameters.permissionLevel !== undefined) {
+            queryParameters['permissionLevel'] = requestParameters.permissionLevel;
         }
 
-        if (requestParameters['keyFilter'] != null) {
-            queryParameters['keyFilter'] = requestParameters['keyFilter'];
+        if (requestParameters.keyFilter !== undefined) {
+            queryParameters['keyFilter'] = requestParameters.keyFilter;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -162,18 +162,12 @@ export class JiraSettingsApi extends runtime.BaseAPI {
      * Set application property
      */
     async setApplicationPropertyRaw(requestParameters: SetApplicationPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApplicationProperty>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setApplicationProperty().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setApplicationProperty.');
         }
 
-        if (requestParameters['simpleApplicationPropertyBean'] == null) {
-            throw new runtime.RequiredError(
-                'simpleApplicationPropertyBean',
-                'Required parameter "simpleApplicationPropertyBean" was null or undefined when calling setApplicationProperty().'
-            );
+        if (requestParameters.simpleApplicationPropertyBean === null || requestParameters.simpleApplicationPropertyBean === undefined) {
+            throw new runtime.RequiredError('simpleApplicationPropertyBean','Required parameter requestParameters.simpleApplicationPropertyBean was null or undefined when calling setApplicationProperty.');
         }
 
         const queryParameters: any = {};
@@ -191,11 +185,11 @@ export class JiraSettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/application-properties/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/application-properties/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['simpleApplicationPropertyBean'],
+            body: requestParameters.simpleApplicationPropertyBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

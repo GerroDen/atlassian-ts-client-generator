@@ -19,7 +19,7 @@ import type {
   Avatars,
   ErrorCollection,
   SystemAvatars,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteAvatarRequest {
     type: DeleteAvatarTypeEnum;
@@ -75,25 +75,16 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Delete avatar
      */
     async deleteAvatarRaw(requestParameters: DeleteAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling deleteAvatar().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling deleteAvatar.');
         }
 
-        if (requestParameters['owningObjectId'] == null) {
-            throw new runtime.RequiredError(
-                'owningObjectId',
-                'Required parameter "owningObjectId" was null or undefined when calling deleteAvatar().'
-            );
+        if (requestParameters.owningObjectId === null || requestParameters.owningObjectId === undefined) {
+            throw new runtime.RequiredError('owningObjectId','Required parameter requestParameters.owningObjectId was null or undefined when calling deleteAvatar.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteAvatar().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteAvatar.');
         }
 
         const queryParameters: any = {};
@@ -109,7 +100,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/type/{type}/owner/{owningObjectId}/avatar/{id}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))).replace(`{${"owningObjectId"}}`, encodeURIComponent(String(requestParameters['owningObjectId']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/universal_avatar/type/{type}/owner/{owningObjectId}/avatar/{id}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))).replace(`{${"owningObjectId"}}`, encodeURIComponent(String(requestParameters.owningObjectId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -131,11 +122,8 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Get system avatars by type
      */
     async getAllSystemAvatarsRaw(requestParameters: GetAllSystemAvatarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SystemAvatars>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getAllSystemAvatars().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAllSystemAvatars.');
         }
 
         const queryParameters: any = {};
@@ -151,7 +139,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/avatar/{type}/system`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
+            path: `/rest/api/3/avatar/{type}/system`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -174,28 +162,22 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Get avatar image by ID
      */
     async getAvatarImageByIDRaw(requestParameters: GetAvatarImageByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getAvatarImageByID().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByID.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getAvatarImageByID().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAvatarImageByID.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
-        if (requestParameters['format'] != null) {
-            queryParameters['format'] = requestParameters['format'];
+        if (requestParameters.format !== undefined) {
+            queryParameters['format'] = requestParameters.format;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -209,7 +191,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/view/type/{type}/avatar/{id}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/universal_avatar/view/type/{type}/avatar/{id}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -231,28 +213,22 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Get avatar image by owner
      */
     async getAvatarImageByOwnerRaw(requestParameters: GetAvatarImageByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getAvatarImageByOwner().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByOwner.');
         }
 
-        if (requestParameters['entityId'] == null) {
-            throw new runtime.RequiredError(
-                'entityId',
-                'Required parameter "entityId" was null or undefined when calling getAvatarImageByOwner().'
-            );
+        if (requestParameters.entityId === null || requestParameters.entityId === undefined) {
+            throw new runtime.RequiredError('entityId','Required parameter requestParameters.entityId was null or undefined when calling getAvatarImageByOwner.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
-        if (requestParameters['format'] != null) {
-            queryParameters['format'] = requestParameters['format'];
+        if (requestParameters.format !== undefined) {
+            queryParameters['format'] = requestParameters.format;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -266,7 +242,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/view/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId']))),
+            path: `/rest/api/3/universal_avatar/view/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters.entityId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -288,21 +264,18 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Get avatar image by type
      */
     async getAvatarImageByTypeRaw(requestParameters: GetAvatarImageByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getAvatarImageByType().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatarImageByType.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
-        if (requestParameters['format'] != null) {
-            queryParameters['format'] = requestParameters['format'];
+        if (requestParameters.format !== undefined) {
+            queryParameters['format'] = requestParameters.format;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -316,7 +289,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/view/type/{type}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
+            path: `/rest/api/3/universal_avatar/view/type/{type}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -338,18 +311,12 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Get avatars
      */
     async getAvatarsRaw(requestParameters: GetAvatarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatars>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getAvatars().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling getAvatars.');
         }
 
-        if (requestParameters['entityId'] == null) {
-            throw new runtime.RequiredError(
-                'entityId',
-                'Required parameter "entityId" was null or undefined when calling getAvatars().'
-            );
+        if (requestParameters.entityId === null || requestParameters.entityId === undefined) {
+            throw new runtime.RequiredError('entityId','Required parameter requestParameters.entityId was null or undefined when calling getAvatars.');
         }
 
         const queryParameters: any = {};
@@ -365,7 +332,7 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId']))),
+            path: `/rest/api/3/universal_avatar/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters.entityId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -388,46 +355,34 @@ export class AvatarsApi extends runtime.BaseAPI {
      * Load avatar
      */
     async storeAvatarRaw(requestParameters: StoreAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling storeAvatar().'
-            );
+        if (requestParameters.type === null || requestParameters.type === undefined) {
+            throw new runtime.RequiredError('type','Required parameter requestParameters.type was null or undefined when calling storeAvatar.');
         }
 
-        if (requestParameters['entityId'] == null) {
-            throw new runtime.RequiredError(
-                'entityId',
-                'Required parameter "entityId" was null or undefined when calling storeAvatar().'
-            );
+        if (requestParameters.entityId === null || requestParameters.entityId === undefined) {
+            throw new runtime.RequiredError('entityId','Required parameter requestParameters.entityId was null or undefined when calling storeAvatar.');
         }
 
-        if (requestParameters['size'] == null) {
-            throw new runtime.RequiredError(
-                'size',
-                'Required parameter "size" was null or undefined when calling storeAvatar().'
-            );
+        if (requestParameters.size === null || requestParameters.size === undefined) {
+            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling storeAvatar.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling storeAvatar().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling storeAvatar.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['x'] != null) {
-            queryParameters['x'] = requestParameters['x'];
+        if (requestParameters.x !== undefined) {
+            queryParameters['x'] = requestParameters.x;
         }
 
-        if (requestParameters['y'] != null) {
-            queryParameters['y'] = requestParameters['y'];
+        if (requestParameters.y !== undefined) {
+            queryParameters['y'] = requestParameters.y;
         }
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -443,11 +398,11 @@ export class AvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/universal_avatar/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId']))),
+            path: `/rest/api/3/universal_avatar/type/{type}/owner/{entityId}`.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters.type))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters.entityId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

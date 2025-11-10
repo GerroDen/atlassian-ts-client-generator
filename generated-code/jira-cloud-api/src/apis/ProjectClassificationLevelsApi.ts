@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   UpdateDefaultProjectClassificationBean,
-} from '../models/index';
+} from '../models';
 
 export interface GetDefaultProjectClassificationRequest {
     projectIdOrKey: string;
@@ -41,11 +41,8 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
      * Get the default data classification level of a project
      */
     async getDefaultProjectClassificationRaw(requestParameters: GetDefaultProjectClassificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getDefaultProjectClassification().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getDefaultProjectClassification.');
         }
 
         const queryParameters: any = {};
@@ -61,7 +58,7 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -88,11 +85,8 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
      * Remove the default data classification level from a project
      */
     async removeDefaultProjectClassificationRaw(requestParameters: RemoveDefaultProjectClassificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling removeDefaultProjectClassification().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling removeDefaultProjectClassification.');
         }
 
         const queryParameters: any = {};
@@ -108,7 +102,7 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -135,18 +129,12 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
      * Update the default data classification level of a project
      */
     async updateDefaultProjectClassificationRaw(requestParameters: UpdateDefaultProjectClassificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling updateDefaultProjectClassification().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling updateDefaultProjectClassification.');
         }
 
-        if (requestParameters['updateDefaultProjectClassificationBean'] == null) {
-            throw new runtime.RequiredError(
-                'updateDefaultProjectClassificationBean',
-                'Required parameter "updateDefaultProjectClassificationBean" was null or undefined when calling updateDefaultProjectClassification().'
-            );
+        if (requestParameters.updateDefaultProjectClassificationBean === null || requestParameters.updateDefaultProjectClassificationBean === undefined) {
+            throw new runtime.RequiredError('updateDefaultProjectClassificationBean','Required parameter requestParameters.updateDefaultProjectClassificationBean was null or undefined when calling updateDefaultProjectClassification.');
         }
 
         const queryParameters: any = {};
@@ -164,11 +152,11 @@ export class ProjectClassificationLevelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/classification-level/default`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateDefaultProjectClassificationBean'],
+            body: requestParameters.updateDefaultProjectClassificationBean,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

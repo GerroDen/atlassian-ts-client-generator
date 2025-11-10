@@ -23,7 +23,7 @@ import type {
   User,
   UserColumnRequestBody,
   UserMigrationBean,
-} from '../models/index';
+} from '../models';
 
 export interface BulkGetUsersRequest {
     accountId: Array<string>;
@@ -41,7 +41,7 @@ export interface BulkGetUsersMigrationRequest {
 }
 
 export interface CreateUserRequest {
-    newUserDetails: Omit<NewUserDetails, 'self'>;
+    requestBody: { [key: string]: any; };
 }
 
 export interface GetAllUsersRequest {
@@ -106,33 +106,30 @@ export class UsersApi extends runtime.BaseAPI {
      * Bulk get users
      */
     async bulkGetUsersRaw(requestParameters: BulkGetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUser>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling bulkGetUsers().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling bulkGetUsers.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -171,20 +168,20 @@ export class UsersApi extends runtime.BaseAPI {
     async bulkGetUsersMigrationRaw(requestParameters: BulkGetUsersMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserMigrationBean>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -221,11 +218,8 @@ export class UsersApi extends runtime.BaseAPI {
      * Create user
      */
     async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters['newUserDetails'] == null) {
-            throw new runtime.RequiredError(
-                'newUserDetails',
-                'Required parameter "newUserDetails" was null or undefined when calling createUser().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createUser.');
         }
 
         const queryParameters: any = {};
@@ -247,7 +241,7 @@ export class UsersApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['newUserDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -269,12 +263,12 @@ export class UsersApi extends runtime.BaseAPI {
     async getAllUsersRaw(requestParameters: GetAllUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -313,12 +307,12 @@ export class UsersApi extends runtime.BaseAPI {
     async getAllUsersDefaultRaw(requestParameters: GetAllUsersDefaultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -357,20 +351,20 @@ export class UsersApi extends runtime.BaseAPI {
     async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -409,12 +403,12 @@ export class UsersApi extends runtime.BaseAPI {
     async getUserDefaultColumnsRaw(requestParameters: GetUserDefaultColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ColumnItem>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -451,17 +445,14 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user email
      */
     async getUserEmailRaw(requestParameters: GetUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling getUserEmail().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getUserEmail.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -493,17 +484,14 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user email bulk
      */
     async getUserEmailBulkRaw(requestParameters: GetUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnrestrictedUserEmail>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling getUserEmailBulk().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getUserEmailBulk.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -535,25 +523,22 @@ export class UsersApi extends runtime.BaseAPI {
      * Get user groups
      */
     async getUserGroupsRaw(requestParameters: GetUserGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<GroupName>>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling getUserGroups().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getUserGroups.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -590,25 +575,22 @@ export class UsersApi extends runtime.BaseAPI {
      * Delete user
      */
     async removeUserRaw(requestParameters: RemoveUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling removeUser().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling removeUser.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -646,12 +628,12 @@ export class UsersApi extends runtime.BaseAPI {
     async resetUserColumnsRaw(requestParameters: ResetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -687,17 +669,14 @@ export class UsersApi extends runtime.BaseAPI {
      * Set user default columns
      */
     async setUserColumnsRaw(requestParameters: SetUserColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['userColumnRequestBody'] == null) {
-            throw new runtime.RequiredError(
-                'userColumnRequestBody',
-                'Required parameter "userColumnRequestBody" was null or undefined when calling setUserColumns().'
-            );
+        if (requestParameters.userColumnRequestBody === null || requestParameters.userColumnRequestBody === undefined) {
+            throw new runtime.RequiredError('userColumnRequestBody','Required parameter requestParameters.userColumnRequestBody was null or undefined when calling setUserColumns.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -717,7 +696,7 @@ export class UsersApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['userColumnRequestBody'],
+            body: requestParameters.userColumnRequestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

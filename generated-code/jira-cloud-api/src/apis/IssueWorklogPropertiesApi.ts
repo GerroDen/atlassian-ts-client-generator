@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EntityProperty,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteWorklogPropertyRequest {
     issueIdOrKey: string;
@@ -53,25 +53,16 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
      * Delete worklog property
      */
     async deleteWorklogPropertyRaw(requestParameters: DeleteWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteWorklogProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteWorklogProperty.');
         }
 
-        if (requestParameters['worklogId'] == null) {
-            throw new runtime.RequiredError(
-                'worklogId',
-                'Required parameter "worklogId" was null or undefined when calling deleteWorklogProperty().'
-            );
+        if (requestParameters.worklogId === null || requestParameters.worklogId === undefined) {
+            throw new runtime.RequiredError('worklogId','Required parameter requestParameters.worklogId was null or undefined when calling deleteWorklogProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteWorklogProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteWorklogProperty.');
         }
 
         const queryParameters: any = {};
@@ -87,7 +78,7 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters.worklogId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -109,25 +100,16 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
      * Get worklog property
      */
     async getWorklogPropertyRaw(requestParameters: GetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getWorklogProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getWorklogProperty.');
         }
 
-        if (requestParameters['worklogId'] == null) {
-            throw new runtime.RequiredError(
-                'worklogId',
-                'Required parameter "worklogId" was null or undefined when calling getWorklogProperty().'
-            );
+        if (requestParameters.worklogId === null || requestParameters.worklogId === undefined) {
+            throw new runtime.RequiredError('worklogId','Required parameter requestParameters.worklogId was null or undefined when calling getWorklogProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getWorklogProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getWorklogProperty.');
         }
 
         const queryParameters: any = {};
@@ -143,7 +125,7 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters.worklogId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -166,18 +148,12 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
      * Get worklog property keys
      */
     async getWorklogPropertyKeysRaw(requestParameters: GetWorklogPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getWorklogPropertyKeys().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getWorklogPropertyKeys.');
         }
 
-        if (requestParameters['worklogId'] == null) {
-            throw new runtime.RequiredError(
-                'worklogId',
-                'Required parameter "worklogId" was null or undefined when calling getWorklogPropertyKeys().'
-            );
+        if (requestParameters.worklogId === null || requestParameters.worklogId === undefined) {
+            throw new runtime.RequiredError('worklogId','Required parameter requestParameters.worklogId was null or undefined when calling getWorklogPropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -193,7 +169,7 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters.worklogId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -216,32 +192,20 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
      * Set worklog property
      */
     async setWorklogPropertyRaw(requestParameters: SetWorklogPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling setWorklogProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling setWorklogProperty.');
         }
 
-        if (requestParameters['worklogId'] == null) {
-            throw new runtime.RequiredError(
-                'worklogId',
-                'Required parameter "worklogId" was null or undefined when calling setWorklogProperty().'
-            );
+        if (requestParameters.worklogId === null || requestParameters.worklogId === undefined) {
+            throw new runtime.RequiredError('worklogId','Required parameter requestParameters.worklogId was null or undefined when calling setWorklogProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setWorklogProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setWorklogProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setWorklogProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setWorklogProperty.');
         }
 
         const queryParameters: any = {};
@@ -259,11 +223,11 @@ export class IssueWorklogPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters['worklogId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/worklog/{worklogId}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"worklogId"}}`, encodeURIComponent(String(requestParameters.worklogId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

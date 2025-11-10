@@ -18,7 +18,7 @@ import type {
   BulkIssueIsWatching,
   IssueList,
   Watchers,
-} from '../models/index';
+} from '../models';
 
 export interface AddWatcherRequest {
     issueIdOrKey: string;
@@ -49,18 +49,12 @@ export class IssueWatchersApi extends runtime.BaseAPI {
      * Add watcher
      */
     async addWatcherRaw(requestParameters: AddWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling addWatcher().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling addWatcher.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling addWatcher().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addWatcher.');
         }
 
         const queryParameters: any = {};
@@ -78,11 +72,11 @@ export class IssueWatchersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -106,11 +100,8 @@ export class IssueWatchersApi extends runtime.BaseAPI {
      * Get is watching issue bulk
      */
     async getIsWatchingIssueBulkRaw(requestParameters: GetIsWatchingIssueBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkIssueIsWatching>> {
-        if (requestParameters['issueList'] == null) {
-            throw new runtime.RequiredError(
-                'issueList',
-                'Required parameter "issueList" was null or undefined when calling getIsWatchingIssueBulk().'
-            );
+        if (requestParameters.issueList === null || requestParameters.issueList === undefined) {
+            throw new runtime.RequiredError('issueList','Required parameter requestParameters.issueList was null or undefined when calling getIsWatchingIssueBulk.');
         }
 
         const queryParameters: any = {};
@@ -132,7 +123,7 @@ export class IssueWatchersApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueList'],
+            body: requestParameters.issueList,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -152,11 +143,8 @@ export class IssueWatchersApi extends runtime.BaseAPI {
      * Get issue watchers
      */
     async getIssueWatchersRaw(requestParameters: GetIssueWatchersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Watchers>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getIssueWatchers().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssueWatchers.');
         }
 
         const queryParameters: any = {};
@@ -172,7 +160,7 @@ export class IssueWatchersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -195,21 +183,18 @@ export class IssueWatchersApi extends runtime.BaseAPI {
      * Delete watcher
      */
     async removeWatcherRaw(requestParameters: RemoveWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling removeWatcher().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling removeWatcher.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -223,7 +208,7 @@ export class IssueWatchersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/watchers`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

@@ -19,7 +19,7 @@ import type {
   ActorsMap,
   ProjectRole,
   ProjectRoleActorsUpdateBean,
-} from '../models/index';
+} from '../models';
 
 export interface AddActorUsersRequest {
     projectIdOrKey: string;
@@ -54,7 +54,7 @@ export interface GetProjectRoleActorsForRoleRequest {
 export interface SetActorsRequest {
     projectIdOrKey: string;
     id: number;
-    projectRoleActorsUpdateBean: Omit<ProjectRoleActorsUpdateBean, 'id'>;
+    projectRoleActorsUpdateBean: ProjectRoleActorsUpdateBean;
 }
 
 /**
@@ -67,25 +67,16 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Add actors to project role
      */
     async addActorUsersRaw(requestParameters: AddActorUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling addActorUsers().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling addActorUsers.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling addActorUsers().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addActorUsers.');
         }
 
-        if (requestParameters['actorsMap'] == null) {
-            throw new runtime.RequiredError(
-                'actorsMap',
-                'Required parameter "actorsMap" was null or undefined when calling addActorUsers().'
-            );
+        if (requestParameters.actorsMap === null || requestParameters.actorsMap === undefined) {
+            throw new runtime.RequiredError('actorsMap','Required parameter requestParameters.actorsMap was null or undefined when calling addActorUsers.');
         }
 
         const queryParameters: any = {};
@@ -103,11 +94,11 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['actorsMap'],
+            body: requestParameters.actorsMap,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -127,18 +118,12 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Add default actors to project role
      */
     async addProjectRoleActorsToRoleRaw(requestParameters: AddProjectRoleActorsToRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling addProjectRoleActorsToRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addProjectRoleActorsToRole.');
         }
 
-        if (requestParameters['actorInputBean'] == null) {
-            throw new runtime.RequiredError(
-                'actorInputBean',
-                'Required parameter "actorInputBean" was null or undefined when calling addProjectRoleActorsToRole().'
-            );
+        if (requestParameters.actorInputBean === null || requestParameters.actorInputBean === undefined) {
+            throw new runtime.RequiredError('actorInputBean','Required parameter requestParameters.actorInputBean was null or undefined when calling addProjectRoleActorsToRole.');
         }
 
         const queryParameters: any = {};
@@ -156,11 +141,11 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['actorInputBean'],
+            body: requestParameters.actorInputBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -180,32 +165,26 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Delete actors from project role
      */
     async deleteActorRaw(requestParameters: DeleteActorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling deleteActor().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling deleteActor.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteActor().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteActor.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['user'] != null) {
-            queryParameters['user'] = requestParameters['user'];
+        if (requestParameters.user !== undefined) {
+            queryParameters['user'] = requestParameters.user;
         }
 
-        if (requestParameters['group'] != null) {
-            queryParameters['group'] = requestParameters['group'];
+        if (requestParameters.group !== undefined) {
+            queryParameters['group'] = requestParameters.group;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -219,7 +198,7 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -241,25 +220,22 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Delete default actors from project role
      */
     async deleteProjectRoleActorsFromRoleRaw(requestParameters: DeleteProjectRoleActorsFromRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteProjectRoleActorsFromRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteProjectRoleActorsFromRole.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['user'] != null) {
-            queryParameters['user'] = requestParameters['user'];
+        if (requestParameters.user !== undefined) {
+            queryParameters['user'] = requestParameters.user;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['group'] != null) {
-            queryParameters['group'] = requestParameters['group'];
+        if (requestParameters.group !== undefined) {
+            queryParameters['group'] = requestParameters.group;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -273,7 +249,7 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -296,11 +272,8 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Get default actors for project role
      */
     async getProjectRoleActorsForRoleRaw(requestParameters: GetProjectRoleActorsForRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getProjectRoleActorsForRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getProjectRoleActorsForRole.');
         }
 
         const queryParameters: any = {};
@@ -316,7 +289,7 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}/actors`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -339,25 +312,16 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
      * Set actors for project role
      */
     async setActorsRaw(requestParameters: SetActorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling setActors().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling setActors.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setActors().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setActors.');
         }
 
-        if (requestParameters['projectRoleActorsUpdateBean'] == null) {
-            throw new runtime.RequiredError(
-                'projectRoleActorsUpdateBean',
-                'Required parameter "projectRoleActorsUpdateBean" was null or undefined when calling setActors().'
-            );
+        if (requestParameters.projectRoleActorsUpdateBean === null || requestParameters.projectRoleActorsUpdateBean === undefined) {
+            throw new runtime.RequiredError('projectRoleActorsUpdateBean','Required parameter requestParameters.projectRoleActorsUpdateBean was null or undefined when calling setActors.');
         }
 
         const queryParameters: any = {};
@@ -375,11 +339,11 @@ export class ProjectRoleActorsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectRoleActorsUpdateBean'],
+            body: requestParameters.projectRoleActorsUpdateBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

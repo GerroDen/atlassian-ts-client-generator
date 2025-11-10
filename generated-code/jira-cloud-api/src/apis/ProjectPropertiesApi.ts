@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EntityProperty,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteProjectPropertyRequest {
     projectIdOrKey: string;
@@ -49,18 +49,12 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
      * Delete project property
      */
     async deleteProjectPropertyRaw(requestParameters: DeleteProjectPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling deleteProjectProperty().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling deleteProjectProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteProjectProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteProjectProperty.');
         }
 
         const queryParameters: any = {};
@@ -76,7 +70,7 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -98,18 +92,12 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
      * Get project property
      */
     async getProjectPropertyRaw(requestParameters: GetProjectPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectProperty().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getProjectProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getProjectProperty.');
         }
 
         const queryParameters: any = {};
@@ -125,7 +113,7 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -148,11 +136,8 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
      * Get project property keys
      */
     async getProjectPropertyKeysRaw(requestParameters: GetProjectPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectPropertyKeys().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectPropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -168,7 +153,7 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/properties`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/properties`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -191,25 +176,16 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
      * Set project property
      */
     async setProjectPropertyRaw(requestParameters: SetProjectPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling setProjectProperty().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling setProjectProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setProjectProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setProjectProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setProjectProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setProjectProperty.');
         }
 
         const queryParameters: any = {};
@@ -227,11 +203,11 @@ export class ProjectPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/properties/{propertyKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

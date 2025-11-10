@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EntityProperty,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteUserPropertyRequest {
     propertyKey: string;
@@ -57,25 +57,22 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Delete user property
      */
     async deleteUserPropertyRaw(requestParameters: DeleteUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteUserProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteUserProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['userKey'] != null) {
-            queryParameters['userKey'] = requestParameters['userKey'];
+        if (requestParameters.userKey !== undefined) {
+            queryParameters['userKey'] = requestParameters.userKey;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -89,7 +86,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -111,25 +108,22 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Get user property
      */
     async getUserPropertyRaw(requestParameters: GetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getUserProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getUserProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['userKey'] != null) {
-            queryParameters['userKey'] = requestParameters['userKey'];
+        if (requestParameters.userKey !== undefined) {
+            queryParameters['userKey'] = requestParameters.userKey;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -143,7 +137,7 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -168,16 +162,16 @@ export class UserPropertiesApi extends runtime.BaseAPI {
     async getUserPropertyKeysRaw(requestParameters: GetUserPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['userKey'] != null) {
-            queryParameters['userKey'] = requestParameters['userKey'];
+        if (requestParameters.userKey !== undefined) {
+            queryParameters['userKey'] = requestParameters.userKey;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -214,32 +208,26 @@ export class UserPropertiesApi extends runtime.BaseAPI {
      * Set user property
      */
     async setUserPropertyRaw(requestParameters: SetUserPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setUserProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setUserProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setUserProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setUserProperty.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['userKey'] != null) {
-            queryParameters['userKey'] = requestParameters['userKey'];
+        if (requestParameters.userKey !== undefined) {
+            queryParameters['userKey'] = requestParameters.userKey;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -255,11 +243,11 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/user/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

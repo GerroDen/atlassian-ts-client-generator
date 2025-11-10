@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   PageBeanIssueSecurityLevelMember,
   SecurityLevel,
-} from '../models/index';
+} from '../models';
 
 export interface GetIssueSecurityLevelRequest {
     id: string;
@@ -41,11 +41,8 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
      * Get issue security level
      */
     async getIssueSecurityLevelRaw(requestParameters: GetIssueSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityLevel>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getIssueSecurityLevel().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getIssueSecurityLevel.');
         }
 
         const queryParameters: any = {};
@@ -61,7 +58,7 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/securitylevel/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/securitylevel/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -84,29 +81,26 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
      * Get issue security level members by issue security scheme
      */
     async getIssueSecurityLevelMembersRaw(requestParameters: GetIssueSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueSecurityLevelMember>> {
-        if (requestParameters['issueSecuritySchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueSecuritySchemeId',
-                'Required parameter "issueSecuritySchemeId" was null or undefined when calling getIssueSecurityLevelMembers().'
-            );
+        if (requestParameters.issueSecuritySchemeId === null || requestParameters.issueSecuritySchemeId === undefined) {
+            throw new runtime.RequiredError('issueSecuritySchemeId','Required parameter requestParameters.issueSecuritySchemeId was null or undefined when calling getIssueSecurityLevelMembers.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['issueSecurityLevelId'] != null) {
-            queryParameters['issueSecurityLevelId'] = requestParameters['issueSecurityLevelId'];
+        if (requestParameters.issueSecurityLevelId) {
+            queryParameters['issueSecurityLevelId'] = requestParameters.issueSecurityLevelId;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -120,7 +114,7 @@ export class IssueSecurityLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{issueSecuritySchemeId}/members`.replace(`{${"issueSecuritySchemeId"}}`, encodeURIComponent(String(requestParameters['issueSecuritySchemeId']))),
+            path: `/rest/api/3/issuesecurityschemes/{issueSecuritySchemeId}/members`.replace(`{${"issueSecuritySchemeId"}}`, encodeURIComponent(String(requestParameters.issueSecuritySchemeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

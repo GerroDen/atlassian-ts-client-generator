@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   StatusCategory,
-} from '../models/index';
+} from '../models';
 
 export interface GetStatusCategoryRequest {
     idOrKey: string;
@@ -68,11 +68,8 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
      * Get status category
      */
     async getStatusCategoryRaw(requestParameters: GetStatusCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusCategory>> {
-        if (requestParameters['idOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'idOrKey',
-                'Required parameter "idOrKey" was null or undefined when calling getStatusCategory().'
-            );
+        if (requestParameters.idOrKey === null || requestParameters.idOrKey === undefined) {
+            throw new runtime.RequiredError('idOrKey','Required parameter requestParameters.idOrKey was null or undefined when calling getStatusCategory.');
         }
 
         const queryParameters: any = {};
@@ -88,7 +85,7 @@ export class WorkflowStatusCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuscategory/{idOrKey}`.replace(`{${"idOrKey"}}`, encodeURIComponent(String(requestParameters['idOrKey']))),
+            path: `/rest/api/3/statuscategory/{idOrKey}`.replace(`{${"idOrKey"}}`, encodeURIComponent(String(requestParameters.idOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

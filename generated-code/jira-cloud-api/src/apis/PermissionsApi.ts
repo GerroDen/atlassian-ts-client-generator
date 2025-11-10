@@ -21,7 +21,7 @@ import type {
   Permissions,
   PermissionsKeysBean,
   PermittedProjects,
-} from '../models/index';
+} from '../models';
 
 export interface GetBulkPermissionsRequest {
     bulkPermissionsRequestBean: BulkPermissionsRequestBean;
@@ -88,11 +88,8 @@ export class PermissionsApi extends runtime.BaseAPI {
      * Get bulk permissions
      */
     async getBulkPermissionsRaw(requestParameters: GetBulkPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkPermissionGrants>> {
-        if (requestParameters['bulkPermissionsRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'bulkPermissionsRequestBean',
-                'Required parameter "bulkPermissionsRequestBean" was null or undefined when calling getBulkPermissions().'
-            );
+        if (requestParameters.bulkPermissionsRequestBean === null || requestParameters.bulkPermissionsRequestBean === undefined) {
+            throw new runtime.RequiredError('bulkPermissionsRequestBean','Required parameter requestParameters.bulkPermissionsRequestBean was null or undefined when calling getBulkPermissions.');
         }
 
         const queryParameters: any = {};
@@ -114,7 +111,7 @@ export class PermissionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkPermissionsRequestBean'],
+            body: requestParameters.bulkPermissionsRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -136,36 +133,36 @@ export class PermissionsApi extends runtime.BaseAPI {
     async getMyPermissionsRaw(requestParameters: GetMyPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Permissions>> {
         const queryParameters: any = {};
 
-        if (requestParameters['projectKey'] != null) {
-            queryParameters['projectKey'] = requestParameters['projectKey'];
+        if (requestParameters.projectKey !== undefined) {
+            queryParameters['projectKey'] = requestParameters.projectKey;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['issueKey'] != null) {
-            queryParameters['issueKey'] = requestParameters['issueKey'];
+        if (requestParameters.issueKey !== undefined) {
+            queryParameters['issueKey'] = requestParameters.issueKey;
         }
 
-        if (requestParameters['issueId'] != null) {
-            queryParameters['issueId'] = requestParameters['issueId'];
+        if (requestParameters.issueId !== undefined) {
+            queryParameters['issueId'] = requestParameters.issueId;
         }
 
-        if (requestParameters['permissions'] != null) {
-            queryParameters['permissions'] = requestParameters['permissions'];
+        if (requestParameters.permissions !== undefined) {
+            queryParameters['permissions'] = requestParameters.permissions;
         }
 
-        if (requestParameters['projectUuid'] != null) {
-            queryParameters['projectUuid'] = requestParameters['projectUuid'];
+        if (requestParameters.projectUuid !== undefined) {
+            queryParameters['projectUuid'] = requestParameters.projectUuid;
         }
 
-        if (requestParameters['projectConfigurationUuid'] != null) {
-            queryParameters['projectConfigurationUuid'] = requestParameters['projectConfigurationUuid'];
+        if (requestParameters.projectConfigurationUuid !== undefined) {
+            queryParameters['projectConfigurationUuid'] = requestParameters.projectConfigurationUuid;
         }
 
-        if (requestParameters['commentId'] != null) {
-            queryParameters['commentId'] = requestParameters['commentId'];
+        if (requestParameters.commentId !== undefined) {
+            queryParameters['commentId'] = requestParameters.commentId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -202,11 +199,8 @@ export class PermissionsApi extends runtime.BaseAPI {
      * Get permitted projects
      */
     async getPermittedProjectsRaw(requestParameters: GetPermittedProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedProjects>> {
-        if (requestParameters['permissionsKeysBean'] == null) {
-            throw new runtime.RequiredError(
-                'permissionsKeysBean',
-                'Required parameter "permissionsKeysBean" was null or undefined when calling getPermittedProjects().'
-            );
+        if (requestParameters.permissionsKeysBean === null || requestParameters.permissionsKeysBean === undefined) {
+            throw new runtime.RequiredError('permissionsKeysBean','Required parameter requestParameters.permissionsKeysBean was null or undefined when calling getPermittedProjects.');
         }
 
         const queryParameters: any = {};
@@ -228,7 +222,7 @@ export class PermissionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['permissionsKeysBean'],
+            body: requestParameters.permissionsKeysBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

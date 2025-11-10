@@ -20,7 +20,7 @@ import type {
   PageBeanUiModificationDetails,
   UiModificationIdentifiers,
   UpdateUiModificationDetails,
-} from '../models/index';
+} from '../models';
 
 export interface CreateUiModificationRequest {
     createUiModificationDetails: CreateUiModificationDetails;
@@ -51,11 +51,8 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
      * Create UI modification
      */
     async createUiModificationRaw(requestParameters: CreateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UiModificationIdentifiers>> {
-        if (requestParameters['createUiModificationDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createUiModificationDetails',
-                'Required parameter "createUiModificationDetails" was null or undefined when calling createUiModification().'
-            );
+        if (requestParameters.createUiModificationDetails === null || requestParameters.createUiModificationDetails === undefined) {
+            throw new runtime.RequiredError('createUiModificationDetails','Required parameter requestParameters.createUiModificationDetails was null or undefined when calling createUiModification.');
         }
 
         const queryParameters: any = {};
@@ -77,7 +74,7 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createUiModificationDetails'],
+            body: requestParameters.createUiModificationDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -97,11 +94,8 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
      * Delete UI modification
      */
     async deleteUiModificationRaw(requestParameters: DeleteUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['uiModificationId'] == null) {
-            throw new runtime.RequiredError(
-                'uiModificationId',
-                'Required parameter "uiModificationId" was null or undefined when calling deleteUiModification().'
-            );
+        if (requestParameters.uiModificationId === null || requestParameters.uiModificationId === undefined) {
+            throw new runtime.RequiredError('uiModificationId','Required parameter requestParameters.uiModificationId was null or undefined when calling deleteUiModification.');
         }
 
         const queryParameters: any = {};
@@ -117,7 +111,7 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/uiModifications/{uiModificationId}`.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters['uiModificationId']))),
+            path: `/rest/api/3/uiModifications/{uiModificationId}`.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters.uiModificationId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -146,16 +140,16 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
     async getUiModificationsRaw(requestParameters: GetUiModificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUiModificationDetails>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -192,18 +186,12 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
      * Update UI modification
      */
     async updateUiModificationRaw(requestParameters: UpdateUiModificationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['uiModificationId'] == null) {
-            throw new runtime.RequiredError(
-                'uiModificationId',
-                'Required parameter "uiModificationId" was null or undefined when calling updateUiModification().'
-            );
+        if (requestParameters.uiModificationId === null || requestParameters.uiModificationId === undefined) {
+            throw new runtime.RequiredError('uiModificationId','Required parameter requestParameters.uiModificationId was null or undefined when calling updateUiModification.');
         }
 
-        if (requestParameters['updateUiModificationDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateUiModificationDetails',
-                'Required parameter "updateUiModificationDetails" was null or undefined when calling updateUiModification().'
-            );
+        if (requestParameters.updateUiModificationDetails === null || requestParameters.updateUiModificationDetails === undefined) {
+            throw new runtime.RequiredError('updateUiModificationDetails','Required parameter requestParameters.updateUiModificationDetails was null or undefined when calling updateUiModification.');
         }
 
         const queryParameters: any = {};
@@ -221,11 +209,11 @@ export class UIModificationsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/uiModifications/{uiModificationId}`.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters['uiModificationId']))),
+            path: `/rest/api/3/uiModifications/{uiModificationId}`.replace(`{${"uiModificationId"}}`, encodeURIComponent(String(requestParameters.uiModificationId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateUiModificationDetails'],
+            body: requestParameters.updateUiModificationDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

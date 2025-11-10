@@ -18,7 +18,7 @@ import type {
   DefaultShareScope,
   SharePermission,
   SharePermissionInputBean,
-} from '../models/index';
+} from '../models';
 
 export interface AddSharePermissionRequest {
     id: number;
@@ -53,18 +53,12 @@ export class FilterSharingApi extends runtime.BaseAPI {
      * Add share permission
      */
     async addSharePermissionRaw(requestParameters: AddSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling addSharePermission().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addSharePermission.');
         }
 
-        if (requestParameters['sharePermissionInputBean'] == null) {
-            throw new runtime.RequiredError(
-                'sharePermissionInputBean',
-                'Required parameter "sharePermissionInputBean" was null or undefined when calling addSharePermission().'
-            );
+        if (requestParameters.sharePermissionInputBean === null || requestParameters.sharePermissionInputBean === undefined) {
+            throw new runtime.RequiredError('sharePermissionInputBean','Required parameter requestParameters.sharePermissionInputBean was null or undefined when calling addSharePermission.');
         }
 
         const queryParameters: any = {};
@@ -82,11 +76,11 @@ export class FilterSharingApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/permission`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/permission`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['sharePermissionInputBean'],
+            body: requestParameters.sharePermissionInputBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -106,18 +100,12 @@ export class FilterSharingApi extends runtime.BaseAPI {
      * Delete share permission
      */
     async deleteSharePermissionRaw(requestParameters: DeleteSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteSharePermission().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteSharePermission.');
         }
 
-        if (requestParameters['permissionId'] == null) {
-            throw new runtime.RequiredError(
-                'permissionId',
-                'Required parameter "permissionId" was null or undefined when calling deleteSharePermission().'
-            );
+        if (requestParameters.permissionId === null || requestParameters.permissionId === undefined) {
+            throw new runtime.RequiredError('permissionId','Required parameter requestParameters.permissionId was null or undefined when calling deleteSharePermission.');
         }
 
         const queryParameters: any = {};
@@ -133,7 +121,7 @@ export class FilterSharingApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/permission/{permissionId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId']))),
+            path: `/rest/api/3/filter/{id}/permission/{permissionId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters.permissionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -191,18 +179,12 @@ export class FilterSharingApi extends runtime.BaseAPI {
      * Get share permission
      */
     async getSharePermissionRaw(requestParameters: GetSharePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SharePermission>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getSharePermission().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSharePermission.');
         }
 
-        if (requestParameters['permissionId'] == null) {
-            throw new runtime.RequiredError(
-                'permissionId',
-                'Required parameter "permissionId" was null or undefined when calling getSharePermission().'
-            );
+        if (requestParameters.permissionId === null || requestParameters.permissionId === undefined) {
+            throw new runtime.RequiredError('permissionId','Required parameter requestParameters.permissionId was null or undefined when calling getSharePermission.');
         }
 
         const queryParameters: any = {};
@@ -218,7 +200,7 @@ export class FilterSharingApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/permission/{permissionId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId']))),
+            path: `/rest/api/3/filter/{id}/permission/{permissionId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters.permissionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -241,11 +223,8 @@ export class FilterSharingApi extends runtime.BaseAPI {
      * Get share permissions
      */
     async getSharePermissionsRaw(requestParameters: GetSharePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SharePermission>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getSharePermissions().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSharePermissions.');
         }
 
         const queryParameters: any = {};
@@ -261,7 +240,7 @@ export class FilterSharingApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/filter/{id}/permission`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/filter/{id}/permission`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -284,11 +263,8 @@ export class FilterSharingApi extends runtime.BaseAPI {
      * Set default share scope
      */
     async setDefaultShareScopeRaw(requestParameters: SetDefaultShareScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultShareScope>> {
-        if (requestParameters['defaultShareScope'] == null) {
-            throw new runtime.RequiredError(
-                'defaultShareScope',
-                'Required parameter "defaultShareScope" was null or undefined when calling setDefaultShareScope().'
-            );
+        if (requestParameters.defaultShareScope === null || requestParameters.defaultShareScope === undefined) {
+            throw new runtime.RequiredError('defaultShareScope','Required parameter requestParameters.defaultShareScope was null or undefined when calling setDefaultShareScope.');
         }
 
         const queryParameters: any = {};
@@ -310,7 +286,7 @@ export class FilterSharingApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['defaultShareScope'],
+            body: requestParameters.defaultShareScope,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

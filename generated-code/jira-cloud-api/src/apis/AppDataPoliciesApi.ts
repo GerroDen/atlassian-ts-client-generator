@@ -18,7 +18,7 @@ import type {
   ErrorCollection,
   ProjectDataPolicies,
   WorkspaceDataPolicy,
-} from '../models/index';
+} from '../models';
 
 export interface GetPoliciesRequest {
     ids?: string;
@@ -36,8 +36,8 @@ export class AppDataPoliciesApi extends runtime.BaseAPI {
     async getPoliciesRaw(requestParameters: GetPoliciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDataPolicies>> {
         const queryParameters: any = {};
 
-        if (requestParameters['ids'] != null) {
-            queryParameters['ids'] = requestParameters['ids'];
+        if (requestParameters.ids !== undefined) {
+            queryParameters['ids'] = requestParameters.ids;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -23,15 +23,15 @@ import type {
   PageBeanNotificationScheme,
   PageBeanNotificationSchemeAndProjectMappingJsonBean,
   UpdateNotificationSchemeDetails,
-} from '../models/index';
+} from '../models';
 
 export interface AddNotificationsRequest {
     id: string;
-    addNotificationsDetails: AddNotificationsDetails;
+    requestBody: { [key: string]: any; };
 }
 
 export interface CreateNotificationSchemeRequest {
-    createNotificationSchemeDetails: CreateNotificationSchemeDetails;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeleteNotificationSchemeRequest {
@@ -66,7 +66,7 @@ export interface RemoveNotificationFromNotificationSchemeRequest {
 
 export interface UpdateNotificationSchemeRequest {
     id: string;
-    updateNotificationSchemeDetails: UpdateNotificationSchemeDetails;
+    requestBody: { [key: string]: any; };
 }
 
 /**
@@ -79,18 +79,12 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Add notifications to notification scheme
      */
     async addNotificationsRaw(requestParameters: AddNotificationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling addNotifications().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addNotifications.');
         }
 
-        if (requestParameters['addNotificationsDetails'] == null) {
-            throw new runtime.RequiredError(
-                'addNotificationsDetails',
-                'Required parameter "addNotificationsDetails" was null or undefined when calling addNotifications().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling addNotifications.');
         }
 
         const queryParameters: any = {};
@@ -108,11 +102,11 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/notificationscheme/{id}/notification`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/notificationscheme/{id}/notification`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['addNotificationsDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -136,11 +130,8 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Create notification scheme
      */
     async createNotificationSchemeRaw(requestParameters: CreateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationSchemeId>> {
-        if (requestParameters['createNotificationSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createNotificationSchemeDetails',
-                'Required parameter "createNotificationSchemeDetails" was null or undefined when calling createNotificationScheme().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createNotificationScheme.');
         }
 
         const queryParameters: any = {};
@@ -162,7 +153,7 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createNotificationSchemeDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -182,11 +173,8 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Delete notification scheme
      */
     async deleteNotificationSchemeRaw(requestParameters: DeleteNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['notificationSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'notificationSchemeId',
-                'Required parameter "notificationSchemeId" was null or undefined when calling deleteNotificationScheme().'
-            );
+        if (requestParameters.notificationSchemeId === null || requestParameters.notificationSchemeId === undefined) {
+            throw new runtime.RequiredError('notificationSchemeId','Required parameter requestParameters.notificationSchemeId was null or undefined when calling deleteNotificationScheme.');
         }
 
         const queryParameters: any = {};
@@ -202,7 +190,7 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/notificationscheme/{notificationSchemeId}`.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters['notificationSchemeId']))),
+            path: `/rest/api/3/notificationscheme/{notificationSchemeId}`.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters.notificationSchemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -229,17 +217,14 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Get notification scheme
      */
     async getNotificationSchemeRaw(requestParameters: GetNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getNotificationScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getNotificationScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -253,7 +238,7 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/notificationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/notificationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -278,20 +263,20 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     async getNotificationSchemeToProjectMappingsRaw(requestParameters: GetNotificationSchemeToProjectMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationSchemeAndProjectMappingJsonBean>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['notificationSchemeId'] != null) {
-            queryParameters['notificationSchemeId'] = requestParameters['notificationSchemeId'];
+        if (requestParameters.notificationSchemeId) {
+            queryParameters['notificationSchemeId'] = requestParameters.notificationSchemeId;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -330,28 +315,28 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
     async getNotificationSchemesRaw(requestParameters: GetNotificationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanNotificationScheme>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['onlyDefault'] != null) {
-            queryParameters['onlyDefault'] = requestParameters['onlyDefault'];
+        if (requestParameters.onlyDefault !== undefined) {
+            queryParameters['onlyDefault'] = requestParameters.onlyDefault;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -388,18 +373,12 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Remove notification from notification scheme
      */
     async removeNotificationFromNotificationSchemeRaw(requestParameters: RemoveNotificationFromNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['notificationSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'notificationSchemeId',
-                'Required parameter "notificationSchemeId" was null or undefined when calling removeNotificationFromNotificationScheme().'
-            );
+        if (requestParameters.notificationSchemeId === null || requestParameters.notificationSchemeId === undefined) {
+            throw new runtime.RequiredError('notificationSchemeId','Required parameter requestParameters.notificationSchemeId was null or undefined when calling removeNotificationFromNotificationScheme.');
         }
 
-        if (requestParameters['notificationId'] == null) {
-            throw new runtime.RequiredError(
-                'notificationId',
-                'Required parameter "notificationId" was null or undefined when calling removeNotificationFromNotificationScheme().'
-            );
+        if (requestParameters.notificationId === null || requestParameters.notificationId === undefined) {
+            throw new runtime.RequiredError('notificationId','Required parameter requestParameters.notificationId was null or undefined when calling removeNotificationFromNotificationScheme.');
         }
 
         const queryParameters: any = {};
@@ -415,7 +394,7 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/notificationscheme/{notificationSchemeId}/notification/{notificationId}`.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters['notificationSchemeId']))).replace(`{${"notificationId"}}`, encodeURIComponent(String(requestParameters['notificationId']))),
+            path: `/rest/api/3/notificationscheme/{notificationSchemeId}/notification/{notificationId}`.replace(`{${"notificationSchemeId"}}`, encodeURIComponent(String(requestParameters.notificationSchemeId))).replace(`{${"notificationId"}}`, encodeURIComponent(String(requestParameters.notificationId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -442,18 +421,12 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
      * Update notification scheme
      */
     async updateNotificationSchemeRaw(requestParameters: UpdateNotificationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateNotificationScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateNotificationScheme.');
         }
 
-        if (requestParameters['updateNotificationSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateNotificationSchemeDetails',
-                'Required parameter "updateNotificationSchemeDetails" was null or undefined when calling updateNotificationScheme().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateNotificationScheme.');
         }
 
         const queryParameters: any = {};
@@ -471,11 +444,11 @@ export class IssueNotificationSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/notificationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/notificationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateNotificationSchemeDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

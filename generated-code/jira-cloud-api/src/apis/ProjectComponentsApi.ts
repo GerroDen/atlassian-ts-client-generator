@@ -19,10 +19,10 @@ import type {
   PageBean2ComponentJsonBean,
   PageBeanComponentWithIssueCount,
   ProjectComponent,
-} from '../models/index';
+} from '../models';
 
 export interface CreateComponentRequest {
-    projectComponent: Omit<ProjectComponent, 'ari'|'assignee'|'id'|'isAssigneeTypeValid'|'lead'|'metadata'|'projectId'|'realAssignee'|'realAssigneeType'|'self'>;
+    projectComponent: ProjectComponent;
 }
 
 export interface DeleteComponentRequest {
@@ -62,7 +62,7 @@ export interface GetProjectComponentsPaginatedRequest {
 
 export interface UpdateComponentRequest {
     id: string;
-    projectComponent: Omit<ProjectComponent, 'ari'|'assignee'|'id'|'isAssigneeTypeValid'|'lead'|'metadata'|'projectId'|'realAssignee'|'realAssigneeType'|'self'>;
+    projectComponent: ProjectComponent;
 }
 
 /**
@@ -75,11 +75,8 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Create component
      */
     async createComponentRaw(requestParameters: CreateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
-        if (requestParameters['projectComponent'] == null) {
-            throw new runtime.RequiredError(
-                'projectComponent',
-                'Required parameter "projectComponent" was null or undefined when calling createComponent().'
-            );
+        if (requestParameters.projectComponent === null || requestParameters.projectComponent === undefined) {
+            throw new runtime.RequiredError('projectComponent','Required parameter requestParameters.projectComponent was null or undefined when calling createComponent.');
         }
 
         const queryParameters: any = {};
@@ -101,7 +98,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectComponent'],
+            body: requestParameters.projectComponent,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -121,17 +118,14 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Delete component
      */
     async deleteComponentRaw(requestParameters: DeleteComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteComponent().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteComponent.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['moveIssuesTo'] != null) {
-            queryParameters['moveIssuesTo'] = requestParameters['moveIssuesTo'];
+        if (requestParameters.moveIssuesTo !== undefined) {
+            queryParameters['moveIssuesTo'] = requestParameters.moveIssuesTo;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -145,7 +139,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -169,24 +163,24 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
     async findComponentsForProjectsRaw(requestParameters: FindComponentsForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2ComponentJsonBean>> {
         const queryParameters: any = {};
 
-        if (requestParameters['projectIdsOrKeys'] != null) {
-            queryParameters['projectIdsOrKeys'] = requestParameters['projectIdsOrKeys'];
+        if (requestParameters.projectIdsOrKeys) {
+            queryParameters['projectIdsOrKeys'] = requestParameters.projectIdsOrKeys;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -223,11 +217,8 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Get component
      */
     async getComponentRaw(requestParameters: GetComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getComponent().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getComponent.');
         }
 
         const queryParameters: any = {};
@@ -243,7 +234,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -266,11 +257,8 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Get component issues count
      */
     async getComponentRelatedIssuesRaw(requestParameters: GetComponentRelatedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ComponentIssuesCount>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getComponentRelatedIssues().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getComponentRelatedIssues.');
         }
 
         const queryParameters: any = {};
@@ -286,7 +274,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/component/{id}/relatedIssueCounts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/component/{id}/relatedIssueCounts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -309,17 +297,14 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Get project components
      */
     async getProjectComponentsRaw(requestParameters: GetProjectComponentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectComponent>>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectComponents().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectComponents.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['componentSource'] != null) {
-            queryParameters['componentSource'] = requestParameters['componentSource'];
+        if (requestParameters.componentSource !== undefined) {
+            queryParameters['componentSource'] = requestParameters.componentSource;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -333,7 +318,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/components`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/components`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -356,33 +341,30 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Get project components paginated
      */
     async getProjectComponentsPaginatedRaw(requestParameters: GetProjectComponentsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanComponentWithIssueCount>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectComponentsPaginated().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectComponentsPaginated.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['componentSource'] != null) {
-            queryParameters['componentSource'] = requestParameters['componentSource'];
+        if (requestParameters.componentSource !== undefined) {
+            queryParameters['componentSource'] = requestParameters.componentSource;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -396,7 +378,7 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/component`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/component`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -419,18 +401,12 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
      * Update component
      */
     async updateComponentRaw(requestParameters: UpdateComponentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectComponent>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateComponent().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateComponent.');
         }
 
-        if (requestParameters['projectComponent'] == null) {
-            throw new runtime.RequiredError(
-                'projectComponent',
-                'Required parameter "projectComponent" was null or undefined when calling updateComponent().'
-            );
+        if (requestParameters.projectComponent === null || requestParameters.projectComponent === undefined) {
+            throw new runtime.RequiredError('projectComponent','Required parameter requestParameters.projectComponent was null or undefined when calling updateComponent.');
         }
 
         const queryParameters: any = {};
@@ -448,11 +424,11 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/component/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectComponent'],
+            body: requestParameters.projectComponent,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -474,11 +450,11 @@ export class ProjectComponentsApi extends runtime.BaseAPI {
  */
 export const FindComponentsForProjectsOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name'
+    NameDesc: '-name',
+    NameAsc: '+name'
 } as const;
 export type FindComponentsForProjectsOrderByEnum = typeof FindComponentsForProjectsOrderByEnum[keyof typeof FindComponentsForProjectsOrderByEnum];
 /**
@@ -495,17 +471,17 @@ export type GetProjectComponentsComponentSourceEnum = typeof GetProjectComponent
  */
 export const GetProjectComponentsPaginatedOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     IssueCount: 'issueCount',
-    IssueCount2Desc: '-issueCount',
-    IssueCount3Asc: '+issueCount',
+    IssueCountDesc: '-issueCount',
+    IssueCountAsc: '+issueCount',
     Lead: 'lead',
-    Lead2Desc: '-lead',
-    Lead3Asc: '+lead',
+    LeadDesc: '-lead',
+    LeadAsc: '+lead',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name'
+    NameDesc: '-name',
+    NameAsc: '+name'
 } as const;
 export type GetProjectComponentsPaginatedOrderByEnum = typeof GetProjectComponentsPaginatedOrderByEnum[keyof typeof GetProjectComponentsPaginatedOrderByEnum];
 /**

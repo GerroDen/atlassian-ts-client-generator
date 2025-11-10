@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   StatusDetails,
-} from '../models/index';
+} from '../models';
 
 export interface GetStatusRequest {
     idOrName: string;
@@ -32,11 +32,8 @@ export class WorkflowStatusesApi extends runtime.BaseAPI {
      * Get status
      */
     async getStatusRaw(requestParameters: GetStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusDetails>> {
-        if (requestParameters['idOrName'] == null) {
-            throw new runtime.RequiredError(
-                'idOrName',
-                'Required parameter "idOrName" was null or undefined when calling getStatus().'
-            );
+        if (requestParameters.idOrName === null || requestParameters.idOrName === undefined) {
+            throw new runtime.RequiredError('idOrName','Required parameter requestParameters.idOrName was null or undefined when calling getStatus.');
         }
 
         const queryParameters: any = {};
@@ -52,7 +49,7 @@ export class WorkflowStatusesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/status/{idOrName}`.replace(`{${"idOrName"}}`, encodeURIComponent(String(requestParameters['idOrName']))),
+            path: `/rest/api/3/status/{idOrName}`.replace(`{${"idOrName"}}`, encodeURIComponent(String(requestParameters.idOrName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

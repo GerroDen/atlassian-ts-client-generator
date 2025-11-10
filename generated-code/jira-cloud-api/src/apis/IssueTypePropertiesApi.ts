@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EntityProperty,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteIssueTypePropertyRequest {
     issueTypeId: string;
@@ -49,18 +49,12 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
      * Delete issue type property
      */
     async deleteIssueTypePropertyRaw(requestParameters: DeleteIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling deleteIssueTypeProperty().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling deleteIssueTypeProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteIssueTypeProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteIssueTypeProperty.');
         }
 
         const queryParameters: any = {};
@@ -76,7 +70,7 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -98,18 +92,12 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
      * Get issue type property
      */
     async getIssueTypePropertyRaw(requestParameters: GetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling getIssueTypeProperty().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling getIssueTypeProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getIssueTypeProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getIssueTypeProperty.');
         }
 
         const queryParameters: any = {};
@@ -125,7 +113,7 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -148,11 +136,8 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
      * Get issue type property keys
      */
     async getIssueTypePropertyKeysRaw(requestParameters: GetIssueTypePropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling getIssueTypePropertyKeys().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling getIssueTypePropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -168,7 +153,7 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{issueTypeId}/properties`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))),
+            path: `/rest/api/3/issuetype/{issueTypeId}/properties`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -191,25 +176,16 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
      * Set issue type property
      */
     async setIssueTypePropertyRaw(requestParameters: SetIssueTypePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling setIssueTypeProperty().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling setIssueTypeProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setIssueTypeProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setIssueTypeProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setIssueTypeProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setIssueTypeProperty.');
         }
 
         const queryParameters: any = {};
@@ -227,11 +203,11 @@ export class IssueTypePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issuetype/{issueTypeId}/properties/{propertyKey}`.replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

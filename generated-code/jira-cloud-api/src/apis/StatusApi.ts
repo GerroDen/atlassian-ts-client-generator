@@ -22,7 +22,7 @@ import type {
   StatusProjectUsageDTO,
   StatusUpdateRequest,
   StatusWorkflowUsageDTO,
-} from '../models/index';
+} from '../models';
 
 export interface CreateStatusesRequest {
     statusCreateRequest: StatusCreateRequest;
@@ -82,11 +82,8 @@ export class StatusApi extends runtime.BaseAPI {
      * Bulk create statuses
      */
     async createStatusesRaw(requestParameters: CreateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
-        if (requestParameters['statusCreateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'statusCreateRequest',
-                'Required parameter "statusCreateRequest" was null or undefined when calling createStatuses().'
-            );
+        if (requestParameters.statusCreateRequest === null || requestParameters.statusCreateRequest === undefined) {
+            throw new runtime.RequiredError('statusCreateRequest','Required parameter requestParameters.statusCreateRequest was null or undefined when calling createStatuses.');
         }
 
         const queryParameters: any = {};
@@ -108,7 +105,7 @@ export class StatusApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['statusCreateRequest'],
+            body: requestParameters.statusCreateRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -128,17 +125,14 @@ export class StatusApi extends runtime.BaseAPI {
      * Bulk delete Statuses
      */
     async deleteStatusesByIdRaw(requestParameters: DeleteStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteStatusesById().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteStatusesById.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -179,28 +173,22 @@ export class StatusApi extends runtime.BaseAPI {
      * Get issue type usages by status and project
      */
     async getProjectIssueTypeUsagesForStatusRaw(requestParameters: GetProjectIssueTypeUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectIssueTypeUsageDTO>> {
-        if (requestParameters['statusId'] == null) {
-            throw new runtime.RequiredError(
-                'statusId',
-                'Required parameter "statusId" was null or undefined when calling getProjectIssueTypeUsagesForStatus().'
-            );
+        if (requestParameters.statusId === null || requestParameters.statusId === undefined) {
+            throw new runtime.RequiredError('statusId','Required parameter requestParameters.statusId was null or undefined when calling getProjectIssueTypeUsagesForStatus.');
         }
 
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getProjectIssueTypeUsagesForStatus().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectIssueTypeUsagesForStatus.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['nextPageToken'] != null) {
-            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        if (requestParameters.nextPageToken !== undefined) {
+            queryParameters['nextPageToken'] = requestParameters.nextPageToken;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -214,7 +202,7 @@ export class StatusApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuses/{statusId}/project/{projectId}/issueTypeUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId']))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/rest/api/3/statuses/{statusId}/project/{projectId}/issueTypeUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters.statusId))).replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -237,21 +225,18 @@ export class StatusApi extends runtime.BaseAPI {
      * Get project usages by status
      */
     async getProjectUsagesForStatusRaw(requestParameters: GetProjectUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusProjectUsageDTO>> {
-        if (requestParameters['statusId'] == null) {
-            throw new runtime.RequiredError(
-                'statusId',
-                'Required parameter "statusId" was null or undefined when calling getProjectUsagesForStatus().'
-            );
+        if (requestParameters.statusId === null || requestParameters.statusId === undefined) {
+            throw new runtime.RequiredError('statusId','Required parameter requestParameters.statusId was null or undefined when calling getProjectUsagesForStatus.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['nextPageToken'] != null) {
-            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        if (requestParameters.nextPageToken !== undefined) {
+            queryParameters['nextPageToken'] = requestParameters.nextPageToken;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -265,7 +250,7 @@ export class StatusApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuses/{statusId}/projectUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId']))),
+            path: `/rest/api/3/statuses/{statusId}/projectUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters.statusId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -288,17 +273,14 @@ export class StatusApi extends runtime.BaseAPI {
      * Bulk get statuses
      */
     async getStatusesByIdRaw(requestParameters: GetStatusesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getStatusesById().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getStatusesById.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -335,21 +317,18 @@ export class StatusApi extends runtime.BaseAPI {
      * Bulk get statuses by name
      */
     async getStatusesByNameRaw(requestParameters: GetStatusesByNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<JiraStatus>>> {
-        if (requestParameters['name'] == null) {
-            throw new runtime.RequiredError(
-                'name',
-                'Required parameter "name" was null or undefined when calling getStatusesByName().'
-            );
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getStatusesByName.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['name'] != null) {
-            queryParameters['name'] = requestParameters['name'];
+        if (requestParameters.name) {
+            queryParameters['name'] = requestParameters.name;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -386,21 +365,18 @@ export class StatusApi extends runtime.BaseAPI {
      * Get workflow usages by status
      */
     async getWorkflowUsagesForStatusRaw(requestParameters: GetWorkflowUsagesForStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusWorkflowUsageDTO>> {
-        if (requestParameters['statusId'] == null) {
-            throw new runtime.RequiredError(
-                'statusId',
-                'Required parameter "statusId" was null or undefined when calling getWorkflowUsagesForStatus().'
-            );
+        if (requestParameters.statusId === null || requestParameters.statusId === undefined) {
+            throw new runtime.RequiredError('statusId','Required parameter requestParameters.statusId was null or undefined when calling getWorkflowUsagesForStatus.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['nextPageToken'] != null) {
-            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        if (requestParameters.nextPageToken !== undefined) {
+            queryParameters['nextPageToken'] = requestParameters.nextPageToken;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -414,7 +390,7 @@ export class StatusApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/statuses/{statusId}/workflowUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters['statusId']))),
+            path: `/rest/api/3/statuses/{statusId}/workflowUsages`.replace(`{${"statusId"}}`, encodeURIComponent(String(requestParameters.statusId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -439,24 +415,24 @@ export class StatusApi extends runtime.BaseAPI {
     async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfStatuses>> {
         const queryParameters: any = {};
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['searchString'] = requestParameters['searchString'];
+        if (requestParameters.searchString !== undefined) {
+            queryParameters['searchString'] = requestParameters.searchString;
         }
 
-        if (requestParameters['statusCategory'] != null) {
-            queryParameters['statusCategory'] = requestParameters['statusCategory'];
+        if (requestParameters.statusCategory !== undefined) {
+            queryParameters['statusCategory'] = requestParameters.statusCategory;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -493,11 +469,8 @@ export class StatusApi extends runtime.BaseAPI {
      * Bulk update statuses
      */
     async updateStatusesRaw(requestParameters: UpdateStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['statusUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'statusUpdateRequest',
-                'Required parameter "statusUpdateRequest" was null or undefined when calling updateStatuses().'
-            );
+        if (requestParameters.statusUpdateRequest === null || requestParameters.statusUpdateRequest === undefined) {
+            throw new runtime.RequiredError('statusUpdateRequest','Required parameter requestParameters.statusUpdateRequest was null or undefined when calling updateStatuses.');
         }
 
         const queryParameters: any = {};
@@ -519,7 +492,7 @@ export class StatusApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['statusUpdateRequest'],
+            body: requestParameters.statusUpdateRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

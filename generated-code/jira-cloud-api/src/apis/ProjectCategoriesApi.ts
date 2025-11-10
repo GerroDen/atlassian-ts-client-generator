@@ -17,10 +17,10 @@ import * as runtime from '../runtime';
 import type {
   ProjectCategory,
   UpdatedProjectCategory,
-} from '../models/index';
+} from '../models';
 
 export interface CreateProjectCategoryRequest {
-    projectCategory: Omit<ProjectCategory, 'id'|'self'>;
+    projectCategory: ProjectCategory;
 }
 
 export interface GetProjectCategoryByIdRequest {
@@ -33,7 +33,7 @@ export interface RemoveProjectCategoryRequest {
 
 export interface UpdateProjectCategoryRequest {
     id: number;
-    projectCategory: Omit<ProjectCategory, 'id'|'self'>;
+    projectCategory: ProjectCategory;
 }
 
 /**
@@ -46,11 +46,8 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
      * Create project category
      */
     async createProjectCategoryRaw(requestParameters: CreateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
-        if (requestParameters['projectCategory'] == null) {
-            throw new runtime.RequiredError(
-                'projectCategory',
-                'Required parameter "projectCategory" was null or undefined when calling createProjectCategory().'
-            );
+        if (requestParameters.projectCategory === null || requestParameters.projectCategory === undefined) {
+            throw new runtime.RequiredError('projectCategory','Required parameter requestParameters.projectCategory was null or undefined when calling createProjectCategory.');
         }
 
         const queryParameters: any = {};
@@ -72,7 +69,7 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectCategory'],
+            body: requestParameters.projectCategory,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -128,11 +125,8 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
      * Get project category by ID
      */
     async getProjectCategoryByIdRaw(requestParameters: GetProjectCategoryByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectCategory>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getProjectCategoryById().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getProjectCategoryById.');
         }
 
         const queryParameters: any = {};
@@ -148,7 +142,7 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -171,11 +165,8 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
      * Delete project category
      */
     async removeProjectCategoryRaw(requestParameters: RemoveProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling removeProjectCategory().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeProjectCategory.');
         }
 
         const queryParameters: any = {};
@@ -191,7 +182,7 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -213,18 +204,12 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
      * Update project category
      */
     async updateProjectCategoryRaw(requestParameters: UpdateProjectCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatedProjectCategory>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateProjectCategory().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateProjectCategory.');
         }
 
-        if (requestParameters['projectCategory'] == null) {
-            throw new runtime.RequiredError(
-                'projectCategory',
-                'Required parameter "projectCategory" was null or undefined when calling updateProjectCategory().'
-            );
+        if (requestParameters.projectCategory === null || requestParameters.projectCategory === undefined) {
+            throw new runtime.RequiredError('projectCategory','Required parameter requestParameters.projectCategory was null or undefined when calling updateProjectCategory.');
         }
 
         const queryParameters: any = {};
@@ -242,11 +227,11 @@ export class ProjectCategoriesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/projectCategory/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectCategory'],
+            body: requestParameters.projectCategory,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

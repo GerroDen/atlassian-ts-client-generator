@@ -19,7 +19,7 @@ import type {
   ScreenSchemeDetails,
   ScreenSchemeId,
   UpdateScreenSchemeDetails,
-} from '../models/index';
+} from '../models';
 
 export interface CreateScreenSchemeRequest {
     screenSchemeDetails: ScreenSchemeDetails;
@@ -53,11 +53,8 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
      * Create screen scheme
      */
     async createScreenSchemeRaw(requestParameters: CreateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenSchemeId>> {
-        if (requestParameters['screenSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'screenSchemeDetails',
-                'Required parameter "screenSchemeDetails" was null or undefined when calling createScreenScheme().'
-            );
+        if (requestParameters.screenSchemeDetails === null || requestParameters.screenSchemeDetails === undefined) {
+            throw new runtime.RequiredError('screenSchemeDetails','Required parameter requestParameters.screenSchemeDetails was null or undefined when calling createScreenScheme.');
         }
 
         const queryParameters: any = {};
@@ -79,7 +76,7 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['screenSchemeDetails'],
+            body: requestParameters.screenSchemeDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -99,11 +96,8 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
      * Delete screen scheme
      */
     async deleteScreenSchemeRaw(requestParameters: DeleteScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['screenSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'screenSchemeId',
-                'Required parameter "screenSchemeId" was null or undefined when calling deleteScreenScheme().'
-            );
+        if (requestParameters.screenSchemeId === null || requestParameters.screenSchemeId === undefined) {
+            throw new runtime.RequiredError('screenSchemeId','Required parameter requestParameters.screenSchemeId was null or undefined when calling deleteScreenScheme.');
         }
 
         const queryParameters: any = {};
@@ -119,7 +113,7 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screenscheme/{screenSchemeId}`.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters['screenSchemeId']))),
+            path: `/rest/api/3/screenscheme/{screenSchemeId}`.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters.screenSchemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -143,28 +137,28 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
     async getScreenSchemesRaw(requestParameters: GetScreenSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenScheme>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['queryString'] != null) {
-            queryParameters['queryString'] = requestParameters['queryString'];
+        if (requestParameters.queryString !== undefined) {
+            queryParameters['queryString'] = requestParameters.queryString;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -201,18 +195,12 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
      * Update screen scheme
      */
     async updateScreenSchemeRaw(requestParameters: UpdateScreenSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['screenSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'screenSchemeId',
-                'Required parameter "screenSchemeId" was null or undefined when calling updateScreenScheme().'
-            );
+        if (requestParameters.screenSchemeId === null || requestParameters.screenSchemeId === undefined) {
+            throw new runtime.RequiredError('screenSchemeId','Required parameter requestParameters.screenSchemeId was null or undefined when calling updateScreenScheme.');
         }
 
-        if (requestParameters['updateScreenSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateScreenSchemeDetails',
-                'Required parameter "updateScreenSchemeDetails" was null or undefined when calling updateScreenScheme().'
-            );
+        if (requestParameters.updateScreenSchemeDetails === null || requestParameters.updateScreenSchemeDetails === undefined) {
+            throw new runtime.RequiredError('updateScreenSchemeDetails','Required parameter requestParameters.updateScreenSchemeDetails was null or undefined when calling updateScreenScheme.');
         }
 
         const queryParameters: any = {};
@@ -230,11 +218,11 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screenscheme/{screenSchemeId}`.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters['screenSchemeId']))),
+            path: `/rest/api/3/screenscheme/{screenSchemeId}`.replace(`{${"screenSchemeId"}}`, encodeURIComponent(String(requestParameters.screenSchemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateScreenSchemeDetails'],
+            body: requestParameters.updateScreenSchemeDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -260,10 +248,10 @@ export class ScreenSchemesApi extends runtime.BaseAPI {
  */
 export const GetScreenSchemesOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetScreenSchemesOrderByEnum = typeof GetScreenSchemesOrderByEnum[keyof typeof GetScreenSchemesOrderByEnum];

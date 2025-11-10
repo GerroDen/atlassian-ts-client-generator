@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   PageBeanString,
-} from '../models/index';
+} from '../models';
 
 export interface GetAllLabelsRequest {
     startAt?: number;
@@ -35,12 +35,12 @@ export class LabelsApi extends runtime.BaseAPI {
     async getAllLabelsRaw(requestParameters: GetAllLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanString>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

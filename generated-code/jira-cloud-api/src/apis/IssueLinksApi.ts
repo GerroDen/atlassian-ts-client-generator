@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   IssueLink,
   LinkIssueRequestJsonBean,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteIssueLinkRequest {
     linkId: string;
@@ -41,11 +41,8 @@ export class IssueLinksApi extends runtime.BaseAPI {
      * Delete issue link
      */
     async deleteIssueLinkRaw(requestParameters: DeleteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['linkId'] == null) {
-            throw new runtime.RequiredError(
-                'linkId',
-                'Required parameter "linkId" was null or undefined when calling deleteIssueLink().'
-            );
+        if (requestParameters.linkId === null || requestParameters.linkId === undefined) {
+            throw new runtime.RequiredError('linkId','Required parameter requestParameters.linkId was null or undefined when calling deleteIssueLink.');
         }
 
         const queryParameters: any = {};
@@ -61,7 +58,7 @@ export class IssueLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issueLink/{linkId}`.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId']))),
+            path: `/rest/api/3/issueLink/{linkId}`.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters.linkId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -83,11 +80,8 @@ export class IssueLinksApi extends runtime.BaseAPI {
      * Get issue link
      */
     async getIssueLinkRaw(requestParameters: GetIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLink>> {
-        if (requestParameters['linkId'] == null) {
-            throw new runtime.RequiredError(
-                'linkId',
-                'Required parameter "linkId" was null or undefined when calling getIssueLink().'
-            );
+        if (requestParameters.linkId === null || requestParameters.linkId === undefined) {
+            throw new runtime.RequiredError('linkId','Required parameter requestParameters.linkId was null or undefined when calling getIssueLink.');
         }
 
         const queryParameters: any = {};
@@ -103,7 +97,7 @@ export class IssueLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issueLink/{linkId}`.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId']))),
+            path: `/rest/api/3/issueLink/{linkId}`.replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters.linkId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -126,11 +120,8 @@ export class IssueLinksApi extends runtime.BaseAPI {
      * Create issue link
      */
     async linkIssuesRaw(requestParameters: LinkIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['linkIssueRequestJsonBean'] == null) {
-            throw new runtime.RequiredError(
-                'linkIssueRequestJsonBean',
-                'Required parameter "linkIssueRequestJsonBean" was null or undefined when calling linkIssues().'
-            );
+        if (requestParameters.linkIssueRequestJsonBean === null || requestParameters.linkIssueRequestJsonBean === undefined) {
+            throw new runtime.RequiredError('linkIssueRequestJsonBean','Required parameter requestParameters.linkIssueRequestJsonBean was null or undefined when calling linkIssues.');
         }
 
         const queryParameters: any = {};
@@ -152,7 +143,7 @@ export class IssueLinksApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['linkIssueRequestJsonBean'],
+            body: requestParameters.linkIssueRequestJsonBean,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

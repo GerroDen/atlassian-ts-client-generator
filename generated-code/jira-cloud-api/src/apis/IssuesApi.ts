@@ -42,7 +42,7 @@ import type {
   PageOfCreateMetaIssueTypes,
   Transitions,
   User,
-} from '../models/index';
+} from '../models';
 
 export interface ArchiveIssuesRequest {
     issueArchivalSyncRequest: IssueArchivalSyncRequest;
@@ -54,7 +54,7 @@ export interface ArchiveIssuesAsyncRequest {
 
 export interface AssignIssueRequest {
     issueIdOrKey: string;
-    user: Omit<User, 'accountType'|'active'|'applicationRoles'|'avatarUrls'|'displayName'|'emailAddress'|'expand'|'groups'|'locale'|'self'|'timeZone'>;
+    user: User;
 }
 
 export interface BulkFetchIssuesRequest {
@@ -62,12 +62,12 @@ export interface BulkFetchIssuesRequest {
 }
 
 export interface CreateIssueRequest {
-    issueUpdateDetails: IssueUpdateDetails;
+    requestBody: { [key: string]: any; };
     updateHistory?: boolean;
 }
 
 export interface CreateIssuesRequest {
-    issuesUpdateBean: IssuesUpdateBean;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeleteIssueRequest {
@@ -77,12 +77,12 @@ export interface DeleteIssueRequest {
 
 export interface DoTransitionRequest {
     issueIdOrKey: string;
-    issueUpdateDetails: IssueUpdateDetails;
+    requestBody: { [key: string]: any; };
 }
 
 export interface EditIssueRequest {
     issueIdOrKey: string;
-    issueUpdateDetails: IssueUpdateDetails;
+    requestBody: { [key: string]: any; };
     notifyUsers?: boolean;
     overrideScreenSecurity?: boolean;
     overrideEditableFlag?: boolean;
@@ -91,7 +91,7 @@ export interface EditIssueRequest {
 }
 
 export interface ExportArchivedIssuesRequest {
-    archivedIssuesFilterRequest: ArchivedIssuesFilterRequest;
+    requestBody: { [key: string]: any; };
 }
 
 export interface GetBulkChangelogsRequest {
@@ -161,7 +161,7 @@ export interface GetTransitionsRequest {
 
 export interface NotifyRequest {
     issueIdOrKey: string;
-    notification: Notification;
+    requestBody: { [key: string]: any; };
 }
 
 export interface UnarchiveIssuesRequest {
@@ -178,11 +178,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Archive issue(s) by issue ID/key
      */
     async archiveIssuesRaw(requestParameters: ArchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueArchivalSyncResponse>> {
-        if (requestParameters['issueArchivalSyncRequest'] == null) {
-            throw new runtime.RequiredError(
-                'issueArchivalSyncRequest',
-                'Required parameter "issueArchivalSyncRequest" was null or undefined when calling archiveIssues().'
-            );
+        if (requestParameters.issueArchivalSyncRequest === null || requestParameters.issueArchivalSyncRequest === undefined) {
+            throw new runtime.RequiredError('issueArchivalSyncRequest','Required parameter requestParameters.issueArchivalSyncRequest was null or undefined when calling archiveIssues.');
         }
 
         const queryParameters: any = {};
@@ -204,7 +201,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueArchivalSyncRequest'],
+            body: requestParameters.issueArchivalSyncRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -224,11 +221,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Archive issue(s) by JQL
      */
     async archiveIssuesAsyncRaw(requestParameters: ArchiveIssuesAsyncRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['archiveIssueAsyncRequest'] == null) {
-            throw new runtime.RequiredError(
-                'archiveIssueAsyncRequest',
-                'Required parameter "archiveIssueAsyncRequest" was null or undefined when calling archiveIssuesAsync().'
-            );
+        if (requestParameters.archiveIssueAsyncRequest === null || requestParameters.archiveIssueAsyncRequest === undefined) {
+            throw new runtime.RequiredError('archiveIssueAsyncRequest','Required parameter requestParameters.archiveIssueAsyncRequest was null or undefined when calling archiveIssuesAsync.');
         }
 
         const queryParameters: any = {};
@@ -250,7 +244,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['archiveIssueAsyncRequest'],
+            body: requestParameters.archiveIssueAsyncRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -274,18 +268,12 @@ export class IssuesApi extends runtime.BaseAPI {
      * Assign issue
      */
     async assignIssueRaw(requestParameters: AssignIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling assignIssue().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling assignIssue.');
         }
 
-        if (requestParameters['user'] == null) {
-            throw new runtime.RequiredError(
-                'user',
-                'Required parameter "user" was null or undefined when calling assignIssue().'
-            );
+        if (requestParameters.user === null || requestParameters.user === undefined) {
+            throw new runtime.RequiredError('user','Required parameter requestParameters.user was null or undefined when calling assignIssue.');
         }
 
         const queryParameters: any = {};
@@ -303,11 +291,11 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/assignee`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/assignee`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['user'],
+            body: requestParameters.user,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -331,11 +319,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Bulk fetch issues
      */
     async bulkFetchIssuesRaw(requestParameters: BulkFetchIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkIssueResults>> {
-        if (requestParameters['bulkFetchIssueRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'bulkFetchIssueRequestBean',
-                'Required parameter "bulkFetchIssueRequestBean" was null or undefined when calling bulkFetchIssues().'
-            );
+        if (requestParameters.bulkFetchIssueRequestBean === null || requestParameters.bulkFetchIssueRequestBean === undefined) {
+            throw new runtime.RequiredError('bulkFetchIssueRequestBean','Required parameter requestParameters.bulkFetchIssueRequestBean was null or undefined when calling bulkFetchIssues.');
         }
 
         const queryParameters: any = {};
@@ -357,7 +342,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkFetchIssueRequestBean'],
+            body: requestParameters.bulkFetchIssueRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -377,17 +362,14 @@ export class IssuesApi extends runtime.BaseAPI {
      * Create issue
      */
     async createIssueRaw(requestParameters: CreateIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatedIssue>> {
-        if (requestParameters['issueUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'issueUpdateDetails',
-                'Required parameter "issueUpdateDetails" was null or undefined when calling createIssue().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createIssue.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['updateHistory'] != null) {
-            queryParameters['updateHistory'] = requestParameters['updateHistory'];
+        if (requestParameters.updateHistory !== undefined) {
+            queryParameters['updateHistory'] = requestParameters.updateHistory;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -407,7 +389,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueUpdateDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -427,11 +409,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Bulk create issue
      */
     async createIssuesRaw(requestParameters: CreateIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatedIssues>> {
-        if (requestParameters['issuesUpdateBean'] == null) {
-            throw new runtime.RequiredError(
-                'issuesUpdateBean',
-                'Required parameter "issuesUpdateBean" was null or undefined when calling createIssues().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createIssues.');
         }
 
         const queryParameters: any = {};
@@ -453,7 +432,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issuesUpdateBean'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -473,17 +452,14 @@ export class IssuesApi extends runtime.BaseAPI {
      * Delete issue
      */
     async deleteIssueRaw(requestParameters: DeleteIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteIssue().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteIssue.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['deleteSubtasks'] != null) {
-            queryParameters['deleteSubtasks'] = requestParameters['deleteSubtasks'];
+        if (requestParameters.deleteSubtasks !== undefined) {
+            queryParameters['deleteSubtasks'] = requestParameters.deleteSubtasks;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -497,7 +473,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -519,18 +495,12 @@ export class IssuesApi extends runtime.BaseAPI {
      * Transition issue
      */
     async doTransitionRaw(requestParameters: DoTransitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling doTransition().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling doTransition.');
         }
 
-        if (requestParameters['issueUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'issueUpdateDetails',
-                'Required parameter "issueUpdateDetails" was null or undefined when calling doTransition().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling doTransition.');
         }
 
         const queryParameters: any = {};
@@ -548,11 +518,11 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/transitions`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/transitions`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueUpdateDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -576,40 +546,34 @@ export class IssuesApi extends runtime.BaseAPI {
      * Edit issue
      */
     async editIssueRaw(requestParameters: EditIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling editIssue().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling editIssue.');
         }
 
-        if (requestParameters['issueUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'issueUpdateDetails',
-                'Required parameter "issueUpdateDetails" was null or undefined when calling editIssue().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling editIssue.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['notifyUsers'] != null) {
-            queryParameters['notifyUsers'] = requestParameters['notifyUsers'];
+        if (requestParameters.notifyUsers !== undefined) {
+            queryParameters['notifyUsers'] = requestParameters.notifyUsers;
         }
 
-        if (requestParameters['overrideScreenSecurity'] != null) {
-            queryParameters['overrideScreenSecurity'] = requestParameters['overrideScreenSecurity'];
+        if (requestParameters.overrideScreenSecurity !== undefined) {
+            queryParameters['overrideScreenSecurity'] = requestParameters.overrideScreenSecurity;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
-        if (requestParameters['returnIssue'] != null) {
-            queryParameters['returnIssue'] = requestParameters['returnIssue'];
+        if (requestParameters.returnIssue !== undefined) {
+            queryParameters['returnIssue'] = requestParameters.returnIssue;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -625,11 +589,11 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueUpdateDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -653,11 +617,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Export archived issue(s)
      */
     async exportArchivedIssuesRaw(requestParameters: ExportArchivedIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExportArchivedIssuesTaskProgressResponse>> {
-        if (requestParameters['archivedIssuesFilterRequest'] == null) {
-            throw new runtime.RequiredError(
-                'archivedIssuesFilterRequest',
-                'Required parameter "archivedIssuesFilterRequest" was null or undefined when calling exportArchivedIssues().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling exportArchivedIssues.');
         }
 
         const queryParameters: any = {};
@@ -679,7 +640,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['archivedIssuesFilterRequest'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -699,11 +660,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Bulk fetch changelogs
      */
     async getBulkChangelogsRaw(requestParameters: GetBulkChangelogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkChangelogResponseBean>> {
-        if (requestParameters['bulkChangelogRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'bulkChangelogRequestBean',
-                'Required parameter "bulkChangelogRequestBean" was null or undefined when calling getBulkChangelogs().'
-            );
+        if (requestParameters.bulkChangelogRequestBean === null || requestParameters.bulkChangelogRequestBean === undefined) {
+            throw new runtime.RequiredError('bulkChangelogRequestBean','Required parameter requestParameters.bulkChangelogRequestBean was null or undefined when calling getBulkChangelogs.');
         }
 
         const queryParameters: any = {};
@@ -725,7 +683,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkChangelogRequestBean'],
+            body: requestParameters.bulkChangelogRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -745,21 +703,18 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get changelogs
      */
     async getChangeLogsRaw(requestParameters: GetChangeLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanChangelog>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getChangeLogs().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getChangeLogs.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -773,7 +728,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/changelog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/changelog`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -796,18 +751,12 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get changelogs by IDs
      */
     async getChangeLogsByIdsRaw(requestParameters: GetChangeLogsByIdsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfChangelogs>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getChangeLogsByIds().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getChangeLogsByIds.');
         }
 
-        if (requestParameters['issueChangelogIds'] == null) {
-            throw new runtime.RequiredError(
-                'issueChangelogIds',
-                'Required parameter "issueChangelogIds" was null or undefined when calling getChangeLogsByIds().'
-            );
+        if (requestParameters.issueChangelogIds === null || requestParameters.issueChangelogIds === undefined) {
+            throw new runtime.RequiredError('issueChangelogIds','Required parameter requestParameters.issueChangelogIds was null or undefined when calling getChangeLogsByIds.');
         }
 
         const queryParameters: any = {};
@@ -825,11 +774,11 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/changelog/list`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/changelog/list`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueChangelogIds'],
+            body: requestParameters.issueChangelogIds,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -847,29 +796,28 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Returns details of projects, issue types within projects, and, when requested, the create screen fields for each issue type for the user. Use the information to populate the requests in [ Create issue](#api-rest-api-3-issue-post) and [Create issues](#api-rest-api-3-issue-bulk-post).  Deprecated, see [Create Issue Meta Endpoint Deprecation Notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1304).  The request can be restricted to specific projects or issue types using the query parameters. The response will contain information for the valid projects, issue types, or project and issue type combinations requested. Note that invalid project, issue type, or project and issue type combinations do not generate errors.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Create issues* [project permission](https://confluence.atlassian.com/x/yodKLg) in the requested projects.
      * Get create issue metadata
-     * @deprecated
      */
     async getCreateIssueMetaRaw(requestParameters: GetCreateIssueMetaRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueCreateMetadata>> {
         const queryParameters: any = {};
 
-        if (requestParameters['projectIds'] != null) {
-            queryParameters['projectIds'] = requestParameters['projectIds'];
+        if (requestParameters.projectIds) {
+            queryParameters['projectIds'] = requestParameters.projectIds;
         }
 
-        if (requestParameters['projectKeys'] != null) {
-            queryParameters['projectKeys'] = requestParameters['projectKeys'];
+        if (requestParameters.projectKeys) {
+            queryParameters['projectKeys'] = requestParameters.projectKeys;
         }
 
-        if (requestParameters['issuetypeIds'] != null) {
-            queryParameters['issuetypeIds'] = requestParameters['issuetypeIds'];
+        if (requestParameters.issuetypeIds) {
+            queryParameters['issuetypeIds'] = requestParameters.issuetypeIds;
         }
 
-        if (requestParameters['issuetypeNames'] != null) {
-            queryParameters['issuetypeNames'] = requestParameters['issuetypeNames'];
+        if (requestParameters.issuetypeNames) {
+            queryParameters['issuetypeNames'] = requestParameters.issuetypeNames;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -895,7 +843,6 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Returns details of projects, issue types within projects, and, when requested, the create screen fields for each issue type for the user. Use the information to populate the requests in [ Create issue](#api-rest-api-3-issue-post) and [Create issues](#api-rest-api-3-issue-bulk-post).  Deprecated, see [Create Issue Meta Endpoint Deprecation Notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-1304).  The request can be restricted to specific projects or issue types using the query parameters. The response will contain information for the valid projects, issue types, or project and issue type combinations requested. Note that invalid project, issue type, or project and issue type combinations do not generate errors.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** *Create issues* [project permission](https://confluence.atlassian.com/x/yodKLg) in the requested projects.
      * Get create issue metadata
-     * @deprecated
      */
     async getCreateIssueMeta(requestParameters: GetCreateIssueMetaRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IssueCreateMetadata> {
         const response = await this.getCreateIssueMetaRaw(requestParameters, initOverrides);
@@ -907,28 +854,22 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get create field metadata for a project and issue type id
      */
     async getCreateIssueMetaIssueTypeIdRaw(requestParameters: GetCreateIssueMetaIssueTypeIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfCreateMetaIssueTypeWithField>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getCreateIssueMetaIssueTypeId().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getCreateIssueMetaIssueTypeId.');
         }
 
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling getCreateIssueMetaIssueTypeId().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling getCreateIssueMetaIssueTypeId.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -942,7 +883,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))),
+            path: `/rest/api/3/issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -965,21 +906,18 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get create metadata issue types for a project
      */
     async getCreateIssueMetaIssueTypesRaw(requestParameters: GetCreateIssueMetaIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfCreateMetaIssueTypes>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getCreateIssueMetaIssueTypes().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getCreateIssueMetaIssueTypes.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -993,7 +931,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/createmeta/{projectIdOrKey}/issuetypes`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/issue/createmeta/{projectIdOrKey}/issuetypes`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1016,21 +954,18 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get edit issue metadata
      */
     async getEditIssueMetaRaw(requestParameters: GetEditIssueMetaRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueUpdateMetadata>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getEditIssueMeta().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getEditIssueMeta.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['overrideScreenSecurity'] != null) {
-            queryParameters['overrideScreenSecurity'] = requestParameters['overrideScreenSecurity'];
+        if (requestParameters.overrideScreenSecurity !== undefined) {
+            queryParameters['overrideScreenSecurity'] = requestParameters.overrideScreenSecurity;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1044,7 +979,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/editmeta`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/editmeta`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1103,37 +1038,34 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get issue
      */
     async getIssueRaw(requestParameters: GetIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueBean>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getIssue().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssue.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['fields'] != null) {
-            queryParameters['fields'] = requestParameters['fields'];
+        if (requestParameters.fields) {
+            queryParameters['fields'] = requestParameters.fields;
         }
 
-        if (requestParameters['fieldsByKeys'] != null) {
-            queryParameters['fieldsByKeys'] = requestParameters['fieldsByKeys'];
+        if (requestParameters.fieldsByKeys !== undefined) {
+            queryParameters['fieldsByKeys'] = requestParameters.fieldsByKeys;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
-        if (requestParameters['updateHistory'] != null) {
-            queryParameters['updateHistory'] = requestParameters['updateHistory'];
+        if (requestParameters.updateHistory !== undefined) {
+            queryParameters['updateHistory'] = requestParameters.updateHistory;
         }
 
-        if (requestParameters['failFast'] != null) {
-            queryParameters['failFast'] = requestParameters['failFast'];
+        if (requestParameters.failFast !== undefined) {
+            queryParameters['failFast'] = requestParameters.failFast;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1147,7 +1079,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1172,8 +1104,8 @@ export class IssuesApi extends runtime.BaseAPI {
     async getIssueLimitReportRaw(requestParameters: GetIssueLimitReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLimitReportResponseBean>> {
         const queryParameters: any = {};
 
-        if (requestParameters['isReturningKeys'] != null) {
-            queryParameters['isReturningKeys'] = requestParameters['isReturningKeys'];
+        if (requestParameters.isReturningKeys !== undefined) {
+            queryParameters['isReturningKeys'] = requestParameters.isReturningKeys;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1210,33 +1142,30 @@ export class IssuesApi extends runtime.BaseAPI {
      * Get transitions
      */
     async getTransitionsRaw(requestParameters: GetTransitionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transitions>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getTransitions().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getTransitions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['transitionId'] != null) {
-            queryParameters['transitionId'] = requestParameters['transitionId'];
+        if (requestParameters.transitionId !== undefined) {
+            queryParameters['transitionId'] = requestParameters.transitionId;
         }
 
-        if (requestParameters['skipRemoteOnlyCondition'] != null) {
-            queryParameters['skipRemoteOnlyCondition'] = requestParameters['skipRemoteOnlyCondition'];
+        if (requestParameters.skipRemoteOnlyCondition !== undefined) {
+            queryParameters['skipRemoteOnlyCondition'] = requestParameters.skipRemoteOnlyCondition;
         }
 
-        if (requestParameters['includeUnavailableTransitions'] != null) {
-            queryParameters['includeUnavailableTransitions'] = requestParameters['includeUnavailableTransitions'];
+        if (requestParameters.includeUnavailableTransitions !== undefined) {
+            queryParameters['includeUnavailableTransitions'] = requestParameters.includeUnavailableTransitions;
         }
 
-        if (requestParameters['sortByOpsBarAndStatus'] != null) {
-            queryParameters['sortByOpsBarAndStatus'] = requestParameters['sortByOpsBarAndStatus'];
+        if (requestParameters.sortByOpsBarAndStatus !== undefined) {
+            queryParameters['sortByOpsBarAndStatus'] = requestParameters.sortByOpsBarAndStatus;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1250,7 +1179,7 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/transitions`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/transitions`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1273,18 +1202,12 @@ export class IssuesApi extends runtime.BaseAPI {
      * Send notification for issue
      */
     async notifyRaw(requestParameters: NotifyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling notify().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling notify.');
         }
 
-        if (requestParameters['notification'] == null) {
-            throw new runtime.RequiredError(
-                'notification',
-                'Required parameter "notification" was null or undefined when calling notify().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling notify.');
         }
 
         const queryParameters: any = {};
@@ -1302,11 +1225,11 @@ export class IssuesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/notify`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/notify`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['notification'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -1330,11 +1253,8 @@ export class IssuesApi extends runtime.BaseAPI {
      * Unarchive issue(s) by issue keys/ID
      */
     async unarchiveIssuesRaw(requestParameters: UnarchiveIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueArchivalSyncResponse>> {
-        if (requestParameters['issueArchivalSyncRequest'] == null) {
-            throw new runtime.RequiredError(
-                'issueArchivalSyncRequest',
-                'Required parameter "issueArchivalSyncRequest" was null or undefined when calling unarchiveIssues().'
-            );
+        if (requestParameters.issueArchivalSyncRequest === null || requestParameters.issueArchivalSyncRequest === undefined) {
+            throw new runtime.RequiredError('issueArchivalSyncRequest','Required parameter requestParameters.issueArchivalSyncRequest was null or undefined when calling unarchiveIssues.');
         }
 
         const queryParameters: any = {};
@@ -1356,7 +1276,7 @@ export class IssuesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueArchivalSyncRequest'],
+            body: requestParameters.issueArchivalSyncRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

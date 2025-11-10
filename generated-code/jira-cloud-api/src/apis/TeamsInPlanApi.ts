@@ -21,7 +21,7 @@ import type {
   GetAtlassianTeamResponse,
   GetPlanOnlyTeamResponse,
   PageWithCursorGetTeamResponseForPage,
-} from '../models/index';
+} from '../models';
 
 export interface AddAtlassianTeamOperationRequest {
     planId: number;
@@ -81,18 +81,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Add Atlassian team to plan
      */
     async addAtlassianTeamRaw(requestParameters: AddAtlassianTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling addAtlassianTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling addAtlassianTeam.');
         }
 
-        if (requestParameters['addAtlassianTeamRequest'] == null) {
-            throw new runtime.RequiredError(
-                'addAtlassianTeamRequest',
-                'Required parameter "addAtlassianTeamRequest" was null or undefined when calling addAtlassianTeam().'
-            );
+        if (requestParameters.addAtlassianTeamRequest === null || requestParameters.addAtlassianTeamRequest === undefined) {
+            throw new runtime.RequiredError('addAtlassianTeamRequest','Required parameter requestParameters.addAtlassianTeamRequest was null or undefined when calling addAtlassianTeam.');
         }
 
         const queryParameters: any = {};
@@ -110,11 +104,11 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/atlassian`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/atlassian`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['addAtlassianTeamRequest'],
+            body: requestParameters.addAtlassianTeamRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -138,18 +132,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Create plan-only team
      */
     async createPlanOnlyTeamRaw(requestParameters: CreatePlanOnlyTeamOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling createPlanOnlyTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling createPlanOnlyTeam.');
         }
 
-        if (requestParameters['createPlanOnlyTeamRequest'] == null) {
-            throw new runtime.RequiredError(
-                'createPlanOnlyTeamRequest',
-                'Required parameter "createPlanOnlyTeamRequest" was null or undefined when calling createPlanOnlyTeam().'
-            );
+        if (requestParameters.createPlanOnlyTeamRequest === null || requestParameters.createPlanOnlyTeamRequest === undefined) {
+            throw new runtime.RequiredError('createPlanOnlyTeamRequest','Required parameter requestParameters.createPlanOnlyTeamRequest was null or undefined when calling createPlanOnlyTeam.');
         }
 
         const queryParameters: any = {};
@@ -167,11 +155,11 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/planonly`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/planonly`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createPlanOnlyTeamRequest'],
+            body: requestParameters.createPlanOnlyTeamRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -195,18 +183,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Delete plan-only team
      */
     async deletePlanOnlyTeamRaw(requestParameters: DeletePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling deletePlanOnlyTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling deletePlanOnlyTeam.');
         }
 
-        if (requestParameters['planOnlyTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'planOnlyTeamId',
-                'Required parameter "planOnlyTeamId" was null or undefined when calling deletePlanOnlyTeam().'
-            );
+        if (requestParameters.planOnlyTeamId === null || requestParameters.planOnlyTeamId === undefined) {
+            throw new runtime.RequiredError('planOnlyTeamId','Required parameter requestParameters.planOnlyTeamId was null or undefined when calling deletePlanOnlyTeam.');
         }
 
         const queryParameters: any = {};
@@ -222,7 +204,7 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters.planOnlyTeamId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -249,18 +231,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Get Atlassian team in plan
      */
     async getAtlassianTeamRaw(requestParameters: GetAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAtlassianTeamResponse>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling getAtlassianTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling getAtlassianTeam.');
         }
 
-        if (requestParameters['atlassianTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTeamId',
-                'Required parameter "atlassianTeamId" was null or undefined when calling getAtlassianTeam().'
-            );
+        if (requestParameters.atlassianTeamId === null || requestParameters.atlassianTeamId === undefined) {
+            throw new runtime.RequiredError('atlassianTeamId','Required parameter requestParameters.atlassianTeamId was null or undefined when calling getAtlassianTeam.');
         }
 
         const queryParameters: any = {};
@@ -276,7 +252,7 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters.atlassianTeamId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -299,18 +275,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Get plan-only team
      */
     async getPlanOnlyTeamRaw(requestParameters: GetPlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPlanOnlyTeamResponse>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling getPlanOnlyTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling getPlanOnlyTeam.');
         }
 
-        if (requestParameters['planOnlyTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'planOnlyTeamId',
-                'Required parameter "planOnlyTeamId" was null or undefined when calling getPlanOnlyTeam().'
-            );
+        if (requestParameters.planOnlyTeamId === null || requestParameters.planOnlyTeamId === undefined) {
+            throw new runtime.RequiredError('planOnlyTeamId','Required parameter requestParameters.planOnlyTeamId was null or undefined when calling getPlanOnlyTeam.');
         }
 
         const queryParameters: any = {};
@@ -326,7 +296,7 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters.planOnlyTeamId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -349,21 +319,18 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Get teams in plan paginated
      */
     async getTeamsRaw(requestParameters: GetTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageWithCursorGetTeamResponseForPage>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling getTeams().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling getTeams.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['cursor'] != null) {
-            queryParameters['cursor'] = requestParameters['cursor'];
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -377,7 +344,7 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -400,18 +367,12 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Remove Atlassian team from plan
      */
     async removeAtlassianTeamRaw(requestParameters: RemoveAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling removeAtlassianTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling removeAtlassianTeam.');
         }
 
-        if (requestParameters['atlassianTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTeamId',
-                'Required parameter "atlassianTeamId" was null or undefined when calling removeAtlassianTeam().'
-            );
+        if (requestParameters.atlassianTeamId === null || requestParameters.atlassianTeamId === undefined) {
+            throw new runtime.RequiredError('atlassianTeamId','Required parameter requestParameters.atlassianTeamId was null or undefined when calling removeAtlassianTeam.');
         }
 
         const queryParameters: any = {};
@@ -427,7 +388,7 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters.atlassianTeamId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -454,25 +415,16 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Update Atlassian team in plan
      */
     async updateAtlassianTeamRaw(requestParameters: UpdateAtlassianTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling updateAtlassianTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling updateAtlassianTeam.');
         }
 
-        if (requestParameters['atlassianTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTeamId',
-                'Required parameter "atlassianTeamId" was null or undefined when calling updateAtlassianTeam().'
-            );
+        if (requestParameters.atlassianTeamId === null || requestParameters.atlassianTeamId === undefined) {
+            throw new runtime.RequiredError('atlassianTeamId','Required parameter requestParameters.atlassianTeamId was null or undefined when calling updateAtlassianTeam.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling updateAtlassianTeam().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateAtlassianTeam.');
         }
 
         const queryParameters: any = {};
@@ -490,11 +442,11 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters['atlassianTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/atlassian/{atlassianTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"atlassianTeamId"}}`, encodeURIComponent(String(requestParameters.atlassianTeamId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -518,25 +470,16 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
      * Update plan-only team
      */
     async updatePlanOnlyTeamRaw(requestParameters: UpdatePlanOnlyTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['planId'] == null) {
-            throw new runtime.RequiredError(
-                'planId',
-                'Required parameter "planId" was null or undefined when calling updatePlanOnlyTeam().'
-            );
+        if (requestParameters.planId === null || requestParameters.planId === undefined) {
+            throw new runtime.RequiredError('planId','Required parameter requestParameters.planId was null or undefined when calling updatePlanOnlyTeam.');
         }
 
-        if (requestParameters['planOnlyTeamId'] == null) {
-            throw new runtime.RequiredError(
-                'planOnlyTeamId',
-                'Required parameter "planOnlyTeamId" was null or undefined when calling updatePlanOnlyTeam().'
-            );
+        if (requestParameters.planOnlyTeamId === null || requestParameters.planOnlyTeamId === undefined) {
+            throw new runtime.RequiredError('planOnlyTeamId','Required parameter requestParameters.planOnlyTeamId was null or undefined when calling updatePlanOnlyTeam.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling updatePlanOnlyTeam().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updatePlanOnlyTeam.');
         }
 
         const queryParameters: any = {};
@@ -554,11 +497,11 @@ export class TeamsInPlanApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters['planId']))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters['planOnlyTeamId']))),
+            path: `/rest/api/3/plans/plan/{planId}/team/planonly/{planOnlyTeamId}`.replace(`{${"planId"}}`, encodeURIComponent(String(requestParameters.planId))).replace(`{${"planOnlyTeamId"}}`, encodeURIComponent(String(requestParameters.planOnlyTeamId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

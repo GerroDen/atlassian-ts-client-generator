@@ -18,7 +18,7 @@ import type {
   AnnouncementBannerConfiguration,
   AnnouncementBannerConfigurationUpdate,
   ErrorCollection,
-} from '../models/index';
+} from '../models';
 
 export interface SetBannerRequest {
     announcementBannerConfigurationUpdate: AnnouncementBannerConfigurationUpdate;
@@ -70,11 +70,8 @@ export class AnnouncementBannerApi extends runtime.BaseAPI {
      * Update announcement banner configuration
      */
     async setBannerRaw(requestParameters: SetBannerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['announcementBannerConfigurationUpdate'] == null) {
-            throw new runtime.RequiredError(
-                'announcementBannerConfigurationUpdate',
-                'Required parameter "announcementBannerConfigurationUpdate" was null or undefined when calling setBanner().'
-            );
+        if (requestParameters.announcementBannerConfigurationUpdate === null || requestParameters.announcementBannerConfigurationUpdate === undefined) {
+            throw new runtime.RequiredError('announcementBannerConfigurationUpdate','Required parameter requestParameters.announcementBannerConfigurationUpdate was null or undefined when calling setBanner.');
         }
 
         const queryParameters: any = {};
@@ -96,7 +93,7 @@ export class AnnouncementBannerApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['announcementBannerConfigurationUpdate'],
+            body: requestParameters.announcementBannerConfigurationUpdate,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

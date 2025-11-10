@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   EntityProperty,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteCommentPropertyRequest {
     commentId: string;
@@ -49,18 +49,12 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
      * Delete comment property
      */
     async deleteCommentPropertyRaw(requestParameters: DeleteCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['commentId'] == null) {
-            throw new runtime.RequiredError(
-                'commentId',
-                'Required parameter "commentId" was null or undefined when calling deleteCommentProperty().'
-            );
+        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
+            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling deleteCommentProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteCommentProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteCommentProperty.');
         }
 
         const queryParameters: any = {};
@@ -76,7 +70,7 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -98,18 +92,12 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
      * Get comment property
      */
     async getCommentPropertyRaw(requestParameters: GetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['commentId'] == null) {
-            throw new runtime.RequiredError(
-                'commentId',
-                'Required parameter "commentId" was null or undefined when calling getCommentProperty().'
-            );
+        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
+            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getCommentProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getCommentProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getCommentProperty.');
         }
 
         const queryParameters: any = {};
@@ -125,7 +113,7 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -148,11 +136,8 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
      * Get comment property keys
      */
     async getCommentPropertyKeysRaw(requestParameters: GetCommentPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['commentId'] == null) {
-            throw new runtime.RequiredError(
-                'commentId',
-                'Required parameter "commentId" was null or undefined when calling getCommentPropertyKeys().'
-            );
+        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
+            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling getCommentPropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -168,7 +153,7 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/comment/{commentId}/properties`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: `/rest/api/3/comment/{commentId}/properties`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -191,25 +176,16 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
      * Set comment property
      */
     async setCommentPropertyRaw(requestParameters: SetCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['commentId'] == null) {
-            throw new runtime.RequiredError(
-                'commentId',
-                'Required parameter "commentId" was null or undefined when calling setCommentProperty().'
-            );
+        if (requestParameters.commentId === null || requestParameters.commentId === undefined) {
+            throw new runtime.RequiredError('commentId','Required parameter requestParameters.commentId was null or undefined when calling setCommentProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setCommentProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setCommentProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setCommentProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setCommentProperty.');
         }
 
         const queryParameters: any = {};
@@ -227,11 +203,11 @@ export class IssueCommentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/comment/{commentId}/properties/{propertyKey}`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters.commentId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

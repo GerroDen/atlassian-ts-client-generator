@@ -18,7 +18,7 @@ import type {
   ColumnItem,
   ColumnRequestBody,
   ErrorCollection,
-} from '../models/index';
+} from '../models';
 
 export interface SetIssueNavigatorDefaultColumnsRequest {
     columnRequestBody: ColumnRequestBody;
@@ -70,11 +70,8 @@ export class IssueNavigatorSettingsApi extends runtime.BaseAPI {
      * Set issue navigator default columns
      */
     async setIssueNavigatorDefaultColumnsRaw(requestParameters: SetIssueNavigatorDefaultColumnsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['columnRequestBody'] == null) {
-            throw new runtime.RequiredError(
-                'columnRequestBody',
-                'Required parameter "columnRequestBody" was null or undefined when calling setIssueNavigatorDefaultColumns().'
-            );
+        if (requestParameters.columnRequestBody === null || requestParameters.columnRequestBody === undefined) {
+            throw new runtime.RequiredError('columnRequestBody','Required parameter requestParameters.columnRequestBody was null or undefined when calling setIssueNavigatorDefaultColumns.');
         }
 
         const queryParameters: any = {};
@@ -96,7 +93,7 @@ export class IssueNavigatorSettingsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['columnRequestBody'],
+            body: requestParameters.columnRequestBody,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

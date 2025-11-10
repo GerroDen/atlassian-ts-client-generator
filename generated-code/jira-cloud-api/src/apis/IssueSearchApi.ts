@@ -24,7 +24,7 @@ import type {
   SearchAndReconcileResults,
   SearchRequestBean,
   SearchResults,
-} from '../models/index';
+} from '../models';
 
 export interface CountIssuesRequest {
     jQLCountRequestBean: JQLCountRequestBean;
@@ -85,11 +85,8 @@ export class IssueSearchApi extends runtime.BaseAPI {
      * Count issues using JQL
      */
     async countIssuesRaw(requestParameters: CountIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLCountResultsBean>> {
-        if (requestParameters['jQLCountRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'jQLCountRequestBean',
-                'Required parameter "jQLCountRequestBean" was null or undefined when calling countIssues().'
-            );
+        if (requestParameters.jQLCountRequestBean === null || requestParameters.jQLCountRequestBean === undefined) {
+            throw new runtime.RequiredError('jQLCountRequestBean','Required parameter requestParameters.jQLCountRequestBean was null or undefined when calling countIssues.');
         }
 
         const queryParameters: any = {};
@@ -111,7 +108,7 @@ export class IssueSearchApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jQLCountRequestBean'],
+            body: requestParameters.jQLCountRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -133,28 +130,28 @@ export class IssueSearchApi extends runtime.BaseAPI {
     async getIssuePickerResourceRaw(requestParameters: GetIssuePickerResourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssuePickerSuggestions>> {
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['currentJQL'] != null) {
-            queryParameters['currentJQL'] = requestParameters['currentJQL'];
+        if (requestParameters.currentJQL !== undefined) {
+            queryParameters['currentJQL'] = requestParameters.currentJQL;
         }
 
-        if (requestParameters['currentIssueKey'] != null) {
-            queryParameters['currentIssueKey'] = requestParameters['currentIssueKey'];
+        if (requestParameters.currentIssueKey !== undefined) {
+            queryParameters['currentIssueKey'] = requestParameters.currentIssueKey;
         }
 
-        if (requestParameters['currentProjectId'] != null) {
-            queryParameters['currentProjectId'] = requestParameters['currentProjectId'];
+        if (requestParameters.currentProjectId !== undefined) {
+            queryParameters['currentProjectId'] = requestParameters.currentProjectId;
         }
 
-        if (requestParameters['showSubTasks'] != null) {
-            queryParameters['showSubTasks'] = requestParameters['showSubTasks'];
+        if (requestParameters.showSubTasks !== undefined) {
+            queryParameters['showSubTasks'] = requestParameters.showSubTasks;
         }
 
-        if (requestParameters['showSubTaskParent'] != null) {
-            queryParameters['showSubTaskParent'] = requestParameters['showSubTaskParent'];
+        if (requestParameters.showSubTaskParent !== undefined) {
+            queryParameters['showSubTaskParent'] = requestParameters.showSubTaskParent;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -191,11 +188,8 @@ export class IssueSearchApi extends runtime.BaseAPI {
      * Check issues against JQL
      */
     async matchIssuesRaw(requestParameters: MatchIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueMatches>> {
-        if (requestParameters['issuesAndJQLQueries'] == null) {
-            throw new runtime.RequiredError(
-                'issuesAndJQLQueries',
-                'Required parameter "issuesAndJQLQueries" was null or undefined when calling matchIssues().'
-            );
+        if (requestParameters.issuesAndJQLQueries === null || requestParameters.issuesAndJQLQueries === undefined) {
+            throw new runtime.RequiredError('issuesAndJQLQueries','Required parameter requestParameters.issuesAndJQLQueries was null or undefined when calling matchIssues.');
         }
 
         const queryParameters: any = {};
@@ -217,7 +211,7 @@ export class IssueSearchApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issuesAndJQLQueries'],
+            body: requestParameters.issuesAndJQLQueries,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -239,40 +233,40 @@ export class IssueSearchApi extends runtime.BaseAPI {
     async searchAndReconsileIssuesUsingJqlRaw(requestParameters: SearchAndReconsileIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
         const queryParameters: any = {};
 
-        if (requestParameters['jql'] != null) {
-            queryParameters['jql'] = requestParameters['jql'];
+        if (requestParameters.jql !== undefined) {
+            queryParameters['jql'] = requestParameters.jql;
         }
 
-        if (requestParameters['nextPageToken'] != null) {
-            queryParameters['nextPageToken'] = requestParameters['nextPageToken'];
+        if (requestParameters.nextPageToken !== undefined) {
+            queryParameters['nextPageToken'] = requestParameters.nextPageToken;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['fields'] != null) {
-            queryParameters['fields'] = requestParameters['fields'];
+        if (requestParameters.fields) {
+            queryParameters['fields'] = requestParameters.fields;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
-        if (requestParameters['fieldsByKeys'] != null) {
-            queryParameters['fieldsByKeys'] = requestParameters['fieldsByKeys'];
+        if (requestParameters.fieldsByKeys !== undefined) {
+            queryParameters['fieldsByKeys'] = requestParameters.fieldsByKeys;
         }
 
-        if (requestParameters['failFast'] != null) {
-            queryParameters['failFast'] = requestParameters['failFast'];
+        if (requestParameters.failFast !== undefined) {
+            queryParameters['failFast'] = requestParameters.failFast;
         }
 
-        if (requestParameters['reconcileIssues'] != null) {
-            queryParameters['reconcileIssues'] = requestParameters['reconcileIssues'];
+        if (requestParameters.reconcileIssues) {
+            queryParameters['reconcileIssues'] = requestParameters.reconcileIssues;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -309,11 +303,8 @@ export class IssueSearchApi extends runtime.BaseAPI {
      * Search for issues using JQL enhanced search (POST)
      */
     async searchAndReconsileIssuesUsingJqlPostRaw(requestParameters: SearchAndReconsileIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchAndReconcileResults>> {
-        if (requestParameters['searchAndReconcileRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'searchAndReconcileRequestBean',
-                'Required parameter "searchAndReconcileRequestBean" was null or undefined when calling searchAndReconsileIssuesUsingJqlPost().'
-            );
+        if (requestParameters.searchAndReconcileRequestBean === null || requestParameters.searchAndReconcileRequestBean === undefined) {
+            throw new runtime.RequiredError('searchAndReconcileRequestBean','Required parameter requestParameters.searchAndReconcileRequestBean was null or undefined when calling searchAndReconsileIssuesUsingJqlPost.');
         }
 
         const queryParameters: any = {};
@@ -335,7 +326,7 @@ export class IssueSearchApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['searchAndReconcileRequestBean'],
+            body: requestParameters.searchAndReconcileRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -353,45 +344,44 @@ export class IssueSearchApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
      * Currently being removed. Search for issues using JQL (GET)
-     * @deprecated
      */
     async searchForIssuesUsingJqlRaw(requestParameters: SearchForIssuesUsingJqlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
         const queryParameters: any = {};
 
-        if (requestParameters['jql'] != null) {
-            queryParameters['jql'] = requestParameters['jql'];
+        if (requestParameters.jql !== undefined) {
+            queryParameters['jql'] = requestParameters.jql;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['validateQuery'] != null) {
-            queryParameters['validateQuery'] = requestParameters['validateQuery'];
+        if (requestParameters.validateQuery !== undefined) {
+            queryParameters['validateQuery'] = requestParameters.validateQuery;
         }
 
-        if (requestParameters['fields'] != null) {
-            queryParameters['fields'] = requestParameters['fields'];
+        if (requestParameters.fields) {
+            queryParameters['fields'] = requestParameters.fields;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
-        if (requestParameters['fieldsByKeys'] != null) {
-            queryParameters['fieldsByKeys'] = requestParameters['fieldsByKeys'];
+        if (requestParameters.fieldsByKeys !== undefined) {
+            queryParameters['fieldsByKeys'] = requestParameters.fieldsByKeys;
         }
 
-        if (requestParameters['failFast'] != null) {
-            queryParameters['failFast'] = requestParameters['failFast'];
+        if (requestParameters.failFast !== undefined) {
+            queryParameters['failFast'] = requestParameters.failFast;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -417,7 +407,6 @@ export class IssueSearchApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  If the JQL query expression is too large to be encoded as a query parameter, use the [POST](#api-rest-api-3-search-post) version of this resource.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
      * Currently being removed. Search for issues using JQL (GET)
-     * @deprecated
      */
     async searchForIssuesUsingJql(requestParameters: SearchForIssuesUsingJqlRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResults> {
         const response = await this.searchForIssuesUsingJqlRaw(requestParameters, initOverrides);
@@ -427,14 +416,10 @@ export class IssueSearchApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  There is a [GET](#api-rest-api-3-search-get) version of this resource that can be used for smaller JQL query expressions.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
      * Currently being removed. Search for issues using JQL (POST)
-     * @deprecated
      */
     async searchForIssuesUsingJqlPostRaw(requestParameters: SearchForIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
-        if (requestParameters['searchRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'searchRequestBean',
-                'Required parameter "searchRequestBean" was null or undefined when calling searchForIssuesUsingJqlPost().'
-            );
+        if (requestParameters.searchRequestBean === null || requestParameters.searchRequestBean === undefined) {
+            throw new runtime.RequiredError('searchRequestBean','Required parameter requestParameters.searchRequestBean was null or undefined when calling searchForIssuesUsingJqlPost.');
         }
 
         const queryParameters: any = {};
@@ -456,7 +441,7 @@ export class IssueSearchApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['searchRequestBean'],
+            body: requestParameters.searchRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -465,7 +450,6 @@ export class IssueSearchApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Searches for issues using [JQL](https://confluence.atlassian.com/x/egORLQ).  There is a [GET](#api-rest-api-3-search-get) version of this resource that can be used for smaller JQL query expressions.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Issues are included in the response where the user has:   *  *Browse projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project containing the issue.  *  If [issue-level security](https://confluence.atlassian.com/x/J4lKLg) is configured, issue-level security permission to view the issue.
      * Currently being removed. Search for issues using JQL (POST)
-     * @deprecated
      */
     async searchForIssuesUsingJqlPost(requestParameters: SearchForIssuesUsingJqlPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResults> {
         const response = await this.searchForIssuesUsingJqlPostRaw(requestParameters, initOverrides);

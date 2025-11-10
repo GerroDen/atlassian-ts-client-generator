@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Avatar,
   ProjectAvatars,
-} from '../models/index';
+} from '../models';
 
 export interface CreateProjectAvatarRequest {
     projectIdOrKey: string;
@@ -38,7 +38,7 @@ export interface GetAllProjectAvatarsRequest {
 
 export interface UpdateProjectAvatarRequest {
     projectIdOrKey: string;
-    avatar: Omit<Avatar, 'fileName'|'isDeletable'|'isSelected'|'isSystemAvatar'|'owner'|'urls'>;
+    requestBody: { [key: string]: any; };
 }
 
 /**
@@ -51,32 +51,26 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
      * Load project avatar
      */
     async createProjectAvatarRaw(requestParameters: CreateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling createProjectAvatar().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling createProjectAvatar.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling createProjectAvatar().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createProjectAvatar.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['x'] != null) {
-            queryParameters['x'] = requestParameters['x'];
+        if (requestParameters.x !== undefined) {
+            queryParameters['x'] = requestParameters.x;
         }
 
-        if (requestParameters['y'] != null) {
-            queryParameters['y'] = requestParameters['y'];
+        if (requestParameters.y !== undefined) {
+            queryParameters['y'] = requestParameters.y;
         }
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -92,11 +86,11 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/avatar2`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/avatar2`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -116,18 +110,12 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
      * Delete project avatar
      */
     async deleteProjectAvatarRaw(requestParameters: DeleteProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling deleteProjectAvatar().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling deleteProjectAvatar.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteProjectAvatar().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteProjectAvatar.');
         }
 
         const queryParameters: any = {};
@@ -143,7 +131,7 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/avatar/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/avatar/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -165,11 +153,8 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
      * Get all project avatars
      */
     async getAllProjectAvatarsRaw(requestParameters: GetAllProjectAvatarsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectAvatars>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getAllProjectAvatars().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getAllProjectAvatars.');
         }
 
         const queryParameters: any = {};
@@ -185,7 +170,7 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/avatars`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/avatars`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -208,18 +193,12 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
      * Set project avatar
      */
     async updateProjectAvatarRaw(requestParameters: UpdateProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling updateProjectAvatar().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling updateProjectAvatar.');
         }
 
-        if (requestParameters['avatar'] == null) {
-            throw new runtime.RequiredError(
-                'avatar',
-                'Required parameter "avatar" was null or undefined when calling updateProjectAvatar().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateProjectAvatar.');
         }
 
         const queryParameters: any = {};
@@ -237,11 +216,11 @@ export class ProjectAvatarsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/avatar`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/avatar`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['avatar'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

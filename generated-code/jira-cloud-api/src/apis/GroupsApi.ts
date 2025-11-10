@@ -21,10 +21,10 @@ import type {
   PageBeanGroupDetails,
   PageBeanUserDetails,
   UpdateUserToGroupBean,
-} from '../models/index';
+} from '../models';
 
 export interface AddUserToGroupRequest {
-    updateUserToGroupBean: UpdateUserToGroupBean;
+    requestBody: { [key: string]: any; };
     groupname?: string;
     groupId?: string;
 }
@@ -39,7 +39,7 @@ export interface BulkGetGroupsRequest {
 }
 
 export interface CreateGroupRequest {
-    addGroupBean: AddGroupBean;
+    requestBody: { [key: string]: any; };
 }
 
 export interface FindGroupsRequest {
@@ -90,21 +90,18 @@ export class GroupsApi extends runtime.BaseAPI {
      * Add user to group
      */
     async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters['updateUserToGroupBean'] == null) {
-            throw new runtime.RequiredError(
-                'updateUserToGroupBean',
-                'Required parameter "updateUserToGroupBean" was null or undefined when calling addUserToGroup().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling addUserToGroup.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -124,7 +121,7 @@ export class GroupsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateUserToGroupBean'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -146,28 +143,28 @@ export class GroupsApi extends runtime.BaseAPI {
     async bulkGetGroupsRaw(requestParameters: BulkGetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanGroupDetails>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['groupName'] != null) {
-            queryParameters['groupName'] = requestParameters['groupName'];
+        if (requestParameters.groupName) {
+            queryParameters['groupName'] = requestParameters.groupName;
         }
 
-        if (requestParameters['accessType'] != null) {
-            queryParameters['accessType'] = requestParameters['accessType'];
+        if (requestParameters.accessType !== undefined) {
+            queryParameters['accessType'] = requestParameters.accessType;
         }
 
-        if (requestParameters['applicationKey'] != null) {
-            queryParameters['applicationKey'] = requestParameters['applicationKey'];
+        if (requestParameters.applicationKey !== undefined) {
+            queryParameters['applicationKey'] = requestParameters.applicationKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -204,11 +201,8 @@ export class GroupsApi extends runtime.BaseAPI {
      * Create group
      */
     async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
-        if (requestParameters['addGroupBean'] == null) {
-            throw new runtime.RequiredError(
-                'addGroupBean',
-                'Required parameter "addGroupBean" was null or undefined when calling createGroup().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createGroup.');
         }
 
         const queryParameters: any = {};
@@ -230,7 +224,7 @@ export class GroupsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['addGroupBean'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -252,32 +246,32 @@ export class GroupsApi extends runtime.BaseAPI {
     async findGroupsRaw(requestParameters: FindGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundGroups>> {
         const queryParameters: any = {};
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['exclude'] != null) {
-            queryParameters['exclude'] = requestParameters['exclude'];
+        if (requestParameters.exclude) {
+            queryParameters['exclude'] = requestParameters.exclude;
         }
 
-        if (requestParameters['excludeId'] != null) {
-            queryParameters['excludeId'] = requestParameters['excludeId'];
+        if (requestParameters.excludeId) {
+            queryParameters['excludeId'] = requestParameters.excludeId;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['caseInsensitive'] != null) {
-            queryParameters['caseInsensitive'] = requestParameters['caseInsensitive'];
+        if (requestParameters.caseInsensitive !== undefined) {
+            queryParameters['caseInsensitive'] = requestParameters.caseInsensitive;
         }
 
-        if (requestParameters['userName'] != null) {
-            queryParameters['userName'] = requestParameters['userName'];
+        if (requestParameters.userName !== undefined) {
+            queryParameters['userName'] = requestParameters.userName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -312,21 +306,20 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * This operation is deprecated, use [`group/member`](#api-rest-api-3-group-member-get).  Returns all users in a group.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get group
-     * @deprecated
      */
     async getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Group>> {
         const queryParameters: any = {};
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -352,7 +345,6 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * This operation is deprecated, use [`group/member`](#api-rest-api-3-group-member-get).  Returns all users in a group.  **[Permissions](#permissions) required:** either of:   *  *Browse users and groups* [global permission](https://confluence.atlassian.com/x/x4dKLg).  *  *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get group
-     * @deprecated
      */
     async getGroup(requestParameters: GetGroupRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Group> {
         const response = await this.getGroupRaw(requestParameters, initOverrides);
@@ -366,24 +358,24 @@ export class GroupsApi extends runtime.BaseAPI {
     async getUsersFromGroupRaw(requestParameters: GetUsersFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUserDetails>> {
         const queryParameters: any = {};
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['includeInactiveUsers'] != null) {
-            queryParameters['includeInactiveUsers'] = requestParameters['includeInactiveUsers'];
+        if (requestParameters.includeInactiveUsers !== undefined) {
+            queryParameters['includeInactiveUsers'] = requestParameters.includeInactiveUsers;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -422,20 +414,20 @@ export class GroupsApi extends runtime.BaseAPI {
     async removeGroupRaw(requestParameters: RemoveGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['swapGroup'] != null) {
-            queryParameters['swapGroup'] = requestParameters['swapGroup'];
+        if (requestParameters.swapGroup !== undefined) {
+            queryParameters['swapGroup'] = requestParameters.swapGroup;
         }
 
-        if (requestParameters['swapGroupId'] != null) {
-            queryParameters['swapGroupId'] = requestParameters['swapGroupId'];
+        if (requestParameters.swapGroupId !== undefined) {
+            queryParameters['swapGroupId'] = requestParameters.swapGroupId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -471,29 +463,26 @@ export class GroupsApi extends runtime.BaseAPI {
      * Remove user from group
      */
     async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['accountId'] == null) {
-            throw new runtime.RequiredError(
-                'accountId',
-                'Required parameter "accountId" was null or undefined when calling removeUserFromGroup().'
-            );
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling removeUserFromGroup.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

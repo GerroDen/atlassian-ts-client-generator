@@ -20,7 +20,7 @@ import type {
   PageBeanUser,
   PageBeanUserKey,
   User,
-} from '../models/index';
+} from '../models';
 
 export interface FindAssignableUsersRequest {
     query?: string;
@@ -109,48 +109,48 @@ export class UserSearchApi extends runtime.BaseAPI {
     async findAssignableUsersRaw(requestParameters: FindAssignableUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['sessionId'] != null) {
-            queryParameters['sessionId'] = requestParameters['sessionId'];
+        if (requestParameters.sessionId !== undefined) {
+            queryParameters['sessionId'] = requestParameters.sessionId;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['project'] != null) {
-            queryParameters['project'] = requestParameters['project'];
+        if (requestParameters.project !== undefined) {
+            queryParameters['project'] = requestParameters.project;
         }
 
-        if (requestParameters['issueKey'] != null) {
-            queryParameters['issueKey'] = requestParameters['issueKey'];
+        if (requestParameters.issueKey !== undefined) {
+            queryParameters['issueKey'] = requestParameters.issueKey;
         }
 
-        if (requestParameters['issueId'] != null) {
-            queryParameters['issueId'] = requestParameters['issueId'];
+        if (requestParameters.issueId !== undefined) {
+            queryParameters['issueId'] = requestParameters.issueId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['actionDescriptorId'] != null) {
-            queryParameters['actionDescriptorId'] = requestParameters['actionDescriptorId'];
+        if (requestParameters.actionDescriptorId !== undefined) {
+            queryParameters['actionDescriptorId'] = requestParameters.actionDescriptorId;
         }
 
-        if (requestParameters['recommend'] != null) {
-            queryParameters['recommend'] = requestParameters['recommend'];
+        if (requestParameters.recommend !== undefined) {
+            queryParameters['recommend'] = requestParameters.recommend;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -187,37 +187,34 @@ export class UserSearchApi extends runtime.BaseAPI {
      * Find users assignable to projects
      */
     async findBulkAssignableUsersRaw(requestParameters: FindBulkAssignableUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
-        if (requestParameters['projectKeys'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeys',
-                'Required parameter "projectKeys" was null or undefined when calling findBulkAssignableUsers().'
-            );
+        if (requestParameters.projectKeys === null || requestParameters.projectKeys === undefined) {
+            throw new runtime.RequiredError('projectKeys','Required parameter requestParameters.projectKeys was null or undefined when calling findBulkAssignableUsers.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['projectKeys'] != null) {
-            queryParameters['projectKeys'] = requestParameters['projectKeys'];
+        if (requestParameters.projectKeys !== undefined) {
+            queryParameters['projectKeys'] = requestParameters.projectKeys;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -254,25 +251,22 @@ export class UserSearchApi extends runtime.BaseAPI {
      * Find user keys by query
      */
     async findUserKeysByQueryRaw(requestParameters: FindUserKeysByQueryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUserKey>> {
-        if (requestParameters['query'] == null) {
-            throw new runtime.RequiredError(
-                'query',
-                'Required parameter "query" was null or undefined when calling findUserKeysByQuery().'
-            );
+        if (requestParameters.query === null || requestParameters.query === undefined) {
+            throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling findUserKeysByQuery.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResult'] != null) {
-            queryParameters['maxResult'] = requestParameters['maxResult'];
+        if (requestParameters.maxResult !== undefined) {
+            queryParameters['maxResult'] = requestParameters.maxResult;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -311,28 +305,28 @@ export class UserSearchApi extends runtime.BaseAPI {
     async findUsersRaw(requestParameters: FindUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['property'] != null) {
-            queryParameters['property'] = requestParameters['property'];
+        if (requestParameters.property !== undefined) {
+            queryParameters['property'] = requestParameters.property;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -369,25 +363,22 @@ export class UserSearchApi extends runtime.BaseAPI {
      * Find users by query
      */
     async findUsersByQueryRaw(requestParameters: FindUsersByQueryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanUser>> {
-        if (requestParameters['query'] == null) {
-            throw new runtime.RequiredError(
-                'query',
-                'Required parameter "query" was null or undefined when calling findUsersByQuery().'
-            );
+        if (requestParameters.query === null || requestParameters.query === undefined) {
+            throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling findUsersByQuery.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -424,41 +415,38 @@ export class UserSearchApi extends runtime.BaseAPI {
      * Find users for picker
      */
     async findUsersForPickerRaw(requestParameters: FindUsersForPickerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundUsers>> {
-        if (requestParameters['query'] == null) {
-            throw new runtime.RequiredError(
-                'query',
-                'Required parameter "query" was null or undefined when calling findUsersForPicker().'
-            );
+        if (requestParameters.query === null || requestParameters.query === undefined) {
+            throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling findUsersForPicker.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['showAvatar'] != null) {
-            queryParameters['showAvatar'] = requestParameters['showAvatar'];
+        if (requestParameters.showAvatar !== undefined) {
+            queryParameters['showAvatar'] = requestParameters.showAvatar;
         }
 
-        if (requestParameters['exclude'] != null) {
-            queryParameters['exclude'] = requestParameters['exclude'];
+        if (requestParameters.exclude) {
+            queryParameters['exclude'] = requestParameters.exclude;
         }
 
-        if (requestParameters['excludeAccountIds'] != null) {
-            queryParameters['excludeAccountIds'] = requestParameters['excludeAccountIds'];
+        if (requestParameters.excludeAccountIds) {
+            queryParameters['excludeAccountIds'] = requestParameters.excludeAccountIds;
         }
 
-        if (requestParameters['avatarSize'] != null) {
-            queryParameters['avatarSize'] = requestParameters['avatarSize'];
+        if (requestParameters.avatarSize !== undefined) {
+            queryParameters['avatarSize'] = requestParameters.avatarSize;
         }
 
-        if (requestParameters['excludeConnectUsers'] != null) {
-            queryParameters['excludeConnectUsers'] = requestParameters['excludeConnectUsers'];
+        if (requestParameters.excludeConnectUsers !== undefined) {
+            queryParameters['excludeConnectUsers'] = requestParameters.excludeConnectUsers;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -495,45 +483,42 @@ export class UserSearchApi extends runtime.BaseAPI {
      * Find users with permissions
      */
     async findUsersWithAllPermissionsRaw(requestParameters: FindUsersWithAllPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
-        if (requestParameters['permissions'] == null) {
-            throw new runtime.RequiredError(
-                'permissions',
-                'Required parameter "permissions" was null or undefined when calling findUsersWithAllPermissions().'
-            );
+        if (requestParameters.permissions === null || requestParameters.permissions === undefined) {
+            throw new runtime.RequiredError('permissions','Required parameter requestParameters.permissions was null or undefined when calling findUsersWithAllPermissions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['permissions'] != null) {
-            queryParameters['permissions'] = requestParameters['permissions'];
+        if (requestParameters.permissions !== undefined) {
+            queryParameters['permissions'] = requestParameters.permissions;
         }
 
-        if (requestParameters['issueKey'] != null) {
-            queryParameters['issueKey'] = requestParameters['issueKey'];
+        if (requestParameters.issueKey !== undefined) {
+            queryParameters['issueKey'] = requestParameters.issueKey;
         }
 
-        if (requestParameters['projectKey'] != null) {
-            queryParameters['projectKey'] = requestParameters['projectKey'];
+        if (requestParameters.projectKey !== undefined) {
+            queryParameters['projectKey'] = requestParameters.projectKey;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -572,32 +557,32 @@ export class UserSearchApi extends runtime.BaseAPI {
     async findUsersWithBrowsePermissionRaw(requestParameters: FindUsersWithBrowsePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<User>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['username'] != null) {
-            queryParameters['username'] = requestParameters['username'];
+        if (requestParameters.username !== undefined) {
+            queryParameters['username'] = requestParameters.username;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['issueKey'] != null) {
-            queryParameters['issueKey'] = requestParameters['issueKey'];
+        if (requestParameters.issueKey !== undefined) {
+            queryParameters['issueKey'] = requestParameters.issueKey;
         }
 
-        if (requestParameters['projectKey'] != null) {
-            queryParameters['projectKey'] = requestParameters['projectKey'];
+        if (requestParameters.projectKey !== undefined) {
+            queryParameters['projectKey'] = requestParameters.projectKey;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

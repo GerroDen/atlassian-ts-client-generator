@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ProjectType,
-} from '../models/index';
+} from '../models';
 
 export interface GetAccessibleProjectTypeByKeyRequest {
     projectTypeKey: GetAccessibleProjectTypeByKeyProjectTypeKeyEnum;
@@ -36,11 +36,8 @@ export class ProjectTypesApi extends runtime.BaseAPI {
      * Get accessible project type by key
      */
     async getAccessibleProjectTypeByKeyRaw(requestParameters: GetAccessibleProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
-        if (requestParameters['projectTypeKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectTypeKey',
-                'Required parameter "projectTypeKey" was null or undefined when calling getAccessibleProjectTypeByKey().'
-            );
+        if (requestParameters.projectTypeKey === null || requestParameters.projectTypeKey === undefined) {
+            throw new runtime.RequiredError('projectTypeKey','Required parameter requestParameters.projectTypeKey was null or undefined when calling getAccessibleProjectTypeByKey.');
         }
 
         const queryParameters: any = {};
@@ -56,7 +53,7 @@ export class ProjectTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/type/{projectTypeKey}/accessible`.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters['projectTypeKey']))),
+            path: `/rest/api/3/project/type/{projectTypeKey}/accessible`.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters.projectTypeKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,11 +148,8 @@ export class ProjectTypesApi extends runtime.BaseAPI {
      * Get project type by key
      */
     async getProjectTypeByKeyRaw(requestParameters: GetProjectTypeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectType>> {
-        if (requestParameters['projectTypeKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectTypeKey',
-                'Required parameter "projectTypeKey" was null or undefined when calling getProjectTypeByKey().'
-            );
+        if (requestParameters.projectTypeKey === null || requestParameters.projectTypeKey === undefined) {
+            throw new runtime.RequiredError('projectTypeKey','Required parameter requestParameters.projectTypeKey was null or undefined when calling getProjectTypeByKey.');
         }
 
         const queryParameters: any = {};
@@ -171,7 +165,7 @@ export class ProjectTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/type/{projectTypeKey}`.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters['projectTypeKey']))),
+            path: `/rest/api/3/project/type/{projectTypeKey}`.replace(`{${"projectTypeKey"}}`, encodeURIComponent(String(requestParameters.projectTypeKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

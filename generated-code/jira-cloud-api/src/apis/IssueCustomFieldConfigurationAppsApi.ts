@@ -19,7 +19,7 @@ import type {
   CustomFieldConfigurations,
   PageBeanBulkContextualConfiguration,
   PageBeanContextualConfiguration,
-} from '../models/index';
+} from '../models';
 
 export interface GetCustomFieldConfigurationRequest {
     fieldIdOrKey: string;
@@ -58,41 +58,38 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
      * Get custom field configurations
      */
     async getCustomFieldConfigurationRaw(requestParameters: GetCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextualConfiguration>> {
-        if (requestParameters['fieldIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldIdOrKey',
-                'Required parameter "fieldIdOrKey" was null or undefined when calling getCustomFieldConfiguration().'
-            );
+        if (requestParameters.fieldIdOrKey === null || requestParameters.fieldIdOrKey === undefined) {
+            throw new runtime.RequiredError('fieldIdOrKey','Required parameter requestParameters.fieldIdOrKey was null or undefined when calling getCustomFieldConfiguration.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['fieldContextId'] != null) {
-            queryParameters['fieldContextId'] = requestParameters['fieldContextId'];
+        if (requestParameters.fieldContextId) {
+            queryParameters['fieldContextId'] = requestParameters.fieldContextId;
         }
 
-        if (requestParameters['issueId'] != null) {
-            queryParameters['issueId'] = requestParameters['issueId'];
+        if (requestParameters.issueId !== undefined) {
+            queryParameters['issueId'] = requestParameters.issueId;
         }
 
-        if (requestParameters['projectKeyOrId'] != null) {
-            queryParameters['projectKeyOrId'] = requestParameters['projectKeyOrId'];
+        if (requestParameters.projectKeyOrId !== undefined) {
+            queryParameters['projectKeyOrId'] = requestParameters.projectKeyOrId;
         }
 
-        if (requestParameters['issueTypeId'] != null) {
-            queryParameters['issueTypeId'] = requestParameters['issueTypeId'];
+        if (requestParameters.issueTypeId !== undefined) {
+            queryParameters['issueTypeId'] = requestParameters.issueTypeId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -106,7 +103,7 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey']))),
+            path: `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters.fieldIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -129,41 +126,38 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
      * Bulk get custom field configurations
      */
     async getCustomFieldsConfigurationsRaw(requestParameters: GetCustomFieldsConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanBulkContextualConfiguration>> {
-        if (requestParameters['configurationsListParameters'] == null) {
-            throw new runtime.RequiredError(
-                'configurationsListParameters',
-                'Required parameter "configurationsListParameters" was null or undefined when calling getCustomFieldsConfigurations().'
-            );
+        if (requestParameters.configurationsListParameters === null || requestParameters.configurationsListParameters === undefined) {
+            throw new runtime.RequiredError('configurationsListParameters','Required parameter requestParameters.configurationsListParameters was null or undefined when calling getCustomFieldsConfigurations.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['fieldContextId'] != null) {
-            queryParameters['fieldContextId'] = requestParameters['fieldContextId'];
+        if (requestParameters.fieldContextId) {
+            queryParameters['fieldContextId'] = requestParameters.fieldContextId;
         }
 
-        if (requestParameters['issueId'] != null) {
-            queryParameters['issueId'] = requestParameters['issueId'];
+        if (requestParameters.issueId !== undefined) {
+            queryParameters['issueId'] = requestParameters.issueId;
         }
 
-        if (requestParameters['projectKeyOrId'] != null) {
-            queryParameters['projectKeyOrId'] = requestParameters['projectKeyOrId'];
+        if (requestParameters.projectKeyOrId !== undefined) {
+            queryParameters['projectKeyOrId'] = requestParameters.projectKeyOrId;
         }
 
-        if (requestParameters['issueTypeId'] != null) {
-            queryParameters['issueTypeId'] = requestParameters['issueTypeId'];
+        if (requestParameters.issueTypeId !== undefined) {
+            queryParameters['issueTypeId'] = requestParameters.issueTypeId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -183,7 +177,7 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['configurationsListParameters'],
+            body: requestParameters.configurationsListParameters,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -203,18 +197,12 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
      * Update custom field configurations
      */
     async updateCustomFieldConfigurationRaw(requestParameters: UpdateCustomFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldIdOrKey',
-                'Required parameter "fieldIdOrKey" was null or undefined when calling updateCustomFieldConfiguration().'
-            );
+        if (requestParameters.fieldIdOrKey === null || requestParameters.fieldIdOrKey === undefined) {
+            throw new runtime.RequiredError('fieldIdOrKey','Required parameter requestParameters.fieldIdOrKey was null or undefined when calling updateCustomFieldConfiguration.');
         }
 
-        if (requestParameters['customFieldConfigurations'] == null) {
-            throw new runtime.RequiredError(
-                'customFieldConfigurations',
-                'Required parameter "customFieldConfigurations" was null or undefined when calling updateCustomFieldConfiguration().'
-            );
+        if (requestParameters.customFieldConfigurations === null || requestParameters.customFieldConfigurations === undefined) {
+            throw new runtime.RequiredError('customFieldConfigurations','Required parameter requestParameters.customFieldConfigurations was null or undefined when calling updateCustomFieldConfiguration.');
         }
 
         const queryParameters: any = {};
@@ -232,11 +220,11 @@ export class IssueCustomFieldConfigurationAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey']))),
+            path: `/rest/api/3/app/field/{fieldIdOrKey}/context/configuration`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters.fieldIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['customFieldConfigurations'],
+            body: requestParameters.customFieldConfigurations,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

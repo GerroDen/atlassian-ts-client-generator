@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AuditRecords,
   ErrorCollection,
-} from '../models/index';
+} from '../models';
 
 export interface GetAuditRecordsRequest {
     offset?: number;
@@ -39,24 +39,24 @@ export class AuditRecordsApi extends runtime.BaseAPI {
     async getAuditRecordsRaw(requestParameters: GetAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecords>> {
         const queryParameters: any = {};
 
-        if (requestParameters['offset'] != null) {
-            queryParameters['offset'] = requestParameters['offset'];
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
         }
 
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters['filter'] != null) {
-            queryParameters['filter'] = requestParameters['filter'];
+        if (requestParameters.filter !== undefined) {
+            queryParameters['filter'] = requestParameters.filter;
         }
 
-        if (requestParameters['from'] != null) {
-            queryParameters['from'] = requestParameters['from'];
+        if (requestParameters.from !== undefined) {
+            queryParameters['from'] = requestParameters.from;
         }
 
-        if (requestParameters['to'] != null) {
-            queryParameters['to'] = requestParameters['to'];
+        if (requestParameters.to !== undefined) {
+            queryParameters['to'] = requestParameters.to;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

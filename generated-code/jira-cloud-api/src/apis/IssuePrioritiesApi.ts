@@ -24,10 +24,10 @@ import type {
   SetDefaultPriorityRequest,
   TaskProgressBeanObject,
   UpdatePriorityDetails,
-} from '../models/index';
+} from '../models';
 
 export interface CreatePriorityRequest {
-    createPriorityDetails: CreatePriorityDetails;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeletePriorityRequest {
@@ -58,7 +58,7 @@ export interface SetDefaultPriorityOperationRequest {
 
 export interface UpdatePriorityRequest {
     id: string;
-    updatePriorityDetails: UpdatePriorityDetails;
+    requestBody: { [key: string]: any; };
 }
 
 /**
@@ -69,14 +69,10 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Creates an issue priority.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create priority
-     * @deprecated
      */
     async createPriorityRaw(requestParameters: CreatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PriorityId>> {
-        if (requestParameters['createPriorityDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createPriorityDetails',
-                'Required parameter "createPriorityDetails" was null or undefined when calling createPriority().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createPriority.');
         }
 
         const queryParameters: any = {};
@@ -98,7 +94,7 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createPriorityDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -107,7 +103,6 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Creates an issue priority.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Create priority
-     * @deprecated
      */
     async createPriority(requestParameters: CreatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PriorityId> {
         const response = await this.createPriorityRaw(requestParameters, initOverrides);
@@ -119,11 +114,8 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
      * Delete priority
      */
     async deletePriorityRaw(requestParameters: DeletePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deletePriority().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deletePriority.');
         }
 
         const queryParameters: any = {};
@@ -139,7 +131,7 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -159,7 +151,6 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Returns the list of all issue priorities.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Get priorities
-     * @deprecated
      */
     async getPrioritiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Priority>>> {
         const queryParameters: any = {};
@@ -187,7 +178,6 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Returns the list of all issue priorities.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Get priorities
-     * @deprecated
      */
     async getPriorities(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Priority>> {
         const response = await this.getPrioritiesRaw(initOverrides);
@@ -199,11 +189,8 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
      * Get priority
      */
     async getPriorityRaw(requestParameters: GetPriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Priority>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getPriority().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPriority.');
         }
 
         const queryParameters: any = {};
@@ -219,7 +206,7 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -242,11 +229,8 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
      * Move priorities
      */
     async movePrioritiesRaw(requestParameters: MovePrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['reorderIssuePriorities'] == null) {
-            throw new runtime.RequiredError(
-                'reorderIssuePriorities',
-                'Required parameter "reorderIssuePriorities" was null or undefined when calling movePriorities().'
-            );
+        if (requestParameters.reorderIssuePriorities === null || requestParameters.reorderIssuePriorities === undefined) {
+            throw new runtime.RequiredError('reorderIssuePriorities','Required parameter requestParameters.reorderIssuePriorities was null or undefined when calling movePriorities.');
         }
 
         const queryParameters: any = {};
@@ -268,7 +252,7 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['reorderIssuePriorities'],
+            body: requestParameters.reorderIssuePriorities,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -290,37 +274,36 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Search priorities
-     * @deprecated
      */
     async searchPrioritiesRaw(requestParameters: SearchPrioritiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriority>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['priorityName'] != null) {
-            queryParameters['priorityName'] = requestParameters['priorityName'];
+        if (requestParameters.priorityName !== undefined) {
+            queryParameters['priorityName'] = requestParameters.priorityName;
         }
 
-        if (requestParameters['onlyDefault'] != null) {
-            queryParameters['onlyDefault'] = requestParameters['onlyDefault'];
+        if (requestParameters.onlyDefault !== undefined) {
+            queryParameters['onlyDefault'] = requestParameters.onlyDefault;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -346,7 +329,6 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Returns a [paginated](#pagination) list of priorities. The list can contain all priorities or a subset determined by any combination of these criteria:   *  a list of priority IDs. Any invalid priority IDs are ignored.  *  a list of project IDs. Only priorities that are available in these projects will be returned. Any invalid project IDs are ignored.  *  whether the field configuration is a default. This returns priorities from company-managed (classic) projects only, as there is no concept of default priorities in team-managed projects.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Search priorities
-     * @deprecated
      */
     async searchPriorities(requestParameters: SearchPrioritiesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanPriority> {
         const response = await this.searchPrioritiesRaw(requestParameters, initOverrides);
@@ -358,11 +340,8 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
      * Set default priority
      */
     async setDefaultPriorityRaw(requestParameters: SetDefaultPriorityOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['setDefaultPriorityRequest'] == null) {
-            throw new runtime.RequiredError(
-                'setDefaultPriorityRequest',
-                'Required parameter "setDefaultPriorityRequest" was null or undefined when calling setDefaultPriority().'
-            );
+        if (requestParameters.setDefaultPriorityRequest === null || requestParameters.setDefaultPriorityRequest === undefined) {
+            throw new runtime.RequiredError('setDefaultPriorityRequest','Required parameter requestParameters.setDefaultPriorityRequest was null or undefined when calling setDefaultPriority.');
         }
 
         const queryParameters: any = {};
@@ -384,7 +363,7 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['setDefaultPriorityRequest'],
+            body: requestParameters.setDefaultPriorityRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -406,21 +385,14 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Updates an issue priority.  At least one request body parameter must be defined.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update priority
-     * @deprecated
      */
     async updatePriorityRaw(requestParameters: UpdatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updatePriority().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updatePriority.');
         }
 
-        if (requestParameters['updatePriorityDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updatePriorityDetails',
-                'Required parameter "updatePriorityDetails" was null or undefined when calling updatePriority().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updatePriority.');
         }
 
         const queryParameters: any = {};
@@ -438,11 +410,11 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/priority/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updatePriorityDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -455,7 +427,6 @@ export class IssuePrioritiesApi extends runtime.BaseAPI {
     /**
      * Updates an issue priority.  At least one request body parameter must be defined.  Deprecation applies to iconUrl param in request body which will be sunset on 16th Mar 2025. For more details refer to [changelog](https://developer.atlassian.com/changelog/#CHANGE-1525).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Update priority
-     * @deprecated
      */
     async updatePriority(requestParameters: UpdatePriorityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.updatePriorityRaw(requestParameters, initOverrides);

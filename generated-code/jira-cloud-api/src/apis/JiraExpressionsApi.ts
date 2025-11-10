@@ -22,7 +22,7 @@ import type {
   JiraExpressionForAnalysis,
   JiraExpressionResult,
   JiraExpressionsAnalysis,
-} from '../models/index';
+} from '../models';
 
 export interface AnalyseExpressionRequest {
     jiraExpressionForAnalysis: JiraExpressionForAnalysis;
@@ -49,17 +49,14 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
      * Analyse Jira expression
      */
     async analyseExpressionRaw(requestParameters: AnalyseExpressionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JiraExpressionsAnalysis>> {
-        if (requestParameters['jiraExpressionForAnalysis'] == null) {
-            throw new runtime.RequiredError(
-                'jiraExpressionForAnalysis',
-                'Required parameter "jiraExpressionForAnalysis" was null or undefined when calling analyseExpression().'
-            );
+        if (requestParameters.jiraExpressionForAnalysis === null || requestParameters.jiraExpressionForAnalysis === undefined) {
+            throw new runtime.RequiredError('jiraExpressionForAnalysis','Required parameter requestParameters.jiraExpressionForAnalysis was null or undefined when calling analyseExpression.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['check'] != null) {
-            queryParameters['check'] = requestParameters['check'];
+        if (requestParameters.check !== undefined) {
+            queryParameters['check'] = requestParameters.check;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -79,7 +76,7 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jiraExpressionForAnalysis'],
+            body: requestParameters.jiraExpressionForAnalysis,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -99,17 +96,14 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
      * Evaluate Jira expression using enhanced search API
      */
     async evaluateJSISJiraExpressionRaw(requestParameters: EvaluateJSISJiraExpressionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JExpEvaluateJiraExpressionResultBean>> {
-        if (requestParameters['jiraExpressionEvaluateRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'jiraExpressionEvaluateRequestBean',
-                'Required parameter "jiraExpressionEvaluateRequestBean" was null or undefined when calling evaluateJSISJiraExpression().'
-            );
+        if (requestParameters.jiraExpressionEvaluateRequestBean === null || requestParameters.jiraExpressionEvaluateRequestBean === undefined) {
+            throw new runtime.RequiredError('jiraExpressionEvaluateRequestBean','Required parameter requestParameters.jiraExpressionEvaluateRequestBean was null or undefined when calling evaluateJSISJiraExpression.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -129,7 +123,7 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jiraExpressionEvaluateRequestBean'],
+            body: requestParameters.jiraExpressionEvaluateRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -147,20 +141,16 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Evaluates a Jira expression and returns its value.  This resource can be used to test Jira expressions that you plan to use elsewhere, or to fetch data in a flexible way. Consult the [Jira expressions documentation](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/) for more details.  #### Context variables ####  The following context variables are available to Jira expressions evaluated by this resource. Their presence depends on various factors; usually you need to manually request them in the context object sent in the payload, but some of them are added automatically under certain conditions.   *  `user` ([User](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user)): The current user. Always available and equal to `null` if the request is anonymous.  *  `app` ([App](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#app)): The [Connect app](https://developer.atlassian.com/cloud/jira/platform/index/#connect-apps) that made the request. Available only for authenticated requests made by Connect Apps (read more here: [Authentication for Connect apps](https://developer.atlassian.com/cloud/jira/platform/security-for-connect-apps/)).  *  `issue` ([Issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue)): The current issue. Available only when the issue is provided in the request context object.  *  `issues` ([List](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#list) of [Issues](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue)): A collection of issues matching a JQL query. Available only when JQL is provided in the request context object.  *  `project` ([Project](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#project)): The current project. Available only when the project is provided in the request context object.  *  `sprint` ([Sprint](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#sprint)): The current sprint. Available only when the sprint is provided in the request context object.  *  `board` ([Board](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#board)): The current board. Available only when the board is provided in the request context object.  *  `serviceDesk` ([ServiceDesk](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#servicedesk)): The current service desk. Available only when the service desk is provided in the request context object.  *  `customerRequest` ([CustomerRequest](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#customerrequest)): The current customer request. Available only when the customer request is provided in the request context object.  Also, custom context variables can be passed in the request with their types. Those variables can be accessed by key in the Jira expression. These variable types are available for use in a custom context:   *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.  *  `json`: A JSON object containing custom content.  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.  This operation can be accessed anonymously.  **[Permissions](#permissions) required**: None. However, an expression may return different results for different users depending on their permissions. For example, different users may see different comments on the same issue.   Permission to access Jira Software is required to access Jira Software context variables (`board` and `sprint`) or fields (for example, `issue.sprint`).
      * Currently being removed. Evaluate Jira expression
-     * @deprecated
      */
     async evaluateJiraExpressionRaw(requestParameters: EvaluateJiraExpressionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JiraExpressionResult>> {
-        if (requestParameters['jiraExpressionEvalRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'jiraExpressionEvalRequestBean',
-                'Required parameter "jiraExpressionEvalRequestBean" was null or undefined when calling evaluateJiraExpression().'
-            );
+        if (requestParameters.jiraExpressionEvalRequestBean === null || requestParameters.jiraExpressionEvalRequestBean === undefined) {
+            throw new runtime.RequiredError('jiraExpressionEvalRequestBean','Required parameter requestParameters.jiraExpressionEvalRequestBean was null or undefined when calling evaluateJiraExpression.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -180,7 +170,7 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jiraExpressionEvalRequestBean'],
+            body: requestParameters.jiraExpressionEvalRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -189,7 +179,6 @@ export class JiraExpressionsApi extends runtime.BaseAPI {
     /**
      * Endpoint is currently being removed. [More details](https://developer.atlassian.com/changelog/#CHANGE-2046)  Evaluates a Jira expression and returns its value.  This resource can be used to test Jira expressions that you plan to use elsewhere, or to fetch data in a flexible way. Consult the [Jira expressions documentation](https://developer.atlassian.com/cloud/jira/platform/jira-expressions/) for more details.  #### Context variables ####  The following context variables are available to Jira expressions evaluated by this resource. Their presence depends on various factors; usually you need to manually request them in the context object sent in the payload, but some of them are added automatically under certain conditions.   *  `user` ([User](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user)): The current user. Always available and equal to `null` if the request is anonymous.  *  `app` ([App](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#app)): The [Connect app](https://developer.atlassian.com/cloud/jira/platform/index/#connect-apps) that made the request. Available only for authenticated requests made by Connect Apps (read more here: [Authentication for Connect apps](https://developer.atlassian.com/cloud/jira/platform/security-for-connect-apps/)).  *  `issue` ([Issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue)): The current issue. Available only when the issue is provided in the request context object.  *  `issues` ([List](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#list) of [Issues](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue)): A collection of issues matching a JQL query. Available only when JQL is provided in the request context object.  *  `project` ([Project](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#project)): The current project. Available only when the project is provided in the request context object.  *  `sprint` ([Sprint](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#sprint)): The current sprint. Available only when the sprint is provided in the request context object.  *  `board` ([Board](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#board)): The current board. Available only when the board is provided in the request context object.  *  `serviceDesk` ([ServiceDesk](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#servicedesk)): The current service desk. Available only when the service desk is provided in the request context object.  *  `customerRequest` ([CustomerRequest](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#customerrequest)): The current customer request. Available only when the customer request is provided in the request context object.  Also, custom context variables can be passed in the request with their types. Those variables can be accessed by key in the Jira expression. These variable types are available for use in a custom context:   *  `user`: A [user](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#user) specified as an Atlassian account ID.  *  `issue`: An [issue](https://developer.atlassian.com/cloud/jira/platform/jira-expressions-type-reference#issue) specified by ID or key. All the fields of the issue object are available in the Jira expression.  *  `json`: A JSON object containing custom content.  *  `list`: A JSON list of `user`, `issue`, or `json` variable types.  This operation can be accessed anonymously.  **[Permissions](#permissions) required**: None. However, an expression may return different results for different users depending on their permissions. For example, different users may see different comments on the same issue.   Permission to access Jira Software is required to access Jira Software context variables (`board` and `sprint`) or fields (for example, `issue.sprint`).
      * Currently being removed. Evaluate Jira expression
-     * @deprecated
      */
     async evaluateJiraExpression(requestParameters: EvaluateJiraExpressionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JiraExpressionResult> {
         const response = await this.evaluateJiraExpressionRaw(requestParameters, initOverrides);

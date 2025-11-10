@@ -29,7 +29,7 @@ import type {
   PageBeanFieldConfigurationScheme,
   PageBeanFieldConfigurationSchemeProjects,
   UpdateFieldConfigurationSchemeDetails,
-} from '../models/index';
+} from '../models';
 
 export interface AssignFieldConfigurationSchemeToProjectRequest {
     fieldConfigurationSchemeProjectAssociation: FieldConfigurationSchemeProjectAssociation;
@@ -118,11 +118,8 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Assign field configuration scheme to project
      */
     async assignFieldConfigurationSchemeToProjectRaw(requestParameters: AssignFieldConfigurationSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldConfigurationSchemeProjectAssociation'] == null) {
-            throw new runtime.RequiredError(
-                'fieldConfigurationSchemeProjectAssociation',
-                'Required parameter "fieldConfigurationSchemeProjectAssociation" was null or undefined when calling assignFieldConfigurationSchemeToProject().'
-            );
+        if (requestParameters.fieldConfigurationSchemeProjectAssociation === null || requestParameters.fieldConfigurationSchemeProjectAssociation === undefined) {
+            throw new runtime.RequiredError('fieldConfigurationSchemeProjectAssociation','Required parameter requestParameters.fieldConfigurationSchemeProjectAssociation was null or undefined when calling assignFieldConfigurationSchemeToProject.');
         }
 
         const queryParameters: any = {};
@@ -144,7 +141,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldConfigurationSchemeProjectAssociation'],
+            body: requestParameters.fieldConfigurationSchemeProjectAssociation,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -168,11 +165,8 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Create field configuration
      */
     async createFieldConfigurationRaw(requestParameters: CreateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfiguration>> {
-        if (requestParameters['fieldConfigurationDetails'] == null) {
-            throw new runtime.RequiredError(
-                'fieldConfigurationDetails',
-                'Required parameter "fieldConfigurationDetails" was null or undefined when calling createFieldConfiguration().'
-            );
+        if (requestParameters.fieldConfigurationDetails === null || requestParameters.fieldConfigurationDetails === undefined) {
+            throw new runtime.RequiredError('fieldConfigurationDetails','Required parameter requestParameters.fieldConfigurationDetails was null or undefined when calling createFieldConfiguration.');
         }
 
         const queryParameters: any = {};
@@ -194,7 +188,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldConfigurationDetails'],
+            body: requestParameters.fieldConfigurationDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -214,11 +208,8 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Create field configuration scheme
      */
     async createFieldConfigurationSchemeRaw(requestParameters: CreateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldConfigurationScheme>> {
-        if (requestParameters['updateFieldConfigurationSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateFieldConfigurationSchemeDetails',
-                'Required parameter "updateFieldConfigurationSchemeDetails" was null or undefined when calling createFieldConfigurationScheme().'
-            );
+        if (requestParameters.updateFieldConfigurationSchemeDetails === null || requestParameters.updateFieldConfigurationSchemeDetails === undefined) {
+            throw new runtime.RequiredError('updateFieldConfigurationSchemeDetails','Required parameter requestParameters.updateFieldConfigurationSchemeDetails was null or undefined when calling createFieldConfigurationScheme.');
         }
 
         const queryParameters: any = {};
@@ -240,7 +231,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateFieldConfigurationSchemeDetails'],
+            body: requestParameters.updateFieldConfigurationSchemeDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -260,11 +251,8 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Delete field configuration
      */
     async deleteFieldConfigurationRaw(requestParameters: DeleteFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteFieldConfiguration().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteFieldConfiguration.');
         }
 
         const queryParameters: any = {};
@@ -280,7 +268,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfiguration/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfiguration/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -307,11 +295,8 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Delete field configuration scheme
      */
     async deleteFieldConfigurationSchemeRaw(requestParameters: DeleteFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteFieldConfigurationScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteFieldConfigurationScheme.');
         }
 
         const queryParameters: any = {};
@@ -327,7 +312,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfigurationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfigurationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -356,16 +341,16 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     async getAllFieldConfigurationSchemesRaw(requestParameters: GetAllFieldConfigurationSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationScheme>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -404,24 +389,24 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     async getAllFieldConfigurationsRaw(requestParameters: GetAllFieldConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationDetails>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['isDefault'] != null) {
-            queryParameters['isDefault'] = requestParameters['isDefault'];
+        if (requestParameters.isDefault !== undefined) {
+            queryParameters['isDefault'] = requestParameters.isDefault;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -458,21 +443,18 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Get field configuration items
      */
     async getFieldConfigurationItemsRaw(requestParameters: GetFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationItem>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getFieldConfigurationItems().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getFieldConfigurationItems.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -486,7 +468,7 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfiguration/{id}/fields`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfiguration/{id}/fields`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -511,16 +493,16 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
     async getFieldConfigurationSchemeMappingsRaw(requestParameters: GetFieldConfigurationSchemeMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationIssueTypeItem>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['fieldConfigurationSchemeId'] != null) {
-            queryParameters['fieldConfigurationSchemeId'] = requestParameters['fieldConfigurationSchemeId'];
+        if (requestParameters.fieldConfigurationSchemeId) {
+            queryParameters['fieldConfigurationSchemeId'] = requestParameters.fieldConfigurationSchemeId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -557,25 +539,22 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Get field configuration schemes for projects
      */
     async getFieldConfigurationSchemeProjectMappingRaw(requestParameters: GetFieldConfigurationSchemeProjectMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanFieldConfigurationSchemeProjects>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getFieldConfigurationSchemeProjectMapping().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getFieldConfigurationSchemeProjectMapping.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -612,18 +591,12 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Remove issue types from field configuration scheme
      */
     async removeIssueTypesFromGlobalFieldConfigurationSchemeRaw(requestParameters: RemoveIssueTypesFromGlobalFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling removeIssueTypesFromGlobalFieldConfigurationScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeIssueTypesFromGlobalFieldConfigurationScheme.');
         }
 
-        if (requestParameters['issueTypeIdsToRemove'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeIdsToRemove',
-                'Required parameter "issueTypeIdsToRemove" was null or undefined when calling removeIssueTypesFromGlobalFieldConfigurationScheme().'
-            );
+        if (requestParameters.issueTypeIdsToRemove === null || requestParameters.issueTypeIdsToRemove === undefined) {
+            throw new runtime.RequiredError('issueTypeIdsToRemove','Required parameter requestParameters.issueTypeIdsToRemove was null or undefined when calling removeIssueTypesFromGlobalFieldConfigurationScheme.');
         }
 
         const queryParameters: any = {};
@@ -641,11 +614,11 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfigurationscheme/{id}/mapping/delete`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfigurationscheme/{id}/mapping/delete`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeIdsToRemove'],
+            body: requestParameters.issueTypeIdsToRemove,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -669,18 +642,12 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Assign issue types to field configurations
      */
     async setFieldConfigurationSchemeMappingRaw(requestParameters: SetFieldConfigurationSchemeMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setFieldConfigurationSchemeMapping().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setFieldConfigurationSchemeMapping.');
         }
 
-        if (requestParameters['associateFieldConfigurationsWithIssueTypesRequest'] == null) {
-            throw new runtime.RequiredError(
-                'associateFieldConfigurationsWithIssueTypesRequest',
-                'Required parameter "associateFieldConfigurationsWithIssueTypesRequest" was null or undefined when calling setFieldConfigurationSchemeMapping().'
-            );
+        if (requestParameters.associateFieldConfigurationsWithIssueTypesRequest === null || requestParameters.associateFieldConfigurationsWithIssueTypesRequest === undefined) {
+            throw new runtime.RequiredError('associateFieldConfigurationsWithIssueTypesRequest','Required parameter requestParameters.associateFieldConfigurationsWithIssueTypesRequest was null or undefined when calling setFieldConfigurationSchemeMapping.');
         }
 
         const queryParameters: any = {};
@@ -698,11 +665,11 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfigurationscheme/{id}/mapping`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfigurationscheme/{id}/mapping`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['associateFieldConfigurationsWithIssueTypesRequest'],
+            body: requestParameters.associateFieldConfigurationsWithIssueTypesRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -726,18 +693,12 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Update field configuration
      */
     async updateFieldConfigurationRaw(requestParameters: UpdateFieldConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateFieldConfiguration().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateFieldConfiguration.');
         }
 
-        if (requestParameters['fieldConfigurationDetails'] == null) {
-            throw new runtime.RequiredError(
-                'fieldConfigurationDetails',
-                'Required parameter "fieldConfigurationDetails" was null or undefined when calling updateFieldConfiguration().'
-            );
+        if (requestParameters.fieldConfigurationDetails === null || requestParameters.fieldConfigurationDetails === undefined) {
+            throw new runtime.RequiredError('fieldConfigurationDetails','Required parameter requestParameters.fieldConfigurationDetails was null or undefined when calling updateFieldConfiguration.');
         }
 
         const queryParameters: any = {};
@@ -755,11 +716,11 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfiguration/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfiguration/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldConfigurationDetails'],
+            body: requestParameters.fieldConfigurationDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -783,18 +744,12 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Update field configuration items
      */
     async updateFieldConfigurationItemsRaw(requestParameters: UpdateFieldConfigurationItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateFieldConfigurationItems().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateFieldConfigurationItems.');
         }
 
-        if (requestParameters['fieldConfigurationItemsDetails'] == null) {
-            throw new runtime.RequiredError(
-                'fieldConfigurationItemsDetails',
-                'Required parameter "fieldConfigurationItemsDetails" was null or undefined when calling updateFieldConfigurationItems().'
-            );
+        if (requestParameters.fieldConfigurationItemsDetails === null || requestParameters.fieldConfigurationItemsDetails === undefined) {
+            throw new runtime.RequiredError('fieldConfigurationItemsDetails','Required parameter requestParameters.fieldConfigurationItemsDetails was null or undefined when calling updateFieldConfigurationItems.');
         }
 
         const queryParameters: any = {};
@@ -812,11 +767,11 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfiguration/{id}/fields`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfiguration/{id}/fields`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldConfigurationItemsDetails'],
+            body: requestParameters.fieldConfigurationItemsDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -840,18 +795,12 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
      * Update field configuration scheme
      */
     async updateFieldConfigurationSchemeRaw(requestParameters: UpdateFieldConfigurationSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateFieldConfigurationScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateFieldConfigurationScheme.');
         }
 
-        if (requestParameters['updateFieldConfigurationSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateFieldConfigurationSchemeDetails',
-                'Required parameter "updateFieldConfigurationSchemeDetails" was null or undefined when calling updateFieldConfigurationScheme().'
-            );
+        if (requestParameters.updateFieldConfigurationSchemeDetails === null || requestParameters.updateFieldConfigurationSchemeDetails === undefined) {
+            throw new runtime.RequiredError('updateFieldConfigurationSchemeDetails','Required parameter requestParameters.updateFieldConfigurationSchemeDetails was null or undefined when calling updateFieldConfigurationScheme.');
         }
 
         const queryParameters: any = {};
@@ -869,11 +818,11 @@ export class IssueFieldConfigurationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/fieldconfigurationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/fieldconfigurationscheme/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateFieldConfigurationSchemeDetails'],
+            body: requestParameters.updateFieldConfigurationSchemeDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

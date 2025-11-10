@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ProjectEmailAddress,
-} from '../models/index';
+} from '../models';
 
 export interface GetProjectEmailRequest {
     projectId: number;
@@ -37,11 +37,8 @@ export class ProjectEmailApi extends runtime.BaseAPI {
      * Get project\'s sender email
      */
     async getProjectEmailRaw(requestParameters: GetProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectEmailAddress>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getProjectEmail().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getProjectEmail.');
         }
 
         const queryParameters: any = {};
@@ -57,7 +54,7 @@ export class ProjectEmailApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectId}/email`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/rest/api/3/project/{projectId}/email`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -80,18 +77,12 @@ export class ProjectEmailApi extends runtime.BaseAPI {
      * Set project\'s sender email
      */
     async updateProjectEmailRaw(requestParameters: UpdateProjectEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling updateProjectEmail().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling updateProjectEmail.');
         }
 
-        if (requestParameters['projectEmailAddress'] == null) {
-            throw new runtime.RequiredError(
-                'projectEmailAddress',
-                'Required parameter "projectEmailAddress" was null or undefined when calling updateProjectEmail().'
-            );
+        if (requestParameters.projectEmailAddress === null || requestParameters.projectEmailAddress === undefined) {
+            throw new runtime.RequiredError('projectEmailAddress','Required parameter requestParameters.projectEmailAddress was null or undefined when calling updateProjectEmail.');
         }
 
         const queryParameters: any = {};
@@ -109,11 +100,11 @@ export class ProjectEmailApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectId}/email`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/rest/api/3/project/{projectId}/email`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectEmailAddress'],
+            body: requestParameters.projectEmailAddress,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

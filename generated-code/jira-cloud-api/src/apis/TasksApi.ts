@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   TaskProgressBeanObject,
-} from '../models/index';
+} from '../models';
 
 export interface CancelTaskRequest {
     taskId: string;
@@ -36,11 +36,8 @@ export class TasksApi extends runtime.BaseAPI {
      * Cancel task
      */
     async cancelTaskRaw(requestParameters: CancelTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['taskId'] == null) {
-            throw new runtime.RequiredError(
-                'taskId',
-                'Required parameter "taskId" was null or undefined when calling cancelTask().'
-            );
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling cancelTask.');
         }
 
         const queryParameters: any = {};
@@ -56,7 +53,7 @@ export class TasksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/task/{taskId}/cancel`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
+            path: `/rest/api/3/task/{taskId}/cancel`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -83,11 +80,8 @@ export class TasksApi extends runtime.BaseAPI {
      * Get task
      */
     async getTaskRaw(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TaskProgressBeanObject>> {
-        if (requestParameters['taskId'] == null) {
-            throw new runtime.RequiredError(
-                'taskId',
-                'Required parameter "taskId" was null or undefined when calling getTask().'
-            );
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling getTask.');
         }
 
         const queryParameters: any = {};
@@ -103,7 +97,7 @@ export class TasksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/task/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
+            path: `/rest/api/3/task/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

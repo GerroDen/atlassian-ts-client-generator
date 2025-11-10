@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ContainerOfWorkflowSchemeAssociations,
   WorkflowSchemeProjectAssociation,
-} from '../models/index';
+} from '../models';
 
 export interface AssignSchemeToProjectRequest {
     workflowSchemeProjectAssociation: WorkflowSchemeProjectAssociation;
@@ -37,11 +37,8 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
      * Assign workflow scheme to project
      */
     async assignSchemeToProjectRaw(requestParameters: AssignSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['workflowSchemeProjectAssociation'] == null) {
-            throw new runtime.RequiredError(
-                'workflowSchemeProjectAssociation',
-                'Required parameter "workflowSchemeProjectAssociation" was null or undefined when calling assignSchemeToProject().'
-            );
+        if (requestParameters.workflowSchemeProjectAssociation === null || requestParameters.workflowSchemeProjectAssociation === undefined) {
+            throw new runtime.RequiredError('workflowSchemeProjectAssociation','Required parameter requestParameters.workflowSchemeProjectAssociation was null or undefined when calling assignSchemeToProject.');
         }
 
         const queryParameters: any = {};
@@ -63,7 +60,7 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowSchemeProjectAssociation'],
+            body: requestParameters.workflowSchemeProjectAssociation,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -87,17 +84,14 @@ export class WorkflowSchemeProjectAssociationsApi extends runtime.BaseAPI {
      * Get workflow scheme project associations
      */
     async getWorkflowSchemeProjectAssociationsRaw(requestParameters: GetWorkflowSchemeProjectAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerOfWorkflowSchemeAssociations>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getWorkflowSchemeProjectAssociations().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getWorkflowSchemeProjectAssociations.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

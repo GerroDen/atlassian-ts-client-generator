@@ -22,7 +22,7 @@ import type {
   IssueFilterForBulkPropertyDelete,
   MultiIssueEntityProperties,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface BulkDeleteIssuePropertyRequest {
     propertyKey: string;
@@ -72,18 +72,12 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Bulk delete issue property
      */
     async bulkDeleteIssuePropertyRaw(requestParameters: BulkDeleteIssuePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling bulkDeleteIssueProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling bulkDeleteIssueProperty.');
         }
 
-        if (requestParameters['issueFilterForBulkPropertyDelete'] == null) {
-            throw new runtime.RequiredError(
-                'issueFilterForBulkPropertyDelete',
-                'Required parameter "issueFilterForBulkPropertyDelete" was null or undefined when calling bulkDeleteIssueProperty().'
-            );
+        if (requestParameters.issueFilterForBulkPropertyDelete === null || requestParameters.issueFilterForBulkPropertyDelete === undefined) {
+            throw new runtime.RequiredError('issueFilterForBulkPropertyDelete','Required parameter requestParameters.issueFilterForBulkPropertyDelete was null or undefined when calling bulkDeleteIssueProperty.');
         }
 
         const queryParameters: any = {};
@@ -101,11 +95,11 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueFilterForBulkPropertyDelete'],
+            body: requestParameters.issueFilterForBulkPropertyDelete,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -124,11 +118,8 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Bulk set issue properties by issue
      */
     async bulkSetIssuePropertiesByIssueRaw(requestParameters: BulkSetIssuePropertiesByIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['multiIssueEntityProperties'] == null) {
-            throw new runtime.RequiredError(
-                'multiIssueEntityProperties',
-                'Required parameter "multiIssueEntityProperties" was null or undefined when calling bulkSetIssuePropertiesByIssue().'
-            );
+        if (requestParameters.multiIssueEntityProperties === null || requestParameters.multiIssueEntityProperties === undefined) {
+            throw new runtime.RequiredError('multiIssueEntityProperties','Required parameter requestParameters.multiIssueEntityProperties was null or undefined when calling bulkSetIssuePropertiesByIssue.');
         }
 
         const queryParameters: any = {};
@@ -150,7 +141,7 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['multiIssueEntityProperties'],
+            body: requestParameters.multiIssueEntityProperties,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -169,18 +160,12 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Bulk set issue property
      */
     async bulkSetIssuePropertyRaw(requestParameters: BulkSetIssuePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling bulkSetIssueProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling bulkSetIssueProperty.');
         }
 
-        if (requestParameters['bulkIssuePropertyUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'bulkIssuePropertyUpdateRequest',
-                'Required parameter "bulkIssuePropertyUpdateRequest" was null or undefined when calling bulkSetIssueProperty().'
-            );
+        if (requestParameters.bulkIssuePropertyUpdateRequest === null || requestParameters.bulkIssuePropertyUpdateRequest === undefined) {
+            throw new runtime.RequiredError('bulkIssuePropertyUpdateRequest','Required parameter requestParameters.bulkIssuePropertyUpdateRequest was null or undefined when calling bulkSetIssueProperty.');
         }
 
         const queryParameters: any = {};
@@ -198,11 +183,11 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkIssuePropertyUpdateRequest'],
+            body: requestParameters.bulkIssuePropertyUpdateRequest,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -221,11 +206,8 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Bulk set issues properties by list
      */
     async bulkSetIssuesPropertiesListRaw(requestParameters: BulkSetIssuesPropertiesListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueEntityProperties'] == null) {
-            throw new runtime.RequiredError(
-                'issueEntityProperties',
-                'Required parameter "issueEntityProperties" was null or undefined when calling bulkSetIssuesPropertiesList().'
-            );
+        if (requestParameters.issueEntityProperties === null || requestParameters.issueEntityProperties === undefined) {
+            throw new runtime.RequiredError('issueEntityProperties','Required parameter requestParameters.issueEntityProperties was null or undefined when calling bulkSetIssuesPropertiesList.');
         }
 
         const queryParameters: any = {};
@@ -247,7 +229,7 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueEntityProperties'],
+            body: requestParameters.issueEntityProperties,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -266,18 +248,12 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Delete issue property
      */
     async deleteIssuePropertyRaw(requestParameters: DeleteIssuePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteIssueProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteIssueProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteIssueProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteIssueProperty.');
         }
 
         const queryParameters: any = {};
@@ -293,7 +269,7 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -315,18 +291,12 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Get issue property
      */
     async getIssuePropertyRaw(requestParameters: GetIssuePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getIssueProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssueProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getIssueProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getIssueProperty.');
         }
 
         const queryParameters: any = {};
@@ -342,7 +312,7 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -365,11 +335,8 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Get issue property keys
      */
     async getIssuePropertyKeysRaw(requestParameters: GetIssuePropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getIssuePropertyKeys().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getIssuePropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -385,7 +352,7 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/properties`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/properties`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -408,25 +375,16 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
      * Set issue property
      */
     async setIssuePropertyRaw(requestParameters: SetIssuePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling setIssueProperty().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling setIssueProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setIssueProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setIssueProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setIssueProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setIssueProperty.');
         }
 
         const queryParameters: any = {};
@@ -444,11 +402,11 @@ export class IssuePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/properties/{propertyKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

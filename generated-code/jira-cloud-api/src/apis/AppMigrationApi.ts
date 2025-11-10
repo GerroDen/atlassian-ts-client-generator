@@ -19,7 +19,7 @@ import type {
   EntityPropertyDetails,
   WorkflowRulesSearch,
   WorkflowRulesSearchDetails,
-} from '../models/index';
+} from '../models';
 
 export interface AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequest {
     atlassianTransferId: string;
@@ -47,18 +47,12 @@ export class AppMigrationApi extends runtime.BaseAPI {
      * Bulk update custom field value
      */
     async appIssueFieldValueUpdateResourceUpdateIssueFieldsPutRaw(requestParameters: AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['atlassianTransferId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTransferId',
-                'Required parameter "atlassianTransferId" was null or undefined when calling appIssueFieldValueUpdateResourceUpdateIssueFieldsPut().'
-            );
+        if (requestParameters.atlassianTransferId === null || requestParameters.atlassianTransferId === undefined) {
+            throw new runtime.RequiredError('atlassianTransferId','Required parameter requestParameters.atlassianTransferId was null or undefined when calling appIssueFieldValueUpdateResourceUpdateIssueFieldsPut.');
         }
 
-        if (requestParameters['connectCustomFieldValues'] == null) {
-            throw new runtime.RequiredError(
-                'connectCustomFieldValues',
-                'Required parameter "connectCustomFieldValues" was null or undefined when calling appIssueFieldValueUpdateResourceUpdateIssueFieldsPut().'
-            );
+        if (requestParameters.connectCustomFieldValues === null || requestParameters.connectCustomFieldValues === undefined) {
+            throw new runtime.RequiredError('connectCustomFieldValues','Required parameter requestParameters.connectCustomFieldValues was null or undefined when calling appIssueFieldValueUpdateResourceUpdateIssueFieldsPut.');
         }
 
         const queryParameters: any = {};
@@ -67,8 +61,8 @@ export class AppMigrationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['atlassianTransferId'] != null) {
-            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters['atlassianTransferId']);
+        if (requestParameters.atlassianTransferId !== undefined && requestParameters.atlassianTransferId !== null) {
+            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters.atlassianTransferId);
         }
 
         const response = await this.request({
@@ -76,7 +70,7 @@ export class AppMigrationApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['connectCustomFieldValues'],
+            body: requestParameters.connectCustomFieldValues,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -100,25 +94,16 @@ export class AppMigrationApi extends runtime.BaseAPI {
      * Bulk update entity properties
      */
     async migrationResourceUpdateEntityPropertiesValuePutRaw(requestParameters: MigrationResourceUpdateEntityPropertiesValuePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['atlassianTransferId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTransferId',
-                'Required parameter "atlassianTransferId" was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut().'
-            );
+        if (requestParameters.atlassianTransferId === null || requestParameters.atlassianTransferId === undefined) {
+            throw new runtime.RequiredError('atlassianTransferId','Required parameter requestParameters.atlassianTransferId was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut.');
         }
 
-        if (requestParameters['entityType'] == null) {
-            throw new runtime.RequiredError(
-                'entityType',
-                'Required parameter "entityType" was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut().'
-            );
+        if (requestParameters.entityType === null || requestParameters.entityType === undefined) {
+            throw new runtime.RequiredError('entityType','Required parameter requestParameters.entityType was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut.');
         }
 
-        if (requestParameters['entityPropertyDetails'] == null) {
-            throw new runtime.RequiredError(
-                'entityPropertyDetails',
-                'Required parameter "entityPropertyDetails" was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut().'
-            );
+        if (requestParameters.entityPropertyDetails === null || requestParameters.entityPropertyDetails === undefined) {
+            throw new runtime.RequiredError('entityPropertyDetails','Required parameter requestParameters.entityPropertyDetails was null or undefined when calling migrationResourceUpdateEntityPropertiesValuePut.');
         }
 
         const queryParameters: any = {};
@@ -127,16 +112,16 @@ export class AppMigrationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['atlassianTransferId'] != null) {
-            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters['atlassianTransferId']);
+        if (requestParameters.atlassianTransferId !== undefined && requestParameters.atlassianTransferId !== null) {
+            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters.atlassianTransferId);
         }
 
         const response = await this.request({
-            path: `/rest/atlassian-connect/1/migration/properties/{entityType}`.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType']))),
+            path: `/rest/atlassian-connect/1/migration/properties/{entityType}`.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters.entityType))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['entityPropertyDetails'],
+            body: requestParameters.entityPropertyDetails,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -155,18 +140,12 @@ export class AppMigrationApi extends runtime.BaseAPI {
      * Get workflow transition rule configurations
      */
     async migrationResourceWorkflowRuleSearchPostRaw(requestParameters: MigrationResourceWorkflowRuleSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowRulesSearchDetails>> {
-        if (requestParameters['atlassianTransferId'] == null) {
-            throw new runtime.RequiredError(
-                'atlassianTransferId',
-                'Required parameter "atlassianTransferId" was null or undefined when calling migrationResourceWorkflowRuleSearchPost().'
-            );
+        if (requestParameters.atlassianTransferId === null || requestParameters.atlassianTransferId === undefined) {
+            throw new runtime.RequiredError('atlassianTransferId','Required parameter requestParameters.atlassianTransferId was null or undefined when calling migrationResourceWorkflowRuleSearchPost.');
         }
 
-        if (requestParameters['workflowRulesSearch'] == null) {
-            throw new runtime.RequiredError(
-                'workflowRulesSearch',
-                'Required parameter "workflowRulesSearch" was null or undefined when calling migrationResourceWorkflowRuleSearchPost().'
-            );
+        if (requestParameters.workflowRulesSearch === null || requestParameters.workflowRulesSearch === undefined) {
+            throw new runtime.RequiredError('workflowRulesSearch','Required parameter requestParameters.workflowRulesSearch was null or undefined when calling migrationResourceWorkflowRuleSearchPost.');
         }
 
         const queryParameters: any = {};
@@ -175,8 +154,8 @@ export class AppMigrationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['atlassianTransferId'] != null) {
-            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters['atlassianTransferId']);
+        if (requestParameters.atlassianTransferId !== undefined && requestParameters.atlassianTransferId !== null) {
+            headerParameters['Atlassian-Transfer-Id'] = String(requestParameters.atlassianTransferId);
         }
 
         const response = await this.request({
@@ -184,7 +163,7 @@ export class AppMigrationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowRulesSearch'],
+            body: requestParameters.workflowRulesSearch,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

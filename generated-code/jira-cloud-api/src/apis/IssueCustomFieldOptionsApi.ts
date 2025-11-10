@@ -23,7 +23,7 @@ import type {
   OrderOfCustomFieldOptions,
   PageBeanCustomFieldContextOption,
   TaskProgressBeanRemoveOptionFromIssuesResult,
-} from '../models/index';
+} from '../models';
 
 export interface CreateCustomFieldOptionRequest {
     fieldId: string;
@@ -80,25 +80,16 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Create custom field options (context)
      */
     async createCustomFieldOptionRaw(requestParameters: CreateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldCreatedContextOptionsList>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling createCustomFieldOption().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling createCustomFieldOption.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling createCustomFieldOption().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling createCustomFieldOption.');
         }
 
-        if (requestParameters['bulkCustomFieldOptionCreateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'bulkCustomFieldOptionCreateRequest',
-                'Required parameter "bulkCustomFieldOptionCreateRequest" was null or undefined when calling createCustomFieldOption().'
-            );
+        if (requestParameters.bulkCustomFieldOptionCreateRequest === null || requestParameters.bulkCustomFieldOptionCreateRequest === undefined) {
+            throw new runtime.RequiredError('bulkCustomFieldOptionCreateRequest','Required parameter requestParameters.bulkCustomFieldOptionCreateRequest was null or undefined when calling createCustomFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -116,11 +107,11 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkCustomFieldOptionCreateRequest'],
+            body: requestParameters.bulkCustomFieldOptionCreateRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -140,25 +131,16 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Delete custom field options (context)
      */
     async deleteCustomFieldOptionRaw(requestParameters: DeleteCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling deleteCustomFieldOption().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling deleteCustomFieldOption.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling deleteCustomFieldOption().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling deleteCustomFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling deleteCustomFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling deleteCustomFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -174,7 +156,7 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/{optionId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/{optionId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -196,11 +178,8 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Get custom field option
      */
     async getCustomFieldOptionRaw(requestParameters: GetCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldOption>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getCustomFieldOption().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCustomFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -216,7 +195,7 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/customFieldOption/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/customFieldOption/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -239,36 +218,30 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Get custom field options (context)
      */
     async getOptionsForContextRaw(requestParameters: GetOptionsForContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextOption>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getOptionsForContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getOptionsForContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling getOptionsForContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling getOptionsForContext.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['optionId'] != null) {
-            queryParameters['optionId'] = requestParameters['optionId'];
+        if (requestParameters.optionId !== undefined) {
+            queryParameters['optionId'] = requestParameters.optionId;
         }
 
-        if (requestParameters['onlyOptions'] != null) {
-            queryParameters['onlyOptions'] = requestParameters['onlyOptions'];
+        if (requestParameters.onlyOptions !== undefined) {
+            queryParameters['onlyOptions'] = requestParameters.onlyOptions;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -282,7 +255,7 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -305,25 +278,16 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Reorder custom field options (context)
      */
     async reorderCustomFieldOptionsRaw(requestParameters: ReorderCustomFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling reorderCustomFieldOptions().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling reorderCustomFieldOptions.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling reorderCustomFieldOptions().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling reorderCustomFieldOptions.');
         }
 
-        if (requestParameters['orderOfCustomFieldOptions'] == null) {
-            throw new runtime.RequiredError(
-                'orderOfCustomFieldOptions',
-                'Required parameter "orderOfCustomFieldOptions" was null or undefined when calling reorderCustomFieldOptions().'
-            );
+        if (requestParameters.orderOfCustomFieldOptions === null || requestParameters.orderOfCustomFieldOptions === undefined) {
+            throw new runtime.RequiredError('orderOfCustomFieldOptions','Required parameter requestParameters.orderOfCustomFieldOptions was null or undefined when calling reorderCustomFieldOptions.');
         }
 
         const queryParameters: any = {};
@@ -341,11 +305,11 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/move`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/move`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['orderOfCustomFieldOptions'],
+            body: requestParameters.orderOfCustomFieldOptions,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -369,35 +333,26 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Replace custom field options
      */
     async replaceCustomFieldOptionRaw(requestParameters: ReplaceCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling replaceCustomFieldOption().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling replaceCustomFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling replaceCustomFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling replaceCustomFieldOption.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling replaceCustomFieldOption().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling replaceCustomFieldOption.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['replaceWith'] != null) {
-            queryParameters['replaceWith'] = requestParameters['replaceWith'];
+        if (requestParameters.replaceWith !== undefined) {
+            queryParameters['replaceWith'] = requestParameters.replaceWith;
         }
 
-        if (requestParameters['jql'] != null) {
-            queryParameters['jql'] = requestParameters['jql'];
+        if (requestParameters.jql !== undefined) {
+            queryParameters['jql'] = requestParameters.jql;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -411,7 +366,7 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/{optionId}/issue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option/{optionId}/issue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -433,25 +388,16 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
      * Update custom field options (context)
      */
     async updateCustomFieldOptionRaw(requestParameters: UpdateCustomFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CustomFieldUpdatedContextOptionsList>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling updateCustomFieldOption().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling updateCustomFieldOption.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling updateCustomFieldOption().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling updateCustomFieldOption.');
         }
 
-        if (requestParameters['bulkCustomFieldOptionUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'bulkCustomFieldOptionUpdateRequest',
-                'Required parameter "bulkCustomFieldOptionUpdateRequest" was null or undefined when calling updateCustomFieldOption().'
-            );
+        if (requestParameters.bulkCustomFieldOptionUpdateRequest === null || requestParameters.bulkCustomFieldOptionUpdateRequest === undefined) {
+            throw new runtime.RequiredError('bulkCustomFieldOptionUpdateRequest','Required parameter requestParameters.bulkCustomFieldOptionUpdateRequest was null or undefined when calling updateCustomFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -469,11 +415,11 @@ export class IssueCustomFieldOptionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/option`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkCustomFieldOptionUpdateRequest'],
+            body: requestParameters.bulkCustomFieldOptionUpdateRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

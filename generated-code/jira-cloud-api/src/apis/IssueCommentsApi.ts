@@ -19,11 +19,11 @@ import type {
   IssueCommentListRequestBean,
   PageBeanComment,
   PageOfComments,
-} from '../models/index';
+} from '../models';
 
 export interface AddCommentRequest {
     issueIdOrKey: string;
-    comment: Omit<Comment, 'author'|'created'|'id'|'jsdAuthorCanSeeRequest'|'jsdPublic'|'renderedBody'|'self'|'updateAuthor'|'updated'>;
+    requestBody: { [key: string]: any; };
     expand?: string;
 }
 
@@ -54,7 +54,7 @@ export interface GetCommentsByIdsRequest {
 export interface UpdateCommentRequest {
     issueIdOrKey: string;
     id: string;
-    comment: Omit<Comment, 'author'|'created'|'id'|'jsdAuthorCanSeeRequest'|'jsdPublic'|'renderedBody'|'self'|'updateAuthor'|'updated'>;
+    requestBody: { [key: string]: any; };
     notifyUsers?: boolean;
     overrideEditableFlag?: boolean;
     expand?: string;
@@ -70,24 +70,18 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Add comment
      */
     async addCommentRaw(requestParameters: AddCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Comment>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling addComment().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling addComment.');
         }
 
-        if (requestParameters['comment'] == null) {
-            throw new runtime.RequiredError(
-                'comment',
-                'Required parameter "comment" was null or undefined when calling addComment().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling addComment.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -103,11 +97,11 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/comment`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/comment`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['comment'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -127,18 +121,12 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Delete comment
      */
     async deleteCommentRaw(requestParameters: DeleteCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteComment().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteComment.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteComment().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteComment.');
         }
 
         const queryParameters: any = {};
@@ -154,7 +142,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -176,24 +164,18 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Get comment
      */
     async getCommentRaw(requestParameters: GetCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Comment>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getComment().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getComment.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getComment().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getComment.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -207,7 +189,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -230,29 +212,26 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Get comments
      */
     async getCommentsRaw(requestParameters: GetCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfComments>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getComments().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getComments.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -266,7 +245,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/comment`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/comment`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -289,17 +268,14 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Get comments by IDs
      */
     async getCommentsByIdsRaw(requestParameters: GetCommentsByIdsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanComment>> {
-        if (requestParameters['issueCommentListRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'issueCommentListRequestBean',
-                'Required parameter "issueCommentListRequestBean" was null or undefined when calling getCommentsByIds().'
-            );
+        if (requestParameters.issueCommentListRequestBean === null || requestParameters.issueCommentListRequestBean === undefined) {
+            throw new runtime.RequiredError('issueCommentListRequestBean','Required parameter requestParameters.issueCommentListRequestBean was null or undefined when calling getCommentsByIds.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -319,7 +295,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueCommentListRequestBean'],
+            body: requestParameters.issueCommentListRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -339,39 +315,30 @@ export class IssueCommentsApi extends runtime.BaseAPI {
      * Update comment
      */
     async updateCommentRaw(requestParameters: UpdateCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Comment>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling updateComment().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling updateComment.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateComment().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateComment.');
         }
 
-        if (requestParameters['comment'] == null) {
-            throw new runtime.RequiredError(
-                'comment',
-                'Required parameter "comment" was null or undefined when calling updateComment().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateComment.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['notifyUsers'] != null) {
-            queryParameters['notifyUsers'] = requestParameters['notifyUsers'];
+        if (requestParameters.notifyUsers !== undefined) {
+            queryParameters['notifyUsers'] = requestParameters.notifyUsers;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -387,11 +354,11 @@ export class IssueCommentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/comment/{id}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['comment'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -413,7 +380,7 @@ export class IssueCommentsApi extends runtime.BaseAPI {
  */
 export const GetCommentsOrderByEnum = {
     Created: 'created',
-    Created2Desc: '-created',
-    Created3Asc: '+created'
+    CreatedDesc: '-created',
+    CreatedAsc: '+created'
 } as const;
 export type GetCommentsOrderByEnum = typeof GetCommentsOrderByEnum[keyof typeof GetCommentsOrderByEnum];

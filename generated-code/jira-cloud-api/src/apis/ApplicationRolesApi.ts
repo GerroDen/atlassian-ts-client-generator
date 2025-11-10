@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ApplicationRole,
-} from '../models/index';
+} from '../models';
 
 export interface GetApplicationRoleRequest {
     key: string;
@@ -68,11 +68,8 @@ export class ApplicationRolesApi extends runtime.BaseAPI {
      * Get application role
      */
     async getApplicationRoleRaw(requestParameters: GetApplicationRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApplicationRole>> {
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling getApplicationRole().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getApplicationRole.');
         }
 
         const queryParameters: any = {};
@@ -88,7 +85,7 @@ export class ApplicationRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/applicationrole/{key}`.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
+            path: `/rest/api/3/applicationrole/{key}`.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters.key))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

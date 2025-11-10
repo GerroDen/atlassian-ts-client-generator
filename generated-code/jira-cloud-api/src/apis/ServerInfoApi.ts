@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ServerInformation,
-} from '../models/index';
+} from '../models';
 
 /**
  * 

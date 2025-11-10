@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ServiceRegistry,
-} from '../models/index';
+} from '../models';
 
 export interface ServiceRegistryResourceServicesGetRequest {
     serviceIds: Array<string>;
@@ -32,17 +32,14 @@ export class ServiceRegistryApi extends runtime.BaseAPI {
      * Retrieve the attributes of service registries
      */
     async serviceRegistryResourceServicesGetRaw(requestParameters: ServiceRegistryResourceServicesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ServiceRegistry>>> {
-        if (requestParameters['serviceIds'] == null) {
-            throw new runtime.RequiredError(
-                'serviceIds',
-                'Required parameter "serviceIds" was null or undefined when calling serviceRegistryResourceServicesGet().'
-            );
+        if (requestParameters.serviceIds === null || requestParameters.serviceIds === undefined) {
+            throw new runtime.RequiredError('serviceIds','Required parameter requestParameters.serviceIds was null or undefined when calling serviceRegistryResourceServicesGet.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['serviceIds'] != null) {
-            queryParameters['serviceIds'] = requestParameters['serviceIds'];
+        if (requestParameters.serviceIds) {
+            queryParameters['serviceIds'] = requestParameters.serviceIds;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -21,7 +21,7 @@ import type {
   ScreenDetails,
   ScreenableField,
   UpdateScreenDetails,
-} from '../models/index';
+} from '../models';
 
 export interface AddFieldToDefaultScreenRequest {
     fieldId: string;
@@ -70,11 +70,8 @@ export class ScreensApi extends runtime.BaseAPI {
      * Add field to default screen
      */
     async addFieldToDefaultScreenRaw(requestParameters: AddFieldToDefaultScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling addFieldToDefaultScreen().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling addFieldToDefaultScreen.');
         }
 
         const queryParameters: any = {};
@@ -90,7 +87,7 @@ export class ScreensApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/addToDefault/{fieldId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/screens/addToDefault/{fieldId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -117,11 +114,8 @@ export class ScreensApi extends runtime.BaseAPI {
      * Create screen
      */
     async createScreenRaw(requestParameters: CreateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
-        if (requestParameters['screenDetails'] == null) {
-            throw new runtime.RequiredError(
-                'screenDetails',
-                'Required parameter "screenDetails" was null or undefined when calling createScreen().'
-            );
+        if (requestParameters.screenDetails === null || requestParameters.screenDetails === undefined) {
+            throw new runtime.RequiredError('screenDetails','Required parameter requestParameters.screenDetails was null or undefined when calling createScreen.');
         }
 
         const queryParameters: any = {};
@@ -143,7 +137,7 @@ export class ScreensApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['screenDetails'],
+            body: requestParameters.screenDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -163,11 +157,8 @@ export class ScreensApi extends runtime.BaseAPI {
      * Delete screen
      */
     async deleteScreenRaw(requestParameters: DeleteScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling deleteScreen().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling deleteScreen.');
         }
 
         const queryParameters: any = {};
@@ -183,7 +174,7 @@ export class ScreensApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))),
+            path: `/rest/api/3/screens/{screenId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -205,11 +196,8 @@ export class ScreensApi extends runtime.BaseAPI {
      * Get available screen fields
      */
     async getAvailableScreenFieldsRaw(requestParameters: GetAvailableScreenFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableField>>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling getAvailableScreenFields().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling getAvailableScreenFields.');
         }
 
         const queryParameters: any = {};
@@ -225,7 +213,7 @@ export class ScreensApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/availableFields`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))),
+            path: `/rest/api/3/screens/{screenId}/availableFields`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -250,28 +238,28 @@ export class ScreensApi extends runtime.BaseAPI {
     async getScreensRaw(requestParameters: GetScreensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreen>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['queryString'] != null) {
-            queryParameters['queryString'] = requestParameters['queryString'];
+        if (requestParameters.queryString !== undefined) {
+            queryParameters['queryString'] = requestParameters.queryString;
         }
 
-        if (requestParameters['scope'] != null) {
-            queryParameters['scope'] = requestParameters['scope'];
+        if (requestParameters.scope) {
+            queryParameters['scope'] = requestParameters.scope;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -308,25 +296,22 @@ export class ScreensApi extends runtime.BaseAPI {
      * Get screens for a field
      */
     async getScreensForFieldRaw(requestParameters: GetScreensForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanScreenWithTab>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getScreensForField().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getScreensForField.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -340,7 +325,7 @@ export class ScreensApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/screens`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/screens`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -363,18 +348,12 @@ export class ScreensApi extends runtime.BaseAPI {
      * Update screen
      */
     async updateScreenRaw(requestParameters: UpdateScreenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Screen>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling updateScreen().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling updateScreen.');
         }
 
-        if (requestParameters['updateScreenDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateScreenDetails',
-                'Required parameter "updateScreenDetails" was null or undefined when calling updateScreen().'
-            );
+        if (requestParameters.updateScreenDetails === null || requestParameters.updateScreenDetails === undefined) {
+            throw new runtime.RequiredError('updateScreenDetails','Required parameter requestParameters.updateScreenDetails was null or undefined when calling updateScreen.');
         }
 
         const queryParameters: any = {};
@@ -392,11 +371,11 @@ export class ScreensApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))),
+            path: `/rest/api/3/screens/{screenId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateScreenDetails'],
+            body: requestParameters.updateScreenDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -427,10 +406,10 @@ export type GetScreensScopeEnum = typeof GetScreensScopeEnum[keyof typeof GetScr
  */
 export const GetScreensOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetScreensOrderByEnum = typeof GetScreensOrderByEnum[keyof typeof GetScreensOrderByEnum];

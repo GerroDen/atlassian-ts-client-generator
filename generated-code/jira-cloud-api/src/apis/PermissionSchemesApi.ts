@@ -19,16 +19,16 @@ import type {
   PermissionGrants,
   PermissionScheme,
   PermissionSchemes,
-} from '../models/index';
+} from '../models';
 
 export interface CreatePermissionGrantRequest {
     schemeId: number;
-    permissionGrant: Omit<PermissionGrant, 'id'|'self'>;
+    requestBody: { [key: string]: any; };
     expand?: string;
 }
 
 export interface CreatePermissionSchemeRequest {
-    permissionScheme: Omit<PermissionScheme, 'expand'|'id'|'self'>;
+    requestBody: { [key: string]: any; };
     expand?: string;
 }
 
@@ -63,7 +63,7 @@ export interface GetPermissionSchemeGrantsRequest {
 
 export interface UpdatePermissionSchemeRequest {
     schemeId: number;
-    permissionScheme: Omit<PermissionScheme, 'expand'|'id'|'self'>;
+    requestBody: { [key: string]: any; };
     expand?: string;
 }
 
@@ -77,24 +77,18 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Create permission grant
      */
     async createPermissionGrantRaw(requestParameters: CreatePermissionGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling createPermissionGrant().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling createPermissionGrant.');
         }
 
-        if (requestParameters['permissionGrant'] == null) {
-            throw new runtime.RequiredError(
-                'permissionGrant',
-                'Required parameter "permissionGrant" was null or undefined when calling createPermissionGrant().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createPermissionGrant.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -110,11 +104,11 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}/permission`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}/permission`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['permissionGrant'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -134,17 +128,14 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Create permission scheme
      */
     async createPermissionSchemeRaw(requestParameters: CreatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
-        if (requestParameters['permissionScheme'] == null) {
-            throw new runtime.RequiredError(
-                'permissionScheme',
-                'Required parameter "permissionScheme" was null or undefined when calling createPermissionScheme().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createPermissionScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -164,7 +155,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['permissionScheme'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -184,11 +175,8 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Delete permission scheme
      */
     async deletePermissionSchemeRaw(requestParameters: DeletePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling deletePermissionScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling deletePermissionScheme.');
         }
 
         const queryParameters: any = {};
@@ -204,7 +192,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -226,18 +214,12 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Delete permission scheme grant
      */
     async deletePermissionSchemeEntityRaw(requestParameters: DeletePermissionSchemeEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling deletePermissionSchemeEntity().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling deletePermissionSchemeEntity.');
         }
 
-        if (requestParameters['permissionId'] == null) {
-            throw new runtime.RequiredError(
-                'permissionId',
-                'Required parameter "permissionId" was null or undefined when calling deletePermissionSchemeEntity().'
-            );
+        if (requestParameters.permissionId === null || requestParameters.permissionId === undefined) {
+            throw new runtime.RequiredError('permissionId','Required parameter requestParameters.permissionId was null or undefined when calling deletePermissionSchemeEntity.');
         }
 
         const queryParameters: any = {};
@@ -253,7 +235,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}/permission/{permissionId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}/permission/{permissionId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters.permissionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -277,8 +259,8 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
     async getAllPermissionSchemesRaw(requestParameters: GetAllPermissionSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionSchemes>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -315,17 +297,14 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Get permission scheme
      */
     async getPermissionSchemeRaw(requestParameters: GetPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getPermissionScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getPermissionScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -339,7 +318,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -362,24 +341,18 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Get permission scheme grant
      */
     async getPermissionSchemeGrantRaw(requestParameters: GetPermissionSchemeGrantRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrant>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getPermissionSchemeGrant().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getPermissionSchemeGrant.');
         }
 
-        if (requestParameters['permissionId'] == null) {
-            throw new runtime.RequiredError(
-                'permissionId',
-                'Required parameter "permissionId" was null or undefined when calling getPermissionSchemeGrant().'
-            );
+        if (requestParameters.permissionId === null || requestParameters.permissionId === undefined) {
+            throw new runtime.RequiredError('permissionId','Required parameter requestParameters.permissionId was null or undefined when calling getPermissionSchemeGrant.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -393,7 +366,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}/permission/{permissionId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters['permissionId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}/permission/{permissionId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"permissionId"}}`, encodeURIComponent(String(requestParameters.permissionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -416,17 +389,14 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Get permission scheme grants
      */
     async getPermissionSchemeGrantsRaw(requestParameters: GetPermissionSchemeGrantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionGrants>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getPermissionSchemeGrants().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getPermissionSchemeGrants.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -440,7 +410,7 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}/permission`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}/permission`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -463,24 +433,18 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
      * Update permission scheme
      */
     async updatePermissionSchemeRaw(requestParameters: UpdatePermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling updatePermissionScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling updatePermissionScheme.');
         }
 
-        if (requestParameters['permissionScheme'] == null) {
-            throw new runtime.RequiredError(
-                'permissionScheme',
-                'Required parameter "permissionScheme" was null or undefined when calling updatePermissionScheme().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updatePermissionScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -496,11 +460,11 @@ export class PermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/permissionscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['permissionScheme'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

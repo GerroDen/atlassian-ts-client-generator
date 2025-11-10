@@ -18,11 +18,11 @@ import type {
   RemoteIssueLink,
   RemoteIssueLinkIdentifies,
   RemoteIssueLinkRequest,
-} from '../models/index';
+} from '../models';
 
 export interface CreateOrUpdateRemoteIssueLinkRequest {
     issueIdOrKey: string;
-    remoteIssueLinkRequest: RemoteIssueLinkRequest;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeleteRemoteIssueLinkByGlobalIdRequest {
@@ -48,7 +48,7 @@ export interface GetRemoteIssueLinksRequest {
 export interface UpdateRemoteIssueLinkRequest {
     issueIdOrKey: string;
     linkId: string;
-    remoteIssueLinkRequest: RemoteIssueLinkRequest;
+    requestBody: { [key: string]: any; };
 }
 
 /**
@@ -61,18 +61,12 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Create or update remote issue link
      */
     async createOrUpdateRemoteIssueLinkRaw(requestParameters: CreateOrUpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLinkIdentifies>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling createOrUpdateRemoteIssueLink().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling createOrUpdateRemoteIssueLink.');
         }
 
-        if (requestParameters['remoteIssueLinkRequest'] == null) {
-            throw new runtime.RequiredError(
-                'remoteIssueLinkRequest',
-                'Required parameter "remoteIssueLinkRequest" was null or undefined when calling createOrUpdateRemoteIssueLink().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createOrUpdateRemoteIssueLink.');
         }
 
         const queryParameters: any = {};
@@ -90,11 +84,11 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['remoteIssueLinkRequest'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -114,24 +108,18 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Delete remote issue link by global ID
      */
     async deleteRemoteIssueLinkByGlobalIdRaw(requestParameters: DeleteRemoteIssueLinkByGlobalIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteRemoteIssueLinkByGlobalId().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteRemoteIssueLinkByGlobalId.');
         }
 
-        if (requestParameters['globalId'] == null) {
-            throw new runtime.RequiredError(
-                'globalId',
-                'Required parameter "globalId" was null or undefined when calling deleteRemoteIssueLinkByGlobalId().'
-            );
+        if (requestParameters.globalId === null || requestParameters.globalId === undefined) {
+            throw new runtime.RequiredError('globalId','Required parameter requestParameters.globalId was null or undefined when calling deleteRemoteIssueLinkByGlobalId.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['globalId'] != null) {
-            queryParameters['globalId'] = requestParameters['globalId'];
+        if (requestParameters.globalId !== undefined) {
+            queryParameters['globalId'] = requestParameters.globalId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -145,7 +133,7 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -167,18 +155,12 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Delete remote issue link by ID
      */
     async deleteRemoteIssueLinkByIdRaw(requestParameters: DeleteRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling deleteRemoteIssueLinkById().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling deleteRemoteIssueLinkById.');
         }
 
-        if (requestParameters['linkId'] == null) {
-            throw new runtime.RequiredError(
-                'linkId',
-                'Required parameter "linkId" was null or undefined when calling deleteRemoteIssueLinkById().'
-            );
+        if (requestParameters.linkId === null || requestParameters.linkId === undefined) {
+            throw new runtime.RequiredError('linkId','Required parameter requestParameters.linkId was null or undefined when calling deleteRemoteIssueLinkById.');
         }
 
         const queryParameters: any = {};
@@ -194,7 +176,7 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters.linkId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -216,18 +198,12 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Get remote issue link by ID
      */
     async getRemoteIssueLinkByIdRaw(requestParameters: GetRemoteIssueLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLink>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getRemoteIssueLinkById().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getRemoteIssueLinkById.');
         }
 
-        if (requestParameters['linkId'] == null) {
-            throw new runtime.RequiredError(
-                'linkId',
-                'Required parameter "linkId" was null or undefined when calling getRemoteIssueLinkById().'
-            );
+        if (requestParameters.linkId === null || requestParameters.linkId === undefined) {
+            throw new runtime.RequiredError('linkId','Required parameter requestParameters.linkId was null or undefined when calling getRemoteIssueLinkById.');
         }
 
         const queryParameters: any = {};
@@ -243,7 +219,7 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters.linkId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -266,17 +242,14 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Get remote issue links
      */
     async getRemoteIssueLinksRaw(requestParameters: GetRemoteIssueLinksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteIssueLink>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling getRemoteIssueLinks().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling getRemoteIssueLinks.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['globalId'] != null) {
-            queryParameters['globalId'] = requestParameters['globalId'];
+        if (requestParameters.globalId !== undefined) {
+            queryParameters['globalId'] = requestParameters.globalId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -290,7 +263,7 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -313,25 +286,16 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
      * Update remote issue link by ID
      */
     async updateRemoteIssueLinkRaw(requestParameters: UpdateRemoteIssueLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling updateRemoteIssueLink().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling updateRemoteIssueLink.');
         }
 
-        if (requestParameters['linkId'] == null) {
-            throw new runtime.RequiredError(
-                'linkId',
-                'Required parameter "linkId" was null or undefined when calling updateRemoteIssueLink().'
-            );
+        if (requestParameters.linkId === null || requestParameters.linkId === undefined) {
+            throw new runtime.RequiredError('linkId','Required parameter requestParameters.linkId was null or undefined when calling updateRemoteIssueLink.');
         }
 
-        if (requestParameters['remoteIssueLinkRequest'] == null) {
-            throw new runtime.RequiredError(
-                'remoteIssueLinkRequest',
-                'Required parameter "remoteIssueLinkRequest" was null or undefined when calling updateRemoteIssueLink().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateRemoteIssueLink.');
         }
 
         const queryParameters: any = {};
@@ -349,11 +313,11 @@ export class IssueRemoteLinksApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters['linkId']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/remotelink/{linkId}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))).replace(`{${"linkId"}}`, encodeURIComponent(String(requestParameters.linkId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['remoteIssueLinkRequest'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

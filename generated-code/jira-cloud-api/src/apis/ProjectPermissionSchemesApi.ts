@@ -19,7 +19,7 @@ import type {
   PermissionScheme,
   ProjectIssueSecurityLevels,
   SecurityScheme,
-} from '../models/index';
+} from '../models';
 
 export interface AssignPermissionSchemeRequest {
     projectKeyOrId: string;
@@ -50,24 +50,18 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
      * Assign permission scheme
      */
     async assignPermissionSchemeRaw(requestParameters: AssignPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
-        if (requestParameters['projectKeyOrId'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeyOrId',
-                'Required parameter "projectKeyOrId" was null or undefined when calling assignPermissionScheme().'
-            );
+        if (requestParameters.projectKeyOrId === null || requestParameters.projectKeyOrId === undefined) {
+            throw new runtime.RequiredError('projectKeyOrId','Required parameter requestParameters.projectKeyOrId was null or undefined when calling assignPermissionScheme.');
         }
 
-        if (requestParameters['idBean'] == null) {
-            throw new runtime.RequiredError(
-                'idBean',
-                'Required parameter "idBean" was null or undefined when calling assignPermissionScheme().'
-            );
+        if (requestParameters.idBean === null || requestParameters.idBean === undefined) {
+            throw new runtime.RequiredError('idBean','Required parameter requestParameters.idBean was null or undefined when calling assignPermissionScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -83,11 +77,11 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectKeyOrId}/permissionscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId']))),
+            path: `/rest/api/3/project/{projectKeyOrId}/permissionscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters.projectKeyOrId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['idBean'],
+            body: requestParameters.idBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -107,17 +101,14 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
      * Get assigned permission scheme
      */
     async getAssignedPermissionSchemeRaw(requestParameters: GetAssignedPermissionSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionScheme>> {
-        if (requestParameters['projectKeyOrId'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeyOrId',
-                'Required parameter "projectKeyOrId" was null or undefined when calling getAssignedPermissionScheme().'
-            );
+        if (requestParameters.projectKeyOrId === null || requestParameters.projectKeyOrId === undefined) {
+            throw new runtime.RequiredError('projectKeyOrId','Required parameter requestParameters.projectKeyOrId was null or undefined when calling getAssignedPermissionScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -131,7 +122,7 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectKeyOrId}/permissionscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId']))),
+            path: `/rest/api/3/project/{projectKeyOrId}/permissionscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters.projectKeyOrId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -154,11 +145,8 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
      * Get project issue security scheme
      */
     async getProjectIssueSecuritySchemeRaw(requestParameters: GetProjectIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityScheme>> {
-        if (requestParameters['projectKeyOrId'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeyOrId',
-                'Required parameter "projectKeyOrId" was null or undefined when calling getProjectIssueSecurityScheme().'
-            );
+        if (requestParameters.projectKeyOrId === null || requestParameters.projectKeyOrId === undefined) {
+            throw new runtime.RequiredError('projectKeyOrId','Required parameter requestParameters.projectKeyOrId was null or undefined when calling getProjectIssueSecurityScheme.');
         }
 
         const queryParameters: any = {};
@@ -174,7 +162,7 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectKeyOrId}/issuesecuritylevelscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId']))),
+            path: `/rest/api/3/project/{projectKeyOrId}/issuesecuritylevelscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters.projectKeyOrId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -197,11 +185,8 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
      * Get project issue security levels
      */
     async getSecurityLevelsForProjectRaw(requestParameters: GetSecurityLevelsForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectIssueSecurityLevels>> {
-        if (requestParameters['projectKeyOrId'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeyOrId',
-                'Required parameter "projectKeyOrId" was null or undefined when calling getSecurityLevelsForProject().'
-            );
+        if (requestParameters.projectKeyOrId === null || requestParameters.projectKeyOrId === undefined) {
+            throw new runtime.RequiredError('projectKeyOrId','Required parameter requestParameters.projectKeyOrId was null or undefined when calling getSecurityLevelsForProject.');
         }
 
         const queryParameters: any = {};
@@ -217,7 +202,7 @@ export class ProjectPermissionSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectKeyOrId}/securitylevel`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId']))),
+            path: `/rest/api/3/project/{projectKeyOrId}/securitylevel`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters.projectKeyOrId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -29,7 +29,7 @@ import type {
   PageBeanDashboard,
   PageOfDashboards,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface AddGadgetRequest {
     dashboardId: number;
@@ -137,18 +137,12 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Add gadget to dashboard
      */
     async addGadgetRaw(requestParameters: AddGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadget>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling addGadget().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling addGadget.');
         }
 
-        if (requestParameters['dashboardGadgetSettings'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardGadgetSettings',
-                'Required parameter "dashboardGadgetSettings" was null or undefined when calling addGadget().'
-            );
+        if (requestParameters.dashboardGadgetSettings === null || requestParameters.dashboardGadgetSettings === undefined) {
+            throw new runtime.RequiredError('dashboardGadgetSettings','Required parameter requestParameters.dashboardGadgetSettings was null or undefined when calling addGadget.');
         }
 
         const queryParameters: any = {};
@@ -166,11 +160,11 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/gadget`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/gadget`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['dashboardGadgetSettings'],
+            body: requestParameters.dashboardGadgetSettings,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -190,11 +184,8 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Bulk edit dashboards
      */
     async bulkEditDashboardsRaw(requestParameters: BulkEditDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkEditShareableEntityResponse>> {
-        if (requestParameters['bulkEditShareableEntityRequest'] == null) {
-            throw new runtime.RequiredError(
-                'bulkEditShareableEntityRequest',
-                'Required parameter "bulkEditShareableEntityRequest" was null or undefined when calling bulkEditDashboards().'
-            );
+        if (requestParameters.bulkEditShareableEntityRequest === null || requestParameters.bulkEditShareableEntityRequest === undefined) {
+            throw new runtime.RequiredError('bulkEditShareableEntityRequest','Required parameter requestParameters.bulkEditShareableEntityRequest was null or undefined when calling bulkEditDashboards.');
         }
 
         const queryParameters: any = {};
@@ -216,7 +207,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkEditShareableEntityRequest'],
+            body: requestParameters.bulkEditShareableEntityRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -236,24 +227,18 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Copy dashboard
      */
     async copyDashboardRaw(requestParameters: CopyDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling copyDashboard().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling copyDashboard.');
         }
 
-        if (requestParameters['dashboardDetails'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardDetails',
-                'Required parameter "dashboardDetails" was null or undefined when calling copyDashboard().'
-            );
+        if (requestParameters.dashboardDetails === null || requestParameters.dashboardDetails === undefined) {
+            throw new runtime.RequiredError('dashboardDetails','Required parameter requestParameters.dashboardDetails was null or undefined when calling copyDashboard.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['extendAdminPermissions'] != null) {
-            queryParameters['extendAdminPermissions'] = requestParameters['extendAdminPermissions'];
+        if (requestParameters.extendAdminPermissions !== undefined) {
+            queryParameters['extendAdminPermissions'] = requestParameters.extendAdminPermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -269,11 +254,11 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{id}/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/dashboard/{id}/copy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['dashboardDetails'],
+            body: requestParameters.dashboardDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -293,17 +278,14 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Create dashboard
      */
     async createDashboardRaw(requestParameters: CreateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
-        if (requestParameters['dashboardDetails'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardDetails',
-                'Required parameter "dashboardDetails" was null or undefined when calling createDashboard().'
-            );
+        if (requestParameters.dashboardDetails === null || requestParameters.dashboardDetails === undefined) {
+            throw new runtime.RequiredError('dashboardDetails','Required parameter requestParameters.dashboardDetails was null or undefined when calling createDashboard.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['extendAdminPermissions'] != null) {
-            queryParameters['extendAdminPermissions'] = requestParameters['extendAdminPermissions'];
+        if (requestParameters.extendAdminPermissions !== undefined) {
+            queryParameters['extendAdminPermissions'] = requestParameters.extendAdminPermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -323,7 +305,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['dashboardDetails'],
+            body: requestParameters.dashboardDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -343,11 +325,8 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Delete dashboard
      */
     async deleteDashboardRaw(requestParameters: DeleteDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteDashboard().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteDashboard.');
         }
 
         const queryParameters: any = {};
@@ -363,7 +342,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -385,25 +364,16 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Delete dashboard item property
      */
     async deleteDashboardItemPropertyRaw(requestParameters: DeleteDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling deleteDashboardItemProperty().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling deleteDashboardItemProperty.');
         }
 
-        if (requestParameters['itemId'] == null) {
-            throw new runtime.RequiredError(
-                'itemId',
-                'Required parameter "itemId" was null or undefined when calling deleteDashboardItemProperty().'
-            );
+        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling deleteDashboardItemProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteDashboardItemProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteDashboardItemProperty.');
         }
 
         const queryParameters: any = {};
@@ -419,7 +389,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -484,16 +454,16 @@ export class DashboardsApi extends runtime.BaseAPI {
     async getAllDashboardsRaw(requestParameters: GetAllDashboardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageOfDashboards>> {
         const queryParameters: any = {};
 
-        if (requestParameters['filter'] != null) {
-            queryParameters['filter'] = requestParameters['filter'];
+        if (requestParameters.filter !== undefined) {
+            queryParameters['filter'] = requestParameters.filter;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -530,25 +500,22 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Get gadgets
      */
     async getAllGadgetsRaw(requestParameters: GetAllGadgetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DashboardGadgetResponse>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling getAllGadgets().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling getAllGadgets.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['moduleKey'] != null) {
-            queryParameters['moduleKey'] = requestParameters['moduleKey'];
+        if (requestParameters.moduleKey) {
+            queryParameters['moduleKey'] = requestParameters.moduleKey;
         }
 
-        if (requestParameters['uri'] != null) {
-            queryParameters['uri'] = requestParameters['uri'];
+        if (requestParameters.uri) {
+            queryParameters['uri'] = requestParameters.uri;
         }
 
-        if (requestParameters['gadgetId'] != null) {
-            queryParameters['gadgetId'] = requestParameters['gadgetId'];
+        if (requestParameters.gadgetId) {
+            queryParameters['gadgetId'] = requestParameters.gadgetId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -562,7 +529,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/gadget`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/gadget`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -585,11 +552,8 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Get dashboard
      */
     async getDashboardRaw(requestParameters: GetDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getDashboard().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDashboard.');
         }
 
         const queryParameters: any = {};
@@ -605,7 +569,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -628,25 +592,16 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Get dashboard item property
      */
     async getDashboardItemPropertyRaw(requestParameters: GetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling getDashboardItemProperty().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling getDashboardItemProperty.');
         }
 
-        if (requestParameters['itemId'] == null) {
-            throw new runtime.RequiredError(
-                'itemId',
-                'Required parameter "itemId" was null or undefined when calling getDashboardItemProperty().'
-            );
+        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getDashboardItemProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getDashboardItemProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getDashboardItemProperty.');
         }
 
         const queryParameters: any = {};
@@ -662,7 +617,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -685,18 +640,12 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Get dashboard item property keys
      */
     async getDashboardItemPropertyKeysRaw(requestParameters: GetDashboardItemPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling getDashboardItemPropertyKeys().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling getDashboardItemPropertyKeys.');
         }
 
-        if (requestParameters['itemId'] == null) {
-            throw new runtime.RequiredError(
-                'itemId',
-                'Required parameter "itemId" was null or undefined when calling getDashboardItemPropertyKeys().'
-            );
+        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling getDashboardItemPropertyKeys.');
         }
 
         const queryParameters: any = {};
@@ -712,7 +661,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -737,48 +686,48 @@ export class DashboardsApi extends runtime.BaseAPI {
     async getDashboardsPaginatedRaw(requestParameters: GetDashboardsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanDashboard>> {
         const queryParameters: any = {};
 
-        if (requestParameters['dashboardName'] != null) {
-            queryParameters['dashboardName'] = requestParameters['dashboardName'];
+        if (requestParameters.dashboardName !== undefined) {
+            queryParameters['dashboardName'] = requestParameters.dashboardName;
         }
 
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
+        if (requestParameters.accountId !== undefined) {
+            queryParameters['accountId'] = requestParameters.accountId;
         }
 
-        if (requestParameters['owner'] != null) {
-            queryParameters['owner'] = requestParameters['owner'];
+        if (requestParameters.owner !== undefined) {
+            queryParameters['owner'] = requestParameters.owner;
         }
 
-        if (requestParameters['groupname'] != null) {
-            queryParameters['groupname'] = requestParameters['groupname'];
+        if (requestParameters.groupname !== undefined) {
+            queryParameters['groupname'] = requestParameters.groupname;
         }
 
-        if (requestParameters['groupId'] != null) {
-            queryParameters['groupId'] = requestParameters['groupId'];
+        if (requestParameters.groupId !== undefined) {
+            queryParameters['groupId'] = requestParameters.groupId;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -815,18 +764,12 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Remove gadget from dashboard
      */
     async removeGadgetRaw(requestParameters: RemoveGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling removeGadget().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling removeGadget.');
         }
 
-        if (requestParameters['gadgetId'] == null) {
-            throw new runtime.RequiredError(
-                'gadgetId',
-                'Required parameter "gadgetId" was null or undefined when calling removeGadget().'
-            );
+        if (requestParameters.gadgetId === null || requestParameters.gadgetId === undefined) {
+            throw new runtime.RequiredError('gadgetId','Required parameter requestParameters.gadgetId was null or undefined when calling removeGadget.');
         }
 
         const queryParameters: any = {};
@@ -842,7 +785,7 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters['gadgetId']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters.gadgetId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -869,32 +812,20 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Set dashboard item property
      */
     async setDashboardItemPropertyRaw(requestParameters: SetDashboardItemPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling setDashboardItemProperty().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling setDashboardItemProperty.');
         }
 
-        if (requestParameters['itemId'] == null) {
-            throw new runtime.RequiredError(
-                'itemId',
-                'Required parameter "itemId" was null or undefined when calling setDashboardItemProperty().'
-            );
+        if (requestParameters.itemId === null || requestParameters.itemId === undefined) {
+            throw new runtime.RequiredError('itemId','Required parameter requestParameters.itemId was null or undefined when calling setDashboardItemProperty.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling setDashboardItemProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling setDashboardItemProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setDashboardItemProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setDashboardItemProperty.');
         }
 
         const queryParameters: any = {};
@@ -912,11 +843,11 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters['itemId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"itemId"}}`, encodeURIComponent(String(requestParameters.itemId))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -940,24 +871,18 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Update dashboard
      */
     async updateDashboardRaw(requestParameters: UpdateDashboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Dashboard>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateDashboard().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateDashboard.');
         }
 
-        if (requestParameters['dashboardDetails'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardDetails',
-                'Required parameter "dashboardDetails" was null or undefined when calling updateDashboard().'
-            );
+        if (requestParameters.dashboardDetails === null || requestParameters.dashboardDetails === undefined) {
+            throw new runtime.RequiredError('dashboardDetails','Required parameter requestParameters.dashboardDetails was null or undefined when calling updateDashboard.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['extendAdminPermissions'] != null) {
-            queryParameters['extendAdminPermissions'] = requestParameters['extendAdminPermissions'];
+        if (requestParameters.extendAdminPermissions !== undefined) {
+            queryParameters['extendAdminPermissions'] = requestParameters.extendAdminPermissions;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -973,11 +898,11 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/dashboard/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['dashboardDetails'],
+            body: requestParameters.dashboardDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -997,25 +922,16 @@ export class DashboardsApi extends runtime.BaseAPI {
      * Update gadget on dashboard
      */
     async updateGadgetRaw(requestParameters: UpdateGadgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['dashboardId'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardId',
-                'Required parameter "dashboardId" was null or undefined when calling updateGadget().'
-            );
+        if (requestParameters.dashboardId === null || requestParameters.dashboardId === undefined) {
+            throw new runtime.RequiredError('dashboardId','Required parameter requestParameters.dashboardId was null or undefined when calling updateGadget.');
         }
 
-        if (requestParameters['gadgetId'] == null) {
-            throw new runtime.RequiredError(
-                'gadgetId',
-                'Required parameter "gadgetId" was null or undefined when calling updateGadget().'
-            );
+        if (requestParameters.gadgetId === null || requestParameters.gadgetId === undefined) {
+            throw new runtime.RequiredError('gadgetId','Required parameter requestParameters.gadgetId was null or undefined when calling updateGadget.');
         }
 
-        if (requestParameters['dashboardGadgetUpdateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'dashboardGadgetUpdateRequest',
-                'Required parameter "dashboardGadgetUpdateRequest" was null or undefined when calling updateGadget().'
-            );
+        if (requestParameters.dashboardGadgetUpdateRequest === null || requestParameters.dashboardGadgetUpdateRequest === undefined) {
+            throw new runtime.RequiredError('dashboardGadgetUpdateRequest','Required parameter requestParameters.dashboardGadgetUpdateRequest was null or undefined when calling updateGadget.');
         }
 
         const queryParameters: any = {};
@@ -1033,11 +949,11 @@ export class DashboardsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters['dashboardId']))).replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters['gadgetId']))),
+            path: `/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}`.replace(`{${"dashboardId"}}`, encodeURIComponent(String(requestParameters.dashboardId))).replace(`{${"gadgetId"}}`, encodeURIComponent(String(requestParameters.gadgetId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['dashboardGadgetUpdateRequest'],
+            body: requestParameters.dashboardGadgetUpdateRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -1071,23 +987,23 @@ export type GetAllDashboardsFilterEnum = typeof GetAllDashboardsFilterEnum[keyof
  */
 export const GetDashboardsPaginatedOrderByEnum = {
     Description: 'description',
-    Description2Desc: '-description',
-    Description3Asc: '+description',
+    DescriptionDesc: '-description',
+    DescriptionAsc: '+description',
     FavoriteCount: 'favorite_count',
-    FavoriteCount2Desc: '-favorite_count',
-    FavoriteCount3Asc: '+favorite_count',
+    FavoriteCountDesc: '-favorite_count',
+    FavoriteCountAsc: '+favorite_count',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id',
+    IdDesc: '-id',
+    IdAsc: '+id',
     IsFavorite: 'is_favorite',
-    IsFavorite2Desc: '-is_favorite',
-    IsFavorite3Asc: '+is_favorite',
+    IsFavoriteDesc: '-is_favorite',
+    IsFavoriteAsc: '+is_favorite',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Owner: 'owner',
-    Owner2Desc: '-owner',
-    Owner3Asc: '+owner'
+    OwnerDesc: '-owner',
+    OwnerAsc: '+owner'
 } as const;
 export type GetDashboardsPaginatedOrderByEnum = typeof GetDashboardsPaginatedOrderByEnum[keyof typeof GetDashboardsPaginatedOrderByEnum];
 /**

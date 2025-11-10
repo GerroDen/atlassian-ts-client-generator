@@ -22,7 +22,7 @@ import type {
   PageBeanField,
   TaskProgressBeanObject,
   UpdateCustomFieldDetails,
-} from '../models/index';
+} from '../models';
 
 export interface ICreateCustomFieldRequest {
     customFieldDefinitionJsonBean: CustomFieldDefinitionJsonBean;
@@ -81,11 +81,8 @@ export class IssueFieldsApi extends runtime.BaseAPI {
      * Create custom field
      */
     async createCustomFieldRaw(requestParameters: ICreateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FieldDetails>> {
-        if (requestParameters['customFieldDefinitionJsonBean'] == null) {
-            throw new runtime.RequiredError(
-                'customFieldDefinitionJsonBean',
-                'Required parameter "customFieldDefinitionJsonBean" was null or undefined when calling createCustomField().'
-            );
+        if (requestParameters.customFieldDefinitionJsonBean === null || requestParameters.customFieldDefinitionJsonBean === undefined) {
+            throw new runtime.RequiredError('customFieldDefinitionJsonBean','Required parameter requestParameters.customFieldDefinitionJsonBean was null or undefined when calling createCustomField.');
         }
 
         const queryParameters: any = {};
@@ -107,7 +104,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['customFieldDefinitionJsonBean'],
+            body: requestParameters.customFieldDefinitionJsonBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -127,11 +124,8 @@ export class IssueFieldsApi extends runtime.BaseAPI {
      * Delete custom field
      */
     async deleteCustomFieldRaw(requestParameters: DeleteCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteCustomField().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteCustomField.');
         }
 
         const queryParameters: any = {};
@@ -147,7 +141,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/field/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -167,24 +161,20 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     /**
      * Returns a [paginated](#pagination) list of the contexts a field is used in. Deprecated, use [ Get custom field contexts](#api-rest-api-3-field-fieldId-context-get).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get contexts for a field
-     * @deprecated
      */
     async getContextsForFieldDeprecatedRaw(requestParameters: GetContextsForFieldDeprecatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContext>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getContextsForFieldDeprecated().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getContextsForFieldDeprecated.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -198,7 +188,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/contexts`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/contexts`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -210,7 +200,6 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     /**
      * Returns a [paginated](#pagination) list of the contexts a field is used in. Deprecated, use [ Get custom field contexts](#api-rest-api-3-field-fieldId-context-get).  **[Permissions](#permissions) required:** *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).
      * Get contexts for a field
-     * @deprecated
      */
     async getContextsForFieldDeprecated(requestParameters: GetContextsForFieldDeprecatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageBeanContext> {
         const response = await this.getContextsForFieldDeprecatedRaw(requestParameters, initOverrides);
@@ -260,36 +249,36 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     async getFieldsPaginatedRaw(requestParameters: GetFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['type'] != null) {
-            queryParameters['type'] = requestParameters['type'];
+        if (requestParameters.type) {
+            queryParameters['type'] = requestParameters.type;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['projectIds'] != null) {
-            queryParameters['projectIds'] = requestParameters['projectIds'];
+        if (requestParameters.projectIds) {
+            queryParameters['projectIds'] = requestParameters.projectIds;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -328,28 +317,28 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     async getTrashedFieldsPaginatedRaw(requestParameters: GetTrashedFieldsPaginatedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanField>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -386,11 +375,8 @@ export class IssueFieldsApi extends runtime.BaseAPI {
      * Restore custom field from trash
      */
     async restoreCustomFieldRaw(requestParameters: RestoreCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling restoreCustomField().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling restoreCustomField.');
         }
 
         const queryParameters: any = {};
@@ -406,7 +392,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/field/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -433,11 +419,8 @@ export class IssueFieldsApi extends runtime.BaseAPI {
      * Move custom field to trash
      */
     async trashCustomFieldRaw(requestParameters: TrashCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling trashCustomField().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling trashCustomField.');
         }
 
         const queryParameters: any = {};
@@ -453,7 +436,7 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{id}/trash`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/field/{id}/trash`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -480,18 +463,12 @@ export class IssueFieldsApi extends runtime.BaseAPI {
      * Update custom field
      */
     async updateCustomFieldRaw(requestParameters: UpdateCustomFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling updateCustomField().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling updateCustomField.');
         }
 
-        if (requestParameters['updateCustomFieldDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateCustomFieldDetails',
-                'Required parameter "updateCustomFieldDetails" was null or undefined when calling updateCustomField().'
-            );
+        if (requestParameters.updateCustomFieldDetails === null || requestParameters.updateCustomFieldDetails === undefined) {
+            throw new runtime.RequiredError('updateCustomFieldDetails','Required parameter requestParameters.updateCustomFieldDetails was null or undefined when calling updateCustomField.');
         }
 
         const queryParameters: any = {};
@@ -509,11 +486,11 @@ export class IssueFieldsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateCustomFieldDetails'],
+            body: requestParameters.updateCustomFieldDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -547,20 +524,20 @@ export type GetFieldsPaginatedTypeEnum = typeof GetFieldsPaginatedTypeEnum[keyof
  */
 export const GetFieldsPaginatedOrderByEnum = {
     ContextsCount: 'contextsCount',
-    ContextsCount2Desc: '-contextsCount',
-    ContextsCount3Asc: '+contextsCount',
+    ContextsCountDesc: '-contextsCount',
+    ContextsCountAsc: '+contextsCount',
     LastUsed: 'lastUsed',
-    LastUsed2Desc: '-lastUsed',
-    LastUsed3Asc: '+lastUsed',
+    LastUsedDesc: '-lastUsed',
+    LastUsedAsc: '+lastUsed',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     ScreensCount: 'screensCount',
-    ScreensCount2Desc: '-screensCount',
-    ScreensCount3Asc: '+screensCount',
+    ScreensCountDesc: '-screensCount',
+    ScreensCountAsc: '+screensCount',
     ProjectsCount: 'projectsCount',
-    ProjectsCount2Desc: '-projectsCount',
-    ProjectsCount3Asc: '+projectsCount'
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
 export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum[keyof typeof GetFieldsPaginatedOrderByEnum];
 /**
@@ -568,16 +545,16 @@ export type GetFieldsPaginatedOrderByEnum = typeof GetFieldsPaginatedOrderByEnum
  */
 export const GetTrashedFieldsPaginatedExpandEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     TrashDate: 'trashDate',
-    TrashDate2Desc: '-trashDate',
-    TrashDate3Asc: '+trashDate',
+    TrashDateDesc: '-trashDate',
+    TrashDateAsc: '+trashDate',
     PlannedDeletionDate: 'plannedDeletionDate',
-    PlannedDeletionDate2Desc: '-plannedDeletionDate',
-    PlannedDeletionDate3Asc: '+plannedDeletionDate',
+    PlannedDeletionDateDesc: '-plannedDeletionDate',
+    PlannedDeletionDateAsc: '+plannedDeletionDate',
     ProjectsCount: 'projectsCount',
-    ProjectsCount2Desc: '-projectsCount',
-    ProjectsCount3Asc: '+projectsCount'
+    ProjectsCountDesc: '-projectsCount',
+    ProjectsCountAsc: '+projectsCount'
 } as const;
 export type GetTrashedFieldsPaginatedExpandEnum = typeof GetTrashedFieldsPaginatedExpandEnum[keyof typeof GetTrashedFieldsPaginatedExpandEnum];

@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   Locale,
   User,
-} from '../models/index';
+} from '../models';
 
 export interface GetCurrentUserRequest {
     expand?: string;
@@ -52,8 +52,8 @@ export class MyselfApi extends runtime.BaseAPI {
     async getCurrentUserRaw(requestParameters: GetCurrentUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -126,17 +126,14 @@ export class MyselfApi extends runtime.BaseAPI {
      * Get preference
      */
     async getPreferenceRaw(requestParameters: GetPreferenceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling getPreference().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling getPreference.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -177,17 +174,14 @@ export class MyselfApi extends runtime.BaseAPI {
      * Delete preference
      */
     async removePreferenceRaw(requestParameters: RemovePreferenceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling removePreference().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling removePreference.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -221,14 +215,10 @@ export class MyselfApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [ Update a user profile](https://developer.atlassian.com/cloud/admin/user-management/rest/#api-users-account-id-manage-profile-patch) from the user management REST API instead.  Sets the locale of the user. The locale must be one supported by the instance of Jira.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Set locale
-     * @deprecated
      */
     async setLocaleRaw(requestParameters: SetLocaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['locale'] == null) {
-            throw new runtime.RequiredError(
-                'locale',
-                'Required parameter "locale" was null or undefined when calling setLocale().'
-            );
+        if (requestParameters.locale === null || requestParameters.locale === undefined) {
+            throw new runtime.RequiredError('locale','Required parameter requestParameters.locale was null or undefined when calling setLocale.');
         }
 
         const queryParameters: any = {};
@@ -245,7 +235,7 @@ export class MyselfApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['locale'],
+            body: requestParameters.locale,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -258,7 +248,6 @@ export class MyselfApi extends runtime.BaseAPI {
     /**
      * Deprecated, use [ Update a user profile](https://developer.atlassian.com/cloud/admin/user-management/rest/#api-users-account-id-manage-profile-patch) from the user management REST API instead.  Sets the locale of the user. The locale must be one supported by the instance of Jira.  **[Permissions](#permissions) required:** Permission to access Jira.
      * Set locale
-     * @deprecated
      */
     async setLocale(requestParameters: SetLocaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.setLocaleRaw(requestParameters, initOverrides);
@@ -270,24 +259,18 @@ export class MyselfApi extends runtime.BaseAPI {
      * Set preference
      */
     async setPreferenceRaw(requestParameters: SetPreferenceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['key'] == null) {
-            throw new runtime.RequiredError(
-                'key',
-                'Required parameter "key" was null or undefined when calling setPreference().'
-            );
+        if (requestParameters.key === null || requestParameters.key === undefined) {
+            throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling setPreference.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setPreference().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setPreference.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -307,7 +290,7 @@ export class MyselfApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

@@ -20,7 +20,7 @@ import type {
   GetForgeAppPropertyKeys200Response,
   OperationMessage,
   PropertyKeys,
-} from '../models/index';
+} from '../models';
 
 export interface AddonPropertiesResourceDeleteAddonPropertyDeleteRequest {
     addonKey: string;
@@ -65,18 +65,12 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Delete app property
      */
     async addonPropertiesResourceDeleteAddonPropertyDeleteRaw(requestParameters: AddonPropertiesResourceDeleteAddonPropertyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['addonKey'] == null) {
-            throw new runtime.RequiredError(
-                'addonKey',
-                'Required parameter "addonKey" was null or undefined when calling addonPropertiesResourceDeleteAddonPropertyDelete().'
-            );
+        if (requestParameters.addonKey === null || requestParameters.addonKey === undefined) {
+            throw new runtime.RequiredError('addonKey','Required parameter requestParameters.addonKey was null or undefined when calling addonPropertiesResourceDeleteAddonPropertyDelete.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling addonPropertiesResourceDeleteAddonPropertyDelete().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling addonPropertiesResourceDeleteAddonPropertyDelete.');
         }
 
         const queryParameters: any = {};
@@ -92,7 +86,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -114,11 +108,8 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Get app properties
      */
     async addonPropertiesResourceGetAddonPropertiesGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PropertyKeys>> {
-        if (requestParameters['addonKey'] == null) {
-            throw new runtime.RequiredError(
-                'addonKey',
-                'Required parameter "addonKey" was null or undefined when calling addonPropertiesResourceGetAddonPropertiesGet().'
-            );
+        if (requestParameters.addonKey === null || requestParameters.addonKey === undefined) {
+            throw new runtime.RequiredError('addonKey','Required parameter requestParameters.addonKey was null or undefined when calling addonPropertiesResourceGetAddonPropertiesGet.');
         }
 
         const queryParameters: any = {};
@@ -134,7 +125,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey']))),
+            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -157,18 +148,12 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Get app property
      */
     async addonPropertiesResourceGetAddonPropertyGetRaw(requestParameters: AddonPropertiesResourceGetAddonPropertyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EntityProperty>> {
-        if (requestParameters['addonKey'] == null) {
-            throw new runtime.RequiredError(
-                'addonKey',
-                'Required parameter "addonKey" was null or undefined when calling addonPropertiesResourceGetAddonPropertyGet().'
-            );
+        if (requestParameters.addonKey === null || requestParameters.addonKey === undefined) {
+            throw new runtime.RequiredError('addonKey','Required parameter requestParameters.addonKey was null or undefined when calling addonPropertiesResourceGetAddonPropertyGet.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling addonPropertiesResourceGetAddonPropertyGet().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling addonPropertiesResourceGetAddonPropertyGet.');
         }
 
         const queryParameters: any = {};
@@ -184,7 +169,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -207,25 +192,16 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Set app property
      */
     async addonPropertiesResourcePutAddonPropertyPutRaw(requestParameters: AddonPropertiesResourcePutAddonPropertyPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
-        if (requestParameters['addonKey'] == null) {
-            throw new runtime.RequiredError(
-                'addonKey',
-                'Required parameter "addonKey" was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut().'
-            );
+        if (requestParameters.addonKey === null || requestParameters.addonKey === undefined) {
+            throw new runtime.RequiredError('addonKey','Required parameter requestParameters.addonKey was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut.');
         }
 
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addonPropertiesResourcePutAddonPropertyPut.');
         }
 
         const queryParameters: any = {};
@@ -243,11 +219,11 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters['addonKey']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}`.replace(`{${"addonKey"}}`, encodeURIComponent(String(requestParameters.addonKey))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -267,11 +243,8 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Delete app property (Forge)
      */
     async deleteForgeAppPropertyRaw(requestParameters: DeleteForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling deleteForgeAppProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling deleteForgeAppProperty.');
         }
 
         const queryParameters: any = {};
@@ -287,7 +260,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -309,11 +282,8 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Get app property (Forge)
      */
     async getForgeAppPropertyRaw(requestParameters: GetForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppProperty200Response>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling getForgeAppProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling getForgeAppProperty.');
         }
 
         const queryParameters: any = {};
@@ -329,7 +299,7 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -388,18 +358,12 @@ export class AppPropertiesApi extends runtime.BaseAPI {
      * Set app property (Forge)
      */
     async putForgeAppPropertyRaw(requestParameters: PutForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationMessage>> {
-        if (requestParameters['propertyKey'] == null) {
-            throw new runtime.RequiredError(
-                'propertyKey',
-                'Required parameter "propertyKey" was null or undefined when calling putForgeAppProperty().'
-            );
+        if (requestParameters.propertyKey === null || requestParameters.propertyKey === undefined) {
+            throw new runtime.RequiredError('propertyKey','Required parameter requestParameters.propertyKey was null or undefined when calling putForgeAppProperty.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling putForgeAppProperty().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling putForgeAppProperty.');
         }
 
         const queryParameters: any = {};
@@ -417,11 +381,11 @@ export class AppPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: `/rest/forge/1/app/properties/{propertyKey}`.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters.propertyKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

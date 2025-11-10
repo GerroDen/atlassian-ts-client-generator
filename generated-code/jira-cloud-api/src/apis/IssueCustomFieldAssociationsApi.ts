@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   FieldAssociationsRequest,
-} from '../models/index';
+} from '../models';
 
 export interface CreateAssociationsRequest {
     fieldAssociationsRequest: FieldAssociationsRequest;
@@ -36,11 +36,8 @@ export class IssueCustomFieldAssociationsApi extends runtime.BaseAPI {
      * Create associations
      */
     async createAssociationsRaw(requestParameters: CreateAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldAssociationsRequest'] == null) {
-            throw new runtime.RequiredError(
-                'fieldAssociationsRequest',
-                'Required parameter "fieldAssociationsRequest" was null or undefined when calling createAssociations().'
-            );
+        if (requestParameters.fieldAssociationsRequest === null || requestParameters.fieldAssociationsRequest === undefined) {
+            throw new runtime.RequiredError('fieldAssociationsRequest','Required parameter requestParameters.fieldAssociationsRequest was null or undefined when calling createAssociations.');
         }
 
         const queryParameters: any = {};
@@ -62,7 +59,7 @@ export class IssueCustomFieldAssociationsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldAssociationsRequest'],
+            body: requestParameters.fieldAssociationsRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -86,11 +83,8 @@ export class IssueCustomFieldAssociationsApi extends runtime.BaseAPI {
      * Remove associations
      */
     async removeAssociationsRaw(requestParameters: RemoveAssociationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldAssociationsRequest'] == null) {
-            throw new runtime.RequiredError(
-                'fieldAssociationsRequest',
-                'Required parameter "fieldAssociationsRequest" was null or undefined when calling removeAssociations().'
-            );
+        if (requestParameters.fieldAssociationsRequest === null || requestParameters.fieldAssociationsRequest === undefined) {
+            throw new runtime.RequiredError('fieldAssociationsRequest','Required parameter requestParameters.fieldAssociationsRequest was null or undefined when calling removeAssociations.');
         }
 
         const queryParameters: any = {};
@@ -112,7 +106,7 @@ export class IssueCustomFieldAssociationsApi extends runtime.BaseAPI {
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['fieldAssociationsRequest'],
+            body: requestParameters.fieldAssociationsRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

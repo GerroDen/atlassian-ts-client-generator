@@ -25,7 +25,7 @@ import type {
   ParsedJqlQueries,
   SanitizedJqlQueries,
   SearchAutoCompleteFilter,
-} from '../models/index';
+} from '../models';
 
 export interface GetAutoCompletePostRequest {
     searchAutoCompleteFilter: SearchAutoCompleteFilter;
@@ -97,11 +97,8 @@ export class JQLApi extends runtime.BaseAPI {
      * Get field reference data (POST)
      */
     async getAutoCompletePostRaw(requestParameters: GetAutoCompletePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JQLReferenceData>> {
-        if (requestParameters['searchAutoCompleteFilter'] == null) {
-            throw new runtime.RequiredError(
-                'searchAutoCompleteFilter',
-                'Required parameter "searchAutoCompleteFilter" was null or undefined when calling getAutoCompletePost().'
-            );
+        if (requestParameters.searchAutoCompleteFilter === null || requestParameters.searchAutoCompleteFilter === undefined) {
+            throw new runtime.RequiredError('searchAutoCompleteFilter','Required parameter requestParameters.searchAutoCompleteFilter was null or undefined when calling getAutoCompletePost.');
         }
 
         const queryParameters: any = {};
@@ -123,7 +120,7 @@ export class JQLApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['searchAutoCompleteFilter'],
+            body: requestParameters.searchAutoCompleteFilter,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -145,20 +142,20 @@ export class JQLApi extends runtime.BaseAPI {
     async getFieldAutoCompleteForQueryStringRaw(requestParameters: GetFieldAutoCompleteForQueryStringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AutoCompleteSuggestions>> {
         const queryParameters: any = {};
 
-        if (requestParameters['fieldName'] != null) {
-            queryParameters['fieldName'] = requestParameters['fieldName'];
+        if (requestParameters.fieldName !== undefined) {
+            queryParameters['fieldName'] = requestParameters.fieldName;
         }
 
-        if (requestParameters['fieldValue'] != null) {
-            queryParameters['fieldValue'] = requestParameters['fieldValue'];
+        if (requestParameters.fieldValue !== undefined) {
+            queryParameters['fieldValue'] = requestParameters.fieldValue;
         }
 
-        if (requestParameters['predicateName'] != null) {
-            queryParameters['predicateName'] = requestParameters['predicateName'];
+        if (requestParameters.predicateName !== undefined) {
+            queryParameters['predicateName'] = requestParameters.predicateName;
         }
 
-        if (requestParameters['predicateValue'] != null) {
-            queryParameters['predicateValue'] = requestParameters['predicateValue'];
+        if (requestParameters.predicateValue !== undefined) {
+            queryParameters['predicateValue'] = requestParameters.predicateValue;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -195,11 +192,8 @@ export class JQLApi extends runtime.BaseAPI {
      * Convert user identifiers to account IDs in JQL queries
      */
     async migrateQueriesRaw(requestParameters: MigrateQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConvertedJQLQueries>> {
-        if (requestParameters['jQLPersonalDataMigrationRequest'] == null) {
-            throw new runtime.RequiredError(
-                'jQLPersonalDataMigrationRequest',
-                'Required parameter "jQLPersonalDataMigrationRequest" was null or undefined when calling migrateQueries().'
-            );
+        if (requestParameters.jQLPersonalDataMigrationRequest === null || requestParameters.jQLPersonalDataMigrationRequest === undefined) {
+            throw new runtime.RequiredError('jQLPersonalDataMigrationRequest','Required parameter requestParameters.jQLPersonalDataMigrationRequest was null or undefined when calling migrateQueries.');
         }
 
         const queryParameters: any = {};
@@ -221,7 +215,7 @@ export class JQLApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jQLPersonalDataMigrationRequest'],
+            body: requestParameters.jQLPersonalDataMigrationRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -241,24 +235,18 @@ export class JQLApi extends runtime.BaseAPI {
      * Parse JQL query
      */
     async parseJqlQueriesRaw(requestParameters: ParseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ParsedJqlQueries>> {
-        if (requestParameters['validation'] == null) {
-            throw new runtime.RequiredError(
-                'validation',
-                'Required parameter "validation" was null or undefined when calling parseJqlQueries().'
-            );
+        if (requestParameters.validation === null || requestParameters.validation === undefined) {
+            throw new runtime.RequiredError('validation','Required parameter requestParameters.validation was null or undefined when calling parseJqlQueries.');
         }
 
-        if (requestParameters['jqlQueriesToParse'] == null) {
-            throw new runtime.RequiredError(
-                'jqlQueriesToParse',
-                'Required parameter "jqlQueriesToParse" was null or undefined when calling parseJqlQueries().'
-            );
+        if (requestParameters.jqlQueriesToParse === null || requestParameters.jqlQueriesToParse === undefined) {
+            throw new runtime.RequiredError('jqlQueriesToParse','Required parameter requestParameters.jqlQueriesToParse was null or undefined when calling parseJqlQueries.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['validation'] != null) {
-            queryParameters['validation'] = requestParameters['validation'];
+        if (requestParameters.validation !== undefined) {
+            queryParameters['validation'] = requestParameters.validation;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -278,7 +266,7 @@ export class JQLApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jqlQueriesToParse'],
+            body: requestParameters.jqlQueriesToParse,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -298,11 +286,8 @@ export class JQLApi extends runtime.BaseAPI {
      * Sanitize JQL queries
      */
     async sanitiseJqlQueriesRaw(requestParameters: SanitiseJqlQueriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SanitizedJqlQueries>> {
-        if (requestParameters['jqlQueriesToSanitize'] == null) {
-            throw new runtime.RequiredError(
-                'jqlQueriesToSanitize',
-                'Required parameter "jqlQueriesToSanitize" was null or undefined when calling sanitiseJqlQueries().'
-            );
+        if (requestParameters.jqlQueriesToSanitize === null || requestParameters.jqlQueriesToSanitize === undefined) {
+            throw new runtime.RequiredError('jqlQueriesToSanitize','Required parameter requestParameters.jqlQueriesToSanitize was null or undefined when calling sanitiseJqlQueries.');
         }
 
         const queryParameters: any = {};
@@ -324,7 +309,7 @@ export class JQLApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jqlQueriesToSanitize'],
+            body: requestParameters.jqlQueriesToSanitize,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

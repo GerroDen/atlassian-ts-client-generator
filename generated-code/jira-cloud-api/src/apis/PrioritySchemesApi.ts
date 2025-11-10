@@ -23,7 +23,7 @@ import type {
   SuggestedMappingsRequestBean,
   UpdatePrioritySchemeRequestBean,
   UpdatePrioritySchemeResponseBean,
-} from '../models/index';
+} from '../models';
 
 export interface CreatePrioritySchemeRequest {
     createPrioritySchemeDetails: CreatePrioritySchemeDetails;
@@ -85,11 +85,8 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Create priority scheme
      */
     async createPrioritySchemeRaw(requestParameters: CreatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PrioritySchemeId>> {
-        if (requestParameters['createPrioritySchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createPrioritySchemeDetails',
-                'Required parameter "createPrioritySchemeDetails" was null or undefined when calling createPriorityScheme().'
-            );
+        if (requestParameters.createPrioritySchemeDetails === null || requestParameters.createPrioritySchemeDetails === undefined) {
+            throw new runtime.RequiredError('createPrioritySchemeDetails','Required parameter requestParameters.createPrioritySchemeDetails was null or undefined when calling createPriorityScheme.');
         }
 
         const queryParameters: any = {};
@@ -111,7 +108,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createPrioritySchemeDetails'],
+            body: requestParameters.createPrioritySchemeDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -131,11 +128,8 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Delete priority scheme
      */
     async deletePrioritySchemeRaw(requestParameters: DeletePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling deletePriorityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling deletePriorityScheme.');
         }
 
         const queryParameters: any = {};
@@ -151,7 +145,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priorityscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/priorityscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -178,33 +172,30 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Get available priorities by priority scheme
      */
     async getAvailablePrioritiesByPrioritySchemeRaw(requestParameters: GetAvailablePrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getAvailablePrioritiesByPriorityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getAvailablePrioritiesByPriorityScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['schemeId'] != null) {
-            queryParameters['schemeId'] = requestParameters['schemeId'];
+        if (requestParameters.schemeId !== undefined) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
         }
 
-        if (requestParameters['exclude'] != null) {
-            queryParameters['exclude'] = requestParameters['exclude'];
+        if (requestParameters.exclude) {
+            queryParameters['exclude'] = requestParameters.exclude;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -241,21 +232,18 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Get priorities by priority scheme
      */
     async getPrioritiesByPrioritySchemeRaw(requestParameters: GetPrioritiesByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getPrioritiesByPriorityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getPrioritiesByPriorityScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -269,7 +257,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priorityscheme/{schemeId}/priorities`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/priorityscheme/{schemeId}/priorities`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -294,36 +282,36 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
     async getPrioritySchemesRaw(requestParameters: GetPrioritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPrioritySchemeWithPaginatedPrioritiesAndProjects>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['priorityId'] != null) {
-            queryParameters['priorityId'] = requestParameters['priorityId'];
+        if (requestParameters.priorityId) {
+            queryParameters['priorityId'] = requestParameters.priorityId;
         }
 
-        if (requestParameters['schemeId'] != null) {
-            queryParameters['schemeId'] = requestParameters['schemeId'];
+        if (requestParameters.schemeId) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
         }
 
-        if (requestParameters['schemeName'] != null) {
-            queryParameters['schemeName'] = requestParameters['schemeName'];
+        if (requestParameters.schemeName !== undefined) {
+            queryParameters['schemeName'] = requestParameters.schemeName;
         }
 
-        if (requestParameters['onlyDefault'] != null) {
-            queryParameters['onlyDefault'] = requestParameters['onlyDefault'];
+        if (requestParameters.onlyDefault !== undefined) {
+            queryParameters['onlyDefault'] = requestParameters.onlyDefault;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -360,29 +348,26 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Get projects by priority scheme
      */
     async getProjectsByPrioritySchemeRaw(requestParameters: GetProjectsByPrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProject>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling getProjectsByPriorityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling getProjectsByPriorityScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -396,7 +381,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priorityscheme/{schemeId}/projects`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/priorityscheme/{schemeId}/projects`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -419,11 +404,8 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Suggested priorities for mappings
      */
     async suggestedPrioritiesForMappingsRaw(requestParameters: SuggestedPrioritiesForMappingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanPriorityWithSequence>> {
-        if (requestParameters['suggestedMappingsRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'suggestedMappingsRequestBean',
-                'Required parameter "suggestedMappingsRequestBean" was null or undefined when calling suggestedPrioritiesForMappings().'
-            );
+        if (requestParameters.suggestedMappingsRequestBean === null || requestParameters.suggestedMappingsRequestBean === undefined) {
+            throw new runtime.RequiredError('suggestedMappingsRequestBean','Required parameter requestParameters.suggestedMappingsRequestBean was null or undefined when calling suggestedPrioritiesForMappings.');
         }
 
         const queryParameters: any = {};
@@ -445,7 +427,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['suggestedMappingsRequestBean'],
+            body: requestParameters.suggestedMappingsRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -465,18 +447,12 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
      * Update priority scheme
      */
     async updatePrioritySchemeRaw(requestParameters: UpdatePrioritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdatePrioritySchemeResponseBean>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling updatePriorityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling updatePriorityScheme.');
         }
 
-        if (requestParameters['updatePrioritySchemeRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'updatePrioritySchemeRequestBean',
-                'Required parameter "updatePrioritySchemeRequestBean" was null or undefined when calling updatePriorityScheme().'
-            );
+        if (requestParameters.updatePrioritySchemeRequestBean === null || requestParameters.updatePrioritySchemeRequestBean === undefined) {
+            throw new runtime.RequiredError('updatePrioritySchemeRequestBean','Required parameter requestParameters.updatePrioritySchemeRequestBean was null or undefined when calling updatePriorityScheme.');
         }
 
         const queryParameters: any = {};
@@ -494,11 +470,11 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/priorityscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/priorityscheme/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updatePrioritySchemeRequestBean'],
+            body: requestParameters.updatePrioritySchemeRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -520,7 +496,7 @@ export class PrioritySchemesApi extends runtime.BaseAPI {
  */
 export const GetPrioritySchemesOrderByEnum = {
     Name: 'name',
-    Name2Asc: '+name',
-    Name3Desc: '-name'
+    NameAsc: '+name',
+    NameDesc: '-name'
 } as const;
 export type GetPrioritySchemesOrderByEnum = typeof GetPrioritySchemesOrderByEnum[keyof typeof GetPrioritySchemesOrderByEnum];

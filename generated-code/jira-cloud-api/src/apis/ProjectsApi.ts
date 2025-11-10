@@ -24,7 +24,7 @@ import type {
   ProjectIssueTypeHierarchy,
   TaskProgressBeanObject,
   UpdateProjectDetails,
-} from '../models/index';
+} from '../models';
 
 export interface ArchiveProjectRequest {
     projectIdOrKey: string;
@@ -109,11 +109,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Archive project
      */
     async archiveProjectRaw(requestParameters: ArchiveProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling archiveProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling archiveProject.');
         }
 
         const queryParameters: any = {};
@@ -129,7 +126,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/archive`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/archive`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -156,11 +153,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Create project
      */
     async createProjectRaw(requestParameters: CreateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectIdentifiers>> {
-        if (requestParameters['createProjectDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createProjectDetails',
-                'Required parameter "createProjectDetails" was null or undefined when calling createProject().'
-            );
+        if (requestParameters.createProjectDetails === null || requestParameters.createProjectDetails === undefined) {
+            throw new runtime.RequiredError('createProjectDetails','Required parameter requestParameters.createProjectDetails was null or undefined when calling createProject.');
         }
 
         const queryParameters: any = {};
@@ -182,7 +176,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createProjectDetails'],
+            body: requestParameters.createProjectDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -202,17 +196,14 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Delete project
      */
     async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling deleteProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling deleteProject.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['enableUndo'] != null) {
-            queryParameters['enableUndo'] = requestParameters['enableUndo'];
+        if (requestParameters.enableUndo !== undefined) {
+            queryParameters['enableUndo'] = requestParameters.enableUndo;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -226,7 +217,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -248,11 +239,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Delete project asynchronously
      */
     async deleteProjectAsynchronouslyRaw(requestParameters: DeleteProjectAsynchronouslyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling deleteProjectAsynchronously().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling deleteProjectAsynchronously.');
         }
 
         const queryParameters: any = {};
@@ -268,7 +256,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/delete`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/delete`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -288,21 +276,20 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns all projects visible to the user. Deprecated, use [ Get projects paginated](#api-rest-api-3-project-search-get) that supports search and pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Projects are returned only where the user has *Browse Projects* or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
      * Get all projects
-     * @deprecated
      */
     async getAllProjectsRaw(requestParameters: GetAllProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Project>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['recent'] != null) {
-            queryParameters['recent'] = requestParameters['recent'];
+        if (requestParameters.recent !== undefined) {
+            queryParameters['recent'] = requestParameters.recent;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -328,7 +315,6 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns all projects visible to the user. Deprecated, use [ Get projects paginated](#api-rest-api-3-project-search-get) that supports search and pagination.  This operation can be accessed anonymously.  **[Permissions](#permissions) required:** Projects are returned only where the user has *Browse Projects* or *Administer projects* [project permission](https://confluence.atlassian.com/x/yodKLg) for the project.
      * Get all projects
-     * @deprecated
      */
     async getAllProjects(requestParameters: GetAllProjectsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Project>> {
         const response = await this.getAllProjectsRaw(requestParameters, initOverrides);
@@ -340,11 +326,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Get all statuses for project
      */
     async getAllStatusesRaw(requestParameters: GetAllStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeWithStatus>>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getAllStatuses().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getAllStatuses.');
         }
 
         const queryParameters: any = {};
@@ -360,7 +343,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/statuses`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/statuses`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -383,11 +366,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Get project issue type hierarchy
      */
     async getHierarchyRaw(requestParameters: GetHierarchyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectIssueTypeHierarchy>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getHierarchy().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getHierarchy.');
         }
 
         const queryParameters: any = {};
@@ -403,7 +383,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectId}/hierarchy`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: `/rest/api/3/project/{projectId}/hierarchy`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -426,17 +406,14 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Get project notification scheme
      */
     async getNotificationSchemeForProjectRaw(requestParameters: GetNotificationSchemeForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationScheme>> {
-        if (requestParameters['projectKeyOrId'] == null) {
-            throw new runtime.RequiredError(
-                'projectKeyOrId',
-                'Required parameter "projectKeyOrId" was null or undefined when calling getNotificationSchemeForProject().'
-            );
+        if (requestParameters.projectKeyOrId === null || requestParameters.projectKeyOrId === undefined) {
+            throw new runtime.RequiredError('projectKeyOrId','Required parameter requestParameters.projectKeyOrId was null or undefined when calling getNotificationSchemeForProject.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -450,7 +427,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectKeyOrId}/notificationscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters['projectKeyOrId']))),
+            path: `/rest/api/3/project/{projectKeyOrId}/notificationscheme`.replace(`{${"projectKeyOrId"}}`, encodeURIComponent(String(requestParameters.projectKeyOrId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -473,21 +450,18 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Get project
      */
     async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProject.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -501,7 +475,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -526,12 +500,12 @@ export class ProjectsApi extends runtime.BaseAPI {
     async getRecentRaw(requestParameters: GetRecentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Project>>> {
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -568,11 +542,8 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Restore deleted or archived project
      */
     async restoreRaw(requestParameters: RestoreRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling restore().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling restore.');
         }
 
         const queryParameters: any = {};
@@ -588,7 +559,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/restore`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/restore`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -613,56 +584,56 @@ export class ProjectsApi extends runtime.BaseAPI {
     async searchProjectsRaw(requestParameters: SearchProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanProject>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['keys'] != null) {
-            queryParameters['keys'] = requestParameters['keys'];
+        if (requestParameters.keys) {
+            queryParameters['keys'] = requestParameters.keys;
         }
 
-        if (requestParameters['query'] != null) {
-            queryParameters['query'] = requestParameters['query'];
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
         }
 
-        if (requestParameters['typeKey'] != null) {
-            queryParameters['typeKey'] = requestParameters['typeKey'];
+        if (requestParameters.typeKey !== undefined) {
+            queryParameters['typeKey'] = requestParameters.typeKey;
         }
 
-        if (requestParameters['categoryId'] != null) {
-            queryParameters['categoryId'] = requestParameters['categoryId'];
+        if (requestParameters.categoryId !== undefined) {
+            queryParameters['categoryId'] = requestParameters.categoryId;
         }
 
-        if (requestParameters['action'] != null) {
-            queryParameters['action'] = requestParameters['action'];
+        if (requestParameters.action !== undefined) {
+            queryParameters['action'] = requestParameters.action;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
+        if (requestParameters.status) {
+            queryParameters['status'] = requestParameters.status;
         }
 
-        if (requestParameters['properties'] != null) {
-            queryParameters['properties'] = requestParameters['properties'];
+        if (requestParameters.properties) {
+            queryParameters['properties'] = requestParameters.properties;
         }
 
-        if (requestParameters['propertyQuery'] != null) {
-            queryParameters['propertyQuery'] = requestParameters['propertyQuery'];
+        if (requestParameters.propertyQuery !== undefined) {
+            queryParameters['propertyQuery'] = requestParameters.propertyQuery;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -699,24 +670,18 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Update project
      */
     async updateProjectRaw(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Project>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling updateProject().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling updateProject.');
         }
 
-        if (requestParameters['updateProjectDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateProjectDetails',
-                'Required parameter "updateProjectDetails" was null or undefined when calling updateProject().'
-            );
+        if (requestParameters.updateProjectDetails === null || requestParameters.updateProjectDetails === undefined) {
+            throw new runtime.RequiredError('updateProjectDetails','Required parameter requestParameters.updateProjectDetails was null or undefined when calling updateProject.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -732,11 +697,11 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateProjectDetails'],
+            body: requestParameters.updateProjectDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -758,29 +723,29 @@ export class ProjectsApi extends runtime.BaseAPI {
  */
 export const SearchProjectsOrderByEnum = {
     Category: 'category',
-    Category2Desc: '-category',
-    Category3Asc: '+category',
+    CategoryDesc: '-category',
+    CategoryAsc: '+category',
     Key: 'key',
-    Key2Desc: '-key',
-    Key3Asc: '+key',
+    KeyDesc: '-key',
+    KeyAsc: '+key',
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Owner: 'owner',
-    Owner2Desc: '-owner',
-    Owner3Asc: '+owner',
+    OwnerDesc: '-owner',
+    OwnerAsc: '+owner',
     IssueCount: 'issueCount',
-    IssueCount2Desc: '-issueCount',
-    IssueCount3Asc: '+issueCount',
+    IssueCountDesc: '-issueCount',
+    IssueCountAsc: '+issueCount',
     LastIssueUpdatedDate: 'lastIssueUpdatedDate',
-    LastIssueUpdatedDate2Desc: '-lastIssueUpdatedDate',
-    LastIssueUpdatedDate3Asc: '+lastIssueUpdatedDate',
+    LastIssueUpdatedDateDesc: '-lastIssueUpdatedDate',
+    LastIssueUpdatedDateAsc: '+lastIssueUpdatedDate',
     ArchivedDate: 'archivedDate',
-    ArchivedDate2Asc: '+archivedDate',
-    ArchivedDate3Desc: '-archivedDate',
+    ArchivedDateAsc: '+archivedDate',
+    ArchivedDateDesc: '-archivedDate',
     DeletedDate: 'deletedDate',
-    DeletedDate2Asc: '+deletedDate',
-    DeletedDate3Desc: '-deletedDate'
+    DeletedDateAsc: '+deletedDate',
+    DeletedDateDesc: '-deletedDate'
 } as const;
 export type SearchProjectsOrderByEnum = typeof SearchProjectsOrderByEnum[keyof typeof SearchProjectsOrderByEnum];
 /**

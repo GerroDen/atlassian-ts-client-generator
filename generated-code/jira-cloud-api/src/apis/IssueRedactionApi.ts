@@ -18,7 +18,7 @@ import type {
   BulkRedactionRequest,
   ErrorCollection,
   RedactionJobStatusResponse,
-} from '../models/index';
+} from '../models';
 
 export interface GetRedactionStatusRequest {
     jobId: string;
@@ -38,11 +38,8 @@ export class IssueRedactionApi extends runtime.BaseAPI {
      * Get redaction status
      */
     async getRedactionStatusRaw(requestParameters: GetRedactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionJobStatusResponse>> {
-        if (requestParameters['jobId'] == null) {
-            throw new runtime.RequiredError(
-                'jobId',
-                'Required parameter "jobId" was null or undefined when calling getRedactionStatus().'
-            );
+        if (requestParameters.jobId === null || requestParameters.jobId === undefined) {
+            throw new runtime.RequiredError('jobId','Required parameter requestParameters.jobId was null or undefined when calling getRedactionStatus.');
         }
 
         const queryParameters: any = {};
@@ -53,7 +50,7 @@ export class IssueRedactionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/redact/status/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: `/rest/api/3/redact/status/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters.jobId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -76,11 +73,8 @@ export class IssueRedactionApi extends runtime.BaseAPI {
      * Redact
      */
     async redactRaw(requestParameters: RedactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['bulkRedactionRequest'] == null) {
-            throw new runtime.RequiredError(
-                'bulkRedactionRequest',
-                'Required parameter "bulkRedactionRequest" was null or undefined when calling redact().'
-            );
+        if (requestParameters.bulkRedactionRequest === null || requestParameters.bulkRedactionRequest === undefined) {
+            throw new runtime.RequiredError('bulkRedactionRequest','Required parameter requestParameters.bulkRedactionRequest was null or undefined when calling redact.');
         }
 
         const queryParameters: any = {};
@@ -97,7 +91,7 @@ export class IssueRedactionApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['bulkRedactionRequest'],
+            body: requestParameters.bulkRedactionRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

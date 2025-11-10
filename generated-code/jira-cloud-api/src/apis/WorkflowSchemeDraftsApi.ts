@@ -21,7 +21,7 @@ import type {
   PublishDraftWorkflowScheme,
   TaskProgressBeanObject,
   WorkflowScheme,
-} from '../models/index';
+} from '../models';
 
 export interface CreateWorkflowSchemeDraftFromParentRequest {
     id: number;
@@ -88,7 +88,7 @@ export interface UpdateDraftWorkflowMappingRequest {
 
 export interface UpdateWorkflowSchemeDraftRequest {
     id: number;
-    workflowScheme: Omit<WorkflowScheme, 'draft'|'id'|'issueTypes'|'lastModified'|'lastModifiedUser'|'originalDefaultWorkflow'|'originalIssueTypeMappings'|'self'>;
+    workflowScheme: WorkflowScheme;
 }
 
 /**
@@ -101,11 +101,8 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Create draft workflow scheme
      */
     async createWorkflowSchemeDraftFromParentRaw(requestParameters: CreateWorkflowSchemeDraftFromParentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling createWorkflowSchemeDraftFromParent().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createWorkflowSchemeDraftFromParent.');
         }
 
         const queryParameters: any = {};
@@ -121,7 +118,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/createdraft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/createdraft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -144,11 +141,8 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Delete draft default workflow
      */
     async deleteDraftDefaultWorkflowRaw(requestParameters: DeleteDraftDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteDraftDefaultWorkflow().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteDraftDefaultWorkflow.');
         }
 
         const queryParameters: any = {};
@@ -164,7 +158,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -187,24 +181,18 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Delete issue types for workflow in draft workflow scheme
      */
     async deleteDraftWorkflowMappingRaw(requestParameters: DeleteDraftWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteDraftWorkflowMapping().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteDraftWorkflowMapping.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling deleteDraftWorkflowMapping().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling deleteDraftWorkflowMapping.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -218,7 +206,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -240,11 +228,8 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Delete draft workflow scheme
      */
     async deleteWorkflowSchemeDraftRaw(requestParameters: DeleteWorkflowSchemeDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteWorkflowSchemeDraft().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteWorkflowSchemeDraft.');
         }
 
         const queryParameters: any = {};
@@ -260,7 +245,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -282,18 +267,12 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Delete workflow for issue type in draft workflow scheme
      */
     async deleteWorkflowSchemeDraftIssueTypeRaw(requestParameters: DeleteWorkflowSchemeDraftIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteWorkflowSchemeDraftIssueType.');
         }
 
-        if (requestParameters['issueType'] == null) {
-            throw new runtime.RequiredError(
-                'issueType',
-                'Required parameter "issueType" was null or undefined when calling deleteWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.issueType === null || requestParameters.issueType === undefined) {
+            throw new runtime.RequiredError('issueType','Required parameter requestParameters.issueType was null or undefined when calling deleteWorkflowSchemeDraftIssueType.');
         }
 
         const queryParameters: any = {};
@@ -309,7 +288,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters.issueType))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -332,11 +311,8 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Get draft default workflow
      */
     async getDraftDefaultWorkflowRaw(requestParameters: GetDraftDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DefaultWorkflow>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getDraftDefaultWorkflow().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDraftDefaultWorkflow.');
         }
 
         const queryParameters: any = {};
@@ -352,7 +328,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -375,17 +351,14 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Get issue types for workflows in draft workflow scheme
      */
     async getDraftWorkflowRaw(requestParameters: GetDraftWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypesWorkflowMapping>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getDraftWorkflow().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDraftWorkflow.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -399,7 +372,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -422,11 +395,8 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Get draft workflow scheme
      */
     async getWorkflowSchemeDraftRaw(requestParameters: GetWorkflowSchemeDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getWorkflowSchemeDraft().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWorkflowSchemeDraft.');
         }
 
         const queryParameters: any = {};
@@ -442,7 +412,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -465,18 +435,12 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Get workflow for issue type in draft workflow scheme
      */
     async getWorkflowSchemeDraftIssueTypeRaw(requestParameters: GetWorkflowSchemeDraftIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeWorkflowMapping>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWorkflowSchemeDraftIssueType.');
         }
 
-        if (requestParameters['issueType'] == null) {
-            throw new runtime.RequiredError(
-                'issueType',
-                'Required parameter "issueType" was null or undefined when calling getWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.issueType === null || requestParameters.issueType === undefined) {
+            throw new runtime.RequiredError('issueType','Required parameter requestParameters.issueType was null or undefined when calling getWorkflowSchemeDraftIssueType.');
         }
 
         const queryParameters: any = {};
@@ -492,7 +456,7 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters.issueType))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -515,24 +479,18 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Publish draft workflow scheme
      */
     async publishDraftWorkflowSchemeRaw(requestParameters: PublishDraftWorkflowSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling publishDraftWorkflowScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling publishDraftWorkflowScheme.');
         }
 
-        if (requestParameters['publishDraftWorkflowScheme'] == null) {
-            throw new runtime.RequiredError(
-                'publishDraftWorkflowScheme',
-                'Required parameter "publishDraftWorkflowScheme" was null or undefined when calling publishDraftWorkflowScheme().'
-            );
+        if (requestParameters.publishDraftWorkflowScheme === null || requestParameters.publishDraftWorkflowScheme === undefined) {
+            throw new runtime.RequiredError('publishDraftWorkflowScheme','Required parameter requestParameters.publishDraftWorkflowScheme was null or undefined when calling publishDraftWorkflowScheme.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['validateOnly'] != null) {
-            queryParameters['validateOnly'] = requestParameters['validateOnly'];
+        if (requestParameters.validateOnly !== undefined) {
+            queryParameters['validateOnly'] = requestParameters.validateOnly;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -548,11 +506,11 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/publish`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/publish`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['publishDraftWorkflowScheme'],
+            body: requestParameters.publishDraftWorkflowScheme,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -571,25 +529,16 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Set workflow for issue type in draft workflow scheme
      */
     async setWorkflowSchemeDraftIssueTypeRaw(requestParameters: SetWorkflowSchemeDraftIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling setWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setWorkflowSchemeDraftIssueType.');
         }
 
-        if (requestParameters['issueType'] == null) {
-            throw new runtime.RequiredError(
-                'issueType',
-                'Required parameter "issueType" was null or undefined when calling setWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.issueType === null || requestParameters.issueType === undefined) {
+            throw new runtime.RequiredError('issueType','Required parameter requestParameters.issueType was null or undefined when calling setWorkflowSchemeDraftIssueType.');
         }
 
-        if (requestParameters['issueTypeWorkflowMapping'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeWorkflowMapping',
-                'Required parameter "issueTypeWorkflowMapping" was null or undefined when calling setWorkflowSchemeDraftIssueType().'
-            );
+        if (requestParameters.issueTypeWorkflowMapping === null || requestParameters.issueTypeWorkflowMapping === undefined) {
+            throw new runtime.RequiredError('issueTypeWorkflowMapping','Required parameter requestParameters.issueTypeWorkflowMapping was null or undefined when calling setWorkflowSchemeDraftIssueType.');
         }
 
         const queryParameters: any = {};
@@ -607,11 +556,11 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters['issueType']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/issuetype/{issueType}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"issueType"}}`, encodeURIComponent(String(requestParameters.issueType))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeWorkflowMapping'],
+            body: requestParameters.issueTypeWorkflowMapping,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -631,18 +580,12 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Update draft default workflow
      */
     async updateDraftDefaultWorkflowRaw(requestParameters: UpdateDraftDefaultWorkflowRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateDraftDefaultWorkflow().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateDraftDefaultWorkflow.');
         }
 
-        if (requestParameters['defaultWorkflow'] == null) {
-            throw new runtime.RequiredError(
-                'defaultWorkflow',
-                'Required parameter "defaultWorkflow" was null or undefined when calling updateDraftDefaultWorkflow().'
-            );
+        if (requestParameters.defaultWorkflow === null || requestParameters.defaultWorkflow === undefined) {
+            throw new runtime.RequiredError('defaultWorkflow','Required parameter requestParameters.defaultWorkflow was null or undefined when calling updateDraftDefaultWorkflow.');
         }
 
         const queryParameters: any = {};
@@ -660,11 +603,11 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['defaultWorkflow'],
+            body: requestParameters.defaultWorkflow,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -684,31 +627,22 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Set issue types for workflow in workflow scheme
      */
     async updateDraftWorkflowMappingRaw(requestParameters: UpdateDraftWorkflowMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateDraftWorkflowMapping().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateDraftWorkflowMapping.');
         }
 
-        if (requestParameters['workflowName'] == null) {
-            throw new runtime.RequiredError(
-                'workflowName',
-                'Required parameter "workflowName" was null or undefined when calling updateDraftWorkflowMapping().'
-            );
+        if (requestParameters.workflowName === null || requestParameters.workflowName === undefined) {
+            throw new runtime.RequiredError('workflowName','Required parameter requestParameters.workflowName was null or undefined when calling updateDraftWorkflowMapping.');
         }
 
-        if (requestParameters['issueTypesWorkflowMapping'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypesWorkflowMapping',
-                'Required parameter "issueTypesWorkflowMapping" was null or undefined when calling updateDraftWorkflowMapping().'
-            );
+        if (requestParameters.issueTypesWorkflowMapping === null || requestParameters.issueTypesWorkflowMapping === undefined) {
+            throw new runtime.RequiredError('issueTypesWorkflowMapping','Required parameter requestParameters.issueTypesWorkflowMapping was null or undefined when calling updateDraftWorkflowMapping.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['workflowName'] != null) {
-            queryParameters['workflowName'] = requestParameters['workflowName'];
+        if (requestParameters.workflowName !== undefined) {
+            queryParameters['workflowName'] = requestParameters.workflowName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -724,11 +658,11 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft/workflow`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypesWorkflowMapping'],
+            body: requestParameters.issueTypesWorkflowMapping,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -748,18 +682,12 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
      * Update draft workflow scheme
      */
     async updateWorkflowSchemeDraftRaw(requestParameters: UpdateWorkflowSchemeDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateWorkflowSchemeDraft().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateWorkflowSchemeDraft.');
         }
 
-        if (requestParameters['workflowScheme'] == null) {
-            throw new runtime.RequiredError(
-                'workflowScheme',
-                'Required parameter "workflowScheme" was null or undefined when calling updateWorkflowSchemeDraft().'
-            );
+        if (requestParameters.workflowScheme === null || requestParameters.workflowScheme === undefined) {
+            throw new runtime.RequiredError('workflowScheme','Required parameter requestParameters.workflowScheme was null or undefined when calling updateWorkflowSchemeDraft.');
         }
 
         const queryParameters: any = {};
@@ -777,11 +705,11 @@ export class WorkflowSchemeDraftsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/workflowscheme/{id}/draft`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowScheme'],
+            body: requestParameters.workflowScheme,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

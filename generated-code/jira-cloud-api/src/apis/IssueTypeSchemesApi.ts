@@ -24,7 +24,7 @@ import type {
   PageBeanIssueTypeScheme,
   PageBeanIssueTypeSchemeMapping,
   PageBeanIssueTypeSchemeProjects,
-} from '../models/index';
+} from '../models';
 
 export interface AddIssueTypesToIssueTypeSchemeRequest {
     issueTypeSchemeId: number;
@@ -89,18 +89,12 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Add issue types to issue type scheme
      */
     async addIssueTypesToIssueTypeSchemeRaw(requestParameters: AddIssueTypesToIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeId',
-                'Required parameter "issueTypeSchemeId" was null or undefined when calling addIssueTypesToIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeId === null || requestParameters.issueTypeSchemeId === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeId','Required parameter requestParameters.issueTypeSchemeId was null or undefined when calling addIssueTypesToIssueTypeScheme.');
         }
 
-        if (requestParameters['issueTypeIds'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeIds',
-                'Required parameter "issueTypeIds" was null or undefined when calling addIssueTypesToIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeIds === null || requestParameters.issueTypeIds === undefined) {
+            throw new runtime.RequiredError('issueTypeIds','Required parameter requestParameters.issueTypeIds was null or undefined when calling addIssueTypesToIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -118,11 +112,11 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId']))),
+            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters.issueTypeSchemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeIds'],
+            body: requestParameters.issueTypeIds,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -146,11 +140,8 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Assign issue type scheme to project
      */
     async assignIssueTypeSchemeToProjectRaw(requestParameters: AssignIssueTypeSchemeToProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeProjectAssociation'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeProjectAssociation',
-                'Required parameter "issueTypeSchemeProjectAssociation" was null or undefined when calling assignIssueTypeSchemeToProject().'
-            );
+        if (requestParameters.issueTypeSchemeProjectAssociation === null || requestParameters.issueTypeSchemeProjectAssociation === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeProjectAssociation','Required parameter requestParameters.issueTypeSchemeProjectAssociation was null or undefined when calling assignIssueTypeSchemeToProject.');
         }
 
         const queryParameters: any = {};
@@ -172,7 +163,7 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeSchemeProjectAssociation'],
+            body: requestParameters.issueTypeSchemeProjectAssociation,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -196,11 +187,8 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Create issue type scheme
      */
     async createIssueTypeSchemeRaw(requestParameters: CreateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeSchemeID>> {
-        if (requestParameters['issueTypeSchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeDetails',
-                'Required parameter "issueTypeSchemeDetails" was null or undefined when calling createIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeDetails === null || requestParameters.issueTypeSchemeDetails === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeDetails','Required parameter requestParameters.issueTypeSchemeDetails was null or undefined when calling createIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -222,7 +210,7 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeSchemeDetails'],
+            body: requestParameters.issueTypeSchemeDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -242,11 +230,8 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Delete issue type scheme
      */
     async deleteIssueTypeSchemeRaw(requestParameters: DeleteIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeId',
-                'Required parameter "issueTypeSchemeId" was null or undefined when calling deleteIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeId === null || requestParameters.issueTypeSchemeId === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeId','Required parameter requestParameters.issueTypeSchemeId was null or undefined when calling deleteIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -262,7 +247,7 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId']))),
+            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters.issueTypeSchemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -291,28 +276,28 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     async getAllIssueTypeSchemesRaw(requestParameters: GetAllIssueTypeSchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeScheme>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
-        if (requestParameters['queryString'] != null) {
-            queryParameters['queryString'] = requestParameters['queryString'];
+        if (requestParameters.queryString !== undefined) {
+            queryParameters['queryString'] = requestParameters.queryString;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -349,25 +334,22 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Get issue type schemes for projects
      */
     async getIssueTypeSchemeForProjectsRaw(requestParameters: GetIssueTypeSchemeForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeProjects>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getIssueTypeSchemeForProjects().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getIssueTypeSchemeForProjects.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -406,16 +388,16 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
     async getIssueTypeSchemesMappingRaw(requestParameters: GetIssueTypeSchemesMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeSchemeMapping>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['issueTypeSchemeId'] != null) {
-            queryParameters['issueTypeSchemeId'] = requestParameters['issueTypeSchemeId'];
+        if (requestParameters.issueTypeSchemeId) {
+            queryParameters['issueTypeSchemeId'] = requestParameters.issueTypeSchemeId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -452,18 +434,12 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Remove issue type from issue type scheme
      */
     async removeIssueTypeFromIssueTypeSchemeRaw(requestParameters: RemoveIssueTypeFromIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeId',
-                'Required parameter "issueTypeSchemeId" was null or undefined when calling removeIssueTypeFromIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeId === null || requestParameters.issueTypeSchemeId === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeId','Required parameter requestParameters.issueTypeSchemeId was null or undefined when calling removeIssueTypeFromIssueTypeScheme.');
         }
 
-        if (requestParameters['issueTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeId',
-                'Required parameter "issueTypeId" was null or undefined when calling removeIssueTypeFromIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeId === null || requestParameters.issueTypeId === undefined) {
+            throw new runtime.RequiredError('issueTypeId','Required parameter requestParameters.issueTypeId was null or undefined when calling removeIssueTypeFromIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -479,7 +455,7 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype/{issueTypeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId']))).replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters['issueTypeId']))),
+            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype/{issueTypeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters.issueTypeSchemeId))).replace(`{${"issueTypeId"}}`, encodeURIComponent(String(requestParameters.issueTypeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -506,18 +482,12 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Change order of issue types
      */
     async reorderIssueTypesInIssueTypeSchemeRaw(requestParameters: ReorderIssueTypesInIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeId',
-                'Required parameter "issueTypeSchemeId" was null or undefined when calling reorderIssueTypesInIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeId === null || requestParameters.issueTypeSchemeId === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeId','Required parameter requestParameters.issueTypeSchemeId was null or undefined when calling reorderIssueTypesInIssueTypeScheme.');
         }
 
-        if (requestParameters['orderOfIssueTypes'] == null) {
-            throw new runtime.RequiredError(
-                'orderOfIssueTypes',
-                'Required parameter "orderOfIssueTypes" was null or undefined when calling reorderIssueTypesInIssueTypeScheme().'
-            );
+        if (requestParameters.orderOfIssueTypes === null || requestParameters.orderOfIssueTypes === undefined) {
+            throw new runtime.RequiredError('orderOfIssueTypes','Required parameter requestParameters.orderOfIssueTypes was null or undefined when calling reorderIssueTypesInIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -535,11 +505,11 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype/move`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId']))),
+            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}/issuetype/move`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters.issueTypeSchemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['orderOfIssueTypes'],
+            body: requestParameters.orderOfIssueTypes,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -563,18 +533,12 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
      * Update issue type scheme
      */
     async updateIssueTypeSchemeRaw(requestParameters: UpdateIssueTypeSchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['issueTypeSchemeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeId',
-                'Required parameter "issueTypeSchemeId" was null or undefined when calling updateIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeId === null || requestParameters.issueTypeSchemeId === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeId','Required parameter requestParameters.issueTypeSchemeId was null or undefined when calling updateIssueTypeScheme.');
         }
 
-        if (requestParameters['issueTypeSchemeUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeSchemeUpdateDetails',
-                'Required parameter "issueTypeSchemeUpdateDetails" was null or undefined when calling updateIssueTypeScheme().'
-            );
+        if (requestParameters.issueTypeSchemeUpdateDetails === null || requestParameters.issueTypeSchemeUpdateDetails === undefined) {
+            throw new runtime.RequiredError('issueTypeSchemeUpdateDetails','Required parameter requestParameters.issueTypeSchemeUpdateDetails was null or undefined when calling updateIssueTypeScheme.');
         }
 
         const queryParameters: any = {};
@@ -592,11 +556,11 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters['issueTypeSchemeId']))),
+            path: `/rest/api/3/issuetypescheme/{issueTypeSchemeId}`.replace(`{${"issueTypeSchemeId"}}`, encodeURIComponent(String(requestParameters.issueTypeSchemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeSchemeUpdateDetails'],
+            body: requestParameters.issueTypeSchemeUpdateDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -622,10 +586,10 @@ export class IssueTypeSchemesApi extends runtime.BaseAPI {
  */
 export const GetAllIssueTypeSchemesOrderByEnum = {
     Name: 'name',
-    Name2Desc: '-name',
-    Name3Asc: '+name',
+    NameDesc: '-name',
+    NameAsc: '+name',
     Id: 'id',
-    Id2Desc: '-id',
-    Id3Asc: '+id'
+    IdDesc: '-id',
+    IdAsc: '+id'
 } as const;
 export type GetAllIssueTypeSchemesOrderByEnum = typeof GetAllIssueTypeSchemesOrderByEnum[keyof typeof GetAllIssueTypeSchemesOrderByEnum];

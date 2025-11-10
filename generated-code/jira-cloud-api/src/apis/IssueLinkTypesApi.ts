@@ -17,10 +17,10 @@ import * as runtime from '../runtime';
 import type {
   IssueLinkType,
   IssueLinkTypes,
-} from '../models/index';
+} from '../models';
 
 export interface CreateIssueLinkTypeRequest {
-    issueLinkType: Omit<IssueLinkType, 'self'>;
+    issueLinkType: IssueLinkType;
 }
 
 export interface DeleteIssueLinkTypeRequest {
@@ -33,7 +33,7 @@ export interface GetIssueLinkTypeRequest {
 
 export interface UpdateIssueLinkTypeRequest {
     issueLinkTypeId: string;
-    issueLinkType: Omit<IssueLinkType, 'self'>;
+    issueLinkType: IssueLinkType;
 }
 
 /**
@@ -46,11 +46,8 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
      * Create issue link type
      */
     async createIssueLinkTypeRaw(requestParameters: CreateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
-        if (requestParameters['issueLinkType'] == null) {
-            throw new runtime.RequiredError(
-                'issueLinkType',
-                'Required parameter "issueLinkType" was null or undefined when calling createIssueLinkType().'
-            );
+        if (requestParameters.issueLinkType === null || requestParameters.issueLinkType === undefined) {
+            throw new runtime.RequiredError('issueLinkType','Required parameter requestParameters.issueLinkType was null or undefined when calling createIssueLinkType.');
         }
 
         const queryParameters: any = {};
@@ -72,7 +69,7 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueLinkType'],
+            body: requestParameters.issueLinkType,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -92,11 +89,8 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
      * Delete issue link type
      */
     async deleteIssueLinkTypeRaw(requestParameters: DeleteIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['issueLinkTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueLinkTypeId',
-                'Required parameter "issueLinkTypeId" was null or undefined when calling deleteIssueLinkType().'
-            );
+        if (requestParameters.issueLinkTypeId === null || requestParameters.issueLinkTypeId === undefined) {
+            throw new runtime.RequiredError('issueLinkTypeId','Required parameter requestParameters.issueLinkTypeId was null or undefined when calling deleteIssueLinkType.');
         }
 
         const queryParameters: any = {};
@@ -112,7 +106,7 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId']))),
+            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters.issueLinkTypeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -134,11 +128,8 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
      * Get issue link type
      */
     async getIssueLinkTypeRaw(requestParameters: GetIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
-        if (requestParameters['issueLinkTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueLinkTypeId',
-                'Required parameter "issueLinkTypeId" was null or undefined when calling getIssueLinkType().'
-            );
+        if (requestParameters.issueLinkTypeId === null || requestParameters.issueLinkTypeId === undefined) {
+            throw new runtime.RequiredError('issueLinkTypeId','Required parameter requestParameters.issueLinkTypeId was null or undefined when calling getIssueLinkType.');
         }
 
         const queryParameters: any = {};
@@ -154,7 +145,7 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId']))),
+            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters.issueLinkTypeId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -213,18 +204,12 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
      * Update issue link type
      */
     async updateIssueLinkTypeRaw(requestParameters: UpdateIssueLinkTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueLinkType>> {
-        if (requestParameters['issueLinkTypeId'] == null) {
-            throw new runtime.RequiredError(
-                'issueLinkTypeId',
-                'Required parameter "issueLinkTypeId" was null or undefined when calling updateIssueLinkType().'
-            );
+        if (requestParameters.issueLinkTypeId === null || requestParameters.issueLinkTypeId === undefined) {
+            throw new runtime.RequiredError('issueLinkTypeId','Required parameter requestParameters.issueLinkTypeId was null or undefined when calling updateIssueLinkType.');
         }
 
-        if (requestParameters['issueLinkType'] == null) {
-            throw new runtime.RequiredError(
-                'issueLinkType',
-                'Required parameter "issueLinkType" was null or undefined when calling updateIssueLinkType().'
-            );
+        if (requestParameters.issueLinkType === null || requestParameters.issueLinkType === undefined) {
+            throw new runtime.RequiredError('issueLinkType','Required parameter requestParameters.issueLinkType was null or undefined when calling updateIssueLinkType.');
         }
 
         const queryParameters: any = {};
@@ -242,11 +227,11 @@ export class IssueLinkTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters['issueLinkTypeId']))),
+            path: `/rest/api/3/issueLinkType/{issueLinkTypeId}`.replace(`{${"issueLinkTypeId"}}`, encodeURIComponent(String(requestParameters.issueLinkTypeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueLinkType'],
+            body: requestParameters.issueLinkType,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

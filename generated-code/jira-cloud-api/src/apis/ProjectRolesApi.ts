@@ -18,7 +18,7 @@ import type {
   CreateUpdateRoleRequestBean,
   ProjectRole,
   ProjectRoleDetails,
-} from '../models/index';
+} from '../models';
 
 export interface CreateProjectRoleRequest {
     createUpdateRoleRequestBean: CreateUpdateRoleRequestBean;
@@ -69,11 +69,8 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Create project role
      */
     async createProjectRoleRaw(requestParameters: CreateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['createUpdateRoleRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'createUpdateRoleRequestBean',
-                'Required parameter "createUpdateRoleRequestBean" was null or undefined when calling createProjectRole().'
-            );
+        if (requestParameters.createUpdateRoleRequestBean === null || requestParameters.createUpdateRoleRequestBean === undefined) {
+            throw new runtime.RequiredError('createUpdateRoleRequestBean','Required parameter requestParameters.createUpdateRoleRequestBean was null or undefined when calling createProjectRole.');
         }
 
         const queryParameters: any = {};
@@ -95,7 +92,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createUpdateRoleRequestBean'],
+            body: requestParameters.createUpdateRoleRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -115,17 +112,14 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Delete project role
      */
     async deleteProjectRoleRaw(requestParameters: DeleteProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteProjectRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteProjectRole.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['swap'] != null) {
-            queryParameters['swap'] = requestParameters['swap'];
+        if (requestParameters.swap !== undefined) {
+            queryParameters['swap'] = requestParameters.swap;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -139,7 +133,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -161,18 +155,12 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Fully update project role
      */
     async fullyUpdateProjectRoleRaw(requestParameters: FullyUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling fullyUpdateProjectRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling fullyUpdateProjectRole.');
         }
 
-        if (requestParameters['createUpdateRoleRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'createUpdateRoleRequestBean',
-                'Required parameter "createUpdateRoleRequestBean" was null or undefined when calling fullyUpdateProjectRole().'
-            );
+        if (requestParameters.createUpdateRoleRequestBean === null || requestParameters.createUpdateRoleRequestBean === undefined) {
+            throw new runtime.RequiredError('createUpdateRoleRequestBean','Required parameter requestParameters.createUpdateRoleRequestBean was null or undefined when calling fullyUpdateProjectRole.');
         }
 
         const queryParameters: any = {};
@@ -190,11 +178,11 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createUpdateRoleRequestBean'],
+            body: requestParameters.createUpdateRoleRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -250,24 +238,18 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Get project role for project
      */
     async getProjectRoleRaw(requestParameters: GetProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectRole().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectRole.');
         }
 
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getProjectRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getProjectRole.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['excludeInactiveUsers'] != null) {
-            queryParameters['excludeInactiveUsers'] = requestParameters['excludeInactiveUsers'];
+        if (requestParameters.excludeInactiveUsers !== undefined) {
+            queryParameters['excludeInactiveUsers'] = requestParameters.excludeInactiveUsers;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -281,7 +263,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/role/{id}`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -304,11 +286,8 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Get project role by ID
      */
     async getProjectRoleByIdRaw(requestParameters: GetProjectRoleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getProjectRoleById().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getProjectRoleById.');
         }
 
         const queryParameters: any = {};
@@ -324,7 +303,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -347,21 +326,18 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Get project role details
      */
     async getProjectRoleDetailsRaw(requestParameters: GetProjectRoleDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectRoleDetails>>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectRoleDetails().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectRoleDetails.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['currentMember'] != null) {
-            queryParameters['currentMember'] = requestParameters['currentMember'];
+        if (requestParameters.currentMember !== undefined) {
+            queryParameters['currentMember'] = requestParameters.currentMember;
         }
 
-        if (requestParameters['excludeConnectAddons'] != null) {
-            queryParameters['excludeConnectAddons'] = requestParameters['excludeConnectAddons'];
+        if (requestParameters.excludeConnectAddons !== undefined) {
+            queryParameters['excludeConnectAddons'] = requestParameters.excludeConnectAddons;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -375,7 +351,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/roledetails`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/roledetails`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -398,11 +374,8 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Get project roles for project
      */
     async getProjectRolesRaw(requestParameters: GetProjectRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string; }>> {
-        if (requestParameters['projectIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'projectIdOrKey',
-                'Required parameter "projectIdOrKey" was null or undefined when calling getProjectRoles().'
-            );
+        if (requestParameters.projectIdOrKey === null || requestParameters.projectIdOrKey === undefined) {
+            throw new runtime.RequiredError('projectIdOrKey','Required parameter requestParameters.projectIdOrKey was null or undefined when calling getProjectRoles.');
         }
 
         const queryParameters: any = {};
@@ -418,7 +391,7 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/project/{projectIdOrKey}/role`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters['projectIdOrKey']))),
+            path: `/rest/api/3/project/{projectIdOrKey}/role`.replace(`{${"projectIdOrKey"}}`, encodeURIComponent(String(requestParameters.projectIdOrKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -441,18 +414,12 @@ export class ProjectRolesApi extends runtime.BaseAPI {
      * Partial update project role
      */
     async partialUpdateProjectRoleRaw(requestParameters: PartialUpdateProjectRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectRole>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling partialUpdateProjectRole().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling partialUpdateProjectRole.');
         }
 
-        if (requestParameters['createUpdateRoleRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'createUpdateRoleRequestBean',
-                'Required parameter "createUpdateRoleRequestBean" was null or undefined when calling partialUpdateProjectRole().'
-            );
+        if (requestParameters.createUpdateRoleRequestBean === null || requestParameters.createUpdateRoleRequestBean === undefined) {
+            throw new runtime.RequiredError('createUpdateRoleRequestBean','Required parameter requestParameters.createUpdateRoleRequestBean was null or undefined when calling partialUpdateProjectRole.');
         }
 
         const queryParameters: any = {};
@@ -470,11 +437,11 @@ export class ProjectRolesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/role/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createUpdateRoleRequestBean'],
+            body: requestParameters.createUpdateRoleRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

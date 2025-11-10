@@ -22,7 +22,7 @@ import type {
   PageBeanWebhook,
   WebhookRegistrationDetails,
   WebhooksExpirationDate,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteWebhookByIdRequest {
     containerForWebhookIDs: ContainerForWebhookIDs;
@@ -56,11 +56,8 @@ export class WebhooksApi extends runtime.BaseAPI {
      * Delete webhooks by ID
      */
     async deleteWebhookByIdRaw(requestParameters: DeleteWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['containerForWebhookIDs'] == null) {
-            throw new runtime.RequiredError(
-                'containerForWebhookIDs',
-                'Required parameter "containerForWebhookIDs" was null or undefined when calling deleteWebhookById().'
-            );
+        if (requestParameters.containerForWebhookIDs === null || requestParameters.containerForWebhookIDs === undefined) {
+            throw new runtime.RequiredError('containerForWebhookIDs','Required parameter requestParameters.containerForWebhookIDs was null or undefined when calling deleteWebhookById.');
         }
 
         const queryParameters: any = {};
@@ -82,7 +79,7 @@ export class WebhooksApi extends runtime.BaseAPI {
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['containerForWebhookIDs'],
+            body: requestParameters.containerForWebhookIDs,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -103,12 +100,12 @@ export class WebhooksApi extends runtime.BaseAPI {
     async getDynamicWebhooksForAppRaw(requestParameters: GetDynamicWebhooksForAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWebhook>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -147,12 +144,12 @@ export class WebhooksApi extends runtime.BaseAPI {
     async getFailedWebhooksRaw(requestParameters: GetFailedWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FailedWebhooks>> {
         const queryParameters: any = {};
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['after'] != null) {
-            queryParameters['after'] = requestParameters['after'];
+        if (requestParameters.after !== undefined) {
+            queryParameters['after'] = requestParameters.after;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -189,11 +186,8 @@ export class WebhooksApi extends runtime.BaseAPI {
      * Extend webhook life
      */
     async refreshWebhooksRaw(requestParameters: RefreshWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhooksExpirationDate>> {
-        if (requestParameters['containerForWebhookIDs'] == null) {
-            throw new runtime.RequiredError(
-                'containerForWebhookIDs',
-                'Required parameter "containerForWebhookIDs" was null or undefined when calling refreshWebhooks().'
-            );
+        if (requestParameters.containerForWebhookIDs === null || requestParameters.containerForWebhookIDs === undefined) {
+            throw new runtime.RequiredError('containerForWebhookIDs','Required parameter requestParameters.containerForWebhookIDs was null or undefined when calling refreshWebhooks.');
         }
 
         const queryParameters: any = {};
@@ -215,7 +209,7 @@ export class WebhooksApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['containerForWebhookIDs'],
+            body: requestParameters.containerForWebhookIDs,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -235,11 +229,8 @@ export class WebhooksApi extends runtime.BaseAPI {
      * Register dynamic webhooks
      */
     async registerDynamicWebhooksRaw(requestParameters: RegisterDynamicWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerForRegisteredWebhooks>> {
-        if (requestParameters['webhookRegistrationDetails'] == null) {
-            throw new runtime.RequiredError(
-                'webhookRegistrationDetails',
-                'Required parameter "webhookRegistrationDetails" was null or undefined when calling registerDynamicWebhooks().'
-            );
+        if (requestParameters.webhookRegistrationDetails === null || requestParameters.webhookRegistrationDetails === undefined) {
+            throw new runtime.RequiredError('webhookRegistrationDetails','Required parameter requestParameters.webhookRegistrationDetails was null or undefined when calling registerDynamicWebhooks.');
         }
 
         const queryParameters: any = {};
@@ -261,7 +252,7 @@ export class WebhooksApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['webhookRegistrationDetails'],
+            body: requestParameters.webhookRegistrationDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

@@ -31,7 +31,7 @@ import type {
   TaskProgressBeanObject,
   UpdateIssueSecurityLevelDetails,
   UpdateIssueSecuritySchemeRequestBean,
-} from '../models/index';
+} from '../models';
 
 export interface AddSecurityLevelRequest {
     schemeId: string;
@@ -49,7 +49,7 @@ export interface AssociateSchemesToProjectsRequest {
 }
 
 export interface CreateIssueSecuritySchemeRequest {
-    createIssueSecuritySchemeDetails: CreateIssueSecuritySchemeDetails;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeleteSecuritySchemeRequest {
@@ -104,7 +104,7 @@ export interface SearchSecuritySchemesRequest {
 }
 
 export interface SetDefaultLevelsOperationRequest {
-    setDefaultLevelsRequest: SetDefaultLevelsRequest;
+    requestBody: { [key: string]: any; };
 }
 
 export interface UpdateIssueSecuritySchemeRequest {
@@ -115,7 +115,7 @@ export interface UpdateIssueSecuritySchemeRequest {
 export interface UpdateSecurityLevelRequest {
     schemeId: string;
     levelId: string;
-    updateIssueSecurityLevelDetails: UpdateIssueSecurityLevelDetails;
+    requestBody: { [key: string]: any; };
 }
 
 /**
@@ -128,18 +128,12 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Add issue security levels
      */
     async addSecurityLevelRaw(requestParameters: AddSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling addSecurityLevel().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling addSecurityLevel.');
         }
 
-        if (requestParameters['addSecuritySchemeLevelsRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'addSecuritySchemeLevelsRequestBean',
-                'Required parameter "addSecuritySchemeLevelsRequestBean" was null or undefined when calling addSecurityLevel().'
-            );
+        if (requestParameters.addSecuritySchemeLevelsRequestBean === null || requestParameters.addSecuritySchemeLevelsRequestBean === undefined) {
+            throw new runtime.RequiredError('addSecuritySchemeLevelsRequestBean','Required parameter requestParameters.addSecuritySchemeLevelsRequestBean was null or undefined when calling addSecurityLevel.');
         }
 
         const queryParameters: any = {};
@@ -157,11 +151,11 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['addSecuritySchemeLevelsRequestBean'],
+            body: requestParameters.addSecuritySchemeLevelsRequestBean,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -185,25 +179,16 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Add issue security level members
      */
     async addSecurityLevelMembersRaw(requestParameters: AddSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling addSecurityLevelMembers().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling addSecurityLevelMembers.');
         }
 
-        if (requestParameters['levelId'] == null) {
-            throw new runtime.RequiredError(
-                'levelId',
-                'Required parameter "levelId" was null or undefined when calling addSecurityLevelMembers().'
-            );
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling addSecurityLevelMembers.');
         }
 
-        if (requestParameters['securitySchemeMembersRequest'] == null) {
-            throw new runtime.RequiredError(
-                'securitySchemeMembersRequest',
-                'Required parameter "securitySchemeMembersRequest" was null or undefined when calling addSecurityLevelMembers().'
-            );
+        if (requestParameters.securitySchemeMembersRequest === null || requestParameters.securitySchemeMembersRequest === undefined) {
+            throw new runtime.RequiredError('securitySchemeMembersRequest','Required parameter requestParameters.securitySchemeMembersRequest was null or undefined when calling addSecurityLevelMembers.');
         }
 
         const queryParameters: any = {};
@@ -221,11 +206,11 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters['levelId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['securitySchemeMembersRequest'],
+            body: requestParameters.securitySchemeMembersRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -249,11 +234,8 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Associate security scheme to project
      */
     async associateSchemesToProjectsRaw(requestParameters: AssociateSchemesToProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['associateSecuritySchemeWithProjectDetails'] == null) {
-            throw new runtime.RequiredError(
-                'associateSecuritySchemeWithProjectDetails',
-                'Required parameter "associateSecuritySchemeWithProjectDetails" was null or undefined when calling associateSchemesToProjects().'
-            );
+        if (requestParameters.associateSecuritySchemeWithProjectDetails === null || requestParameters.associateSecuritySchemeWithProjectDetails === undefined) {
+            throw new runtime.RequiredError('associateSecuritySchemeWithProjectDetails','Required parameter requestParameters.associateSecuritySchemeWithProjectDetails was null or undefined when calling associateSchemesToProjects.');
         }
 
         const queryParameters: any = {};
@@ -275,7 +257,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['associateSecuritySchemeWithProjectDetails'],
+            body: requestParameters.associateSecuritySchemeWithProjectDetails,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -294,11 +276,8 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Create issue security scheme
      */
     async createIssueSecuritySchemeRaw(requestParameters: CreateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecuritySchemeId>> {
-        if (requestParameters['createIssueSecuritySchemeDetails'] == null) {
-            throw new runtime.RequiredError(
-                'createIssueSecuritySchemeDetails',
-                'Required parameter "createIssueSecuritySchemeDetails" was null or undefined when calling createIssueSecurityScheme().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createIssueSecurityScheme.');
         }
 
         const queryParameters: any = {};
@@ -320,7 +299,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createIssueSecuritySchemeDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -340,11 +319,8 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Delete issue security scheme
      */
     async deleteSecuritySchemeRaw(requestParameters: DeleteSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling deleteSecurityScheme().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling deleteSecurityScheme.');
         }
 
         const queryParameters: any = {};
@@ -360,7 +336,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -387,11 +363,8 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Get issue security scheme
      */
     async getIssueSecuritySchemeRaw(requestParameters: GetIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityScheme>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getIssueSecurityScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getIssueSecurityScheme.');
         }
 
         const queryParameters: any = {};
@@ -407,7 +380,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuesecurityschemes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -468,28 +441,28 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
     async getSecurityLevelMembersRaw(requestParameters: GetSecurityLevelMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecurityLevelMember>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['schemeId'] != null) {
-            queryParameters['schemeId'] = requestParameters['schemeId'];
+        if (requestParameters.schemeId) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
         }
 
-        if (requestParameters['levelId'] != null) {
-            queryParameters['levelId'] = requestParameters['levelId'];
+        if (requestParameters.levelId) {
+            queryParameters['levelId'] = requestParameters.levelId;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -528,24 +501,24 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
     async getSecurityLevelsRaw(requestParameters: GetSecurityLevelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecurityLevel>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['schemeId'] != null) {
-            queryParameters['schemeId'] = requestParameters['schemeId'];
+        if (requestParameters.schemeId) {
+            queryParameters['schemeId'] = requestParameters.schemeId;
         }
 
-        if (requestParameters['onlyDefault'] != null) {
-            queryParameters['onlyDefault'] = requestParameters['onlyDefault'];
+        if (requestParameters.onlyDefault !== undefined) {
+            queryParameters['onlyDefault'] = requestParameters.onlyDefault;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -582,24 +555,18 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Remove issue security level
      */
     async removeLevelRaw(requestParameters: RemoveLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling removeLevel().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling removeLevel.');
         }
 
-        if (requestParameters['levelId'] == null) {
-            throw new runtime.RequiredError(
-                'levelId',
-                'Required parameter "levelId" was null or undefined when calling removeLevel().'
-            );
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling removeLevel.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['replaceWith'] != null) {
-            queryParameters['replaceWith'] = requestParameters['replaceWith'];
+        if (requestParameters.replaceWith !== undefined) {
+            queryParameters['replaceWith'] = requestParameters.replaceWith;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -613,7 +580,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters['levelId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -635,25 +602,16 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Remove member from issue security level
      */
     async removeMemberFromSecurityLevelRaw(requestParameters: RemoveMemberFromSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling removeMemberFromSecurityLevel().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling removeMemberFromSecurityLevel.');
         }
 
-        if (requestParameters['levelId'] == null) {
-            throw new runtime.RequiredError(
-                'levelId',
-                'Required parameter "levelId" was null or undefined when calling removeMemberFromSecurityLevel().'
-            );
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling removeMemberFromSecurityLevel.');
         }
 
-        if (requestParameters['memberId'] == null) {
-            throw new runtime.RequiredError(
-                'memberId',
-                'Required parameter "memberId" was null or undefined when calling removeMemberFromSecurityLevel().'
-            );
+        if (requestParameters.memberId === null || requestParameters.memberId === undefined) {
+            throw new runtime.RequiredError('memberId','Required parameter requestParameters.memberId was null or undefined when calling removeMemberFromSecurityLevel.');
         }
 
         const queryParameters: any = {};
@@ -669,7 +627,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member/{memberId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters['levelId']))).replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters['memberId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}/member/{memberId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))).replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters.memberId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -698,20 +656,20 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
     async searchProjectsUsingSecuritySchemesRaw(requestParameters: SearchProjectsUsingSecuritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueSecuritySchemeToProjectMapping>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['issueSecuritySchemeId'] != null) {
-            queryParameters['issueSecuritySchemeId'] = requestParameters['issueSecuritySchemeId'];
+        if (requestParameters.issueSecuritySchemeId) {
+            queryParameters['issueSecuritySchemeId'] = requestParameters.issueSecuritySchemeId;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -750,20 +708,20 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
     async searchSecuritySchemesRaw(requestParameters: SearchSecuritySchemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanSecuritySchemeWithProjects>> {
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['id'] != null) {
-            queryParameters['id'] = requestParameters['id'];
+        if (requestParameters.id) {
+            queryParameters['id'] = requestParameters.id;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -800,11 +758,8 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Set default issue security levels
      */
     async setDefaultLevelsRaw(requestParameters: SetDefaultLevelsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['setDefaultLevelsRequest'] == null) {
-            throw new runtime.RequiredError(
-                'setDefaultLevelsRequest',
-                'Required parameter "setDefaultLevelsRequest" was null or undefined when calling setDefaultLevels().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling setDefaultLevels.');
         }
 
         const queryParameters: any = {};
@@ -826,7 +781,7 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['setDefaultLevelsRequest'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -850,18 +805,12 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Update issue security scheme
      */
     async updateIssueSecuritySchemeRaw(requestParameters: UpdateIssueSecuritySchemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateIssueSecurityScheme().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateIssueSecurityScheme.');
         }
 
-        if (requestParameters['updateIssueSecuritySchemeRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'updateIssueSecuritySchemeRequestBean',
-                'Required parameter "updateIssueSecuritySchemeRequestBean" was null or undefined when calling updateIssueSecurityScheme().'
-            );
+        if (requestParameters.updateIssueSecuritySchemeRequestBean === null || requestParameters.updateIssueSecuritySchemeRequestBean === undefined) {
+            throw new runtime.RequiredError('updateIssueSecuritySchemeRequestBean','Required parameter requestParameters.updateIssueSecuritySchemeRequestBean was null or undefined when calling updateIssueSecurityScheme.');
         }
 
         const queryParameters: any = {};
@@ -879,11 +828,11 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuesecurityschemes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateIssueSecuritySchemeRequestBean'],
+            body: requestParameters.updateIssueSecuritySchemeRequestBean,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -907,25 +856,16 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
      * Update issue security level
      */
     async updateSecurityLevelRaw(requestParameters: UpdateSecurityLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['schemeId'] == null) {
-            throw new runtime.RequiredError(
-                'schemeId',
-                'Required parameter "schemeId" was null or undefined when calling updateSecurityLevel().'
-            );
+        if (requestParameters.schemeId === null || requestParameters.schemeId === undefined) {
+            throw new runtime.RequiredError('schemeId','Required parameter requestParameters.schemeId was null or undefined when calling updateSecurityLevel.');
         }
 
-        if (requestParameters['levelId'] == null) {
-            throw new runtime.RequiredError(
-                'levelId',
-                'Required parameter "levelId" was null or undefined when calling updateSecurityLevel().'
-            );
+        if (requestParameters.levelId === null || requestParameters.levelId === undefined) {
+            throw new runtime.RequiredError('levelId','Required parameter requestParameters.levelId was null or undefined when calling updateSecurityLevel.');
         }
 
-        if (requestParameters['updateIssueSecurityLevelDetails'] == null) {
-            throw new runtime.RequiredError(
-                'updateIssueSecurityLevelDetails',
-                'Required parameter "updateIssueSecurityLevelDetails" was null or undefined when calling updateSecurityLevel().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling updateSecurityLevel.');
         }
 
         const queryParameters: any = {};
@@ -943,11 +883,11 @@ export class IssueSecuritySchemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters['schemeId']))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters['levelId']))),
+            path: `/rest/api/3/issuesecurityschemes/{schemeId}/level/{levelId}`.replace(`{${"schemeId"}}`, encodeURIComponent(String(requestParameters.schemeId))).replace(`{${"levelId"}}`, encodeURIComponent(String(requestParameters.levelId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['updateIssueSecurityLevelDetails'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

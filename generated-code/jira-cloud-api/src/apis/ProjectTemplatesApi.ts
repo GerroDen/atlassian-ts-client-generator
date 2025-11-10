@@ -20,7 +20,7 @@ import type {
   ProjectTemplateModel,
   SaveTemplateRequest,
   SaveTemplateResponse,
-} from '../models/index';
+} from '../models';
 
 export interface CreateProjectWithCustomTemplateRequest {
     projectCustomTemplateCreateRequestDTO: ProjectCustomTemplateCreateRequestDTO;
@@ -53,11 +53,8 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
      * Create custom project
      */
     async createProjectWithCustomTemplateRaw(requestParameters: CreateProjectWithCustomTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['projectCustomTemplateCreateRequestDTO'] == null) {
-            throw new runtime.RequiredError(
-                'projectCustomTemplateCreateRequestDTO',
-                'Required parameter "projectCustomTemplateCreateRequestDTO" was null or undefined when calling createProjectWithCustomTemplate().'
-            );
+        if (requestParameters.projectCustomTemplateCreateRequestDTO === null || requestParameters.projectCustomTemplateCreateRequestDTO === undefined) {
+            throw new runtime.RequiredError('projectCustomTemplateCreateRequestDTO','Required parameter requestParameters.projectCustomTemplateCreateRequestDTO was null or undefined when calling createProjectWithCustomTemplate.');
         }
 
         const queryParameters: any = {};
@@ -79,7 +76,7 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectCustomTemplateCreateRequestDTO'],
+            body: requestParameters.projectCustomTemplateCreateRequestDTO,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -98,11 +95,8 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
      * Edit a custom project template
      */
     async editTemplateRaw(requestParameters: EditTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['editTemplateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'editTemplateRequest',
-                'Required parameter "editTemplateRequest" was null or undefined when calling editTemplate().'
-            );
+        if (requestParameters.editTemplateRequest === null || requestParameters.editTemplateRequest === undefined) {
+            throw new runtime.RequiredError('editTemplateRequest','Required parameter requestParameters.editTemplateRequest was null or undefined when calling editTemplate.');
         }
 
         const queryParameters: any = {};
@@ -124,7 +118,7 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['editTemplateRequest'],
+            body: requestParameters.editTemplateRequest,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -150,12 +144,12 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
     async liveTemplateRaw(requestParameters: LiveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectTemplateModel>> {
         const queryParameters: any = {};
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['templateKey'] != null) {
-            queryParameters['templateKey'] = requestParameters['templateKey'];
+        if (requestParameters.templateKey !== undefined) {
+            queryParameters['templateKey'] = requestParameters.templateKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -192,17 +186,14 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
      * Deletes a custom project template
      */
     async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['templateKey'] == null) {
-            throw new runtime.RequiredError(
-                'templateKey',
-                'Required parameter "templateKey" was null or undefined when calling removeTemplate().'
-            );
+        if (requestParameters.templateKey === null || requestParameters.templateKey === undefined) {
+            throw new runtime.RequiredError('templateKey','Required parameter requestParameters.templateKey was null or undefined when calling removeTemplate.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['templateKey'] != null) {
-            queryParameters['templateKey'] = requestParameters['templateKey'];
+        if (requestParameters.templateKey !== undefined) {
+            queryParameters['templateKey'] = requestParameters.templateKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -243,11 +234,8 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
      * Save a custom project template
      */
     async saveTemplateRaw(requestParameters: SaveTemplateOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SaveTemplateResponse>> {
-        if (requestParameters['saveTemplateRequest'] == null) {
-            throw new runtime.RequiredError(
-                'saveTemplateRequest',
-                'Required parameter "saveTemplateRequest" was null or undefined when calling saveTemplate().'
-            );
+        if (requestParameters.saveTemplateRequest === null || requestParameters.saveTemplateRequest === undefined) {
+            throw new runtime.RequiredError('saveTemplateRequest','Required parameter requestParameters.saveTemplateRequest was null or undefined when calling saveTemplate.');
         }
 
         const queryParameters: any = {};
@@ -269,7 +257,7 @@ export class ProjectTemplatesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['saveTemplateRequest'],
+            body: requestParameters.saveTemplateRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   ErrorCollection,
-} from '../models/index';
+} from '../models';
 
 export interface GetValidProjectKeyRequest {
     key?: string;
@@ -42,8 +42,8 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
     async getValidProjectKeyRaw(requestParameters: GetValidProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -84,17 +84,14 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
      * Get valid project name
      */
     async getValidProjectNameRaw(requestParameters: GetValidProjectNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['name'] == null) {
-            throw new runtime.RequiredError(
-                'name',
-                'Required parameter "name" was null or undefined when calling getValidProjectName().'
-            );
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getValidProjectName.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['name'] != null) {
-            queryParameters['name'] = requestParameters['name'];
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -137,8 +134,8 @@ export class ProjectKeyAndNameValidationApi extends runtime.BaseAPI {
     async validateProjectKeyRaw(requestParameters: ValidateProjectKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ErrorCollection>> {
         const queryParameters: any = {};
 
-        if (requestParameters['key'] != null) {
-            queryParameters['key'] = requestParameters['key'];
+        if (requestParameters.key !== undefined) {
+            queryParameters['key'] = requestParameters.key;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

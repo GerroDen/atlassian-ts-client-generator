@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ConnectModules,
   ErrorMessage,
-} from '../models/index';
+} from '../models';
 
 export interface DynamicModulesResourceRegisterModulesPostRequest {
     connectModules: ConnectModules;
@@ -65,11 +65,8 @@ export class DynamicModulesApi extends runtime.BaseAPI {
      * Register modules
      */
     async dynamicModulesResourceRegisterModulesPostRaw(requestParameters: DynamicModulesResourceRegisterModulesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['connectModules'] == null) {
-            throw new runtime.RequiredError(
-                'connectModules',
-                'Required parameter "connectModules" was null or undefined when calling dynamicModulesResourceRegisterModulesPost().'
-            );
+        if (requestParameters.connectModules === null || requestParameters.connectModules === undefined) {
+            throw new runtime.RequiredError('connectModules','Required parameter requestParameters.connectModules was null or undefined when calling dynamicModulesResourceRegisterModulesPost.');
         }
 
         const queryParameters: any = {};
@@ -83,7 +80,7 @@ export class DynamicModulesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['connectModules'],
+            body: requestParameters.connectModules,
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -104,8 +101,8 @@ export class DynamicModulesApi extends runtime.BaseAPI {
     async dynamicModulesResourceRemoveModulesDeleteRaw(requestParameters: DynamicModulesResourceRemoveModulesDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters['moduleKey'] != null) {
-            queryParameters['moduleKey'] = requestParameters['moduleKey'];
+        if (requestParameters.moduleKey) {
+            queryParameters['moduleKey'] = requestParameters.moduleKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

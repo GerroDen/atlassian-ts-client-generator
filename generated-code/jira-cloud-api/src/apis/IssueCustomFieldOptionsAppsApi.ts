@@ -19,11 +19,11 @@ import type {
   IssueFieldOptionCreateBean,
   PageBeanIssueFieldOption,
   TaskProgressBeanRemoveOptionFromIssuesResult,
-} from '../models/index';
+} from '../models';
 
 export interface CreateIssueFieldOptionRequest {
     fieldKey: string;
-    issueFieldOptionCreateBean: IssueFieldOptionCreateBean;
+    requestBody: { [key: string]: any; };
 }
 
 export interface DeleteIssueFieldOptionRequest {
@@ -81,18 +81,12 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Create issue field option
      */
     async createIssueFieldOptionRaw(requestParameters: CreateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling createIssueFieldOption().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling createIssueFieldOption.');
         }
 
-        if (requestParameters['issueFieldOptionCreateBean'] == null) {
-            throw new runtime.RequiredError(
-                'issueFieldOptionCreateBean',
-                'Required parameter "issueFieldOptionCreateBean" was null or undefined when calling createIssueFieldOption().'
-            );
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling createIssueFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -110,11 +104,11 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))),
+            path: `/rest/api/3/field/{fieldKey}/option`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueFieldOptionCreateBean'],
+            body: requestParameters.requestBody,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -134,18 +128,12 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Delete issue field option
      */
     async deleteIssueFieldOptionRaw(requestParameters: DeleteIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling deleteIssueFieldOption().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling deleteIssueFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling deleteIssueFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling deleteIssueFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -161,7 +149,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))),
+            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -188,21 +176,18 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Get all issue field options
      */
     async getAllIssueFieldOptionsRaw(requestParameters: GetAllIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling getAllIssueFieldOptions().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling getAllIssueFieldOptions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -216,7 +201,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))),
+            path: `/rest/api/3/field/{fieldKey}/option`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -239,18 +224,12 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Get issue field option
      */
     async getIssueFieldOptionRaw(requestParameters: GetIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling getIssueFieldOption().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling getIssueFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling getIssueFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling getIssueFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -266,7 +245,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))),
+            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -289,25 +268,22 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Get selectable issue field options
      */
     async getSelectableIssueFieldOptionsRaw(requestParameters: GetSelectableIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling getSelectableIssueFieldOptions().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling getSelectableIssueFieldOptions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -321,7 +297,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/suggestions/edit`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))),
+            path: `/rest/api/3/field/{fieldKey}/option/suggestions/edit`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -344,25 +320,22 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Get visible issue field options
      */
     async getVisibleIssueFieldOptionsRaw(requestParameters: GetVisibleIssueFieldOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling getVisibleIssueFieldOptions().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling getVisibleIssueFieldOptions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -376,7 +349,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/suggestions/search`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))),
+            path: `/rest/api/3/field/{fieldKey}/option/suggestions/search`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -399,36 +372,30 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Replace issue field option
      */
     async replaceIssueFieldOptionRaw(requestParameters: ReplaceIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling replaceIssueFieldOption().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling replaceIssueFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling replaceIssueFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling replaceIssueFieldOption.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['replaceWith'] != null) {
-            queryParameters['replaceWith'] = requestParameters['replaceWith'];
+        if (requestParameters.replaceWith !== undefined) {
+            queryParameters['replaceWith'] = requestParameters.replaceWith;
         }
 
-        if (requestParameters['jql'] != null) {
-            queryParameters['jql'] = requestParameters['jql'];
+        if (requestParameters.jql !== undefined) {
+            queryParameters['jql'] = requestParameters.jql;
         }
 
-        if (requestParameters['overrideScreenSecurity'] != null) {
-            queryParameters['overrideScreenSecurity'] = requestParameters['overrideScreenSecurity'];
+        if (requestParameters.overrideScreenSecurity !== undefined) {
+            queryParameters['overrideScreenSecurity'] = requestParameters.overrideScreenSecurity;
         }
 
-        if (requestParameters['overrideEditableFlag'] != null) {
-            queryParameters['overrideEditableFlag'] = requestParameters['overrideEditableFlag'];
+        if (requestParameters.overrideEditableFlag !== undefined) {
+            queryParameters['overrideEditableFlag'] = requestParameters.overrideEditableFlag;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -442,7 +409,7 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/{optionId}/issue`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))),
+            path: `/rest/api/3/field/{fieldKey}/option/{optionId}/issue`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -464,25 +431,16 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
      * Update issue field option
      */
     async updateIssueFieldOptionRaw(requestParameters: UpdateIssueFieldOptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueFieldOption>> {
-        if (requestParameters['fieldKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldKey',
-                'Required parameter "fieldKey" was null or undefined when calling updateIssueFieldOption().'
-            );
+        if (requestParameters.fieldKey === null || requestParameters.fieldKey === undefined) {
+            throw new runtime.RequiredError('fieldKey','Required parameter requestParameters.fieldKey was null or undefined when calling updateIssueFieldOption.');
         }
 
-        if (requestParameters['optionId'] == null) {
-            throw new runtime.RequiredError(
-                'optionId',
-                'Required parameter "optionId" was null or undefined when calling updateIssueFieldOption().'
-            );
+        if (requestParameters.optionId === null || requestParameters.optionId === undefined) {
+            throw new runtime.RequiredError('optionId','Required parameter requestParameters.optionId was null or undefined when calling updateIssueFieldOption.');
         }
 
-        if (requestParameters['issueFieldOption'] == null) {
-            throw new runtime.RequiredError(
-                'issueFieldOption',
-                'Required parameter "issueFieldOption" was null or undefined when calling updateIssueFieldOption().'
-            );
+        if (requestParameters.issueFieldOption === null || requestParameters.issueFieldOption === undefined) {
+            throw new runtime.RequiredError('issueFieldOption','Required parameter requestParameters.issueFieldOption was null or undefined when calling updateIssueFieldOption.');
         }
 
         const queryParameters: any = {};
@@ -500,11 +458,11 @@ export class IssueCustomFieldOptionsAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters['fieldKey']))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters['optionId']))),
+            path: `/rest/api/3/field/{fieldKey}/option/{optionId}`.replace(`{${"fieldKey"}}`, encodeURIComponent(String(requestParameters.fieldKey))).replace(`{${"optionId"}}`, encodeURIComponent(String(requestParameters.optionId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueFieldOption'],
+            body: requestParameters.issueFieldOption,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

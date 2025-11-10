@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   CustomFieldValueUpdateDetails,
   MultipleCustomFieldValuesUpdateDetails,
-} from '../models/index';
+} from '../models';
 
 export interface UpdateCustomFieldValueRequest {
     fieldIdOrKey: string;
@@ -40,24 +40,18 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
      * Update custom field value
      */
     async updateCustomFieldValueRaw(requestParameters: UpdateCustomFieldValueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'fieldIdOrKey',
-                'Required parameter "fieldIdOrKey" was null or undefined when calling updateCustomFieldValue().'
-            );
+        if (requestParameters.fieldIdOrKey === null || requestParameters.fieldIdOrKey === undefined) {
+            throw new runtime.RequiredError('fieldIdOrKey','Required parameter requestParameters.fieldIdOrKey was null or undefined when calling updateCustomFieldValue.');
         }
 
-        if (requestParameters['customFieldValueUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'customFieldValueUpdateDetails',
-                'Required parameter "customFieldValueUpdateDetails" was null or undefined when calling updateCustomFieldValue().'
-            );
+        if (requestParameters.customFieldValueUpdateDetails === null || requestParameters.customFieldValueUpdateDetails === undefined) {
+            throw new runtime.RequiredError('customFieldValueUpdateDetails','Required parameter requestParameters.customFieldValueUpdateDetails was null or undefined when calling updateCustomFieldValue.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['generateChangelog'] != null) {
-            queryParameters['generateChangelog'] = requestParameters['generateChangelog'];
+        if (requestParameters.generateChangelog !== undefined) {
+            queryParameters['generateChangelog'] = requestParameters.generateChangelog;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -73,11 +67,11 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/app/field/{fieldIdOrKey}/value`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters['fieldIdOrKey']))),
+            path: `/rest/api/3/app/field/{fieldIdOrKey}/value`.replace(`{${"fieldIdOrKey"}}`, encodeURIComponent(String(requestParameters.fieldIdOrKey))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['customFieldValueUpdateDetails'],
+            body: requestParameters.customFieldValueUpdateDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -101,17 +95,14 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
      * Update custom fields
      */
     async updateMultipleCustomFieldValuesRaw(requestParameters: UpdateMultipleCustomFieldValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['multipleCustomFieldValuesUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'multipleCustomFieldValuesUpdateDetails',
-                'Required parameter "multipleCustomFieldValuesUpdateDetails" was null or undefined when calling updateMultipleCustomFieldValues().'
-            );
+        if (requestParameters.multipleCustomFieldValuesUpdateDetails === null || requestParameters.multipleCustomFieldValuesUpdateDetails === undefined) {
+            throw new runtime.RequiredError('multipleCustomFieldValuesUpdateDetails','Required parameter requestParameters.multipleCustomFieldValuesUpdateDetails was null or undefined when calling updateMultipleCustomFieldValues.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['generateChangelog'] != null) {
-            queryParameters['generateChangelog'] = requestParameters['generateChangelog'];
+        if (requestParameters.generateChangelog !== undefined) {
+            queryParameters['generateChangelog'] = requestParameters.generateChangelog;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -131,7 +122,7 @@ export class IssueCustomFieldValuesAppsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['multipleCustomFieldValuesUpdateDetails'],
+            body: requestParameters.multipleCustomFieldValuesUpdateDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

@@ -25,7 +25,7 @@ import type {
   IssueBulkTransitionPayload,
   IssueBulkWatchOrUnwatchPayload,
   SubmittedBulkOperation,
-} from '../models/index';
+} from '../models';
 
 export interface GetAvailableTransitionsRequest {
     issueIdsOrKeys: string;
@@ -78,25 +78,22 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Get available transitions
      */
     async getAvailableTransitionsRaw(requestParameters: GetAvailableTransitionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkTransitionGetAvailableTransitions>> {
-        if (requestParameters['issueIdsOrKeys'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdsOrKeys',
-                'Required parameter "issueIdsOrKeys" was null or undefined when calling getAvailableTransitions().'
-            );
+        if (requestParameters.issueIdsOrKeys === null || requestParameters.issueIdsOrKeys === undefined) {
+            throw new runtime.RequiredError('issueIdsOrKeys','Required parameter requestParameters.issueIdsOrKeys was null or undefined when calling getAvailableTransitions.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['issueIdsOrKeys'] != null) {
-            queryParameters['issueIdsOrKeys'] = requestParameters['issueIdsOrKeys'];
+        if (requestParameters.issueIdsOrKeys !== undefined) {
+            queryParameters['issueIdsOrKeys'] = requestParameters.issueIdsOrKeys;
         }
 
-        if (requestParameters['endingBefore'] != null) {
-            queryParameters['endingBefore'] = requestParameters['endingBefore'];
+        if (requestParameters.endingBefore !== undefined) {
+            queryParameters['endingBefore'] = requestParameters.endingBefore;
         }
 
-        if (requestParameters['startingAfter'] != null) {
-            queryParameters['startingAfter'] = requestParameters['startingAfter'];
+        if (requestParameters.startingAfter !== undefined) {
+            queryParameters['startingAfter'] = requestParameters.startingAfter;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -133,29 +130,26 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Get bulk editable fields
      */
     async getBulkEditableFieldsRaw(requestParameters: GetBulkEditableFieldsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkEditGetFields>> {
-        if (requestParameters['issueIdsOrKeys'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdsOrKeys',
-                'Required parameter "issueIdsOrKeys" was null or undefined when calling getBulkEditableFields().'
-            );
+        if (requestParameters.issueIdsOrKeys === null || requestParameters.issueIdsOrKeys === undefined) {
+            throw new runtime.RequiredError('issueIdsOrKeys','Required parameter requestParameters.issueIdsOrKeys was null or undefined when calling getBulkEditableFields.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['issueIdsOrKeys'] != null) {
-            queryParameters['issueIdsOrKeys'] = requestParameters['issueIdsOrKeys'];
+        if (requestParameters.issueIdsOrKeys !== undefined) {
+            queryParameters['issueIdsOrKeys'] = requestParameters.issueIdsOrKeys;
         }
 
-        if (requestParameters['searchText'] != null) {
-            queryParameters['searchText'] = requestParameters['searchText'];
+        if (requestParameters.searchText !== undefined) {
+            queryParameters['searchText'] = requestParameters.searchText;
         }
 
-        if (requestParameters['endingBefore'] != null) {
-            queryParameters['endingBefore'] = requestParameters['endingBefore'];
+        if (requestParameters.endingBefore !== undefined) {
+            queryParameters['endingBefore'] = requestParameters.endingBefore;
         }
 
-        if (requestParameters['startingAfter'] != null) {
-            queryParameters['startingAfter'] = requestParameters['startingAfter'];
+        if (requestParameters.startingAfter !== undefined) {
+            queryParameters['startingAfter'] = requestParameters.startingAfter;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -192,11 +186,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Get bulk issue operation progress
      */
     async getBulkOperationProgressRaw(requestParameters: GetBulkOperationProgressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkOperationProgress>> {
-        if (requestParameters['taskId'] == null) {
-            throw new runtime.RequiredError(
-                'taskId',
-                'Required parameter "taskId" was null or undefined when calling getBulkOperationProgress().'
-            );
+        if (requestParameters.taskId === null || requestParameters.taskId === undefined) {
+            throw new runtime.RequiredError('taskId','Required parameter requestParameters.taskId was null or undefined when calling getBulkOperationProgress.');
         }
 
         const queryParameters: any = {};
@@ -212,7 +203,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/bulk/queue/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
+            path: `/rest/api/3/bulk/queue/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters.taskId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -235,11 +226,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk delete issues
      */
     async submitBulkDeleteRaw(requestParameters: SubmitBulkDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkDeletePayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkDeletePayload',
-                'Required parameter "issueBulkDeletePayload" was null or undefined when calling submitBulkDelete().'
-            );
+        if (requestParameters.issueBulkDeletePayload === null || requestParameters.issueBulkDeletePayload === undefined) {
+            throw new runtime.RequiredError('issueBulkDeletePayload','Required parameter requestParameters.issueBulkDeletePayload was null or undefined when calling submitBulkDelete.');
         }
 
         const queryParameters: any = {};
@@ -261,7 +249,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkDeletePayload'],
+            body: requestParameters.issueBulkDeletePayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -281,11 +269,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk edit issues
      */
     async submitBulkEditRaw(requestParameters: SubmitBulkEditRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkEditPayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkEditPayload',
-                'Required parameter "issueBulkEditPayload" was null or undefined when calling submitBulkEdit().'
-            );
+        if (requestParameters.issueBulkEditPayload === null || requestParameters.issueBulkEditPayload === undefined) {
+            throw new runtime.RequiredError('issueBulkEditPayload','Required parameter requestParameters.issueBulkEditPayload was null or undefined when calling submitBulkEdit.');
         }
 
         const queryParameters: any = {};
@@ -307,7 +292,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkEditPayload'],
+            body: requestParameters.issueBulkEditPayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -327,11 +312,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk move issues
      */
     async submitBulkMoveRaw(requestParameters: SubmitBulkMoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkMovePayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkMovePayload',
-                'Required parameter "issueBulkMovePayload" was null or undefined when calling submitBulkMove().'
-            );
+        if (requestParameters.issueBulkMovePayload === null || requestParameters.issueBulkMovePayload === undefined) {
+            throw new runtime.RequiredError('issueBulkMovePayload','Required parameter requestParameters.issueBulkMovePayload was null or undefined when calling submitBulkMove.');
         }
 
         const queryParameters: any = {};
@@ -353,7 +335,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkMovePayload'],
+            body: requestParameters.issueBulkMovePayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -373,11 +355,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk transition issue statuses
      */
     async submitBulkTransitionRaw(requestParameters: SubmitBulkTransitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkTransitionPayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkTransitionPayload',
-                'Required parameter "issueBulkTransitionPayload" was null or undefined when calling submitBulkTransition().'
-            );
+        if (requestParameters.issueBulkTransitionPayload === null || requestParameters.issueBulkTransitionPayload === undefined) {
+            throw new runtime.RequiredError('issueBulkTransitionPayload','Required parameter requestParameters.issueBulkTransitionPayload was null or undefined when calling submitBulkTransition.');
         }
 
         const queryParameters: any = {};
@@ -399,7 +378,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkTransitionPayload'],
+            body: requestParameters.issueBulkTransitionPayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -419,11 +398,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk unwatch issues
      */
     async submitBulkUnwatchRaw(requestParameters: SubmitBulkUnwatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkWatchOrUnwatchPayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkWatchOrUnwatchPayload',
-                'Required parameter "issueBulkWatchOrUnwatchPayload" was null or undefined when calling submitBulkUnwatch().'
-            );
+        if (requestParameters.issueBulkWatchOrUnwatchPayload === null || requestParameters.issueBulkWatchOrUnwatchPayload === undefined) {
+            throw new runtime.RequiredError('issueBulkWatchOrUnwatchPayload','Required parameter requestParameters.issueBulkWatchOrUnwatchPayload was null or undefined when calling submitBulkUnwatch.');
         }
 
         const queryParameters: any = {};
@@ -445,7 +421,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkWatchOrUnwatchPayload'],
+            body: requestParameters.issueBulkWatchOrUnwatchPayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -465,11 +441,8 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
      * Bulk watch issues
      */
     async submitBulkWatchRaw(requestParameters: SubmitBulkWatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmittedBulkOperation>> {
-        if (requestParameters['issueBulkWatchOrUnwatchPayload'] == null) {
-            throw new runtime.RequiredError(
-                'issueBulkWatchOrUnwatchPayload',
-                'Required parameter "issueBulkWatchOrUnwatchPayload" was null or undefined when calling submitBulkWatch().'
-            );
+        if (requestParameters.issueBulkWatchOrUnwatchPayload === null || requestParameters.issueBulkWatchOrUnwatchPayload === undefined) {
+            throw new runtime.RequiredError('issueBulkWatchOrUnwatchPayload','Required parameter requestParameters.issueBulkWatchOrUnwatchPayload was null or undefined when calling submitBulkWatch.');
         }
 
         const queryParameters: any = {};
@@ -491,7 +464,7 @@ export class IssueBulkOperationsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueBulkWatchOrUnwatchPayload'],
+            body: requestParameters.issueBulkWatchOrUnwatchPayload,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

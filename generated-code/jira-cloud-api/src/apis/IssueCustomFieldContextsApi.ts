@@ -26,7 +26,7 @@ import type {
   PageBeanIssueTypeToContextMapping,
   ProjectIds,
   ProjectIssueTypeMappings,
-} from '../models/index';
+} from '../models';
 
 export interface AddIssueTypesToContextRequest {
     fieldId: string;
@@ -42,7 +42,7 @@ export interface AssignProjectsToCustomFieldContextRequest {
 
 export interface CreateCustomFieldContextRequest {
     fieldId: string;
-    createCustomFieldContext: Omit<CreateCustomFieldContext, 'id'>;
+    createCustomFieldContext: CreateCustomFieldContext;
 }
 
 export interface DeleteCustomFieldContextRequest {
@@ -120,25 +120,16 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Add issue types to context
      */
     async addIssueTypesToContextRaw(requestParameters: AddIssueTypesToContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling addIssueTypesToContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling addIssueTypesToContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling addIssueTypesToContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling addIssueTypesToContext.');
         }
 
-        if (requestParameters['issueTypeIds'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeIds',
-                'Required parameter "issueTypeIds" was null or undefined when calling addIssueTypesToContext().'
-            );
+        if (requestParameters.issueTypeIds === null || requestParameters.issueTypeIds === undefined) {
+            throw new runtime.RequiredError('issueTypeIds','Required parameter requestParameters.issueTypeIds was null or undefined when calling addIssueTypesToContext.');
         }
 
         const queryParameters: any = {};
@@ -156,11 +147,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/issuetype`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/issuetype`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeIds'],
+            body: requestParameters.issueTypeIds,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -184,25 +175,16 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Assign custom field context to projects
      */
     async assignProjectsToCustomFieldContextRaw(requestParameters: AssignProjectsToCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling assignProjectsToCustomFieldContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling assignProjectsToCustomFieldContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling assignProjectsToCustomFieldContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling assignProjectsToCustomFieldContext.');
         }
 
-        if (requestParameters['projectIds'] == null) {
-            throw new runtime.RequiredError(
-                'projectIds',
-                'Required parameter "projectIds" was null or undefined when calling assignProjectsToCustomFieldContext().'
-            );
+        if (requestParameters.projectIds === null || requestParameters.projectIds === undefined) {
+            throw new runtime.RequiredError('projectIds','Required parameter requestParameters.projectIds was null or undefined when calling assignProjectsToCustomFieldContext.');
         }
 
         const queryParameters: any = {};
@@ -220,11 +202,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/project`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/project`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectIds'],
+            body: requestParameters.projectIds,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -248,18 +230,12 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Create custom field context
      */
     async createCustomFieldContextRaw(requestParameters: CreateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomFieldContext>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling createCustomFieldContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling createCustomFieldContext.');
         }
 
-        if (requestParameters['createCustomFieldContext'] == null) {
-            throw new runtime.RequiredError(
-                'createCustomFieldContext',
-                'Required parameter "createCustomFieldContext" was null or undefined when calling createCustomFieldContext().'
-            );
+        if (requestParameters.createCustomFieldContext === null || requestParameters.createCustomFieldContext === undefined) {
+            throw new runtime.RequiredError('createCustomFieldContext','Required parameter requestParameters.createCustomFieldContext was null or undefined when calling createCustomFieldContext.');
         }
 
         const queryParameters: any = {};
@@ -277,11 +253,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['createCustomFieldContext'],
+            body: requestParameters.createCustomFieldContext,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -301,18 +277,12 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Delete custom field context
      */
     async deleteCustomFieldContextRaw(requestParameters: DeleteCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling deleteCustomFieldContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling deleteCustomFieldContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling deleteCustomFieldContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling deleteCustomFieldContext.');
         }
 
         const queryParameters: any = {};
@@ -328,7 +298,7 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -355,33 +325,30 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Get custom field contexts
      */
     async getContextsForFieldRaw(requestParameters: GetContextsForFieldRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContext>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getContextsForField().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getContextsForField.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['isAnyIssueType'] != null) {
-            queryParameters['isAnyIssueType'] = requestParameters['isAnyIssueType'];
+        if (requestParameters.isAnyIssueType !== undefined) {
+            queryParameters['isAnyIssueType'] = requestParameters.isAnyIssueType;
         }
 
-        if (requestParameters['isGlobalContext'] != null) {
-            queryParameters['isGlobalContext'] = requestParameters['isGlobalContext'];
+        if (requestParameters.isGlobalContext !== undefined) {
+            queryParameters['isGlobalContext'] = requestParameters.isGlobalContext;
         }
 
-        if (requestParameters['contextId'] != null) {
-            queryParameters['contextId'] = requestParameters['contextId'];
+        if (requestParameters.contextId) {
+            queryParameters['contextId'] = requestParameters.contextId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -395,7 +362,7 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -418,28 +385,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Get custom field contexts for projects and issue types
      */
     async getCustomFieldContextsForProjectsAndIssueTypesRaw(requestParameters: GetCustomFieldContextsForProjectsAndIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanContextForProjectAndIssueType>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getCustomFieldContextsForProjectsAndIssueTypes().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getCustomFieldContextsForProjectsAndIssueTypes.');
         }
 
-        if (requestParameters['projectIssueTypeMappings'] == null) {
-            throw new runtime.RequiredError(
-                'projectIssueTypeMappings',
-                'Required parameter "projectIssueTypeMappings" was null or undefined when calling getCustomFieldContextsForProjectsAndIssueTypes().'
-            );
+        if (requestParameters.projectIssueTypeMappings === null || requestParameters.projectIssueTypeMappings === undefined) {
+            throw new runtime.RequiredError('projectIssueTypeMappings','Required parameter requestParameters.projectIssueTypeMappings was null or undefined when calling getCustomFieldContextsForProjectsAndIssueTypes.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -455,11 +416,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/mapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context/mapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectIssueTypeMappings'],
+            body: requestParameters.projectIssueTypeMappings,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -479,25 +440,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Get custom field contexts default values
      */
     async getDefaultValuesRaw(requestParameters: GetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextDefaultValue>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getDefaultValues().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getDefaultValues.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['contextId'] != null) {
-            queryParameters['contextId'] = requestParameters['contextId'];
+        if (requestParameters.contextId) {
+            queryParameters['contextId'] = requestParameters.contextId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -511,7 +469,7 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/defaultValue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context/defaultValue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -534,25 +492,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Get issue types for custom field context
      */
     async getIssueTypeMappingsForContextsRaw(requestParameters: GetIssueTypeMappingsForContextsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanIssueTypeToContextMapping>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getIssueTypeMappingsForContexts().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getIssueTypeMappingsForContexts.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['contextId'] != null) {
-            queryParameters['contextId'] = requestParameters['contextId'];
+        if (requestParameters.contextId) {
+            queryParameters['contextId'] = requestParameters.contextId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -566,7 +521,7 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/issuetypemapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context/issuetypemapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -589,25 +544,22 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Get project mappings for custom field context
      */
     async getProjectContextMappingRaw(requestParameters: GetProjectContextMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanCustomFieldContextProjectMapping>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling getProjectContextMapping().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling getProjectContextMapping.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['contextId'] != null) {
-            queryParameters['contextId'] = requestParameters['contextId'];
+        if (requestParameters.contextId) {
+            queryParameters['contextId'] = requestParameters.contextId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -621,7 +573,7 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/projectmapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context/projectmapping`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -644,25 +596,16 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Remove custom field context from projects
      */
     async removeCustomFieldContextFromProjectsRaw(requestParameters: RemoveCustomFieldContextFromProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling removeCustomFieldContextFromProjects().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling removeCustomFieldContextFromProjects.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling removeCustomFieldContextFromProjects().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling removeCustomFieldContextFromProjects.');
         }
 
-        if (requestParameters['projectIds'] == null) {
-            throw new runtime.RequiredError(
-                'projectIds',
-                'Required parameter "projectIds" was null or undefined when calling removeCustomFieldContextFromProjects().'
-            );
+        if (requestParameters.projectIds === null || requestParameters.projectIds === undefined) {
+            throw new runtime.RequiredError('projectIds','Required parameter requestParameters.projectIds was null or undefined when calling removeCustomFieldContextFromProjects.');
         }
 
         const queryParameters: any = {};
@@ -680,11 +623,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/project/remove`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/project/remove`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['projectIds'],
+            body: requestParameters.projectIds,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -708,25 +651,16 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Remove issue types from context
      */
     async removeIssueTypesFromContextRaw(requestParameters: RemoveIssueTypesFromContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling removeIssueTypesFromContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling removeIssueTypesFromContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling removeIssueTypesFromContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling removeIssueTypesFromContext.');
         }
 
-        if (requestParameters['issueTypeIds'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeIds',
-                'Required parameter "issueTypeIds" was null or undefined when calling removeIssueTypesFromContext().'
-            );
+        if (requestParameters.issueTypeIds === null || requestParameters.issueTypeIds === undefined) {
+            throw new runtime.RequiredError('issueTypeIds','Required parameter requestParameters.issueTypeIds was null or undefined when calling removeIssueTypesFromContext.');
         }
 
         const queryParameters: any = {};
@@ -744,11 +678,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}/issuetype/remove`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}/issuetype/remove`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeIds'],
+            body: requestParameters.issueTypeIds,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -772,18 +706,12 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Set custom field contexts default values
      */
     async setDefaultValuesRaw(requestParameters: SetDefaultValuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling setDefaultValues().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling setDefaultValues.');
         }
 
-        if (requestParameters['customFieldContextDefaultValueUpdate'] == null) {
-            throw new runtime.RequiredError(
-                'customFieldContextDefaultValueUpdate',
-                'Required parameter "customFieldContextDefaultValueUpdate" was null or undefined when calling setDefaultValues().'
-            );
+        if (requestParameters.customFieldContextDefaultValueUpdate === null || requestParameters.customFieldContextDefaultValueUpdate === undefined) {
+            throw new runtime.RequiredError('customFieldContextDefaultValueUpdate','Required parameter requestParameters.customFieldContextDefaultValueUpdate was null or undefined when calling setDefaultValues.');
         }
 
         const queryParameters: any = {};
@@ -801,11 +729,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/defaultValue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))),
+            path: `/rest/api/3/field/{fieldId}/context/defaultValue`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['customFieldContextDefaultValueUpdate'],
+            body: requestParameters.customFieldContextDefaultValueUpdate,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -829,25 +757,16 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
      * Update custom field context
      */
     async updateCustomFieldContextRaw(requestParameters: UpdateCustomFieldContextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['fieldId'] == null) {
-            throw new runtime.RequiredError(
-                'fieldId',
-                'Required parameter "fieldId" was null or undefined when calling updateCustomFieldContext().'
-            );
+        if (requestParameters.fieldId === null || requestParameters.fieldId === undefined) {
+            throw new runtime.RequiredError('fieldId','Required parameter requestParameters.fieldId was null or undefined when calling updateCustomFieldContext.');
         }
 
-        if (requestParameters['contextId'] == null) {
-            throw new runtime.RequiredError(
-                'contextId',
-                'Required parameter "contextId" was null or undefined when calling updateCustomFieldContext().'
-            );
+        if (requestParameters.contextId === null || requestParameters.contextId === undefined) {
+            throw new runtime.RequiredError('contextId','Required parameter requestParameters.contextId was null or undefined when calling updateCustomFieldContext.');
         }
 
-        if (requestParameters['customFieldContextUpdateDetails'] == null) {
-            throw new runtime.RequiredError(
-                'customFieldContextUpdateDetails',
-                'Required parameter "customFieldContextUpdateDetails" was null or undefined when calling updateCustomFieldContext().'
-            );
+        if (requestParameters.customFieldContextUpdateDetails === null || requestParameters.customFieldContextUpdateDetails === undefined) {
+            throw new runtime.RequiredError('customFieldContextUpdateDetails','Required parameter requestParameters.customFieldContextUpdateDetails was null or undefined when calling updateCustomFieldContext.');
         }
 
         const queryParameters: any = {};
@@ -865,11 +784,11 @@ export class IssueCustomFieldContextsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/field/{fieldId}/context/{contextId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters['fieldId']))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters['contextId']))),
+            path: `/rest/api/3/field/{fieldId}/context/{contextId}`.replace(`{${"fieldId"}}`, encodeURIComponent(String(requestParameters.fieldId))).replace(`{${"contextId"}}`, encodeURIComponent(String(requestParameters.contextId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['customFieldContextUpdateDetails'],
+            body: requestParameters.customFieldContextUpdateDetails,
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

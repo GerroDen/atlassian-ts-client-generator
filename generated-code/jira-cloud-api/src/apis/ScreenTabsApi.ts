@@ -16,11 +16,11 @@
 import * as runtime from '../runtime';
 import type {
   ScreenableTab,
-} from '../models/index';
+} from '../models';
 
 export interface AddScreenTabRequest {
     screenId: number;
-    screenableTab: Omit<ScreenableTab, 'id'>;
+    screenableTab: ScreenableTab;
 }
 
 export interface DeleteScreenTabRequest {
@@ -49,7 +49,7 @@ export interface MoveScreenTabRequest {
 export interface RenameScreenTabRequest {
     screenId: number;
     tabId: number;
-    screenableTab: Omit<ScreenableTab, 'id'>;
+    screenableTab: ScreenableTab;
 }
 
 /**
@@ -62,18 +62,12 @@ export class ScreenTabsApi extends runtime.BaseAPI {
      * Create screen tab
      */
     async addScreenTabRaw(requestParameters: AddScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling addScreenTab().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling addScreenTab.');
         }
 
-        if (requestParameters['screenableTab'] == null) {
-            throw new runtime.RequiredError(
-                'screenableTab',
-                'Required parameter "screenableTab" was null or undefined when calling addScreenTab().'
-            );
+        if (requestParameters.screenableTab === null || requestParameters.screenableTab === undefined) {
+            throw new runtime.RequiredError('screenableTab','Required parameter requestParameters.screenableTab was null or undefined when calling addScreenTab.');
         }
 
         const queryParameters: any = {};
@@ -91,11 +85,11 @@ export class ScreenTabsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/tabs`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))),
+            path: `/rest/api/3/screens/{screenId}/tabs`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['screenableTab'],
+            body: requestParameters.screenableTab,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -115,18 +109,12 @@ export class ScreenTabsApi extends runtime.BaseAPI {
      * Delete screen tab
      */
     async deleteScreenTabRaw(requestParameters: DeleteScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling deleteScreenTab().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling deleteScreenTab.');
         }
 
-        if (requestParameters['tabId'] == null) {
-            throw new runtime.RequiredError(
-                'tabId',
-                'Required parameter "tabId" was null or undefined when calling deleteScreenTab().'
-            );
+        if (requestParameters.tabId === null || requestParameters.tabId === undefined) {
+            throw new runtime.RequiredError('tabId','Required parameter requestParameters.tabId was null or undefined when calling deleteScreenTab.');
         }
 
         const queryParameters: any = {};
@@ -142,7 +130,7 @@ export class ScreenTabsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId']))),
+            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters.tabId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -164,17 +152,14 @@ export class ScreenTabsApi extends runtime.BaseAPI {
      * Get all screen tabs
      */
     async getAllScreenTabsRaw(requestParameters: GetAllScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ScreenableTab>>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling getAllScreenTabs().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling getAllScreenTabs.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['projectKey'] != null) {
-            queryParameters['projectKey'] = requestParameters['projectKey'];
+        if (requestParameters.projectKey !== undefined) {
+            queryParameters['projectKey'] = requestParameters.projectKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -188,7 +173,7 @@ export class ScreenTabsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/tabs`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))),
+            path: `/rest/api/3/screens/{screenId}/tabs`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -213,20 +198,20 @@ export class ScreenTabsApi extends runtime.BaseAPI {
     async getBulkScreenTabsRaw(requestParameters: GetBulkScreenTabsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
-        if (requestParameters['screenId'] != null) {
-            queryParameters['screenId'] = requestParameters['screenId'];
+        if (requestParameters.screenId) {
+            queryParameters['screenId'] = requestParameters.screenId;
         }
 
-        if (requestParameters['tabId'] != null) {
-            queryParameters['tabId'] = requestParameters['tabId'];
+        if (requestParameters.tabId) {
+            queryParameters['tabId'] = requestParameters.tabId;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResult'] != null) {
-            queryParameters['maxResult'] = requestParameters['maxResult'];
+        if (requestParameters.maxResult !== undefined) {
+            queryParameters['maxResult'] = requestParameters.maxResult;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -262,25 +247,16 @@ export class ScreenTabsApi extends runtime.BaseAPI {
      * Move screen tab
      */
     async moveScreenTabRaw(requestParameters: MoveScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling moveScreenTab().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling moveScreenTab.');
         }
 
-        if (requestParameters['tabId'] == null) {
-            throw new runtime.RequiredError(
-                'tabId',
-                'Required parameter "tabId" was null or undefined when calling moveScreenTab().'
-            );
+        if (requestParameters.tabId === null || requestParameters.tabId === undefined) {
+            throw new runtime.RequiredError('tabId','Required parameter requestParameters.tabId was null or undefined when calling moveScreenTab.');
         }
 
-        if (requestParameters['pos'] == null) {
-            throw new runtime.RequiredError(
-                'pos',
-                'Required parameter "pos" was null or undefined when calling moveScreenTab().'
-            );
+        if (requestParameters.pos === null || requestParameters.pos === undefined) {
+            throw new runtime.RequiredError('pos','Required parameter requestParameters.pos was null or undefined when calling moveScreenTab.');
         }
 
         const queryParameters: any = {};
@@ -296,7 +272,7 @@ export class ScreenTabsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}/move/{pos}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId']))).replace(`{${"pos"}}`, encodeURIComponent(String(requestParameters['pos']))),
+            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}/move/{pos}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters.tabId))).replace(`{${"pos"}}`, encodeURIComponent(String(requestParameters.pos))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -323,25 +299,16 @@ export class ScreenTabsApi extends runtime.BaseAPI {
      * Update screen tab
      */
     async renameScreenTabRaw(requestParameters: RenameScreenTabRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScreenableTab>> {
-        if (requestParameters['screenId'] == null) {
-            throw new runtime.RequiredError(
-                'screenId',
-                'Required parameter "screenId" was null or undefined when calling renameScreenTab().'
-            );
+        if (requestParameters.screenId === null || requestParameters.screenId === undefined) {
+            throw new runtime.RequiredError('screenId','Required parameter requestParameters.screenId was null or undefined when calling renameScreenTab.');
         }
 
-        if (requestParameters['tabId'] == null) {
-            throw new runtime.RequiredError(
-                'tabId',
-                'Required parameter "tabId" was null or undefined when calling renameScreenTab().'
-            );
+        if (requestParameters.tabId === null || requestParameters.tabId === undefined) {
+            throw new runtime.RequiredError('tabId','Required parameter requestParameters.tabId was null or undefined when calling renameScreenTab.');
         }
 
-        if (requestParameters['screenableTab'] == null) {
-            throw new runtime.RequiredError(
-                'screenableTab',
-                'Required parameter "screenableTab" was null or undefined when calling renameScreenTab().'
-            );
+        if (requestParameters.screenableTab === null || requestParameters.screenableTab === undefined) {
+            throw new runtime.RequiredError('screenableTab','Required parameter requestParameters.screenableTab was null or undefined when calling renameScreenTab.');
         }
 
         const queryParameters: any = {};
@@ -359,11 +326,11 @@ export class ScreenTabsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters['screenId']))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters['tabId']))),
+            path: `/rest/api/3/screens/{screenId}/tabs/{tabId}`.replace(`{${"screenId"}}`, encodeURIComponent(String(requestParameters.screenId))).replace(`{${"tabId"}}`, encodeURIComponent(String(requestParameters.tabId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['screenableTab'],
+            body: requestParameters.screenableTab,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

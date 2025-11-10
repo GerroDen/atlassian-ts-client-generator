@@ -21,7 +21,7 @@ import type {
   JqlFunctionPrecomputationUpdateRequestBean,
   JqlFunctionPrecomputationUpdateResponse,
   PageBean2JqlFunctionPrecomputationBean,
-} from '../models/index';
+} from '../models';
 
 export interface GetPrecomputationsRequest {
     functionKey?: Array<string>;
@@ -52,20 +52,20 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
     async getPrecomputationsRaw(requestParameters: GetPrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBean2JqlFunctionPrecomputationBean>> {
         const queryParameters: any = {};
 
-        if (requestParameters['functionKey'] != null) {
-            queryParameters['functionKey'] = requestParameters['functionKey'];
+        if (requestParameters.functionKey) {
+            queryParameters['functionKey'] = requestParameters.functionKey;
         }
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -102,17 +102,14 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
      * Get precomputations by ID (apps)
      */
     async getPrecomputationsByIDRaw(requestParameters: GetPrecomputationsByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationGetByIdResponse>> {
-        if (requestParameters['jqlFunctionPrecomputationGetByIdRequest'] == null) {
-            throw new runtime.RequiredError(
-                'jqlFunctionPrecomputationGetByIdRequest',
-                'Required parameter "jqlFunctionPrecomputationGetByIdRequest" was null or undefined when calling getPrecomputationsByID().'
-            );
+        if (requestParameters.jqlFunctionPrecomputationGetByIdRequest === null || requestParameters.jqlFunctionPrecomputationGetByIdRequest === undefined) {
+            throw new runtime.RequiredError('jqlFunctionPrecomputationGetByIdRequest','Required parameter requestParameters.jqlFunctionPrecomputationGetByIdRequest was null or undefined when calling getPrecomputationsByID.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['orderBy'] = requestParameters['orderBy'];
+        if (requestParameters.orderBy !== undefined) {
+            queryParameters['orderBy'] = requestParameters.orderBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -132,7 +129,7 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jqlFunctionPrecomputationGetByIdRequest'],
+            body: requestParameters.jqlFunctionPrecomputationGetByIdRequest,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -152,17 +149,14 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
      * Update precomputations (apps)
      */
     async updatePrecomputationsRaw(requestParameters: UpdatePrecomputationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JqlFunctionPrecomputationUpdateResponse>> {
-        if (requestParameters['jqlFunctionPrecomputationUpdateRequestBean'] == null) {
-            throw new runtime.RequiredError(
-                'jqlFunctionPrecomputationUpdateRequestBean',
-                'Required parameter "jqlFunctionPrecomputationUpdateRequestBean" was null or undefined when calling updatePrecomputations().'
-            );
+        if (requestParameters.jqlFunctionPrecomputationUpdateRequestBean === null || requestParameters.jqlFunctionPrecomputationUpdateRequestBean === undefined) {
+            throw new runtime.RequiredError('jqlFunctionPrecomputationUpdateRequestBean','Required parameter requestParameters.jqlFunctionPrecomputationUpdateRequestBean was null or undefined when calling updatePrecomputations.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['skipNotFoundPrecomputations'] != null) {
-            queryParameters['skipNotFoundPrecomputations'] = requestParameters['skipNotFoundPrecomputations'];
+        if (requestParameters.skipNotFoundPrecomputations !== undefined) {
+            queryParameters['skipNotFoundPrecomputations'] = requestParameters.skipNotFoundPrecomputations;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -182,7 +176,7 @@ export class JQLFunctionsAppsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['jqlFunctionPrecomputationUpdateRequestBean'],
+            body: requestParameters.jqlFunctionPrecomputationUpdateRequestBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

@@ -20,7 +20,7 @@ import type {
   WorkflowTransitionRulesUpdate,
   WorkflowTransitionRulesUpdateErrors,
   WorkflowsWithTransitionRulesDetails,
-} from '../models/index';
+} from '../models';
 
 export interface DeleteWorkflowTransitionRuleConfigurationsRequest {
     workflowsWithTransitionRulesDetails: WorkflowsWithTransitionRulesDetails;
@@ -51,11 +51,8 @@ export class WorkflowTransitionRulesApi extends runtime.BaseAPI {
      * Delete workflow transition rule configurations
      */
     async deleteWorkflowTransitionRuleConfigurationsRaw(requestParameters: DeleteWorkflowTransitionRuleConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionRulesUpdateErrors>> {
-        if (requestParameters['workflowsWithTransitionRulesDetails'] == null) {
-            throw new runtime.RequiredError(
-                'workflowsWithTransitionRulesDetails',
-                'Required parameter "workflowsWithTransitionRulesDetails" was null or undefined when calling deleteWorkflowTransitionRuleConfigurations().'
-            );
+        if (requestParameters.workflowsWithTransitionRulesDetails === null || requestParameters.workflowsWithTransitionRulesDetails === undefined) {
+            throw new runtime.RequiredError('workflowsWithTransitionRulesDetails','Required parameter requestParameters.workflowsWithTransitionRulesDetails was null or undefined when calling deleteWorkflowTransitionRuleConfigurations.');
         }
 
         const queryParameters: any = {};
@@ -72,7 +69,7 @@ export class WorkflowTransitionRulesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowsWithTransitionRulesDetails'],
+            body: requestParameters.workflowsWithTransitionRulesDetails,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -92,45 +89,42 @@ export class WorkflowTransitionRulesApi extends runtime.BaseAPI {
      * Get workflow transition rule configurations
      */
     async getWorkflowTransitionRuleConfigurationsRaw(requestParameters: GetWorkflowTransitionRuleConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageBeanWorkflowTransitionRules>> {
-        if (requestParameters['types'] == null) {
-            throw new runtime.RequiredError(
-                'types',
-                'Required parameter "types" was null or undefined when calling getWorkflowTransitionRuleConfigurations().'
-            );
+        if (requestParameters.types === null || requestParameters.types === undefined) {
+            throw new runtime.RequiredError('types','Required parameter requestParameters.types was null or undefined when calling getWorkflowTransitionRuleConfigurations.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['startAt'] != null) {
-            queryParameters['startAt'] = requestParameters['startAt'];
+        if (requestParameters.startAt !== undefined) {
+            queryParameters['startAt'] = requestParameters.startAt;
         }
 
-        if (requestParameters['maxResults'] != null) {
-            queryParameters['maxResults'] = requestParameters['maxResults'];
+        if (requestParameters.maxResults !== undefined) {
+            queryParameters['maxResults'] = requestParameters.maxResults;
         }
 
-        if (requestParameters['types'] != null) {
-            queryParameters['types'] = requestParameters['types'];
+        if (requestParameters.types) {
+            queryParameters['types'] = requestParameters.types;
         }
 
-        if (requestParameters['keys'] != null) {
-            queryParameters['keys'] = requestParameters['keys'];
+        if (requestParameters.keys) {
+            queryParameters['keys'] = requestParameters.keys;
         }
 
-        if (requestParameters['workflowNames'] != null) {
-            queryParameters['workflowNames'] = requestParameters['workflowNames'];
+        if (requestParameters.workflowNames) {
+            queryParameters['workflowNames'] = requestParameters.workflowNames;
         }
 
-        if (requestParameters['withTags'] != null) {
-            queryParameters['withTags'] = requestParameters['withTags'];
+        if (requestParameters.withTags) {
+            queryParameters['withTags'] = requestParameters.withTags;
         }
 
-        if (requestParameters['draft'] != null) {
-            queryParameters['draft'] = requestParameters['draft'];
+        if (requestParameters.draft !== undefined) {
+            queryParameters['draft'] = requestParameters.draft;
         }
 
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand'];
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -167,11 +161,8 @@ export class WorkflowTransitionRulesApi extends runtime.BaseAPI {
      * Update workflow transition rule configurations
      */
     async updateWorkflowTransitionRuleConfigurationsRaw(requestParameters: UpdateWorkflowTransitionRuleConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkflowTransitionRulesUpdateErrors>> {
-        if (requestParameters['workflowTransitionRulesUpdate'] == null) {
-            throw new runtime.RequiredError(
-                'workflowTransitionRulesUpdate',
-                'Required parameter "workflowTransitionRulesUpdate" was null or undefined when calling updateWorkflowTransitionRuleConfigurations().'
-            );
+        if (requestParameters.workflowTransitionRulesUpdate === null || requestParameters.workflowTransitionRulesUpdate === undefined) {
+            throw new runtime.RequiredError('workflowTransitionRulesUpdate','Required parameter requestParameters.workflowTransitionRulesUpdate was null or undefined when calling updateWorkflowTransitionRuleConfigurations.');
         }
 
         const queryParameters: any = {};
@@ -193,7 +184,7 @@ export class WorkflowTransitionRulesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['workflowTransitionRulesUpdate'],
+            body: requestParameters.workflowTransitionRulesUpdate,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

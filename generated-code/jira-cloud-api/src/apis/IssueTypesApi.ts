@@ -19,7 +19,7 @@ import type {
   IssueTypeCreateBean,
   IssueTypeDetails,
   IssueTypeUpdateBean,
-} from '../models/index';
+} from '../models';
 
 export interface CreateIssueTypeRequest {
     issueTypeCreateBean: IssueTypeCreateBean;
@@ -66,11 +66,8 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Create issue type
      */
     async createIssueTypeRaw(requestParameters: CreateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
-        if (requestParameters['issueTypeCreateBean'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeCreateBean',
-                'Required parameter "issueTypeCreateBean" was null or undefined when calling createIssueType().'
-            );
+        if (requestParameters.issueTypeCreateBean === null || requestParameters.issueTypeCreateBean === undefined) {
+            throw new runtime.RequiredError('issueTypeCreateBean','Required parameter requestParameters.issueTypeCreateBean was null or undefined when calling createIssueType.');
         }
 
         const queryParameters: any = {};
@@ -92,7 +89,7 @@ export class IssueTypesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeCreateBean'],
+            body: requestParameters.issueTypeCreateBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -112,39 +109,30 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Load issue type avatar
      */
     async createIssueTypeAvatarRaw(requestParameters: CreateIssueTypeAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Avatar>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling createIssueTypeAvatar().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createIssueTypeAvatar.');
         }
 
-        if (requestParameters['size'] == null) {
-            throw new runtime.RequiredError(
-                'size',
-                'Required parameter "size" was null or undefined when calling createIssueTypeAvatar().'
-            );
+        if (requestParameters.size === null || requestParameters.size === undefined) {
+            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling createIssueTypeAvatar.');
         }
 
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling createIssueTypeAvatar().'
-            );
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createIssueTypeAvatar.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['x'] != null) {
-            queryParameters['x'] = requestParameters['x'];
+        if (requestParameters.x !== undefined) {
+            queryParameters['x'] = requestParameters.x;
         }
 
-        if (requestParameters['y'] != null) {
-            queryParameters['y'] = requestParameters['y'];
+        if (requestParameters.y !== undefined) {
+            queryParameters['y'] = requestParameters.y;
         }
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -160,11 +148,11 @@ export class IssueTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{id}/avatar2`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuetype/{id}/avatar2`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: requestParameters.body as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);
@@ -184,17 +172,14 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Delete issue type
      */
     async deleteIssueTypeRaw(requestParameters: DeleteIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteIssueType.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['alternativeIssueTypeId'] != null) {
-            queryParameters['alternativeIssueTypeId'] = requestParameters['alternativeIssueTypeId'];
+        if (requestParameters.alternativeIssueTypeId !== undefined) {
+            queryParameters['alternativeIssueTypeId'] = requestParameters.alternativeIssueTypeId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -208,7 +193,7 @@ export class IssueTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -230,11 +215,8 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Get alternative issue types
      */
     async getAlternativeIssueTypesRaw(requestParameters: GetAlternativeIssueTypesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getAlternativeIssueTypes().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAlternativeIssueTypes.');
         }
 
         const queryParameters: any = {};
@@ -250,7 +232,7 @@ export class IssueTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{id}/alternatives`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuetype/{id}/alternatives`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -309,11 +291,8 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Get issue type
      */
     async getIssueTypeRaw(requestParameters: GetIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getIssueType.');
         }
 
         const queryParameters: any = {};
@@ -329,7 +308,7 @@ export class IssueTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -352,21 +331,18 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Get issue types for project
      */
     async getIssueTypesForProjectRaw(requestParameters: GetIssueTypesForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IssueTypeDetails>>> {
-        if (requestParameters['projectId'] == null) {
-            throw new runtime.RequiredError(
-                'projectId',
-                'Required parameter "projectId" was null or undefined when calling getIssueTypesForProject().'
-            );
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling getIssueTypesForProject.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['projectId'] != null) {
-            queryParameters['projectId'] = requestParameters['projectId'];
+        if (requestParameters.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
         }
 
-        if (requestParameters['level'] != null) {
-            queryParameters['level'] = requestParameters['level'];
+        if (requestParameters.level !== undefined) {
+            queryParameters['level'] = requestParameters.level;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -403,18 +379,12 @@ export class IssueTypesApi extends runtime.BaseAPI {
      * Update issue type
      */
     async updateIssueTypeRaw(requestParameters: UpdateIssueTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IssueTypeDetails>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateIssueType().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateIssueType.');
         }
 
-        if (requestParameters['issueTypeUpdateBean'] == null) {
-            throw new runtime.RequiredError(
-                'issueTypeUpdateBean',
-                'Required parameter "issueTypeUpdateBean" was null or undefined when calling updateIssueType().'
-            );
+        if (requestParameters.issueTypeUpdateBean === null || requestParameters.issueTypeUpdateBean === undefined) {
+            throw new runtime.RequiredError('issueTypeUpdateBean','Required parameter requestParameters.issueTypeUpdateBean was null or undefined when calling updateIssueType.');
         }
 
         const queryParameters: any = {};
@@ -432,11 +402,11 @@ export class IssueTypesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/issuetype/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['issueTypeUpdateBean'],
+            body: requestParameters.issueTypeUpdateBean,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response);

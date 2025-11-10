@@ -20,7 +20,7 @@ import type {
   AttachmentArchiveMetadataReadable,
   AttachmentMetadata,
   AttachmentSettings,
-} from '../models/index';
+} from '../models';
 
 export interface AddAttachmentRequest {
     issueIdOrKey: string;
@@ -65,11 +65,8 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Add attachment
      */
     async addAttachmentRaw(requestParameters: AddAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Attachment>>> {
-        if (requestParameters['issueIdOrKey'] == null) {
-            throw new runtime.RequiredError(
-                'issueIdOrKey',
-                'Required parameter "issueIdOrKey" was null or undefined when calling addAttachment().'
-            );
+        if (requestParameters.issueIdOrKey === null || requestParameters.issueIdOrKey === undefined) {
+            throw new runtime.RequiredError('issueIdOrKey','Required parameter requestParameters.issueIdOrKey was null or undefined when calling addAttachment.');
         }
 
         const queryParameters: any = {};
@@ -85,7 +82,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/issue/{issueIdOrKey}/attachments`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: `/rest/api/3/issue/{issueIdOrKey}/attachments`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters.issueIdOrKey))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -108,11 +105,8 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Get all metadata for an expanded attachment
      */
     async expandAttachmentForHumansRaw(requestParameters: ExpandAttachmentForHumansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AttachmentArchiveMetadataReadable>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling expandAttachmentForHumans().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling expandAttachmentForHumans.');
         }
 
         const queryParameters: any = {};
@@ -128,7 +122,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/{id}/expand/human`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/{id}/expand/human`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,11 +145,8 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Get contents metadata for an expanded attachment
      */
     async expandAttachmentForMachinesRaw(requestParameters: ExpandAttachmentForMachinesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AttachmentArchiveImpl>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling expandAttachmentForMachines().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling expandAttachmentForMachines.');
         }
 
         const queryParameters: any = {};
@@ -171,7 +162,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/{id}/expand/raw`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/{id}/expand/raw`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -194,11 +185,8 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Get attachment metadata
      */
     async getAttachmentRaw(requestParameters: GetAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AttachmentMetadata>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getAttachment().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachment.');
         }
 
         const queryParameters: any = {};
@@ -214,7 +202,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -237,17 +225,14 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Get attachment content
      */
     async getAttachmentContentRaw(requestParameters: GetAttachmentContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getAttachmentContent().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachmentContent.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['redirect'] != null) {
-            queryParameters['redirect'] = requestParameters['redirect'];
+        if (requestParameters.redirect !== undefined) {
+            queryParameters['redirect'] = requestParameters.redirect;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -261,7 +246,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -319,29 +304,26 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Get attachment thumbnail
      */
     async getAttachmentThumbnailRaw(requestParameters: GetAttachmentThumbnailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getAttachmentThumbnail().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getAttachmentThumbnail.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['redirect'] != null) {
-            queryParameters['redirect'] = requestParameters['redirect'];
+        if (requestParameters.redirect !== undefined) {
+            queryParameters['redirect'] = requestParameters.redirect;
         }
 
-        if (requestParameters['fallbackToDefault'] != null) {
-            queryParameters['fallbackToDefault'] = requestParameters['fallbackToDefault'];
+        if (requestParameters.fallbackToDefault !== undefined) {
+            queryParameters['fallbackToDefault'] = requestParameters.fallbackToDefault;
         }
 
-        if (requestParameters['width'] != null) {
-            queryParameters['width'] = requestParameters['width'];
+        if (requestParameters.width !== undefined) {
+            queryParameters['width'] = requestParameters.width;
         }
 
-        if (requestParameters['height'] != null) {
-            queryParameters['height'] = requestParameters['height'];
+        if (requestParameters.height !== undefined) {
+            queryParameters['height'] = requestParameters.height;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -355,7 +337,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/thumbnail/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/thumbnail/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -377,11 +359,8 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
      * Delete attachment
      */
     async removeAttachmentRaw(requestParameters: RemoveAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling removeAttachment().'
-            );
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling removeAttachment.');
         }
 
         const queryParameters: any = {};
@@ -397,7 +376,7 @@ export class IssueAttachmentsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/rest/api/3/attachment/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/rest/api/3/attachment/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
