@@ -83,4 +83,42 @@ export class IssueFieldsApi extends runtime.BaseAPI {
     }
 }`);
   });
+
+  it("updates FieldIdentifierObject.identifier", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface FieldIdentifierObject {
+    identifier?: object;
+    type: string;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface FieldIdentifierObject {
+    identifier?: unknown;
+    type: string;
+}`);
+  });
+
+  it("updates AssociationContextObject.identifier", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface AssociationContextObject {
+    identifier?: object;
+    type: string;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface AssociationContextObject {
+    identifier?: unknown;
+    type: string;
+}`);
+  });
 });

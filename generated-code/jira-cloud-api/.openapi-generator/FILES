@@ -21,6 +21,7 @@ src/apis/IssueAttachmentsApi.ts
 src/apis/IssueBulkOperationsApi.ts
 src/apis/IssueCommentPropertiesApi.ts
 src/apis/IssueCommentsApi.ts
+src/apis/IssueCustomFieldAssociationsApi.ts
 src/apis/IssueCustomFieldConfigurationAppsApi.ts
 src/apis/IssueCustomFieldContextsApi.ts
 src/apis/IssueCustomFieldOptionsApi.ts
@@ -34,6 +35,7 @@ src/apis/IssueNavigatorSettingsApi.ts
 src/apis/IssueNotificationSchemesApi.ts
 src/apis/IssuePrioritiesApi.ts
 src/apis/IssuePropertiesApi.ts
+src/apis/IssueRedactionApi.ts
 src/apis/IssueRemoteLinksApi.ts
 src/apis/IssueResolutionsApi.ts
 src/apis/IssueSearchApi.ts
@@ -70,6 +72,7 @@ src/apis/ProjectPermissionSchemesApi.ts
 src/apis/ProjectPropertiesApi.ts
 src/apis/ProjectRoleActorsApi.ts
 src/apis/ProjectRolesApi.ts
+src/apis/ProjectTemplatesApi.ts
 src/apis/ProjectTypesApi.ts
 src/apis/ProjectVersionsApi.ts
 src/apis/ProjectsApi.ts

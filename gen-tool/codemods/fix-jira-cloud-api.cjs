@@ -1,4 +1,5 @@
 const { Identifier } = require("jscodeshift");
+const js = require("@eslint/js");
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, api) => {
   const { j } = api;
@@ -42,6 +43,17 @@ const transformer = (file, api) => {
         j.tsLiteralType(j.stringLiteral("software")),
       ]);
     });
+  source
+    .find(j.TSInterfaceDeclaration)
+    .filter((path) =>
+      ["FieldIdentifierObject", "AssociationContextObject"].includes(
+        path.node.id.name,
+      ),
+    )
+    .find(j.TSPropertySignature)
+    .filter((path) => path.node.key.name === "identifier")
+    .find(j.TSTypeAnnotation)
+    .replaceWith(j.tsTypeAnnotation(j.tsUnknownKeyword()));
   if (file.path?.endsWith("apis/IssueFieldsApi.ts")) {
     source
       .find(j.Identifier)

@@ -463,7 +463,7 @@ export interface ApprovalConfiguration {
      * @type {Array<string | null>}
      * @memberof ApprovalConfiguration
      */
-    exclude?: ApprovalConfigurationExcludeEnum | null;
+    exclude?: Array<ApprovalConfigurationExcludeEnum | null> | null;
     /**
      * The custom field ID of the "Approvers" or "Approver Groups" field.
      * @type {string}
@@ -519,6 +519,31 @@ export const ApprovalConfigurationExcludeEnum = {
 } as const;
 export type ApprovalConfigurationExcludeEnum = typeof ApprovalConfigurationExcludeEnum[keyof typeof ApprovalConfigurationExcludeEnum];
 
+/**
+ * Approval configuration.
+ * @export
+ * @interface ApprovalConfigurationPreview
+ */
+export interface ApprovalConfigurationPreview {
+    /**
+     * The active approval configuration.
+     * @type {string}
+     * @memberof ApprovalConfigurationPreview
+     */
+    active?: string;
+    /**
+     * The transition ID for approved state.
+     * @type {string}
+     * @memberof ApprovalConfigurationPreview
+     */
+    transitionApproved?: string;
+    /**
+     * The transition ID for rejected state.
+     * @type {string}
+     * @memberof ApprovalConfigurationPreview
+     */
+    transitionRejected?: string;
+}
 /**
  * 
  * @export
@@ -644,6 +669,25 @@ export interface AssociatedItemBean {
      * @memberof AssociatedItemBean
      */
     readonly typeName?: string;
+}
+/**
+ * Field association for example PROJECT\_ID.
+ * @export
+ * @interface AssociationContextObject
+ */
+export interface AssociationContextObject {
+    /**
+     * 
+     * @type {object}
+     * @memberof AssociationContextObject
+     */
+    identifier?: unknown;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssociationContextObject
+     */
+    type: string;
 }
 /**
  * Details about an attachment.
@@ -1459,6 +1503,174 @@ export interface Avatars {
     readonly system?: Array<Avatar>;
 }
 /**
+ * The payload for creating a board column
+ * @export
+ * @interface BoardColumnPayload
+ */
+export interface BoardColumnPayload {
+    /**
+     * The maximum issue constraint for the column
+     * @type {number}
+     * @memberof BoardColumnPayload
+     */
+    maximumIssueConstraint?: number;
+    /**
+     * The minimum issue constraint for the column
+     * @type {number}
+     * @memberof BoardColumnPayload
+     */
+    minimumIssueConstraint?: number;
+    /**
+     * The name of the column
+     * @type {string}
+     * @memberof BoardColumnPayload
+     */
+    name?: string;
+    /**
+     * The status IDs for the column
+     * @type {Array<ProjectCreateResourceIdentifier>}
+     * @memberof BoardColumnPayload
+     */
+    statusIds?: Array<ProjectCreateResourceIdentifier>;
+}
+/**
+ * The payload for setting a board feature
+ * @export
+ * @interface BoardFeaturePayload
+ */
+export interface BoardFeaturePayload {
+    /**
+     * The key of the feature
+     * @type {string}
+     * @memberof BoardFeaturePayload
+     */
+    featureKey?: BoardFeaturePayloadFeatureKeyEnum;
+    /**
+     * Whether the feature should be turned on or off
+     * @type {boolean}
+     * @memberof BoardFeaturePayload
+     */
+    state?: boolean;
+}
+
+
+/**
+ * @export
+ */
+export const BoardFeaturePayloadFeatureKeyEnum = {
+    Estimation: 'ESTIMATION',
+    Sprints: 'SPRINTS'
+} as const;
+export type BoardFeaturePayloadFeatureKeyEnum = typeof BoardFeaturePayloadFeatureKeyEnum[keyof typeof BoardFeaturePayloadFeatureKeyEnum];
+
+/**
+ * The payload for creating a board
+ * @export
+ * @interface BoardPayload
+ */
+export interface BoardPayload {
+    /**
+     * Takes in a JQL string to create a new filter. If no value is provided, it'll default to a JQL filter for the project creating
+     * @type {string}
+     * @memberof BoardPayload
+     */
+    boardFilterJQL?: string;
+    /**
+     * Card color settings of the board
+     * @type {string}
+     * @memberof BoardPayload
+     */
+    cardColorStrategy?: BoardPayloadCardColorStrategyEnum;
+    /**
+     * 
+     * @type {CardLayout}
+     * @memberof BoardPayload
+     */
+    cardLayout?: CardLayout;
+    /**
+     * Card layout settings of the board
+     * @type {Array<CardLayoutField>}
+     * @memberof BoardPayload
+     */
+    cardLayouts?: Array<CardLayoutField>;
+    /**
+     * The columns of the board
+     * @type {Array<BoardColumnPayload>}
+     * @memberof BoardPayload
+     */
+    columns?: Array<BoardColumnPayload>;
+    /**
+     * Feature settings for the board
+     * @type {Array<BoardFeaturePayload>}
+     * @memberof BoardPayload
+     */
+    features?: Array<BoardFeaturePayload>;
+    /**
+     * The name of the board
+     * @type {string}
+     * @memberof BoardPayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof BoardPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The quick filters for the board.
+     * @type {Array<QuickFilterPayload>}
+     * @memberof BoardPayload
+     */
+    quickFilters?: Array<QuickFilterPayload>;
+    /**
+     * Whether sprints are supported on the board
+     * @type {boolean}
+     * @memberof BoardPayload
+     */
+    supportsSprint?: boolean;
+    /**
+     * 
+     * @type {SwimlanesPayload}
+     * @memberof BoardPayload
+     */
+    swimlanes?: SwimlanesPayload;
+    /**
+     * 
+     * @type {WorkingDaysConfig}
+     * @memberof BoardPayload
+     */
+    workingDaysConfig?: WorkingDaysConfig;
+}
+
+
+/**
+ * @export
+ */
+export const BoardPayloadCardColorStrategyEnum = {
+    IssueType: 'ISSUE_TYPE',
+    RequestType: 'REQUEST_TYPE',
+    Assignee: 'ASSIGNEE',
+    Priority: 'PRIORITY',
+    None: 'NONE',
+    Custom: 'CUSTOM'
+} as const;
+export type BoardPayloadCardColorStrategyEnum = typeof BoardPayloadCardColorStrategyEnum[keyof typeof BoardPayloadCardColorStrategyEnum];
+
+/**
+ * 
+ * @export
+ * @interface BoardsPayload
+ */
+export interface BoardsPayload {
+    /**
+     * The boards to be associated with the project.
+     * @type {Array<BoardPayload>}
+     * @memberof BoardsPayload
+     */
+    boards?: Array<BoardPayload>;
+}
+/**
  * Details for changing owners of shareable entities
  * @export
  * @interface BulkChangeOwnerDetails
@@ -1731,7 +1943,7 @@ export interface BulkFetchIssueRequestBean {
      *  *  `transitions` Returns all possible transitions for the issue.
      *  *  `operations` Returns all possible operations for the issue.
      *  *  `editmeta` Returns information about how each field can be edited.
-     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+     *  *  `changelog` Returns a list of recent updates to an issue, sorted by date, starting from the most recent. This returns a maximum of 40 changelogs. If you require more, please refer to [Bulk fetch changelogs](#api-rest-api-3-changelog-bulkfetch-post).
      *  *  `versionedRepresentations` Instead of `fields`, returns `versionedRepresentations` a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
      * @type {Array<string>}
      * @memberof BulkFetchIssueRequestBean
@@ -2057,6 +2269,32 @@ export interface BulkProjectPermissions {
     projects?: Array<number>;
 }
 /**
+ * 
+ * @export
+ * @interface BulkRedactionRequest
+ */
+export interface BulkRedactionRequest {
+    /**
+     * 
+     * @type {Set<SingleRedactionRequest>}
+     * @memberof BulkRedactionRequest
+     */
+    redactions?: Array<SingleRedactionRequest>;
+}
+/**
+ * 
+ * @export
+ * @interface BulkRedactionResponse
+ */
+export interface BulkRedactionResponse {
+    /**
+     * Result for requested redactions
+     * @type {Set<SingleRedactionResponse>}
+     * @memberof BulkRedactionResponse
+     */
+    results: Array<SingleRedactionResponse>;
+}
+/**
  * Bulk Transition Get Available Transitions Response.
  * @export
  * @interface BulkTransitionGetAvailableTransitions
@@ -2100,6 +2338,61 @@ export interface BulkTransitionSubmitInput {
      */
     transitionId: string;
 }
+/**
+ * Card layout configuration.
+ * @export
+ * @interface CardLayout
+ */
+export interface CardLayout {
+    /**
+     * Whether to show days in column
+     * @type {boolean}
+     * @memberof CardLayout
+     */
+    showDaysInColumn?: boolean;
+}
+/**
+ * Card layout settings of the board
+ * @export
+ * @interface CardLayoutField
+ */
+export interface CardLayoutField {
+    /**
+     * 
+     * @type {string}
+     * @memberof CardLayoutField
+     */
+    fieldId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CardLayoutField
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CardLayoutField
+     */
+    mode?: CardLayoutFieldModeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CardLayoutField
+     */
+    position?: number;
+}
+
+
+/**
+ * @export
+ */
+export const CardLayoutFieldModeEnum = {
+    Plan: 'PLAN',
+    Work: 'WORK'
+} as const;
+export type CardLayoutFieldModeEnum = typeof CardLayoutFieldModeEnum[keyof typeof CardLayoutFieldModeEnum];
+
 /**
  * A change item.
  * @export
@@ -2654,6 +2947,42 @@ export const ConditionGroupConfigurationOperationEnum = {
 export type ConditionGroupConfigurationOperationEnum = typeof ConditionGroupConfigurationOperationEnum[keyof typeof ConditionGroupConfigurationOperationEnum];
 
 /**
+ * The payload for creating a condition group in a workflow
+ * @export
+ * @interface ConditionGroupPayload
+ */
+export interface ConditionGroupPayload {
+    /**
+     * The nested conditions of the condition group.
+     * @type {Array<ConditionGroupPayload>}
+     * @memberof ConditionGroupPayload
+     */
+    conditionGroup?: Array<ConditionGroupPayload>;
+    /**
+     * The rules for this condition.
+     * @type {Array<RulePayload>}
+     * @memberof ConditionGroupPayload
+     */
+    conditions?: Array<RulePayload>;
+    /**
+     * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
+     * @type {string}
+     * @memberof ConditionGroupPayload
+     */
+    operation?: ConditionGroupPayloadOperationEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ConditionGroupPayloadOperationEnum = {
+    Any: 'ANY',
+    All: 'ALL'
+} as const;
+export type ConditionGroupPayloadOperationEnum = typeof ConditionGroupPayloadOperationEnum[keyof typeof ConditionGroupPayloadOperationEnum];
+
+/**
  * The conditions group associated with the transition.
  * @export
  * @interface ConditionGroupUpdate
@@ -2882,6 +3211,51 @@ export interface ContainerOfWorkflowSchemeAssociations {
      */
     values: Array<WorkflowSchemeAssociations>;
 }
+/**
+ * Represents the content to redact
+ * @export
+ * @interface ContentItem
+ */
+export interface ContentItem {
+    /**
+     * The ID of the content entity.
+     * 
+     *  *  For redacting an issue field, this will be the field ID (e.g., summary, customfield\_10000).
+     *  *  For redacting a comment, this will be the comment ID.
+     *  *  For redacting a worklog, this will be the worklog ID.
+     * @type {string}
+     * @memberof ContentItem
+     */
+    entityId: string;
+    /**
+     * The type of the entity to redact; It will be one of the following:
+     * 
+     *  *  **issuefieldvalue** \- To redact in issue fields
+     *  *  **issue-comment** \- To redact in issue comments.
+     *  *  **issue-worklog** \- To redact in issue worklogs
+     * @type {string}
+     * @memberof ContentItem
+     */
+    entityType: ContentItemEntityTypeEnum;
+    /**
+     * This would be the issue ID
+     * @type {string}
+     * @memberof ContentItem
+     */
+    id: string;
+}
+
+
+/**
+ * @export
+ */
+export const ContentItemEntityTypeEnum = {
+    Issuefieldvalue: 'issuefieldvalue',
+    IssueComment: 'issue-comment',
+    IssueWorklog: 'issue-worklog'
+} as const;
+export type ContentItemEntityTypeEnum = typeof ContentItemEntityTypeEnum[keyof typeof ContentItemEntityTypeEnum];
+
 /**
  * A context.
  * @export
@@ -5165,6 +5539,77 @@ export interface CustomFieldOptionUpdate {
     value?: string;
 }
 /**
+ * Defines the payload for the custom field definitions. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/\#api-rest-api-3-field-post
+ * @export
+ * @interface CustomFieldPayload
+ */
+export interface CustomFieldPayload {
+    /**
+     * The type of the custom field
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    cfType?: string;
+    /**
+     * The description of the custom field
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    description?: string;
+    /**
+     * The name of the custom field
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    name?: string;
+    /**
+     * The strategy to use when there is a conflict with an existing custom field. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    onConflict?: CustomFieldPayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof CustomFieldPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * Allows an overwrite to declare the new Custom Field to be created as a GLOBAL-scoped field. Leave this as empty or null to use the project's default scope.
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    scope?: CustomFieldPayloadScopeEnum;
+    /**
+     * The searcher key of the custom field
+     * @type {string}
+     * @memberof CustomFieldPayload
+     */
+    searcherKey?: string;
+}
+
+
+/**
+ * @export
+ */
+export const CustomFieldPayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type CustomFieldPayloadOnConflictEnum = typeof CustomFieldPayloadOnConflictEnum[keyof typeof CustomFieldPayloadOnConflictEnum];
+
+/**
+ * @export
+ */
+export const CustomFieldPayloadScopeEnum = {
+    Global: 'GLOBAL',
+    Template: 'TEMPLATE',
+    Project: 'PROJECT'
+} as const;
+export type CustomFieldPayloadScopeEnum = typeof CustomFieldPayloadScopeEnum[keyof typeof CustomFieldPayloadScopeEnum];
+
+/**
  * Details about the replacement for a deleted version.
  * @export
  * @interface CustomFieldReplacement
@@ -5236,6 +5681,195 @@ export interface CustomFieldValueUpdateDetails {
      */
     updates?: Array<CustomFieldValueUpdate>;
 }
+/**
+ * 
+ * @export
+ * @interface CustomTemplateOptions
+ */
+export interface CustomTemplateOptions {
+    /**
+     * Enable screen delegated admin support for the template. This means screen and associated schemes will be copied rather than referenced.
+     * @type {boolean}
+     * @memberof CustomTemplateOptions
+     */
+    enableScreenDelegatedAdminSupport?: boolean;
+    /**
+     * Enable workflow delegated admin support for the template. This means workflows and workflow schemes will be copied rather than referenced.
+     * @type {boolean}
+     * @memberof CustomTemplateOptions
+     */
+    enableWorkflowDelegatedAdminSupport?: boolean;
+}
+/**
+ * The specific request object for creating a project with template.
+ * @export
+ * @interface CustomTemplateRequestDTO
+ */
+export interface CustomTemplateRequestDTO {
+    /**
+     * 
+     * @type {BoardsPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    boards?: BoardsPayload | null;
+    /**
+     * 
+     * @type {FieldCapabilityPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    field?: FieldCapabilityPayload | null;
+    /**
+     * 
+     * @type {IssueTypeProjectCreatePayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    issueType?: IssueTypeProjectCreatePayload | null;
+    /**
+     * 
+     * @type {NotificationSchemePayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    notification?: NotificationSchemePayload | null;
+    /**
+     * 
+     * @type {PermissionPayloadDTO}
+     * @memberof CustomTemplateRequestDTO
+     */
+    permissionScheme?: PermissionPayloadDTO | null;
+    /**
+     * 
+     * @type {ProjectPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    project?: ProjectPayload;
+    /**
+     * 
+     * @type {RolesCapabilityPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    role?: RolesCapabilityPayload | null;
+    /**
+     * 
+     * @type {ScopePayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    scope?: ScopePayload | null;
+    /**
+     * 
+     * @type {SecuritySchemePayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    security?: SecuritySchemePayload | null;
+    /**
+     * 
+     * @type {WorkflowCapabilityPayload}
+     * @memberof CustomTemplateRequestDTO
+     */
+    workflow?: WorkflowCapabilityPayload | null;
+}
+/**
+ * Project Details
+ * @export
+ * @interface CustomTemplatesProjectDetails
+ */
+export interface CustomTemplatesProjectDetails {
+    /**
+     * The access level of the project. Only used by team-managed project
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    accessLevel?: CustomTemplatesProjectDetailsAccessLevelEnum;
+    /**
+     * Additional properties of the project
+     * @type {{ [key: string]: string; }}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    additionalProperties?: { [key: string]: string; };
+    /**
+     * The default assignee when creating issues in the project
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    assigneeType?: CustomTemplatesProjectDetailsAssigneeTypeEnum;
+    /**
+     * The ID of the project's avatar. Use the \[Get project avatars\](\#api-rest-api-3-project-projectIdOrKey-avatar-get) operation to list the available avatars in a project.
+     * @type {number}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    avatarId?: number;
+    /**
+     * The ID of the project's category. A complete list of category IDs is found using the [Get all project categories](#api-rest-api-3-projectCategory-get) operation.
+     * @type {number}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    categoryId?: number;
+    /**
+     * Brief description of the project
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    description?: string;
+    /**
+     * Whether components are enabled for the project. Only used by company-managed project
+     * @type {boolean}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    enableComponents?: boolean;
+    /**
+     * Project keys must be unique and start with an uppercase letter followed by one or more uppercase alphanumeric characters. The maximum length is 10 characters.
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    key?: string;
+    /**
+     * The default language for the project
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    language?: string;
+    /**
+     * The account ID of the project lead. Either `lead` or `leadAccountId` must be set when creating a project. Cannot be provided with `lead`.
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    leadAccountId?: string;
+    /**
+     * Name of the project
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    name?: string;
+    /**
+     * A link to information about this project, such as project documentation
+     * @type {string}
+     * @memberof CustomTemplatesProjectDetails
+     */
+    url?: string;
+}
+
+
+/**
+ * @export
+ */
+export const CustomTemplatesProjectDetailsAccessLevelEnum = {
+    Open: 'open',
+    Limited: 'limited',
+    Private: 'private',
+    Free: 'free'
+} as const;
+export type CustomTemplatesProjectDetailsAccessLevelEnum = typeof CustomTemplatesProjectDetailsAccessLevelEnum[keyof typeof CustomTemplatesProjectDetailsAccessLevelEnum];
+
+/**
+ * @export
+ */
+export const CustomTemplatesProjectDetailsAssigneeTypeEnum = {
+    ProjectDefault: 'PROJECT_DEFAULT',
+    ComponentLead: 'COMPONENT_LEAD',
+    ProjectLead: 'PROJECT_LEAD',
+    Unassigned: 'UNASSIGNED'
+} as const;
+export type CustomTemplatesProjectDetailsAssigneeTypeEnum = typeof CustomTemplatesProjectDetailsAssigneeTypeEnum[keyof typeof CustomTemplatesProjectDetailsAssigneeTypeEnum];
+
 /**
  * Details of a dashboard.
  * @export
@@ -5670,6 +6304,30 @@ export interface DefaultWorkflow {
 /**
  * 
  * @export
+ * @interface DefaultWorkflowEditorResponse
+ */
+export interface DefaultWorkflowEditorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultWorkflowEditorResponse
+     */
+    value?: DefaultWorkflowEditorResponseValueEnum;
+}
+
+
+/**
+ * @export
+ */
+export const DefaultWorkflowEditorResponseValueEnum = {
+    New: 'NEW',
+    Legacy: 'LEGACY'
+} as const;
+export type DefaultWorkflowEditorResponseValueEnum = typeof DefaultWorkflowEditorResponseValueEnum[keyof typeof DefaultWorkflowEditorResponseValueEnum];
+
+/**
+ * 
+ * @export
  * @interface DeleteAndReplaceVersionBean
  */
 export interface DeleteAndReplaceVersionBean {
@@ -5803,6 +6461,37 @@ export interface DuplicatePlanRequest {
      * @memberof DuplicatePlanRequest
      */
     name: string;
+}
+/**
+ * Request to edit a custom template
+ * @export
+ * @interface EditTemplateRequest
+ */
+export interface EditTemplateRequest {
+    /**
+     * The description of the template
+     * @type {string}
+     * @memberof EditTemplateRequest
+     */
+    templateDescription?: string;
+    /**
+     * 
+     * @type {CustomTemplateOptions}
+     * @memberof EditTemplateRequest
+     */
+    templateGenerationOptions?: CustomTemplateOptions;
+    /**
+     * The unique identifier of the template
+     * @type {string}
+     * @memberof EditTemplateRequest
+     */
+    templateKey?: string;
+    /**
+     * The name of the template
+     * @type {string}
+     * @memberof EditTemplateRequest
+     */
+    templateName?: string;
 }
 /**
  * An entity property, for more information see [Entity properties](https://developer.atlassian.com/cloud/jira/platform/jira-entity-properties/).
@@ -6257,6 +6946,80 @@ export interface Field {
      * @memberof Field
      */
     stableId?: string;
+    /**
+     * The display name of the field type
+     * @type {string}
+     * @memberof Field
+     */
+    typeDisplayName?: string;
+}
+/**
+ * Details of field associations with projects.
+ * @export
+ * @interface FieldAssociationsRequest
+ */
+export interface FieldAssociationsRequest {
+    /**
+     * Contexts to associate/unassociate the fields with.
+     * @type {Array<AssociationContextObject>}
+     * @memberof FieldAssociationsRequest
+     */
+    associationContexts: Array<AssociationContextObject>;
+    /**
+     * Fields to associate/unassociate with projects.
+     * @type {Array<FieldIdentifierObject>}
+     * @memberof FieldAssociationsRequest
+     */
+    fields: Array<FieldIdentifierObject>;
+}
+/**
+ * Defines the payload for the fields, screens, screen schemes, issue type screen schemes, field layouts, and field layout schemes
+ * @export
+ * @interface FieldCapabilityPayload
+ */
+export interface FieldCapabilityPayload {
+    /**
+     * The custom field definitions. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/\#api-rest-api-3-field-post
+     * @type {Array<CustomFieldPayload>}
+     * @memberof FieldCapabilityPayload
+     */
+    customFieldDefinitions?: Array<CustomFieldPayload> | null;
+    /**
+     * 
+     * @type {FieldLayoutSchemePayload}
+     * @memberof FieldCapabilityPayload
+     */
+    fieldLayoutScheme?: FieldLayoutSchemePayload | null;
+    /**
+     * The field layouts configuration.
+     * @type {Array<FieldLayoutPayload>}
+     * @memberof FieldCapabilityPayload
+     */
+    fieldLayouts?: Array<FieldLayoutPayload> | null;
+    /**
+     * The issue layouts configuration
+     * @type {Array<IssueLayoutPayload>}
+     * @memberof FieldCapabilityPayload
+     */
+    issueLayouts?: Array<IssueLayoutPayload> | null;
+    /**
+     * 
+     * @type {IssueTypeScreenSchemePayload}
+     * @memberof FieldCapabilityPayload
+     */
+    issueTypeScreenScheme?: IssueTypeScreenSchemePayload | null;
+    /**
+     * The screen schemes See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screen-schemes/\#api-rest-api-3-screenscheme-post
+     * @type {Array<ScreenSchemePayload>}
+     * @memberof FieldCapabilityPayload
+     */
+    screenScheme?: Array<ScreenSchemePayload> | null;
+    /**
+     * The screens. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screens/\#api-rest-api-3-screens-post
+     * @type {Array<ScreenPayload>}
+     * @memberof FieldCapabilityPayload
+     */
+    screens?: Array<ScreenPayload> | null;
 }
 /**
  * A clause that asserts whether a field was changed. For example, `status CHANGED AFTER startOfMonth(-1M)`.See [CHANGED](https://confluence.atlassian.com/x/dgiiLQ#Advancedsearching-operatorsreference-CHANGEDCHANGED) for more information about the CHANGED operator.
@@ -6641,6 +7404,38 @@ export interface FieldDetails {
     searchable?: boolean;
 }
 /**
+ * 
+ * @export
+ * @interface FieldIdIdentifier
+ */
+export interface FieldIdIdentifier extends FieldIdentifierObject {
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldIdIdentifier
+     */
+    identifier?: string;
+}
+/**
+ * Identifier for a field for example FIELD\_ID.
+ * @export
+ * @interface FieldIdentifierObject
+ */
+export interface FieldIdentifierObject {
+    /**
+     * 
+     * @type {object}
+     * @memberof FieldIdentifierObject
+     */
+    identifier?: unknown;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldIdentifierObject
+     */
+    type: string;
+}
+/**
  * Information about the most recent use of a field.
  * @export
  * @interface FieldLastUsed
@@ -6675,6 +7470,99 @@ export const FieldLastUsedTypeEnum = {
 } as const;
 export type FieldLastUsedTypeEnum = typeof FieldLastUsedTypeEnum[keyof typeof FieldLastUsedTypeEnum];
 
+/**
+ * Defines the payload for the field layout configuration. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/\#api-rest-api-3-fieldconfiguration-post
+ * @export
+ * @interface FieldLayoutConfiguration
+ */
+export interface FieldLayoutConfiguration {
+    /**
+     * Whether to show the field
+     * @type {boolean}
+     * @memberof FieldLayoutConfiguration
+     */
+    field?: boolean;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldLayoutConfiguration
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * Whether the field is required
+     * @type {boolean}
+     * @memberof FieldLayoutConfiguration
+     */
+    required?: boolean;
+}
+/**
+ * Defines the payload for the field layouts. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/\#api-group-issue-field-configurations" + fieldlayout is what users would see as "Field Configuration" in Jira's UI - https://support.atlassian.com/jira-cloud-administration/docs/manage-issue-field-configurations/
+ * @export
+ * @interface FieldLayoutPayload
+ */
+export interface FieldLayoutPayload {
+    /**
+     * The field layout configuration. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/\#api-rest-api-3-fieldconfiguration-post
+     * @type {Array<FieldLayoutConfiguration>}
+     * @memberof FieldLayoutPayload
+     */
+    configuration?: Array<FieldLayoutConfiguration>;
+    /**
+     * The description of the field layout
+     * @type {string}
+     * @memberof FieldLayoutPayload
+     */
+    description?: string;
+    /**
+     * The name of the field layout
+     * @type {string}
+     * @memberof FieldLayoutPayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldLayoutPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+/**
+ * Defines the payload for the field layout schemes. See "Field Configuration Scheme" - https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-field-configurations/\#api-rest-api-3-fieldconfigurationscheme-post https://support.atlassian.com/jira-cloud-administration/docs/configure-a-field-configuration-scheme/
+ * @export
+ * @interface FieldLayoutSchemePayload
+ */
+export interface FieldLayoutSchemePayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldLayoutSchemePayload
+     */
+    defaultFieldLayout?: ProjectCreateResourceIdentifier;
+    /**
+     * The description of the field layout scheme
+     * @type {string}
+     * @memberof FieldLayoutSchemePayload
+     */
+    description?: string;
+    /**
+     * There is a default configuration "fieldlayout" that is applied to all issue types using this scheme that don't have an explicit mapping users can create (or re-use existing) configurations for other issue types and map them to this scheme
+     * @type {{ [key: string]: ProjectCreateResourceIdentifier; }}
+     * @memberof FieldLayoutSchemePayload
+     */
+    explicitMappings?: { [key: string]: ProjectCreateResourceIdentifier; };
+    /**
+     * The name of the field layout scheme
+     * @type {string}
+     * @memberof FieldLayoutSchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FieldLayoutSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
 /**
  * The metadata describing an issue field.
  * @export
@@ -7277,6 +8165,12 @@ export interface FilterSubscriptionsList {
  */
 export interface FoundGroup {
     /**
+     * Avatar url for the group/team if present.
+     * @type {string}
+     * @memberof FoundGroup
+     */
+    avatarUrl?: string;
+    /**
      * The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
      * @type {string}
      * @memberof FoundGroup
@@ -7295,12 +8189,54 @@ export interface FoundGroup {
      */
     labels?: Array<GroupLabel>;
     /**
+     * Describes who/how the team is managed. The possible values are  
+     * \* external - when team is synced from an external directory like SCIM or HRIS, and team members cannot be modified.  
+     * \* admins - when a team is managed by an admin (team members can only be modified by admins).  
+     * \* team-members - managed by existing team members, new members need to be invited to join.  
+     * \* open - anyone can join or modify this team.
+     * @type {string}
+     * @memberof FoundGroup
+     */
+    managedBy?: FoundGroupManagedByEnum;
+    /**
      * The name of the group. The name of a group is mutable, to reliably identify a group use ``groupId`.`
      * @type {string}
      * @memberof FoundGroup
      */
     name?: string;
+    /**
+     * Describes the type of group. The possible values are  
+     * \* team-collaboration - A platform team managed in people directory.  
+     * \* userbase-group - a group of users created in adminhub.  
+     * \* admin-oversight - currently unused.
+     * @type {string}
+     * @memberof FoundGroup
+     */
+    usageType?: FoundGroupUsageTypeEnum;
 }
+
+
+/**
+ * @export
+ */
+export const FoundGroupManagedByEnum = {
+    External: 'EXTERNAL',
+    Admins: 'ADMINS',
+    TeamMembers: 'TEAM_MEMBERS',
+    Open: 'OPEN'
+} as const;
+export type FoundGroupManagedByEnum = typeof FoundGroupManagedByEnum[keyof typeof FoundGroupManagedByEnum];
+
+/**
+ * @export
+ */
+export const FoundGroupUsageTypeEnum = {
+    UserbaseGroup: 'USERBASE_GROUP',
+    TeamCollaboration: 'TEAM_COLLABORATION',
+    AdminOversight: 'ADMIN_OVERSIGHT'
+} as const;
+export type FoundGroupUsageTypeEnum = typeof FoundGroupUsageTypeEnum[keyof typeof FoundGroupUsageTypeEnum];
+
 /**
  * The list of groups found in a search, including header text (Showing X of Y matching groups) and total of matched groups.
  * @export
@@ -7369,6 +8305,31 @@ export interface FoundUsersAndGroups {
      * @memberof FoundUsersAndGroups
      */
     users?: FoundUsers;
+}
+/**
+ * The payload for the layout details for the start end of a transition
+ * @export
+ * @interface FromLayoutPayload
+ */
+export interface FromLayoutPayload {
+    /**
+     * The port that the transition can be made from
+     * @type {number}
+     * @memberof FromLayoutPayload
+     */
+    fromPort?: number;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof FromLayoutPayload
+     */
+    status?: ProjectCreateResourceIdentifier;
+    /**
+     * The port that the transition goes to
+     * @type {number}
+     * @memberof FromLayoutPayload
+     */
+    toPortOverride?: number;
 }
 /**
  * An operand that is a function. See [Advanced searching - functions reference](https://confluence.atlassian.com/x/dwiiLQ) for more information about JQL functions.
@@ -7612,6 +8573,57 @@ export interface GetExclusionRulesResponse {
      * @memberof GetExclusionRulesResponse
      */
     workStatusIds?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface GetForgeAppProperty200Response
+ */
+export interface GetForgeAppProperty200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetForgeAppProperty200Response
+     */
+    key?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof GetForgeAppProperty200Response
+     */
+    value?: any | null;
+}
+/**
+ * 
+ * @export
+ * @interface GetForgeAppPropertyKeys200Response
+ */
+export interface GetForgeAppPropertyKeys200Response {
+    /**
+     * 
+     * @type {Array<GetForgeAppPropertyKeys200ResponseKeysInner>}
+     * @memberof GetForgeAppPropertyKeys200Response
+     */
+    keys?: Array<GetForgeAppPropertyKeys200ResponseKeysInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetForgeAppPropertyKeys200ResponseKeysInner
+ */
+export interface GetForgeAppPropertyKeys200ResponseKeysInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetForgeAppPropertyKeys200ResponseKeysInner
+     */
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetForgeAppPropertyKeys200ResponseKeysInner
+     */
+    self?: string;
 }
 /**
  * 
@@ -7874,6 +8886,12 @@ export interface GetPlanResponseForPage {
      * @memberof GetPlanResponseForPage
      */
     name: string;
+    /**
+     * Default scenario ID.
+     * @type {string}
+     * @memberof GetPlanResponseForPage
+     */
+    scenarioId: string;
     /**
      * The plan status. This is "Active", "Trashed" or "Archived".
      * @type {string}
@@ -8393,50 +9411,6 @@ export interface IdOrKeyBean {
 /**
  * 
  * @export
- * @interface IdSearchRequestBean
- */
-export interface IdSearchRequestBean {
-    /**
-     * A [JQL](https://confluence.atlassian.com/x/egORLQ) expression. Order by clauses are not allowed.
-     * @type {string}
-     * @memberof IdSearchRequestBean
-     */
-    jql?: string;
-    /**
-     * The maximum number of items to return per page.
-     * @type {number}
-     * @memberof IdSearchRequestBean
-     */
-    maxResults?: number;
-    /**
-     * The continuation token to fetch the next page. This token is provided by the response of this endpoint.
-     * @type {string}
-     * @memberof IdSearchRequestBean
-     */
-    nextPageToken?: string;
-}
-/**
- * Result of your JQL search. Returns a list of issue IDs and a token to fetch the next page if one exists.
- * @export
- * @interface IdSearchResults
- */
-export interface IdSearchResults {
-    /**
-     * The list of issue IDs found by the search.
-     * @type {Array<number>}
-     * @memberof IdSearchResults
-     */
-    readonly issueIds?: Array<number>;
-    /**
-     * Continuation token to fetch the next page. If this result represents the last or the only page this token will be null.
-     * @type {string}
-     * @memberof IdSearchResults
-     */
-    readonly nextPageToken?: string;
-}
-/**
- * 
- * @export
  * @interface IncludedFields
  */
 export interface IncludedFields {
@@ -8819,14 +9793,6 @@ export interface IssueBulkWatchOrUnwatchPayload {
      * @memberof IssueBulkWatchOrUnwatchPayload
      */
     selectedIssueIdsOrKeys: Array<string>;
-    /**
-     * A boolean value that indicates whether to send a bulk change notification when the issues are being watched or unwatched.
-     * 
-     * If `true`, dispatches a bulk notification email to users about the updates.
-     * @type {boolean}
-     * @memberof IssueBulkWatchOrUnwatchPayload
-     */
-    sendBulkNotification?: boolean | null;
 }
 /**
  * List of changelogs that belong to single issue
@@ -9149,6 +10115,94 @@ export interface IssueFilterForBulkPropertySet {
      */
     hasProperty?: boolean;
 }
+/**
+ * Defines the payload to configure the issue layout item for a project.
+ * @export
+ * @interface IssueLayoutItemPayload
+ */
+export interface IssueLayoutItemPayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueLayoutItemPayload
+     */
+    itemKey?: ProjectCreateResourceIdentifier;
+    /**
+     * The item section type
+     * @type {string}
+     * @memberof IssueLayoutItemPayload
+     */
+    sectionType?: IssueLayoutItemPayloadSectionTypeEnum;
+    /**
+     * The item type. Currently only support FIELD
+     * @type {string}
+     * @memberof IssueLayoutItemPayload
+     */
+    type?: IssueLayoutItemPayloadTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const IssueLayoutItemPayloadSectionTypeEnum = {
+    Content: 'content',
+    PrimaryContext: 'primaryContext',
+    SecondaryContext: 'secondaryContext'
+} as const;
+export type IssueLayoutItemPayloadSectionTypeEnum = typeof IssueLayoutItemPayloadSectionTypeEnum[keyof typeof IssueLayoutItemPayloadSectionTypeEnum];
+
+/**
+ * @export
+ */
+export const IssueLayoutItemPayloadTypeEnum = {
+    Field: 'FIELD'
+} as const;
+export type IssueLayoutItemPayloadTypeEnum = typeof IssueLayoutItemPayloadTypeEnum[keyof typeof IssueLayoutItemPayloadTypeEnum];
+
+/**
+ * Defines the payload to configure the issue layouts for a project.
+ * @export
+ * @interface IssueLayoutPayload
+ */
+export interface IssueLayoutPayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueLayoutPayload
+     */
+    containerId?: ProjectCreateResourceIdentifier;
+    /**
+     * The issue layout type
+     * @type {string}
+     * @memberof IssueLayoutPayload
+     */
+    issueLayoutType?: IssueLayoutPayloadIssueLayoutTypeEnum;
+    /**
+     * The configuration of items in the issue layout
+     * @type {Array<IssueLayoutItemPayload>}
+     * @memberof IssueLayoutPayload
+     */
+    items?: Array<IssueLayoutItemPayload>;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueLayoutPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const IssueLayoutPayloadIssueLayoutTypeEnum = {
+    IssueView: 'ISSUE_VIEW',
+    IssueCreate: 'ISSUE_CREATE',
+    RequestForm: 'REQUEST_FORM'
+} as const;
+export type IssueLayoutPayloadIssueLayoutTypeEnum = typeof IssueLayoutPayloadIssueLayoutTypeEnum[keyof typeof IssueLayoutPayloadIssueLayoutTypeEnum];
+
 /**
  * 
  * @export
@@ -9626,6 +10680,49 @@ export interface IssueTypeDetails {
     readonly subtask?: boolean;
 }
 /**
+ * The payload for creating an issue type hierarchy
+ * @export
+ * @interface IssueTypeHierarchyPayload
+ */
+export interface IssueTypeHierarchyPayload {
+    /**
+     * The hierarchy level of the issue type. 0, 1, 2, 3 .. n; Negative values for subtasks
+     * @type {number}
+     * @memberof IssueTypeHierarchyPayload
+     */
+    hierarchyLevel?: number;
+    /**
+     * The name of the issue type
+     * @type {string}
+     * @memberof IssueTypeHierarchyPayload
+     */
+    name?: string;
+    /**
+     * The conflict strategy to use when the issue type already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
+     * @type {string}
+     * @memberof IssueTypeHierarchyPayload
+     */
+    onConflict?: IssueTypeHierarchyPayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypeHierarchyPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const IssueTypeHierarchyPayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type IssueTypeHierarchyPayloadOnConflictEnum = typeof IssueTypeHierarchyPayloadOnConflictEnum[keyof typeof IssueTypeHierarchyPayloadOnConflictEnum];
+
+/**
  * The list of issue type IDs.
  * @export
  * @interface IssueTypeIds
@@ -9756,6 +10853,86 @@ export interface IssueTypeIssueCreateMetadata {
     readonly subtask?: boolean;
 }
 /**
+ * The payload for creating an issue type
+ * @export
+ * @interface IssueTypePayload
+ */
+export interface IssueTypePayload {
+    /**
+     * The avatar ID of the issue type. Go to https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-avatars/\#api-rest-api-3-avatar-type-system-get to choose an avatarId existing in Jira
+     * @type {number}
+     * @memberof IssueTypePayload
+     */
+    avatarId?: number | null;
+    /**
+     * The description of the issue type
+     * @type {string}
+     * @memberof IssueTypePayload
+     */
+    description?: string | null;
+    /**
+     * The hierarchy level of the issue type. 0, 1, 2, 3 .. n; Negative values for subtasks
+     * @type {number}
+     * @memberof IssueTypePayload
+     */
+    hierarchyLevel?: number;
+    /**
+     * The name of the issue type
+     * @type {string}
+     * @memberof IssueTypePayload
+     */
+    name?: string;
+    /**
+     * The conflict strategy to use when the issue type already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
+     * @type {string}
+     * @memberof IssueTypePayload
+     */
+    onConflict?: IssueTypePayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const IssueTypePayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type IssueTypePayloadOnConflictEnum = typeof IssueTypePayloadOnConflictEnum[keyof typeof IssueTypePayloadOnConflictEnum];
+
+/**
+ * The payload for creating issue types in a project
+ * @export
+ * @interface IssueTypeProjectCreatePayload
+ */
+export interface IssueTypeProjectCreatePayload {
+    /**
+     * Defines the issue type hierarhy to be created and used during this project creation. This will only add new levels if there isn't an existing level
+     * @type {Array<IssueTypeHierarchyPayload>}
+     * @memberof IssueTypeProjectCreatePayload
+     */
+    issueTypeHierarchy?: Array<IssueTypeHierarchyPayload> | null;
+    /**
+     * 
+     * @type {IssueTypeSchemePayload}
+     * @memberof IssueTypeProjectCreatePayload
+     */
+    issueTypeScheme?: IssueTypeSchemePayload;
+    /**
+     * Only needed if you want to create issue types, you can otherwise use the ids of issue types in the scheme configuration
+     * @type {Array<IssueTypePayload>}
+     * @memberof IssueTypeProjectCreatePayload
+     */
+    issueTypes?: Array<IssueTypePayload> | null;
+}
+/**
  * Details of an issue type scheme.
  * @export
  * @interface IssueTypeScheme
@@ -9854,6 +11031,43 @@ export interface IssueTypeSchemeMapping {
      * @memberof IssueTypeSchemeMapping
      */
     issueTypeSchemeId: string;
+}
+/**
+ * The payload for creating issue type schemes
+ * @export
+ * @interface IssueTypeSchemePayload
+ */
+export interface IssueTypeSchemePayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypeSchemePayload
+     */
+    defaultIssueTypeId?: ProjectCreateResourceIdentifier;
+    /**
+     * The description of the issue type scheme
+     * @type {string}
+     * @memberof IssueTypeSchemePayload
+     */
+    description?: string | null;
+    /**
+     * The issue type IDs for the issue type scheme
+     * @type {Array<ProjectCreateResourceIdentifier>}
+     * @memberof IssueTypeSchemePayload
+     */
+    issueTypeIds?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * The name of the issue type scheme
+     * @type {string}
+     * @memberof IssueTypeSchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypeSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
 }
 /**
  * Details of the association between an issue type scheme and project.
@@ -10039,6 +11253,43 @@ export interface IssueTypeScreenSchemeMappingDetails {
     issueTypeMappings: Array<IssueTypeScreenSchemeMapping>;
 }
 /**
+ * Defines the payload for the issue type screen schemes. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-type-screen-schemes/\#api-rest-api-3-issuetypescreenscheme-post
+ * @export
+ * @interface IssueTypeScreenSchemePayload
+ */
+export interface IssueTypeScreenSchemePayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypeScreenSchemePayload
+     */
+    defaultScreenScheme?: ProjectCreateResourceIdentifier;
+    /**
+     * The description of the issue type screen scheme
+     * @type {string}
+     * @memberof IssueTypeScreenSchemePayload
+     */
+    description?: string;
+    /**
+     * The IDs of the screen schemes for the issue type IDs and default. A default entry is required to create an issue type screen scheme, it defines the mapping for all issue types without a screen scheme.
+     * @type {{ [key: string]: ProjectCreateResourceIdentifier; }}
+     * @memberof IssueTypeScreenSchemePayload
+     */
+    explicitMappings?: { [key: string]: ProjectCreateResourceIdentifier; };
+    /**
+     * The name of the issue type screen scheme
+     * @type {string}
+     * @memberof IssueTypeScreenSchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof IssueTypeScreenSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+/**
  * Associated issue type screen scheme and project.
  * @export
  * @interface IssueTypeScreenSchemeProjectAssociation
@@ -10127,7 +11378,10 @@ export interface IssueTypeToContextMapping {
  */
 export interface IssueTypeUpdateBean {
     /**
-     * The ID of an issue type avatar.
+     * The ID of an issue type avatar. This can be obtained be obtained from the following endpoints:
+     * 
+     *  *  [System issue type avatar IDs only](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-avatars/#api-rest-api-3-avatar-type-system-get)
+     *  *  [System and custom issue type avatar IDs](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-avatars/#api-rest-api-3-universal-avatar-type-type-owner-entityid-get)
      * @type {number}
      * @memberof IssueTypeUpdateBean
      */
@@ -10378,6 +11632,12 @@ export interface IssuesUpdateBean {
  * @interface JExpEvaluateIssuesJqlMetaDataBean
  */
 export interface JExpEvaluateIssuesJqlMetaDataBean {
+    /**
+     * Indicates whether this is the last page of the paginated response.
+     * @type {boolean}
+     * @memberof JExpEvaluateIssuesJqlMetaDataBean
+     */
+    readonly isLast?: boolean;
     /**
      * Next Page token for the next page of issues.
      * @type {string}
@@ -11344,6 +12604,12 @@ export interface JiraIssueFields {
      */
     singleVersionPickerFields?: Array<JiraSingleVersionPickerField>;
     /**
+     * 
+     * @type {JiraStatusInput}
+     * @memberof JiraIssueFields
+     */
+    status?: JiraStatusInput;
+    /**
      * Edit the time tracking field.
      * @type {JiraTimeTrackingField}
      * @memberof JiraIssueFields
@@ -11375,6 +12641,84 @@ export interface JiraIssueTypeField {
 /**
  * 
  * @export
+ * @interface JiraLabelPropertiesInputJackson1
+ */
+export interface JiraLabelPropertiesInputJackson1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraLabelPropertiesInputJackson1
+     */
+    color?: JiraLabelPropertiesInputJackson1ColorEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraLabelPropertiesInputJackson1
+     */
+    name?: string;
+}
+
+
+/**
+ * @export
+ */
+export const JiraLabelPropertiesInputJackson1ColorEnum = {
+    GreyLightest: 'GREY_LIGHTEST',
+    GreyLighter: 'GREY_LIGHTER',
+    Grey: 'GREY',
+    GreyDarker: 'GREY_DARKER',
+    GreyDarkest: 'GREY_DARKEST',
+    PurpleLightest: 'PURPLE_LIGHTEST',
+    PurpleLighter: 'PURPLE_LIGHTER',
+    Purple: 'PURPLE',
+    PurpleDarker: 'PURPLE_DARKER',
+    PurpleDarkest: 'PURPLE_DARKEST',
+    BlueLightest: 'BLUE_LIGHTEST',
+    BlueLighter: 'BLUE_LIGHTER',
+    Blue: 'BLUE',
+    BlueDarker: 'BLUE_DARKER',
+    BlueDarkest: 'BLUE_DARKEST',
+    TealLightest: 'TEAL_LIGHTEST',
+    TealLighter: 'TEAL_LIGHTER',
+    Teal: 'TEAL',
+    TealDarker: 'TEAL_DARKER',
+    TealDarkest: 'TEAL_DARKEST',
+    GreenLightest: 'GREEN_LIGHTEST',
+    GreenLighter: 'GREEN_LIGHTER',
+    Green: 'GREEN',
+    GreenDarker: 'GREEN_DARKER',
+    GreenDarkest: 'GREEN_DARKEST',
+    LimeLightest: 'LIME_LIGHTEST',
+    LimeLighter: 'LIME_LIGHTER',
+    Lime: 'LIME',
+    LimeDarker: 'LIME_DARKER',
+    LimeDarkest: 'LIME_DARKEST',
+    YellowLightest: 'YELLOW_LIGHTEST',
+    YellowLighter: 'YELLOW_LIGHTER',
+    Yellow: 'YELLOW',
+    YellowDarker: 'YELLOW_DARKER',
+    YellowDarkest: 'YELLOW_DARKEST',
+    OrangeLightest: 'ORANGE_LIGHTEST',
+    OrangeLighter: 'ORANGE_LIGHTER',
+    Orange: 'ORANGE',
+    OrangeDarker: 'ORANGE_DARKER',
+    OrangeDarkest: 'ORANGE_DARKEST',
+    RedLightest: 'RED_LIGHTEST',
+    RedLighter: 'RED_LIGHTER',
+    Red: 'RED',
+    RedDarker: 'RED_DARKER',
+    RedDarkest: 'RED_DARKEST',
+    MagentaLightest: 'MAGENTA_LIGHTEST',
+    MagentaLighter: 'MAGENTA_LIGHTER',
+    Magenta: 'MAGENTA',
+    MagentaDarker: 'MAGENTA_DARKER',
+    MagentaDarkest: 'MAGENTA_DARKEST'
+} as const;
+export type JiraLabelPropertiesInputJackson1ColorEnum = typeof JiraLabelPropertiesInputJackson1ColorEnum[keyof typeof JiraLabelPropertiesInputJackson1ColorEnum];
+
+/**
+ * 
+ * @export
  * @interface JiraLabelsField
  */
 export interface JiraLabelsField {
@@ -11390,6 +12734,12 @@ export interface JiraLabelsField {
      * @memberof JiraLabelsField
      */
     fieldId: string;
+    /**
+     * 
+     * @type {Array<JiraLabelPropertiesInputJackson1>}
+     * @memberof JiraLabelsField
+     */
+    labelProperties?: Array<JiraLabelPropertiesInputJackson1>;
     /**
      * 
      * @type {Array<JiraLabelsInput>}
@@ -11767,22 +13117,6 @@ export interface JiraStatus {
      * @memberof JiraStatus
      */
     statusCategory?: JiraStatusStatusCategoryEnum;
-    /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * Projects and issue types where the status is used. Only available if the `usages` expand is requested.
-     * @type {Set<ProjectIssueTypes>}
-     * @memberof JiraStatus
-     */
-    usages?: Array<ProjectIssueTypes> | null;
-    /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
-     * @type {Set<WorkflowUsages>}
-     * @memberof JiraStatus
-     */
-    workflowUsages?: Array<WorkflowUsages> | null;
 }
 
 
@@ -11796,6 +13130,19 @@ export const JiraStatusStatusCategoryEnum = {
 } as const;
 export type JiraStatusStatusCategoryEnum = typeof JiraStatusStatusCategoryEnum[keyof typeof JiraStatusStatusCategoryEnum];
 
+/**
+ * 
+ * @export
+ * @interface JiraStatusInput
+ */
+export interface JiraStatusInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof JiraStatusInput
+     */
+    statusId: string;
+}
 /**
  * 
  * @export
@@ -11885,6 +13232,12 @@ export interface JiraWorkflow {
      */
     isEditable?: boolean;
     /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof JiraWorkflow
+     */
+    loopedTransitionContainerLayout?: WorkflowLayout | null;
+    /**
      * The name of the workflow.
      * @type {string}
      * @memberof JiraWorkflow
@@ -11915,7 +13268,7 @@ export interface JiraWorkflow {
      */
     taskId?: string | null;
     /**
-     * The transitions of the workflow. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
+     * The transitions of the workflow.
      * @type {Set<WorkflowTransitions>}
      * @memberof JiraWorkflow
      */
@@ -11927,20 +13280,73 @@ export interface JiraWorkflow {
      */
     updated?: string | null;
     /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
-     * @type {Set<ProjectIssueTypes>}
-     * @memberof JiraWorkflow
-     */
-    usages?: Array<ProjectIssueTypes> | null;
-    /**
      * 
      * @type {DocumentVersion}
      * @memberof JiraWorkflow
      */
     version?: DocumentVersion;
 }
+/**
+ * Details of a status.
+ * @export
+ * @interface JiraWorkflowPreviewStatus
+ */
+export interface JiraWorkflowPreviewStatus {
+    /**
+     * The description of the status.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    description?: string;
+    /**
+     * The ID of the status.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    id?: string;
+    /**
+     * The name of the status.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    name?: string;
+    /**
+     * The raw name of the status.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    rawName?: string;
+    /**
+     * 
+     * @type {WorkflowPreviewScope}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    scope?: WorkflowPreviewScope;
+    /**
+     * The category of the status.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    statusCategory?: JiraWorkflowPreviewStatusStatusCategoryEnum;
+    /**
+     * The reference of the status. Unique within this response but not guaranteed to be stable across requests.
+     * @type {string}
+     * @memberof JiraWorkflowPreviewStatus
+     */
+    statusReference?: string;
+}
+
+
+/**
+ * @export
+ */
+export const JiraWorkflowPreviewStatusStatusCategoryEnum = {
+    Todo: 'TODO',
+    InProgress: 'IN_PROGRESS',
+    Done: 'DONE'
+} as const;
+export type JiraWorkflowPreviewStatusStatusCategoryEnum = typeof JiraWorkflowPreviewStatusStatusCategoryEnum[keyof typeof JiraWorkflowPreviewStatusStatusCategoryEnum];
+
 /**
  * Details of a status.
  * @export
@@ -11983,14 +13389,6 @@ export interface JiraWorkflowStatus {
      * @memberof JiraWorkflowStatus
      */
     statusReference?: string;
-    /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * The `statuses.usages` expand is an optional parameter that can be used when reading and updating statuses in Jira. It provides additional information about the projects and issue types associated with the requested statuses.
-     * @type {Set<ProjectIssueTypes>}
-     * @memberof JiraWorkflowStatus
-     */
-    usages?: Array<ProjectIssueTypes> | null;
 }
 
 
@@ -13442,6 +14840,25 @@ export interface NewUserDetails {
     readonly self?: string;
 }
 /**
+ * 
+ * @export
+ * @interface NonWorkingDay
+ */
+export interface NonWorkingDay {
+    /**
+     * 
+     * @type {number}
+     * @memberof NonWorkingDay
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof NonWorkingDay
+     */
+    iso8601Date?: string;
+}
+/**
  * Details about a notification.
  * @export
  * @interface Notification
@@ -13699,6 +15116,38 @@ export interface NotificationSchemeEventDetails {
     notifications: Array<NotificationSchemeNotificationDetails>;
 }
 /**
+ * The event ID to use for reference in the payload
+ * @export
+ * @interface NotificationSchemeEventIDPayload
+ */
+export interface NotificationSchemeEventIDPayload {
+    /**
+     * The event ID to use for reference in the payload
+     * @type {string}
+     * @memberof NotificationSchemeEventIDPayload
+     */
+    id?: string;
+}
+/**
+ * The payload for creating a notification scheme event. Defines which notifications should be sent for a specific event
+ * @export
+ * @interface NotificationSchemeEventPayload
+ */
+export interface NotificationSchemeEventPayload {
+    /**
+     * 
+     * @type {NotificationSchemeEventIDPayload}
+     * @memberof NotificationSchemeEventPayload
+     */
+    event?: NotificationSchemeEventIDPayload;
+    /**
+     * The configuration for notification recipents
+     * @type {Array<NotificationSchemeNotificationDetailsPayload>}
+     * @memberof NotificationSchemeEventPayload
+     */
+    notifications?: Array<NotificationSchemeNotificationDetailsPayload>;
+}
+/**
  * The ID of an event that is being mapped to notifications.
  * @export
  * @interface NotificationSchemeEventTypeId
@@ -13746,6 +15195,74 @@ export interface NotificationSchemeNotificationDetails {
      */
     parameter?: string;
 }
+/**
+ * The configuration for notification recipents
+ * @export
+ * @interface NotificationSchemeNotificationDetailsPayload
+ */
+export interface NotificationSchemeNotificationDetailsPayload {
+    /**
+     * The type of notification.
+     * @type {string}
+     * @memberof NotificationSchemeNotificationDetailsPayload
+     */
+    notificationType?: string;
+    /**
+     * The parameter of the notification, should be eiither null if not required, or PCRI.
+     * @type {string}
+     * @memberof NotificationSchemeNotificationDetailsPayload
+     */
+    parameter?: string;
+}
+/**
+ * The payload for creating a notification scheme. The user has to supply the ID for the default notification scheme. For CMP this is provided in the project payload and should be left empty, for TMP it's provided using this payload
+ * @export
+ * @interface NotificationSchemePayload
+ */
+export interface NotificationSchemePayload {
+    /**
+     * The description of the notification scheme
+     * @type {string}
+     * @memberof NotificationSchemePayload
+     */
+    description?: string;
+    /**
+     * The name of the notification scheme
+     * @type {string}
+     * @memberof NotificationSchemePayload
+     */
+    name?: string;
+    /**
+     * The events and notifications for the notification scheme
+     * @type {Array<NotificationSchemeEventPayload>}
+     * @memberof NotificationSchemePayload
+     */
+    notificationSchemeEvents?: Array<NotificationSchemeEventPayload>;
+    /**
+     * The strategy to use when there is a conflict with an existing entity
+     * @type {string}
+     * @memberof NotificationSchemePayload
+     */
+    onConflict?: NotificationSchemePayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof NotificationSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const NotificationSchemePayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type NotificationSchemePayloadOnConflictEnum = typeof NotificationSchemePayloadOnConflictEnum[keyof typeof NotificationSchemePayloadOnConflictEnum];
+
 /**
  * 
  * @export
@@ -17130,6 +18647,12 @@ export interface ParsedJqlQuery {
      * @memberof ParsedJqlQuery
      */
     structure?: JqlQuery;
+    /**
+     * The list of warning messages
+     * @type {Set<string>}
+     * @memberof ParsedJqlQuery
+     */
+    warnings?: Array<string>;
 }
 /**
  * Details for permissions of shareable entities
@@ -17183,6 +18706,61 @@ export interface PermissionGrant {
     readonly self?: string;
 }
 /**
+ * List of permission grants
+ * @export
+ * @interface PermissionGrantDTO
+ */
+export interface PermissionGrantDTO {
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof PermissionGrantDTO
+     */
+    applicationAccess?: Array<string>;
+    /**
+     * 
+     * @type {Set<ProjectCreateResourceIdentifier>}
+     * @memberof PermissionGrantDTO
+     */
+    groupCustomFields?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * 
+     * @type {Set<ProjectCreateResourceIdentifier>}
+     * @memberof PermissionGrantDTO
+     */
+    groups?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof PermissionGrantDTO
+     */
+    permissionKeys?: Array<string>;
+    /**
+     * 
+     * @type {Set<ProjectCreateResourceIdentifier>}
+     * @memberof PermissionGrantDTO
+     */
+    projectRoles?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * 
+     * @type {Set<string>}
+     * @memberof PermissionGrantDTO
+     */
+    specialGrants?: Array<string>;
+    /**
+     * 
+     * @type {Set<ProjectCreateResourceIdentifier>}
+     * @memberof PermissionGrantDTO
+     */
+    userCustomFields?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * 
+     * @type {Set<ProjectCreateResourceIdentifier>}
+     * @memberof PermissionGrantDTO
+     */
+    users?: Array<ProjectCreateResourceIdentifier>;
+}
+/**
  * List of permission grants.
  * @export
  * @interface PermissionGrants
@@ -17232,6 +18810,61 @@ export interface PermissionHolder {
      */
     value?: string;
 }
+/**
+ * The payload to create a permission scheme
+ * @export
+ * @interface PermissionPayloadDTO
+ */
+export interface PermissionPayloadDTO {
+    /**
+     * Configuration to generate addon role. Default is false if null. Only applies to GLOBAL-scoped permission scheme
+     * @type {boolean}
+     * @memberof PermissionPayloadDTO
+     */
+    addAddonRole?: boolean;
+    /**
+     * The description of the permission scheme
+     * @type {string}
+     * @memberof PermissionPayloadDTO
+     */
+    description?: string;
+    /**
+     * List of permission grants
+     * @type {Set<PermissionGrantDTO>}
+     * @memberof PermissionPayloadDTO
+     */
+    grants?: Array<PermissionGrantDTO>;
+    /**
+     * The name of the permission scheme
+     * @type {string}
+     * @memberof PermissionPayloadDTO
+     */
+    name?: string;
+    /**
+     * The strategy to use when there is a conflict with an existing permission scheme. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters; NEW - If the entity exist, try and create a new one with a different name
+     * @type {string}
+     * @memberof PermissionPayloadDTO
+     */
+    onConflict?: PermissionPayloadDTOOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof PermissionPayloadDTO
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const PermissionPayloadDTOOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type PermissionPayloadDTOOnConflictEnum = typeof PermissionPayloadDTOOnConflictEnum[keyof typeof PermissionPayloadDTOOnConflictEnum];
+
 /**
  * Details of a permission scheme.
  * @export
@@ -17333,6 +18966,86 @@ export interface PermittedProjects {
      * @memberof PermittedProjects
      */
     readonly projects?: Array<ProjectIdentifierBean>;
+}
+/**
+ * Condition group configuration for workflow transitions.
+ * @export
+ * @interface PreviewConditionGroupConfiguration
+ */
+export interface PreviewConditionGroupConfiguration {
+    /**
+     * The nested conditions of the condition group.
+     * @type {Array<PreviewConditionGroupConfiguration>}
+     * @memberof PreviewConditionGroupConfiguration
+     */
+    conditionGroups?: Array<PreviewConditionGroupConfiguration>;
+    /**
+     * The rules for this condition.
+     * @type {Array<PreviewRuleConfiguration>}
+     * @memberof PreviewConditionGroupConfiguration
+     */
+    conditions?: Array<PreviewRuleConfiguration>;
+    /**
+     * Determines how the conditions in the group are evaluated. Accepts either `ANY` or `ALL`. If `ANY` is used, at least one condition in the group must be true for the group to evaluate to true. If `ALL` is used, all conditions in the group must be true for the group to evaluate to true.
+     * @type {string}
+     * @memberof PreviewConditionGroupConfiguration
+     */
+    operation?: PreviewConditionGroupConfigurationOperationEnum;
+}
+
+
+/**
+ * @export
+ */
+export const PreviewConditionGroupConfigurationOperationEnum = {
+    Any: 'ANY',
+    All: 'ALL'
+} as const;
+export type PreviewConditionGroupConfigurationOperationEnum = typeof PreviewConditionGroupConfigurationOperationEnum[keyof typeof PreviewConditionGroupConfigurationOperationEnum];
+
+/**
+ * Rule configuration for workflow transitions.
+ * @export
+ * @interface PreviewRuleConfiguration
+ */
+export interface PreviewRuleConfiguration {
+    /**
+     * A transient identifier for this element, unique within this response but not guaranteed to stable across requests.
+     * @type {string}
+     * @memberof PreviewRuleConfiguration
+     */
+    id?: string;
+    /**
+     * The parameters of the rule.
+     * @type {{ [key: string]: string; }}
+     * @memberof PreviewRuleConfiguration
+     */
+    parameters?: { [key: string]: string; };
+    /**
+     * The rule key of the rule.
+     * @type {string}
+     * @memberof PreviewRuleConfiguration
+     */
+    ruleKey?: string;
+}
+/**
+ * Trigger configuration for workflow transitions.
+ * @export
+ * @interface PreviewTrigger
+ */
+export interface PreviewTrigger {
+    /**
+     * The ID of the trigger.
+     * @type {string}
+     * @memberof PreviewTrigger
+     */
+    id?: string;
+    /**
+     * The key of the trigger rule.
+     * @type {string}
+     * @memberof PreviewTrigger
+     */
+    ruleKey?: string;
 }
 /**
  * An issue priority.
@@ -17843,6 +19556,68 @@ export interface ProjectAndIssueTypePair {
     projectId: string;
 }
 /**
+ * 
+ * @export
+ * @interface ProjectArchetype
+ */
+export interface ProjectArchetype {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectArchetype
+     */
+    realType?: ProjectArchetypeRealTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectArchetype
+     */
+    style?: ProjectArchetypeStyleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectArchetype
+     */
+    type?: ProjectArchetypeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectArchetypeRealTypeEnum = {
+    Business: 'BUSINESS',
+    Software: 'SOFTWARE',
+    ProductDiscovery: 'PRODUCT_DISCOVERY',
+    ServiceDesk: 'SERVICE_DESK',
+    CustomerService: 'CUSTOMER_SERVICE',
+    Ops: 'OPS'
+} as const;
+export type ProjectArchetypeRealTypeEnum = typeof ProjectArchetypeRealTypeEnum[keyof typeof ProjectArchetypeRealTypeEnum];
+
+/**
+ * @export
+ */
+export const ProjectArchetypeStyleEnum = {
+    Classic: 'classic',
+    NextGen: 'next-gen'
+} as const;
+export type ProjectArchetypeStyleEnum = typeof ProjectArchetypeStyleEnum[keyof typeof ProjectArchetypeStyleEnum];
+
+/**
+ * @export
+ */
+export const ProjectArchetypeTypeEnum = {
+    Business: 'BUSINESS',
+    Software: 'SOFTWARE',
+    ProductDiscovery: 'PRODUCT_DISCOVERY',
+    ServiceDesk: 'SERVICE_DESK',
+    CustomerService: 'CUSTOMER_SERVICE',
+    Ops: 'OPS'
+} as const;
+export type ProjectArchetypeTypeEnum = typeof ProjectArchetypeTypeEnum[keyof typeof ProjectArchetypeTypeEnum];
+
+/**
  * List of project avatars.
  * @export
  * @interface ProjectAvatars
@@ -18032,6 +19807,79 @@ export const ProjectComponentRealAssigneeTypeEnum = {
 } as const;
 export type ProjectComponentRealAssigneeTypeEnum = typeof ProjectComponentRealAssigneeTypeEnum[keyof typeof ProjectComponentRealAssigneeTypeEnum];
 
+/**
+ * Every project-created entity has an ID that must be unique within the scope of the project creation. PCRI (Project Create Resource Identifier) is a standard format for creating IDs and references to other project entities. PCRI format is defined as follows: pcri:\[entityType\]:\[type\]:\[entityId\] entityType - the type of an entity, e.g. status, role, workflow type - PCRI type, either `id` - The ID of an entity that already exists in the target site, or `ref` - A unique reference to an entity that is being created entityId - entity identifier, if type is `id` - must be an existing entity ID that exists in the Jira site, if `ref` - must be unique across all entities in the scope of this project template creation
+ * @export
+ * @interface ProjectCreateResourceIdentifier
+ */
+export interface ProjectCreateResourceIdentifier {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    anID?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    areference?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    entityId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    entityType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCreateResourceIdentifier
+     */
+    type?: ProjectCreateResourceIdentifierTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectCreateResourceIdentifierTypeEnum = {
+    Id: 'id',
+    Ref: 'ref'
+} as const;
+export type ProjectCreateResourceIdentifierTypeEnum = typeof ProjectCreateResourceIdentifierTypeEnum[keyof typeof ProjectCreateResourceIdentifierTypeEnum];
+
+/**
+ * Request to create a project using a custom template
+ * @export
+ * @interface ProjectCustomTemplateCreateRequestDTO
+ */
+export interface ProjectCustomTemplateCreateRequestDTO {
+    /**
+     * 
+     * @type {CustomTemplatesProjectDetails}
+     * @memberof ProjectCustomTemplateCreateRequestDTO
+     */
+    details?: CustomTemplatesProjectDetails;
+    /**
+     * 
+     * @type {CustomTemplateRequestDTO}
+     * @memberof ProjectCustomTemplateCreateRequestDTO
+     */
+    template?: CustomTemplateRequestDTO;
+}
 /**
  * Details about data policies for a list of projects.
  * @export
@@ -18250,6 +20098,19 @@ export interface ProjectId {
     id: string;
 }
 /**
+ * 
+ * @export
+ * @interface ProjectIdAssociationContext
+ */
+export interface ProjectIdAssociationContext extends AssociationContextObject {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectIdAssociationContext
+     */
+    identifier?: number;
+}
+/**
  * The identifiers for a project.
  * @export
  * @interface ProjectIdentifierBean
@@ -18439,25 +20300,23 @@ export interface ProjectIssueTypeMappings {
     mappings: Array<ProjectIssueTypeMapping>;
 }
 /**
- * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
- * 
- * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the requested workflows.
+ * Project and issue type context for workflow queries made using issue types.
  * @export
- * @interface ProjectIssueTypes
+ * @interface ProjectIssueTypeQueryContext
  */
-export interface ProjectIssueTypes {
+export interface ProjectIssueTypeQueryContext {
     /**
-     * IDs of the issue types
-     * @type {Set<string | null>}
-     * @memberof ProjectIssueTypes
+     * The set of issue type IDs.
+     * @type {Array<string>}
+     * @memberof ProjectIssueTypeQueryContext
      */
-    issueTypes?: Array<string | null> | null;
+    issueTypes?: Array<string>;
     /**
-     * 
-     * @type {ProjectId}
-     * @memberof ProjectIssueTypes
+     * The ID of the project.
+     * @type {string}
+     * @memberof ProjectIssueTypeQueryContext
      */
-    project?: ProjectId | null;
+    project?: string;
 }
 /**
  * Details of an issue type hierarchy level.
@@ -18563,6 +20422,80 @@ export interface ProjectLandingPageInfo {
      */
     url?: string;
 }
+/**
+ * The payload for creating a project
+ * @export
+ * @interface ProjectPayload
+ */
+export interface ProjectPayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    fieldLayoutSchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    issueSecuritySchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    issueTypeSchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    issueTypeScreenSchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    notificationSchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    permissionSchemeId?: ProjectCreateResourceIdentifier;
+    /**
+     * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes), which defines the application-specific feature set. If you don't specify the project template you have to specify the project type.
+     * @type {string}
+     * @memberof ProjectPayload
+     */
+    projectTypeKey?: ProjectPayloadProjectTypeKeyEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ProjectPayload
+     */
+    workflowSchemeId?: ProjectCreateResourceIdentifier;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectPayloadProjectTypeKeyEnum = {
+    Software: 'software',
+    Business: 'business',
+    ServiceDesk: 'service_desk',
+    ProductDiscovery: 'product_discovery'
+} as const;
+export type ProjectPayloadProjectTypeKeyEnum = typeof ProjectPayloadProjectTypeKeyEnum[keyof typeof ProjectPayloadProjectTypeKeyEnum];
+
 /**
  * Permissions which a user has on a project.
  * @export
@@ -18807,6 +20740,97 @@ export const ProjectScopeBeanAttributesEnum = {
 export type ProjectScopeBeanAttributesEnum = typeof ProjectScopeBeanAttributesEnum[keyof typeof ProjectScopeBeanAttributesEnum];
 
 /**
+ * 
+ * @export
+ * @interface ProjectTemplateKey
+ */
+export interface ProjectTemplateKey {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateKey
+     */
+    key?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateKey
+     */
+    uuid?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ProjectTemplateModel
+ */
+export interface ProjectTemplateModel {
+    /**
+     * 
+     * @type {ProjectArchetype}
+     * @memberof ProjectTemplateModel
+     */
+    archetype?: ProjectArchetype;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateModel
+     */
+    defaultBoardView?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateModel
+     */
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectTemplateModel
+     */
+    liveTemplateProjectIdReference?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateModel
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectTemplateKey}
+     * @memberof ProjectTemplateModel
+     */
+    projectTemplateKey?: ProjectTemplateKey;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ProjectTemplateModel
+     */
+    snapshotTemplate?: { [key: string]: any; };
+    /**
+     * 
+     * @type {CustomTemplateOptions}
+     * @memberof ProjectTemplateModel
+     */
+    templateGenerationOptions?: CustomTemplateOptions;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectTemplateModel
+     */
+    type?: ProjectTemplateModelTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ProjectTemplateModelTypeEnum = {
+    Live: 'LIVE',
+    Snapshot: 'SNAPSHOT'
+} as const;
+export type ProjectTemplateModelTypeEnum = typeof ProjectTemplateModelTypeEnum[keyof typeof ProjectTemplateModelTypeEnum];
+
+/**
  * Details about a project type.
  * @export
  * @interface ProjectType
@@ -18957,6 +20981,93 @@ export interface PublishedWorkflowId {
      * @memberof PublishedWorkflowId
      */
     name: string;
+}
+/**
+ * The payload for defining quick filters
+ * @export
+ * @interface QuickFilterPayload
+ */
+export interface QuickFilterPayload {
+    /**
+     * The description of the quick filter
+     * @type {string}
+     * @memberof QuickFilterPayload
+     */
+    description?: string;
+    /**
+     * The jql query for the quick filter
+     * @type {string}
+     * @memberof QuickFilterPayload
+     */
+    jqlQuery?: string;
+    /**
+     * The name of the quick filter
+     * @type {string}
+     * @memberof QuickFilterPayload
+     */
+    name?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RedactionJobStatusResponse
+ */
+export interface RedactionJobStatusResponse {
+    /**
+     * 
+     * @type {BulkRedactionResponse}
+     * @memberof RedactionJobStatusResponse
+     */
+    bulkRedactionResponse?: BulkRedactionResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof RedactionJobStatusResponse
+     */
+    jobStatus?: RedactionJobStatusResponseJobStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RedactionJobStatusResponseJobStatusEnum = {
+    Pending: 'PENDING',
+    InProgress: 'IN_PROGRESS',
+    Completed: 'COMPLETED'
+} as const;
+export type RedactionJobStatusResponseJobStatusEnum = typeof RedactionJobStatusResponseJobStatusEnum[keyof typeof RedactionJobStatusResponseJobStatusEnum];
+
+/**
+ * Represents the position of the redaction
+ * @export
+ * @interface RedactionPosition
+ */
+export interface RedactionPosition {
+    /**
+     * The ADF pointer indicating the position of the text to be redacted. This is only required when redacting from rich text(ADF) fields. For plain text fields, this field can be omitted.
+     * @type {string}
+     * @memberof RedactionPosition
+     */
+    adfPointer?: string;
+    /**
+     * The text which will be redacted, encoded using SHA256 hash and Base64 digest
+     * @type {string}
+     * @memberof RedactionPosition
+     */
+    expectedText: string;
+    /**
+     * The start index(inclusive) for the redaction in specified content
+     * @type {number}
+     * @memberof RedactionPosition
+     */
+    from: number;
+    /**
+     * The ending index(exclusive) for the redaction in specified content
+     * @type {number}
+     * @memberof RedactionPosition
+     */
+    to: number;
 }
 /**
  * ID of a registered webhook or error messages explaining why a webhook wasn't registered.
@@ -19487,6 +21598,90 @@ export const RoleActorTypeEnum = {
 export type RoleActorTypeEnum = typeof RoleActorTypeEnum[keyof typeof RoleActorTypeEnum];
 
 /**
+ * The payload used to create a project role. It is optional for CMP projects, as a default role actor will be provided. TMP will add new role actors to the table.
+ * @export
+ * @interface RolePayload
+ */
+export interface RolePayload {
+    /**
+     * The default actors for the role. By adding default actors, the role will be added to any future projects created
+     * @type {Array<ProjectCreateResourceIdentifier>}
+     * @memberof RolePayload
+     */
+    defaultActors?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * The description of the role
+     * @type {string}
+     * @memberof RolePayload
+     */
+    description?: string;
+    /**
+     * The name of the role
+     * @type {string}
+     * @memberof RolePayload
+     */
+    name?: string;
+    /**
+     * The strategy to use when there is a conflict with an existing project role. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters
+     * @type {string}
+     * @memberof RolePayload
+     */
+    onConflict?: RolePayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof RolePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The type of the role. Only used by project-scoped project
+     * @type {string}
+     * @memberof RolePayload
+     */
+    type?: RolePayloadTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const RolePayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type RolePayloadOnConflictEnum = typeof RolePayloadOnConflictEnum[keyof typeof RolePayloadOnConflictEnum];
+
+/**
+ * @export
+ */
+export const RolePayloadTypeEnum = {
+    Hidden: 'HIDDEN',
+    Viewable: 'VIEWABLE',
+    Editable: 'EDITABLE'
+} as const;
+export type RolePayloadTypeEnum = typeof RolePayloadTypeEnum[keyof typeof RolePayloadTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RolesCapabilityPayload
+ */
+export interface RolesCapabilityPayload {
+    /**
+     * A map of role PCRI (can be ID or REF) to a list of user or group PCRI IDs to associate with the role and project.
+     * @type {{ [key: string]: Array<ProjectCreateResourceIdentifier>; }}
+     * @memberof RolesCapabilityPayload
+     */
+    roleToProjectActors?: { [key: string]: Array<ProjectCreateResourceIdentifier>; };
+    /**
+     * The list of roles to create.
+     * @type {Array<RolePayload>}
+     * @memberof RolesCapabilityPayload
+     */
+    roles?: Array<RolePayload>;
+}
+/**
  * A rule configuration.
  * @export
  * @interface RuleConfiguration
@@ -19510,6 +21705,25 @@ export interface RuleConfiguration {
      * @memberof RuleConfiguration
      */
     value: string;
+}
+/**
+ * The payload for creating rules in a workflow
+ * @export
+ * @interface RulePayload
+ */
+export interface RulePayload {
+    /**
+     * The parameters of the rule
+     * @type {{ [key: string]: string; }}
+     * @memberof RulePayload
+     */
+    parameters?: { [key: string]: string; };
+    /**
+     * The key of the rule. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/\#api-rest-api-3-workflows-capabilities-get
+     * @type {string}
+     * @memberof RulePayload
+     */
+    ruleKey?: string;
 }
 /**
  * The sanitized JQL queries for the given account IDs.
@@ -19556,6 +21770,80 @@ export interface SanitizedJqlQuery {
     sanitizedQuery?: string | null;
 }
 /**
+ * The request details to generate template from a project
+ * @export
+ * @interface SaveProjectTemplateRequest
+ */
+export interface SaveProjectTemplateRequest {
+    /**
+     * The ID of the target project
+     * @type {number}
+     * @memberof SaveProjectTemplateRequest
+     */
+    projectId?: number;
+    /**
+     * 
+     * @type {CustomTemplateOptions}
+     * @memberof SaveProjectTemplateRequest
+     */
+    templateGenerationOptions?: CustomTemplateOptions;
+    /**
+     * The type of the template: LIVE | SNAPSHOT
+     * @type {string}
+     * @memberof SaveProjectTemplateRequest
+     */
+    templateType?: SaveProjectTemplateRequestTemplateTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const SaveProjectTemplateRequestTemplateTypeEnum = {
+    Live: 'LIVE',
+    Snapshot: 'SNAPSHOT'
+} as const;
+export type SaveProjectTemplateRequestTemplateTypeEnum = typeof SaveProjectTemplateRequestTemplateTypeEnum[keyof typeof SaveProjectTemplateRequestTemplateTypeEnum];
+
+/**
+ * Request to save a custom template
+ * @export
+ * @interface SaveTemplateRequest
+ */
+export interface SaveTemplateRequest {
+    /**
+     * The description of the template
+     * @type {string}
+     * @memberof SaveTemplateRequest
+     */
+    templateDescription?: string;
+    /**
+     * 
+     * @type {SaveProjectTemplateRequest}
+     * @memberof SaveTemplateRequest
+     */
+    templateFromProjectRequest?: SaveProjectTemplateRequest;
+    /**
+     * The name of the template
+     * @type {string}
+     * @memberof SaveTemplateRequest
+     */
+    templateName?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SaveTemplateResponse
+ */
+export interface SaveTemplateResponse {
+    /**
+     * 
+     * @type {ProjectTemplateKey}
+     * @memberof SaveTemplateResponse
+     */
+    projectTemplateKey?: ProjectTemplateKey;
+}
+/**
  * The projects the item is associated with. Indicated for items associated with [next-gen projects](https://confluence.atlassian.com/x/loMyO).
  * @export
  * @interface Scope
@@ -19585,6 +21873,30 @@ export const ScopeTypeEnum = {
     Template: 'TEMPLATE'
 } as const;
 export type ScopeTypeEnum = typeof ScopeTypeEnum[keyof typeof ScopeTypeEnum];
+
+/**
+ * The payload for creating a scope. Defines if a project is team-managed project or company-managed project
+ * @export
+ * @interface ScopePayload
+ */
+export interface ScopePayload {
+    /**
+     * The type of the scope. Use `GLOBAL` or empty for company-managed project, and `PROJECT` for team-managed project
+     * @type {string}
+     * @memberof ScopePayload
+     */
+    type?: ScopePayloadTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const ScopePayloadTypeEnum = {
+    Global: 'GLOBAL',
+    Project: 'PROJECT'
+} as const;
+export type ScopePayloadTypeEnum = typeof ScopePayloadTypeEnum[keyof typeof ScopePayloadTypeEnum];
 
 /**
  * A screen.
@@ -19635,6 +21947,37 @@ export interface ScreenDetails {
      * @memberof ScreenDetails
      */
     name: string;
+}
+/**
+ * Defines the payload for the field screens. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screens/\#api-rest-api-3-screens-post
+ * @export
+ * @interface ScreenPayload
+ */
+export interface ScreenPayload {
+    /**
+     * The description of the screen
+     * @type {string}
+     * @memberof ScreenPayload
+     */
+    description?: string;
+    /**
+     * The name of the screen
+     * @type {string}
+     * @memberof ScreenPayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ScreenPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The tabs of the screen. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screen-tab-fields/\#api-rest-api-3-screens-screenid-tabs-tabid-fields-post
+     * @type {Array<TabPayload>}
+     * @memberof ScreenPayload
+     */
+    tabs?: Array<TabPayload>;
 }
 /**
  * A screen scheme.
@@ -19710,6 +22053,43 @@ export interface ScreenSchemeId {
      * @memberof ScreenSchemeId
      */
     readonly id: number;
+}
+/**
+ * Defines the payload for the screen schemes. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screen-schemes/\#api-rest-api-3-screenscheme-post
+ * @export
+ * @interface ScreenSchemePayload
+ */
+export interface ScreenSchemePayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ScreenSchemePayload
+     */
+    defaultScreen?: ProjectCreateResourceIdentifier;
+    /**
+     * The description of the screen scheme
+     * @type {string}
+     * @memberof ScreenSchemePayload
+     */
+    description?: string;
+    /**
+     * The name of the screen scheme
+     * @type {string}
+     * @memberof ScreenSchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ScreenSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * Similar to the field layout scheme those mappings allow users to set different screens for different operations: default - always there, applied to all operations that don't have an explicit mapping `create`, `view`, `edit` - specific operations that are available and users can assign a different screen for each one of them https://support.atlassian.com/jira-cloud-administration/docs/manage-screen-schemes/\#Associating-a-screen-with-an-issue-operation
+     * @type {{ [key: string]: ProjectCreateResourceIdentifier; }}
+     * @memberof ScreenSchemePayload
+     */
+    screens?: { [key: string]: ProjectCreateResourceIdentifier; };
 }
 /**
  * The IDs of the screens for the screen types of the screen scheme.
@@ -19898,7 +22278,7 @@ export interface SearchAndReconcileRequestBean {
      */
     properties?: Array<string>;
     /**
-     * Strong consistency issue ids to be reconciled with search results. Accepts max 50 ids. All issues must exist.
+     * Strong consistency issue ids to be reconciled with search results. Accepts max 50 ids
      * @type {Array<number>}
      * @memberof SearchAndReconcileRequestBean
      */
@@ -19910,6 +22290,12 @@ export interface SearchAndReconcileRequestBean {
  * @interface SearchAndReconcileResults
  */
 export interface SearchAndReconcileResults {
+    /**
+     * Indicates whether this is the last page of the paginated response.
+     * @type {boolean}
+     * @memberof SearchAndReconcileResults
+     */
+    readonly isLast?: boolean;
     /**
      * The list of issues found by the search or reconsiliation.
      * @type {Array<IssueBean>}
@@ -20195,6 +22581,68 @@ export interface SecurityLevelMember {
     managed?: boolean;
 }
 /**
+ * The payload for creating a security level member. See https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-security-schemes/
+ * @export
+ * @interface SecurityLevelMemberPayload
+ */
+export interface SecurityLevelMemberPayload {
+    /**
+     * Defines the value associated with the type. For reporter this would be \{"null"\}; for users this would be the names of specific users); for group this would be group names like \{"administrators", "jira-administrators", "jira-users"\}
+     * @type {string}
+     * @memberof SecurityLevelMemberPayload
+     */
+    parameter?: string;
+    /**
+     * The type of the security level member
+     * @type {string}
+     * @memberof SecurityLevelMemberPayload
+     */
+    type?: SecurityLevelMemberPayloadTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const SecurityLevelMemberPayloadTypeEnum = {
+    Group: 'group',
+    Reporter: 'reporter',
+    Users: 'users'
+} as const;
+export type SecurityLevelMemberPayloadTypeEnum = typeof SecurityLevelMemberPayloadTypeEnum[keyof typeof SecurityLevelMemberPayloadTypeEnum];
+
+/**
+ * The payload for creating a security level. See https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-security-schemes/
+ * @export
+ * @interface SecurityLevelPayload
+ */
+export interface SecurityLevelPayload {
+    /**
+     * The description of the security level
+     * @type {string}
+     * @memberof SecurityLevelPayload
+     */
+    description?: string;
+    /**
+     * Whether the security level is default for the security scheme
+     * @type {boolean}
+     * @memberof SecurityLevelPayload
+     */
+    isDefault?: boolean;
+    /**
+     * The name of the security level
+     * @type {string}
+     * @memberof SecurityLevelPayload
+     */
+    name?: string;
+    /**
+     * The members of the security level
+     * @type {Array<SecurityLevelMemberPayload>}
+     * @memberof SecurityLevelPayload
+     */
+    securityLevelMembers?: Array<SecurityLevelMemberPayload>;
+}
+/**
  * Details about a security scheme.
  * @export
  * @interface SecurityScheme
@@ -20313,6 +22761,37 @@ export interface SecuritySchemeMembersRequest {
      * @memberof SecuritySchemeMembersRequest
      */
     members?: Array<SecuritySchemeLevelMemberBean>;
+}
+/**
+ * The payload for creating a security scheme. See https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-security-schemes/
+ * @export
+ * @interface SecuritySchemePayload
+ */
+export interface SecuritySchemePayload {
+    /**
+     * The description of the security scheme
+     * @type {string}
+     * @memberof SecuritySchemePayload
+     */
+    description?: string;
+    /**
+     * The name of the security scheme
+     * @type {string}
+     * @memberof SecuritySchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof SecuritySchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The security levels for the security scheme
+     * @type {Array<SecurityLevelPayload>}
+     * @memberof SecuritySchemePayload
+     */
+    securityLevels?: Array<SecurityLevelPayload>;
 }
 /**
  * Details about an issue security scheme.
@@ -20916,25 +23395,6 @@ export interface SimpleListWrapperGroupName {
     size?: number;
 }
 /**
- * Represents a usage of an entity by a project ID and related issue type IDs.
- * @export
- * @interface SimpleUsage
- */
-export interface SimpleUsage {
-    /**
-     * The issue type IDs for the usage.
-     * @type {Array<string>}
-     * @memberof SimpleUsage
-     */
-    issueTypeIds: Array<string>;
-    /**
-     * The project ID for the usage.
-     * @type {string}
-     * @memberof SimpleUsage
-     */
-    projectId: string;
-}
-/**
  * 
  * @export
  * @interface SimplifiedHierarchyLevel
@@ -21019,6 +23479,56 @@ export interface SimplifiedIssueTransition {
      * @memberof SimplifiedIssueTransition
      */
     readonly transitionName?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SingleRedactionRequest
+ */
+export interface SingleRedactionRequest {
+    /**
+     * 
+     * @type {ContentItem}
+     * @memberof SingleRedactionRequest
+     */
+    contentItem: ContentItem;
+    /**
+     * Unique id for the redaction request; ID format should be of UUID
+     * @type {string}
+     * @memberof SingleRedactionRequest
+     */
+    externalId: string;
+    /**
+     * The reason why the content is being redacted
+     * @type {string}
+     * @memberof SingleRedactionRequest
+     */
+    reason: string;
+    /**
+     * 
+     * @type {RedactionPosition}
+     * @memberof SingleRedactionRequest
+     */
+    redactionPosition: RedactionPosition;
+}
+/**
+ * Result for requested redactions
+ * @export
+ * @interface SingleRedactionResponse
+ */
+export interface SingleRedactionResponse {
+    /**
+     * An unique id for the redaction request
+     * @type {string}
+     * @memberof SingleRedactionResponse
+     */
+    externalId: string;
+    /**
+     * Indicates if redaction was success/failure
+     * @type {boolean}
+     * @memberof SingleRedactionResponse
+     */
+    successful: boolean;
 }
 /**
  * 
@@ -21356,6 +23866,65 @@ export interface StatusMigration {
     oldStatusReference: string;
 }
 /**
+ * The payload for creating a status
+ * @export
+ * @interface StatusPayload
+ */
+export interface StatusPayload {
+    /**
+     * The description of the status
+     * @type {string}
+     * @memberof StatusPayload
+     */
+    description?: string;
+    /**
+     * The name of the status
+     * @type {string}
+     * @memberof StatusPayload
+     */
+    name?: string;
+    /**
+     * The conflict strategy for the status already exists. FAIL - Fail execution, this always needs to be unique; USE - Use the existing entity and ignore new entity parameters; NEW - Create a new entity
+     * @type {string}
+     * @memberof StatusPayload
+     */
+    onConflict?: StatusPayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof StatusPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The status category of the status. The value is case-sensitive.
+     * @type {string}
+     * @memberof StatusPayload
+     */
+    statusCategory?: StatusPayloadStatusCategoryEnum;
+}
+
+
+/**
+ * @export
+ */
+export const StatusPayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type StatusPayloadOnConflictEnum = typeof StatusPayloadOnConflictEnum[keyof typeof StatusPayloadOnConflictEnum];
+
+/**
+ * @export
+ */
+export const StatusPayloadStatusCategoryEnum = {
+    Todo: 'TODO',
+    InProgress: 'IN_PROGRESS',
+    Done: 'DONE'
+} as const;
+export type StatusPayloadStatusCategoryEnum = typeof StatusPayloadStatusCategoryEnum[keyof typeof StatusPayloadStatusCategoryEnum];
+
+/**
  * The list of issue types.
  * @export
  * @interface StatusProjectIssueTypeUsage
@@ -21462,25 +24031,6 @@ export interface StatusProjectUsagePage {
      * @memberof StatusProjectUsagePage
      */
     values?: Array<StatusProjectUsage>;
-}
-/**
- * The status reference and port that a transition is connected to.
- * @export
- * @interface StatusReferenceAndPort
- */
-export interface StatusReferenceAndPort {
-    /**
-     * The port this transition uses to connect to this status.
-     * @type {number}
-     * @memberof StatusReferenceAndPort
-     */
-    port?: number;
-    /**
-     * The reference of this status.
-     * @type {string}
-     * @memberof StatusReferenceAndPort
-     */
-    statusReference: string;
 }
 /**
  * The scope of the status.
@@ -21771,6 +24321,75 @@ export interface SuggestedMappingsRequestBean {
     startAt?: number;
 }
 /**
+ * The payload for custom swimlanes
+ * @export
+ * @interface SwimlanePayload
+ */
+export interface SwimlanePayload {
+    /**
+     * The description of the quick filter
+     * @type {string}
+     * @memberof SwimlanePayload
+     */
+    description?: string;
+    /**
+     * The jql query for the quick filter
+     * @type {string}
+     * @memberof SwimlanePayload
+     */
+    jqlQuery?: string;
+    /**
+     * The name of the quick filter
+     * @type {string}
+     * @memberof SwimlanePayload
+     */
+    name?: string;
+}
+/**
+ * The payload for customising a swimlanes on a board
+ * @export
+ * @interface SwimlanesPayload
+ */
+export interface SwimlanesPayload {
+    /**
+     * The custom swimlane definitions.
+     * @type {Array<SwimlanePayload>}
+     * @memberof SwimlanesPayload
+     */
+    customSwimlanes?: Array<SwimlanePayload>;
+    /**
+     * The name of the custom swimlane to use for work items that don't match any other swimlanes.
+     * @type {string}
+     * @memberof SwimlanesPayload
+     */
+    defaultCustomSwimlaneName?: string;
+    /**
+     * The swimlane strategy for the board.
+     * @type {string}
+     * @memberof SwimlanesPayload
+     */
+    swimlaneStrategy?: SwimlanesPayloadSwimlaneStrategyEnum;
+}
+
+
+/**
+ * @export
+ */
+export const SwimlanesPayloadSwimlaneStrategyEnum = {
+    None: 'none',
+    Custom: 'custom',
+    ParentChild: 'parentChild',
+    Assignee: 'assignee',
+    AssigneeUnassignedFirst: 'assigneeUnassignedFirst',
+    Epic: 'epic',
+    Project: 'project',
+    Issueparent: 'issueparent',
+    Issuechildren: 'issuechildren',
+    RequestType: 'request_type'
+} as const;
+export type SwimlanesPayloadSwimlaneStrategyEnum = typeof SwimlanesPayloadSwimlaneStrategyEnum[keyof typeof SwimlanesPayloadSwimlaneStrategyEnum];
+
+/**
  * List of system avatars.
  * @export
  * @interface SystemAvatars
@@ -21782,6 +24401,25 @@ export interface SystemAvatars {
      * @memberof SystemAvatars
      */
     readonly system?: Array<Avatar>;
+}
+/**
+ * Defines the payload for the tabs of the screen. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screen-tab-fields/\#api-rest-api-3-screens-screenid-tabs-tabid-fields-post
+ * @export
+ * @interface TabPayload
+ */
+export interface TabPayload {
+    /**
+     * The list of resource identifier of the field associated to the tab. See https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-screen-tab-fields/\#api-rest-api-3-screens-screenid-tabs-tabid-fields-post
+     * @type {Array<ProjectCreateResourceIdentifier>}
+     * @memberof TabPayload
+     */
+    fields?: Array<ProjectCreateResourceIdentifier>;
+    /**
+     * The name of the tab
+     * @type {string}
+     * @memberof TabPayload
+     */
+    name?: string;
 }
 /**
  * Classification mapping for classifications in source issues to respective target classification.
@@ -21885,13 +24523,15 @@ export interface TargetToSourcesMapping {
      */
     inferSubtaskTypeDefault: boolean;
     /**
-     * List of issue IDs or keys to be moved. These issues must be from the same project, have the same issue type, and be from the same parent (if they’re subtasks).
+     * List of issue IDs or keys to be moved.
      * @type {Array<string>}
      * @memberof TargetToSourcesMapping
      */
     issueIdsOrKeys?: Array<string>;
     /**
      * List of the objects containing classifications in the source issues and their new values which need to be set during the bulk move operation.
+     * 
+     * It is mandatory to provide source classification to target classification mapping when the source classification is invalid for the target project and issue type.
      * 
      *  *  **You should only define this property when `inferClassificationDefaults` is `false`.**
      *  *  **In order to provide mapping for issues which don't have a classification, use `"-1"`.**
@@ -21913,6 +24553,8 @@ export interface TargetToSourcesMapping {
      * List of the objects containing statuses in the source workflow and their new values which need to be set during the bulk move operation.
      * 
      * The new values will only be applied if the source status is invalid for the target project and issue type.
+     * 
+     * It is mandatory to provide source status to target status mapping when the source status is invalid for the target project and issue type.
      * 
      * **You should only define this property when `inferStatusDefaults` is `false`.**
      * @type {Array<TargetStatus>}
@@ -22346,6 +24988,25 @@ export interface TimeTrackingProvider {
     readonly url?: string;
 }
 /**
+ * The payload for the layout details for the destination end of a transition
+ * @export
+ * @interface ToLayoutPayload
+ */
+export interface ToLayoutPayload {
+    /**
+     * Defines where the transition line will be connected to a status. Port 0 to 7 are acceptable values.
+     * @type {number}
+     * @memberof ToLayoutPayload
+     */
+    port?: number;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof ToLayoutPayload
+     */
+    status?: ProjectCreateResourceIdentifier;
+}
+/**
  * Details of a workflow transition.
  * @export
  * @interface Transition
@@ -22419,6 +25080,219 @@ export const TransitionTypeEnum = {
 export type TransitionTypeEnum = typeof TransitionTypeEnum[keyof typeof TransitionTypeEnum];
 
 /**
+ * Link information for workflow transitions.
+ * @export
+ * @interface TransitionLink
+ */
+export interface TransitionLink {
+    /**
+     * The from port number.
+     * @type {number}
+     * @memberof TransitionLink
+     */
+    fromPort?: number;
+    /**
+     * The from status reference.
+     * @type {string}
+     * @memberof TransitionLink
+     */
+    fromStatusReference?: string;
+    /**
+     * The to port number.
+     * @type {number}
+     * @memberof TransitionLink
+     */
+    toPort?: number;
+}
+/**
+ * The payload for creating a transition in a workflow. Can be DIRECTED, GLOBAL, SELF-LOOPED, GLOBAL LOOPED
+ * @export
+ * @interface TransitionPayload
+ */
+export interface TransitionPayload {
+    /**
+     * The actions that are performed when the transition is made
+     * @type {Array<RulePayload>}
+     * @memberof TransitionPayload
+     */
+    actions?: Array<RulePayload>;
+    /**
+     * 
+     * @type {ConditionGroupPayload}
+     * @memberof TransitionPayload
+     */
+    conditions?: ConditionGroupPayload;
+    /**
+     * Mechanism in Jira for triggering certain actions, like notifications, automations, etc. Unless a custom notification scheme is configure, it's better not to provide any value here
+     * @type {string}
+     * @memberof TransitionPayload
+     */
+    customIssueEventId?: string;
+    /**
+     * The description of the transition
+     * @type {string}
+     * @memberof TransitionPayload
+     */
+    description?: string;
+    /**
+     * The statuses that the transition can be made from
+     * @type {Array<FromLayoutPayload>}
+     * @memberof TransitionPayload
+     */
+    from?: Array<FromLayoutPayload>;
+    /**
+     * The id of the transition
+     * @type {number}
+     * @memberof TransitionPayload
+     */
+    id?: number;
+    /**
+     * The name of the transition
+     * @type {string}
+     * @memberof TransitionPayload
+     */
+    name?: string;
+    /**
+     * The properties of the transition
+     * @type {{ [key: string]: string; }}
+     * @memberof TransitionPayload
+     */
+    properties?: { [key: string]: string; };
+    /**
+     * 
+     * @type {ToLayoutPayload}
+     * @memberof TransitionPayload
+     */
+    to?: ToLayoutPayload;
+    /**
+     * 
+     * @type {RulePayload}
+     * @memberof TransitionPayload
+     */
+    transitionScreen?: RulePayload;
+    /**
+     * The triggers that are performed when the transition is made
+     * @type {Array<RulePayload>}
+     * @memberof TransitionPayload
+     */
+    triggers?: Array<RulePayload>;
+    /**
+     * The type of the transition
+     * @type {string}
+     * @memberof TransitionPayload
+     */
+    type?: TransitionPayloadTypeEnum;
+    /**
+     * The validators that are performed when the transition is made
+     * @type {Array<RulePayload>}
+     * @memberof TransitionPayload
+     */
+    validators?: Array<RulePayload>;
+}
+
+
+/**
+ * @export
+ */
+export const TransitionPayloadTypeEnum = {
+    Global: 'global',
+    Initial: 'initial',
+    Directed: 'directed'
+} as const;
+export type TransitionPayloadTypeEnum = typeof TransitionPayloadTypeEnum[keyof typeof TransitionPayloadTypeEnum];
+
+/**
+ * Details about a workflow transition in preview context.
+ * @export
+ * @interface TransitionPreview
+ */
+export interface TransitionPreview {
+    /**
+     * The post-functions of the transition.
+     * @type {Array<PreviewRuleConfiguration>}
+     * @memberof TransitionPreview
+     */
+    actions?: Array<PreviewRuleConfiguration>;
+    /**
+     * 
+     * @type {PreviewConditionGroupConfiguration}
+     * @memberof TransitionPreview
+     */
+    conditions?: PreviewConditionGroupConfiguration | null;
+    /**
+     * The custom issue event ID for the transition.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    customIssueEventId?: string;
+    /**
+     * The description of the transition.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    description?: string;
+    /**
+     * The ID of the transition.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    id?: string;
+    /**
+     * The statuses the transition can start from, and the mapping of ports between the statuses.
+     * @type {Array<TransitionLink>}
+     * @memberof TransitionPreview
+     */
+    links?: Array<TransitionLink>;
+    /**
+     * The name of the transition.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    name?: string;
+    /**
+     * The status the transition goes to.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    toStatusReference?: string;
+    /**
+     * 
+     * @type {PreviewRuleConfiguration}
+     * @memberof TransitionPreview
+     */
+    transitionScreen?: PreviewRuleConfiguration | null;
+    /**
+     * The triggers of the transition.
+     * @type {Array<PreviewTrigger>}
+     * @memberof TransitionPreview
+     */
+    triggers?: Array<PreviewTrigger>;
+    /**
+     * The transition type.
+     * @type {string}
+     * @memberof TransitionPreview
+     */
+    type?: TransitionPreviewTypeEnum;
+    /**
+     * The validators of the transition.
+     * @type {Array<PreviewRuleConfiguration>}
+     * @memberof TransitionPreview
+     */
+    validators?: Array<PreviewRuleConfiguration>;
+}
+
+
+/**
+ * @export
+ */
+export const TransitionPreviewTypeEnum = {
+    Initial: 'INITIAL',
+    Global: 'GLOBAL',
+    Directed: 'DIRECTED'
+} as const;
+export type TransitionPreviewTypeEnum = typeof TransitionPreviewTypeEnum[keyof typeof TransitionPreviewTypeEnum];
+
+/**
  * The details of a transition screen.
  * @export
  * @interface TransitionScreenDetails
@@ -22438,7 +25312,7 @@ export interface TransitionScreenDetails {
     name?: string;
 }
 /**
- * The transition update data. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
+ * The transition update data.
  * @export
  * @interface TransitionUpdateDTO
  */
@@ -22469,18 +25343,11 @@ export interface TransitionUpdateDTO {
      */
     description?: string;
     /**
-     * The statuses and ports that the transition can start from. This field is deprecated - use `toStatusReference`/`links` instead.
-     * @type {Array<StatusReferenceAndPort>}
-     * @memberof TransitionUpdateDTO
-     * @deprecated
-     */
-    from?: Array<StatusReferenceAndPort>;
-    /**
      * The ID of the transition.
      * @type {string}
      * @memberof TransitionUpdateDTO
      */
-    id: string;
+    id?: string;
     /**
      * The statuses the transition can start from, and the mapping of ports between the statuses.
      * @type {Array<WorkflowTransitionLinks>}
@@ -22492,20 +25359,13 @@ export interface TransitionUpdateDTO {
      * @type {string}
      * @memberof TransitionUpdateDTO
      */
-    name: string;
+    name?: string;
     /**
      * The properties of the transition.
      * @type {{ [key: string]: string; }}
      * @memberof TransitionUpdateDTO
      */
     properties?: { [key: string]: string; };
-    /**
-     * 
-     * @type {StatusReferenceAndPort}
-     * @memberof TransitionUpdateDTO
-     * @deprecated
-     */
-    to?: StatusReferenceAndPort | null;
     /**
      * The status the transition goes to.
      * @type {string}
@@ -22529,7 +25389,7 @@ export interface TransitionUpdateDTO {
      * @type {string}
      * @memberof TransitionUpdateDTO
      */
-    type: TransitionUpdateDTOTypeEnum;
+    type?: TransitionUpdateDTOTypeEnum;
     /**
      * The validators of the transition.
      * @type {Array<WorkflowRuleConfiguration>}
@@ -23809,6 +26669,16 @@ export interface UserPickerUser {
      */
     accountId?: string;
     /**
+     * The user account type. Can take the following values:
+     * 
+     *  *  `atlassian` regular Atlassian user account
+     *  *  `app` system account used for Connect applications and OAuth to represent external systems
+     *  *  `customer` Jira Service Desk account representing an external service desk
+     * @type {string}
+     * @memberof UserPickerUser
+     */
+    accountType?: UserPickerUserAccountTypeEnum;
+    /**
      * The avatar URL of the user.
      * @type {string}
      * @memberof UserPickerUser
@@ -23839,6 +26709,19 @@ export interface UserPickerUser {
      */
     name?: string;
 }
+
+
+/**
+ * @export
+ */
+export const UserPickerUserAccountTypeEnum = {
+    Atlassian: 'atlassian',
+    App: 'app',
+    Customer: 'customer',
+    Unknown: 'unknown'
+} as const;
+export type UserPickerUserAccountTypeEnum = typeof UserPickerUserAccountTypeEnum[keyof typeof UserPickerUserAccountTypeEnum];
+
 /**
  * The level of validation to return from the API. If no values are provided, the default would return `WARNING` and `ERROR` level validation results.
  * @export
@@ -24408,6 +27291,12 @@ export interface Webhook {
      * @memberof Webhook
      */
     jqlFilter: string;
+    /**
+     * The URL that specifies where the webhooks are sent.
+     * @type {string}
+     * @memberof Webhook
+     */
+    url: string;
 }
 
 
@@ -24681,6 +27570,31 @@ export const WorkflowCapabilitiesProjectTypesEnum = {
 export type WorkflowCapabilitiesProjectTypesEnum = typeof WorkflowCapabilitiesProjectTypesEnum[keyof typeof WorkflowCapabilitiesProjectTypesEnum];
 
 /**
+ * The payload for creating a workflows. See https://www.atlassian.com/software/jira/guides/workflows/overview\#what-is-a-jira-workflow
+ * @export
+ * @interface WorkflowCapabilityPayload
+ */
+export interface WorkflowCapabilityPayload {
+    /**
+     * The statuses for the workflow
+     * @type {Array<StatusPayload>}
+     * @memberof WorkflowCapabilityPayload
+     */
+    statuses?: Array<StatusPayload>;
+    /**
+     * 
+     * @type {WorkflowSchemePayload}
+     * @memberof WorkflowCapabilityPayload
+     */
+    workflowScheme?: WorkflowSchemePayload;
+    /**
+     * The transitions for the workflow
+     * @type {Array<WorkflowPayload>}
+     * @memberof WorkflowCapabilityPayload
+     */
+    workflows?: Array<WorkflowPayload>;
+}
+/**
  * A compound workflow transition rule condition. This object returns `nodeType` as `compound`.
  * @export
  * @interface WorkflowCompoundCondition
@@ -24735,6 +27649,12 @@ export interface WorkflowCreate {
      */
     description?: string;
     /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof WorkflowCreate
+     */
+    loopedTransitionContainerLayout?: WorkflowLayout | null;
+    /**
      * The name of the workflow to create.
      * @type {string}
      * @memberof WorkflowCreate
@@ -24770,19 +27690,19 @@ export interface WorkflowCreateRequest {
      * @type {WorkflowScope}
      * @memberof WorkflowCreateRequest
      */
-    scope: WorkflowScope;
+    scope?: WorkflowScope;
     /**
      * The statuses to associate with the workflows.
      * @type {Array<WorkflowStatusUpdate>}
      * @memberof WorkflowCreateRequest
      */
-    statuses: Array<WorkflowStatusUpdate>;
+    statuses?: Array<WorkflowStatusUpdate>;
     /**
      * The details of the workflows to create.
      * @type {Array<WorkflowCreate>}
      * @memberof WorkflowCreateRequest
      */
-    workflows: Array<WorkflowCreate>;
+    workflows?: Array<WorkflowCreate>;
 }
 /**
  * Details of the created workflows and statuses.
@@ -24821,6 +27741,25 @@ export interface WorkflowCreateValidateRequest {
      * @memberof WorkflowCreateValidateRequest
      */
     validationOptions?: ValidationOptionsForCreate;
+}
+/**
+ * The version details of the workflow.
+ * @export
+ * @interface WorkflowDocumentVersionBean
+ */
+export interface WorkflowDocumentVersionBean {
+    /**
+     * The version UUID.
+     * @type {string}
+     * @memberof WorkflowDocumentVersionBean
+     */
+    id?: string;
+    /**
+     * The version number.
+     * @type {number}
+     * @memberof WorkflowDocumentVersionBean
+     */
+    versionNumber?: number;
 }
 /**
  * A reference to the location of the error. This will be null if the error does not refer to a specific element.
@@ -24960,14 +27899,6 @@ export interface WorkflowMetadataRestModel {
      */
     name: string;
     /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * Use the optional `workflows.usages` expand to get additional information about the projects and issue types associated with the workflows in the workflow scheme.
-     * @type {Array<SimpleUsage>}
-     * @memberof WorkflowMetadataRestModel
-     */
-    usage: Array<SimpleUsage> | null;
-    /**
      * 
      * @type {DocumentVersion}
      * @memberof WorkflowMetadataRestModel
@@ -24992,6 +27923,283 @@ export interface WorkflowOperations {
      * @memberof WorkflowOperations
      */
     canEdit: boolean;
+}
+/**
+ * The payload for creating workflow, see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflows/\#api-rest-api-3-workflows-create-post
+ * @export
+ * @interface WorkflowPayload
+ */
+export interface WorkflowPayload {
+    /**
+     * The description of the workflow
+     * @type {string}
+     * @memberof WorkflowPayload
+     */
+    description?: string;
+    /**
+     * 
+     * @type {WorkflowStatusLayoutPayload}
+     * @memberof WorkflowPayload
+     */
+    loopedTransitionContainerLayout?: WorkflowStatusLayoutPayload;
+    /**
+     * The name of the workflow
+     * @type {string}
+     * @memberof WorkflowPayload
+     */
+    name?: string;
+    /**
+     * The strategy to use if there is a conflict with another workflow
+     * @type {string}
+     * @memberof WorkflowPayload
+     */
+    onConflict?: WorkflowPayloadOnConflictEnum;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof WorkflowPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * 
+     * @type {WorkflowStatusLayoutPayload}
+     * @memberof WorkflowPayload
+     */
+    startPointLayout?: WorkflowStatusLayoutPayload;
+    /**
+     * The statuses to be used in the workflow
+     * @type {Array<WorkflowStatusPayload>}
+     * @memberof WorkflowPayload
+     */
+    statuses?: Array<WorkflowStatusPayload>;
+    /**
+     * The transitions for the workflow
+     * @type {Array<TransitionPayload>}
+     * @memberof WorkflowPayload
+     */
+    transitions?: Array<TransitionPayload>;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowPayloadOnConflictEnum = {
+    Fail: 'FAIL',
+    Use: 'USE',
+    New: 'NEW'
+} as const;
+export type WorkflowPayloadOnConflictEnum = typeof WorkflowPayloadOnConflictEnum[keyof typeof WorkflowPayloadOnConflictEnum];
+
+/**
+ * Details of a workflow.
+ * @export
+ * @interface WorkflowPreview
+ */
+export interface WorkflowPreview {
+    /**
+     * The description of the workflow.
+     * @type {string}
+     * @memberof WorkflowPreview
+     */
+    description?: string;
+    /**
+     * The ID of the workflow.
+     * @type {string}
+     * @memberof WorkflowPreview
+     */
+    id?: string;
+    /**
+     * 
+     * @type {WorkflowPreviewLayout}
+     * @memberof WorkflowPreview
+     */
+    loopedTransitionContainerLayout?: WorkflowPreviewLayout;
+    /**
+     * The name of the workflow.
+     * @type {string}
+     * @memberof WorkflowPreview
+     */
+    name?: string;
+    /**
+     * The project and issue type context for this workflow query.
+     * @type {Array<ProjectIssueTypeQueryContext>}
+     * @memberof WorkflowPreview
+     */
+    queryContext?: Array<ProjectIssueTypeQueryContext>;
+    /**
+     * 
+     * @type {WorkflowPreviewScope}
+     * @memberof WorkflowPreview
+     */
+    scope?: WorkflowPreviewScope;
+    /**
+     * 
+     * @type {WorkflowPreviewLayout}
+     * @memberof WorkflowPreview
+     */
+    startPointLayout?: WorkflowPreviewLayout;
+    /**
+     * The statuses referenced in this workflow.
+     * @type {Array<WorkflowPreviewStatus>}
+     * @memberof WorkflowPreview
+     */
+    statuses?: Array<WorkflowPreviewStatus>;
+    /**
+     * The transitions of the workflow.
+     * @type {Array<TransitionPreview>}
+     * @memberof WorkflowPreview
+     */
+    transitions?: Array<TransitionPreview>;
+    /**
+     * 
+     * @type {WorkflowDocumentVersionBean}
+     * @memberof WorkflowPreview
+     */
+    version?: WorkflowDocumentVersionBean;
+}
+/**
+ * Layout coordinates for workflow elements.
+ * @export
+ * @interface WorkflowPreviewLayout
+ */
+export interface WorkflowPreviewLayout {
+    /**
+     * The X coordinate.
+     * @type {number}
+     * @memberof WorkflowPreviewLayout
+     */
+    x?: number;
+    /**
+     * The Y coordinate.
+     * @type {number}
+     * @memberof WorkflowPreviewLayout
+     */
+    y?: number;
+}
+/**
+ * The details of the preview workflow request.
+ * @export
+ * @interface WorkflowPreviewRequest
+ */
+export interface WorkflowPreviewRequest {
+    /**
+     * The list of issue type IDs. At most 25 issue type IDs can be specified.
+     * @type {Array<string>}
+     * @memberof WorkflowPreviewRequest
+     */
+    issueTypeIds?: Array<string>;
+    /**
+     * The projectId parameter is required and will be used for permission checks. In addition, you must supply at least one of the following lookup terms: *workflowNames*, *workflowIds*, or *issueTypeIds*. The specified workflows must be associated with the given project.
+     * @type {string}
+     * @memberof WorkflowPreviewRequest
+     */
+    projectId: string;
+    /**
+     * The list of workflow IDs to be returned. At most 25 workflow IDs can be specified.
+     * @type {Array<string>}
+     * @memberof WorkflowPreviewRequest
+     */
+    workflowIds?: Array<string>;
+    /**
+     * The list of workflow names to be returned. At most 25 workflow names can be specified.
+     * @type {Array<string>}
+     * @memberof WorkflowPreviewRequest
+     */
+    workflowNames?: Array<string>;
+}
+/**
+ * The preview workflow response containing workflows and statuses.
+ * @export
+ * @interface WorkflowPreviewResponse
+ */
+export interface WorkflowPreviewResponse {
+    /**
+     * The list of statuses referenced by the workflows.
+     * @type {Array<JiraWorkflowPreviewStatus>}
+     * @memberof WorkflowPreviewResponse
+     */
+    statuses?: Array<JiraWorkflowPreviewStatus>;
+    /**
+     * The list of workflows. The workflows are returned in the same order as specified in the request.
+     * @type {Array<WorkflowPreview>}
+     * @memberof WorkflowPreviewResponse
+     */
+    workflows?: Array<WorkflowPreview>;
+}
+/**
+ * The scope of the workflow.
+ * @export
+ * @interface WorkflowPreviewScope
+ */
+export interface WorkflowPreviewScope {
+    /**
+     * 
+     * @type {WorkflowProjectIdScope}
+     * @memberof WorkflowPreviewScope
+     */
+    project?: WorkflowProjectIdScope | null;
+    /**
+     * The scope of the workflow. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
+     * @type {string}
+     * @memberof WorkflowPreviewScope
+     */
+    type?: WorkflowPreviewScopeTypeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const WorkflowPreviewScopeTypeEnum = {
+    Project: 'PROJECT',
+    Global: 'GLOBAL'
+} as const;
+export type WorkflowPreviewScopeTypeEnum = typeof WorkflowPreviewScopeTypeEnum[keyof typeof WorkflowPreviewScopeTypeEnum];
+
+/**
+ * Details about a workflow status in preview context.
+ * @export
+ * @interface WorkflowPreviewStatus
+ */
+export interface WorkflowPreviewStatus {
+    /**
+     * 
+     * @type {ApprovalConfigurationPreview}
+     * @memberof WorkflowPreviewStatus
+     */
+    approvalConfiguration?: ApprovalConfigurationPreview;
+    /**
+     * Whether the status is deprecated.
+     * @type {boolean}
+     * @memberof WorkflowPreviewStatus
+     */
+    deprecated?: boolean;
+    /**
+     * 
+     * @type {WorkflowPreviewLayout}
+     * @memberof WorkflowPreviewStatus
+     */
+    layout?: WorkflowPreviewLayout;
+    /**
+     * The reference of the status.
+     * @type {string}
+     * @memberof WorkflowPreviewStatus
+     */
+    statusReference?: string;
+}
+/**
+ * Project ID details.
+ * @export
+ * @interface WorkflowProjectIdScope
+ */
+export interface WorkflowProjectIdScope {
+    /**
+     * The ID of the project.
+     * @type {string}
+     * @memberof WorkflowProjectIdScope
+     */
+    id?: string;
 }
 /**
  * The issue type.
@@ -25399,6 +28607,43 @@ export interface WorkflowSchemeIdName {
     name: string;
 }
 /**
+ * The payload for creating a workflow scheme. See https://www.atlassian.com/software/jira/guides/workflows/overview\#what-is-a-jira-workflow-scheme
+ * @export
+ * @interface WorkflowSchemePayload
+ */
+export interface WorkflowSchemePayload {
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof WorkflowSchemePayload
+     */
+    defaultWorkflow?: ProjectCreateResourceIdentifier;
+    /**
+     * The description of the workflow scheme
+     * @type {string}
+     * @memberof WorkflowSchemePayload
+     */
+    description?: string;
+    /**
+     * Association between issuetypes and workflows
+     * @type {{ [key: string]: ProjectCreateResourceIdentifier; }}
+     * @memberof WorkflowSchemePayload
+     */
+    explicitMappings?: { [key: string]: ProjectCreateResourceIdentifier; };
+    /**
+     * The name of the workflow scheme
+     * @type {string}
+     * @memberof WorkflowSchemePayload
+     */
+    name?: string;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof WorkflowSchemePayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+}
+/**
  * An associated workflow scheme and project.
  * @export
  * @interface WorkflowSchemeProjectAssociation
@@ -25485,14 +28730,6 @@ export interface WorkflowSchemeReadResponse {
      * @memberof WorkflowSchemeReadResponse
      */
     name: string;
-    /**
-     * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
-     * 
-     * The IDs of projects using the workflow scheme.
-     * @type {Array<string | null>}
-     * @memberof WorkflowSchemeReadResponse
-     */
-    projectIdsUsingScheme?: Array<string | null> | null;
     /**
      * 
      * @type {WorkflowScope}
@@ -25817,25 +29054,6 @@ export interface WorkflowStatus {
     properties?: { [key: string]: any; };
 }
 /**
- * The status reference and port that a transition is connected to.
- * @export
- * @interface WorkflowStatusAndPort
- */
-export interface WorkflowStatusAndPort {
-    /**
-     * The port the transition is connected to this status.
-     * @type {number}
-     * @memberof WorkflowStatusAndPort
-     */
-    port?: number | null;
-    /**
-     * The reference of this status.
-     * @type {string}
-     * @memberof WorkflowStatusAndPort
-     */
-    statusReference?: string;
-}
-/**
  * The x and y location of the status in the workflow.
  * @export
  * @interface WorkflowStatusLayout
@@ -25853,6 +29071,50 @@ export interface WorkflowStatusLayout {
      * @memberof WorkflowStatusLayout
      */
     y?: number | null;
+}
+/**
+ * The layout of the workflow status.
+ * @export
+ * @interface WorkflowStatusLayoutPayload
+ */
+export interface WorkflowStatusLayoutPayload {
+    /**
+     * The x coordinate of the status.
+     * @type {number}
+     * @memberof WorkflowStatusLayoutPayload
+     */
+    x?: number;
+    /**
+     * The y coordinate of the status.
+     * @type {number}
+     * @memberof WorkflowStatusLayoutPayload
+     */
+    y?: number;
+}
+/**
+ * The statuses to be used in the workflow
+ * @export
+ * @interface WorkflowStatusPayload
+ */
+export interface WorkflowStatusPayload {
+    /**
+     * 
+     * @type {WorkflowStatusLayoutPayload}
+     * @memberof WorkflowStatusPayload
+     */
+    layout?: WorkflowStatusLayoutPayload;
+    /**
+     * 
+     * @type {ProjectCreateResourceIdentifier}
+     * @memberof WorkflowStatusPayload
+     */
+    pcri?: ProjectCreateResourceIdentifier;
+    /**
+     * The properties of the workflow status.
+     * @type {{ [key: string]: string; }}
+     * @memberof WorkflowStatusPayload
+     */
+    properties?: { [key: string]: string; };
 }
 /**
  * Details of the status being updated.
@@ -26095,7 +29357,7 @@ export interface WorkflowTransitionRulesUpdateErrors {
     updateResults: Array<WorkflowTransitionRulesUpdateErrorDetails>;
 }
 /**
- * The transitions of the workflow. Note that a transition can have either the deprecated `to`/`from` fields or the `toStatusReference`/`links` fields, but never both nor a combination.
+ * The transitions of the workflow.
  * @export
  * @interface WorkflowTransitions
  */
@@ -26125,13 +29387,6 @@ export interface WorkflowTransitions {
      */
     description?: string;
     /**
-     * The statuses and ports that the transition can start from. This field is deprecated - use `toStatusReference`/`links` instead.
-     * @type {Array<WorkflowStatusAndPort>}
-     * @memberof WorkflowTransitions
-     * @deprecated
-     */
-    from?: Array<WorkflowStatusAndPort>;
-    /**
      * The ID of the transition.
      * @type {string}
      * @memberof WorkflowTransitions
@@ -26155,13 +29410,6 @@ export interface WorkflowTransitions {
      * @memberof WorkflowTransitions
      */
     properties?: { [key: string]: string; };
-    /**
-     * 
-     * @type {WorkflowStatusAndPort}
-     * @memberof WorkflowTransitions
-     * @deprecated
-     */
-    to?: WorkflowStatusAndPort | null;
     /**
      * The status the transition goes to.
      * @type {string}
@@ -26260,6 +29508,12 @@ export interface WorkflowUpdate {
      * @type {WorkflowLayout}
      * @memberof WorkflowUpdate
      */
+    loopedTransitionContainerLayout?: WorkflowLayout | null;
+    /**
+     * 
+     * @type {WorkflowLayout}
+     * @memberof WorkflowUpdate
+     */
     startPointLayout?: WorkflowLayout | null;
     /**
      * The mapping of old to new status ID for a specific project and issue type.
@@ -26297,13 +29551,13 @@ export interface WorkflowUpdateRequest {
      * @type {Array<WorkflowStatusUpdate>}
      * @memberof WorkflowUpdateRequest
      */
-    statuses: Array<WorkflowStatusUpdate>;
+    statuses?: Array<WorkflowStatusUpdate>;
     /**
      * The details of the workflows to update.
      * @type {Array<WorkflowUpdate>}
      * @memberof WorkflowUpdateRequest
      */
-    workflows: Array<WorkflowUpdate>;
+    workflows?: Array<WorkflowUpdate>;
 }
 /**
  * 
@@ -26348,27 +29602,6 @@ export interface WorkflowUpdateValidateRequestBean {
      * @memberof WorkflowUpdateValidateRequestBean
      */
     validationOptions?: ValidationOptionsForUpdate;
-}
-/**
- * Deprecated. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/changelog/#CHANGE-2298) for details.
- * 
- * The workflows that use this status. Only available if the `workflowUsages` expand is requested.
- * @export
- * @interface WorkflowUsages
- */
-export interface WorkflowUsages {
-    /**
-     * Workflow ID.
-     * @type {string}
-     * @memberof WorkflowUsages
-     */
-    workflowId?: string;
-    /**
-     * Workflow name.
-     * @type {string}
-     * @memberof WorkflowUsages
-     */
-    workflowName?: string;
 }
 /**
  * The details about a workflow validation error.
@@ -26460,6 +29693,73 @@ export interface WorkflowsWithTransitionRulesDetails {
      * @memberof WorkflowsWithTransitionRulesDetails
      */
     workflows: Array<WorkflowTransitionRulesDetails>;
+}
+/**
+ * Working days configuration
+ * @export
+ * @interface WorkingDaysConfig
+ */
+export interface WorkingDaysConfig {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    friday?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof WorkingDaysConfig
+     */
+    id?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    monday?: boolean;
+    /**
+     * 
+     * @type {Set<NonWorkingDay>}
+     * @memberof WorkingDaysConfig
+     */
+    nonWorkingDays?: Array<NonWorkingDay>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    saturday?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    sunday?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    thursday?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkingDaysConfig
+     */
+    timezoneId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    tuesday?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkingDaysConfig
+     */
+    wednesday?: boolean;
 }
 /**
  * Details of a worklog.
