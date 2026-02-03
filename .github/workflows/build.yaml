@@ -12,8 +12,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: npm ci
-      - run: npm run lint
+      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn lint
   test:
     runs-on: ubuntu-latest
     steps:
@@ -23,8 +23,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: npm ci
-      - run: npm run test
+      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn test
   gen:
     runs-on: ubuntu-latest
     strategy:
@@ -48,5 +48,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: npm ci
-      - run: npm run gen:${{ matrix.api }}
+      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn gen:${{ matrix.api }}
