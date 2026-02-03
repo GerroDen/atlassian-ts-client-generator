@@ -832,7 +832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openapitools/openapi-generator-cli@npm:^2.25.0":
+"@openapitools/openapi-generator-cli@npm:^2.28.0":
   version: 2.28.0
   resolution: "@openapitools/openapi-generator-cli@npm:2.28.0"
   dependencies:
@@ -1414,7 +1414,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "atlassian-js-client-generator@workspace:."
   dependencies:
-    "@openapitools/openapi-generator-cli": "npm:^2.25.0"
+    "@openapitools/openapi-generator-cli": "npm:^2.28.0"
     "@types/jscodeshift": "npm:^17.3.0"
     exec-sh: "npm:^0.4.0"
     fast-glob: "npm:^3.3.3"
