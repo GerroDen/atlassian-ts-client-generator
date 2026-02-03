@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn install --immutable
       - run: yarn lint
   test:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn install --immutable
       - run: yarn test
   gen:
     runs-on: ubuntu-latest
@@ -48,5 +48,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-      - run: yarn install --mode=update-lockfile --no-immutable
+      - run: yarn install --immutable
       - run: yarn gen:${{ matrix.api }}
