@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "import",
+    "vitest",
+    "node",
+    "promise",
+    "unicorn",
+    "typescript",
+    "oxc"
+  ],
+  "categories": {},
+  "env": {
+    "builtin": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.{js,cjs}"],
+      "env": {
+        "es2026": true,
+        "node": true
+      }
+    }
+  ]
+}
