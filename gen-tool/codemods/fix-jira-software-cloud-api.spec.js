@@ -1,4 +1,5 @@
 import { applyTransform } from "jscodeshift/src/testUtils.js";
+import { describe, it, expect } from "vitest";
 
 const transformer = await import("./fix-jira-software-cloud-api.cjs");
 
