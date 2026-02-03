@@ -8,23 +8,16 @@ const transformer = (file, api) => {
     .filter((path) => path.value.key?.name === "links")
     .filter(
       (path) =>
-        path.value.typeAnnotation?.typeAnnotation?.members?.[0]?.typeAnnotation
-          ?.typeAnnotation?.typeName?.name === "GenericLinksValue",
+        path.value.typeAnnotation?.typeAnnotation?.members?.[0]?.typeAnnotation?.typeAnnotation
+          ?.typeName?.name === "GenericLinksValue",
     )
     .forEach((path) => {
       path.node.key.name = "_links";
     });
   source
     .find(j.TSTypeReference)
-    .filter(
-      (path) =>
-        path.value.typeName?.name === "BulkRemoveContentStatesStatusEnum",
-    )
-    .replaceWith(
-      j.tsTypeReference(
-        j.identifier("BulkRemoveContentStatesOperationStatusEnum"),
-      ),
-    );
+    .filter((path) => path.value.typeName?.name === "BulkRemoveContentStatesStatusEnum")
+    .replaceWith(j.tsTypeReference(j.identifier("BulkRemoveContentStatesOperationStatusEnum")));
   return source.toSource();
 };
 

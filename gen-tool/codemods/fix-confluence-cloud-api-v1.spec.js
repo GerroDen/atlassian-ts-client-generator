@@ -19,8 +19,7 @@ describe("fix-confluence-cloud-api-v1", () => {
       options,
     );
 
-    expect(result)
-      .toBe(`export interface GetRestrictionsByOperation200ResponseValue {
+    expect(result).toBe(`export interface GetRestrictionsByOperation200ResponseValue {
   links: LookAndFeelHeadings;
   _links?: { [key: string]: GenericLinksValue; };
 }`);
@@ -39,8 +38,7 @@ describe("fix-confluence-cloud-api-v1", () => {
       options,
     );
 
-    expect(result)
-      .toBe(`export interface BulkRemoveContentStatesOperationRequest {
+    expect(result).toBe(`export interface BulkRemoveContentStatesOperationRequest {
     status: BulkRemoveContentStatesOperationStatusEnum;
     bulkRemoveContentStatesRequest?: BulkRemoveContentStatesRequest;
 }`);

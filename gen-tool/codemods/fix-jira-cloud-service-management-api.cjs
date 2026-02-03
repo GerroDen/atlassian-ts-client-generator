@@ -1,8 +1,4 @@
-const {
-  Identifier,
-  TSInterfaceDeclaration,
-  ClassMethod,
-} = require("jscodeshift");
+const { Identifier, TSInterfaceDeclaration, ClassMethod } = require("jscodeshift");
 
 const duplicateTypes = [
   "GetArticlesRequest",
@@ -31,15 +27,11 @@ const transformer = (file, api) => {
           return false;
         }
         return (
-          path.parent?.parent?.parent?.parent?.parent?.parent?.node.id.name ===
-          "ServicedeskApi"
+          path.parent?.parent?.parent?.parent?.parent?.parent?.node.id.name === "ServicedeskApi"
         );
       })
       .forEach((path) => {
-        path.node.name = path.node.name.replace(
-          /(.+)Request$/,
-          "$1ServicedeskRequest",
-        );
+        path.node.name = path.node.name.replace(/(.+)Request$/, "$1ServicedeskRequest");
       });
   }
   return source.toSource();

@@ -1,14 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "import",
-    "vitest",
-    "node",
-    "promise",
-    "unicorn",
-    "typescript",
-    "oxc"
-  ],
+  "plugins": ["import", "vitest", "node", "promise", "unicorn", "typescript", "oxc"],
   "categories": {},
   "env": {
     "builtin": true

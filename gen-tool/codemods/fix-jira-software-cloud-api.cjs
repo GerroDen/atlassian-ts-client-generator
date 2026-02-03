@@ -5,9 +5,7 @@ const transformer = (file, api) => {
   const source = j(file.source);
   source
     .find(j.TSPropertySignature)
-    .filter(
-      (path) => path.parent?.parent?.node?.id?.name === "GetAllBoardsRequest",
-    )
+    .filter((path) => path.parent?.parent?.node?.id?.name === "GetAllBoardsRequest")
     .filter((path) => path.node.key?.name === "type")
     .forEach((path) => {
       path.node.typeAnnotation.typeAnnotation = j.tsUnionType([

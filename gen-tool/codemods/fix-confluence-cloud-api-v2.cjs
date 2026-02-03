@@ -11,14 +11,8 @@ const transformer = (file, api) => {
     });
   source
     .find(j.TSPropertySignature)
-    .filter((path) =>
-      path.value?.leadingComments?.at(0)?.value?.includes("@deprecated"),
-    )
-    .filter((path) =>
-      ["inlineMarkerRef", "inlineOriginalSelection"].includes(
-        path.value.key.name,
-      ),
-    )
+    .filter((path) => path.value?.leadingComments?.at(0)?.value?.includes("@deprecated"))
+    .filter((path) => ["inlineMarkerRef", "inlineOriginalSelection"].includes(path.value.key.name))
     .remove();
   return source.toSource();
 };

@@ -8,8 +8,7 @@ const transformer = (file, api) => {
     .filter((path) => path.node.key?.name === "streamRaw")
     .filter(
       (path) =>
-        path.node.body?.body[0]?.expression?.argument?.callee?.property
-          ?.name !== "streamRawRaw",
+        path.node.body?.body[0]?.expression?.argument?.callee?.property?.name !== "streamRawRaw",
     )
     .forEach((path) => {
       path.node.key.name = "_streamRaw";
@@ -24,9 +23,7 @@ const transformer = (file, api) => {
   if (!file.path?.endsWith("/models/index.ts")) {
     source
       .find(j.ExportNamedDeclaration)
-      .filter(
-        (path) => path.node.declaration?.type === "TSInterfaceDeclaration",
-      )
+      .filter((path) => path.node.declaration?.type === "TSInterfaceDeclaration")
       .filter((path) => path.node.declaration?.id?.name?.endsWith("Request"))
       .replaceWith((path) => path.node.declaration);
   }

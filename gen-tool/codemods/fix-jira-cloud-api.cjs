@@ -9,8 +9,7 @@ const transformer = (file, api) => {
     .filter((path) => path.node.key?.name?.match("properties"))
     .filter((path) => path.parent?.parent.node?.id?.name?.endsWith("Request"))
     .forEach((path) => {
-      path.node.typeAnnotation.typeAnnotation.typeParameters.params[0] =
-        j.tsStringKeyword();
+      path.node.typeAnnotation.typeAnnotation.typeParameters.params[0] = j.tsStringKeyword();
     });
   source
     .find(j.TSPropertySignature)
@@ -30,9 +29,7 @@ const transformer = (file, api) => {
     });
   source
     .find(j.TSPropertySignature)
-    .filter(
-      (path) => path.parent?.parent?.node?.id?.name === "SearchProjectsRequest",
-    )
+    .filter((path) => path.parent?.parent?.node?.id?.name === "SearchProjectsRequest")
     .filter((path) => path.node.key?.name === "typeKey")
     .forEach((path) => {
       path.node.typeAnnotation.typeAnnotation = j.tsUnionType([
@@ -44,9 +41,7 @@ const transformer = (file, api) => {
   source
     .find(j.TSInterfaceDeclaration)
     .filter((path) =>
-      ["FieldIdentifierObject", "AssociationContextObject"].includes(
-        path.node.id.name,
-      ),
+      ["FieldIdentifierObject", "AssociationContextObject"].includes(path.node.id.name),
     )
     .find(j.TSPropertySignature)
     .filter((path) => path.node.key.name === "identifier")

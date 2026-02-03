@@ -27,9 +27,7 @@ try {
   const fileContent = await fs.readFile(`generated-code/${dir}/package.json`, {
     encoding: "utf8",
   });
-  const { name, version, description, author } = JSON.parse(
-    fileContent.toString(),
-  );
+  const { name, version, description, author } = JSON.parse(fileContent.toString());
   const packageJson = {
     name,
     version: normalizeVersion(version),
