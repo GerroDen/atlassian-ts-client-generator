@@ -2,11 +2,10 @@
   "name": "atlassian-js-client-generator",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "packageManager": "yarn@4.12.0",
   "workspaces": [
     "generated-code/*"
   ],
+  "type": "module",
   "scripts": {
     "fetch": "run-s 'fetch:*'",
     "fetch:bamboo-api": "curl -o bamboo-api/swagger.json https://dac-static.atlassian.com/server/bamboo/swagger.v3.json",
@@ -57,9 +56,10 @@
     "gen:user-management-cloud-api": "run-s 'gen:user-management-cloud-api:*'",
     "gen:user-management-cloud-api:gen": "gen-tool/gen-api.js user-management-cloud-api",
     "gen:user-management-cloud-api:lint": "tsc -p generated-code/user-management-cloud-api --noEmit",
+    "fmt": "oxfmt",
     "lint": "run-p 'lint:*'",
     "lint:oxlint": "oxlint",
-    "lint:prettier": "prettier '{**/*,*}.{js,cjs,json}' --check",
+    "lint:fmt": "oxfmt --check",
     "test": "vitest",
     "openapi-generator-version": "openapi-generator-cli version-manager list"
   },
@@ -70,9 +70,10 @@
     "fast-glob": "^3.3.3",
     "jscodeshift": "^17.3.0",
     "npm-run-all": "^4.1.5",
+    "oxfmt": "^0.28.0",
     "oxlint": "^1.43.0",
-    "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }
