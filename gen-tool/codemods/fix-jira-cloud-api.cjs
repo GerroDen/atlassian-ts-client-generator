@@ -1,5 +1,3 @@
-const { Identifier } = require("jscodeshift");
-const js = require("@eslint/js");
 /** @type {import("jscodeshift").Transform} */
 const transformer = (file, api) => {
   const { j } = api;
