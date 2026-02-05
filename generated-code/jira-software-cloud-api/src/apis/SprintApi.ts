@@ -111,8 +111,11 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -158,8 +161,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -197,8 +205,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -260,8 +272,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -299,8 +315,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -345,8 +365,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -384,8 +409,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -432,8 +461,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/issue`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -481,8 +514,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -537,8 +574,13 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -591,8 +633,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}/swap`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}/swap`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -640,8 +686,12 @@ export class SprintApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/sprint/{sprintId}`.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

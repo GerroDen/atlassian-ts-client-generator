@@ -70,8 +70,11 @@ export class LabelInfoApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/label`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/label`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

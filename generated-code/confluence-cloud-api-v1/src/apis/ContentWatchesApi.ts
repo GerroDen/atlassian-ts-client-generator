@@ -145,8 +145,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
+        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -210,8 +214,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
+        urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -275,8 +283,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -329,8 +341,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
+        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -380,8 +396,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:watcher:confluence", "read:user:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/watch`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/watch`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -431,8 +451,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/notification/child-created`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/notification/child-created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -482,8 +506,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/notification/created`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/notification/created`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -537,8 +565,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
+        urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -592,8 +624,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -658,8 +694,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
+        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/content/{contentId}`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -712,8 +752,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
+        urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/label/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -766,8 +810,12 @@ export class ContentWatchesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/watch/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

@@ -16,9 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   MultiEntityResultSpacePermission,
+  MultiEntityResultSpacePermissionAssignment,
 } from '../models/index';
 
-export interface GetSpacePermissionsRequest {
+export interface GetAvailableSpacePermissionsRequest {
+    cursor?: string;
+    limit?: number;
+}
+
+export interface GetSpacePermissionsAssignmentsRequest {
     id: number;
     cursor?: string;
     limit?: number;
@@ -30,14 +36,61 @@ export interface GetSpacePermissionsRequest {
 export class SpacePermissionsApi extends runtime.BaseAPI {
 
     /**
-     * Returns space permissions for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
-     * Get space permissions
+     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Get available space permissions
      */
-    async getSpacePermissionsRaw(requestParameters: GetSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+    async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['cursor'] != null) {
+            queryParameters['cursor'] = requestParameters['cursor'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
+        }
+
+
+        let urlPath = `/space-permissions`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Get available space permissions
+     */
+    async getAvailableSpacePermissions(requestParameters: GetAvailableSpacePermissionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpacePermission> {
+        const response = await this.getAvailableSpacePermissionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns space permission assignments for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Get space permissions assignments
+     */
+    async getSpacePermissionsAssignmentsRaw(requestParameters: GetSpacePermissionsAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermissionAssignment>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
-                'Required parameter "id" was null or undefined when calling getSpacePermissions().'
+                'Required parameter "id" was null or undefined when calling getSpacePermissionsAssignments().'
             );
         }
 
@@ -61,8 +114,12 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/permissions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/permissions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -72,11 +129,11 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns space permissions for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
-     * Get space permissions
+     * Returns space permission assignments for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Get space permissions assignments
      */
-    async getSpacePermissions(requestParameters: GetSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpacePermission> {
-        const response = await this.getSpacePermissionsRaw(requestParameters, initOverrides);
+    async getSpacePermissionsAssignments(requestParameters: GetSpacePermissionsAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiEntityResultSpacePermissionAssignment> {
+        const response = await this.getSpacePermissionsAssignmentsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

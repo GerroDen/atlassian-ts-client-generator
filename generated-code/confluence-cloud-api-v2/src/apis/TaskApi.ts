@@ -86,8 +86,12 @@ export class TaskApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:task:confluence"]);
         }
 
+
+        let urlPath = `/tasks/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -194,8 +198,11 @@ export class TaskApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:task:confluence"]);
         }
 
+
+        let urlPath = `/tasks`;
+
         const response = await this.request({
-            path: `/tasks`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -250,8 +257,12 @@ export class TaskApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/tasks/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

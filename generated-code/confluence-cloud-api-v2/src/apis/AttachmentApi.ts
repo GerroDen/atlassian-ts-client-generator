@@ -33,6 +33,7 @@ export interface GetAttachmentByIdRequest {
     includeOperations?: boolean;
     includeVersions?: boolean;
     includeVersion?: boolean;
+    includeCollaborators?: boolean;
 }
 
 export interface GetAttachmentsRequest {
@@ -114,8 +115,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/attachments/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -170,6 +175,10 @@ export class AttachmentApi extends runtime.BaseAPI {
             queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -180,8 +189,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -240,8 +253,11 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments`;
+
         const response = await this.request({
-            path: `/attachments`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -307,8 +323,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/attachments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -374,8 +394,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{id}/attachments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/custom-content/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -429,8 +453,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/labels/{id}/attachments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/labels/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -496,8 +524,12 @@ export class AttachmentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/attachments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/attachments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

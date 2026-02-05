@@ -15,11 +15,8 @@
 
 import * as runtime from '../runtime';
 import type {
-  ContentArray,
-  GetContentForSpace200Response,
   LongTask,
   Space,
-  SpaceArray,
   SpaceCreate,
   SpaceUpdate,
 } from '../models/index';
@@ -34,41 +31,6 @@ export interface CreateSpaceRequest {
 
 export interface DeleteSpaceRequest {
     spaceKey: string;
-}
-
-export interface GetContentByTypeForSpaceRequest {
-    spaceKey: string;
-    type: string;
-    depth?: GetContentByTypeForSpaceDepthEnum;
-    expand?: Array<string>;
-    start?: number;
-    limit?: number;
-}
-
-export interface GetContentForSpaceRequest {
-    spaceKey: string;
-    depth?: GetContentForSpaceDepthEnum;
-    expand?: Array<string>;
-    start?: number;
-    limit?: number;
-}
-
-export interface GetSpaceRequest {
-    spaceKey: string;
-    expand?: Array<GetSpaceExpandEnum>;
-}
-
-export interface GetSpacesRequest {
-    spaceKey?: Array<string>;
-    spaceId?: Array<number>;
-    type?: GetSpacesTypeEnum;
-    status?: GetSpacesStatusEnum;
-    label?: Array<string>;
-    favourite?: boolean;
-    favouriteUserKey?: string;
-    expand?: Array<GetSpacesExpandEnum>;
-    start?: number;
-    limit?: number;
 }
 
 export interface UpdateSpaceRequest {
@@ -107,8 +69,11 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/_private`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/_private`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -153,8 +118,11 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/space`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -197,8 +165,12 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -213,262 +185,6 @@ export class SpaceApi extends runtime.BaseAPI {
      */
     async deleteSpace(requestParameters: DeleteSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LongTask> {
         const response = await this.deleteSpaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
-     * Get content by type for space
-     * @deprecated
-     */
-    async getContentByTypeForSpaceRaw(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        if (requestParameters['spaceKey'] == null) {
-            throw new runtime.RequiredError(
-                'spaceKey',
-                'Required parameter "spaceKey" was null or undefined when calling getContentByTypeForSpace().'
-            );
-        }
-
-        if (requestParameters['type'] == null) {
-            throw new runtime.RequiredError(
-                'type',
-                'Required parameter "type" was null or undefined when calling getContentByTypeForSpace().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['depth'] != null) {
-            queryParameters['depth'] = requestParameters['depth'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/content/{type}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content of a given type, in a space. The returned content is ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
-     * Get content by type for space
-     * @deprecated
-     */
-    async getContentByTypeForSpace(requestParameters: GetContentByTypeForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
-        const response = await this.getContentByTypeForSpaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
-     * Get content for space
-     * @deprecated
-     */
-    async getContentForSpaceRaw(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetContentForSpace200Response>> {
-        if (requestParameters['spaceKey'] == null) {
-            throw new runtime.RequiredError(
-                'spaceKey',
-                'Required parameter "spaceKey" was null or undefined when calling getContentForSpace().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['depth'] != null) {
-            queryParameters['depth'] = requestParameters['depth'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a space. The returned content is grouped by type (pages then blogposts), then ordered by content ID in ascending order.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space. Note, the returned list will only contain content that the current user has permission to view.
-     * Get content for space
-     * @deprecated
-     */
-    async getContentForSpace(requestParameters: GetContentForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetContentForSpace200Response> {
-        const response = await this.getContentForSpaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
-     * Get space
-     * @deprecated
-     */
-    async getSpaceRaw(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
-        if (requestParameters['spaceKey'] == null) {
-            throw new runtime.RequiredError(
-                'spaceKey',
-                'Required parameter "spaceKey" was null or undefined when calling getSpace().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a space. This includes information like the name, description, and permissions, but not the content in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
-     * Get space
-     * @deprecated
-     */
-    async getSpace(requestParameters: GetSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Space> {
-        const response = await this.getSpaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
-     * Get spaces
-     * @deprecated
-     */
-    async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceArray>> {
-        const queryParameters: any = {};
-
-        if (requestParameters['spaceKey'] != null) {
-            queryParameters['spaceKey'] = requestParameters['spaceKey'];
-        }
-
-        if (requestParameters['spaceId'] != null) {
-            queryParameters['spaceId'] = requestParameters['spaceId'];
-        }
-
-        if (requestParameters['type'] != null) {
-            queryParameters['type'] = requestParameters['type'];
-        }
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['label'] != null) {
-            queryParameters['label'] = requestParameters['label'];
-        }
-
-        if (requestParameters['favourite'] != null) {
-            queryParameters['favourite'] = requestParameters['favourite'];
-        }
-
-        if (requestParameters['favouriteUserKey'] != null) {
-            queryParameters['favouriteUserKey'] = requestParameters['favouriteUserKey'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/space`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all spaces. The returned spaces are ordered alphabetically in ascending order by space key.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Note, the returned list will only contain spaces that the current user has permission to view.
-     * Get spaces
-     * @deprecated
-     */
-    async getSpaces(requestParameters: GetSpacesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SpaceArray> {
-        const response = await this.getSpacesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -505,8 +221,12 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -526,76 +246,3 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
 }
-
-/**
- * @export
- */
-export const GetContentByTypeForSpaceDepthEnum = {
-    All: 'all',
-    Root: 'root'
-} as const;
-export type GetContentByTypeForSpaceDepthEnum = typeof GetContentByTypeForSpaceDepthEnum[keyof typeof GetContentByTypeForSpaceDepthEnum];
-/**
- * @export
- */
-export const GetContentForSpaceDepthEnum = {
-    All: 'all',
-    Root: 'root'
-} as const;
-export type GetContentForSpaceDepthEnum = typeof GetContentForSpaceDepthEnum[keyof typeof GetContentForSpaceDepthEnum];
-/**
- * @export
- */
-export const GetSpaceExpandEnum = {
-    Settings: 'settings',
-    Metadata: 'metadata',
-    MetadataLabels: 'metadata.labels',
-    Operations: 'operations',
-    LookAndFeel: 'lookAndFeel',
-    Permissions: 'permissions',
-    Icon: 'icon',
-    Description: 'description',
-    DescriptionPlain: 'description.plain',
-    DescriptionView: 'description.view',
-    Theme: 'theme',
-    Homepage: 'homepage',
-    History: 'history'
-} as const;
-export type GetSpaceExpandEnum = typeof GetSpaceExpandEnum[keyof typeof GetSpaceExpandEnum];
-/**
- * @export
- */
-export const GetSpacesTypeEnum = {
-    Global: 'global',
-    Collaboration: 'collaboration',
-    KnowledgeBase: 'knowledge_base',
-    Personal: 'personal'
-} as const;
-export type GetSpacesTypeEnum = typeof GetSpacesTypeEnum[keyof typeof GetSpacesTypeEnum];
-/**
- * @export
- */
-export const GetSpacesStatusEnum = {
-    Current: 'current',
-    Archived: 'archived'
-} as const;
-export type GetSpacesStatusEnum = typeof GetSpacesStatusEnum[keyof typeof GetSpacesStatusEnum];
-/**
- * @export
- */
-export const GetSpacesExpandEnum = {
-    Settings: 'settings',
-    Metadata: 'metadata',
-    MetadataLabels: 'metadata.labels',
-    Operations: 'operations',
-    LookAndFeel: 'lookAndFeel',
-    Permissions: 'permissions',
-    Icon: 'icon',
-    Description: 'description',
-    DescriptionPlain: 'description.plain',
-    DescriptionView: 'description.view',
-    Theme: 'theme',
-    Homepage: 'homepage',
-    History: 'history'
-} as const;
-export type GetSpacesExpandEnum = typeof GetSpacesExpandEnum[keyof typeof GetSpacesExpandEnum];

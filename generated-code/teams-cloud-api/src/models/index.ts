@@ -3,27 +3,113 @@
 /**
  * 
  * @export
- * @interface PublicApiAddMemberError
+ * @interface PublicApiBulkOperationRequest
  */
-export interface PublicApiAddMemberError {
+export interface PublicApiBulkOperationRequest {
     /**
      * 
-     * @type {string}
-     * @memberof PublicApiAddMemberError
+     * @type {Array<string>}
+     * @memberof PublicApiBulkOperationRequest
      */
-    accountId: string;
+    teamIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicApiBulkOperationResponse
+ */
+export interface PublicApiBulkOperationResponse {
+    /**
+     * 
+     * @type {Array<PublicApiBulkTeamOperationError>}
+     * @memberof PublicApiBulkOperationResponse
+     */
+    errors: Array<PublicApiBulkTeamOperationError>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicApiBulkOperationResponse
+     */
+    successfulTeamIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicApiBulkTeamOperationError
+ */
+export interface PublicApiBulkTeamOperationError {
     /**
      * 
      * @type {string}
-     * @memberof PublicApiAddMemberError
+     * @memberof PublicApiBulkTeamOperationError
      */
     code: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicApiAddMemberError
+     * @memberof PublicApiBulkTeamOperationError
      */
     message: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiBulkTeamOperationError
+     */
+    teamId: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicApiExternalReference
+ */
+export interface PublicApiExternalReference {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiExternalReference
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiExternalReference
+     */
+    source: PublicApiExternalReferenceSourceEnum;
+}
+
+
+/**
+ * @export
+ */
+export const PublicApiExternalReferenceSourceEnum = {
+    AtlassianGroup: 'ATLASSIAN_GROUP'
+} as const;
+export type PublicApiExternalReferenceSourceEnum = typeof PublicApiExternalReferenceSourceEnum[keyof typeof PublicApiExternalReferenceSourceEnum];
+
+/**
+ * 
+ * @export
+ * @interface PublicApiExternalTeamCreationPayload
+ */
+export interface PublicApiExternalTeamCreationPayload {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiExternalTeamCreationPayload
+     */
+    description: string;
+    /**
+     * 
+     * @type {PublicApiExternalReference}
+     * @memberof PublicApiExternalTeamCreationPayload
+     */
+    externalReference: PublicApiExternalReference;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiExternalTeamCreationPayload
+     */
+    siteId?: string;
 }
 /**
  * 
@@ -47,27 +133,21 @@ export interface PublicApiFetchResponsePublicApiMembershipAccountId {
 /**
  * 
  * @export
- * @interface PublicApiMemberNotFoundError
+ * @interface PublicApiLinkTeamToExternalSourcePayload
  */
-export interface PublicApiMemberNotFoundError {
+export interface PublicApiLinkTeamToExternalSourcePayload {
     /**
      * 
-     * @type {string}
-     * @memberof PublicApiMemberNotFoundError
+     * @type {PublicApiExternalReference}
+     * @memberof PublicApiLinkTeamToExternalSourcePayload
      */
-    accountId: string;
+    externalReference: PublicApiExternalReference;
     /**
-     * 
+     * The siteId to help locate the externalReference. For example, when the externalReference is a group belonging to a site.
      * @type {string}
-     * @memberof PublicApiMemberNotFoundError
+     * @memberof PublicApiLinkTeamToExternalSourcePayload
      */
-    code: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicApiMemberNotFoundError
-     */
-    message: string;
+    siteId?: string;
 }
 /**
  * 
@@ -103,10 +183,10 @@ export interface PublicApiMembershipAddPayload {
 export interface PublicApiMembershipAddResponse {
     /**
      * 
-     * @type {Set<PublicApiMembershipAddResponseErrorsInner>}
+     * @type {Set<PublicApiMembershipCodedError>}
      * @memberof PublicApiMembershipAddResponse
      */
-    errors: Set<PublicApiMembershipAddResponseErrorsInner>;
+    errors: Set<PublicApiMembershipCodedError>;
     /**
      * 
      * @type {Set<PublicApiMembership>}
@@ -114,12 +194,6 @@ export interface PublicApiMembershipAddResponse {
      */
     members: Set<PublicApiMembership>;
 }
-/**
- * @type PublicApiMembershipAddResponseErrorsInner
- * 
- * @export
- */
-export type PublicApiMembershipAddResponseErrorsInner = PublicApiAddMemberError | PublicApiMemberNotFoundError | PublicApiRemoveMemberError;
 /**
  * 
  * @export
@@ -185,10 +259,10 @@ export interface PublicApiMembershipRemovePayload {
 export interface PublicApiMembershipRemoveResponse {
     /**
      * 
-     * @type {Set<PublicApiMembershipAddResponseErrorsInner>}
+     * @type {Set<PublicApiMembershipCodedError>}
      * @memberof PublicApiMembershipRemoveResponse
      */
-    errors: Set<PublicApiMembershipAddResponseErrorsInner>;
+    errors: Set<PublicApiMembershipCodedError>;
 }
 /**
  * 
@@ -231,34 +305,15 @@ export interface PublicApiPageInfoAccountId {
 /**
  * 
  * @export
- * @interface PublicApiRemoveMemberError
- */
-export interface PublicApiRemoveMemberError {
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicApiRemoveMemberError
-     */
-    accountId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicApiRemoveMemberError
-     */
-    code: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicApiRemoveMemberError
-     */
-    message: string;
-}
-/**
- * 
- * @export
  * @interface PublicApiTeam
  */
 export interface PublicApiTeam {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
+    creatorId?: string;
     /**
      * 
      * @type {string}
@@ -282,6 +337,12 @@ export interface PublicApiTeam {
      * @type {string}
      * @memberof PublicApiTeam
      */
+    state: PublicApiTeamStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeam
+     */
     teamId: string;
     /**
      * 
@@ -295,10 +356,20 @@ export interface PublicApiTeam {
 /**
  * @export
  */
+export const PublicApiTeamStateEnum = {
+    Active: 'ACTIVE',
+    Archived: 'ARCHIVED'
+} as const;
+export type PublicApiTeamStateEnum = typeof PublicApiTeamStateEnum[keyof typeof PublicApiTeamStateEnum];
+
+/**
+ * @export
+ */
 export const PublicApiTeamTeamTypeEnum = {
     Open: 'OPEN',
     MemberInvite: 'MEMBER_INVITE',
-    External: 'EXTERNAL'
+    External: 'EXTERNAL',
+    OrgAdminManaged: 'ORG_ADMIN_MANAGED'
 } as const;
 export type PublicApiTeamTeamTypeEnum = typeof PublicApiTeamTeamTypeEnum[keyof typeof PublicApiTeamTeamTypeEnum];
 
@@ -321,7 +392,7 @@ export interface PublicApiTeamCreationPayload {
      */
     displayName: string;
     /**
-     * 
+     * If the org mandates site-scoped teams, a site ID must be provided or the operation will fail. [Deprecated] We have deprecated the empty siteId since it only works for org-scoped teams and teams are moving to unit-scope. It's recommended to always provide a valid siteId to ensure this operation continues to work in the future.
      * @type {string}
      * @memberof PublicApiTeamCreationPayload
      */
@@ -341,7 +412,8 @@ export interface PublicApiTeamCreationPayload {
 export const PublicApiTeamCreationPayloadTeamTypeEnum = {
     Open: 'OPEN',
     MemberInvite: 'MEMBER_INVITE',
-    External: 'EXTERNAL'
+    External: 'EXTERNAL',
+    OrgAdminManaged: 'ORG_ADMIN_MANAGED'
 } as const;
 export type PublicApiTeamCreationPayloadTeamTypeEnum = typeof PublicApiTeamCreationPayloadTeamTypeEnum[keyof typeof PublicApiTeamCreationPayloadTeamTypeEnum];
 
@@ -375,6 +447,12 @@ export interface PublicApiTeamResponse {
      * @type {string}
      * @memberof PublicApiTeamResponse
      */
+    creatorId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeamResponse
+     */
     description: string;
     /**
      * 
@@ -388,6 +466,12 @@ export interface PublicApiTeamResponse {
      * @memberof PublicApiTeamResponse
      */
     organizationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeamResponse
+     */
+    state: PublicApiTeamResponseStateEnum;
     /**
      * 
      * @type {string}
@@ -412,10 +496,20 @@ export interface PublicApiTeamResponse {
 /**
  * @export
  */
+export const PublicApiTeamResponseStateEnum = {
+    Active: 'ACTIVE',
+    Archived: 'ARCHIVED'
+} as const;
+export type PublicApiTeamResponseStateEnum = typeof PublicApiTeamResponseStateEnum[keyof typeof PublicApiTeamResponseStateEnum];
+
+/**
+ * @export
+ */
 export const PublicApiTeamResponseTeamTypeEnum = {
     Open: 'OPEN',
     MemberInvite: 'MEMBER_INVITE',
-    External: 'EXTERNAL'
+    External: 'EXTERNAL',
+    OrgAdminManaged: 'ORG_ADMIN_MANAGED'
 } as const;
 export type PublicApiTeamResponseTeamTypeEnum = typeof PublicApiTeamResponseTeamTypeEnum[keyof typeof PublicApiTeamResponseTeamTypeEnum];
 
@@ -425,6 +519,12 @@ export type PublicApiTeamResponseTeamTypeEnum = typeof PublicApiTeamResponseTeam
  * @interface PublicApiTeamResponseWithMembers
  */
 export interface PublicApiTeamResponseWithMembers {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeamResponseWithMembers
+     */
+    creatorId?: string;
     /**
      * 
      * @type {string}
@@ -454,6 +554,12 @@ export interface PublicApiTeamResponseWithMembers {
      * @type {string}
      * @memberof PublicApiTeamResponseWithMembers
      */
+    state: PublicApiTeamResponseWithMembersStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiTeamResponseWithMembers
+     */
     teamId: string;
     /**
      * 
@@ -473,10 +579,20 @@ export interface PublicApiTeamResponseWithMembers {
 /**
  * @export
  */
+export const PublicApiTeamResponseWithMembersStateEnum = {
+    Active: 'ACTIVE',
+    Archived: 'ARCHIVED'
+} as const;
+export type PublicApiTeamResponseWithMembersStateEnum = typeof PublicApiTeamResponseWithMembersStateEnum[keyof typeof PublicApiTeamResponseWithMembersStateEnum];
+
+/**
+ * @export
+ */
 export const PublicApiTeamResponseWithMembersTeamTypeEnum = {
     Open: 'OPEN',
     MemberInvite: 'MEMBER_INVITE',
-    External: 'EXTERNAL'
+    External: 'EXTERNAL',
+    OrgAdminManaged: 'ORG_ADMIN_MANAGED'
 } as const;
 export type PublicApiTeamResponseWithMembersTeamTypeEnum = typeof PublicApiTeamResponseWithMembersTeamTypeEnum[keyof typeof PublicApiTeamResponseWithMembersTeamTypeEnum];
 

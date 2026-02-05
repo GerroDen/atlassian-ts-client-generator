@@ -88,8 +88,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/zdu/end`;
+
         const response = await this.request({
-            path: `/mirroring/latest/zdu/end`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -124,8 +127,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/mirrorRepos/delayed-sync`;
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorRepos/delayed-sync`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -152,8 +158,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/farmNodes`;
+
         const response = await this.request({
-            path: `/mirroring/latest/farmNodes`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -180,8 +189,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/syncSettings/mode`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/mode`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -207,8 +219,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/syncSettings`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -235,8 +250,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/syncSettings/projects`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/projects`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -269,8 +287,12 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/mirrorRepos/{externalRepositoryId}`;
+        urlPath = urlPath.replace(`{${"externalRepositoryId"}}`, encodeURIComponent(String(requestParameters['externalRepositoryId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorRepos/{externalRepositoryId}`.replace(`{${"externalRepositoryId"}}`, encodeURIComponent(String(requestParameters['externalRepositoryId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -297,8 +319,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/refChangesQueue`;
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/refChangesQueue`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -325,8 +350,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/refChangesQueue/count`;
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/refChangesQueue/count`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -360,8 +388,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/repoSyncStatus`;
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/repoSyncStatus`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -402,8 +433,13 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repoSyncStatus`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repoSyncStatus`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -444,8 +480,13 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repo-lock-owner`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/projects/{projectKey}/repos/{repositorySlug}/repo-lock-owner`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -472,8 +513,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/supportInfo/repo-lock-owners`;
+
         const response = await this.request({
-            path: `/mirroring/latest/supportInfo/repo-lock-owners`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -500,8 +544,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/progress`;
+
         const response = await this.request({
-            path: `/mirroring/latest/progress`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -528,8 +575,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/upstreamServer`;
+
         const response = await this.request({
-            path: `/mirroring/latest/upstreamServer`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -558,8 +608,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/syncSettings/mode`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/mode`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -588,8 +641,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/syncSettings`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -624,8 +680,12 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/syncSettings/projects/{projectId}`;
+        urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -653,8 +713,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/syncSettings/projects`;
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/projects`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -681,8 +744,11 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/zdu/start`;
+
         const response = await this.request({
-            path: `/mirroring/latest/zdu/start`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -716,8 +782,12 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/syncSettings/projects/{projectId}`;
+        urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/syncSettings/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

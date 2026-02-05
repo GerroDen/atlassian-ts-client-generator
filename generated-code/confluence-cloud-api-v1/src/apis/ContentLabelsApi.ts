@@ -24,13 +24,6 @@ export interface AddLabelsToContentOperationRequest {
     body: AddLabelsToContentRequest;
 }
 
-export interface GetLabelsForContentRequest {
-    id: string;
-    prefix?: GetLabelsForContentPrefixEnum;
-    start?: number;
-    limit?: number;
-}
-
 export interface RemoveLabelFromContentRequest {
     id: string;
     label: string;
@@ -79,8 +72,12 @@ export class ContentLabelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/label`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -96,63 +93,6 @@ export class ContentLabelsApi extends runtime.BaseAPI {
      */
     async addLabelsToContent(requestParameters: AddLabelsToContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
         const response = await this.addLabelsToContentRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
-     * Get labels for content
-     * @deprecated
-     */
-    async getLabelsForContentRaw(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getLabelsForContent().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['prefix'] != null) {
-            queryParameters['prefix'] = requestParameters['prefix'];
-        }
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the labels on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space and permission to view the content if it is a page.
-     * Get labels for content
-     * @deprecated
-     */
-    async getLabelsForContent(requestParameters: GetLabelsForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LabelArray> {
-        const response = await this.getLabelsForContentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -187,8 +127,13 @@ export class ContentLabelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/label/{label}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"label"}}`, encodeURIComponent(String(requestParameters['label'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label/{label}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"label"}}`, encodeURIComponent(String(requestParameters['label']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -240,8 +185,12 @@ export class ContentLabelsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/label`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/label`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -259,13 +208,3 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
 }
-
-/**
- * @export
- */
-export const GetLabelsForContentPrefixEnum = {
-    Global: 'global',
-    My: 'my',
-    Team: 'team'
-} as const;
-export type GetLabelsForContentPrefixEnum = typeof GetLabelsForContentPrefixEnum[keyof typeof GetLabelsForContentPrefixEnum];

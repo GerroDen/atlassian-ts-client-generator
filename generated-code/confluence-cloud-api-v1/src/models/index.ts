@@ -699,10 +699,10 @@ export interface AuditRecordAuthor {
     displayName: string;
     /**
      * 
-     * @type {object}
+     * @type {Array<OperationCheckResult>}
      * @memberof AuditRecordAuthor
      */
-    operations: object | null;
+    operations?: Array<OperationCheckResult> | null;
     /**
      * This property is no longer available and will be removed from the documentation soon.
      * Use `accountId` instead.
@@ -863,10 +863,10 @@ export interface AuditRecordCreateAuthor {
     displayName?: string;
     /**
      * Always defaults to null.
-     * @type {object}
+     * @type {Array<OperationCheckResult>}
      * @memberof AuditRecordCreateAuthor
      */
-    operations?: object;
+    operations?: Array<OperationCheckResult>;
     /**
      * This property is no longer available and will be removed from the documentation soon.
      * Use `accountId` instead.
@@ -1094,15 +1094,15 @@ export interface Breadcrumb {
 /**
  * 
  * @export
- * @interface BulkRemoveContentStatesRequest
+ * @interface BulkContentBodyConversionInput
  */
-export interface BulkRemoveContentStatesRequest {
+export interface BulkContentBodyConversionInput {
     /**
      * 
-     * @type {Array<string>}
-     * @memberof BulkRemoveContentStatesRequest
+     * @type {Array<ContentBodyConversionInput>}
+     * @memberof BulkContentBodyConversionInput
      */
-    ids: Array<string>;
+    conversionInputs?: Array<ContentBodyConversionInput>;
 }
 /**
  * 
@@ -1983,7 +1983,13 @@ export interface ContentBodyConversionInput {
      */
     to: string;
     /**
-     * If `false`, the cache will erase its current value and begin a new conversion. If `true`, the cache will not erase its current value, and will set the status of the async conversion to “RERUNNING”. Once the data is updated, the status will change to “COMPLETED”. Large macros that take a long time to convert and that need not be immediately up to date (e.g. a macro in which the new conversion result is the same as a previous conversion result that was completed within the last 5 minutes) should set this field to `true`. Cache values are stored per user per content body and expansions.
+     * Controls whether conversion results are cached and reused for identical requests.
+     * 
+     * - `false`: Each request creates a new conversion task, even if an identical request was made previously.
+     * - `true`: Enables caching behavior for identical requests from the same user.
+     *   - If no cached result exists, a new conversion task is created
+     *   - If a cached result exists, the existing task is marked as RERUNNING and will complete with status COMPLETED
+     *   - Returns the same task ID for identical requests, allowing you to retrieve the cached result
      * @type {boolean}
      * @memberof ContentBodyConversionInput
      */
@@ -3950,68 +3956,6 @@ export interface ContentState {
 /**
  * 
  * @export
- * @interface ContentStateBulkSetTaskUpdate
- */
-export interface ContentStateBulkSetTaskUpdate {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    set: Array<string>;
-    /**
-     * 
-     * @type {Array<ContentStateFailure>}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    failed: Array<ContentStateFailure>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    percentage: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    message?: string;
-    /**
-     * 
-     * @type {ContentState}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    state?: ContentState;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ContentStateBulkSetTaskUpdate
-     */
-    success: boolean;
-}
-/**
- * Object describing why a content state set failed
- * @export
- * @interface ContentStateFailure
- */
-export interface ContentStateFailure {
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentStateFailure
-     */
-    contentId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentStateFailure
-     */
-    failureReason: string;
-}
-/**
- * 
- * @export
  * @interface ContentStateResponse
  */
 export interface ContentStateResponse {
@@ -4818,6 +4762,7 @@ export interface CopyPageRequestBody {
  * Defines where the page will be copied to, and can be one of the following types.
  * 
  *   - `parent_page`: page will be copied as a child of the specified parent page
+ *   - `parent_content`: page will be copied as a child of the specified parent content
  *   - `space`: page will be copied to the specified space as a root page on the space
  *   - `existing_page`: page will be copied and replace the specified page
  * @export
@@ -4831,7 +4776,7 @@ export interface CopyPageRequestDestination {
      */
     type: CopyPageRequestDestinationTypeEnum;
     /**
-     * The space key for `space` type, and content id for `parent_page` and `existing_page`
+     * The space key for `space` type, and content id for `parent_page`, `parent_content`, and `existing_page`
      * @type {string}
      * @memberof CopyPageRequestDestination
      */
@@ -4845,7 +4790,8 @@ export interface CopyPageRequestDestination {
 export const CopyPageRequestDestinationTypeEnum = {
     Space: 'space',
     ExistingPage: 'existing_page',
-    ParentPage: 'parent_page'
+    ParentPage: 'parent_page',
+    ParentContent: 'parent_content'
 } as const;
 export type CopyPageRequestDestinationTypeEnum = typeof CopyPageRequestDestinationTypeEnum[keyof typeof CopyPageRequestDestinationTypeEnum];
 
@@ -4894,31 +4840,6 @@ export interface EmbeddedContent {
  * @export
  */
 export type GenericLinksValue = string | { [key: string]: any; };
-/**
- * 
- * @export
- * @interface GetContentForSpace200Response
- */
-export interface GetContentForSpace200Response {
-    /**
-     * 
-     * @type {ContentArray}
-     * @memberof GetContentForSpace200Response
-     */
-    page?: ContentArray;
-    /**
-     * 
-     * @type {ContentArray}
-     * @memberof GetContentForSpace200Response
-     */
-    blogpost?: ContentArray;
-    /**
-     * 
-     * @type {{ [key: string]: GenericLinksValue; }}
-     * @memberof GetContentForSpace200Response
-     */
-    _links?: { [key: string]: GenericLinksValue; };
-}
 /**
  * 
  * @export
@@ -5014,6 +4935,24 @@ export interface Group {
      */
     id: string;
     /**
+     * This property represents how this collection of users is used:
+     *   - `USERBASE_GROUP`: This value indicates that the collection of users is used as a group.
+     *   - `TEAM_COLLABORATION`: This value indicates that the collection of users is used as a team.
+     * @type {string}
+     * @memberof Group
+     */
+    usageType?: GroupUsageTypeEnum;
+    /**
+     * This property represents how this collection of users is managed:
+     *   - `ADMINS`: This value indicates that the collection of users is managed by org, site or product admins.
+     *   - `EXTERNAL`: This value indicates that the collection of users is managed externally (through SCIM, HRIS, etc.).
+     *   - `TEAM_MEMBERS`: This value indicates that the collection of users is managed by its members.
+     *   - `OPEN`: This value indicates that the collection of users is not actively managed by any users.
+     * @type {string}
+     * @memberof Group
+     */
+    managedBy?: GroupManagedByEnum;
+    /**
      * 
      * @type {{ [key: string]: GenericLinksValue; }}
      * @memberof Group
@@ -5029,6 +4968,26 @@ export const GroupTypeEnum = {
     Group: 'group'
 } as const;
 export type GroupTypeEnum = typeof GroupTypeEnum[keyof typeof GroupTypeEnum];
+
+/**
+ * @export
+ */
+export const GroupUsageTypeEnum = {
+    UserbaseGroup: 'USERBASE_GROUP',
+    TeamCollaboration: 'TEAM_COLLABORATION'
+} as const;
+export type GroupUsageTypeEnum = typeof GroupUsageTypeEnum[keyof typeof GroupUsageTypeEnum];
+
+/**
+ * @export
+ */
+export const GroupManagedByEnum = {
+    Admins: 'ADMINS',
+    External: 'EXTERNAL',
+    TeamMembers: 'TEAM_MEMBERS',
+    Open: 'OPEN'
+} as const;
+export type GroupManagedByEnum = typeof GroupManagedByEnum[keyof typeof GroupManagedByEnum];
 
 /**
  * 

@@ -87,8 +87,12 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence", "write:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{space-id}/properties`;
+        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+
         const response = await this.request({
-            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -138,8 +142,13 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence", "write:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{space-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -192,8 +201,12 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{space-id}/properties`;
+        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+
         const response = await this.request({
-            path: `/spaces/{space-id}/properties`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -242,8 +255,13 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{space-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -301,8 +319,13 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence", "write:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{space-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/spaces/{space-id}/properties/{property-id}`.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

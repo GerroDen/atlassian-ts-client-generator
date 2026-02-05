@@ -30,6 +30,10 @@ export interface DeleteWhiteboardRequest {
 
 export interface GetWhiteboardByIdRequest {
     id: number;
+    includeCollaborators?: boolean;
+    includeDirectChildren?: boolean;
+    includeOperations?: boolean;
+    includeProperties?: boolean;
 }
 
 /**
@@ -67,8 +71,11 @@ export class WhiteboardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards`;
+
         const response = await this.request({
-            path: `/whiteboards`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -111,8 +118,12 @@ export class WhiteboardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -143,6 +154,22 @@ export class WhiteboardApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
+        if (requestParameters['includeDirectChildren'] != null) {
+            queryParameters['include-direct-children'] = requestParameters['includeDirectChildren'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -153,8 +180,12 @@ export class WhiteboardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

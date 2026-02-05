@@ -80,8 +80,12 @@ export class ExperimentalApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -139,8 +143,12 @@ export class ExperimentalApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -181,8 +189,12 @@ export class ExperimentalApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/pageTree`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/pageTree`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -236,8 +248,12 @@ export class ExperimentalApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/label`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

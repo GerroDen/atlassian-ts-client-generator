@@ -35,8 +35,11 @@ export class DefaultApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/inbox/pull-requests/count`;
+
         const response = await this.request({
-            path: `/api/latest/inbox/pull-requests/count`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -74,8 +77,11 @@ export class DefaultApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/inbox/pull-requests`;
+
         const response = await this.request({
-            path: `/api/latest/inbox/pull-requests`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

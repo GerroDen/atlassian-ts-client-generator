@@ -58,8 +58,11 @@ export class DashboardApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/dashboard/pull-request-suggestions`;
+
         const response = await this.request({
-            path: `/api/latest/dashboard/pull-request-suggestions`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -118,8 +121,11 @@ export class DashboardApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/dashboard/pull-requests`;
+
         const response = await this.request({
-            path: `/api/latest/dashboard/pull-requests`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

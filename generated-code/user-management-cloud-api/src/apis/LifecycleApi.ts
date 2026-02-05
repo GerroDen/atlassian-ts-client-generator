@@ -69,8 +69,12 @@ export class LifecycleApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/lifecycle/cancel-delete`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/cancel-delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -112,8 +116,12 @@ export class LifecycleApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/lifecycle/delete`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/delete`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -132,7 +140,7 @@ export class LifecycleApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Deactivate the specified user account. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
+     *  Deactivate (block) the specified user account from logging into Atlassian. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
      * Deactivate a user
      */
     async usersAccountIdManageLifecycleDisablePostRaw(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -164,8 +172,12 @@ export class LifecycleApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/lifecycle/disable`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/disable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -176,7 +188,7 @@ export class LifecycleApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Deactivate the specified user account. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
+     *  Deactivate (block) the specified user account from logging into Atlassian. The permission to make use of this resource is exposed by the `lifecycle.enablement` privilege. You can optionally set a message associated with the block. If none is supplied, a default message will be used. 
      * Deactivate a user
      */
     async usersAccountIdManageLifecycleDisablePost(requestParameters: UsersAccountIdManageLifecycleDisablePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -207,8 +219,12 @@ export class LifecycleApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/lifecycle/enable`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/lifecycle/enable`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

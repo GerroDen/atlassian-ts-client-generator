@@ -80,8 +80,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:issue:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
+        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -132,8 +136,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:issue:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}`;
+        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -175,8 +183,12 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:issue:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
+        urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -216,8 +228,11 @@ export class IssueApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:issue:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/issue/rank`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/issue/rank`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

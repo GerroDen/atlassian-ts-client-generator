@@ -1,0 +1,16 @@
+
+# RestSecretScanningRuleScope
+
+The scope in which this rule was configured for.
+
+## Properties
+
+Name | Type
+------------ | -------------
+`resourceId` | number
+`type` | string
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

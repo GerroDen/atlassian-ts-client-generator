@@ -33,8 +33,11 @@ export class CapabilitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/build/capabilities`;
+
         const response = await this.request({
-            path: `/api/latest/build/capabilities`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -61,8 +64,11 @@ export class CapabilitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/deployment/capabilities`;
+
         const response = await this.request({
-            path: `/api/latest/deployment/capabilities`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

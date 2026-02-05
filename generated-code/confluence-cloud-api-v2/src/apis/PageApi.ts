@@ -22,6 +22,7 @@ import type {
   PrimaryBodyRepresentation,
   PrimaryBodyRepresentationSingle,
   UpdatePageRequest,
+  UpdatePageTitleRequest,
 } from '../models/index';
 
 export interface CreatePageOperationRequest {
@@ -59,6 +60,9 @@ export interface GetPageByIdRequest {
     includeVersions?: boolean;
     includeVersion?: boolean;
     includeFavoritedByCurrentUserStatus?: boolean;
+    includeWebresources?: boolean;
+    includeCollaborators?: boolean;
+    includeDirectChildren?: boolean;
 }
 
 export interface GetPagesRequest {
@@ -68,6 +72,7 @@ export interface GetPagesRequest {
     status?: Array<GetPagesStatusEnum>;
     title?: string;
     bodyFormat?: PrimaryBodyRepresentation;
+    subtype?: GetPagesSubtypeEnum;
     cursor?: string;
     limit?: number;
 }
@@ -86,6 +91,11 @@ export interface GetPagesInSpaceRequest {
 export interface UpdatePageOperationRequest {
     id: number;
     updatePageRequest: UpdatePageRequest;
+}
+
+export interface UpdatePageTitleOperationRequest {
+    id: number;
+    updatePageTitleRequest: UpdatePageTitleRequest;
 }
 
 /**
@@ -131,8 +141,11 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages`;
+
         const response = await this.request({
-            path: `/pages`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -183,8 +196,12 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -245,8 +262,12 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/labels/{id}/pages`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/labels/{id}/pages`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -322,6 +343,18 @@ export class PageApi extends runtime.BaseAPI {
             queryParameters['include-favorited-by-current-user-status'] = requestParameters['includeFavoritedByCurrentUserStatus'];
         }
 
+        if (requestParameters['includeWebresources'] != null) {
+            queryParameters['include-webresources'] = requestParameters['includeWebresources'];
+        }
+
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
+        if (requestParameters['includeDirectChildren'] != null) {
+            queryParameters['include-direct-children'] = requestParameters['includeDirectChildren'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -332,8 +365,12 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -382,6 +419,10 @@ export class PageApi extends runtime.BaseAPI {
             queryParameters['body-format'] = requestParameters['bodyFormat'];
         }
 
+        if (requestParameters['subtype'] != null) {
+            queryParameters['subtype'] = requestParameters['subtype'];
+        }
+
         if (requestParameters['cursor'] != null) {
             queryParameters['cursor'] = requestParameters['cursor'];
         }
@@ -400,8 +441,11 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages`;
+
         const response = await this.request({
-            path: `/pages`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -471,8 +515,12 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/pages`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/pages`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -491,7 +539,7 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a page by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update a page by id.  When the \"current\" version is updated, the provided body content is considered as the latest version. This latest body content will be attempted to be merged into the draft version through a content reconciliation algorithm. If two versions are significantly diverged,  the latest provided content may entirely override what was previously in the draft.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
      * Update page
      */
     async updatePageRaw(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
@@ -523,8 +571,12 @@ export class PageApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -535,11 +587,68 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a page by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update a page by id.  When the \"current\" version is updated, the provided body content is considered as the latest version. This latest body content will be attempted to be merged into the draft version through a content reconciliation algorithm. If two versions are significantly diverged,  the latest provided content may entirely override what was previously in the draft.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
      * Update page
      */
     async updatePage(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePage200Response> {
         const response = await this.updatePageRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Updates the title of a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update page title
+     */
+    async updatePageTitleRaw(requestParameters: UpdatePageTitleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updatePageTitle().'
+            );
+        }
+
+        if (requestParameters['updatePageTitleRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updatePageTitleRequest',
+                'Required parameter "updatePageTitleRequest" was null or undefined when calling updatePageTitle().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
+        }
+
+
+        let urlPath = `/pages/{id}/title`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['updatePageTitleRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Updates the title of a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update page title
+     */
+    async updatePageTitle(requestParameters: UpdatePageTitleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreatePage200Response> {
+        const response = await this.updatePageTitleRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -567,6 +676,14 @@ export const GetPagesStatusEnum = {
     Trashed: 'trashed'
 } as const;
 export type GetPagesStatusEnum = typeof GetPagesStatusEnum[keyof typeof GetPagesStatusEnum];
+/**
+ * @export
+ */
+export const GetPagesSubtypeEnum = {
+    Live: 'live',
+    Page: 'page'
+} as const;
+export type GetPagesSubtypeEnum = typeof GetPagesSubtypeEnum[keyof typeof GetPagesSubtypeEnum];
 /**
  * @export
  */

@@ -30,11 +30,6 @@ export interface ResetLookAndFeelSettingsRequest {
     spaceKey?: string;
 }
 
-export interface SetLookAndFeelSettingsRequest {
-    body: string;
-    spaceKey?: string;
-}
-
 export interface UpdateLookAndFeelRequest {
     body: LookAndFeelSelection;
 }
@@ -70,8 +65,11 @@ export class SettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/lookandfeel`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/lookandfeel`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -106,8 +104,11 @@ export class SettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/systemInfo`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/systemInfo`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -146,8 +147,11 @@ export class SettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/lookandfeel/custom`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/lookandfeel/custom`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -162,62 +166,6 @@ export class SettingsApi extends runtime.BaseAPI {
      */
     async resetLookAndFeelSettings(requestParameters: ResetLookAndFeelSettingsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.resetLookAndFeelSettingsRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Sets the look and feel settings to either the default settings or the custom settings, for the site or a single space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Set look and feel settings
-     * @deprecated
-     */
-    async setLookAndFeelSettingsRaw(requestParameters: SetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling setLookAndFeelSettings().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['spaceKey'] != null) {
-            queryParameters['spaceKey'] = requestParameters['spaceKey'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/settings/lookandfeel/selected`,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['body'] as any,
-        }, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<string>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * Sets the look and feel settings to either the default settings or the custom settings, for the site or a single space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Set look and feel settings
-     * @deprecated
-     */
-    async setLookAndFeelSettings(requestParameters: SetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.setLookAndFeelSettingsRaw(requestParameters, initOverrides);
-        return await response.value();
     }
 
     /**
@@ -246,8 +194,11 @@ export class SettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/lookandfeel`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/lookandfeel`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -296,8 +247,11 @@ export class SettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/lookandfeel/custom`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/lookandfeel/custom`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

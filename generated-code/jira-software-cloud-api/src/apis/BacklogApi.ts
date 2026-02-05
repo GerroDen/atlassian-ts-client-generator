@@ -56,8 +56,11 @@ export class BacklogApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/backlog/issue`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/backlog/issue`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -105,8 +108,12 @@ export class BacklogApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/backlog/{boardId}/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/backlog/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

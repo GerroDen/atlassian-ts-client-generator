@@ -83,8 +83,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:audit-log:confluence", "write:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -136,8 +139,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit/export`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit/export`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -192,8 +198,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -248,8 +257,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit/since`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit/since`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -284,8 +296,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit/retention`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit/retention`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -329,8 +344,11 @@ export class AuditApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:audit-log:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/audit/retention`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/audit/retention`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

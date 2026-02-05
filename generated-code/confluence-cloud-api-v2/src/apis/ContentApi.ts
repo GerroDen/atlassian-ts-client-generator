@@ -54,8 +54,11 @@ export class ContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/content/convert-ids-to-types`;
+
         const response = await this.request({
-            path: `/content/convert-ids-to-types`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

@@ -57,8 +57,12 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -109,8 +113,12 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

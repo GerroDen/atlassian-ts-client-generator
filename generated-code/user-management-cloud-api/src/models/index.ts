@@ -68,6 +68,12 @@ export interface ApiTokenModel {
      * @memberof ApiTokenModel
      */
     id: string;
+    /**
+     * Timestamp of the token expiry as a UTC-ISO8601 string
+     * @type {string}
+     * @memberof ApiTokenModel
+     */
+    expiry?: string;
 }
 /**
  * 

@@ -992,12 +992,6 @@ export interface BuildResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {Array<Labelling>}
-     * @memberof BuildResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
      * @type {string}
      * @memberof BuildResultsSummary
      */
@@ -1520,12 +1514,6 @@ export interface ChainResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {Array<Labelling>}
-     * @memberof ChainResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
      * @type {string}
      * @memberof ChainResultsSummary
      */
@@ -1572,6 +1560,12 @@ export interface ChainResultsSummary {
      * @memberof ChainResultsSummary
      */
     onceOff?: boolean;
+    /**
+     * 
+     * @type {Array<ResultsSummary>}
+     * @memberof ChainResultsSummary
+     */
+    orderedJobResultSummaries?: Array<ResultsSummary>;
     /**
      * 
      * @type {boolean}
@@ -2706,6 +2700,18 @@ export interface EnvironmentIds {
 export interface EphemeralAgentsConfigurationDTO {
     /**
      * 
+     * @type {number}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    agentLimit?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EphemeralAgentsConfigurationDTO
+     */
+    agentLimitEnabled?: boolean;
+    /**
+     * 
      * @type {boolean}
      * @memberof EphemeralAgentsConfigurationDTO
      */
@@ -3825,6 +3831,12 @@ export interface ImmutableChain {
     project?: Project;
     /**
      * 
+     * @type {boolean}
+     * @memberof ImmutableChain
+     */
+    rerunnable?: boolean;
+    /**
+     * 
      * @type {Array<ImmutableChainStage>}
      * @memberof ImmutableChain
      */
@@ -4284,6 +4296,44 @@ export const ImmutableJobPlanTypeEnum = {
 } as const;
 export type ImmutableJobPlanTypeEnum = typeof ImmutableJobPlanTypeEnum[keyof typeof ImmutableJobPlanTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface ImmutableListCommit
+ */
+export interface ImmutableListCommit {
+    /**
+     * 
+     * @type {Commit}
+     * @memberof ImmutableListCommit
+     */
+    first?: Commit;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof ImmutableListCommit
+     */
+    last?: Commit;
+}
+/**
+ * 
+ * @export
+ * @interface ImmutableListVariableSubstitutionContext
+ */
+export interface ImmutableListVariableSubstitutionContext {
+    /**
+     * 
+     * @type {VariableSubstitutionContext}
+     * @memberof ImmutableListVariableSubstitutionContext
+     */
+    first?: VariableSubstitutionContext;
+    /**
+     * 
+     * @type {VariableSubstitutionContext}
+     * @memberof ImmutableListVariableSubstitutionContext
+     */
+    last?: VariableSubstitutionContext;
+}
 /**
  * 
  * @export
@@ -4785,12 +4835,6 @@ export interface ImmutableResultsSummary {
      * @memberof ImmutableResultsSummary
      */
     labelNames?: Array<string>;
-    /**
-     * 
-     * @type {Array<Labelling>}
-     * @memberof ImmutableResultsSummary
-     */
-    labellings?: Array<Labelling>;
     /**
      * 
      * @type {string}
@@ -6115,9 +6159,9 @@ export interface LinkedJiraIssue {
  * @export
  */
 export const LinkedJiraIssueIssueTypeEnum = {
-    Relates: 'BUILD_RELATES',
-    Fixes: 'BUILD_FIXES',
-    Causes: 'BUILD_CAUSES'
+    BuildRelates: 'BUILD_RELATES',
+    BuildFixes: 'BUILD_FIXES',
+    BuildCauses: 'BUILD_CAUSES'
 } as const;
 export type LinkedJiraIssueIssueTypeEnum = typeof LinkedJiraIssueIssueTypeEnum[keyof typeof LinkedJiraIssueIssueTypeEnum];
 
@@ -6446,6 +6490,12 @@ export interface MutableArtifact {
      * @memberof MutableArtifact
      */
     size?: number;
+    /**
+     * 
+     * @type {any}
+     * @memberof MutableArtifact
+     */
+    storageTag?: any | null;
 }
 
 
@@ -7011,6 +7061,25 @@ export interface Operations {
 /**
  * 
  * @export
+ * @interface PathSegment
+ */
+export interface PathSegment {
+    /**
+     * 
+     * @type {object}
+     * @memberof PathSegment
+     */
+    matrixParameters?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof PathSegment
+     */
+    path?: string;
+}
+/**
+ * 
+ * @export
  * @interface PipelineDefinition
  */
 export interface PipelineDefinition {
@@ -7362,6 +7431,12 @@ export interface PlanKey {
 export interface PlanRepositoryDefinition {
     /**
      * 
+     * @type {boolean}
+     * @memberof PlanRepositoryDefinition
+     */
+    ancestorMarkedForDeletion?: boolean;
+    /**
+     * 
      * @type {VcsBambooSpecsDetectionOptions}
      * @memberof PlanRepositoryDefinition
      */
@@ -7656,6 +7731,12 @@ export interface Project {
     key?: string;
     /**
      * 
+     * @type {Array<Labelling>}
+     * @memberof Project
+     */
+    labellings?: Array<Labelling>;
+    /**
+     * 
      * @type {boolean}
      * @memberof Project
      */
@@ -7672,6 +7753,12 @@ export interface Project {
      * @memberof Project
      */
     oid?: BambooEntityOid;
+    /**
+     * 
+     * @type {Array<Labelling>}
+     * @memberof Project
+     */
+    relatedLabellings?: Array<Labelling>;
     /**
      * 
      * @type {VcsBambooSpecsSource}
@@ -9950,6 +10037,37 @@ export interface RestDeploymentVersionLink {
 /**
  * 
  * @export
+ * @interface RestDeploymentVersionList
+ */
+export interface RestDeploymentVersionList {
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentVersionList
+     */
+    maxResult?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentVersionList
+     */
+    size?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RestDeploymentVersionList
+     */
+    startIndex?: number;
+    /**
+     * 
+     * @type {Array<RestDeploymentVersion>}
+     * @memberof RestDeploymentVersionList
+     */
+    versions?: Array<RestDeploymentVersion>;
+}
+/**
+ * 
+ * @export
  * @interface RestDeploymentVersionStatus
  */
 export interface RestDeploymentVersionStatus {
@@ -11488,6 +11606,12 @@ export interface RestInfo {
      * @memberof RestInfo
      */
     edition?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestInfo
+     */
+    specsVersion?: string;
     /**
      * 
      * @type {string}
@@ -13637,10 +13761,10 @@ export interface RestProject {
     project?: Project;
     /**
      * 
-     * @type {RestProjectUriInfo}
+     * @type {UriInfo}
      * @memberof RestProject
      */
-    uriInfo?: RestProjectUriInfo;
+    uriInfo?: UriInfo;
     /**
      * 
      * @type {User}
@@ -13730,6 +13854,12 @@ export interface RestProjectList {
     maxResult?: number;
     /**
      * 
+     * @type {Array<RestProject>}
+     * @memberof RestProjectList
+     */
+    projects?: Array<RestProject>;
+    /**
+     * 
      * @type {number}
      * @memberof RestProjectList
      */
@@ -13789,104 +13919,6 @@ export interface RestProjectRepository {
      * @memberof RestProjectRepository
      */
     url?: string;
-}
-/**
- * 
- * @export
- * @interface RestProjectUriInfo
- */
-export interface RestProjectUriInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectUriInfo
-     */
-    absolutePath?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfo
-     */
-    absolutePathBuilder?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectUriInfo
-     */
-    baseUri?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfo
-     */
-    baseUriBuilder?: object;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof RestProjectUriInfo
-     */
-    matchedResources?: Array<object>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof RestProjectUriInfo
-     */
-    matchedURIs?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectUriInfo
-     */
-    path?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfo
-     */
-    pathParameters?: object;
-    /**
-     * 
-     * @type {Array<RestProjectUriInfoPathSegmentsInner>}
-     * @memberof RestProjectUriInfo
-     */
-    pathSegments?: Array<RestProjectUriInfoPathSegmentsInner>;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfo
-     */
-    _queryParameters?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectUriInfo
-     */
-    requestUri?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfo
-     */
-    requestUriBuilder?: object;
-}
-/**
- * 
- * @export
- * @interface RestProjectUriInfoPathSegmentsInner
- */
-export interface RestProjectUriInfoPathSegmentsInner {
-    /**
-     * 
-     * @type {object}
-     * @memberof RestProjectUriInfoPathSegmentsInner
-     */
-    matrixParameters?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof RestProjectUriInfoPathSegmentsInner
-     */
-    path?: string;
 }
 /**
  * 
@@ -15206,25 +15238,6 @@ export interface RestStageResultList {
 /**
  * 
  * @export
- * @interface RestStorageConfiguration
- */
-export interface RestStorageConfiguration {
-    /**
-     * 
-     * @type {number}
-     * @memberof RestStorageConfiguration
-     */
-    hardLimit?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RestStorageConfiguration
-     */
-    softLimit?: number;
-}
-/**
- * 
- * @export
  * @interface RestTrustedKey
  */
 export interface RestTrustedKey {
@@ -16299,12 +16312,6 @@ export interface ResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {Array<Labelling>}
-     * @memberof ResultsSummary
-     */
-    labellings?: Array<Labelling>;
-    /**
-     * 
      * @type {string}
      * @memberof ResultsSummary
      */
@@ -16786,6 +16793,193 @@ export interface Status {
      * @memberof Status
      */
     statusCode?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SystemStatusInfo
+ */
+export interface SystemStatusInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    appServerContainer?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    availableProcessors?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    bambooBuildDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    bambooBuildNumber?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    bambooVersion?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    freeMemory?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    hostName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    ipAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaRuntimeName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaRuntimeVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVendor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVmName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVmSpecificationVendor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVmSpecificationVersion?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVmVendor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    javaVmVersion?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    maxMemory?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    operatingSystem?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    operatingSystemArchitecture?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    systemDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    systemEncoding?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    systemTime?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    totalMemory?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    uptime?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    uptimeMs?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SystemStatusInfo
+     */
+    usedMemory?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    userLocale?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    userName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SystemStatusInfo
+     */
+    userTimezone?: string;
 }
 /**
  * 
@@ -17471,6 +17665,85 @@ export interface TriggerReason {
 /**
  * 
  * @export
+ * @interface UriInfo
+ */
+export interface UriInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof UriInfo
+     */
+    absolutePath?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof UriInfo
+     */
+    absolutePathBuilder?: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UriInfo
+     */
+    baseUri?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof UriInfo
+     */
+    baseUriBuilder?: any | null;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof UriInfo
+     */
+    matchedResources?: Array<object>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UriInfo
+     */
+    matchedURIs?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UriInfo
+     */
+    path?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof UriInfo
+     */
+    pathParameters?: object;
+    /**
+     * 
+     * @type {Array<PathSegment>}
+     * @memberof UriInfo
+     */
+    pathSegments?: Array<PathSegment>;
+    /**
+     * 
+     * @type {object}
+     * @memberof UriInfo
+     */
+    _queryParameters?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof UriInfo
+     */
+    requestUri?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof UriInfo
+     */
+    requestUriBuilder?: any | null;
+}
+/**
+ * 
+ * @export
  * @interface User
  */
 export interface User {
@@ -17498,6 +17771,12 @@ export interface User {
      * @memberof User
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
+    serviceAccount?: boolean;
 }
 /**
  * 

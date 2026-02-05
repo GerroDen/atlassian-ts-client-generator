@@ -48,6 +48,8 @@ export interface GetBlogPostByIdRequest {
     includeVersions?: boolean;
     includeVersion?: boolean;
     includeFavoritedByCurrentUserStatus?: boolean;
+    includeWebresources?: boolean;
+    includeCollaborators?: boolean;
 }
 
 export interface GetBlogPostsRequest {
@@ -120,8 +122,11 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts`;
+
         const response = await this.request({
-            path: `/blogposts`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -172,8 +177,12 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -248,6 +257,14 @@ export class BlogPostApi extends runtime.BaseAPI {
             queryParameters['include-favorited-by-current-user-status'] = requestParameters['includeFavoritedByCurrentUserStatus'];
         }
 
+        if (requestParameters['includeWebresources'] != null) {
+            queryParameters['include-webresources'] = requestParameters['includeWebresources'];
+        }
+
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -258,8 +275,12 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -326,8 +347,11 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts`;
+
         const response = await this.request({
-            path: `/blogposts`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -393,8 +417,12 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/blogposts`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -456,8 +484,12 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/labels/{id}/blogposts`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/labels/{id}/blogposts`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -508,8 +540,12 @@ export class BlogPostApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

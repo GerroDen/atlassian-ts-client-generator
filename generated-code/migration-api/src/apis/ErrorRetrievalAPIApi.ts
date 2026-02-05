@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App Migration
+ * App migration
  * Endpoints available in Jira and Confluence cloud instances to support app migrations
  *
  * The version of the OpenAPI document: 1.0
@@ -43,8 +43,12 @@ export class ErrorRetrievalAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/error/{transferId}`;
+        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+
         const response = await this.request({
-            path: `/error/{transferId}`.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

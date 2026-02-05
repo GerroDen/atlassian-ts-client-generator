@@ -139,8 +139,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/versions/{version-number}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -194,8 +199,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{id}/versions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/attachments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -244,8 +253,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/versions/{version-number}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -303,8 +317,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/versions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -353,8 +371,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/versions/{version-number}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -412,8 +435,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/versions`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/versions`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -462,8 +489,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/footer-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -521,8 +553,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{id}/versions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/footer-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -571,8 +607,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/inline-comments/{id}/versions/{version-number}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -630,8 +671,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{id}/versions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/inline-comments/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -680,8 +725,13 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/versions/{version-number}`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/versions/{version-number}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -739,8 +789,12 @@ export class VersionApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/versions`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/versions`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

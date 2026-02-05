@@ -157,8 +157,16 @@ export class RelationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
+        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -244,8 +252,16 @@ export class RelationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
+        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -335,8 +351,15 @@ export class RelationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/relation/{relationName}/to/{targetType}/{targetKey}/from/{sourceType}`;
+        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/to/{targetType}/{targetKey}/from/{sourceType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -427,8 +450,15 @@ export class RelationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}`;
+        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -518,8 +548,16 @@ export class RelationApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`;
+        urlPath = urlPath.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName'])));
+        urlPath = urlPath.replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType'])));
+        urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
+        urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
+        urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/relation/{relationName}/from/{sourceType}/{sourceKey}/to/{targetType}/{targetKey}`.replace(`{${"relationName"}}`, encodeURIComponent(String(requestParameters['relationName']))).replace(`{${"sourceType"}}`, encodeURIComponent(String(requestParameters['sourceType']))).replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey']))).replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType']))).replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -15,11 +15,17 @@
 
 import * as runtime from '../runtime';
 import type {
+  CreateSpace201Response,
+  CreateSpaceRequest,
   GetSpaceById200Response,
   MultiEntityResultSpace,
   SpaceDescriptionBodyRepresentation,
   SpaceSortOrder,
 } from '../models/index';
+
+export interface CreateSpaceOperationRequest {
+    createSpaceRequest: CreateSpaceRequest;
+}
 
 export interface GetSpaceByIdRequest {
     id: number;
@@ -28,6 +34,7 @@ export interface GetSpaceByIdRequest {
     includeOperations?: boolean;
     includeProperties?: boolean;
     includePermissions?: boolean;
+    includeRoleAssignments?: boolean;
     includeLabels?: boolean;
 }
 
@@ -50,6 +57,55 @@ export interface GetSpacesRequest {
  * 
  */
 export class SpaceApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Create space
+     */
+    async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
+        if (requestParameters['createSpaceRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createSpaceRequest',
+                'Required parameter "createSpaceRequest" was null or undefined when calling createSpace().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:space:confluence"]);
+        }
+
+
+        let urlPath = `/spaces`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['createSpaceRequest'],
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Create space
+     */
+    async createSpace(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateSpace201Response> {
+        const response = await this.createSpaceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Returns a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
@@ -85,6 +141,10 @@ export class SpaceApi extends runtime.BaseAPI {
             queryParameters['include-permissions'] = requestParameters['includePermissions'];
         }
 
+        if (requestParameters['includeRoleAssignments'] != null) {
+            queryParameters['include-role-assignments'] = requestParameters['includeRoleAssignments'];
+        }
+
         if (requestParameters['includeLabels'] != null) {
             queryParameters['include-labels'] = requestParameters['includeLabels'];
         }
@@ -99,8 +159,12 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -183,8 +247,11 @@ export class SpaceApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces`;
+
         const response = await this.request({
-            path: `/spaces`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -211,7 +278,10 @@ export const GetSpacesTypeEnum = {
     Global: 'global',
     Collaboration: 'collaboration',
     KnowledgeBase: 'knowledge_base',
-    Personal: 'personal'
+    Personal: 'personal',
+    System: 'system',
+    Onboarding: 'onboarding',
+    XflowSampleSpace: 'xflow_sample_space'
 } as const;
 export type GetSpacesTypeEnum = typeof GetSpacesTypeEnum[keyof typeof GetSpacesTypeEnum];
 /**

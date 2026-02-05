@@ -143,8 +143,14 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -198,8 +204,12 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -261,8 +271,13 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -307,8 +322,12 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -369,8 +388,13 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -425,8 +449,14 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -479,8 +509,12 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -526,8 +560,12 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -588,8 +626,13 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -645,8 +688,14 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/byGroupId/{groupId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))).replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -706,8 +755,13 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction/byOperation/{operationKey}/user`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -761,8 +815,12 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/restriction`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/restriction`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

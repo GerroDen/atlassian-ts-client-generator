@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App Migration
+ * App migration
  * Endpoints available in Jira and Confluence cloud instances to support app migrations
  *
  * The version of the OpenAPI document: 1.0
@@ -48,8 +48,12 @@ export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/data/{s3Key}`;
+        urlPath = urlPath.replace(`{${"s3Key"}}`, encodeURIComponent(String(requestParameters['s3Key'])));
+
         const response = await this.request({
-            path: `/data/{s3Key}`.replace(`{${"s3Key"}}`, encodeURIComponent(String(requestParameters['s3Key']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -83,8 +87,12 @@ export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/data/{transferId}/all`;
+        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+
         const response = await this.request({
-            path: `/data/{transferId}/all`.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

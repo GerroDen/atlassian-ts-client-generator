@@ -72,8 +72,12 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
+        urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
+
         const response = await this.request({
-            path: `/rest/devopscomponents/1.0/{componentId}`.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -110,8 +114,11 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/devopscomponents/1.0/bulkByProperties`;
+
         const response = await this.request({
-            path: `/rest/devopscomponents/1.0/bulkByProperties`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -155,8 +162,12 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
+        urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
+
         const response = await this.request({
-            path: `/rest/devopscomponents/1.0/{componentId}`.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -203,8 +214,11 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/devopscomponents/1.0/bulk`;
+
         const response = await this.request({
-            path: `/rest/devopscomponents/1.0/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

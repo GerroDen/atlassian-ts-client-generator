@@ -350,8 +350,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/ssh`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/ssh`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -395,8 +399,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -426,8 +435,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/authconfig/latest/idps`;
+
         const response = await this.request({
-            path: `/authconfig/latest/idps`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -461,8 +473,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/ssh/latest/keys`;
+
         const response = await this.request({
-            path: `/ssh/latest/keys`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -492,8 +507,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/authenticate`;
+
         const response = await this.request({
-            path: `/tsv/latest/authenticate`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -523,8 +541,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/authenticate/recovery-code`;
+
         const response = await this.request({
-            path: `/tsv/latest/authenticate/recovery-code`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -554,8 +575,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/totp/complete-enrollment-update`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/complete-enrollment-update`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -585,8 +609,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/totp/complete-enforced-enrollment`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/complete-enforced-enrollment`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -616,8 +643,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/totp/complete-voluntary-enrollment`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/complete-voluntary-enrollment`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -654,8 +684,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -699,8 +733,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -737,8 +776,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -780,8 +823,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -828,8 +876,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -869,8 +923,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/users/{userSlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/users/{userSlug}/{tokenId}`.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -903,8 +962,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/ssh/latest/keys/{keyId}`;
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/ssh/latest/keys/{keyId}`.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -938,8 +1001,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/ssh/latest/keys`;
+
         const response = await this.request({
-            path: `/ssh/latest/keys`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -971,8 +1037,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/elevate-permissions/password`;
+
         const response = await this.request({
-            path: `/tsv/latest/elevate-permissions/password`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1005,8 +1074,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/elevate-permissions/recovery-code`;
+
         const response = await this.request({
-            path: `/tsv/latest/elevate-permissions/recovery-code`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1040,8 +1112,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/elevate-permissions/totp`;
+
         const response = await this.request({
-            path: `/tsv/latest/elevate-permissions/totp`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1068,8 +1143,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/basicauth/latest/config`;
+
         const response = await this.request({
-            path: `/basicauth/latest/config`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1111,8 +1189,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1161,8 +1243,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1204,8 +1291,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1246,8 +1337,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1295,8 +1391,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1337,8 +1439,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/access-tokens/latest/users/{userSlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/users/{userSlug}/{tokenId}`.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1365,8 +1472,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/authenticate/captcha`;
+
         const response = await this.request({
-            path: `/tsv/latest/authenticate/captcha`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1393,8 +1503,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/sso`;
+
         const response = await this.request({
-            path: `/authconfig/latest/sso`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1425,8 +1538,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/elevate-permissions`;
+
         const response = await this.request({
-            path: `/tsv/latest/elevate-permissions`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1466,8 +1582,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/ssh/{keyId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/ssh/{keyId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1501,8 +1622,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/ssh/{keyId}/projects`;
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/keys/latest/ssh/{keyId}/projects`.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1539,8 +1664,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/ssh/{keyId}/repos`;
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/keys/latest/ssh/{keyId}/repos`.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1587,8 +1716,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1653,8 +1788,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1688,8 +1828,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/idps/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/authconfig/latest/idps/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1724,8 +1868,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/idps`;
+
         const response = await this.request({
-            path: `/authconfig/latest/idps`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1752,8 +1899,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/jit-users`;
+
         const response = await this.request({
-            path: `/authconfig/latest/jit-users`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1788,8 +1938,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/login-options`;
+
         const response = await this.request({
-            path: `/authconfig/latest/login-options`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1823,8 +1976,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/ssh/latest/keys/{keyId}`;
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/ssh/latest/keys/{keyId}`.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1867,8 +2024,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/ssh/latest/keys`;
+
         const response = await this.request({
-            path: `/ssh/latest/keys`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1918,8 +2078,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/ssh`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/ssh`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1946,8 +2110,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/sso-management-status`;
+
         const response = await this.request({
-            path: `/tsv/latest/sso-management-status`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1974,8 +2141,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/status`;
+
         const response = await this.request({
-            path: `/tsv/latest/status`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2004,8 +2174,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/basicauth/latest/config`;
+
         const response = await this.request({
-            path: `/basicauth/latest/config`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2039,8 +2212,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/authconfig/latest/idps/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/authconfig/latest/idps/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2081,8 +2258,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/ssh/{keyId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/ssh/{keyId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2129,8 +2311,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2165,8 +2353,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/keys/latest/ssh/{keyId}`;
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+
         const response = await this.request({
-            path: `/keys/latest/ssh/{keyId}`.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2193,8 +2385,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/totp/recovery-code/rotate`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/recovery-code/rotate`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2221,8 +2416,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/ssh/latest/settings`;
+
         const response = await this.request({
-            path: `/ssh/latest/settings`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2251,8 +2449,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/totp/start-enforced-enrollment`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/start-enforced-enrollment`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2280,8 +2481,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/totp/start-enrollment-update`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/start-enrollment-update`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2308,8 +2512,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/totp/start-voluntary-enrollment`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/start-voluntary-enrollment`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2336,8 +2543,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/tsv/latest/totp/unenroll`;
+
         const response = await this.request({
-            path: `/tsv/latest/totp/unenroll`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2372,8 +2582,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/totp/unenroll/user/{userName}`;
+        urlPath = urlPath.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName'])));
+
         const response = await this.request({
-            path: `/tsv/latest/totp/unenroll/user/{userName}`.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2416,8 +2630,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2468,8 +2687,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/projects/{projectKey}/repos/{repositorySlug}/{tokenId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2513,8 +2738,13 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/access-tokens/latest/users/{userSlug}/{tokenId}`;
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/access-tokens/latest/users/{userSlug}/{tokenId}`.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))).replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2544,8 +2774,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/authconfig/latest/sso`;
+
         const response = await this.request({
-            path: `/authconfig/latest/sso`,
+            path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -2582,8 +2815,12 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/authconfig/latest/idps/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/authconfig/latest/idps/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -2632,8 +2869,14 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/ssh/{keyId}/permission/{permission}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+        urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/ssh/{keyId}/permission/{permission}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))).replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2688,8 +2931,15 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}/permission/{permission}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
+        urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/keys/latest/projects/{projectKey}/repos/{repositorySlug}/ssh/{keyId}/permission/{permission}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId']))).replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2718,8 +2968,11 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/tsv/latest/authenticate/totp-code`;
+
         const response = await this.request({
-            path: `/tsv/latest/authenticate/totp-code`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

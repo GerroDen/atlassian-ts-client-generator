@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App Migration
+ * App migration
  * Endpoints available in Jira and Confluence cloud instances to support app migrations
  *
  * The version of the OpenAPI document: 1.0
@@ -53,8 +53,12 @@ export class FeedbackChannelAPIApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/feedback/{transferId}`;
+        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+
         const response = await this.request({
-            path: `/feedback/{transferId}`.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

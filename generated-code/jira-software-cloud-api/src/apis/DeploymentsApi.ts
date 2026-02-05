@@ -15,7 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
-  DeploymentData,
+  DeploymentData1,
   ErrorMessage1,
   SubmitDeploymentRequest,
   SubmitDeploymentsResponse,
@@ -59,7 +59,7 @@ export interface SubmitDeploymentsRequest {
 export class DeploymentsApi extends runtime.BaseAPI {
 
     /**
-     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
      * Delete a deployment by key
      */
     async deleteDeploymentByKeyRaw(requestParameters: DeleteDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -103,8 +103,19 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:deployment-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`;
+        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -114,7 +125,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
      * Delete a deployment by key
      */
     async deleteDeploymentByKey(requestParameters: DeleteDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -122,7 +133,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
      * Delete deployments by Property
      */
     async deleteDeploymentsByPropertyRaw(requestParameters: DeleteDeploymentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -145,8 +156,16 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:deployment-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/deployments/0.1/bulkByProperties`;
+
         const response = await this.request({
-            path: `/rest/deployments/0.1/bulkByProperties`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -156,7 +175,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
      * Delete deployments by Property
      */
     async deleteDeploymentsByProperty(requestParameters: DeleteDeploymentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -164,10 +183,10 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
      * Get a deployment by key
      */
-    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData>> {
+    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -204,8 +223,19 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:deployment-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`;
+        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -215,10 +245,10 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
      * Get a deployment by key
      */
-    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData> {
+    async getDeploymentByKey(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeploymentData1> {
         const response = await this.getDeploymentByKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -253,8 +283,19 @@ export class DeploymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:deployment-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status`;
+        urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
+        urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
+        urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
+
         const response = await this.request({
-            path: `/rest/deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status`.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId']))).replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId']))).replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -273,7 +314,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object. 
      * Submit deployment data
      */
     async submitDeploymentsRaw(requestParameters: SubmitDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse>> {
@@ -301,8 +342,16 @@ export class DeploymentsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:deployment-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/deployments/0.1/bulk`;
+
         const response = await this.request({
-            path: `/rest/deployments/0.1/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -313,7 +362,7 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object.  Only Connect apps that define the `jiraDeploymentInfoProvider` module, and on-premise integrations, can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object. 
      * Submit deployment data
      */
     async submitDeployments(requestParameters: SubmitDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubmitDeploymentsResponse> {

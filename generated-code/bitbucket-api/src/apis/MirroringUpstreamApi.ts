@@ -134,8 +134,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/requests/{mirroringRequestId}/accept`;
+        urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}/accept`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -162,8 +166,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/analyticsSettings`;
+
         const response = await this.request({
-            path: `/mirroring/latest/analyticsSettings`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -192,8 +199,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/authenticate`;
+
         const response = await this.request({
-            path: `/mirroring/latest/authenticate`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -228,8 +238,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/requests/{mirroringRequestId}`;
+        urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -255,8 +269,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
+
         const response = await this.request({
-            path: `/mirroring/latest/account/settings/preferred-mirror`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -286,8 +303,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/repos`;
+
         const response = await this.request({
-            path: `/mirroring/latest/repos`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -333,8 +353,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/projects/{projectId}/repos`;
+        urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/projects/{projectId}/repos`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -372,8 +396,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/repos/{repoId}`;
+        urlPath = urlPath.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/repos/{repoId}`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -407,8 +435,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
+        urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -442,8 +474,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/requests/{mirroringRequestId}`;
+        urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -470,8 +506,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
+
         const response = await this.request({
-            path: `/mirroring/latest/account/settings/preferred-mirror`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -505,8 +544,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/projects/{projectId}`;
+        urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/projects/{projectId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -544,8 +587,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/repos/{repoId}/mirrors`;
+        urlPath = urlPath.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/repos/{repoId}/mirrors`.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -580,8 +627,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/mirrorServers`;
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -620,8 +670,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/requests`;
+
         const response = await this.request({
-            path: `/mirroring/latest/requests`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -657,8 +710,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}/events`;
+        urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}/events`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -687,8 +744,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/requests`;
+
         const response = await this.request({
-            path: `/mirroring/latest/requests`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -723,8 +783,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/requests/{mirroringRequestId}/reject`;
+        urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/requests/{mirroringRequestId}/reject`.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -758,8 +822,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
+        urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -787,8 +855,11 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
+
         const response = await this.request({
-            path: `/mirroring/latest/account/settings/preferred-mirror`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -824,8 +895,12 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
+        urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
+
         const response = await this.request({
-            path: `/mirroring/latest/mirrorServers/{mirrorId}`.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

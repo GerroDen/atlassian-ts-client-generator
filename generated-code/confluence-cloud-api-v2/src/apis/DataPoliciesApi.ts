@@ -50,8 +50,11 @@ export class DataPoliciesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/data-policies/metadata`;
+
         const response = await this.request({
-            path: `/data-policies/metadata`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -106,8 +109,11 @@ export class DataPoliciesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/data-policies/spaces`;
+
         const response = await this.request({
-            path: `/data-policies/spaces`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

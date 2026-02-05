@@ -62,8 +62,12 @@ export class ProfileApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/profile`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -114,8 +118,12 @@ export class ProfileApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/profile`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/profile`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,

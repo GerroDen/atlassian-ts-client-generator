@@ -73,8 +73,12 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space.permission:confluence", "write:space.permission:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/permission/custom-content`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission/custom-content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -125,8 +129,12 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space.permission:confluence", "write:space.permission:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/permission`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -176,8 +184,13 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:space.permission:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/permission/{id}`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/permission/{id}`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

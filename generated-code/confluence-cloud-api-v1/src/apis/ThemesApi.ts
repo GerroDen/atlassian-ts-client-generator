@@ -64,8 +64,11 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/theme/selected`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/theme/selected`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -107,8 +110,12 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -150,8 +157,12 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/theme/{themeKey}`;
+        urlPath = urlPath.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters['themeKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/theme/{themeKey}`.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters['themeKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -194,8 +205,11 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["manage:confluence-configuration"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/settings/theme`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/settings/theme`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -237,8 +251,12 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -288,8 +306,12 @@ export class ThemesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-space"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/theme`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

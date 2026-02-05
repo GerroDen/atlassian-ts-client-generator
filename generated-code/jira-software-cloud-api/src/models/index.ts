@@ -27,7 +27,7 @@ export interface Associations {
 export const AssociationsAssociationTypeEnum = {
     IssueIdOrKeys: 'issueIdOrKeys',
     ServiceIdOrKeys: 'serviceIdOrKeys',
-    AticloudcompasseventSource: 'ati:cloud:compass:event-source'
+    AtiCloudCompassEventSource: 'ati:cloud:compass:event-source'
 } as const;
 export type AssociationsAssociationTypeEnum = typeof AssociationsAssociationTypeEnum[keyof typeof AssociationsAssociationTypeEnum];
 
@@ -391,8 +391,15 @@ export interface Branch {
      * List of issues keys that this entity is associated with. They must be valid Jira issue keys.
      * @type {Array<string>}
      * @memberof Branch
+     * @deprecated
      */
-    issueKeys: Array<string>;
+    issueKeys?: Array<string>;
+    /**
+     * The Jira issue keys or IDs to associate the branch with.
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof Branch
+     */
+    associations?: Array<IssueIdOrKeysAssociation>;
     /**
      * An ID used to apply an ordering to updates for this entity in the case of out-of-order receipt of update requests. This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the provider system, but other alternatives are valid (e.g. a provider could store a counter against each entity and increment that on each update to Jira). Updates for an entity that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
      * @type {number}
@@ -407,10 +414,10 @@ export interface Branch {
     name: string;
     /**
      * 
-     * @type {Commit}
+     * @type {Commit1}
      * @memberof Branch
      */
-    lastCommit: Commit;
+    lastCommit: Commit1;
     /**
      * The URL of the page for creating a pull request from this branch. Max length is 2000 characters.
      * @type {string}
@@ -564,8 +571,15 @@ export interface BuildData {
      * 
      * @type {Array<string>}
      * @memberof BuildData
+     * @deprecated
      */
-    issueKeys: Array<string>;
+    issueKeys?: Array<string>;
+    /**
+     * The Jira issue keys or IDs to associate the build with.
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof BuildData
+     */
+    associations?: Array<IssueIdOrKeysAssociation>;
     /**
      * 
      * @type {TestInfo}
@@ -1136,20 +1150,20 @@ export interface ColorBean {
  * @export
  */
 export const ColorBeanKeyEnum = {
-    _1: 'color_1',
-    _2: 'color_2',
-    _3: 'color_3',
-    _4: 'color_4',
-    _5: 'color_5',
-    _6: 'color_6',
-    _7: 'color_7',
-    _8: 'color_8',
-    _9: 'color_9',
-    _10: 'color_10',
-    _11: 'color_11',
-    _12: 'color_12',
-    _13: 'color_13',
-    _14: 'color_14'
+    Color1: 'color_1',
+    Color2: 'color_2',
+    Color3: 'color_3',
+    Color4: 'color_4',
+    Color5: 'color_5',
+    Color6: 'color_6',
+    Color7: 'color_7',
+    Color8: 'color_8',
+    Color9: 'color_9',
+    Color10: 'color_10',
+    Color11: 'color_11',
+    Color12: 'color_12',
+    Color13: 'color_13',
+    Color14: 'color_14'
 } as const;
 export type ColorBeanKeyEnum = typeof ColorBeanKeyEnum[keyof typeof ColorBeanKeyEnum];
 
@@ -1235,8 +1249,15 @@ export interface Commit {
      * List of issues keys that this entity is associated with. They must be valid Jira issue keys.
      * @type {Array<string>}
      * @memberof Commit
+     * @deprecated
      */
-    issueKeys: Array<string>;
+    issueKeys?: Array<string>;
+    /**
+     * The Jira issue keys or IDs to associate the commit with.
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof Commit
+     */
+    associations?: Array<IssueIdOrKeysAssociation>;
     /**
      * An ID used to apply an ordering to updates for this entity in the case of out-of-order receipt of update requests. This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the provider system, but other alternatives are valid (e.g. a provider could store a counter against each entity and increment that on each update to Jira). Updates for an entity that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
      * @type {number}
@@ -1308,6 +1329,117 @@ export const CommitFlagsEnum = {
 } as const;
 export type CommitFlagsEnum = typeof CommitFlagsEnum[keyof typeof CommitFlagsEnum];
 
+/**
+ * Represents a commit in the version control system.
+ * @export
+ * @interface Commit1
+ */
+export interface Commit1 {
+    /**
+     * The identifier or hash of the commit. Will be used for cross entity linking. Must be unique for all commits within a repository, i.e., only one commit can have ID 'X' in repository 'Y'. But adding, e.g., a branch with ID 'X' to repository 'Y' is acceptable. Only alphanumeric characters, and '~.-_', are allowed. Max length is 1024 characters
+     * @type {string}
+     * @memberof Commit1
+     */
+    id: string;
+    /**
+     * List of issues keys that this entity is associated with. They must be valid Jira issue keys.
+     * @type {Array<string>}
+     * @memberof Commit1
+     */
+    issueKeys: Array<string>;
+    /**
+     * An ID used to apply an ordering to updates for this entity in the case of out-of-order receipt of update requests. This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the provider system, but other alternatives are valid (e.g. a provider could store a counter against each entity and increment that on each update to Jira). Updates for an entity that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
+     * @type {number}
+     * @memberof Commit1
+     */
+    updateSequenceId: number;
+    /**
+     * Deprecated. Use the id field instead.
+     * @type {string}
+     * @memberof Commit1
+     */
+    hash?: string;
+    /**
+     * The set of flags for this commit
+     * @type {Set<string>}
+     * @memberof Commit1
+     */
+    flags?: Array<Commit1FlagsEnum>;
+    /**
+     * The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.
+     * @type {string}
+     * @memberof Commit1
+     */
+    message: string;
+    /**
+     * 
+     * @type {Author}
+     * @memberof Commit1
+     */
+    author: Author;
+    /**
+     * The total number of files added, removed, or modified by this commit
+     * @type {number}
+     * @memberof Commit1
+     */
+    fileCount: number;
+    /**
+     * The URL of this commit. Max length is 2000 characters.
+     * @type {string}
+     * @memberof Commit1
+     */
+    url: string;
+    /**
+     * List of file changes. Max number of files is 10. Currently, only the first 5 files are shown (sorted by path) in the UI. This UI behavior may change without notice.
+     * @type {Array<any>}
+     * @memberof Commit1
+     */
+    files?: Array<any>;
+    /**
+     * The author timestamp of this commit. Formatted as a UTC ISO 8601 date time format.
+     * @type {string}
+     * @memberof Commit1
+     */
+    authorTimestamp: string;
+    /**
+     * Shortened identifier for this commit, used for display. Max length is 255 characters.
+     * @type {string}
+     * @memberof Commit1
+     */
+    displayId: string;
+}
+
+
+/**
+ * @export
+ */
+export const Commit1FlagsEnum = {
+    MergeCommit: 'MERGE_COMMIT'
+} as const;
+export type Commit1FlagsEnum = typeof Commit1FlagsEnum[keyof typeof Commit1FlagsEnum];
+
+/**
+ * Identifies an individual commit in a repository.
+ * 
+ * @export
+ * @interface Commit2
+ */
+export interface Commit2 {
+    /**
+     * The hash for the Commit.
+     * 
+     * @type {string}
+     * @memberof Commit2
+     */
+    commitHash: string;
+    /**
+     * The ID of the Repository that the Commit belongs to.
+     * 
+     * @type {string}
+     * @memberof Commit2
+     */
+    repositoryId: string;
+}
 /**
  * Data related to a specific component in a specific workspace that is affected by incidents.
  * 
@@ -1417,10 +1549,10 @@ export type ComponentSchemaVersionEnum = typeof ComponentSchemaVersionEnum[keyof
  * @export
  */
 export const ComponentTierEnum = {
-    _1: 'Tier 1',
-    _2: 'Tier 2',
-    _3: 'Tier 3',
-    _4: 'Tier 4'
+    Tier1: 'Tier 1',
+    Tier2: 'Tier 2',
+    Tier3: 'Tier 3',
+    Tier4: 'Tier 4'
 } as const;
 export type ComponentTierEnum = typeof ComponentTierEnum[keyof typeof ComponentTierEnum];
 
@@ -1584,8 +1716,6 @@ export interface DeploymentData {
     issueKeys?: Array<string>;
     /**
      * The entities to associate the Deployment information with.
-     * It must contain at least one of IssueIdOrKeysAssociation or ServiceIdOrKeysAssociation.
-     * 
      * @type {Array<DeploymentDataAssociationsInner>}
      * @memberof DeploymentData
      */
@@ -1693,6 +1823,146 @@ export const DeploymentDataSchemaVersionEnum = {
 export type DeploymentDataSchemaVersionEnum = typeof DeploymentDataSchemaVersionEnum[keyof typeof DeploymentDataSchemaVersionEnum];
 
 /**
+ * Data related to a specific deployment in a specific environment that the deployment is present in.
+ * Must specify one of `issueKeys` or `associations`.
+ * 
+ * @export
+ * @interface DeploymentData1
+ */
+export interface DeploymentData1 {
+    /**
+     * This is the identifier for the deployment. It must be unique for the specified pipeline and environment. It must be a monotonically increasing number, as this is used to sequence the deployments.
+     * 
+     * @type {number}
+     * @memberof DeploymentData1
+     */
+    deploymentSequenceNumber: number;
+    /**
+     * A number used to apply an order to the updates to the deployment, as identified by the deploymentSequenceNumber, in the case of out-of-order receipt of update requests. It must be a monotonically increasing number. For example, epoch time could be one way to generate the updateSequenceNumber.
+     * 
+     * @type {number}
+     * @memberof DeploymentData1
+     */
+    updateSequenceNumber: number;
+    /**
+     * Deprecated. The Jira issue keys to associate the Deployment information with.
+     * Should replace this field with the "associations" field to associate Deployment information with issueKeys or other types of associations.
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentData1
+     * @deprecated
+     */
+    issueKeys?: Array<string>;
+    /**
+     * The entities to associate the Deployment information with.
+     * 
+     * @type {Array<DeploymentDataAssociationsInner>}
+     * @memberof DeploymentData1
+     */
+    associations?: Array<DeploymentDataAssociationsInner>;
+    /**
+     * The human-readable name for the deployment. Will be shown in the UI.
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    displayName: string;
+    /**
+     * A URL users can use to link to this deployment, in this environment.
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    url: string;
+    /**
+     * A short description of the deployment
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    description: string;
+    /**
+     * The last-updated timestamp to present to the user as a summary of the state of the deployment.
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    lastUpdated: string;
+    /**
+     * An (optional) additional label that may be displayed with deployment information. Can be used to display version information etc. for the deployment.
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    label?: string;
+    /**
+     * The duration of the deployment (in seconds).
+     * 
+     * @type {number}
+     * @memberof DeploymentData1
+     */
+    duration?: number;
+    /**
+     * The state of the deployment
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    state: DeploymentData1StateEnum;
+    /**
+     * 
+     * @type {Pipeline}
+     * @memberof DeploymentData1
+     */
+    pipeline: Pipeline;
+    /**
+     * 
+     * @type {Environment}
+     * @memberof DeploymentData1
+     */
+    environment: Environment;
+    /**
+     * A list of commands to be actioned for this Deployment
+     * 
+     * @type {Array<Command>}
+     * @memberof DeploymentData1
+     */
+    commands?: Array<Command>;
+    /**
+     * The DeploymentData schema version used for this deployment data.
+     * 
+     * Placeholder to support potential schema changes in the future.
+     * 
+     * @type {string}
+     * @memberof DeploymentData1
+     */
+    schemaVersion?: DeploymentData1SchemaVersionEnum;
+}
+
+
+/**
+ * @export
+ */
+export const DeploymentData1StateEnum = {
+    Unknown: 'unknown',
+    Pending: 'pending',
+    InProgress: 'in_progress',
+    Cancelled: 'cancelled',
+    Failed: 'failed',
+    RolledBack: 'rolled_back',
+    Successful: 'successful'
+} as const;
+export type DeploymentData1StateEnum = typeof DeploymentData1StateEnum[keyof typeof DeploymentData1StateEnum];
+
+/**
+ * @export
+ */
+export const DeploymentData1SchemaVersionEnum = {
+    _10: '1.0'
+} as const;
+export type DeploymentData1SchemaVersionEnum = typeof DeploymentData1SchemaVersionEnum[keyof typeof DeploymentData1SchemaVersionEnum];
+
+/**
  * 
  * @export
  * @interface DeploymentDataAssociationsInner
@@ -1707,12 +1977,12 @@ export interface DeploymentDataAssociationsInner {
     associationType: DeploymentDataAssociationsInnerAssociationTypeEnum;
     /**
      * The entity keys that represent the entities to be associated.
-     * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes must not exceed a limit of 500.
      * 
-     * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
+     * @type {Array<EntityAssociationValuesInner>}
      * @memberof DeploymentDataAssociationsInner
      */
-    values: Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>;
+    values: Array<EntityAssociationValuesInner>;
 }
 
 
@@ -1725,167 +1995,6 @@ export const DeploymentDataAssociationsInnerAssociationTypeEnum = {
 } as const;
 export type DeploymentDataAssociationsInnerAssociationTypeEnum = typeof DeploymentDataAssociationsInnerAssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAssociationTypeEnum];
 
-/**
- * An association type referencing issues in Jira.
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf
- */
-export interface DeploymentDataAssociationsInnerAnyOf {
-    /**
-     * Defines the asssociation type.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf
-     */
-    associationType: DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum;
-    /**
-     * The Jira issue keys to associate the Deployment information with.
-     * 
-     * The number of values counted across all associationTypes (issueKeys,
-     * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
-     * 
-     * @type {Array<string>}
-     * @memberof DeploymentDataAssociationsInnerAnyOf
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum = {
-    IssueKeys: 'issueKeys',
-    IssueIdOrKeys: 'issueIdOrKeys'
-} as const;
-export type DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum = typeof DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAnyOfAssociationTypeEnum];
-
-/**
- * An association type referencing service id or keys.
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf1
- */
-export interface DeploymentDataAssociationsInnerAnyOf1 {
-    /**
-     * Defines the asssociation type.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf1
-     */
-    associationType: DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum;
-    /**
-     * The service id or keys to associate the Deployment information with.
-     * 
-     * The number of values counted across all associationTypes (issueKeys,
-     * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
-     * 
-     * @type {Array<string>}
-     * @memberof DeploymentDataAssociationsInnerAnyOf1
-     */
-    values: Array<string>;
-}
-
-
-/**
- * @export
- */
-export const DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum = {
-    ServiceIdOrKeys: 'serviceIdOrKeys'
-} as const;
-export type DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum = typeof DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAnyOf1AssociationTypeEnum];
-
-/**
- * An association type referencing another DevOps entity. Initially only commit entities are supported for this type of association.
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf2
- */
-export interface DeploymentDataAssociationsInnerAnyOf2 {
-    /**
-     * Defines the association type. Currently supported entities can be found in this field's value enums list.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2
-     */
-    associationType: DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum;
-    /**
-     * The entity keys that represent the entities to be associated.
-     * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
-     * 
-     * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2
-     */
-    values: Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>;
-}
-
-
-/**
- * @export
- */
-export const DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum = {
-    Commit: 'commit',
-    Repository: 'repository'
-} as const;
-export type DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum = typeof DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum[keyof typeof DeploymentDataAssociationsInnerAnyOf2AssociationTypeEnum];
-
-/**
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf2ValuesInner
- */
-export interface DeploymentDataAssociationsInnerAnyOf2ValuesInner {
-    /**
-     * The hash for the Commit.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInner
-     */
-    commitHash: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInner
-     */
-    repositoryId: string;
-}
-/**
- * Identifies an individual commit in a repository.
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
- */
-export interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf {
-    /**
-     * The hash for the Commit.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
-     */
-    commitHash: string;
-    /**
-     * The ID of the Repository that the Commit belongs to.
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf
-     */
-    repositoryId: string;
-}
-/**
- * Identifies an individual repository.
- * 
- * @export
- * @interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1
- */
-export interface DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentDataAssociationsInnerAnyOf2ValuesInnerAnyOf1
-     */
-    repositoryId: string;
-}
 /**
  * Fields that uniquely reference a deployment.
  * 
@@ -1963,6 +2072,60 @@ export const DevInformationOperationTypeEnum = {
 } as const;
 export type DevInformationOperationTypeEnum = typeof DevInformationOperationTypeEnum[keyof typeof DevInformationOperationTypeEnum];
 
+/**
+ * An association type referencing another entity
+ * 
+ * @export
+ * @interface EntityAssociation
+ */
+export interface EntityAssociation {
+    /**
+     * Defines the association type. Currently supported entities can be found in this field's value enums list.
+     * 
+     * @type {string}
+     * @memberof EntityAssociation
+     */
+    associationType: EntityAssociationAssociationTypeEnum;
+    /**
+     * The entity keys that represent the entities to be associated.
+     * The number of values counted across all associationTypes must not exceed a limit of 500.
+     * 
+     * @type {Array<EntityAssociationValuesInner>}
+     * @memberof EntityAssociation
+     */
+    values: Array<EntityAssociationValuesInner>;
+}
+
+
+/**
+ * @export
+ */
+export const EntityAssociationAssociationTypeEnum = {
+    Commit: 'commit',
+    Repository: 'repository'
+} as const;
+export type EntityAssociationAssociationTypeEnum = typeof EntityAssociationAssociationTypeEnum[keyof typeof EntityAssociationAssociationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface EntityAssociationValuesInner
+ */
+export interface EntityAssociationValuesInner {
+    /**
+     * The hash for the Commit.
+     * 
+     * @type {string}
+     * @memberof EntityAssociationValuesInner
+     */
+    commitHash: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAssociationValuesInner
+     */
+    repositoryId: string;
+}
 /**
  * Represents an error that happened with particular entity.
  * @export
@@ -2514,8 +2677,15 @@ export interface FeatureFlagData {
      * 
      * @type {Array<string>}
      * @memberof FeatureFlagData
+     * @deprecated
      */
-    issueKeys: Array<string>;
+    issueKeys?: Array<string>;
+    /**
+     * The Jira issue keys or IDs to associate the feature flag with.
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof FeatureFlagData
+     */
+    associations?: Array<IssueIdOrKeysAssociation>;
     /**
      * 
      * @type {FeatureFlagSummary}
@@ -3371,10 +3541,10 @@ export type GetComponentById200ResponseSchemaVersionEnum = typeof GetComponentBy
  * @export
  */
 export const GetComponentById200ResponseTierEnum = {
-    _1: 'Tier 1',
-    _2: 'Tier 2',
-    _3: 'Tier 3',
-    _4: 'Tier 4'
+    Tier1: 'Tier 1',
+    Tier2: 'Tier 2',
+    Tier3: 'Tier 3',
+    Tier4: 'Tier 4'
 } as const;
 export type GetComponentById200ResponseTierEnum = typeof GetComponentById200ResponseTierEnum[keyof typeof GetComponentById200ResponseTierEnum];
 
@@ -5020,7 +5190,7 @@ export interface IssueBeanTransitionsInnerToAllOfStatusCategory {
     readonly self?: string;
 }
 /**
- * An association type referencing Jira issue id or keys.
+ * An association type referencing issues in Jira.
  * 
  * @export
  * @interface IssueIdOrKeysAssociation
@@ -5034,9 +5204,9 @@ export interface IssueIdOrKeysAssociation {
      */
     associationType: IssueIdOrKeysAssociationAssociationTypeEnum;
     /**
-     * The Jira issue id or keys to associate the Security information with.
+     * The Jira issue keys or IDs to associate the entity with.
      * 
-     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes must not exceed a limit of 500.
      * 
      * @type {Array<string>}
      * @memberof IssueIdOrKeysAssociation
@@ -5049,32 +5219,32 @@ export interface IssueIdOrKeysAssociation {
  * @export
  */
 export const IssueIdOrKeysAssociationAssociationTypeEnum = {
+    IssueKeys: 'issueKeys',
     IssueIdOrKeys: 'issueIdOrKeys'
 } as const;
 export type IssueIdOrKeysAssociationAssociationTypeEnum = typeof IssueIdOrKeysAssociationAssociationTypeEnum[keyof typeof IssueIdOrKeysAssociationAssociationTypeEnum];
 
 /**
- * An association type referencing issues in Jira.
+ * An association type referencing Jira issue id or keys.
  * 
  * @export
- * @interface IssueKeysAssociation
+ * @interface IssueIdOrKeysAssociation1
  */
-export interface IssueKeysAssociation {
+export interface IssueIdOrKeysAssociation1 {
     /**
-     * Defines the asssociation type.
+     * Defines the association type.
      * 
      * @type {string}
-     * @memberof IssueKeysAssociation
+     * @memberof IssueIdOrKeysAssociation1
      */
-    associationType: IssueKeysAssociationAssociationTypeEnum;
+    associationType: IssueIdOrKeysAssociation1AssociationTypeEnum;
     /**
-     * The Jira issue keys to associate the Remote Link information with.
+     * The Jira issue id or keys to associate the Security information with.
      * 
-     * The number of values counted across all associationTypes (issueKeys,
-     * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes (issueIdOrKeys) must not exceed a limit of 500.
      * 
      * @type {Array<string>}
-     * @memberof IssueKeysAssociation
+     * @memberof IssueIdOrKeysAssociation1
      */
     values: Array<string>;
 }
@@ -5083,10 +5253,10 @@ export interface IssueKeysAssociation {
 /**
  * @export
  */
-export const IssueKeysAssociationAssociationTypeEnum = {
-    IssueKeys: 'issueKeys'
+export const IssueIdOrKeysAssociation1AssociationTypeEnum = {
+    IssueIdOrKeys: 'issueIdOrKeys'
 } as const;
-export type IssueKeysAssociationAssociationTypeEnum = typeof IssueKeysAssociationAssociationTypeEnum[keyof typeof IssueKeysAssociationAssociationTypeEnum];
+export type IssueIdOrKeysAssociation1AssociationTypeEnum = typeof IssueIdOrKeysAssociation1AssociationTypeEnum[keyof typeof IssueIdOrKeysAssociation1AssociationTypeEnum];
 
 /**
  * 
@@ -5744,20 +5914,20 @@ export interface PartiallyUpdateEpicRequestColor {
  * @export
  */
 export const PartiallyUpdateEpicRequestColorKeyEnum = {
-    _1: 'color_1',
-    _2: 'color_2',
-    _3: 'color_3',
-    _4: 'color_4',
-    _5: 'color_5',
-    _6: 'color_6',
-    _7: 'color_7',
-    _8: 'color_8',
-    _9: 'color_9',
-    _10: 'color_10',
-    _11: 'color_11',
-    _12: 'color_12',
-    _13: 'color_13',
-    _14: 'color_14'
+    Color1: 'color_1',
+    Color2: 'color_2',
+    Color3: 'color_3',
+    Color4: 'color_4',
+    Color5: 'color_5',
+    Color6: 'color_6',
+    Color7: 'color_7',
+    Color8: 'color_8',
+    Color9: 'color_9',
+    Color10: 'color_10',
+    Color11: 'color_11',
+    Color12: 'color_12',
+    Color13: 'color_13',
+    Color14: 'color_14'
 } as const;
 export type PartiallyUpdateEpicRequestColorKeyEnum = typeof PartiallyUpdateEpicRequestColorKeyEnum[keyof typeof PartiallyUpdateEpicRequestColorKeyEnum];
 
@@ -5982,8 +6152,15 @@ export interface PullRequest {
      * List of issues keys that this entity is associated with. They must be valid Jira issue keys.
      * @type {Array<string>}
      * @memberof PullRequest
+     * @deprecated
      */
-    issueKeys: Array<string>;
+    issueKeys?: Array<string>;
+    /**
+     * The Jira issue keys or IDs to associate the pull request with.
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof PullRequest
+     */
+    associations?: Array<IssueIdOrKeysAssociation>;
     /**
      * An ID used to apply an ordering to updates for this entity in the case of out-of-order receipt of update requests. This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the provider system, but other alternatives are valid (e.g. a provider could store a counter against each entity and increment that on each update to Jira). Updates for an entity that are received with an updateSqeuenceId lower than what is currently stored will be ignored.
      * @type {number}
@@ -6362,17 +6539,16 @@ export type RemoteLinkDataTypeEnum = typeof RemoteLinkDataTypeEnum[keyof typeof 
  */
 export interface RemoteLinkDataAssociationsInner {
     /**
-     * Defines the asssociation type.
+     * Defines the association type.
      * 
      * @type {string}
      * @memberof RemoteLinkDataAssociationsInner
      */
     associationType: RemoteLinkDataAssociationsInnerAssociationTypeEnum;
     /**
-     * The service id or keys to associate the Remote Link information with.
+     * The service ID or keys to associate the entity with.
      * 
-     * The number of values counted across all associationTypes (issueKeys,
-     * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes must not exceed a limit of 500.
      * 
      * @type {Array<string>}
      * @memberof RemoteLinkDataAssociationsInner
@@ -6516,6 +6692,20 @@ export interface Repository {
      * @memberof Repository
      */
     updateSequenceId: number;
+}
+/**
+ * Identifies an individual repository.
+ * 
+ * @export
+ * @interface Repository1
+ */
+export interface Repository1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof Repository1
+     */
+    repositoryId: string;
 }
 /**
  * Represents errors related to a particular repository and its entities
@@ -6844,24 +7034,23 @@ export interface SecurityWorkspaceResponse {
     updatedAt: string;
 }
 /**
- * An association type referencing service id or keys.
+ * An association type referencing service ID or keys.
  * 
  * @export
  * @interface ServiceIdOrKeysAssociation
  */
 export interface ServiceIdOrKeysAssociation {
     /**
-     * Defines the asssociation type.
+     * Defines the association type.
      * 
      * @type {string}
      * @memberof ServiceIdOrKeysAssociation
      */
     associationType: ServiceIdOrKeysAssociationAssociationTypeEnum;
     /**
-     * The service id or keys to associate the Remote Link information with.
+     * The service ID or keys to associate the entity with.
      * 
-     * The number of values counted across all associationTypes (issueKeys,
-     * issueIdOrKeys and serviceIdOrKeys) must not exceed a limit of 500.
+     * The number of values counted across all associationTypes must not exceed a limit of 500.
      * 
      * @type {Array<string>}
      * @memberof ServiceIdOrKeysAssociation
@@ -7156,6 +7345,18 @@ export interface StoreDevinfoResult {
      * @memberof StoreDevinfoResult
      */
     unknownIssueKeys?: Array<string>;
+    /**
+     * Associations that are not known on this Jira instance (if any).
+     * 
+     * These may be invalid keys (e.g. `UTF-8` is sometimes incorrectly identified as a Jira issue key), or they may be for projects that no longer exist.
+     * 
+     * If a development information entity has been associated with any other association other than those in this array it will still be stored against those valid associations.
+     * If a development information entity was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
+     * 
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof StoreDevinfoResult
+     */
+    unknownAssociations?: Array<IssueIdOrKeysAssociation>;
 }
 /**
  * The payload used to submit (update / insert) build data.
@@ -7241,6 +7442,18 @@ export interface SubmitBuildsResponse {
      * @memberof SubmitBuildsResponse
      */
     unknownIssueKeys?: Array<string>;
+    /**
+     * Associations that are not known on this Jira instance (if any).
+     * 
+     * These may be invalid keys (e.g. `UTF-8` is sometimes incorrectly identified as a Jira issue key), or they may be for projects that no longer exist.
+     * 
+     * If a build has been associated with any other association other than those in this array it will still be stored against those valid associations.
+     * If a build was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
+     * 
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof SubmitBuildsResponse
+     */
+    unknownAssociations?: Array<IssueIdOrKeysAssociation>;
 }
 /**
  * The payload used to submit (update / insert) deployment data.
@@ -7322,10 +7535,10 @@ export interface SubmitDeploymentsResponse {
      * If a deployment has been associated with any other association other than those in this array it will still be stored against those valid associations.
      * If a deployment was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
      * 
-     * @type {Array<SubmitDeploymentsResponseUnknownAssociationsInner>}
+     * @type {Array<DeploymentDataAssociationsInner>}
      * @memberof SubmitDeploymentsResponse
      */
-    unknownAssociations?: Array<SubmitDeploymentsResponseUnknownAssociationsInner>;
+    unknownAssociations?: Array<DeploymentDataAssociationsInner>;
 }
 /**
  * The current gating status for the given Deployment.
@@ -7429,39 +7642,6 @@ export const SubmitDeploymentsResponse1DetailsInnerTypeEnum = {
 export type SubmitDeploymentsResponse1DetailsInnerTypeEnum = typeof SubmitDeploymentsResponse1DetailsInnerTypeEnum[keyof typeof SubmitDeploymentsResponse1DetailsInnerTypeEnum];
 
 /**
- * 
- * @export
- * @interface SubmitDeploymentsResponseUnknownAssociationsInner
- */
-export interface SubmitDeploymentsResponseUnknownAssociationsInner {
-    /**
-     * Defines the association type. Currently supported entities can be found in this field's value enums list.
-     * 
-     * @type {string}
-     * @memberof SubmitDeploymentsResponseUnknownAssociationsInner
-     */
-    associationType: SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum;
-    /**
-     * The entity keys that represent the entities to be associated.
-     * The number of values counted across all associationTypes (issueKeys, issueIdOrKeys, serviceIdOrKeys, supported ATIs and entity associations) must not exceed a limit of 500.
-     * 
-     * @type {Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>}
-     * @memberof SubmitDeploymentsResponseUnknownAssociationsInner
-     */
-    values: Array<DeploymentDataAssociationsInnerAnyOf2ValuesInner>;
-}
-
-
-/**
- * @export
- */
-export const SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum = {
-    Commit: 'commit',
-    Repository: 'repository'
-} as const;
-export type SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum = typeof SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum[keyof typeof SubmitDeploymentsResponseUnknownAssociationsInnerAssociationTypeEnum];
-
-/**
  * The payload used to submit (update / insert) DevOps Component data.
  * @export
  * @interface SubmitDevopsComponentsRequest
@@ -7483,7 +7663,7 @@ export interface SubmitDevopsComponentsRequest {
      * @type {Array<Component>}
      * @memberof SubmitDevopsComponentsRequest
      */
-    components: Array<Component>;
+    devopsComponents: Array<Component>;
     /**
      * 
      * @type {ProviderMetadata6}
@@ -7605,6 +7785,18 @@ export interface SubmitFeatureFlagsResponse {
      * @memberof SubmitFeatureFlagsResponse
      */
     unknownIssueKeys?: Array<string>;
+    /**
+     * Associations that are not known on this Jira instance (if any).
+     * 
+     * These may be invalid keys (e.g. `UTF-8` is sometimes incorrectly identified as a Jira issue key), or they may be for projects that no longer exist.
+     * 
+     * If a feature flag has been associated with any other association other than those in this array it will still be stored against those valid associations.
+     * If a feature flag was only associated with the associations in this array, it is deemed to be invalid and it won't be persisted.
+     * 
+     * @type {Array<IssueIdOrKeysAssociation>}
+     * @memberof SubmitFeatureFlagsResponse
+     */
+    unknownAssociations?: Array<IssueIdOrKeysAssociation>;
 }
 /**
  * The payload used to submit (update / insert) Incident data.

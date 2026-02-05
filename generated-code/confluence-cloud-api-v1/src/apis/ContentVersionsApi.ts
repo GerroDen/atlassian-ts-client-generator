@@ -16,26 +16,12 @@
 import * as runtime from '../runtime';
 import type {
   Version,
-  VersionArray,
   VersionRestore,
 } from '../models/index';
 
 export interface DeleteContentVersionRequest {
     id: string;
     versionNumber: number;
-}
-
-export interface GetContentVersionRequest {
-    id: string;
-    versionNumber: number;
-    expand?: Array<string>;
-}
-
-export interface GetContentVersionsRequest {
-    id: string;
-    start?: number;
-    limit?: number;
-    expand?: Array<string>;
 }
 
 export interface RestoreContentVersionRequest {
@@ -80,8 +66,13 @@ export class ContentVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/version/{versionNumber}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -96,119 +87,6 @@ export class ContentVersionsApi extends runtime.BaseAPI {
      */
     async deleteContentVersion(requestParameters: DeleteContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteContentVersionRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content version
-     * @deprecated
-     */
-    async getContentVersionRaw(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getContentVersion().'
-            );
-        }
-
-        if (requestParameters['versionNumber'] == null) {
-            throw new runtime.RequiredError(
-                'versionNumber',
-                'Required parameter "versionNumber" was null or undefined when calling getContentVersion().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version/{versionNumber}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a version for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content version
-     * @deprecated
-     */
-    async getContentVersion(requestParameters: GetContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Version> {
-        const response = await this.getContentVersionRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content versions
-     * @deprecated
-     */
-    async getContentVersionsRaw(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionArray>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getContentVersions().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the versions for a piece of content in descending order.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content versions
-     * @deprecated
-     */
-    async getContentVersions(requestParameters: GetContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VersionArray> {
-        const response = await this.getContentVersionsRaw(requestParameters, initOverrides);
-        return await response.value();
     }
 
     /**
@@ -248,8 +126,12 @@ export class ContentVersionsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/version`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/version`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

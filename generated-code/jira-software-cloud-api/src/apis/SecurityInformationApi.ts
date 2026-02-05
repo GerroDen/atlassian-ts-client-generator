@@ -86,8 +86,11 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/linkedWorkspaces/bulk`;
+
         const response = await this.request({
-            path: `/rest/security/1.0/linkedWorkspaces/bulk`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -124,8 +127,11 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/bulkByProperties`;
+
         const response = await this.request({
-            path: `/rest/security/1.0/bulkByProperties`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -169,8 +175,12 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/vulnerability/{vulnerabilityId}`;
+        urlPath = urlPath.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId'])));
+
         const response = await this.request({
-            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -214,8 +224,12 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/linkedWorkspaces/{workspaceId}`;
+        urlPath = urlPath.replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId'])));
+
         const response = await this.request({
-            path: `/rest/security/1.0/linkedWorkspaces/{workspaceId}`.replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -253,8 +267,11 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/linkedWorkspaces`;
+
         const response = await this.request({
-            path: `/rest/security/1.0/linkedWorkspaces`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -299,8 +316,12 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/vulnerability/{vulnerabilityId}`;
+        urlPath = urlPath.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId'])));
+
         const response = await this.request({
-            path: `/rest/security/1.0/vulnerability/{vulnerabilityId}`.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -347,8 +368,11 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/bulk`;
+
         const response = await this.request({
-            path: `/rest/security/1.0/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -396,8 +420,11 @@ export class SecurityInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/security/1.0/linkedWorkspaces/bulk`;
+
         const response = await this.request({
-            path: `/rest/security/1.0/linkedWorkspaces/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

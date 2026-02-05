@@ -321,8 +321,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/properties`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -374,8 +378,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/properties`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -427,8 +435,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence", "write:comment:confluence"]);
         }
 
+
+        let urlPath = `/comments/{comment-id}/properties`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -480,8 +492,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence", "write:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/properties`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -533,8 +549,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/databases/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -586,8 +606,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
         }
 
+
+        let urlPath = `/folders/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/folders/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -639,8 +663,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/properties`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -692,8 +720,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/embeds/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -745,8 +777,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -796,8 +832,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -845,8 +886,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -894,8 +940,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence", "write:comment:confluence"]);
         }
 
+
+        let urlPath = `/comments/{comment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -943,8 +994,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence", "write:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -992,8 +1048,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{database-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1041,8 +1102,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
         }
 
+
+        let urlPath = `/folders/{folder-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1090,8 +1156,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1139,8 +1210,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1188,8 +1264,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1246,8 +1327,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/properties`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1296,8 +1381,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1355,8 +1445,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/properties`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1405,8 +1499,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1464,8 +1563,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/comments/{comment-id}/properties`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/comments/{comment-id}/properties`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1514,8 +1617,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/comments/{comment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1573,8 +1681,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/properties`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1623,8 +1735,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1682,8 +1799,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/databases/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1732,8 +1853,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{database-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1791,8 +1917,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence"]);
         }
 
+
+        let urlPath = `/folders/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/folders/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1841,8 +1971,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence"]);
         }
 
+
+        let urlPath = `/folders/{folder-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1900,8 +2035,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/properties`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/properties`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1950,8 +2089,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2009,8 +2153,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/embeds/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2059,8 +2207,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2118,8 +2271,12 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}/properties`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}/properties`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2168,8 +2325,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2227,8 +2389,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:attachment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{attachment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/attachments/{attachment-id}/properties/{property-id}`.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2287,8 +2454,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{blogpost-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/blogposts/{blogpost-id}/properties/{property-id}`.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2347,8 +2519,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence", "write:comment:confluence"]);
         }
 
+
+        let urlPath = `/comments/{comment-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/comments/{comment-id}/properties/{property-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2407,8 +2584,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence", "write:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{custom-content-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/custom-content/{custom-content-id}/properties/{property-id}`.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2467,8 +2649,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence", "write:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{database-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/databases/{database-id}/properties/{property-id}`.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2527,8 +2714,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:folder:confluence", "write:folder:confluence"]);
         }
 
+
+        let urlPath = `/folders/{folder-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/folders/{folder-id}/properties/{property-id}`.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2587,8 +2779,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{page-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/pages/{page-id}/properties/{property-id}`.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2647,8 +2844,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence", "write:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{embed-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/embeds/{embed-id}/properties/{property-id}`.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2707,8 +2909,13 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence", "write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{whiteboard-id}/properties/{property-id}`;
+        urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
+        urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
+
         const response = await this.request({
-            path: `/whiteboards/{whiteboard-id}/properties/{property-id}`.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId']))).replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

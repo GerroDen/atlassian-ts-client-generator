@@ -15,21 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
-  AsyncId,
   AvailableContentStates,
-  BulkRemoveContentStatesRequest,
   ContentArray,
   ContentState,
-  ContentStateBulkSetTaskUpdate,
   ContentStateResponse,
   ContentStateRestInput,
   ContentStateSettings,
 } from '../models/index';
-
-export interface BulkRemoveContentStatesOperationRequest {
-    status: BulkRemoveContentStatesOperationStatusEnum;
-    bulkRemoveContentStatesRequest?: BulkRemoveContentStatesRequest;
-}
 
 export interface GetAvailableContentStatesRequest {
     id: string;
@@ -56,10 +48,6 @@ export interface GetSpaceContentStatesRequest {
     spaceKey: string;
 }
 
-export interface GetTaskUpdateRequest {
-    taskId: string;
-}
-
 export interface RemoveContentStateRequest {
     id: string;
     status?: RemoveContentStateStatusEnum;
@@ -67,66 +55,14 @@ export interface RemoveContentStateRequest {
 
 export interface SetContentStateRequest {
     id: string;
+    status: SetContentStateStatusEnum;
     contentStateRestInput: ContentStateRestInput;
-    status?: SetContentStateStatusEnum;
 }
 
 /**
  * 
  */
 export class ContentStatesApi extends runtime.BaseAPI {
-
-    /**
-     * Creates a long running task that Removes content state from draft or published versions of pages specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Content Edit Permission for a content to have its state removed via this endpoint.
-     * Bulk remove content states from content
-     * @deprecated
-     */
-    async bulkRemoveContentStatesRaw(requestParameters: BulkRemoveContentStatesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
-        if (requestParameters['status'] == null) {
-            throw new runtime.RequiredError(
-                'status',
-                'Required parameter "status" was null or undefined when calling bulkRemoveContentStates().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content-states/delete`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['bulkRemoveContentStatesRequest'],
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Creates a long running task that Removes content state from draft or published versions of pages specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Content Edit Permission for a content to have its state removed via this endpoint.
-     * Bulk remove content states from content
-     * @deprecated
-     */
-    async bulkRemoveContentStates(requestParameters: BulkRemoveContentStatesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AsyncId> {
-        const response = await this.bulkRemoveContentStatesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
 
     /**
      * Gets content states that are available for the content to be set as. Will return all enabled Space Content States. Will only return most the 3 most recently published custom content states to match UI editor list. To get all custom content states, use the /content-states endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
@@ -152,8 +88,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/state/available`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/state/available`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -199,8 +139,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/state`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/state`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -242,8 +186,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/state/settings`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/state/settings`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -262,7 +210,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content that has the provided content state in a space.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Returns all content that has the provided content state in a space.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get content in space with given content state
      */
     async getContentsWithStateRaw(requestParameters: GetContentsWithStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -308,8 +256,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/state/content`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/state/content`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -319,7 +271,7 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content that has the provided content state in a space.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Returns all content that has the provided content state in a space.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
      * Get content in space with given content state
      */
     async getContentsWithState(requestParameters: GetContentsWithStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
@@ -344,8 +296,11 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content-states`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/content-states`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -387,8 +342,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/space/{spaceKey}/state`;
+        urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/space/{spaceKey}/state`.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -403,51 +362,6 @@ export class ContentStatesApi extends runtime.BaseAPI {
      */
     async getSpaceContentStates(requestParameters: GetSpaceContentStatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ContentState>> {
         const response = await this.getSpaceContentStatesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get Status of long running task that was previously created to remove content states from content. User must first create a task by passing in details to the /wiki/rest/api/content-states DELETE endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Must have created long running task
-     * Get update on long running task for setting of content state.
-     * @deprecated
-     */
-    async getTaskUpdateRaw(requestParameters: GetTaskUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateBulkSetTaskUpdate>> {
-        if (requestParameters['taskId'] == null) {
-            throw new runtime.RequiredError(
-                'taskId',
-                'Required parameter "taskId" was null or undefined when calling getTaskUpdate().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content-states/task/{taskId}`.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Get Status of long running task that was previously created to remove content states from content. User must first create a task by passing in details to the /wiki/rest/api/content-states DELETE endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Must have created long running task
-     * Get update on long running task for setting of content state.
-     * @deprecated
-     */
-    async getTaskUpdate(requestParameters: GetTaskUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentStateBulkSetTaskUpdate> {
-        const response = await this.getTaskUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -479,8 +393,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/state`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/state`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -510,6 +428,13 @@ export class ContentStatesApi extends runtime.BaseAPI {
             );
         }
 
+        if (requestParameters['status'] == null) {
+            throw new runtime.RequiredError(
+                'status',
+                'Required parameter "status" was null or undefined when calling setContentState().'
+            );
+        }
+
         if (requestParameters['contentStateRestInput'] == null) {
             throw new runtime.RequiredError(
                 'contentStateRestInput',
@@ -535,8 +460,12 @@ export class ContentStatesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/{id}/state`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/state`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -557,14 +486,6 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
 }
 
-/**
- * @export
- */
-export const BulkRemoveContentStatesOperationStatusEnum = {
-    Current: 'current',
-    Draft: 'draft'
-} as const;
-export type BulkRemoveContentStatesOperationStatusEnum = typeof BulkRemoveContentStatesOperationStatusEnum[keyof typeof BulkRemoveContentStatesOperationStatusEnum];
 /**
  * @export
  */

@@ -88,8 +88,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
+        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,8 +155,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
+        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -207,8 +215,11 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/none/issue`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/none/issue`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -255,8 +266,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
+        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/issue`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -304,8 +319,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
+        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -353,8 +372,12 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/rank`;
+        urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/{epicIdOrKey}/rank`.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -395,8 +418,11 @@ export class EpicApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/epic/none/issue`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/epic/none/issue`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

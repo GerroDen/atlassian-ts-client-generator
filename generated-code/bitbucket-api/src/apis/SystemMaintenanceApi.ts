@@ -352,8 +352,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/exports/{jobId}/cancel`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -386,8 +390,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/imports/{jobId}/cancel`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -420,8 +428,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/{jobId}/cancel`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/cancel`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -447,8 +459,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/default-branch`;
+
         const response = await this.request({
-            path: `/api/latest/admin/default-branch`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -474,8 +489,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/mail-server/sender-address`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server/sender-address`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -501,8 +519,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/diagnostics/connectivity`;
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/diagnostics/connectivity`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -559,8 +580,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             formParams.append('type', requestParameters['type'] as any);
         }
 
+
+        let urlPath = `/api/latest/hook-scripts`;
+
         const response = await this.request({
-            path: `/api/latest/hook-scripts`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -599,8 +623,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -633,8 +661,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -667,8 +699,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/users/{userSlug}/avatar.png`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -695,8 +731,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/banner`;
+
         const response = await this.request({
-            path: `/api/latest/admin/banner`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -729,8 +768,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/hook-scripts/{scriptId}`;
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -756,8 +799,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/mail-server`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -783,8 +829,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/audit/latest/notification-settings/retention-config-review`;
+
         const response = await this.request({
-            path: `/audit/latest/notification-settings/retention-config-review`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -810,8 +859,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/license`;
+
         const response = await this.request({
-            path: `/api/latest/admin/license`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -845,8 +897,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -873,8 +929,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/summary`;
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/summary`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -909,8 +968,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/summaries`;
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/summaries`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -949,8 +1011,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings/users`;
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -977,8 +1042,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/nodes`;
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1005,8 +1073,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/application-properties`;
+
         const response = await this.request({
-            path: `/api/latest/application-properties`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1033,8 +1104,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/banner`;
+
         const response = await this.request({
-            path: `/api/latest/admin/banner`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1068,8 +1142,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/config/control-plane.pem`;
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/config/control-plane.pem`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1095,8 +1172,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/default-branch`;
+
         const response = await this.request({
-            path: `/api/latest/admin/default-branch`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1129,8 +1209,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/exports/{jobId}`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1180,8 +1264,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/exports/{jobId}/messages`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/exports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1208,8 +1296,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/admin`;
+
         const response = await this.request({
-            path: `/admin`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1248,8 +1339,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/rate-limit/history`;
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/history`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1283,8 +1377,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/hook-scripts/{scriptId}`;
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1318,8 +1416,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/imports/{jobId}`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1369,8 +1471,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/imports/{jobId}/messages`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/imports/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1397,8 +1503,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/cluster`;
+
         const response = await this.request({
-            path: `/api/latest/admin/cluster`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1432,8 +1541,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/labels/{labelName}`;
+        urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
+
         const response = await this.request({
-            path: `/api/latest/labels/{labelName}`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1479,8 +1592,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/labels/{labelName}/labeled`;
+        urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
+
         const response = await this.request({
-            path: `/api/latest/labels/{labelName}/labeled`.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1519,8 +1636,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/labels`;
+
         const response = await this.request({
-            path: `/api/latest/labels`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1554,8 +1674,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/logs/logger/{loggerName}`;
+        urlPath = urlPath.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName'])));
+
         const response = await this.request({
-            path: `/api/latest/logs/logger/{loggerName}`.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1582,8 +1706,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/mail-server`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1617,8 +1744,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/{jobId}`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1667,8 +1798,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/{jobId}/messages`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/messages`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1702,8 +1837,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/{jobId}/summary`;
+        urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/{jobId}/summary`.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1737,8 +1876,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1765,8 +1908,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/policies/latest/admin/repos/archive`;
+
         const response = await this.request({
-            path: `/policies/latest/admin/repos/archive`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1793,8 +1939,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/policies/latest/admin/repos/delete`;
+
         const response = await this.request({
-            path: `/policies/latest/admin/repos/delete`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1821,8 +1970,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/logs/rootLogger`;
+
         const response = await this.request({
-            path: `/api/latest/logs/rootLogger`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1849,8 +2001,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/mail-server/sender-address`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server/sender-address`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1876,8 +2031,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/logs/settings`;
+
         const response = await this.request({
-            path: `/api/latest/logs/settings`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1904,8 +2062,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings`;
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1939,8 +2100,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/support-zips/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/support-zips/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1966,8 +2131,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/admin/git/mesh/support-zips`;
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/support-zips`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1993,8 +2161,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/admin/supported-key-types`;
+
         const response = await this.request({
-            path: `/admin/supported-key-types`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2027,8 +2198,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2062,8 +2237,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/users/{userSlug}/settings`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2106,8 +2285,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/users`;
+
         const response = await this.request({
-            path: `/api/latest/users`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2136,8 +2318,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/migration/exports/preview`;
+
         const response = await this.request({
-            path: `/api/latest/migration/exports/preview`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2167,8 +2352,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/migration/mesh/preview`;
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/preview`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2203,8 +2391,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/hook-scripts/{scriptId}/content`;
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}/content`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2232,8 +2424,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/git/mesh/nodes`;
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2289,8 +2484,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/migration/mesh/repos`;
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh/repos`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2319,8 +2517,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings/users`;
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2357,8 +2558,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings/users/{userSlug}`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2388,8 +2593,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/banner`;
+
         const response = await this.request({
-            path: `/api/latest/admin/banner`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2418,8 +2626,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/default-branch`;
+
         const response = await this.request({
-            path: `/api/latest/admin/default-branch`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2460,8 +2671,13 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/logs/logger/{loggerName}/{levelName}`;
+        urlPath = urlPath.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName'])));
+        urlPath = urlPath.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName'])));
+
         const response = await this.request({
-            path: `/api/latest/logs/logger/{loggerName}/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName']))).replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2489,8 +2705,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/mail-server`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2520,8 +2739,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/policies/latest/admin/repos/archive`;
+
         const response = await this.request({
-            path: `/policies/latest/admin/repos/archive`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2551,8 +2773,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/policies/latest/admin/repos/delete`;
+
         const response = await this.request({
-            path: `/policies/latest/admin/repos/delete`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2587,8 +2812,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/logs/rootLogger/{levelName}`;
+        urlPath = urlPath.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName'])));
+
         const response = await this.request({
-            path: `/api/latest/logs/rootLogger/{levelName}`.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2616,8 +2845,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/mail-server/sender-address`;
+
         const response = await this.request({
-            path: `/api/latest/admin/mail-server/sender-address`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2646,8 +2878,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/logs/settings`;
+
         const response = await this.request({
-            path: `/api/latest/logs/settings`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2677,8 +2912,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/rate-limit/settings`;
+
         const response = await this.request({
-            path: `/api/latest/admin/rate-limit/settings`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2708,8 +2946,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/migration/exports`;
+
         const response = await this.request({
-            path: `/api/latest/migration/exports`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2739,8 +2980,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/migration/imports`;
+
         const response = await this.request({
-            path: `/api/latest/migration/imports`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2770,8 +3014,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/migration/mesh`;
+
         const response = await this.request({
-            path: `/api/latest/migration/mesh`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2801,8 +3048,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/admin`;
+
         const response = await this.request({
-            path: `/admin`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2838,8 +3088,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/hook-scripts/{scriptId}`;
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/hook-scripts/{scriptId}`.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2869,8 +3123,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/license`;
+
         const response = await this.request({
-            path: `/api/latest/admin/license`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2907,8 +3164,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/admin/git/mesh/nodes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2945,8 +3206,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/users/{userSlug}/settings`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/settings`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2975,8 +3240,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/users`;
+
         const response = await this.request({
-            path: `/api/latest/users`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3006,8 +3274,11 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/users/credentials`;
+
         const response = await this.request({
-            path: `/api/latest/users/credentials`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3065,8 +3336,12 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
             formParams.append('avatar', requestParameters['avatar'] as any);
         }
 
+
+        let urlPath = `/api/latest/users/{userSlug}/avatar.png`;
+        urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
+
         const response = await this.request({
-            path: `/api/latest/users/{userSlug}/avatar.png`.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

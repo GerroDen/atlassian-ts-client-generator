@@ -18,6 +18,7 @@ import type {
   ClassificationLevel,
   PostPageClassificationLevelRequest,
   PostWhiteboardClassificationLevelRequest,
+  PutPageClassificationLevelRequest,
   PutSpaceDefaultClassificationLevelRequest,
   PutWhiteboardClassificationLevelRequest,
 } from '../models/index';
@@ -70,7 +71,7 @@ export interface PostWhiteboardClassificationLevelOperationRequest {
 
 export interface PutBlogPostClassificationLevelRequest {
     id: number;
-    putSpaceDefaultClassificationLevelRequest: PutSpaceDefaultClassificationLevelRequest;
+    putPageClassificationLevelRequest: PutPageClassificationLevelRequest;
 }
 
 export interface PutDatabaseClassificationLevelRequest {
@@ -78,9 +79,9 @@ export interface PutDatabaseClassificationLevelRequest {
     putWhiteboardClassificationLevelRequest: PutWhiteboardClassificationLevelRequest;
 }
 
-export interface PutPageClassificationLevelRequest {
+export interface PutPageClassificationLevelOperationRequest {
     id: number;
-    putSpaceDefaultClassificationLevelRequest: PutSpaceDefaultClassificationLevelRequest;
+    putPageClassificationLevelRequest: PutPageClassificationLevelRequest;
 }
 
 export interface PutSpaceDefaultClassificationLevelOperationRequest {
@@ -122,8 +123,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence", "write:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/classification-level/default`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/classification-level/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -168,8 +173,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -204,8 +213,11 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/classification-levels`;
+
         const response = await this.request({
-            path: `/classification-levels`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -247,8 +259,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/databases/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -294,8 +310,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:page:confluence", "write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -337,8 +357,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/classification-level/default`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/classification-level/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -380,8 +404,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -432,8 +460,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/classification-level/reset`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/classification-level/reset`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -484,8 +516,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{id}/classification-level/reset`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/databases/{id}/classification-level/reset`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -536,8 +572,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/classification-level/reset`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/classification-level/reset`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -588,8 +628,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}/classification-level/reset`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}/classification-level/reset`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -619,10 +663,10 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['putSpaceDefaultClassificationLevelRequest'] == null) {
+        if (requestParameters['putPageClassificationLevelRequest'] == null) {
             throw new runtime.RequiredError(
-                'putSpaceDefaultClassificationLevelRequest',
-                'Required parameter "putSpaceDefaultClassificationLevelRequest" was null or undefined when calling putBlogPostClassificationLevel().'
+                'putPageClassificationLevelRequest',
+                'Required parameter "putPageClassificationLevelRequest" was null or undefined when calling putBlogPostClassificationLevel().'
             );
         }
 
@@ -640,12 +684,16 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['putSpaceDefaultClassificationLevelRequest'],
+            body: requestParameters['putPageClassificationLevelRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -692,8 +740,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:database:confluence"]);
         }
 
+
+        let urlPath = `/databases/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/databases/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -715,7 +767,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
      * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the page.
      * Update page classification level
      */
-    async putPageClassificationLevelRaw(requestParameters: PutPageClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putPageClassificationLevelRaw(requestParameters: PutPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -723,10 +775,10 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['putSpaceDefaultClassificationLevelRequest'] == null) {
+        if (requestParameters['putPageClassificationLevelRequest'] == null) {
             throw new runtime.RequiredError(
-                'putSpaceDefaultClassificationLevelRequest',
-                'Required parameter "putSpaceDefaultClassificationLevelRequest" was null or undefined when calling putPageClassificationLevel().'
+                'putPageClassificationLevelRequest',
+                'Required parameter "putPageClassificationLevelRequest" was null or undefined when calling putPageClassificationLevel().'
             );
         }
 
@@ -744,12 +796,16 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:page:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['putSpaceDefaultClassificationLevelRequest'],
+            body: requestParameters['putPageClassificationLevelRequest'],
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -759,7 +815,7 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
      * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the page.
      * Update page classification level
      */
-    async putPageClassificationLevel(requestParameters: PutPageClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async putPageClassificationLevel(requestParameters: PutPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.putPageClassificationLevelRaw(requestParameters, initOverrides);
     }
 
@@ -796,8 +852,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:space:confluence", "write:space:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/classification-level/default`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/classification-level/default`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -848,8 +908,12 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:whiteboard:confluence"]);
         }
 
+
+        let urlPath = `/whiteboards/{id}/classification-level`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/whiteboards/{id}/classification-level`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

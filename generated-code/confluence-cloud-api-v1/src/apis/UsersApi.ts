@@ -80,8 +80,11 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/anonymous`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/anonymous`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -131,8 +134,11 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/bulk`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/bulk`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -171,8 +177,11 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/current`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/current`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -226,8 +235,11 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/memberof`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/memberof`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -265,8 +277,11 @@ export class UsersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/wiki/rest/api/user/email`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/email`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -304,8 +319,11 @@ export class UsersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/wiki/rest/api/user/email/bulk`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/email/bulk`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -355,8 +373,11 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-user"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/user`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

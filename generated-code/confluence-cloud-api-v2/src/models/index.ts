@@ -54,6 +54,25 @@ export type AccountType = typeof AccountType[keyof typeof AccountType];
 /**
  * 
  * @export
+ * @interface AdminKeyResponse
+ */
+export interface AdminKeyResponse {
+    /**
+     * User identifier.
+     * @type {string}
+     * @memberof AdminKeyResponse
+     */
+    accountId?: string;
+    /**
+     * Timestamp in UTC that represents when the admin key will expire. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof AdminKeyResponse
+     */
+    expirationTime?: string;
+}
+/**
+ * 
+ * @export
  * @interface Ancestor
  */
 export interface Ancestor {
@@ -1246,6 +1265,52 @@ export interface ChildrenCommentModel {
 
 
 /**
+ * 
+ * @export
+ * @interface ChildrenResponse
+ */
+export interface ChildrenResponse {
+    /**
+     * ID of the child content.
+     * @type {string}
+     * @memberof ChildrenResponse
+     */
+    id?: string;
+    /**
+     * 
+     * @type {OnlyArchivedAndCurrentContentStatus}
+     * @memberof ChildrenResponse
+     */
+    status?: OnlyArchivedAndCurrentContentStatus;
+    /**
+     * Title of the child content.
+     * @type {string}
+     * @memberof ChildrenResponse
+     */
+    title?: string;
+    /**
+     * Hierarchical content type (database/embed/folder/page/whiteboard).
+     * @type {string}
+     * @memberof ChildrenResponse
+     */
+    type?: string;
+    /**
+     * ID of the space the content is in.
+     * @type {string}
+     * @memberof ChildrenResponse
+     */
+    spaceId?: string;
+    /**
+     * Numerical value indicating position of the content relative to its siblings (with the same parentId) within the content tree.
+     * If the content is sorted by childPosition, it will reflect the default content ordering within the content tree.
+     * @type {number}
+     * @memberof ChildrenResponse
+     */
+    childPosition?: number | null;
+}
+
+
+/**
  * A unit of [data classification](https://support.atlassian.com/security-and-access-policies/docs/what-is-data-classification/) defined by an organiation. 
  * A classification level may be associated with specific storage and handling requirements or expectations.
  * @export
@@ -1584,6 +1649,25 @@ export interface ContentPropertyUpdateRequestVersion {
 }
 
 /**
+ * The sort fields for hierarchical content types. The default sort direction is ascending. To sort in descending order, append a `-` character before the sort field. For example, `fieldName` or `-fieldName`.
+ * @export
+ */
+export const ContentSortOrder = {
+    CreatedDate: 'created-date',
+    CreatedDate2Desc: '-created-date',
+    Id: 'id',
+    Id2Desc: '-id',
+    ModifiedDate: 'modified-date',
+    ModifiedDate2Desc: '-modified-date',
+    ChildPosition: 'child-position',
+    ChildPosition2Desc: '-child-position',
+    Title: 'title',
+    Title2Desc: '-title'
+} as const;
+export type ContentSortOrder = typeof ContentSortOrder[keyof typeof ContentSortOrder];
+
+
+/**
  * The status of the content.
  * @export
  */
@@ -1747,6 +1831,12 @@ export interface CreateBlogPostRequest {
      * @memberof CreateBlogPostRequest
      */
     body?: CreateBlogPostRequestBody;
+    /**
+     * Created date of the blog post in the format of "yyyy-MM-ddTHH:mm:ss.SSSZ".
+     * @type {string}
+     * @memberof CreateBlogPostRequest
+     */
+    createdAt?: string;
 }
 
 
@@ -1910,7 +2000,7 @@ export interface CreateCustomContentRequest {
      */
     type: string;
     /**
-     * The status of the custom content.
+     * The status of the custom content. Defaults to `current` when status not provided.
      * @type {string}
      * @memberof CreateCustomContentRequest
      */
@@ -1958,7 +2048,8 @@ export interface CreateCustomContentRequest {
  * @export
  */
 export const CreateCustomContentRequestStatusEnum = {
-    Current: 'current'
+    Current: 'current',
+    Draft: 'draft'
 } as const;
 export type CreateCustomContentRequestStatusEnum = typeof CreateCustomContentRequestStatusEnum[keyof typeof CreateCustomContentRequestStatusEnum];
 
@@ -2034,6 +2125,12 @@ export interface CreateDatabase200Response {
      * @memberof CreateDatabase200Response
      */
     createdAt?: string;
+    /**
+     * ID of the space the database is in.
+     * @type {string}
+     * @memberof CreateDatabase200Response
+     */
+    spaceId?: string;
     /**
      * 
      * @type {Version}
@@ -2140,6 +2237,12 @@ export interface CreateFolder200Response {
      * @memberof CreateFolder200Response
      */
     createdAt?: string;
+    /**
+     * ID of the space the folder is in.
+     * @type {string}
+     * @memberof CreateFolder200Response
+     */
+    spaceId?: string;
     /**
      * 
      * @type {Version}
@@ -2663,6 +2766,12 @@ export interface CreatePageRequest {
      * @memberof CreatePageRequest
      */
     body?: CreatePageRequestBody;
+    /**
+     * The subtype of the page. Provide the subtype live to create a live doc or no subtype to create a page.
+     * @type {string}
+     * @memberof CreatePageRequest
+     */
+    subtype?: CreatePageRequestSubtypeEnum;
 }
 
 
@@ -2674,6 +2783,14 @@ export const CreatePageRequestStatusEnum = {
     Draft: 'draft'
 } as const;
 export type CreatePageRequestStatusEnum = typeof CreatePageRequestStatusEnum[keyof typeof CreatePageRequestStatusEnum];
+
+/**
+ * @export
+ */
+export const CreatePageRequestSubtypeEnum = {
+    Live: 'live'
+} as const;
+export type CreatePageRequestSubtypeEnum = typeof CreatePageRequestSubtypeEnum[keyof typeof CreatePageRequestSubtypeEnum];
 
 /**
  * @type CreatePageRequestBody
@@ -2754,6 +2871,12 @@ export interface CreateSmartLink200Response {
      */
     embedUrl?: string;
     /**
+     * ID of the space the Smart Link is in.
+     * @type {string}
+     * @memberof CreateSmartLink200Response
+     */
+    spaceId?: string;
+    /**
      * 
      * @type {Version}
      * @memberof CreateSmartLink200Response
@@ -2798,6 +2921,205 @@ export interface CreateSmartLinkRequest {
      * @memberof CreateSmartLinkRequest
      */
     embedUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateSpace201Response
+ */
+export interface CreateSpace201Response {
+    /**
+     * ID of the space.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    id?: string;
+    /**
+     * Key of the space.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    key?: string;
+    /**
+     * Name of the space.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    name?: string;
+    /**
+     * 
+     * @type {SpaceType}
+     * @memberof CreateSpace201Response
+     */
+    type?: SpaceType;
+    /**
+     * 
+     * @type {SpaceStatus}
+     * @memberof CreateSpace201Response
+     */
+    status?: SpaceStatus;
+    /**
+     * The account ID of the user who created this space originally.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    authorId?: string;
+    /**
+     * Currently active alias for a Confluence space.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    currentActiveAlias?: string;
+    /**
+     * Date and time when the space was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    createdAt?: string;
+    /**
+     * ID of the space's homepage.
+     * @type {string}
+     * @memberof CreateSpace201Response
+     */
+    homepageId?: string;
+    /**
+     * 
+     * @type {SpaceDescription}
+     * @memberof CreateSpace201Response
+     */
+    description?: SpaceDescription;
+    /**
+     * 
+     * @type {SpaceIcon}
+     * @memberof CreateSpace201Response
+     */
+    icon?: SpaceIcon;
+    /**
+     * 
+     * @type {GetAttachmentById200ResponseAllOfLinks}
+     * @memberof CreateSpace201Response
+     */
+    links?: GetAttachmentById200ResponseAllOfLinks;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreateSpaceRequest
+ */
+export interface CreateSpaceRequest {
+    /**
+     * The name of the space to be created.
+     * @type {string}
+     * @memberof CreateSpaceRequest
+     */
+    name: string;
+    /**
+     * The key for the new space. See [Space Keys](https://support.atlassian.com/confluence-cloud/docs/create-a-space/). If the key property is not provided, the alias property is required to be used instead.
+     * @type {string}
+     * @memberof CreateSpaceRequest
+     */
+    key?: string;
+    /**
+     * This field will be used as the new identifier for the space in confluence page URLs. If the alias property is not provided, the key property is required to be used instead. Maximum 255 alphanumeric characters in length.
+     * @type {string}
+     * @memberof CreateSpaceRequest
+     */
+    alias?: string;
+    /**
+     * 
+     * @type {CreateSpaceRequestDescription}
+     * @memberof CreateSpaceRequest
+     */
+    description?: CreateSpaceRequestDescription;
+    /**
+     * 
+     * @type {Array<CreateSpaceRequestRoleAssignmentsInner>}
+     * @memberof CreateSpaceRequest
+     */
+    roleAssignments?: Array<CreateSpaceRequestRoleAssignmentsInner>;
+    /**
+     * The id of the space to copy the space access configuration from.
+     * @type {number}
+     * @memberof CreateSpaceRequest
+     */
+    copySpaceAccessConfiguration?: number;
+    /**
+     * Whether to create the space as private.
+     * @type {boolean}
+     * @memberof CreateSpaceRequest
+     */
+    createPrivateSpace?: boolean;
+    /**
+     * The key of the template to use.
+     * @type {string}
+     * @memberof CreateSpaceRequest
+     */
+    templateKey?: string;
+}
+/**
+ * The description of the new/updated space. Note, only the 'plain' representation is currently supported.
+ * @export
+ * @interface CreateSpaceRequestDescription
+ */
+export interface CreateSpaceRequestDescription {
+    /**
+     * The space description.
+     * @type {string}
+     * @memberof CreateSpaceRequestDescription
+     */
+    value?: string;
+    /**
+     * The format of the description.
+     * @type {string}
+     * @memberof CreateSpaceRequestDescription
+     */
+    representation?: string;
+}
+/**
+ * The role assignments for the new space. If none are provided, the Default Space Roles are applied. If roles are provided, the space is created with exactly the provided set of roles. A private space is created if only the creator is assigned to a role and it’s the Admin role. At least one Admin role assignment must be specified.
+ * @export
+ * @interface CreateSpaceRequestRoleAssignmentsInner
+ */
+export interface CreateSpaceRequestRoleAssignmentsInner {
+    /**
+     * 
+     * @type {Principal}
+     * @memberof CreateSpaceRequestRoleAssignmentsInner
+     */
+    principal?: Principal;
+    /**
+     * The role to which the principal is assigned.
+     * @type {string}
+     * @memberof CreateSpaceRequestRoleAssignmentsInner
+     */
+    roleId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateSpaceRoleRequest
+ */
+export interface CreateSpaceRoleRequest {
+    /**
+     * Name of the space role
+     * @type {string}
+     * @memberof CreateSpaceRoleRequest
+     */
+    name: string;
+    /**
+     * Description for the space role
+     * @type {string}
+     * @memberof CreateSpaceRoleRequest
+     */
+    description: string;
+    /**
+     * The ids of the space permissions associated with the space role. Sample value "read/space"; retrieve ids from responses returned by [GET /space-permissions](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-space-permissions/#api-space-permissions-get) endpoint
+     * @type {Array<string>}
+     * @memberof CreateSpaceRoleRequest
+     */
+    spacePermissions: Array<string>;
 }
 /**
  * 
@@ -2866,6 +3188,12 @@ export interface CreateWhiteboard200Response {
      */
     createdAt?: string;
     /**
+     * ID of the space the whiteboard is in.
+     * @type {string}
+     * @memberof CreateWhiteboard200Response
+     */
+    spaceId?: string;
+    /**
      * 
      * @type {Version}
      * @memberof CreateWhiteboard200Response
@@ -2904,7 +3232,109 @@ export interface CreateWhiteboardRequest {
      * @memberof CreateWhiteboardRequest
      */
     parentId?: string;
+    /**
+     * Providing a template key will add that template to the new whiteboard.
+     * @type {string}
+     * @memberof CreateWhiteboardRequest
+     */
+    templateKey?: CreateWhiteboardRequestTemplateKeyEnum;
+    /**
+     * If templateKey is provided, locale will decide which language the template will be created with. If locale is omitted, the user's locale will be used.
+     * @type {string}
+     * @memberof CreateWhiteboardRequest
+     */
+    locale?: CreateWhiteboardRequestLocaleEnum;
 }
+
+
+/**
+ * @export
+ */
+export const CreateWhiteboardRequestTemplateKeyEnum = {
+    _2x2Prioritization: '2x2-prioritization',
+    _4lsRetro: '4ls-retro',
+    AnnualCalendar: 'annual-calendar',
+    Brainwriting: 'brainwriting',
+    ConceptMap: 'concept-map',
+    Crazy8s: 'crazy-8s',
+    DailySync: 'daily-sync',
+    DisruptiveBrainstorm: 'disruptive-brainstorm',
+    DotVoting: 'dot-voting',
+    ElevatorPitch: 'elevator-pitch',
+    FlowChart: 'flow-chart',
+    GapAnalysis: 'gap-analysis',
+    IceBreakers: 'ice-breakers',
+    IncidentPostmortem: 'incident-postmortem',
+    JourneyMappingKit: 'journey-mapping-kit',
+    KanbanBoard: 'kanban-board',
+    LeanCoffee: 'lean-coffee',
+    NetworkOfTeams: 'network-of-teams',
+    OrgChart: 'org-chart',
+    PiPlanning: 'pi-planning',
+    Prioritization: 'prioritization',
+    PrioritizationExperiment: 'prioritization-experiment',
+    ProductRoadmap: 'product-roadmap',
+    ProductVisionBoard: 'product-vision-board',
+    Rice: 'rice',
+    SailboatRetro: 'sailboat-retro',
+    ServiceBlueprint: 'service-blueprint',
+    SimpleRetrospective: 'simple-retrospective',
+    SprintPlanning: 'sprint-planning',
+    StickyNotePack: 'sticky-note-pack',
+    Swimlanes: 'swimlanes',
+    TeamFormationGuide: 'team-formation-guide',
+    Timeline: 'timeline',
+    TimelineWorkflow: 'timeline-workflow',
+    UserStoryMap: 'user-story-map',
+    Workflow: 'workflow',
+    VisionBoard: 'vision-board',
+    VennDiagram: 'venn-diagram',
+    Storyboard: 'storyboard',
+    ActionPlan: 'action-plan',
+    RootCauseAnalysis: 'root-cause-analysis',
+    ExecutiveSummary: 'executive-summary',
+    StakeholderMapping: 'stakeholder-mapping',
+    AnnualCalendar20252026: 'annual-calendar-2025-2026',
+    HealthMonitor: 'health-monitor',
+    OkrPlanning: 'okr-planning',
+    SwotAnalysis: 'swot-analysis',
+    PokerPlanning: 'poker-planning',
+    FishboneDiagram: 'fishbone-diagram',
+    RiskAssessment: 'risk-assessment',
+    BoundedContext: 'bounded-context',
+    HopesAndFears: 'hopes-and-fears',
+    SwimlaneVertical: 'swimlane-vertical'
+} as const;
+export type CreateWhiteboardRequestTemplateKeyEnum = typeof CreateWhiteboardRequestTemplateKeyEnum[keyof typeof CreateWhiteboardRequestTemplateKeyEnum];
+
+/**
+ * @export
+ */
+export const CreateWhiteboardRequestLocaleEnum = {
+    DeDe: 'de-DE',
+    CsCz: 'cs-CZ',
+    KoKr: 'ko-KR',
+    FrFr: 'fr-FR',
+    ItIt: 'it-IT',
+    JaJp: 'ja-JP',
+    NlNl: 'nl-NL',
+    NbNo: 'nb-NO',
+    DaDk: 'da-DK',
+    SvSe: 'sv-SE',
+    FiFi: 'fi-FI',
+    RuRu: 'ru-RU',
+    PlPl: 'pl-PL',
+    TrTr: 'tr-TR',
+    HuHu: 'hu-HU',
+    EnGb: 'en-GB',
+    EnUs: 'en-US',
+    PtBr: 'pt-BR',
+    ZhCn: 'zh-CN',
+    ZhTw: 'zh-TW',
+    EsEs: 'es-ES'
+} as const;
+export type CreateWhiteboardRequestLocaleEnum = typeof CreateWhiteboardRequestLocaleEnum[keyof typeof CreateWhiteboardRequestLocaleEnum];
+
 /**
  * Contains fields for each representation type requested.
  * @export
@@ -3538,6 +3968,12 @@ export interface DatabaseSingle {
      */
     createdAt?: string;
     /**
+     * ID of the space the database is in.
+     * @type {string}
+     * @memberof DatabaseSingle
+     */
+    spaceId?: string;
+    /**
      * 
      * @type {Version}
      * @memberof DatabaseSingle
@@ -3549,6 +3985,71 @@ export interface DatabaseSingle {
      * @memberof DatabaseSingle
      */
     links?: DatabaseLinks;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DeleteSpaceRoleResponse
+ */
+export interface DeleteSpaceRoleResponse {
+    /**
+     * Id of the task to update the space permissions associated with the space role
+     * @type {string}
+     * @memberof DeleteSpaceRoleResponse
+     */
+    taskId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DescendantsResponse
+ */
+export interface DescendantsResponse {
+    /**
+     * ID of the descendant.
+     * @type {string}
+     * @memberof DescendantsResponse
+     */
+    id?: string;
+    /**
+     * 
+     * @type {OnlyArchivedAndCurrentContentStatus}
+     * @memberof DescendantsResponse
+     */
+    status?: OnlyArchivedAndCurrentContentStatus;
+    /**
+     * Title of the descendant.
+     * @type {string}
+     * @memberof DescendantsResponse
+     */
+    title?: string;
+    /**
+     * Hierarchical content type (database/embed/folder/page/whiteboard).
+     * @type {string}
+     * @memberof DescendantsResponse
+     */
+    type?: string;
+    /**
+     * ID of the parent content.
+     * @type {string}
+     * @memberof DescendantsResponse
+     */
+    parentId?: string;
+    /**
+     * Depth of the descendant in the content tree relative to the content specified in the request.
+     * @type {number}
+     * @memberof DescendantsResponse
+     */
+    depth?: number;
+    /**
+     * Numerical value indicating position of the content relative to its siblings (with the same parentId) within the content tree.
+     * If the content is sorted by childPosition, it will reflect the default content ordering within the content tree.
+     * @type {number}
+     * @memberof DescendantsResponse
+     */
+    childPosition?: number | null;
 }
 
 
@@ -3612,6 +4113,19 @@ export interface DetailedVersion {
      * @memberof DetailedVersion
      */
     nextVersion?: number;
+}
+/**
+ * 
+ * @export
+ * @interface EnableAdminKeyRequest
+ */
+export interface EnableAdminKeyRequest {
+    /**
+     * The requested duration of admin key access in minutes, up to a maximum of 60 minutes, after which the issued admin key will automatically expire.
+     * @type {number}
+     * @memberof EnableAdminKeyRequest
+     */
+    durationInMinutes?: number;
 }
 /**
  * 
@@ -3692,6 +4206,12 @@ export interface FolderSingle {
      * @memberof FolderSingle
      */
     createdAt?: string;
+    /**
+     * ID of the space the folder is in.
+     * @type {string}
+     * @memberof FolderSingle
+     */
+    spaceId?: string;
     /**
      * 
      * @type {Version}
@@ -3957,6 +4477,25 @@ export interface GetAttachmentById200ResponseAllOfLinks {
 /**
  * 
  * @export
+ * @interface GetForgeAppProperty200Response
+ */
+export interface GetForgeAppProperty200Response {
+    /**
+     * The key of the property
+     * @type {string}
+     * @memberof GetForgeAppProperty200Response
+     */
+    key?: string;
+    /**
+     * The value of the property
+     * @type {object}
+     * @memberof GetForgeAppProperty200Response
+     */
+    value?: object;
+}
+/**
+ * 
+ * @export
  * @interface GetSpaceById200Response
  */
 export interface GetSpaceById200Response {
@@ -4048,6 +4587,76 @@ export interface GetSpaceById200Response {
      * 
      * @type {GetAttachmentById200ResponseAllOfLinks}
      * @memberof GetSpaceById200Response
+     */
+    links?: GetAttachmentById200ResponseAllOfLinks;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface GetSpaceRoleMode200Response
+ */
+export interface GetSpaceRoleMode200Response {
+    /**
+     * The space role mode.
+     * @type {string}
+     * @memberof GetSpaceRoleMode200Response
+     */
+    mode?: GetSpaceRoleMode200ResponseModeEnum;
+}
+
+
+/**
+ * @export
+ */
+export const GetSpaceRoleMode200ResponseModeEnum = {
+    PreRoles: 'PRE_ROLES',
+    RolesTransition: 'ROLES_TRANSITION',
+    Roles: 'ROLES'
+} as const;
+export type GetSpaceRoleMode200ResponseModeEnum = typeof GetSpaceRoleMode200ResponseModeEnum[keyof typeof GetSpaceRoleMode200ResponseModeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetSpaceRolesById200Response
+ */
+export interface GetSpaceRolesById200Response {
+    /**
+     * The identifier for the space role.
+     * @type {string}
+     * @memberof GetSpaceRolesById200Response
+     */
+    id?: string;
+    /**
+     * 
+     * @type {RoleType}
+     * @memberof GetSpaceRolesById200Response
+     */
+    type?: RoleType;
+    /**
+     * The name for the space role.
+     * @type {string}
+     * @memberof GetSpaceRolesById200Response
+     */
+    name?: string;
+    /**
+     * The description for the space role’s usage.
+     * @type {string}
+     * @memberof GetSpaceRolesById200Response
+     */
+    description?: string;
+    /**
+     * The space permissions the space role is comprised of.
+     * @type {Array<string>}
+     * @memberof GetSpaceRolesById200Response
+     */
+    spacePermissions?: Array<string>;
+    /**
+     * 
+     * @type {GetAttachmentById200ResponseAllOfLinks}
+     * @memberof GetSpaceRolesById200Response
      */
     links?: GetAttachmentById200ResponseAllOfLinks;
 }
@@ -4246,36 +4855,36 @@ export interface InlineCommentModel {
  * @interface InlineCommentModelProperties
  */
 export interface InlineCommentModelProperties {
- /**
-  * 
-  * @type {Array<ContentProperty>}
-  * @memberof InlineCommentModelProperties
-  */
- results?: Array<ContentProperty>;
- /**
-  * 
-  * @type {OptionalFieldMeta}
-  * @memberof InlineCommentModelProperties
-  */
- meta?: OptionalFieldMeta;
- /**
-  * 
-  * @type {OptionalFieldLinks}
-  * @memberof InlineCommentModelProperties
-  */
- links?: OptionalFieldLinks;
- /**
-  * Property value used to reference the highlighted element in DOM.
-  * @type {string}
-  * @memberof InlineCommentModelProperties
-  */
- inlineMarkerRef?: string;
- /**
-  * Text that is highlighted.
-  * @type {string}
-  * @memberof InlineCommentModelProperties
-  */
- inlineOriginalSelection?: string;
+    /**
+     * 
+     * @type {Array<ContentProperty>}
+     * @memberof InlineCommentModelProperties
+     */
+    results?: Array<ContentProperty>;
+    /**
+     * 
+     * @type {OptionalFieldMeta}
+     * @memberof InlineCommentModelProperties
+     */
+    meta?: OptionalFieldMeta;
+    /**
+     * 
+     * @type {OptionalFieldLinks}
+     * @memberof InlineCommentModelProperties
+     */
+    links?: OptionalFieldLinks;
+    /**
+     * Property value used to reference the highlighted element in DOM.
+     * @type {string}
+     * @memberof InlineCommentModelProperties
+     */
+    inlineMarkerRef?: string;
+    /**
+     * Text that is highlighted.
+     * @type {string}
+     * @memberof InlineCommentModelProperties
+     */
+    inlineOriginalSelection?: string;
 }
 /**
  * 
@@ -4283,18 +4892,18 @@ export interface InlineCommentModelProperties {
  * @interface InlineCommentProperties
  */
 export interface InlineCommentProperties {
- /**
-  * Property value used to reference the highlighted element in DOM.
-  * @type {string}
-  * @memberof InlineCommentProperties
-  */
- inlineMarkerRef?: string;
- /**
-  * Text that is highlighted.
-  * @type {string}
-  * @memberof InlineCommentProperties
-  */
- inlineOriginalSelection?: string;
+    /**
+     * Property value used to reference the highlighted element in DOM.
+     * @type {string}
+     * @memberof InlineCommentProperties
+     */
+    inlineMarkerRef?: string;
+    /**
+     * Text that is highlighted.
+     * @type {string}
+     * @memberof InlineCommentProperties
+     */
+    inlineOriginalSelection?: string;
 }
 
 /**
@@ -4426,6 +5035,44 @@ export interface MultiEntityResultAncestor1 {
      * @memberof MultiEntityResultAncestor1
      */
     links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultAppProperty
+ */
+export interface MultiEntityResultAppProperty {
+    /**
+     * 
+     * @type {Array<MultiEntityResultAppPropertyResultsInner>}
+     * @memberof MultiEntityResultAppProperty
+     */
+    results?: Array<MultiEntityResultAppPropertyResultsInner>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultAppProperty
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultAppPropertyResultsInner
+ */
+export interface MultiEntityResultAppPropertyResultsInner {
+    /**
+     * The key of the property
+     * @type {string}
+     * @memberof MultiEntityResultAppPropertyResultsInner
+     */
+    key?: string;
+    /**
+     * The value of the property
+     * @type {object}
+     * @memberof MultiEntityResultAppPropertyResultsInner
+     */
+    value?: object;
 }
 /**
  * 
@@ -4582,6 +5229,25 @@ export interface MultiEntityResultChildrenCommentModel {
 /**
  * 
  * @export
+ * @interface MultiEntityResultChildrenResponse
+ */
+export interface MultiEntityResultChildrenResponse {
+    /**
+     * 
+     * @type {Array<ChildrenResponse>}
+     * @memberof MultiEntityResultChildrenResponse
+     */
+    results?: Array<ChildrenResponse>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultChildrenResponse
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
  * @interface MultiEntityResultContentProperty
  */
 export interface MultiEntityResultContentProperty {
@@ -4652,6 +5318,25 @@ export interface MultiEntityResultDataPolicySpace {
      * 
      * @type {MultiEntityLinks}
      * @memberof MultiEntityResultDataPolicySpace
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultDescendantsResponse
+ */
+export interface MultiEntityResultDescendantsResponse {
+    /**
+     * 
+     * @type {Array<DescendantsResponse>}
+     * @memberof MultiEntityResultDescendantsResponse
+     */
+    results?: Array<DescendantsResponse>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultDescendantsResponse
      */
     links?: MultiEntityLinks;
 }
@@ -4829,6 +5514,25 @@ export interface MultiEntityResultSpacePermission {
 /**
  * 
  * @export
+ * @interface MultiEntityResultSpacePermissionAssignment
+ */
+export interface MultiEntityResultSpacePermissionAssignment {
+    /**
+     * 
+     * @type {Array<SpacePermissionAssignment>}
+     * @memberof MultiEntityResultSpacePermissionAssignment
+     */
+    results?: Array<SpacePermissionAssignment>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultSpacePermissionAssignment
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
  * @interface MultiEntityResultSpaceProperty
  */
 export interface MultiEntityResultSpaceProperty {
@@ -4842,6 +5546,44 @@ export interface MultiEntityResultSpaceProperty {
      * 
      * @type {MultiEntityLinks}
      * @memberof MultiEntityResultSpaceProperty
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultSpaceRole
+ */
+export interface MultiEntityResultSpaceRole {
+    /**
+     * 
+     * @type {Array<SpaceRole>}
+     * @memberof MultiEntityResultSpaceRole
+     */
+    results?: Array<SpaceRole>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultSpaceRole
+     */
+    links?: MultiEntityLinks;
+}
+/**
+ * 
+ * @export
+ * @interface MultiEntityResultSpaceRoleAssignment
+ */
+export interface MultiEntityResultSpaceRoleAssignment {
+    /**
+     * 
+     * @type {Array<SpaceRoleAssignment>}
+     * @memberof MultiEntityResultSpaceRoleAssignment
+     */
+    results?: Array<SpaceRoleAssignment>;
+    /**
+     * 
+     * @type {MultiEntityLinks}
+     * @memberof MultiEntityResultSpaceRoleAssignment
      */
     links?: MultiEntityLinks;
 }
@@ -5156,6 +5898,12 @@ export interface PageBulk {
      * @memberof PageBulk
      */
     lastOwnerId?: string | null;
+    /**
+     * The subtype of the page.
+     * @type {string}
+     * @memberof PageBulk
+     */
+    subtype?: string | null;
     /**
      * Date and time when the page was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
      * @type {string}
@@ -5566,6 +6314,63 @@ export type PostPageClassificationLevelRequestStatusEnum = typeof PostPageClassi
 /**
  * 
  * @export
+ * @interface PostRedactPageRequest
+ */
+export interface PostRedactPageRequest {
+    /**
+     * Timestamp when the content was last updated.
+     * @type {string}
+     * @memberof PostRedactPageRequest
+     */
+    createdAt: string;
+    /**
+     * Whether to clean up previous versions containing the redaction. When true, historical versions of the content that contain the redacted text will be squashed.
+     * @type {boolean}
+     * @memberof PostRedactPageRequest
+     */
+    cleanHistory?: boolean | null;
+    /**
+     * Optional version number of the content to redact. When specified, the redaction will target 
+     * a specific historical version of the content rather than the current version.
+     * 
+     * - If omitted or null, the redaction applies to the current (latest) version of the content.
+     * - When provided, must be a valid version number that exists for the content.
+     * 
+     * **Note**: Version numbers start at 1 and increment with each content update.
+     * 
+     * @type {number}
+     * @memberof PostRedactPageRequest
+     */
+    versionNumber?: number | null;
+    /**
+     * 
+     * @type {PostRedactPageRequestBody}
+     * @memberof PostRedactPageRequest
+     */
+    body?: PostRedactPageRequestBody;
+    /**
+     * 
+     * @type {PostRedactPageRequestBody}
+     * @memberof PostRedactPageRequest
+     */
+    title?: PostRedactPageRequestBody;
+}
+/**
+ * 
+ * @export
+ * @interface PostRedactPageRequestBody
+ */
+export interface PostRedactPageRequestBody {
+    /**
+     * 
+     * @type {Array<RedactionPointer>}
+     * @memberof PostRedactPageRequestBody
+     */
+    redactions?: Array<RedactionPointer>;
+}
+/**
+ * 
+ * @export
  * @interface PostWhiteboardClassificationLevelRequest
  */
 export interface PostWhiteboardClassificationLevelRequest {
@@ -5614,6 +6419,69 @@ export const PrimaryBodyRepresentationSingle = {
 export type PrimaryBodyRepresentationSingle = typeof PrimaryBodyRepresentationSingle[keyof typeof PrimaryBodyRepresentationSingle];
 
 /**
+ * The principal of the role assignment.
+ * @export
+ * @interface Principal
+ */
+export interface Principal {
+    /**
+     * 
+     * @type {PrincipalType}
+     * @memberof Principal
+     */
+    principalType?: PrincipalType;
+    /**
+     * The principal ID.
+     * @type {string}
+     * @memberof Principal
+     */
+    principalId?: string;
+}
+
+
+
+/**
+ * The principal type.
+ * @export
+ */
+export const PrincipalType = {
+    User: 'USER',
+    Group: 'GROUP',
+    AccessClass: 'ACCESS_CLASS'
+} as const;
+export type PrincipalType = typeof PrincipalType[keyof typeof PrincipalType];
+
+/**
+ * 
+ * @export
+ * @interface PutPageClassificationLevelRequest
+ */
+export interface PutPageClassificationLevelRequest {
+    /**
+     * The ID of the classification level.
+     * @type {string}
+     * @memberof PutPageClassificationLevelRequest
+     */
+    id: string;
+    /**
+     * Status of the content.
+     * @type {string}
+     * @memberof PutPageClassificationLevelRequest
+     */
+    status: PutPageClassificationLevelRequestStatusEnum;
+}
+
+
+/**
+ * @export
+ */
+export const PutPageClassificationLevelRequestStatusEnum = {
+    Current: 'current',
+    Draft: 'draft'
+} as const;
+export type PutPageClassificationLevelRequestStatusEnum = typeof PutPageClassificationLevelRequestStatusEnum[keyof typeof PutPageClassificationLevelRequestStatusEnum];
+
+/**
  * 
  * @export
  * @interface PutSpaceDefaultClassificationLevelRequest
@@ -5625,24 +6493,7 @@ export interface PutSpaceDefaultClassificationLevelRequest {
      * @memberof PutSpaceDefaultClassificationLevelRequest
      */
     id: string;
-    /**
-     * Status of the content.
-     * @type {string}
-     * @memberof PutSpaceDefaultClassificationLevelRequest
-     */
-    status: PutSpaceDefaultClassificationLevelRequestStatusEnum;
 }
-
-
-/**
- * @export
- */
-export const PutSpaceDefaultClassificationLevelRequestStatusEnum = {
-    Current: 'current',
-    Draft: 'draft'
-} as const;
-export type PutSpaceDefaultClassificationLevelRequestStatusEnum = typeof PutSpaceDefaultClassificationLevelRequestStatusEnum[keyof typeof PutSpaceDefaultClassificationLevelRequestStatusEnum];
-
 /**
  * 
  * @export
@@ -5672,6 +6523,158 @@ export const PutWhiteboardClassificationLevelRequestStatusEnum = {
 } as const;
 export type PutWhiteboardClassificationLevelRequestStatusEnum = typeof PutWhiteboardClassificationLevelRequestStatusEnum[keyof typeof PutWhiteboardClassificationLevelRequestStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface Redaction
+ */
+export interface Redaction {
+    /**
+     * List of specific text ranges to redact within this section
+     * @type {Array<RedactionPointer>}
+     * @memberof Redaction
+     */
+    redactions?: Array<RedactionPointer>;
+}
+/**
+ * 
+ * @export
+ * @interface RedactionPointer
+ */
+export interface RedactionPointer {
+    /**
+     * JSON pointer indicating the exact location within the content structure 
+     * where redaction should be applied. Points to the text node containing the content to redact.
+     * 
+     * @type {string}
+     * @memberof RedactionPointer
+     */
+    pointer: string;
+    /**
+     * Starting character index (zero-based) within the target text where redaction begins.
+     * 
+     * @type {number}
+     * @memberof RedactionPointer
+     */
+    from?: number;
+    /**
+     * Ending character index (zero-based) within the target text where redaction ends (exclusive).
+     * Must be greater than or equal to 'from' value.
+     * 
+     * @type {number}
+     * @memberof RedactionPointer
+     */
+    to?: number;
+    /**
+     * Optional human-readable reason for the redaction. Used for audit trails and compliance documentation.
+     * 
+     * @type {string}
+     * @memberof RedactionPointer
+     */
+    reason?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface RedactionPointerResponse
+ */
+export interface RedactionPointerResponse {
+    /**
+     * JSON pointer indicating where the redaction was applied
+     * @type {string}
+     * @memberof RedactionPointerResponse
+     */
+    pointer?: string;
+    /**
+     * Starting character index where redaction was applied
+     * @type {number}
+     * @memberof RedactionPointerResponse
+     */
+    from?: number;
+    /**
+     * Ending character index where redaction was applied
+     * @type {number}
+     * @memberof RedactionPointerResponse
+     */
+    to?: number;
+    /**
+     * Reason for the redaction
+     * @type {string}
+     * @memberof RedactionPointerResponse
+     */
+    reason?: string;
+    /**
+     * Unique identifier for this redaction. Can be used to restore the redacted content later.
+     * 
+     * @type {string}
+     * @memberof RedactionPointerResponse
+     */
+    redactionId?: string;
+}
+/**
+ * Response containing details of all redactions that were applied to the content.
+ * Each redaction includes a unique ID for restoration, except that code block redactions cannot be restored.
+ * 
+ * @export
+ * @interface RedactionResponse
+ */
+export interface RedactionResponse {
+    /**
+     * 
+     * @type {RedactionSectionResponse}
+     * @memberof RedactionResponse
+     */
+    body?: RedactionSectionResponse;
+    /**
+     * 
+     * @type {RedactionSectionResponse}
+     * @memberof RedactionResponse
+     */
+    title?: RedactionSectionResponse;
+}
+/**
+ * 
+ * @export
+ * @interface RedactionSectionResponse
+ */
+export interface RedactionSectionResponse {
+    /**
+     * List of redactions that were applied to this section
+     * @type {Array<RedactionPointerResponse>}
+     * @memberof RedactionSectionResponse
+     */
+    redactions?: Array<RedactionPointerResponse>;
+}
+
+/**
+ * The role type.
+ * @export
+ */
+export const RoleType = {
+    System: 'SYSTEM',
+    Custom: 'CUSTOM'
+} as const;
+export type RoleType = typeof RoleType[keyof typeof RoleType];
+
+/**
+ * 
+ * @export
+ * @interface SetSpaceRoleAssignmentsRequestInner
+ */
+export interface SetSpaceRoleAssignmentsRequestInner {
+    /**
+     * 
+     * @type {Principal}
+     * @memberof SetSpaceRoleAssignmentsRequestInner
+     */
+    principal: Principal;
+    /**
+     * The role to which the principal is assigned.
+     * @type {string}
+     * @memberof SetSpaceRoleAssignmentsRequestInner
+     */
+    roleId?: string;
+}
 /**
  * 
  * @export
@@ -5758,6 +6761,12 @@ export interface SmartLinkSingle {
      */
     embedUrl?: string;
     /**
+     * ID of the space the Smart Link is in.
+     * @type {string}
+     * @memberof SmartLinkSingle
+     */
+    spaceId?: string;
+    /**
      * 
      * @type {Version}
      * @memberof SmartLinkSingle
@@ -5814,6 +6823,12 @@ export interface SpaceBulk {
      * @memberof SpaceBulk
      */
     authorId?: string;
+    /**
+     * Currently active alias for a Confluence space.
+     * @type {string}
+     * @memberof SpaceBulk
+     */
+    currentActiveAlias?: string;
     /**
      * Date and time when the space was created. In format "YYYY-MM-DDTHH:mm:ss.sssZ".
      * @type {string}
@@ -5920,49 +6935,80 @@ export interface SpaceLinks {
  */
 export interface SpacePermission {
     /**
-     * ID of the space permission.
+     * The identifier for the space permission.
      * @type {string}
      * @memberof SpacePermission
      */
     id?: string;
     /**
-     * 
-     * @type {SpacePermissionPrincipal}
+     * The display name for the space permission.
+     * @type {string}
      * @memberof SpacePermission
      */
-    principal?: SpacePermissionPrincipal;
+    displayName?: string;
+    /**
+     * Describes the space permission’s usage.
+     * @type {string}
+     * @memberof SpacePermission
+     */
+    description?: string;
+    /**
+     * The permissions required for this permission to be enabled.
+     * @type {Array<string>}
+     * @memberof SpacePermission
+     */
+    requiredPermissionIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface SpacePermissionAssignment
+ */
+export interface SpacePermissionAssignment {
+    /**
+     * ID of the space permission.
+     * @type {string}
+     * @memberof SpacePermissionAssignment
+     */
+    id?: string;
     /**
      * 
-     * @type {SpacePermissionOperation}
-     * @memberof SpacePermission
+     * @type {SpacePermissionAssignmentPrincipal}
+     * @memberof SpacePermissionAssignment
      */
-    operation?: SpacePermissionOperation;
+    principal?: SpacePermissionAssignmentPrincipal;
+    /**
+     * 
+     * @type {SpacePermissionAssignmentOperation}
+     * @memberof SpacePermissionAssignment
+     */
+    operation?: SpacePermissionAssignmentOperation;
 }
 /**
  * The operation the space permission corresponds to.
  * @export
- * @interface SpacePermissionOperation
+ * @interface SpacePermissionAssignmentOperation
  */
-export interface SpacePermissionOperation {
+export interface SpacePermissionAssignmentOperation {
     /**
      * The type of operation.
      * @type {string}
-     * @memberof SpacePermissionOperation
+     * @memberof SpacePermissionAssignmentOperation
      */
-    key?: SpacePermissionOperationKeyEnum;
+    key?: SpacePermissionAssignmentOperationKeyEnum;
     /**
      * The type of entity the operation type targets.
      * @type {string}
-     * @memberof SpacePermissionOperation
+     * @memberof SpacePermissionAssignmentOperation
      */
-    targetType?: SpacePermissionOperationTargetTypeEnum;
+    targetType?: SpacePermissionAssignmentOperationTargetTypeEnum;
 }
 
 
 /**
  * @export
  */
-export const SpacePermissionOperationKeyEnum = {
+export const SpacePermissionAssignmentOperationKeyEnum = {
     Use: 'use',
     Create: 'create',
     Read: 'read',
@@ -5979,12 +7025,12 @@ export const SpacePermissionOperationKeyEnum = {
     RestrictContent: 'restrict_content',
     Archive: 'archive'
 } as const;
-export type SpacePermissionOperationKeyEnum = typeof SpacePermissionOperationKeyEnum[keyof typeof SpacePermissionOperationKeyEnum];
+export type SpacePermissionAssignmentOperationKeyEnum = typeof SpacePermissionAssignmentOperationKeyEnum[keyof typeof SpacePermissionAssignmentOperationKeyEnum];
 
 /**
  * @export
  */
-export const SpacePermissionOperationTargetTypeEnum = {
+export const SpacePermissionAssignmentOperationTargetTypeEnum = {
     Page: 'page',
     Blogpost: 'blogpost',
     Comment: 'comment',
@@ -5997,24 +7043,24 @@ export const SpacePermissionOperationTargetTypeEnum = {
     Application: 'application',
     UserProfile: 'userProfile'
 } as const;
-export type SpacePermissionOperationTargetTypeEnum = typeof SpacePermissionOperationTargetTypeEnum[keyof typeof SpacePermissionOperationTargetTypeEnum];
+export type SpacePermissionAssignmentOperationTargetTypeEnum = typeof SpacePermissionAssignmentOperationTargetTypeEnum[keyof typeof SpacePermissionAssignmentOperationTargetTypeEnum];
 
 /**
  * The entity the space permissions corresponds to.
  * @export
- * @interface SpacePermissionPrincipal
+ * @interface SpacePermissionAssignmentPrincipal
  */
-export interface SpacePermissionPrincipal {
+export interface SpacePermissionAssignmentPrincipal {
     /**
      * 
      * @type {string}
-     * @memberof SpacePermissionPrincipal
+     * @memberof SpacePermissionAssignmentPrincipal
      */
-    type?: SpacePermissionPrincipalTypeEnum;
+    type?: SpacePermissionAssignmentPrincipalTypeEnum;
     /**
      * ID of the entity.
      * @type {string}
-     * @memberof SpacePermissionPrincipal
+     * @memberof SpacePermissionAssignmentPrincipal
      */
     id?: string;
 }
@@ -6023,12 +7069,12 @@ export interface SpacePermissionPrincipal {
 /**
  * @export
  */
-export const SpacePermissionPrincipalTypeEnum = {
+export const SpacePermissionAssignmentPrincipalTypeEnum = {
     User: 'user',
     Group: 'group',
     Role: 'role'
 } as const;
-export type SpacePermissionPrincipalTypeEnum = typeof SpacePermissionPrincipalTypeEnum[keyof typeof SpacePermissionPrincipalTypeEnum];
+export type SpacePermissionAssignmentPrincipalTypeEnum = typeof SpacePermissionAssignmentPrincipalTypeEnum[keyof typeof SpacePermissionAssignmentPrincipalTypeEnum];
 
 /**
  * 
@@ -6151,6 +7197,64 @@ export interface SpacePropertyVersion {
 /**
  * 
  * @export
+ * @interface SpaceRole
+ */
+export interface SpaceRole {
+    /**
+     * The identifier for the space role.
+     * @type {string}
+     * @memberof SpaceRole
+     */
+    id?: string;
+    /**
+     * 
+     * @type {RoleType}
+     * @memberof SpaceRole
+     */
+    type?: RoleType;
+    /**
+     * The name for the space role.
+     * @type {string}
+     * @memberof SpaceRole
+     */
+    name?: string;
+    /**
+     * The description for the space role’s usage.
+     * @type {string}
+     * @memberof SpaceRole
+     */
+    description?: string;
+    /**
+     * The space permissions the space role is comprised of.
+     * @type {Array<string>}
+     * @memberof SpaceRole
+     */
+    spacePermissions?: Array<string>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SpaceRoleAssignment
+ */
+export interface SpaceRoleAssignment {
+    /**
+     * 
+     * @type {Principal}
+     * @memberof SpaceRoleAssignment
+     */
+    principal?: Principal;
+    /**
+     * The role to which the principal is assigned.
+     * @type {string}
+     * @memberof SpaceRoleAssignment
+     */
+    roleId?: string;
+}
+/**
+ * 
+ * @export
  * @interface SpaceSingle
  */
 export interface SpaceSingle {
@@ -6255,10 +7359,10 @@ export interface SpaceSingle {
 export interface SpaceSinglePermissions {
     /**
      * 
-     * @type {Array<SpacePermission>}
+     * @type {Array<SpacePermissionAssignment>}
      * @memberof SpaceSinglePermissions
      */
-    results?: Array<SpacePermission>;
+    results?: Array<SpacePermissionAssignment>;
     /**
      * 
      * @type {OptionalFieldMeta}
@@ -6332,7 +7436,10 @@ export const SpaceType = {
     Global: 'global',
     Collaboration: 'collaboration',
     KnowledgeBase: 'knowledge_base',
-    Personal: 'personal'
+    Personal: 'personal',
+    System: 'system',
+    Onboarding: 'onboarding',
+    XflowSampleSpace: 'xflow_sample_space'
 } as const;
 export type SpaceType = typeof SpaceType[keyof typeof SpaceType];
 
@@ -6504,6 +7611,12 @@ export interface UpdateBlogPostRequest {
      * @memberof UpdateBlogPostRequest
      */
     version: UpdateBlogPostRequestVersion;
+    /**
+     * Created date of the blog post in the format of "yyyy-MM-ddTHH:mm:ss.SSSZ".
+     * @type {string}
+     * @memberof UpdateBlogPostRequest
+     */
+    createdAt?: string;
 }
 
 
@@ -6563,7 +7676,7 @@ export interface UpdateCustomContentRequest {
      */
     status: UpdateCustomContentRequestStatusEnum;
     /**
-     * ID of the containing space.
+     * ID of the containing space (must be the same as the spaceId of the space the custom content was created in).
      * @type {string}
      * @memberof UpdateCustomContentRequest
      */
@@ -6760,7 +7873,7 @@ export interface UpdatePageRequest {
      */
     spaceId?: any | null;
     /**
-     * ID of the parent page.
+     * ID of the parent content.
      * 
      * This allows the page to be moved under a different parent within the same space.
      * @type {any}
@@ -6821,6 +7934,112 @@ export interface UpdatePageRequestVersion {
      */
     message?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UpdatePageTitleRequest
+ */
+export interface UpdatePageTitleRequest {
+    /**
+     * The status of the page, current or draft.
+     * @type {string}
+     * @memberof UpdatePageTitleRequest
+     */
+    status: UpdatePageTitleRequestStatusEnum;
+    /**
+     * The updated title for the page
+     * @type {string}
+     * @memberof UpdatePageTitleRequest
+     */
+    title: string;
+}
+
+
+/**
+ * @export
+ */
+export const UpdatePageTitleRequestStatusEnum = {
+    Current: 'current',
+    Draft: 'draft'
+} as const;
+export type UpdatePageTitleRequestStatusEnum = typeof UpdatePageTitleRequestStatusEnum[keyof typeof UpdatePageTitleRequestStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface UpdateSpaceRoleRequest
+ */
+export interface UpdateSpaceRoleRequest {
+    /**
+     * Name of the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleRequest
+     */
+    name: string;
+    /**
+     * Description for the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleRequest
+     */
+    description: string;
+    /**
+     * The ids of the space permissions associated with the space role. Sample value "read/space"; retrieve ids from responses returned by [GET /space-permissions](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-space-permissions/#api-space-permissions-get) endpoint
+     * @type {Array<string>}
+     * @memberof UpdateSpaceRoleRequest
+     */
+    spacePermissions: Array<string>;
+    /**
+     * If space anonymous access is assigned to the role being modified, the Id of a role to migrate those assignments to can be specified. Anonymous access role assignments left unchanged if unspecified.
+     * @type {string}
+     * @memberof UpdateSpaceRoleRequest
+     */
+    anonymousReassignmentRoleId?: string;
+    /**
+     * If guests are assigned to the role being modified, the Id of a role to migrate those assignments to can be specified. Guest role assignments left unchanged if unspecified.
+     * @type {string}
+     * @memberof UpdateSpaceRoleRequest
+     */
+    guestReassignmentRoleId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateSpaceRoleResponse
+ */
+export interface UpdateSpaceRoleResponse {
+    /**
+     * Id of the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleResponse
+     */
+    id?: string;
+    /**
+     * 
+     * @type {RoleType}
+     * @memberof UpdateSpaceRoleResponse
+     */
+    type?: RoleType;
+    /**
+     * Name of the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleResponse
+     */
+    name?: string;
+    /**
+     * Description for the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleResponse
+     */
+    description?: string;
+    /**
+     * Id of the task to update the space permissions associated with the space role
+     * @type {string}
+     * @memberof UpdateSpaceRoleResponse
+     */
+    taskId?: string;
+}
+
+
 /**
  * 
  * @export
@@ -7145,6 +8364,12 @@ export interface WhiteboardSingle {
      * @memberof WhiteboardSingle
      */
     createdAt?: string;
+    /**
+     * ID of the space the whiteboard is in.
+     * @type {string}
+     * @memberof WhiteboardSingle
+     */
+    spaceId?: string;
     /**
      * 
      * @type {Version}

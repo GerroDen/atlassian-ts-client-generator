@@ -1,0 +1,16 @@
+
+# ContentBodyCreateStorage
+
+This object is used when creating or updating content.
+
+## Properties
+
+Name | Type
+------------ | -------------
+`value` | string
+`representation` | string
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -41,8 +41,11 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/wiki/rest/atlassian-connect/1/app/module/dynamic`;
+
         const response = await this.request({
-            path: `/atlassian-connect/1/app/module/dynamic`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -78,8 +81,11 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/wiki/rest/atlassian-connect/1/app/module/dynamic`;
+
         const response = await this.request({
-            path: `/atlassian-connect/1/app/module/dynamic`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -117,8 +123,11 @@ export class DynamicModulesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/wiki/rest/atlassian-connect/1/app/module/dynamic`;
+
         const response = await this.request({
-            path: `/atlassian-connect/1/app/module/dynamic`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

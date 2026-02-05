@@ -62,8 +62,12 @@ export class AnalyticsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/analytics/content/{contentId}/viewers`;
+        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/analytics/content/{contentId}/viewers`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -109,8 +113,12 @@ export class AnalyticsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/analytics/content/{contentId}/views`;
+        urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/analytics/content/{contentId}/views`.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

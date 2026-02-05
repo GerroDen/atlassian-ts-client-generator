@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AdminKeyApi';
 export * from './AncestorsApi';
+export * from './AppPropertiesApi';
 export * from './AttachmentApi';
 export * from './BlogPostApi';
 export * from './ChildrenApi';
@@ -11,15 +13,19 @@ export * from './ContentPropertiesApi';
 export * from './CustomContentApi';
 export * from './DataPoliciesApi';
 export * from './DatabaseApi';
+export * from './DescendantsApi';
+export * from './EAPApi';
 export * from './FolderApi';
 export * from './LabelApi';
 export * from './LikeApi';
 export * from './OperationApi';
 export * from './PageApi';
+export * from './RedactionsApi';
 export * from './SmartLinkApi';
 export * from './SpaceApi';
 export * from './SpacePermissionsApi';
 export * from './SpacePropertiesApi';
+export * from './SpaceRolesApi';
 export * from './TaskApi';
 export * from './UserApi';
 export * from './VersionApi';

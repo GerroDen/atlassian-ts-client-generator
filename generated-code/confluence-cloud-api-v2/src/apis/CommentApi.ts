@@ -201,8 +201,11 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments`;
+
         const response = await this.request({
-            path: `/footer-comments`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -247,8 +250,11 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments`;
+
         const response = await this.request({
-            path: `/inline-comments`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -291,8 +297,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -333,8 +343,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -395,8 +409,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/attachments/{id}/footer-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/attachments/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -458,8 +476,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/footer-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -525,8 +547,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/inline-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -584,8 +610,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{id}/footer-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/custom-content/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -655,8 +685,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -714,8 +748,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{id}/children`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/footer-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -766,8 +804,11 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments`;
+
         const response = await this.request({
-            path: `/footer-comments`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -837,8 +878,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -896,8 +941,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{id}/children`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/inline-comments/{id}/children`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -948,8 +997,11 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments`;
+
         const response = await this.request({
-            path: `/inline-comments`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1011,8 +1063,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/footer-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/footer-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1078,8 +1134,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:comment:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/inline-comments`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/inline-comments`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1130,8 +1190,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:comment:confluence"]);
         }
 
+
+        let urlPath = `/footer-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/footer-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1183,8 +1247,12 @@ export class CommentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:comment:confluence"]);
         }
 
+
+        let urlPath = `/inline-comments/{comment-id}`;
+        urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/inline-comments/{comment-id}`.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

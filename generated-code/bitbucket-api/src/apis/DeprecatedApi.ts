@@ -112,8 +112,12 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/build-status/latest/commits/{commitId}`;
+        urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
+
         const response = await this.request({
-            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -144,8 +148,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/users/add-group`;
+
         const response = await this.request({
-            path: `/api/latest/admin/users/add-group`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -176,8 +183,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/groups/add-user`;
+
         const response = await this.request({
-            path: `/api/latest/admin/groups/add-user`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -227,8 +237,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -276,8 +292,12 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/build-status/latest/commits/{commitId}`;
+        urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
+
         const response = await this.request({
-            path: `/build-status/latest/commits/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -316,8 +336,12 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/build-status/latest/commits/stats/{commitId}`;
+        urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
+
         const response = await this.request({
-            path: `/build-status/latest/commits/stats/{commitId}`.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -359,8 +383,13 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -397,8 +426,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/build-status/latest/commits/stats`;
+
         const response = await this.request({
-            path: `/build-status/latest/commits/stats`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -433,8 +465,11 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/admin/groups/remove-user`;
+
         const response = await this.request({
-            path: `/api/latest/admin/groups/remove-user`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -479,8 +514,13 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/branches/default`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -534,8 +574,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -584,8 +630,14 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/approve`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

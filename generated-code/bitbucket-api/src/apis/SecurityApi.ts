@@ -251,8 +251,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -285,8 +288,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/gpg/latest/keys`;
+
         const response = await this.request({
-            path: `/gpg/latest/keys`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -316,8 +322,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/exempt`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -346,8 +355,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/exempt`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -390,8 +402,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -442,8 +458,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -491,8 +512,11 @@ export class SecurityApi extends runtime.BaseAPI {
             formParams.append('certificate', requestParameters['certificate'] as any);
         }
 
+
+        let urlPath = `/api/latest/signing/x509-certificates`;
+
         const response = await this.request({
-            path: `/api/latest/signing/x509-certificates`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -536,8 +560,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -588,8 +616,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -626,8 +659,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/secret-scanning/rules`;
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -669,8 +705,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -717,8 +758,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -751,8 +798,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/signing/x509-certificates/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/signing/x509-certificates/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -779,8 +830,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -810,8 +864,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/gpg/latest/keys`;
+
         const response = await this.request({
-            path: `/gpg/latest/keys`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -837,8 +894,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/secrets/1.0/keys/inactive`;
+
         const response = await this.request({
-            path: `/secrets/1.0/keys/inactive`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -871,8 +931,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/gpg/latest/keys/{fingerprintOrId}`;
+        urlPath = urlPath.replace(`{${"fingerprintOrId"}}`, encodeURIComponent(String(requestParameters['fingerprintOrId'])));
+
         const response = await this.request({
-            path: `/gpg/latest/keys/{fingerprintOrId}`.replace(`{${"fingerprintOrId"}}`, encodeURIComponent(String(requestParameters['fingerprintOrId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -912,8 +976,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -960,8 +1029,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -994,8 +1069,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1044,8 +1123,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1103,8 +1187,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1155,8 +1245,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1214,8 +1309,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1259,8 +1360,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1300,8 +1405,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/exempt`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1340,8 +1448,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/exempt`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1368,8 +1479,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/signing/x509-certificates`;
+
         const response = await this.request({
-            path: `/api/latest/signing/x509-certificates`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1410,8 +1524,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1459,8 +1578,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1487,8 +1612,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/secrets/1.0/keys/inactive`;
+
         const response = await this.request({
-            path: `/secrets/1.0/keys/inactive`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1526,8 +1654,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/gpg/latest/keys`;
+
         const response = await this.request({
-            path: `/gpg/latest/keys`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1568,8 +1699,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1617,8 +1753,14 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1652,8 +1794,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/secret-scanning/rules/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1680,8 +1826,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/system-signing/configuration`;
+
         const response = await this.request({
-            path: `/api/latest/system-signing/configuration`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1708,8 +1857,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1735,8 +1887,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/secrets/1.0/keys/rotate`;
+
         const response = await this.request({
-            path: `/secrets/1.0/keys/rotate`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1785,8 +1940,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1843,8 +2002,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1901,8 +2065,13 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/rules`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1945,8 +2114,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/secret-scanning/rules`;
+
         const response = await this.request({
-            path: `/api/latest/secret-scanning/rules`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1996,8 +2168,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/secret-scanning/allowlist`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2031,8 +2207,12 @@ export class SecurityApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/signing/x509-certificates/crl/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/api/latest/signing/x509-certificates/crl/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2060,8 +2240,11 @@ export class SecurityApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/system-signing/configuration`;
+
         const response = await this.request({
-            path: `/api/latest/system-signing/configuration`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2086,55 +2269,55 @@ export class SecurityApi extends runtime.BaseAPI {
  * @export
  */
 export const FindExemptReposByProjectOrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type FindExemptReposByProjectOrderEnum = typeof FindExemptReposByProjectOrderEnum[keyof typeof FindExemptReposByProjectOrderEnum];
 /**
  * @export
  */
 export const FindExemptReposByScopeOrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type FindExemptReposByScopeOrderEnum = typeof FindExemptReposByScopeOrderEnum[keyof typeof FindExemptReposByScopeOrderEnum];
 /**
  * @export
  */
 export const Search1OrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type Search1OrderEnum = typeof Search1OrderEnum[keyof typeof Search1OrderEnum];
 /**
  * @export
  */
 export const Search2OrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type Search2OrderEnum = typeof Search2OrderEnum[keyof typeof Search2OrderEnum];
 /**
  * @export
  */
 export const Search3OrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type Search3OrderEnum = typeof Search3OrderEnum[keyof typeof Search3OrderEnum];
 /**
  * @export
  */
 export const Search4OrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type Search4OrderEnum = typeof Search4OrderEnum[keyof typeof Search4OrderEnum];
 /**
  * @export
  */
 export const SearchAllowlistRuleOrderEnum = {
-    Asc: 'NAME_ASC',
-    Desc: 'NAME_DESC'
+    NameAsc: 'NAME_ASC',
+    NameDesc: 'NAME_DESC'
 } as const;
 export type SearchAllowlistRuleOrderEnum = typeof SearchAllowlistRuleOrderEnum[keyof typeof SearchAllowlistRuleOrderEnum];

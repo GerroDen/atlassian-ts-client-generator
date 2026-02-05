@@ -17,8 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AsyncContentBody,
   AsyncId,
-  ContentBody,
-  ContentBodyConversionInput,
+  BulkContentBodyConversionInput,
   ContentBodyCreate,
 } from '../models/index';
 
@@ -37,20 +36,11 @@ export interface AsyncConvertContentBodyResponseRequest {
 }
 
 export interface BulkAsyncConvertContentBodyRequestRequest {
-    body: Array<ContentBodyConversionInput>;
+    body: BulkContentBodyConversionInput;
 }
 
 export interface BulkAsyncConvertContentBodyResponseRequest {
     ids: Array<string>;
-}
-
-export interface ConvertContentBodyRequest {
-    to: string;
-    body: ContentBodyCreate;
-    spaceKeyContext?: string;
-    contentIdContext?: string;
-    embeddedContentRender?: ConvertContentBodyEmbeddedContentRenderEnum;
-    expand?: Array<string>;
 }
 
 /**
@@ -59,7 +49,7 @@ export interface ConvertContentBodyRequest {
 export class ContentBodyApi extends runtime.BaseAPI {
 
     /**
-     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - storage: editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - atlas_doc_format: editor, export_view, storage, styled_view, view - storage: atlas_doc_format, editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
      * Asynchronously convert content body
      */
     async asyncConvertContentBodyRequestRaw(requestParameters: AsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
@@ -111,8 +101,12 @@ export class ContentBodyApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/contentbody/convert/async/{to}`;
+        urlPath = urlPath.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -123,7 +117,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - storage: editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - atlas_doc_format: editor, export_view, storage, styled_view, view - storage: atlas_doc_format, editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
      * Asynchronously convert content body
      */
     async asyncConvertContentBodyRequest(requestParameters: AsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AsyncId> {
@@ -132,7 +126,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the asynchronous content body for the corresponding id if the task is complete  or returns the status of the task.  After the task is completed, the result can be obtained for 5 minutes, or until an identical conversion request is made again, with allowCache query param set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
      * Get asynchronously converted content body from the id or the current status of the task.
      */
     async asyncConvertContentBodyResponseRaw(requestParameters: AsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncContentBody>> {
@@ -155,8 +149,12 @@ export class ContentBodyApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/contentbody/convert/async/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -166,7 +164,7 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the asynchronous content body for the corresponding id if the task is complete  or returns the status of the task.  After the task is completed, the result can be obtained for 5 minutes, or until an identical conversion request is made again, with allowCache query param set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
      * Get asynchronously converted content body from the id or the current status of the task.
      */
     async asyncConvertContentBodyResponse(requestParameters: AsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AsyncContentBody> {
@@ -200,8 +198,11 @@ export class ContentBodyApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/contentbody/convert/async/bulk/tasks`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/bulk/tasks`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -248,8 +249,11 @@ export class ContentBodyApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/contentbody/convert/async/bulk/tasks`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/async/bulk/tasks`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -264,77 +268,6 @@ export class ContentBodyApi extends runtime.BaseAPI {
      */
     async bulkAsyncConvertContentBodyResponse(requestParameters: BulkAsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AsyncContentBody>> {
         const response = await this.bulkAsyncConvertContentBodyResponseRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use the [single asynchronous endpoint](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-body/#api-wiki-rest-api-contentbody-convert-async-to-post) or the [bulk asynchronous endpoint](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-body/#api-wiki-rest-api-contentbody-convert-async-bulk-tasks-post) instead.  Converts a content body from one format to another format.  Supported conversions:  - storage: view, export_view, styled_view, editor - editor: storage - view: none - export_view: none - styled_view: none  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
-     * Convert content body
-     * @deprecated
-     */
-    async convertContentBodyRaw(requestParameters: ConvertContentBodyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentBody>> {
-        if (requestParameters['to'] == null) {
-            throw new runtime.RequiredError(
-                'to',
-                'Required parameter "to" was null or undefined when calling convertContentBody().'
-            );
-        }
-
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling convertContentBody().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['spaceKeyContext'] != null) {
-            queryParameters['spaceKeyContext'] = requestParameters['spaceKeyContext'];
-        }
-
-        if (requestParameters['contentIdContext'] != null) {
-            queryParameters['contentIdContext'] = requestParameters['contentIdContext'];
-        }
-
-        if (requestParameters['embeddedContentRender'] != null) {
-            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.all"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/contentbody/convert/{to}`.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['body'],
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use the [single asynchronous endpoint](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-body/#api-wiki-rest-api-contentbody-convert-async-to-post) or the [bulk asynchronous endpoint](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content-body/#api-wiki-rest-api-contentbody-convert-async-bulk-tasks-post) instead.  Converts a content body from one format to another format.  Supported conversions:  - storage: view, export_view, styled_view, editor - editor: storage - view: none - export_view: none - styled_view: none  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
-     * Convert content body
-     * @deprecated
-     */
-    async convertContentBody(requestParameters: ConvertContentBodyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentBody> {
-        const response = await this.convertContentBodyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -355,11 +288,3 @@ export const AsyncConvertContentBodyRequestEmbeddedContentRenderEnum = {
     VersionAtSave: 'version-at-save'
 } as const;
 export type AsyncConvertContentBodyRequestEmbeddedContentRenderEnum = typeof AsyncConvertContentBodyRequestEmbeddedContentRenderEnum[keyof typeof AsyncConvertContentBodyRequestEmbeddedContentRenderEnum];
-/**
- * @export
- */
-export const ConvertContentBodyEmbeddedContentRenderEnum = {
-    Current: 'current',
-    VersionAtSave: 'version-at-save'
-} as const;
-export type ConvertContentBodyEmbeddedContentRenderEnum = typeof ConvertContentBodyEmbeddedContentRenderEnum[keyof typeof ConvertContentBodyEmbeddedContentRenderEnum];

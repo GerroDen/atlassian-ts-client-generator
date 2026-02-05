@@ -85,8 +85,16 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/bulkByProperties`;
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/bulkByProperties`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -148,8 +156,19 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}`;
+        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
+        urlPath = urlPath.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType'])));
+        urlPath = urlPath.replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId'])));
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))).replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType']))).replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -197,8 +216,17 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
+        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -239,8 +267,16 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/existsByProperties`;
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/existsByProperties`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -285,8 +321,17 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
+        urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/repository/{repositoryId}`.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -333,8 +378,16 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:dev-info:jira"]);
+        }
+
+
+        let urlPath = `/rest/devinfo/0.10/bulk`;
+
         const response = await this.request({
-            path: `/rest/devinfo/0.10/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

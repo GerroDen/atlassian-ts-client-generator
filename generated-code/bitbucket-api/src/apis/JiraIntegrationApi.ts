@@ -72,8 +72,12 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/jira/latest/comments/{commentId}/issues`;
+        urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
+
         const response = await this.request({
-            path: `/jira/latest/comments/{commentId}/issues`.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -120,8 +124,12 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/jira/latest/issues/{issueKey}/commits`;
+        urlPath = urlPath.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey'])));
+
         const response = await this.request({
-            path: `/jira/latest/issues/{issueKey}/commits`.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -155,8 +163,12 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/jira/latest/projects/{projectKey}/primary-enhanced-entitylink`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/jira/latest/projects/{projectKey}/primary-enhanced-entitylink`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -204,8 +216,14 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/jira/latest/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/issues`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

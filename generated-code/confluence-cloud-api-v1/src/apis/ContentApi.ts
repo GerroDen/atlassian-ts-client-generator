@@ -19,52 +19,11 @@ import type {
   Content,
   ContentArray,
   ContentBlueprintDraft,
-  ContentCreate,
-  ContentHistory,
-  ContentUpdate,
   LongTask,
 } from '../models/index';
 
 export interface ArchivePagesOperationRequest {
     archivePagesRequest?: ArchivePagesRequest;
-}
-
-export interface CreateContentRequest {
-    content: ContentCreate | null;
-    status?: string;
-    expand?: Array<string>;
-}
-
-export interface DeleteContentRequest {
-    id: string;
-    status?: string;
-}
-
-export interface GetContentRequest {
-    type?: string;
-    spaceKey?: string;
-    title?: string;
-    status?: GetContentStatusEnum;
-    postingDay?: string;
-    expand?: Array<string>;
-    trigger?: GetContentTriggerEnum;
-    orderby?: string;
-    start?: number;
-    limit?: number;
-}
-
-export interface GetContentByIdRequest {
-    id: string;
-    status?: GetContentByIdStatusEnum;
-    version?: number;
-    embeddedContentRender?: GetContentByIdEmbeddedContentRenderEnum;
-    expand?: Array<string>;
-    trigger?: GetContentByIdTriggerEnum;
-}
-
-export interface GetHistoryForContentRequest {
-    id: string;
-    expand?: Array<GetHistoryForContentExpandEnum>;
 }
 
 export interface PublishLegacyDraftRequest {
@@ -87,13 +46,6 @@ export interface SearchContentByCQLRequest {
     expand?: Array<string>;
     cursor?: string;
     limit?: number;
-}
-
-export interface UpdateContentRequest {
-    id: string;
-    content: ContentUpdate;
-    status?: UpdateContentStatusEnum;
-    conflictPolicy?: UpdateContentConflictPolicyEnum;
 }
 
 /**
@@ -120,8 +72,11 @@ export class ContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/archive`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/archive`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -137,302 +92,6 @@ export class ContentApi extends runtime.BaseAPI {
      */
     async archivePages(requestParameters: ArchivePagesOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LongTask> {
         const response = await this.archivePagesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
-     * Create content
-     * @deprecated
-     */
-    async createContentRaw(requestParameters: CreateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters['content'] == null) {
-            throw new runtime.RequiredError(
-                'content',
-                'Required parameter "content" was null or undefined when calling createContent().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['content'],
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Creates a new piece of content or publishes an existing draft.  To publish a draft, add the `id` and `status` properties to the body of the request. Set the `id` to the ID of the draft and set the `status` to \'current\'. When the request is sent, a new piece of content will be created and the metadata from the draft will be transferred into it.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be created in, and permission to view the draft if publishing a draft.
-     * Create content
-     * @deprecated
-     */
-    async createContent(requestParameters: CreateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {
-        const response = await this.createContentRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page`,`blogpost`, or `attachment` and its status is `current`, it will be trashed. - If the content\'s type is `page`,`blogpost`, or `attachment` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
-     * Delete content
-     * @deprecated
-     */
-    async deleteContentRaw(requestParameters: DeleteContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling deleteContent().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Moves a piece of content to the space\'s trash or purges it from the trash, depending on the content\'s type and status:  - If the content\'s type is `page`,`blogpost`, or `attachment` and its status is `current`, it will be trashed. - If the content\'s type is `page`,`blogpost`, or `attachment` and its status is `trashed`, the content will be purged from the trash and deleted permanently. Note, you must also set the `status` query parameter to `trashed` in your request. - If the content\'s type is `comment`, it will be deleted permanently without being trashed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
-     * Delete content
-     * @deprecated
-     */
-    async deleteContent(requestParameters: DeleteContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteContentRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
-     * Get content
-     * @deprecated
-     */
-    async getContentRaw(requestParameters: GetContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
-        const queryParameters: any = {};
-
-        if (requestParameters['type'] != null) {
-            queryParameters['type'] = requestParameters['type'];
-        }
-
-        if (requestParameters['spaceKey'] != null) {
-            queryParameters['spaceKey'] = requestParameters['spaceKey'];
-        }
-
-        if (requestParameters['title'] != null) {
-            queryParameters['title'] = requestParameters['title'];
-        }
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['postingDay'] != null) {
-            queryParameters['postingDay'] = requestParameters['postingDay'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters['trigger'] != null) {
-            queryParameters['trigger'] = requestParameters['trigger'];
-        }
-
-        if (requestParameters['orderby'] != null) {
-            queryParameters['orderby'] = requestParameters['orderby'];
-        }
-
-        if (requestParameters['start'] != null) {
-            queryParameters['start'] = requestParameters['start'];
-        }
-
-        if (requestParameters['limit'] != null) {
-            queryParameters['limit'] = requestParameters['limit'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns all content in a Confluence instance.  By default, the following objects are expanded: `space`, `history`, `version`.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
-     * Get content
-     * @deprecated
-     */
-    async getContent(requestParameters: GetContentRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
-        const response = await this.getContentRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content by ID
-     * @deprecated
-     */
-    async getContentByIdRaw(requestParameters: GetContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getContentById().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['version'] != null) {
-            queryParameters['version'] = requestParameters['version'];
-        }
-
-        if (requestParameters['embeddedContentRender'] != null) {
-            queryParameters['embeddedContentRender'] = requestParameters['embeddedContentRender'];
-        }
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        if (requestParameters['trigger'] != null) {
-            queryParameters['trigger'] = requestParameters['trigger'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns a single piece of content, like a page or a blog post.  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content. If the content is a blog post, \'View\' permission for the space is required.
-     * Get content by ID
-     * @deprecated
-     */
-    async getContentById(requestParameters: GetContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {
-        const response = await this.getContentByIdRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content history
-     * @deprecated
-     */
-    async getHistoryForContentRaw(requestParameters: GetHistoryForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentHistory>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getHistoryForContent().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['expand'] != null) {
-            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}/history`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Returns the most recent update for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content history
-     * @deprecated
-     */
-    async getHistoryForContent(requestParameters: GetHistoryForContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentHistory> {
-        const response = await this.getHistoryForContentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -477,8 +136,12 @@ export class ContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
+        urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/blueprint/instance/{draftId}`.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -538,8 +201,12 @@ export class ContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
+        urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/blueprint/instance/{draftId}`.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -559,7 +226,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
+     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
      * Search content by CQL
      */
     async searchContentByCQLRaw(requestParameters: SearchContentByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
@@ -602,8 +269,11 @@ export class ContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["search:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/content/search`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/content/search`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -613,7 +283,7 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  Starting on Dec 10, 2024, if the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
+     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
      * Search content by CQL
      */
     async searchContentByCQL(requestParameters: SearchContentByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentArray> {
@@ -621,130 +291,4 @@ export class ContentApi extends runtime.BaseAPI {
         return await response.value();
     }
 
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Update content
-     * @deprecated
-     */
-    async updateContentRaw(requestParameters: UpdateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling updateContent().'
-            );
-        }
-
-        if (requestParameters['content'] == null) {
-            throw new runtime.RequiredError(
-                'content',
-                'Required parameter "content" was null or undefined when calling updateContent().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['conflictPolicy'] != null) {
-            queryParameters['conflictPolicy'] = requestParameters['conflictPolicy'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
-            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
-        }
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
-        }
-
-        const response = await this.request({
-            path: `/wiki/rest/api/content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters['content'],
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * Deprecated, use [Confluence\'s v2 API](https://developer.atlassian.com/cloud/confluence/rest/v2/intro/).  Updates a piece of content. Use this method to update the title or body of a piece of content, change the status, change the parent page, and more.  Note, updating draft content is currently not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Update content
-     * @deprecated
-     */
-    async updateContent(requestParameters: UpdateContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Content> {
-        const response = await this.updateContentRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
 }
-
-/**
- * @export
- */
-export const GetContentStatusEnum = {
-} as const;
-export type GetContentStatusEnum = typeof GetContentStatusEnum[keyof typeof GetContentStatusEnum];
-/**
- * @export
- */
-export const GetContentTriggerEnum = {
-    Viewed: 'viewed'
-} as const;
-export type GetContentTriggerEnum = typeof GetContentTriggerEnum[keyof typeof GetContentTriggerEnum];
-/**
- * @export
- */
-export const GetContentByIdStatusEnum = {
-} as const;
-export type GetContentByIdStatusEnum = typeof GetContentByIdStatusEnum[keyof typeof GetContentByIdStatusEnum];
-/**
- * @export
- */
-export const GetContentByIdEmbeddedContentRenderEnum = {
-    Current: 'current',
-    VersionAtSave: 'version-at-save'
-} as const;
-export type GetContentByIdEmbeddedContentRenderEnum = typeof GetContentByIdEmbeddedContentRenderEnum[keyof typeof GetContentByIdEmbeddedContentRenderEnum];
-/**
- * @export
- */
-export const GetContentByIdTriggerEnum = {
-    Viewed: 'viewed'
-} as const;
-export type GetContentByIdTriggerEnum = typeof GetContentByIdTriggerEnum[keyof typeof GetContentByIdTriggerEnum];
-/**
- * @export
- */
-export const GetHistoryForContentExpandEnum = {
-    LastUpdated: 'lastUpdated',
-    PreviousVersion: 'previousVersion',
-    Contributors: 'contributors',
-    NextVersion: 'nextVersion'
-} as const;
-export type GetHistoryForContentExpandEnum = typeof GetHistoryForContentExpandEnum[keyof typeof GetHistoryForContentExpandEnum];
-/**
- * @export
- */
-export const UpdateContentStatusEnum = {
-    Current: 'current',
-    Trashed: 'trashed',
-    Deleted: 'deleted',
-    Historical: 'historical',
-    Draft: 'draft'
-} as const;
-export type UpdateContentStatusEnum = typeof UpdateContentStatusEnum[keyof typeof UpdateContentStatusEnum];
-/**
- * @export
- */
-export const UpdateContentConflictPolicyEnum = {
-    Abort: 'abort'
-} as const;
-export type UpdateContentConflictPolicyEnum = typeof UpdateContentConflictPolicyEnum[keyof typeof UpdateContentConflictPolicyEnum];

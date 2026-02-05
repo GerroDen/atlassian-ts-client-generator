@@ -508,8 +508,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/default-tasks/latest/projects/{projectKey}/tasks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -553,8 +557,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings-restriction`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -584,8 +592,11 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects`;
+
         const response = await this.request({
-            path: `/api/latest/projects`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -622,8 +633,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -660,8 +675,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/vnd.atl.bitbucket.bulk+json';
 
+
+        let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/branch-permissions/latest/projects/{projectKey}/restrictions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -698,8 +717,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -734,8 +757,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -794,8 +821,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings-restriction`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -828,8 +859,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/default-tasks/latest/projects/{projectKey}/tasks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -862,8 +897,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-decline`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -903,8 +942,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks/{taskId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
+
         const response = await this.request({
-            path: `/default-tasks/latest/projects/{projectKey}/tasks/{taskId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -937,8 +981,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -978,8 +1026,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1019,8 +1072,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/branch-permissions/latest/projects/{projectKey}/restrictions/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1060,8 +1118,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1101,8 +1164,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/enabled`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/enabled`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -1147,8 +1215,13 @@ export class ProjectApi extends runtime.BaseAPI {
             headerParameters['Content-Length'] = String(requestParameters['contentLength']);
         }
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/enabled`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/enabled`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1190,8 +1263,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1233,8 +1310,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1269,8 +1351,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1330,8 +1416,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings-restriction`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1395,8 +1485,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings-restriction/all`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings-restriction/all`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1430,8 +1524,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-decline`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1469,8 +1567,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/hooks/{hookKey}/avatar`;
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/hooks/{hookKey}/avatar`.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1511,8 +1613,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/hook-scripts`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/hook-scripts`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1553,8 +1659,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1600,8 +1711,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/default-tasks/latest/projects/{projectKey}/tasks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1650,8 +1765,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/forks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/forks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1697,8 +1817,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1744,8 +1868,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/groups/none`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/groups/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1794,8 +1922,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}/latest`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}/latest`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1829,8 +1962,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1868,8 +2005,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/avatar.png`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/avatar.png`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1911,8 +2052,11 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects`;
+
         const response = await this.request({
-            path: `/api/latest/projects`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1953,8 +2097,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/pull-requests/{scmId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/pull-requests/{scmId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2003,8 +2152,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/related`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/related`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2046,8 +2200,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2088,8 +2246,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2130,8 +2293,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2177,8 +2345,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2219,8 +2391,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions/{id}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/branch-permissions/latest/projects/{projectKey}/restrictions/{id}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2274,8 +2451,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/branch-permissions/latest/projects/{projectKey}/restrictions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2316,8 +2497,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/settings`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/settings`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2362,8 +2548,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}/statistics`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}/statistics`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2408,8 +2599,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}/statistics/summary`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}/statistics/summary`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2466,8 +2662,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2513,8 +2713,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/users/none`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/users/none`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2559,8 +2763,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2601,8 +2810,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/{permission}/all`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/{permission}/all`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2647,8 +2861,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/{permission}/all`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/{permission}/all`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2688,8 +2907,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/hook-scripts/{scriptId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/hook-scripts/{scriptId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2729,8 +2953,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/recreate`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/recreate`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -2772,8 +3001,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2810,8 +3043,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2848,8 +3085,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -2894,8 +3135,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/search`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/search`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2930,8 +3175,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-merge`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -2968,8 +3217,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/auto-decline`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3013,8 +3266,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/hook-scripts/{scriptId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/hook-scripts/{scriptId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3058,8 +3316,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/default-branch`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3101,8 +3364,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/groups`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3143,8 +3410,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/permissions/users`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3186,8 +3457,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/settings`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/hooks/{hookKey}/settings`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3249,8 +3525,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/contributing`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/contributing`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -3310,8 +3591,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/license`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/license`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -3371,8 +3657,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/readme`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}/readme`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -3419,8 +3710,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/test`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/test`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -3475,8 +3770,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks/{taskId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
+
         const response = await this.request({
-            path: `/default-tasks/latest/projects/{projectKey}/tasks/{taskId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3513,8 +3813,12 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3558,8 +3862,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/settings/pull-requests/{scmId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/settings/pull-requests/{scmId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -3603,8 +3912,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/repos/{repositorySlug}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3648,8 +3962,13 @@ export class ProjectApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+        urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/webhooks/{webhookId}`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -3704,8 +4023,12 @@ export class ProjectApi extends runtime.BaseAPI {
             formParams.append('avatar', requestParameters['avatar'] as any);
         }
 
+
+        let urlPath = `/api/latest/projects/{projectKey}/avatar.png`;
+        urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
+
         const response = await this.request({
-            path: `/api/latest/projects/{projectKey}/avatar.png`.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

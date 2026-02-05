@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App Migration
+ * App migration
  * Endpoints available in Jira and Confluence cloud instances to support app migrations
  *
  * The version of the OpenAPI document: 1.0
@@ -36,8 +36,11 @@ export class NotificationAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/webhook`;
+
         const response = await this.request({
-            path: `/webhook`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -73,8 +76,11 @@ export class NotificationAPIApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/webhook`;
+
         const response = await this.request({
-            path: `/webhook`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

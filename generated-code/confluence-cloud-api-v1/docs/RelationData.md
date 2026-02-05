@@ -1,0 +1,16 @@
+
+# RelationData
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`createdBy` | [User](User.md)
+`createdDate` | string
+`friendlyCreatedDate` | string
+
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

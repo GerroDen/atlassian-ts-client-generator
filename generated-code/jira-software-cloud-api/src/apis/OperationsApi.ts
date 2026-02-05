@@ -92,8 +92,11 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/bulkByProperties`;
+
         const response = await this.request({
-            path: `/rest/operations/1.0/bulkByProperties`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -137,8 +140,12 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
+        urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
+
         const response = await this.request({
-            path: `/rest/operations/1.0/incidents/{incidentId}`.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -182,8 +189,12 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
+        urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
+
         const response = await this.request({
-            path: `/rest/operations/1.0/post-incident-reviews/{reviewId}`.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -220,8 +231,11 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/linkedWorkspaces/bulk`;
+
         const response = await this.request({
-            path: `/rest/operations/1.0/linkedWorkspaces/bulk`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -265,8 +279,12 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
+        urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
+
         const response = await this.request({
-            path: `/rest/operations/1.0/incidents/{incidentId}`.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -311,8 +329,12 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
+        urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
+
         const response = await this.request({
-            path: `/rest/operations/1.0/post-incident-reviews/{reviewId}`.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -350,8 +372,11 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/linkedWorkspaces`;
+
         const response = await this.request({
-            path: `/rest/operations/1.0/linkedWorkspaces`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -398,8 +423,11 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/bulk`;
+
         const response = await this.request({
-            path: `/rest/operations/1.0/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -447,8 +475,11 @@ export class OperationsApi extends runtime.BaseAPI {
             headerParameters['Authorization'] = String(requestParameters['authorization']);
         }
 
+
+        let urlPath = `/rest/operations/1.0/linkedWorkspaces/bulk`;
+
         const response = await this.request({
-            path: `/rest/operations/1.0/linkedWorkspaces/bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

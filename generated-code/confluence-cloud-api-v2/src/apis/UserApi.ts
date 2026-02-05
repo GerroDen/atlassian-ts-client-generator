@@ -64,8 +64,11 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/user/access/check-access-by-email`;
+
         const response = await this.request({
-            path: `/user/access/check-access-by-email`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -110,8 +113,11 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/users-bulk`;
+
         const response = await this.request({
-            path: `/users-bulk`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -156,8 +162,11 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", []);
         }
 
+
+        let urlPath = `/user/access/invite-by-email`;
+
         const response = await this.request({
-            path: `/user/access/invite-by-email`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

@@ -94,8 +94,13 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -144,8 +149,13 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -194,8 +204,12 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/{userId}/property`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -244,8 +258,13 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -303,8 +322,13 @@ export class UserPropertiesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:user.property:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/user/{userId}/property/{key}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+        urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/user/{userId}/property/{key}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))).replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

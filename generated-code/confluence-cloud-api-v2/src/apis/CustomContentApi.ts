@@ -42,6 +42,7 @@ export interface GetCustomContentByIdRequest {
     includeOperations?: boolean;
     includeVersions?: boolean;
     includeVersion?: boolean;
+    includeCollaborators?: boolean;
 }
 
 export interface GetCustomContentByTypeRequest {
@@ -116,8 +117,11 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content`;
+
         const response = await this.request({
-            path: `/custom-content`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -164,8 +168,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -224,6 +232,10 @@ export class CustomContentApi extends runtime.BaseAPI {
             queryParameters['include-version'] = requestParameters['includeVersion'];
         }
 
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -234,8 +246,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -305,8 +321,11 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content`;
+
         const response = await this.request({
-            path: `/custom-content`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -375,8 +394,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/blogposts/{id}/custom-content`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/blogposts/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -445,8 +468,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/pages/{id}/custom-content`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/pages/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -511,8 +538,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/spaces/{id}/custom-content`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/spaces/{id}/custom-content`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -531,7 +562,7 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
+     * Update a custom content by id. At most one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. Note that if `spaceId` is specified, it must be the same as the `spaceId` used for creating the custom content as moving custom content to a different space is not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
     async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
@@ -563,8 +594,12 @@ export class CustomContentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:custom-content:confluence"]);
         }
 
+
+        let urlPath = `/custom-content/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/custom-content/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -575,7 +610,7 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a custom content by id.  `spaceId` is always required and maximum one of `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
+     * Update a custom content by id. At most one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. Note that if `spaceId` is specified, it must be the same as the `spaceId` used for creating the custom content as moving custom content to a different space is not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
      * Update custom content
      */
     async updateCustomContent(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateCustomContent201Response> {

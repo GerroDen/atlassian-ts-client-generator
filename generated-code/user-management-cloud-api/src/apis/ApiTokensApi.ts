@@ -60,8 +60,12 @@ export class ApiTokensApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/api-tokens`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/api-tokens`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -110,8 +114,13 @@ export class ApiTokensApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/api-tokens/{tokenId}`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+        urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/api-tokens/{tokenId}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))).replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,

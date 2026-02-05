@@ -228,8 +228,11 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -269,8 +272,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -315,8 +322,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["delete:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -399,8 +411,11 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board`;
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -447,8 +462,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/quickfilter`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/quickfilter`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -499,8 +518,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/sprint`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/sprint`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -550,8 +573,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/version`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/version`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -589,8 +616,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -637,8 +668,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/filter/{filterId}`;
+        urlPath = urlPath.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters['filterId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/filter/{filterId}`.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters['filterId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -708,8 +743,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/epic/{epicId}/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters['epicId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic/{epicId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters['epicId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -778,8 +818,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:sprint:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -824,8 +869,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -863,8 +913,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/properties`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -902,8 +956,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/configuration`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/configuration`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -954,8 +1012,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/epic`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -993,8 +1055,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1057,8 +1123,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/backlog`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/backlog`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1121,8 +1191,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1185,8 +1259,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:epic:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/epic/none/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/epic/none/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1232,8 +1310,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/project`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/project`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1271,8 +1353,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/project/full`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/project/full`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1317,8 +1403,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters['quickFilterId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters['quickFilterId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1357,8 +1448,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["read:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/reports`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/reports`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1406,8 +1501,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/issue`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1462,8 +1561,13 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+        urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/properties/{propertyKey}`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))).replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1516,8 +1620,12 @@ export class BoardApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", ["write:board-scope.admin:jira-software"]);
         }
 
+
+        let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
+        urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
+
         const response = await this.request({
-            path: `/rest/agile/1.0/board/{boardId}/features`.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

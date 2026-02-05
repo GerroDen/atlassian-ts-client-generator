@@ -29,6 +29,10 @@ export interface DeleteSmartLinkRequest {
 
 export interface GetSmartLinkByIdRequest {
     id: number;
+    includeCollaborators?: boolean;
+    includeDirectChildren?: boolean;
+    includeOperations?: boolean;
+    includeProperties?: boolean;
 }
 
 /**
@@ -62,8 +66,11 @@ export class SmartLinkApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds`;
+
         const response = await this.request({
-            path: `/embeds`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -106,8 +113,12 @@ export class SmartLinkApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["delete:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/embeds/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -138,6 +149,22 @@ export class SmartLinkApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters['includeCollaborators'] != null) {
+            queryParameters['include-collaborators'] = requestParameters['includeCollaborators'];
+        }
+
+        if (requestParameters['includeDirectChildren'] != null) {
+            queryParameters['include-direct-children'] = requestParameters['includeDirectChildren'];
+        }
+
+        if (requestParameters['includeOperations'] != null) {
+            queryParameters['include-operations'] = requestParameters['includeOperations'];
+        }
+
+        if (requestParameters['includeProperties'] != null) {
+            queryParameters['include-properties'] = requestParameters['includeProperties'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -148,8 +175,12 @@ export class SmartLinkApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:embed:confluence"]);
         }
 
+
+        let urlPath = `/embeds/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/embeds/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

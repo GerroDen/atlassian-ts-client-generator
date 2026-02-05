@@ -740,6 +740,12 @@ export interface CustomerRequestDTO {
      * @memberof CustomerRequestDTO
      */
     status?: PagedDTOCustomerRequestStatusDTO;
+    /**
+     * Summary of the request created
+     * @type {string}
+     * @memberof CustomerRequestDTO
+     */
+    summary?: string;
 }
 /**
  * 
@@ -1915,6 +1921,12 @@ export interface OrganizationDTO {
      * @memberof OrganizationDTO
      */
     name?: string;
+    /**
+     * Returns if an organization is managed by scim. This field may not be present in some older organizations
+     * @type {boolean}
+     * @memberof OrganizationDTO
+     */
+    scimManaged?: boolean;
     /**
      * A unique system generated ID for the organization. This is identity from the group directory id
      * @type {string}
@@ -3364,6 +3376,61 @@ export interface RequestTypeIconLinkDTO {
 /**
  * 
  * @export
+ * @interface RequestTypePermissionCheckRequestDTO
+ */
+export interface RequestTypePermissionCheckRequestDTO {
+    /**
+     * The account ID of a user.
+     * @type {string}
+     * @memberof RequestTypePermissionCheckRequestDTO
+     */
+    accountId?: string;
+    /**
+     * List of requested permissions.
+     * @type {Array<string>}
+     * @memberof RequestTypePermissionCheckRequestDTO
+     */
+    permissions?: Array<RequestTypePermissionCheckRequestDTOPermissionsEnum>;
+    /**
+     * List of request type IDs.
+     * @type {Array<number>}
+     * @memberof RequestTypePermissionCheckRequestDTO
+     */
+    requestTypeIds?: Array<number>;
+}
+
+
+/**
+ * @export
+ */
+export const RequestTypePermissionCheckRequestDTOPermissionsEnum = {
+    CanCreateRequest: 'canCreateRequest',
+    CanAdminister: 'canAdminister'
+} as const;
+export type RequestTypePermissionCheckRequestDTOPermissionsEnum = typeof RequestTypePermissionCheckRequestDTOPermissionsEnum[keyof typeof RequestTypePermissionCheckRequestDTOPermissionsEnum];
+
+/**
+ * 
+ * @export
+ * @interface RequestTypePermissionCheckResponse
+ */
+export interface RequestTypePermissionCheckResponse {
+    /**
+     * List of request type IDs for which the user has permission to administer.
+     * @type {Array<number>}
+     * @memberof RequestTypePermissionCheckResponse
+     */
+    canAdminister?: Array<number>;
+    /**
+     * List of request type IDs for which the user can create requests.
+     * @type {Array<number>}
+     * @memberof RequestTypePermissionCheckResponse
+     */
+    canCreateRequest?: Array<number>;
+}
+/**
+ * 
+ * @export
  * @interface Resource
  */
 export interface Resource {
@@ -3515,6 +3582,12 @@ export interface ServiceDeskDTO {
      * @memberof ServiceDeskDTO
      */
     projectName?: string;
+    /**
+     * Key of the project type.
+     * @type {string}
+     * @memberof ServiceDeskDTO
+     */
+    projectTypeKey?: string;
 }
 /**
  * Details about the operations available in this version.

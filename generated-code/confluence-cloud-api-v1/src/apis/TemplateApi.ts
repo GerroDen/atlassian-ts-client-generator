@@ -35,6 +35,7 @@ export interface GetBlueprintTemplatesRequest {
 
 export interface GetContentTemplateRequest {
     contentTemplateId: string;
+    expand?: Array<GetContentTemplateExpandEnum>;
 }
 
 export interface GetContentTemplatesRequest {
@@ -83,8 +84,11 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/template`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -136,8 +140,11 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template/blueprint`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/template/blueprint`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -169,6 +176,10 @@ export class TemplateApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters['expand'] != null) {
+            queryParameters['expand'] = requestParameters['expand']!.join(runtime.COLLECTION_FORMATS["csv"]);
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
@@ -179,8 +190,12 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
+        urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -231,8 +246,11 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-content.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template/page`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/template/page`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -274,8 +292,12 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
+        urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/template/{contentTemplateId}`.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -318,8 +340,11 @@ export class TemplateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-content"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/template`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/template`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -344,13 +369,23 @@ export class TemplateApi extends runtime.BaseAPI {
  * @export
  */
 export const GetBlueprintTemplatesExpandEnum = {
-    Body: 'body'
+    Body: 'body',
+    BodyStorage: 'body.storage'
 } as const;
 export type GetBlueprintTemplatesExpandEnum = typeof GetBlueprintTemplatesExpandEnum[keyof typeof GetBlueprintTemplatesExpandEnum];
 /**
  * @export
  */
+export const GetContentTemplateExpandEnum = {
+    Body: 'body',
+    BodyStorage: 'body.storage'
+} as const;
+export type GetContentTemplateExpandEnum = typeof GetContentTemplateExpandEnum[keyof typeof GetContentTemplateExpandEnum];
+/**
+ * @export
+ */
 export const GetContentTemplatesExpandEnum = {
-    Body: 'body'
+    Body: 'body',
+    BodyStorage: 'body.storage'
 } as const;
 export type GetContentTemplatesExpandEnum = typeof GetContentTemplatesExpandEnum[keyof typeof GetContentTemplatesExpandEnum];

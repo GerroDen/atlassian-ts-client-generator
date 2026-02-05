@@ -55,9 +55,9 @@ export interface RemoveGroupByIdRequest {
 
 export interface RemoveMemberFromGroupByGroupIdRequest {
     groupId: string;
+    accountId: string;
     key?: string;
     username?: string;
-    accountId?: string;
 }
 
 export interface SearchGroupsRequest {
@@ -109,8 +109,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/userByGroupId`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/userByGroupId`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -154,8 +157,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -202,8 +208,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/by-id`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/by-id`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -261,8 +270,12 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/{groupId}/membersByGroupId`;
+        urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/{groupId}/membersByGroupId`.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -309,8 +322,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -356,8 +372,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/by-id`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/by-id`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -386,10 +405,21 @@ export class GroupApi extends runtime.BaseAPI {
             );
         }
 
+        if (requestParameters['accountId'] == null) {
+            throw new runtime.RequiredError(
+                'accountId',
+                'Required parameter "accountId" was null or undefined when calling removeMemberFromGroupByGroupId().'
+            );
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters['groupId'] != null) {
             queryParameters['groupId'] = requestParameters['groupId'];
+        }
+
+        if (requestParameters['accountId'] != null) {
+            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         if (requestParameters['key'] != null) {
@@ -398,10 +428,6 @@ export class GroupApi extends runtime.BaseAPI {
 
         if (requestParameters['username'] != null) {
             queryParameters['username'] = requestParameters['username'];
-        }
-
-        if (requestParameters['accountId'] != null) {
-            queryParameters['accountId'] = requestParameters['accountId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -414,8 +440,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["write:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/userByGroupId`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/userByGroupId`,
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -472,8 +501,11 @@ export class GroupApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-groups"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/group/picker`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/group/picker`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

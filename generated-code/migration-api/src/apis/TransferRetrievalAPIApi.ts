@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * App Migration
+ * App migration
  * Endpoints available in Jira and Confluence cloud instances to support app migrations
  *
  * The version of the OpenAPI document: 1.0
@@ -66,8 +66,12 @@ export class TransferRetrievalAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/container/{transferId}/page`;
+        urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
+
         const response = await this.request({
-            path: `/container/{transferId}/page`.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -94,8 +98,11 @@ export class TransferRetrievalAPIApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transfer/recent`;
+
         const response = await this.request({
-            path: `/transfer/recent`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

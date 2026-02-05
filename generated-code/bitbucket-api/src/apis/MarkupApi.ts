@@ -59,8 +59,11 @@ export class MarkupApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/api/latest/markup/preview`;
+
         const response = await this.request({
-            path: `/api/latest/markup/preview`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

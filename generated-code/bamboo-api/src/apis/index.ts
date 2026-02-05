@@ -9,7 +9,7 @@ export * from './DeploymentApi';
 export * from './PermissionsApi';
 export * from './ResourceApi';
 export * from './SessionApi';
-export * from './StorageConfigurationApi';
+export * from './SystemInformationApi';
 export * from './TriggersApi';
 export * from './TrustedKeysManagementApi';
 export * from './UserManagementApi';

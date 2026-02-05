@@ -58,8 +58,12 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:confluence-space.summary"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/longtask/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
         const response = await this.request({
-            path: `/wiki/rest/api/longtask/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -106,8 +110,11 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.accessToken("oAuthDefinitions", ["read:content.metadata:confluence"]);
         }
 
+
+        let urlPath = `/wiki/rest/api/longtask`;
+
         const response = await this.request({
-            path: `/wiki/rest/api/longtask`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

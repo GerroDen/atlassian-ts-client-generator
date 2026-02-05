@@ -65,8 +65,12 @@ export class EmailApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
+
+        let urlPath = `/users/{account_id}/manage/email`;
+        urlPath = urlPath.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId'])));
+
         const response = await this.request({
-            path: `/users/{account_id}/manage/email`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters['accountId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
