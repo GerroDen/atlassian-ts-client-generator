@@ -57,7 +57,7 @@
     "gen:user-management-cloud-api:gen": "gen-tool/gen-api.js user-management-cloud-api",
     "gen:user-management-cloud-api:lint": "tsgo generated-code/user-management-cloud-api --ignoreConfig --noEmit",
     "fmt": "oxfmt",
-    "lint": "conc 'node:lint:*'",
+    "lint": "run-p 'lint:*'",
     "lint:oxlint": "oxlint",
     "lint:fmt": "oxfmt --check",
     "test": "vitest",
