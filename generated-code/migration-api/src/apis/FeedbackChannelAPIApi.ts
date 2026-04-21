@@ -29,10 +29,9 @@ export interface ReceiveFeedbackUsingPOSTRequest {
 export class FeedbackChannelAPIApi extends runtime.BaseAPI {
 
     /**
-     * Feeds the app migration listener back with basic info coming from cloud
-     * Send information to server app
+     * Creates request options for receiveFeedbackUsingPOST without sending the request
      */
-    async receiveFeedbackUsingPOSTRaw(requestParameters: ReceiveFeedbackUsingPOSTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async receiveFeedbackUsingPOSTRequestOpts(requestParameters: ReceiveFeedbackUsingPOSTRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -57,13 +56,22 @@ export class FeedbackChannelAPIApi extends runtime.BaseAPI {
         let urlPath = `/feedback/{transferId}`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['cloudFeedback'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Feeds the app migration listener back with basic info coming from cloud
+     * Send information to server app
+     */
+    async receiveFeedbackUsingPOSTRaw(requestParameters: ReceiveFeedbackUsingPOSTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.receiveFeedbackUsingPOSTRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

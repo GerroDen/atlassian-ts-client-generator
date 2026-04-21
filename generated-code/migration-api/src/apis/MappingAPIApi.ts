@@ -38,10 +38,9 @@ export interface GetMigrationContextForNamespaceUsingGET1Request {
 export class MappingAPIApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves mappings for a specific namespace filtering by the keys provided on the payload
-     * Get mappings by keys
+     * Creates request options for findByNamespaceAndKeysUsingPOST1 without sending the request
      */
-    async findByNamespaceAndKeysUsingPOST1Raw(requestParameters: FindByNamespaceAndKeysUsingPOST1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MigrationMappingItem>> {
+    async findByNamespaceAndKeysUsingPOST1RequestOpts(requestParameters: FindByNamespaceAndKeysUsingPOST1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['namespace'] == null) {
             throw new runtime.RequiredError(
                 'namespace',
@@ -77,13 +76,22 @@ export class MappingAPIApi extends runtime.BaseAPI {
         let urlPath = `/mapping/{transferId}/find`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves mappings for a specific namespace filtering by the keys provided on the payload
+     * Get mappings by keys
+     */
+    async findByNamespaceAndKeysUsingPOST1Raw(requestParameters: FindByNamespaceAndKeysUsingPOST1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MigrationMappingItem>> {
+        const requestOptions = await this.findByNamespaceAndKeysUsingPOST1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -98,10 +106,9 @@ export class MappingAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns mappings for a given namespace
-     * Get mappings in pages
+     * Creates request options for getMigrationContextForNamespaceUsingGET1 without sending the request
      */
-    async getMigrationContextForNamespaceUsingGET1Raw(requestParameters: GetMigrationContextForNamespaceUsingGET1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MigrationMappingDto>> {
+    async getMigrationContextForNamespaceUsingGET1RequestOpts(requestParameters: GetMigrationContextForNamespaceUsingGET1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -136,12 +143,21 @@ export class MappingAPIApi extends runtime.BaseAPI {
         let urlPath = `/mapping/{transferId}/page`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns mappings for a given namespace
+     * Get mappings in pages
+     */
+    async getMigrationContextForNamespaceUsingGET1Raw(requestParameters: GetMigrationContextForNamespaceUsingGET1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MigrationMappingDto>> {
+        const requestOptions = await this.getMigrationContextForNamespaceUsingGET1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

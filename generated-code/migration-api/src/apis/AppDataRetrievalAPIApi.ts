@@ -33,10 +33,9 @@ export interface GetUploadeds3KeysUsingGETRequest {
 export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
 
     /**
-     * Returns an object containing a signed url to retrieve app data
-     * Get app data export signed URL
+     * Creates request options for getMigrationObjectUsingGET without sending the request
      */
-    async getMigrationObjectUsingGETRaw(requestParameters: GetMigrationObjectUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMigrationObjectUsingGET200Response>> {
+    async getMigrationObjectUsingGETRequestOpts(requestParameters: GetMigrationObjectUsingGETRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['s3Key'] == null) {
             throw new runtime.RequiredError(
                 's3Key',
@@ -52,12 +51,21 @@ export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
         let urlPath = `/data/{s3Key}`;
         urlPath = urlPath.replace(`{${"s3Key"}}`, encodeURIComponent(String(requestParameters['s3Key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an object containing a signed url to retrieve app data
+     * Get app data export signed URL
+     */
+    async getMigrationObjectUsingGETRaw(requestParameters: GetMigrationObjectUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMigrationObjectUsingGET200Response>> {
+        const requestOptions = await this.getMigrationObjectUsingGETRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -72,10 +80,9 @@ export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all uploaded data keys for a transferId
-     * Get list of app data exports
+     * Creates request options for getUploadeds3KeysUsingGET without sending the request
      */
-    async getUploadeds3KeysUsingGETRaw(requestParameters: GetUploadeds3KeysUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UploadedDataDto>>> {
+    async getUploadeds3KeysUsingGETRequestOpts(requestParameters: GetUploadeds3KeysUsingGETRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -91,12 +98,21 @@ export class AppDataRetrievalAPIApi extends runtime.BaseAPI {
         let urlPath = `/data/{transferId}/all`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all uploaded data keys for a transferId
+     * Get list of app data exports
+     */
+    async getUploadeds3KeysUsingGETRaw(requestParameters: GetUploadeds3KeysUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UploadedDataDto>>> {
+        const requestOptions = await this.getUploadeds3KeysUsingGETRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -28,10 +28,9 @@ export interface FetchServerSideExceptionUsingGETRequest {
 export class ErrorRetrievalAPIApi extends runtime.BaseAPI {
 
     /**
-     * **Note: This feature is available for app migrations using CCMA v3.3.7 and JCMA v1.7.2 onwards.**  Retrieves details of the exception thrown from your server side listener method `onStartAppMigration` 
-     * Fetch server side error
+     * Creates request options for fetchServerSideExceptionUsingGET without sending the request
      */
-    async fetchServerSideExceptionUsingGETRaw(requestParameters: FetchServerSideExceptionUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransferErrorDto>> {
+    async fetchServerSideExceptionUsingGETRequestOpts(requestParameters: FetchServerSideExceptionUsingGETRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -47,12 +46,21 @@ export class ErrorRetrievalAPIApi extends runtime.BaseAPI {
         let urlPath = `/error/{transferId}`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * **Note: This feature is available for app migrations using CCMA v3.3.7 and JCMA v1.7.2 onwards.**  Retrieves details of the exception thrown from your server side listener method `onStartAppMigration` 
+     * Fetch server side error
+     */
+    async fetchServerSideExceptionUsingGETRaw(requestParameters: FetchServerSideExceptionUsingGETRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransferErrorDto>> {
+        const requestOptions = await this.fetchServerSideExceptionUsingGETRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

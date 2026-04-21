@@ -28,10 +28,9 @@ export interface PutWebhookUsingPUTRequest {
 export class NotificationAPIApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves all the webhook endpoints for a cloud site
-     * Get all webhooks
+     * Creates request options for getWebhookUsingGET without sending the request
      */
-    async getWebhookUsingGETRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookEndpointsDto>> {
+    async getWebhookUsingGETRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -39,12 +38,21 @@ export class NotificationAPIApi extends runtime.BaseAPI {
 
         let urlPath = `/webhook`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all the webhook endpoints for a cloud site
+     * Get all webhooks
+     */
+    async getWebhookUsingGETRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookEndpointsDto>> {
+        const requestOptions = await this.getWebhookUsingGETRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -59,10 +67,9 @@ export class NotificationAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Replaces existing URLs with a new set of URLs provided by your cloud app to receive notifications
-     * Update webhook
+     * Creates request options for putWebhookUsingPUT without sending the request
      */
-    async putWebhookUsingPUTRaw(requestParameters: PutWebhookUsingPUTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookEndpointsDto>> {
+    async putWebhookUsingPUTRequestOpts(requestParameters: PutWebhookUsingPUTRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['webhookEndpointsDto'] == null) {
             throw new runtime.RequiredError(
                 'webhookEndpointsDto',
@@ -79,13 +86,22 @@ export class NotificationAPIApi extends runtime.BaseAPI {
 
         let urlPath = `/webhook`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['webhookEndpointsDto'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Replaces existing URLs with a new set of URLs provided by your cloud app to receive notifications
+     * Update webhook
+     */
+    async putWebhookUsingPUTRaw(requestParameters: PutWebhookUsingPUTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookEndpointsDto>> {
+        const requestOptions = await this.putWebhookUsingPUTRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -32,10 +32,9 @@ export interface GetContainersByPageUsingGET1Request {
 export class TransferRetrievalAPIApi extends runtime.BaseAPI {
 
     /**
-     * Returns containers for a given container type
-     * Get containers in pages
+     * Creates request options for getContainersByPageUsingGET1 without sending the request
      */
-    async getContainersByPageUsingGET1Raw(requestParameters: GetContainersByPageUsingGET1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerFetchResponse>> {
+    async getContainersByPageUsingGET1RequestOpts(requestParameters: GetContainersByPageUsingGET1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -70,12 +69,21 @@ export class TransferRetrievalAPIApi extends runtime.BaseAPI {
         let urlPath = `/container/{transferId}/page`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns containers for a given container type
+     * Get containers in pages
+     */
+    async getContainersByPageUsingGET1Raw(requestParameters: GetContainersByPageUsingGET1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContainerFetchResponse>> {
+        const requestOptions = await this.getContainersByPageUsingGET1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -90,10 +98,9 @@ export class TransferRetrievalAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of latest active transfers (upto 100) with migration details
-     * Get list of active transfers
+     * Creates request options for getRecentTransferUsingGET without sending the request
      */
-    async getRecentTransferUsingGETRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransferMetadata>>> {
+    async getRecentTransferUsingGETRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -101,12 +108,21 @@ export class TransferRetrievalAPIApi extends runtime.BaseAPI {
 
         let urlPath = `/transfer/recent`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of latest active transfers (upto 100) with migration details
+     * Get list of active transfers
+     */
+    async getRecentTransferUsingGETRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransferMetadata>>> {
+        const requestOptions = await this.getRecentTransferUsingGETRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

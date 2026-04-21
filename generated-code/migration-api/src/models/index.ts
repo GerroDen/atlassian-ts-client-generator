@@ -257,7 +257,7 @@ export interface ProgressEndpointDto {
      *  - `INCOMPLETE`: Use when the migration finishes but some entities are not migrated or when the migration  is cancelled (see [Transfer cancellation](/platform/app-migration/transfer-cancellation/)).
      * 
      *  - `FAILED`: Use when the migration doesn't run to completion because it encounters a problem.
-     * @type {string}
+     * @type {ProgressEndpointDtoStatusEnum}
      * @memberof ProgressEndpointDto
      */
     status: ProgressEndpointDtoStatusEnum;
@@ -332,7 +332,7 @@ export interface TransferMetadata {
     transferId: string;
     /**
      * The status of the migration
-     * @type {string}
+     * @type {TransferMetadataStatusEnum}
      * @memberof TransferMetadata
      */
     status: TransferMetadataStatusEnum;
@@ -375,7 +375,7 @@ export interface UploadedDataDto {
 export interface UserSelectionContainerV1 extends ContainerV1 {
     /**
      * 
-     * @type {string}
+     * @type {UserSelectionContainerV1SelectedUsersEnum}
      * @memberof UserSelectionContainerV1
      */
     selectedUsers?: UserSelectionContainerV1SelectedUsersEnum;

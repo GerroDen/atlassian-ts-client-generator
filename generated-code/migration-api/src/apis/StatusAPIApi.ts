@@ -29,10 +29,9 @@ export interface SetProgressUsingPOSTRequest {
 export class StatusAPIApi extends runtime.BaseAPI {
 
     /**
-     * Updates migration status for a given transfer ID.    When you  [implement the listener interface](/platform/app-migration/prepare-server-app/) in your server app, your cloud app **must** use this operation to:    - Report progress on your app migration so that admin users can monitor it in the Cloud Migration Assistant.    - Settle the transfer at the end of your migration by updating its status to `SUCCESS`, `INCOMPLETE`, or `FAILED` so that admin users know it\'s finished.    Once a transfer is settled, subsequent requests for that transfer ID return an HTTP 403 error.
-     * Send migration progress
+     * Creates request options for setProgressUsingPOST without sending the request
      */
-    async setProgressUsingPOSTRaw(requestParameters: SetProgressUsingPOSTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProgressEndpointDto>> {
+    async setProgressUsingPOSTRequestOpts(requestParameters: SetProgressUsingPOSTRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['transferId'] == null) {
             throw new runtime.RequiredError(
                 'transferId',
@@ -57,13 +56,22 @@ export class StatusAPIApi extends runtime.BaseAPI {
         let urlPath = `/progress/{transferId}`;
         urlPath = urlPath.replace(`{${"transferId"}}`, encodeURIComponent(String(requestParameters['transferId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['progressEndpointDto'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates migration status for a given transfer ID.    When you  [implement the listener interface](/platform/app-migration/prepare-server-app/) in your server app, your cloud app **must** use this operation to:    - Report progress on your app migration so that admin users can monitor it in the Cloud Migration Assistant.    - Settle the transfer at the end of your migration by updating its status to `SUCCESS`, `INCOMPLETE`, or `FAILED` so that admin users know it\'s finished.    Once a transfer is settled, subsequent requests for that transfer ID return an HTTP 403 error.
+     * Send migration progress
+     */
+    async setProgressUsingPOSTRaw(requestParameters: SetProgressUsingPOSTRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProgressEndpointDto>> {
+        const requestOptions = await this.setProgressUsingPOSTRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
