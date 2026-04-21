@@ -206,10 +206,9 @@ export interface ToggleFeaturesOperationRequest {
 export class BoardApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new board. Board name, type and filter ID is required.   *  `name` \\- Must be less than 255 characters.  *  `type` \\- Valid values: scrum, kanban  *  `filterId` \\- ID of a filter that the user has permissions to view. Note, if the user does not have the \'Create shared objects\' permission and tries to create a shared board, a private board will be created instead (remember that board sharing depends on the filter sharing).  *  `location` \\- The container that the board will be located in. `location` must include the `type` property (Valid values: project, user). If choosing \'project\', then a project must be specified by a `projectKeyOrId` property in `location`. If choosing \'user\', the current user is chosen by default. The `projectKeyOrId` property should not be provided.  Note:   *  If you want to create a new project with an associated board, use the [Jira platform REST API](https://docs.atlassian.com/jira/REST/latest). For more information, see the [Create project](#api-rest-api-3-project-post) method. The `projectTypeKey` for software boards must be \'software\' and the `projectTemplateKey` must be either `com.pyxis.greenhopper.jira:gh-kanban-template` or `com.pyxis.greenhopper.jira:gh-scrum-template`.  *  You can create a filter using the [Jira REST API](https://docs.atlassian.com/jira/REST/latest). For more information, see the [Create filter](#api-rest-api-3-filter-post) method.  *  If you do not ORDER BY the Rank field for the filter of your board, you will not be able to reorder issues on the board.
-     * Create board
+     * Creates request options for createBoard without sending the request
      */
-    async createBoardRaw(requestParameters: CreateBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
+    async createBoardRequestOpts(requestParameters: CreateBoardOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createBoardRequest'] == null) {
             throw new runtime.RequiredError(
                 'createBoardRequest',
@@ -231,13 +230,22 @@ export class BoardApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/board`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new board. Board name, type and filter ID is required.   *  `name` \\- Must be less than 255 characters.  *  `type` \\- Valid values: scrum, kanban  *  `filterId` \\- ID of a filter that the user has permissions to view. Note, if the user does not have the \'Create shared objects\' permission and tries to create a shared board, a private board will be created instead (remember that board sharing depends on the filter sharing).  *  `location` \\- The container that the board will be located in. `location` must include the `type` property (Valid values: project, user). If choosing \'project\', then a project must be specified by a `projectKeyOrId` property in `location`. If choosing \'user\', the current user is chosen by default. The `projectKeyOrId` property should not be provided.  Note:   *  If you want to create a new project with an associated board, use the [Jira platform REST API](https://docs.atlassian.com/jira/REST/latest). For more information, see the [Create project](#api-rest-api-3-project-post) method. The `projectTypeKey` for software boards must be \'software\' and the `projectTemplateKey` must be either `com.pyxis.greenhopper.jira:gh-kanban-template` or `com.pyxis.greenhopper.jira:gh-scrum-template`.  *  You can create a filter using the [Jira REST API](https://docs.atlassian.com/jira/REST/latest). For more information, see the [Create filter](#api-rest-api-3-filter-post) method.  *  If you do not ORDER BY the Rank field for the filter of your board, you will not be able to reorder issues on the board.
+     * Create board
+     */
+    async createBoardRaw(requestParameters: CreateBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
+        const requestOptions = await this.createBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -252,10 +260,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the board. Admin without the view permission can still remove the board.
-     * Delete board
+     * Creates request options for deleteBoard without sending the request
      */
-    async deleteBoardRaw(requestParameters: DeleteBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBoardRequestOpts(requestParameters: DeleteBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -276,12 +283,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the board. Admin without the view permission can still remove the board.
+     * Delete board
+     */
+    async deleteBoardRaw(requestParameters: DeleteBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -295,10 +311,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the property from the board identified by the id. Ths user removing the property is required to have permissions to modify the board.
-     * Delete board property
+     * Creates request options for deleteBoardProperty without sending the request
      */
-    async deleteBoardPropertyRaw(requestParameters: DeleteBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBoardPropertyRequestOpts(requestParameters: DeleteBoardPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -327,12 +342,21 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the property from the board identified by the id. Ths user removing the property is required to have permissions to modify the board.
+     * Delete board property
+     */
+    async deleteBoardPropertyRaw(requestParameters: DeleteBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBoardPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -346,10 +370,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all boards. This only includes boards that the user has permission to view.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on February 15, 2024.   *  `read:board-scope:jira-software`, `read:project:jira`
-     * Get all boards
+     * Creates request options for getAllBoards without sending the request
      */
-    async getAllBoardsRaw(requestParameters: GetAllBoardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200Response>> {
+    async getAllBoardsRequestOpts(requestParameters: GetAllBoardsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -414,12 +437,21 @@ export class BoardApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/board`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all boards. This only includes boards that the user has permission to view.  **Deprecation notice:** The required OAuth 2.0 scopes will be updated on February 15, 2024.   *  `read:board-scope:jira-software`, `read:project:jira`
+     * Get all boards
+     */
+    async getAllBoardsRaw(requestParameters: GetAllBoardsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200Response>> {
+        const requestOptions = await this.getAllBoardsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -434,10 +466,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all quick filters from a board, for a given board ID.
-     * Get all quick filters
+     * Creates request options for getAllQuickFilters without sending the request
      */
-    async getAllQuickFiltersRaw(requestParameters: GetAllQuickFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200Response>> {
+    async getAllQuickFiltersRequestOpts(requestParameters: GetAllQuickFiltersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -466,12 +497,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/quickfilter`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all quick filters from a board, for a given board ID.
+     * Get all quick filters
+     */
+    async getAllQuickFiltersRaw(requestParameters: GetAllQuickFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200Response>> {
+        const requestOptions = await this.getAllQuickFiltersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -486,10 +526,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all sprints from a board, for a given board ID. This only includes sprints that the user has permission to view.
-     * Get all sprints
+     * Creates request options for getAllSprints without sending the request
      */
-    async getAllSprintsRaw(requestParameters: GetAllSprintsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAllSprintsRequestOpts(requestParameters: GetAllSprintsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -522,12 +561,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/sprint`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all sprints from a board, for a given board ID. This only includes sprints that the user has permission to view.
+     * Get all sprints
+     */
+    async getAllSprintsRaw(requestParameters: GetAllSprintsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAllSprintsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -541,10 +589,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all versions from a board, for a given board ID. This only includes versions that the user has permission to view. Note, if the user does not have permission to view the board, no versions will be returned at all. Returned versions are ordered by the name of the project from which they belong and then by sequence defined by user.
-     * Get all versions
+     * Creates request options for getAllVersions without sending the request
      */
-    async getAllVersionsRaw(requestParameters: GetAllVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAllVersionsRequestOpts(requestParameters: GetAllVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -577,12 +624,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/version`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all versions from a board, for a given board ID. This only includes versions that the user has permission to view. Note, if the user does not have permission to view the board, no versions will be returned at all. Returned versions are ordered by the name of the project from which they belong and then by sequence defined by user.
+     * Get all versions
+     */
+    async getAllVersionsRaw(requestParameters: GetAllVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAllVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -596,10 +652,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the board for the given board ID. This board will only be returned if the user has permission to view it. Admins without the view permission will see the board as a private one, so will see only a subset of the board\'s data (board location for instance).
-     * Get board
+     * Creates request options for getBoard without sending the request
      */
-    async getBoardRaw(requestParameters: GetBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
+    async getBoardRequestOpts(requestParameters: GetBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -620,12 +675,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the board for the given board ID. This board will only be returned if the user has permission to view it. Admins without the view permission will see the board as a private one, so will see only a subset of the board\'s data (board location for instance).
+     * Get board
+     */
+    async getBoardRaw(requestParameters: GetBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllBoards200ResponseValuesInner>> {
+        const requestOptions = await this.getBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -640,10 +704,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns any boards which use the provided filter id. This method can be executed by users without a valid software license in order to find which boards are using a particular filter.
-     * Get board by filter id
+     * Creates request options for getBoardByFilterId without sending the request
      */
-    async getBoardByFilterIdRaw(requestParameters: GetBoardByFilterIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBoardByFilterId200Response>> {
+    async getBoardByFilterIdRequestOpts(requestParameters: GetBoardByFilterIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['filterId'] == null) {
             throw new runtime.RequiredError(
                 'filterId',
@@ -672,12 +735,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/filter/{filterId}`;
         urlPath = urlPath.replace(`{${"filterId"}}`, encodeURIComponent(String(requestParameters['filterId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns any boards which use the provided filter id. This method can be executed by users without a valid software license in order to find which boards are using a particular filter.
+     * Get board by filter id
+     */
+    async getBoardByFilterIdRaw(requestParameters: GetBoardByFilterIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBoardByFilterId200Response>> {
+        const requestOptions = await this.getBoardByFilterIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -692,10 +764,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
-     * Get board issues for epic
+     * Creates request options for getBoardIssuesForEpic without sending the request
      */
-    async getBoardIssuesForEpicRaw(requestParameters: GetBoardIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getBoardIssuesForEpicRequestOpts(requestParameters: GetBoardIssuesForEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -748,12 +819,21 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"epicId"}}`, encodeURIComponent(String(requestParameters['epicId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues that belong to an epic on the board, for the given epic ID and the board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get board issues for epic
+     */
+    async getBoardIssuesForEpicRaw(requestParameters: GetBoardIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getBoardIssuesForEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -767,10 +847,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all issues you have access to that belong to the sprint from the board. Issue returned from this resource contains additional fields like: sprint, closedSprints, flagged and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
-     * Get board issues for sprint
+     * Creates request options for getBoardIssuesForSprint without sending the request
      */
-    async getBoardIssuesForSprintRaw(requestParameters: GetBoardIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getBoardIssuesForSprintRequestOpts(requestParameters: GetBoardIssuesForSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -823,12 +902,21 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all issues you have access to that belong to the sprint from the board. Issue returned from this resource contains additional fields like: sprint, closedSprints, flagged and epic. Issues are returned ordered by rank. JQL order has higher priority than default rank.
+     * Get board issues for sprint
+     */
+    async getBoardIssuesForSprintRaw(requestParameters: GetBoardIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getBoardIssuesForSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -842,10 +930,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of the property with a given key from the board identified by the provided id. The user who retrieves the property is required to have permissions to view the board.
-     * Get board property
+     * Creates request options for getBoardProperty without sending the request
      */
-    async getBoardPropertyRaw(requestParameters: GetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getBoardPropertyRequestOpts(requestParameters: GetBoardPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -874,12 +961,21 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of the property with a given key from the board identified by the provided id. The user who retrieves the property is required to have permissions to view the board.
+     * Get board property
+     */
+    async getBoardPropertyRaw(requestParameters: GetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getBoardPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -893,10 +989,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for the board identified by the id. The user who retrieves the property keys is required to have permissions to view the board.
-     * Get board property keys
+     * Creates request options for getBoardPropertyKeys without sending the request
      */
-    async getBoardPropertyKeysRaw(requestParameters: GetBoardPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getBoardPropertyKeysRequestOpts(requestParameters: GetBoardPropertyKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -917,12 +1012,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/properties`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for the board identified by the id. The user who retrieves the property keys is required to have permissions to view the board.
+     * Get board property keys
+     */
+    async getBoardPropertyKeysRaw(requestParameters: GetBoardPropertyKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getBoardPropertyKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -936,10 +1040,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the board configuration. The response contains the following fields:   *  `id` \\- ID of the board.  *  `name` \\- Name of the board.  *  `filter` \\- Reference to the filter used by the given board.  *  `location` \\- Reference to the container that the board is located in. Includes the container type (Valid values: project, user).  *  `subQuery` (Kanban only) - JQL subquery used by the given board.  *  `columnConfig` \\- The column configuration lists the columns for the board, in the order defined in the column configuration. For each column, it shows the issue status mapping as well as the constraint type (Valid values: none, issueCount, issueCountExclSubs) for the min/max number of issues. Note, the last column with statuses mapped to it is treated as the \"Done\" column, which means that issues in that column will be marked as already completed.  *  `estimation` (Scrum only) - Contains information about type of estimation used for the board. Valid values: none, issueCount, field. If the estimation type is \"field\", the ID and display name of the field used for estimation is also returned. Note, estimates for an issue can be updated by a PUT /rest/api/3/issue/\\{issueIdOrKey\\} request, however the fields must be on the screen. \"timeoriginalestimate\" field will never be on the screen, so in order to update it \"originalEstimate\" in \"timetracking\" field should be updated.  *  `ranking` \\- Contains information about custom field used for ranking in the given board.
-     * Get configuration
+     * Creates request options for getConfiguration without sending the request
      */
-    async getConfigurationRaw(requestParameters: GetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfiguration200Response>> {
+    async getConfigurationRequestOpts(requestParameters: GetConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -960,12 +1063,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/configuration`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the board configuration. The response contains the following fields:   *  `id` \\- ID of the board.  *  `name` \\- Name of the board.  *  `filter` \\- Reference to the filter used by the given board.  *  `location` \\- Reference to the container that the board is located in. Includes the container type (Valid values: project, user).  *  `subQuery` (Kanban only) - JQL subquery used by the given board.  *  `columnConfig` \\- The column configuration lists the columns for the board, in the order defined in the column configuration. For each column, it shows the issue status mapping as well as the constraint type (Valid values: none, issueCount, issueCountExclSubs) for the min/max number of issues. Note, the last column with statuses mapped to it is treated as the \"Done\" column, which means that issues in that column will be marked as already completed.  *  `estimation` (Scrum only) - Contains information about type of estimation used for the board. Valid values: none, issueCount, field. If the estimation type is \"field\", the ID and display name of the field used for estimation is also returned. Note, estimates for an issue can be updated by a PUT /rest/api/3/issue/\\{issueIdOrKey\\} request, however the fields must be on the screen. \"timeoriginalestimate\" field will never be on the screen, so in order to update it \"originalEstimate\" in \"timetracking\" field should be updated.  *  `ranking` \\- Contains information about custom field used for ranking in the given board.
+     * Get configuration
+     */
+    async getConfigurationRaw(requestParameters: GetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfiguration200Response>> {
+        const requestOptions = await this.getConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -980,10 +1092,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all epics from the board, for the given board ID. This only includes epics that the user has permission to view. Note, if the user does not have permission to view the board, no epics will be returned at all.
-     * Get epics
+     * Creates request options for getEpics without sending the request
      */
-    async getEpicsRaw(requestParameters: GetEpicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getEpicsRequestOpts(requestParameters: GetEpicsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1016,12 +1127,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/epic`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all epics from the board, for the given board ID. This only includes epics that the user has permission to view. Note, if the user does not have permission to view the board, no epics will be returned at all.
+     * Get epics
+     */
+    async getEpicsRaw(requestParameters: GetEpicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getEpicsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1035,10 +1155,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * 
-     * Get features for board
+     * Creates request options for getFeaturesForBoard without sending the request
      */
-    async getFeaturesForBoardRaw(requestParameters: GetFeaturesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
+    async getFeaturesForBoardRequestOpts(requestParameters: GetFeaturesForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1059,12 +1178,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * 
+     * Get features for board
+     */
+    async getFeaturesForBoardRaw(requestParameters: GetFeaturesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
+        const requestOptions = await this.getFeaturesForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1079,10 +1207,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues from the board\'s backlog, for the given board ID. This only includes issues that the user has permission to view. The backlog contains incomplete issues that are not assigned to any future or active sprint. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
-     * Get issues for backlog
+     * Creates request options for getIssuesForBacklog without sending the request
      */
-    async getIssuesForBacklogRaw(requestParameters: GetIssuesForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+    async getIssuesForBacklogRequestOpts(requestParameters: GetIssuesForBacklogRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1127,12 +1254,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/backlog`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues from the board\'s backlog, for the given board ID. This only includes issues that the user has permission to view. The backlog contains incomplete issues that are not assigned to any future or active sprint. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for backlog
+     */
+    async getIssuesForBacklogRaw(requestParameters: GetIssuesForBacklogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+        const requestOptions = await this.getIssuesForBacklogRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1147,10 +1283,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues from a board, for a given board ID. This only includes issues that the user has permission to view. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
-     * Get issues for board
+     * Creates request options for getIssuesForBoard without sending the request
      */
-    async getIssuesForBoardRaw(requestParameters: GetIssuesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+    async getIssuesForBoardRequestOpts(requestParameters: GetIssuesForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1195,12 +1330,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues from a board, for a given board ID. This only includes issues that the user has permission to view. An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards. Note, if the user does not have permission to view the board, no issues will be returned at all. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues for board
+     */
+    async getIssuesForBoardRaw(requestParameters: GetIssuesForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResults>> {
+        const requestOptions = await this.getIssuesForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1215,10 +1359,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues that do not belong to any epic on a board, for a given board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
-     * Get issues without epic for board
+     * Creates request options for getIssuesWithoutEpicForBoard without sending the request
      */
-    async getIssuesWithoutEpicForBoardRaw(requestParameters: GetIssuesWithoutEpicForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssuesWithoutEpicForBoardRequestOpts(requestParameters: GetIssuesWithoutEpicForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1263,12 +1406,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/epic/none/issue`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic on a board, for a given board ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     * Get issues without epic for board
+     */
+    async getIssuesWithoutEpicForBoardRaw(requestParameters: GetIssuesWithoutEpicForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssuesWithoutEpicForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1282,10 +1434,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all projects that are associated with the board, for the given board ID. If the user does not have permission to view the board, no projects will be returned at all. Returned projects are ordered by the name.  A project is associated with a board if the board filter contains reference the project or there is an issue from the project that belongs to the board.  The board filter contains reference the project only if JQL query guarantees that returned issues will be returned from the project set defined in JQL. For instance the query `project in (ABC, BCD) AND reporter = admin` have reference to ABC and BCD projects but query `project in (ABC, BCD) OR reporter = admin` doesn\'t have reference to any project.  An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards.
-     * Get projects
+     * Creates request options for getProjects without sending the request
      */
-    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getProjectsRequestOpts(requestParameters: GetProjectsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1314,12 +1465,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/project`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all projects that are associated with the board, for the given board ID. If the user does not have permission to view the board, no projects will be returned at all. Returned projects are ordered by the name.  A project is associated with a board if the board filter contains reference the project or there is an issue from the project that belongs to the board.  The board filter contains reference the project only if JQL query guarantees that returned issues will be returned from the project set defined in JQL. For instance the query `project in (ABC, BCD) AND reporter = admin` have reference to ABC and BCD projects but query `project in (ABC, BCD) OR reporter = admin` doesn\'t have reference to any project.  An issue belongs to the board if its status is mapped to the board\'s column. Epic issues do not belongs to the scrum boards.
+     * Get projects
+     */
+    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1333,10 +1493,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all projects that are statically associated with the board, for the given board ID. Returned projects are ordered by the name.  A project is associated with a board if the board filter contains reference the project.  The board filter contains reference the project only if JQL query guarantees that returned issues will be returned from the project set defined in JQL. For instance the query `project in (ABC, BCD) AND reporter = admin` have reference to ABC and BCD projects but query `project in (ABC, BCD) OR reporter = admin` doesn\'t have reference to any project.
-     * Get projects full
+     * Creates request options for getProjectsFull without sending the request
      */
-    async getProjectsFullRaw(requestParameters: GetProjectsFullRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getProjectsFullRequestOpts(requestParameters: GetProjectsFullRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1357,12 +1516,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/project/full`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all projects that are statically associated with the board, for the given board ID. Returned projects are ordered by the name.  A project is associated with a board if the board filter contains reference the project.  The board filter contains reference the project only if JQL query guarantees that returned issues will be returned from the project set defined in JQL. For instance the query `project in (ABC, BCD) AND reporter = admin` have reference to ABC and BCD projects but query `project in (ABC, BCD) OR reporter = admin` doesn\'t have reference to any project.
+     * Get projects full
+     */
+    async getProjectsFullRaw(requestParameters: GetProjectsFullRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getProjectsFullRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1376,10 +1544,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the quick filter for a given quick filter ID. The quick filter will only be returned if the user can view the board that the quick filter belongs to.
-     * Get quick filter
+     * Creates request options for getQuickFilter without sending the request
      */
-    async getQuickFilterRaw(requestParameters: GetQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200ResponseValuesInner>> {
+    async getQuickFilterRequestOpts(requestParameters: GetQuickFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1408,12 +1575,21 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"quickFilterId"}}`, encodeURIComponent(String(requestParameters['quickFilterId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the quick filter for a given quick filter ID. The quick filter will only be returned if the user can view the board that the quick filter belongs to.
+     * Get quick filter
+     */
+    async getQuickFilterRaw(requestParameters: GetQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllQuickFilters200ResponseValuesInner>> {
+        const requestOptions = await this.getQuickFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1428,10 +1604,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * 
-     * Get reports for board
+     * Creates request options for getReportsForBoard without sending the request
      */
-    async getReportsForBoardRaw(requestParameters: GetReportsForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReportsForBoard200Response>> {
+    async getReportsForBoardRequestOpts(requestParameters: GetReportsForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1452,12 +1627,21 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/reports`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * 
+     * Get reports for board
+     */
+    async getReportsForBoardRaw(requestParameters: GetReportsForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReportsForBoard200Response>> {
+        const requestOptions = await this.getReportsForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1472,10 +1656,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Move issues from the backog to the board (if they are already in the backlog of that board).   This operation either moves an issue(s) onto a board from the backlog (by adding it to the issueList for the board) Or transitions the issue(s) to the first column for a kanban board with backlog. At most 50 issues may be moved at once.
-     * Move issues to board
+     * Creates request options for moveIssuesToBoard without sending the request
      */
-    async moveIssuesToBoardRaw(requestParameters: MoveIssuesToBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveIssuesToBoardRequestOpts(requestParameters: MoveIssuesToBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1505,13 +1688,22 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/issue`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogForBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Move issues from the backog to the board (if they are already in the backlog of that board).   This operation either moves an issue(s) onto a board from the backlog (by adding it to the issueList for the board) Or transitions the issue(s) to the first column for a kanban board with backlog. At most 50 issues may be moved at once.
+     * Move issues to board
+     */
+    async moveIssuesToBoardRaw(requestParameters: MoveIssuesToBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveIssuesToBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1525,10 +1717,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of the specified board\'s property.  You can use this resource to store a custom data against the board identified by the id. The user who stores the data is required to have permissions to modify the board.
-     * Set board property
+     * Creates request options for setBoardProperty without sending the request
      */
-    async setBoardPropertyRaw(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setBoardPropertyRequestOpts(requestParameters: SetBoardPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1566,13 +1757,22 @@ export class BoardApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of the specified board\'s property.  You can use this resource to store a custom data against the board identified by the id. The user who stores the data is required to have permissions to modify the board.
+     * Set board property
+     */
+    async setBoardPropertyRaw(requestParameters: SetBoardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setBoardPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -1591,10 +1791,9 @@ export class BoardApi extends runtime.BaseAPI {
     }
 
     /**
-     * 
-     * Toggle features
+     * Creates request options for toggleFeatures without sending the request
      */
-    async toggleFeaturesRaw(requestParameters: ToggleFeaturesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
+    async toggleFeaturesRequestOpts(requestParameters: ToggleFeaturesOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -1624,13 +1823,22 @@ export class BoardApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/board/{boardId}/features`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['toggleFeaturesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * 
+     * Toggle features
+     */
+    async toggleFeaturesRaw(requestParameters: ToggleFeaturesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetFeaturesForBoard200Response>> {
+        const requestOptions = await this.toggleFeaturesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

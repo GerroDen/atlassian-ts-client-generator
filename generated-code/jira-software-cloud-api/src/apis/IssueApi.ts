@@ -47,10 +47,9 @@ export interface RankIssuesRequest {
 export class IssueApi extends runtime.BaseAPI {
 
     /**
-     * Updates the estimation of the issue. boardId param is required. This param determines which field will be updated on a issue.  Note that this resource changes the estimation field of the issue regardless of appearance the field on the screen.  Original time tracking estimation field accepts estimation in formats like \"1w\", \"2d\", \"3h\", \"20m\" or number which represent number of minutes. However, internally the field stores and returns the estimation as a number of seconds.  The field used for estimation on the given board can be obtained from [board configuration resource](#agile/1.0/board-getConfiguration). More information about the field are returned by [edit meta resource](#api-rest-api-3-issue-issueIdOrKey-editmeta-get) or [field resource](#api-rest-api-3-field-get).
-     * Estimate issue for board
+     * Creates request options for estimateIssueForBoard without sending the request
      */
-    async estimateIssueForBoardRaw(requestParameters: EstimateIssueForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async estimateIssueForBoardRequestOpts(requestParameters: EstimateIssueForBoardOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -84,13 +83,22 @@ export class IssueApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['estimateIssueForBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the estimation of the issue. boardId param is required. This param determines which field will be updated on a issue.  Note that this resource changes the estimation field of the issue regardless of appearance the field on the screen.  Original time tracking estimation field accepts estimation in formats like \"1w\", \"2d\", \"3h\", \"20m\" or number which represent number of minutes. However, internally the field stores and returns the estimation as a number of seconds.  The field used for estimation on the given board can be obtained from [board configuration resource](#agile/1.0/board-getConfiguration). More information about the field are returned by [edit meta resource](#api-rest-api-3-issue-issueIdOrKey-editmeta-get) or [field resource](#api-rest-api-3-field-get).
+     * Estimate issue for board
+     */
+    async estimateIssueForBoardRaw(requestParameters: EstimateIssueForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.estimateIssueForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -104,10 +112,9 @@ export class IssueApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a single issue, for a given issue ID or issue key. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
-     * Get issue
+     * Creates request options for getIssue without sending the request
      */
-    async getIssueRaw(requestParameters: GetIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssueRequestOpts(requestParameters: GetIssueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -140,12 +147,21 @@ export class IssueApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a single issue, for a given issue ID or issue key. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic.
+     * Get issue
+     */
+    async getIssueRaw(requestParameters: GetIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -159,10 +175,9 @@ export class IssueApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the estimation of the issue and a fieldId of the field that is used for it. `boardId` param is required. This param determines which field will be updated on a issue.  Original time internally stores and returns the estimation as a number of seconds.  The field used for estimation on the given board can be obtained from [board configuration resource](#agile/1.0/board-getConfiguration). More information about the field are returned by [edit meta resource](#api-rest-api-3-issue-getEditIssueMeta) or [field resource](#api-rest-api-3-field-get).
-     * Get issue estimation for board
+     * Creates request options for getIssueEstimationForBoard without sending the request
      */
-    async getIssueEstimationForBoardRaw(requestParameters: GetIssueEstimationForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssueEstimationForBoardRequestOpts(requestParameters: GetIssueEstimationForBoardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'issueIdOrKey',
@@ -187,12 +202,21 @@ export class IssueApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/issue/{issueIdOrKey}/estimation`;
         urlPath = urlPath.replace(`{${"issueIdOrKey"}}`, encodeURIComponent(String(requestParameters['issueIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the estimation of the issue and a fieldId of the field that is used for it. `boardId` param is required. This param determines which field will be updated on a issue.  Original time internally stores and returns the estimation as a number of seconds.  The field used for estimation on the given board can be obtained from [board configuration resource](#agile/1.0/board-getConfiguration). More information about the field are returned by [edit meta resource](#api-rest-api-3-issue-getEditIssueMeta) or [field resource](#api-rest-api-3-field-get).
+     * Get issue estimation for board
+     */
+    async getIssueEstimationForBoardRaw(requestParameters: GetIssueEstimationForBoardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssueEstimationForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -206,10 +230,9 @@ export class IssueApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves (ranks) issues before or after a given issue. At most 50 issues may be ranked at once.  This operation may fail for some issues, although this will be rare. In that case the 207 status code is returned for the whole response and detailed information regarding each issue is available in the response body.  If rankCustomFieldId is not defined, the default rank field will be used.
-     * Rank issues
+     * Creates request options for rankIssues without sending the request
      */
-    async rankIssuesRaw(requestParameters: RankIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async rankIssuesRequestOpts(requestParameters: RankIssuesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['moveIssuesToBacklogForBoardRequest'] == null) {
             throw new runtime.RequiredError(
                 'moveIssuesToBacklogForBoardRequest',
@@ -231,13 +254,22 @@ export class IssueApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/issue/rank`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogForBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves (ranks) issues before or after a given issue. At most 50 issues may be ranked at once.  This operation may fail for some issues, although this will be rare. In that case the 207 status code is returned for the whole response and detailed information regarding each issue is available in the response body.  If rankCustomFieldId is not defined, the default rank field will be used.
+     * Rank issues
+     */
+    async rankIssuesRaw(requestParameters: RankIssuesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.rankIssuesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

@@ -49,10 +49,9 @@ export interface SubmitRemoteLinksOperationRequest {
 export class RemoteLinksApi extends runtime.BaseAPI {
 
     /**
-     * Delete the Remote Link data currently stored for the given ID.  Deletion is performed asynchronously. The `getRemoteLinkById` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete a Remote Link by ID
+     * Creates request options for deleteRemoteLinkById without sending the request
      */
-    async deleteRemoteLinkByIdRaw(requestParameters: DeleteRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRemoteLinkByIdRequestOpts(requestParameters: DeleteRemoteLinkByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -88,12 +87,21 @@ export class RemoteLinksApi extends runtime.BaseAPI {
         let urlPath = `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`;
         urlPath = urlPath.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the Remote Link data currently stored for the given ID.  Deletion is performed asynchronously. The `getRemoteLinkById` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete a Remote Link by ID
+     */
+    async deleteRemoteLinkByIdRaw(requestParameters: DeleteRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRemoteLinkByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -107,10 +115,9 @@ export class RemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all Remote Links data that match the given request.  One or more query params must be supplied to specify Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND).  See the documentation for the `submitRemoteLinks` operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345  Deletion is performed asynchronously. The `getRemoteLinkById` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete Remote Links by Property
+     * Creates request options for deleteRemoteLinksByProperty without sending the request
      */
-    async deleteRemoteLinksByPropertyRaw(requestParameters: DeleteRemoteLinksByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRemoteLinksByPropertyRequestOpts(requestParameters: DeleteRemoteLinksByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -142,12 +149,21 @@ export class RemoteLinksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/remotelinks/1.0/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all Remote Links data that match the given request.  One or more query params must be supplied to specify Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND).  See the documentation for the `submitRemoteLinks` operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345  Deletion is performed asynchronously. The `getRemoteLinkById` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete Remote Links by Property
+     */
+    async deleteRemoteLinksByPropertyRaw(requestParameters: DeleteRemoteLinksByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRemoteLinksByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -161,10 +177,9 @@ export class RemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored Remote Link data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes. 
-     * Get a Remote Link by ID
+     * Creates request options for getRemoteLinkById without sending the request
      */
-    async getRemoteLinkByIdRaw(requestParameters: GetRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteLinkData>> {
+    async getRemoteLinkByIdRequestOpts(requestParameters: GetRemoteLinkByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -196,12 +211,21 @@ export class RemoteLinksApi extends runtime.BaseAPI {
         let urlPath = `/rest/remotelinks/1.0/remotelink/{remoteLinkId}`;
         urlPath = urlPath.replace(`{${"remoteLinkId"}}`, encodeURIComponent(String(requestParameters['remoteLinkId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored Remote Link data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes. 
+     * Get a Remote Link by ID
+     */
+    async getRemoteLinkByIdRaw(requestParameters: GetRemoteLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RemoteLinkData>> {
+        const requestOptions = await this.getRemoteLinkByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -216,10 +240,9 @@ export class RemoteLinksApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert Remote Link data.  Remote Links are identified by their ID, existing Remote Link data for the same ID will be replaced if it exists and the updateSequenceId of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getRemoteLinkById` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Remote Links being submitted in one request, each is validated individually prior to submission. Details of which Remote LInk failed submission (if any) are available in the response object. 
-     * Submit Remote Link data
+     * Creates request options for submitRemoteLinks without sending the request
      */
-    async submitRemoteLinksRaw(requestParameters: SubmitRemoteLinksOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitRemoteLinks202Response>> {
+    async submitRemoteLinksRequestOpts(requestParameters: SubmitRemoteLinksOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -252,13 +275,22 @@ export class RemoteLinksApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/remotelinks/1.0/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitRemoteLinksRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / insert Remote Link data.  Remote Links are identified by their ID, existing Remote Link data for the same ID will be replaced if it exists and the updateSequenceId of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getRemoteLinkById` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Remote Links being submitted in one request, each is validated individually prior to submission. Details of which Remote LInk failed submission (if any) are available in the response object. 
+     * Submit Remote Link data
+     */
+    async submitRemoteLinksRaw(requestParameters: SubmitRemoteLinksOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitRemoteLinks202Response>> {
+        const requestOptions = await this.submitRemoteLinksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

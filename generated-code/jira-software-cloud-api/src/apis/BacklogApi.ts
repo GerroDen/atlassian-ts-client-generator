@@ -34,10 +34,9 @@ export interface MoveIssuesToBacklogForBoardOperationRequest {
 export class BacklogApi extends runtime.BaseAPI {
 
     /**
-     * Move issues to the backlog.   This operation is equivalent to remove future and active sprints from a given set of issues. At most 50 issues may be moved at once.
-     * Move issues to backlog
+     * Creates request options for moveIssuesToBacklog without sending the request
      */
-    async moveIssuesToBacklogRaw(requestParameters: MoveIssuesToBacklogOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveIssuesToBacklogRequestOpts(requestParameters: MoveIssuesToBacklogOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['moveIssuesToBacklogRequest'] == null) {
             throw new runtime.RequiredError(
                 'moveIssuesToBacklogRequest',
@@ -59,13 +58,22 @@ export class BacklogApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/backlog/issue`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Move issues to the backlog.   This operation is equivalent to remove future and active sprints from a given set of issues. At most 50 issues may be moved at once.
+     * Move issues to backlog
+     */
+    async moveIssuesToBacklogRaw(requestParameters: MoveIssuesToBacklogOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveIssuesToBacklogRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -79,10 +87,9 @@ export class BacklogApi extends runtime.BaseAPI {
     }
 
     /**
-     * Move issues to the backlog of a particular board (if they are already on that board).   This operation is equivalent to remove future and active sprints from a given set of issues if the board has sprints If the board does not have sprints this will put the issues back into the backlog from the board. At most 50 issues may be moved at once.
-     * Move issues to backlog for board
+     * Creates request options for moveIssuesToBacklogForBoard without sending the request
      */
-    async moveIssuesToBacklogForBoardRaw(requestParameters: MoveIssuesToBacklogForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveIssuesToBacklogForBoardRequestOpts(requestParameters: MoveIssuesToBacklogForBoardOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['boardId'] == null) {
             throw new runtime.RequiredError(
                 'boardId',
@@ -112,13 +119,22 @@ export class BacklogApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/backlog/{boardId}/issue`;
         urlPath = urlPath.replace(`{${"boardId"}}`, encodeURIComponent(String(requestParameters['boardId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogForBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Move issues to the backlog of a particular board (if they are already on that board).   This operation is equivalent to remove future and active sprints from a given set of issues if the board has sprints If the board does not have sprints this will put the issues back into the backlog from the board. At most 50 issues may be moved at once.
+     * Move issues to backlog for board
+     */
+    async moveIssuesToBacklogForBoardRaw(requestParameters: MoveIssuesToBacklogForBoardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveIssuesToBacklogForBoardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

@@ -8,7 +8,7 @@
 export interface Associations {
     /**
      * the type of the association being made
-     * @type {string}
+     * @type {AssociationsAssociationTypeEnum}
      * @memberof Associations
      */
     associationType?: AssociationsAssociationTypeEnum;
@@ -272,7 +272,7 @@ export interface BoardCreateBean {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {BoardCreateBeanTypeEnum}
      * @memberof BoardCreateBean
      */
     type?: BoardCreateBeanTypeEnum;
@@ -470,7 +470,7 @@ export interface BuildData {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {BuildDataSchemaVersionEnum}
      * @memberof BuildData
      */
     schemaVersion?: BuildDataSchemaVersionEnum;
@@ -551,7 +551,7 @@ export interface BuildData {
      * * `cancelled` - The build has been cancelled or stopped.
      * * `unknown` - The build is in an unknown state.
      * 
-     * @type {string}
+     * @type {BuildDataStateEnum}
      * @memberof BuildData
      */
     state: BuildDataStateEnum;
@@ -1139,7 +1139,7 @@ export interface ChangelogItemsInner {
 export interface ColorBean {
     /**
      * 
-     * @type {string}
+     * @type {ColorBeanKeyEnum}
      * @memberof ColorBean
      */
     key?: ColorBeanKeyEnum;
@@ -1272,7 +1272,7 @@ export interface Commit {
     hash?: string;
     /**
      * The set of flags for this commit
-     * @type {Set<string>}
+     * @type {Set<CommitFlagsEnum>}
      * @memberof Commit
      */
     flags?: Array<CommitFlagsEnum>;
@@ -1361,7 +1361,7 @@ export interface Commit1 {
     hash?: string;
     /**
      * The set of flags for this commit
-     * @type {Set<string>}
+     * @type {Set<Commit1FlagsEnum>}
      * @memberof Commit1
      */
     flags?: Array<Commit1FlagsEnum>;
@@ -1452,7 +1452,7 @@ export interface Component {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {ComponentSchemaVersionEnum}
      * @memberof Component
      */
     schemaVersion: ComponentSchemaVersionEnum;
@@ -1514,14 +1514,14 @@ export interface Component {
     /**
      * The tier of the component. Will be shown in the UI.
      * 
-     * @type {string}
+     * @type {ComponentTierEnum}
      * @memberof Component
      */
     tier: ComponentTierEnum;
     /**
      * The type of the component. Will be shown in the UI.
      * 
-     * @type {string}
+     * @type {ComponentComponentTypeEnum}
      * @memberof Component
      */
     componentType: ComponentComponentTypeEnum;
@@ -1599,7 +1599,7 @@ export interface CreateBoardRequest {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {CreateBoardRequestTypeEnum}
      * @memberof CreateBoardRequest
      */
     type?: CreateBoardRequestTypeEnum;
@@ -1630,7 +1630,7 @@ export interface CreateBoardRequestLocation {
     projectKeyOrId?: string;
     /**
      * 
-     * @type {string}
+     * @type {CreateBoardRequestLocationTypeEnum}
      * @memberof CreateBoardRequestLocation
      */
     type?: CreateBoardRequestLocationTypeEnum;
@@ -1765,7 +1765,7 @@ export interface DeploymentData {
     /**
      * The state of the deployment
      * 
-     * @type {string}
+     * @type {DeploymentDataStateEnum}
      * @memberof DeploymentData
      */
     state: DeploymentDataStateEnum;
@@ -1793,7 +1793,7 @@ export interface DeploymentData {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {DeploymentDataSchemaVersionEnum}
      * @memberof DeploymentData
      */
     schemaVersion?: DeploymentDataSchemaVersionEnum;
@@ -1905,7 +1905,7 @@ export interface DeploymentData1 {
     /**
      * The state of the deployment
      * 
-     * @type {string}
+     * @type {DeploymentData1StateEnum}
      * @memberof DeploymentData1
      */
     state: DeploymentData1StateEnum;
@@ -1933,7 +1933,7 @@ export interface DeploymentData1 {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {DeploymentData1SchemaVersionEnum}
      * @memberof DeploymentData1
      */
     schemaVersion?: DeploymentData1SchemaVersionEnum;
@@ -1971,7 +1971,7 @@ export interface DeploymentDataAssociationsInner {
     /**
      * Defines the association type. Currently supported entities can be found in this field's value enums list.
      * 
-     * @type {string}
+     * @type {DeploymentDataAssociationsInnerAssociationTypeEnum}
      * @memberof DeploymentDataAssociationsInner
      */
     associationType: DeploymentDataAssociationsInnerAssociationTypeEnum;
@@ -2044,7 +2044,7 @@ export interface DevInformation {
     preventTransitions?: boolean;
     /**
      * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during normal operation (e.g. a user pushing a branch). "BACKFILL" - Data received while backfilling existing data (e.g. indexing a newly connected account). Default is "NORMAL". Please note that "BACKFILL" operations have a much higher rate-limiting threshold but are also processed slower in comparison to "NORMAL" operations.
-     * @type {string}
+     * @type {DevInformationOperationTypeEnum}
      * @memberof DevInformation
      */
     operationType?: DevInformationOperationTypeEnum;
@@ -2082,7 +2082,7 @@ export interface EntityAssociation {
     /**
      * Defines the association type. Currently supported entities can be found in this field's value enums list.
      * 
-     * @type {string}
+     * @type {EntityAssociationAssociationTypeEnum}
      * @memberof EntityAssociation
      */
     associationType: EntityAssociationAssociationTypeEnum;
@@ -2225,7 +2225,7 @@ export interface Environment {
     /**
      * The type of the environment.
      * 
-     * @type {string}
+     * @type {EnvironmentTypeEnum}
      * @memberof Environment
      */
     type: EnvironmentTypeEnum;
@@ -2263,7 +2263,7 @@ export interface EnvironmentDetails {
     name: string;
     /**
      * The 'type' or 'category' of environment this environment belongs to.
-     * @type {string}
+     * @type {EnvironmentDetailsTypeEnum}
      * @memberof EnvironmentDetails
      */
     type?: EnvironmentDetailsTypeEnum;
@@ -2440,7 +2440,7 @@ export interface EstimationConfigurationBean {
     localisedName?: string;
     /**
      * 
-     * @type {string}
+     * @type {EstimationConfigurationBeanValueEnum}
      * @memberof EstimationConfigurationBean
      */
     value?: EstimationConfigurationBeanValueEnum;
@@ -2496,7 +2496,7 @@ export interface ExistsForPropertiesResponse {
 export interface FeatureBean {
     /**
      * 
-     * @type {string}
+     * @type {FeatureBeanBoardFeatureEnum}
      * @memberof FeatureBean
      */
     boardFeature?: FeatureBeanBoardFeatureEnum;
@@ -2514,7 +2514,7 @@ export interface FeatureBean {
     featureId?: string;
     /**
      * 
-     * @type {string}
+     * @type {FeatureBeanFeatureTypeEnum}
      * @memberof FeatureBean
      */
     featureType?: FeatureBeanFeatureTypeEnum;
@@ -2562,7 +2562,7 @@ export interface FeatureBean {
     permissibleEstimationTypes?: Array<GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner>;
     /**
      * 
-     * @type {string}
+     * @type {FeatureBeanStateEnum}
      * @memberof FeatureBean
      */
     state?: FeatureBeanStateEnum;
@@ -2632,7 +2632,7 @@ export interface FeatureFlagData {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {FeatureFlagDataSchemaVersionEnum}
      * @memberof FeatureFlagData
      */
     schemaVersion?: FeatureFlagDataSchemaVersionEnum;
@@ -3444,7 +3444,7 @@ export interface GetComponentById200Response {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {GetComponentById200ResponseSchemaVersionEnum}
      * @memberof GetComponentById200Response
      */
     schemaVersion: GetComponentById200ResponseSchemaVersionEnum;
@@ -3506,14 +3506,14 @@ export interface GetComponentById200Response {
     /**
      * The tier of the component. Will be shown in the UI.
      * 
-     * @type {string}
+     * @type {GetComponentById200ResponseTierEnum}
      * @memberof GetComponentById200Response
      */
     tier: GetComponentById200ResponseTierEnum;
     /**
      * The type of the component. Will be shown in the UI.
      * 
-     * @type {string}
+     * @type {GetComponentById200ResponseComponentTypeEnum}
      * @memberof GetComponentById200Response
      */
     componentType: GetComponentById200ResponseComponentTypeEnum;
@@ -3786,7 +3786,7 @@ export interface GetFeaturesForBoard200Response {
 export interface GetFeaturesForBoard200ResponseFeaturesInner {
     /**
      * 
-     * @type {string}
+     * @type {GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
     boardFeature?: GetFeaturesForBoard200ResponseFeaturesInnerBoardFeatureEnum;
@@ -3804,7 +3804,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInner {
     featureId?: string;
     /**
      * 
-     * @type {string}
+     * @type {GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
     featureType?: GetFeaturesForBoard200ResponseFeaturesInnerFeatureTypeEnum;
@@ -3852,7 +3852,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInner {
     permissibleEstimationTypes?: Array<GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner>;
     /**
      * 
-     * @type {string}
+     * @type {GetFeaturesForBoard200ResponseFeaturesInnerStateEnum}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInner
      */
     state?: GetFeaturesForBoard200ResponseFeaturesInnerStateEnum;
@@ -3930,7 +3930,7 @@ export interface GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimatio
     localisedName?: string;
     /**
      * 
-     * @type {string}
+     * @type {GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum}
      * @memberof GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInner
      */
     value?: GetFeaturesForBoard200ResponseFeaturesInnerPermissibleEstimationTypesInnerValueEnum;
@@ -3958,7 +3958,7 @@ export interface GetIncidentById200Response {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {GetIncidentById200ResponseSchemaVersionEnum}
      * @memberof GetIncidentById200Response
      */
     schemaVersion: GetIncidentById200ResponseSchemaVersionEnum;
@@ -4039,7 +4039,7 @@ export interface GetIncidentById200Response {
     /**
      * The current status of the Incident.
      * 
-     * @type {string}
+     * @type {GetIncidentById200ResponseStatusEnum}
      * @memberof GetIncidentById200Response
      */
     status: GetIncidentById200ResponseStatusEnum;
@@ -4096,7 +4096,7 @@ export interface GetReviewById200Response {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {GetReviewById200ResponseSchemaVersionEnum}
      * @memberof GetReviewById200Response
      */
     schemaVersion: GetReviewById200ResponseSchemaVersionEnum;
@@ -4171,7 +4171,7 @@ export interface GetReviewById200Response {
     /**
      * The current status of the Post-Incident Review.
      * 
-     * @type {string}
+     * @type {GetReviewById200ResponseStatusEnum}
      * @memberof GetReviewById200Response
      */
     status: GetReviewById200ResponseStatusEnum;
@@ -4375,7 +4375,7 @@ export interface Incident {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {IncidentSchemaVersionEnum}
      * @memberof Incident
      */
     schemaVersion: IncidentSchemaVersionEnum;
@@ -4456,7 +4456,7 @@ export interface Incident {
     /**
      * The current status of the Incident.
      * 
-     * @type {string}
+     * @type {IncidentStatusEnum}
      * @memberof Incident
      */
     status: IncidentStatusEnum;
@@ -4499,7 +4499,7 @@ export type IncidentStatusEnum = typeof IncidentStatusEnum[keyof typeof Incident
 export interface IncidentSeverity {
     /**
      * The severity level of the Incident with P1 being the highest and P5 being the lowest
-     * @type {string}
+     * @type {IncidentSeverityLevelEnum}
      * @memberof IncidentSeverity
      */
     level: IncidentSeverityLevelEnum;
@@ -5007,7 +5007,7 @@ export interface IssueBeanTransitionsInnerToAllOfScope {
     project?: IssueBeanTransitionsInnerToAllOfScopeAllOfProject;
     /**
      * The type of scope.
-     * @type {string}
+     * @type {IssueBeanTransitionsInnerToAllOfScopeTypeEnum}
      * @memberof IssueBeanTransitionsInnerToAllOfScope
      */
     readonly type?: IssueBeanTransitionsInnerToAllOfScopeTypeEnum;
@@ -5061,7 +5061,7 @@ export interface IssueBeanTransitionsInnerToAllOfScopeAllOfProject {
     projectCategory?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
+     * @type {IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum}
      * @memberof IssueBeanTransitionsInnerToAllOfScopeAllOfProject
      */
     readonly projectTypeKey?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectProjectTypeKeyEnum;
@@ -5199,7 +5199,7 @@ export interface IssueIdOrKeysAssociation {
     /**
      * Defines the association type.
      * 
-     * @type {string}
+     * @type {IssueIdOrKeysAssociationAssociationTypeEnum}
      * @memberof IssueIdOrKeysAssociation
      */
     associationType: IssueIdOrKeysAssociationAssociationTypeEnum;
@@ -5234,7 +5234,7 @@ export interface IssueIdOrKeysAssociation1 {
     /**
      * Defines the association type.
      * 
-     * @type {string}
+     * @type {IssueIdOrKeysAssociation1AssociationTypeEnum}
      * @memberof IssueIdOrKeysAssociation1
      */
     associationType: IssueIdOrKeysAssociation1AssociationTypeEnum;
@@ -5525,7 +5525,7 @@ export interface LocationBean {
     projectKeyOrId?: string;
     /**
      * 
-     * @type {string}
+     * @type {LocationBeanTypeEnum}
      * @memberof LocationBean
      */
     type?: LocationBeanTypeEnum;
@@ -5561,7 +5561,7 @@ export interface ModelFile {
     url: string;
     /**
      * The operation performed on this file
-     * @type {string}
+     * @type {ModelFileChangeTypeEnum}
      * @memberof ModelFile
      */
     changeType: ModelFileChangeTypeEnum;
@@ -5903,7 +5903,7 @@ export interface PartiallyUpdateEpicRequest {
 export interface PartiallyUpdateEpicRequestColor {
     /**
      * 
-     * @type {string}
+     * @type {PartiallyUpdateEpicRequestColorKeyEnum}
      * @memberof PartiallyUpdateEpicRequestColor
      */
     key?: PartiallyUpdateEpicRequestColorKeyEnum;
@@ -6000,7 +6000,7 @@ export interface ProjectDetails {
     projectCategory?: IssueBeanTransitionsInnerToAllOfScopeAllOfProjectAllOfProjectCategory;
     /**
      * The [project type](https://confluence.atlassian.com/x/GwiiLQ#Jiraapplicationsoverview-Productfeaturesandprojecttypes) of the project.
-     * @type {string}
+     * @type {ProjectDetailsProjectTypeKeyEnum}
      * @memberof ProjectDetails
      */
     readonly projectTypeKey?: ProjectDetailsProjectTypeKeyEnum;
@@ -6169,7 +6169,7 @@ export interface PullRequest {
     updateSequenceId: number;
     /**
      * The status of the pull request. In the case of concurrent updates, priority is given in the order OPEN, MERGED, DECLINED, UNKNOWN
-     * @type {string}
+     * @type {PullRequestStatusEnum}
      * @memberof PullRequest
      */
     status: PullRequestStatusEnum;
@@ -6409,7 +6409,7 @@ export interface RemoteLinkData {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {RemoteLinkDataSchemaVersionEnum}
      * @memberof RemoteLinkData
      */
     schemaVersion?: RemoteLinkDataSchemaVersionEnum;
@@ -6454,7 +6454,7 @@ export interface RemoteLinkData {
      * The type of the Remote Link. The current supported types are 'document', 'alert', 'test',
      * 'security', 'logFile', 'prototype', 'coverage', 'bugReport' and 'other'
      * 
-     * @type {string}
+     * @type {RemoteLinkDataTypeEnum}
      * @memberof RemoteLinkData
      */
     type: RemoteLinkDataTypeEnum;
@@ -6541,7 +6541,7 @@ export interface RemoteLinkDataAssociationsInner {
     /**
      * Defines the association type.
      * 
-     * @type {string}
+     * @type {RemoteLinkDataAssociationsInnerAssociationTypeEnum}
      * @memberof RemoteLinkDataAssociationsInner
      */
     associationType: RemoteLinkDataAssociationsInnerAssociationTypeEnum;
@@ -6577,7 +6577,7 @@ export interface RemoteLinkStatus {
      * of the status lozenge in the UI. The colours they correspond to are
      * equivalent to atlaskit's [Lozenge](https://atlaskit.atlassian.com/packages/core/lozenge) component.
      * 
-     * @type {string}
+     * @type {RemoteLinkStatusAppearanceEnum}
      * @memberof RemoteLinkStatus
      */
     appearance: RemoteLinkStatusAppearanceEnum;
@@ -6750,7 +6750,7 @@ export interface Review {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {ReviewSchemaVersionEnum}
      * @memberof Review
      */
     schemaVersion: ReviewSchemaVersionEnum;
@@ -6825,7 +6825,7 @@ export interface Review {
     /**
      * The current status of the Post-Incident Review.
      * 
-     * @type {string}
+     * @type {ReviewStatusEnum}
      * @memberof Review
      */
     status: ReviewStatusEnum;
@@ -6872,7 +6872,7 @@ export interface Reviewer {
     name?: string;
     /**
      * The approval status of this reviewer, default is UNAPPROVED.
-     * @type {string}
+     * @type {ReviewerApprovalStatusEnum}
      * @memberof Reviewer
      */
     approvalStatus?: ReviewerApprovalStatusEnum;
@@ -6927,7 +6927,7 @@ export interface Scope {
     project?: IssueBeanTransitionsInnerToAllOfScopeAllOfProject;
     /**
      * The type of scope.
-     * @type {string}
+     * @type {ScopeTypeEnum}
      * @memberof Scope
      */
     readonly type?: ScopeTypeEnum;
@@ -7043,7 +7043,7 @@ export interface ServiceIdOrKeysAssociation {
     /**
      * Defines the association type.
      * 
-     * @type {string}
+     * @type {ServiceIdOrKeysAssociationAssociationTypeEnum}
      * @memberof ServiceIdOrKeysAssociation
      */
     associationType: ServiceIdOrKeysAssociationAssociationTypeEnum;
@@ -7578,7 +7578,7 @@ export interface SubmitDeploymentsResponse1 {
     /**
      * The gating status
      * 
-     * @type {string}
+     * @type {SubmitDeploymentsResponse1GatingStatusEnum}
      * @memberof SubmitDeploymentsResponse1
      */
     gatingStatus?: SubmitDeploymentsResponse1GatingStatusEnum;
@@ -7612,7 +7612,7 @@ export interface SubmitDeploymentsResponse1DetailsInner {
     /**
      * The type of the gating status details.
      * 
-     * @type {string}
+     * @type {SubmitDeploymentsResponse1DetailsInnerTypeEnum}
      * @memberof SubmitDeploymentsResponse1DetailsInner
      */
     type: SubmitDeploymentsResponse1DetailsInnerTypeEnum;
@@ -8048,7 +8048,7 @@ export interface SubmitVulnerabilitiesRequest {
     /**
      * Indicates the operation being performed by the provider system when sending this data. "NORMAL" - Data received during real-time, user-triggered actions (e.g. user closed or updated a vulnerability). "SCAN" - Data sent through some automated process (e.g. some periodically scheduled repository scan). "BACKFILL" - Data received while backfilling existing data (e.g. pushing historical vulnerabilities when re-connect a workspace). Default is "NORMAL". "NORMAL" traffic has higher priority but tighter rate limits, "SCAN" traffic has medium priority and looser limits, "BACKFILL" has lower priority and much looser limits
      * 
-     * @type {string}
+     * @type {SubmitVulnerabilitiesRequestOperationTypeEnum}
      * @memberof SubmitVulnerabilitiesRequest
      */
     operationType?: SubmitVulnerabilitiesRequestOperationTypeEnum;
@@ -8498,7 +8498,7 @@ export interface VulnerabilityDetails {
      * 
      * Placeholder to support potential schema changes in the future.
      * 
-     * @type {string}
+     * @type {VulnerabilityDetailsSchemaVersionEnum}
      * @memberof VulnerabilityDetails
      */
     schemaVersion: VulnerabilityDetailsSchemaVersionEnum;
@@ -8554,7 +8554,7 @@ export interface VulnerabilityDetails {
     url: string;
     /**
      * The type of Vulnerability detected.
-     * @type {string}
+     * @type {VulnerabilityDetailsTypeEnum}
      * @memberof VulnerabilityDetails
      */
     type: VulnerabilityDetailsTypeEnum;
@@ -8592,7 +8592,7 @@ export interface VulnerabilityDetails {
     /**
      * The current status of the Vulnerability.
      * 
-     * @type {string}
+     * @type {VulnerabilityDetailsStatusEnum}
      * @memberof VulnerabilityDetails
      */
     status: VulnerabilityDetailsStatusEnum;
@@ -8680,7 +8680,7 @@ export interface VulnerabilityDetailsAddAssociationsInner {
     /**
      * Defines the association type.
      * 
-     * @type {string}
+     * @type {VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum}
      * @memberof VulnerabilityDetailsAddAssociationsInner
      */
     associationType: VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum;
@@ -8715,7 +8715,7 @@ export type VulnerabilityDetailsAddAssociationsInnerAssociationTypeEnum = typeof
 export interface VulnerabilitySeverity {
     /**
      * The severity level of the Vulnerability.
-     * @type {string}
+     * @type {VulnerabilitySeverityLevelEnum}
      * @memberof VulnerabilitySeverity
      */
     level: VulnerabilitySeverityLevelEnum;

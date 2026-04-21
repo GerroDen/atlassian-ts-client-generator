@@ -68,10 +68,9 @@ export interface RemoveIssuesFromEpicRequest {
 export class EpicApi extends runtime.BaseAPI {
 
     /**
-     * Returns the epic for a given epic ID. This epic will only be returned if the user has permission to view it. **Note:** This operation does not work for epics in next-gen projects.
-     * Get epic
+     * Creates request options for getEpic without sending the request
      */
-    async getEpicRaw(requestParameters: GetEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getEpicRequestOpts(requestParameters: GetEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'epicIdOrKey',
@@ -92,12 +91,21 @@ export class EpicApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
         urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the epic for a given epic ID. This epic will only be returned if the user has permission to view it. **Note:** This operation does not work for epics in next-gen projects.
+     * Get epic
+     */
+    async getEpicRaw(requestParameters: GetEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -111,10 +119,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues that belong to the epic, for the given epic ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
-     * Get issues for epic
+     * Creates request options for getIssuesForEpic without sending the request
      */
-    async getIssuesForEpicRaw(requestParameters: GetIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssuesForEpicRequestOpts(requestParameters: GetIssuesForEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'epicIdOrKey',
@@ -159,12 +166,21 @@ export class EpicApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
         urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues that belong to the epic, for the given epic ID. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues for epic
+     */
+    async getIssuesForEpicRaw(requestParameters: GetIssuesForEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssuesForEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -178,10 +194,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues that do not belong to any epic. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
-     * Get issues without epic
+     * Creates request options for getIssuesWithoutEpic without sending the request
      */
-    async getIssuesWithoutEpicRaw(requestParameters: GetIssuesWithoutEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssuesWithoutEpicRequestOpts(requestParameters: GetIssuesWithoutEpicRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startAt'] != null) {
@@ -218,12 +233,21 @@ export class EpicApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/epic/none/issue`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues that do not belong to any epic. This only includes issues that the user has permission to view. Issues returned from this resource include Agile fields, like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank. **Note:** If you are querying a next-gen project, do not use this operation. Instead, search for issues that don\'t belong to an epic by using the [Search for issues using JQL](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-get) operation in the Jira platform REST API. Build your JQL query using the `parent is empty` clause. For more information on the `parent` JQL field, see [Advanced searching](https://confluence.atlassian.com/x/dAiiLQ#Advancedsearching-fieldsreference-Parent).
+     * Get issues without epic
+     */
+    async getIssuesWithoutEpicRaw(requestParameters: GetIssuesWithoutEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssuesWithoutEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -237,10 +261,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves issues to an epic, for a given epic id. Issues can be only in a single epic at the same time. That means that already assigned issues to an epic, will not be assigned to the previous epic anymore. The user needs to have the edit issue permission for all issue they want to move and to the epic. The maximum number of issues that can be moved in one operation is 50. **Note:** This operation does not work for epics in next-gen projects.
-     * Move issues to epic
+     * Creates request options for moveIssuesToEpic without sending the request
      */
-    async moveIssuesToEpicRaw(requestParameters: MoveIssuesToEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveIssuesToEpicRequestOpts(requestParameters: MoveIssuesToEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'epicIdOrKey',
@@ -270,13 +293,22 @@ export class EpicApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/issue`;
         urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves issues to an epic, for a given epic id. Issues can be only in a single epic at the same time. That means that already assigned issues to an epic, will not be assigned to the previous epic anymore. The user needs to have the edit issue permission for all issue they want to move and to the epic. The maximum number of issues that can be moved in one operation is 50. **Note:** This operation does not work for epics in next-gen projects.
+     * Move issues to epic
+     */
+    async moveIssuesToEpicRaw(requestParameters: MoveIssuesToEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveIssuesToEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -290,10 +322,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a partial update of the epic. A partial update means that fields not present in the request JSON will not be updated. Valid values for color are `color_1` to `color_9`. **Note:** This operation does not work for epics in next-gen projects.
-     * Partially update epic
+     * Creates request options for partiallyUpdateEpic without sending the request
      */
-    async partiallyUpdateEpicRaw(requestParameters: PartiallyUpdateEpicOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async partiallyUpdateEpicRequestOpts(requestParameters: PartiallyUpdateEpicOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'epicIdOrKey',
@@ -323,13 +354,22 @@ export class EpicApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}`;
         urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['partiallyUpdateEpicRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a partial update of the epic. A partial update means that fields not present in the request JSON will not be updated. Valid values for color are `color_1` to `color_9`. **Note:** This operation does not work for epics in next-gen projects.
+     * Partially update epic
+     */
+    async partiallyUpdateEpicRaw(requestParameters: PartiallyUpdateEpicOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.partiallyUpdateEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -343,10 +383,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves (ranks) an epic before or after a given epic.  If rankCustomFieldId is not defined, the default rank field will be used.  **Note:** This operation does not work for epics in next-gen projects.
-     * Rank epics
+     * Creates request options for rankEpics without sending the request
      */
-    async rankEpicsRaw(requestParameters: RankEpicsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async rankEpicsRequestOpts(requestParameters: RankEpicsOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['epicIdOrKey'] == null) {
             throw new runtime.RequiredError(
                 'epicIdOrKey',
@@ -376,13 +415,22 @@ export class EpicApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/epic/{epicIdOrKey}/rank`;
         urlPath = urlPath.replace(`{${"epicIdOrKey"}}`, encodeURIComponent(String(requestParameters['epicIdOrKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['rankEpicsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves (ranks) an epic before or after a given epic.  If rankCustomFieldId is not defined, the default rank field will be used.  **Note:** This operation does not work for epics in next-gen projects.
+     * Rank epics
+     */
+    async rankEpicsRaw(requestParameters: RankEpicsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.rankEpicsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -396,10 +444,9 @@ export class EpicApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes issues from epics. The user needs to have the edit issue permission for all issue they want to remove from epics. The maximum number of issues that can be moved in one operation is 50. **Note:** This operation does not work for epics in next-gen projects. Instead, update the issue using `\\{ fields: \\{ parent: \\{\\} \\} \\}`
-     * Remove issues from epic
+     * Creates request options for removeIssuesFromEpic without sending the request
      */
-    async removeIssuesFromEpicRaw(requestParameters: RemoveIssuesFromEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeIssuesFromEpicRequestOpts(requestParameters: RemoveIssuesFromEpicRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['moveIssuesToBacklogRequest'] == null) {
             throw new runtime.RequiredError(
                 'moveIssuesToBacklogRequest',
@@ -421,13 +468,22 @@ export class EpicApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/epic/none/issue`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes issues from epics. The user needs to have the edit issue permission for all issue they want to remove from epics. The maximum number of issues that can be moved in one operation is 50. **Note:** This operation does not work for epics in next-gen projects. Instead, update the issue using `\\{ fields: \\{ parent: \\{\\} \\} \\}`
+     * Remove issues from epic
+     */
+    async removeIssuesFromEpicRaw(requestParameters: RemoveIssuesFromEpicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeIssuesFromEpicRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

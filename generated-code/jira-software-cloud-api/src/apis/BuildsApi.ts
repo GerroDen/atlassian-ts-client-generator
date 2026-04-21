@@ -50,10 +50,9 @@ export interface SubmitBuildsOperationRequest {
 export class BuildsApi extends runtime.BaseAPI {
 
     /**
-     * Delete the build data currently stored for the given `pipelineId` and `buildNumber` combination.  Deletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete a build by key
+     * Creates request options for deleteBuildByKey without sending the request
      */
-    async deleteBuildByKeyRaw(requestParameters: DeleteBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBuildByKeyRequestOpts(requestParameters: DeleteBuildByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -97,12 +96,21 @@ export class BuildsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the build data currently stored for the given `pipelineId` and `buildNumber` combination.  Deletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete a build by key
+     */
+    async deleteBuildByKeyRaw(requestParameters: DeleteBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBuildByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -116,10 +124,9 @@ export class BuildsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all builds data that match the given request.  One or more query params must be supplied to specify Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND).  See the documentation for the `submitBuilds` operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345  Deletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete builds by Property
+     * Creates request options for deleteBuildsByProperty without sending the request
      */
-    async deleteBuildsByPropertyRaw(requestParameters: DeleteBuildsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBuildsByPropertyRequestOpts(requestParameters: DeleteBuildsByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -147,12 +154,21 @@ export class BuildsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/builds/0.1/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all builds data that match the given request.  One or more query params must be supplied to specify Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND).  See the documentation for the `submitBuilds` operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345  Deletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete builds by Property
+     */
+    async deleteBuildsByPropertyRaw(requestParameters: DeleteBuildsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBuildsByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -166,10 +182,9 @@ export class BuildsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored build data for the given `pipelineId` and `buildNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
-     * Get a build by key
+     * Creates request options for getBuildByKey without sending the request
      */
-    async getBuildByKeyRaw(requestParameters: GetBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BuildData>> {
+    async getBuildByKeyRequestOpts(requestParameters: GetBuildByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -209,12 +224,21 @@ export class BuildsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pipelineId"}}`, encodeURIComponent(String(requestParameters['pipelineId'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored build data for the given `pipelineId` and `buildNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
+     * Get a build by key
+     */
+    async getBuildByKeyRaw(requestParameters: GetBuildByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BuildData>> {
+        const requestOptions = await this.getBuildByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -229,10 +253,9 @@ export class BuildsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert builds data.  Builds are identified by the combination of `pipelineId` and `buildNumber`, and existing build data for the same build will be replaced if it exists and the `updateSequenceNumber` of the existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getBuildByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple builds being submitted in one request, each is validated individually prior to submission. Details of which build failed submission (if any) are available in the response object. 
-     * Submit build data
+     * Creates request options for submitBuilds without sending the request
      */
-    async submitBuildsRaw(requestParameters: SubmitBuildsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitBuildsResponse>> {
+    async submitBuildsRequestOpts(requestParameters: SubmitBuildsOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -265,13 +288,22 @@ export class BuildsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/builds/0.1/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitBuildsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / insert builds data.  Builds are identified by the combination of `pipelineId` and `buildNumber`, and existing build data for the same build will be replaced if it exists and the `updateSequenceNumber` of the existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getBuildByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple builds being submitted in one request, each is validated individually prior to submission. Details of which build failed submission (if any) are available in the response object. 
+     * Submit build data
+     */
+    async submitBuildsRaw(requestParameters: SubmitBuildsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitBuildsResponse>> {
+        const requestOptions = await this.submitBuildsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

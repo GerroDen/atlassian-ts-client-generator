@@ -73,10 +73,9 @@ export interface SubmitOperationsWorkspacesOperationRequest {
 export class OperationsApi extends runtime.BaseAPI {
 
     /**
-     * Bulk delete all Entties that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). See the documentation for the submitEntity operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The getIncidentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete Incidents or Review by Property
+     * Creates request options for deleteEntityByProperty without sending the request
      */
-    async deleteEntityByPropertyRaw(requestParameters: DeleteEntityByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteEntityByPropertyRequestOpts(requestParameters: DeleteEntityByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -95,12 +94,21 @@ export class OperationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/operations/1.0/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all Entties that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). See the documentation for the submitEntity operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The getIncidentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete Incidents or Review by Property
+     */
+    async deleteEntityByPropertyRaw(requestParameters: DeleteEntityByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteEntityByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -114,10 +122,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the Incident data currently stored for the given ID.  Deletion is performed asynchronously. The getIncidentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete a Incident by ID
+     * Creates request options for deleteIncidentById without sending the request
      */
-    async deleteIncidentByIdRaw(requestParameters: DeleteIncidentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIncidentByIdRequestOpts(requestParameters: DeleteIncidentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -144,12 +151,21 @@ export class OperationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
         urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the Incident data currently stored for the given ID.  Deletion is performed asynchronously. The getIncidentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete a Incident by ID
+     */
+    async deleteIncidentByIdRaw(requestParameters: DeleteIncidentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIncidentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -163,10 +179,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the Review data currently stored for the given ID.  Deletion is performed asynchronously. The getReviewById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete a Review by ID
+     * Creates request options for deleteReviewById without sending the request
      */
-    async deleteReviewByIdRaw(requestParameters: DeleteReviewByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteReviewByIdRequestOpts(requestParameters: DeleteReviewByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -193,12 +208,21 @@ export class OperationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
         urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the Review data currently stored for the given ID.  Deletion is performed asynchronously. The getReviewById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete a Review by ID
+     */
+    async deleteReviewByIdRaw(requestParameters: DeleteReviewByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteReviewByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -212,10 +236,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all Operations Workspaces that match the given request.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps.  e.g. DELETE /bulk?workspaceIds=111-222-333,444-555-666 
-     * Delete Operations Workpaces by Id
+     * Creates request options for deleteWorkspaces without sending the request
      */
-    async deleteWorkspacesRaw(requestParameters: DeleteWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWorkspacesRequestOpts(requestParameters: DeleteWorkspacesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -234,12 +257,21 @@ export class OperationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/operations/1.0/linkedWorkspaces/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all Operations Workspaces that match the given request.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps.  e.g. DELETE /bulk?workspaceIds=111-222-333,444-555-666 
+     * Delete Operations Workpaces by Id
+     */
+    async deleteWorkspacesRaw(requestParameters: DeleteWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -253,10 +285,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored Incident data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get a Incident by ID
+     * Creates request options for getIncidentById without sending the request
      */
-    async getIncidentByIdRaw(requestParameters: GetIncidentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetIncidentById200Response>> {
+    async getIncidentByIdRequestOpts(requestParameters: GetIncidentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -283,12 +314,21 @@ export class OperationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/operations/1.0/incidents/{incidentId}`;
         urlPath = urlPath.replace(`{${"incidentId"}}`, encodeURIComponent(String(requestParameters['incidentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored Incident data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get a Incident by ID
+     */
+    async getIncidentByIdRaw(requestParameters: GetIncidentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetIncidentById200Response>> {
+        const requestOptions = await this.getIncidentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -303,10 +343,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored Review data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get a Review by ID
+     * Creates request options for getReviewById without sending the request
      */
-    async getReviewByIdRaw(requestParameters: GetReviewByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewById200Response>> {
+    async getReviewByIdRequestOpts(requestParameters: GetReviewByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -333,12 +372,21 @@ export class OperationsApi extends runtime.BaseAPI {
         let urlPath = `/rest/operations/1.0/post-incident-reviews/{reviewId}`;
         urlPath = urlPath.replace(`{${"reviewId"}}`, encodeURIComponent(String(requestParameters['reviewId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored Review data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get a Review by ID
+     */
+    async getReviewByIdRaw(requestParameters: GetReviewByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewById200Response>> {
+        const requestOptions = await this.getReviewByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -353,10 +401,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the either all Operations Workspace IDs associated with the Jira site or a specific Operations Workspace ID for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  e.g. GET /workspace?workspaceId=111-222-333  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get all Operations Workspace IDs or a specific Operations Workspace by ID
+     * Creates request options for getWorkspaces without sending the request
      */
-    async getWorkspacesRaw(requestParameters: GetWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationsWorkspaceIds>> {
+    async getWorkspacesRequestOpts(requestParameters: GetWorkspacesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -375,12 +422,21 @@ export class OperationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/operations/1.0/linkedWorkspaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the either all Operations Workspace IDs associated with the Jira site or a specific Operations Workspace ID for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  e.g. GET /workspace?workspaceId=111-222-333  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get all Operations Workspace IDs or a specific Operations Workspace by ID
+     */
+    async getWorkspacesRaw(requestParameters: GetWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OperationsWorkspaceIds>> {
+        const requestOptions = await this.getWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -395,10 +451,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert Incident or Review data.  Incidents and reviews are identified by their ID, and existing Incident and Review data for the same ID will be replaced if it exists and the updateSequenceNumber of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The getIncidentById or getReviewById operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Incidents and Reviews being submitted in one request, each is validated individually prior to submission. Details of which entities failed submission (if any) are available in the response object.  A maximum of 1000 incidents can be submitted in one request.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
-     * Submit Incident or Review data
+     * Creates request options for submitEntity without sending the request
      */
-    async submitEntityRaw(requestParameters: SubmitEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitIncidentsResponse>> {
+    async submitEntityRequestOpts(requestParameters: SubmitEntityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -426,13 +481,22 @@ export class OperationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/operations/1.0/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitIncidentsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / insert Incident or Review data.  Incidents and reviews are identified by their ID, and existing Incident and Review data for the same ID will be replaced if it exists and the updateSequenceNumber of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The getIncidentById or getReviewById operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Incidents and Reviews being submitted in one request, each is validated individually prior to submission. Details of which entities failed submission (if any) are available in the response object.  A maximum of 1000 incidents can be submitted in one request.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Submit Incident or Review data
+     */
+    async submitEntityRaw(requestParameters: SubmitEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitIncidentsResponse>> {
+        const requestOptions = await this.submitEntityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -447,10 +511,9 @@ export class OperationsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Insert Operations Workspace IDs to establish a relationship between them and the Jira site the app is installed in. If a relationship between the Workspace ID and Jira already exists then the workspace ID will be ignored and Jira will process the rest of the entries.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
-     * Submit Operations Workspace Ids
+     * Creates request options for submitOperationsWorkspaces without sending the request
      */
-    async submitOperationsWorkspacesRaw(requestParameters: SubmitOperationsWorkspacesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitOperationsWorkspacesResponse>> {
+    async submitOperationsWorkspacesRequestOpts(requestParameters: SubmitOperationsWorkspacesOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -478,13 +541,22 @@ export class OperationsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/operations/1.0/linkedWorkspaces/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitOperationsWorkspacesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Insert Operations Workspace IDs to establish a relationship between them and the Jira site the app is installed in. If a relationship between the Workspace ID and Jira already exists then the workspace ID will be ignored and Jira will process the rest of the entries.  Only Connect apps that define the `jiraOperationsInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Submit Operations Workspace Ids
+     */
+    async submitOperationsWorkspacesRaw(requestParameters: SubmitOperationsWorkspacesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitOperationsWorkspacesResponse>> {
+        const requestOptions = await this.submitOperationsWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

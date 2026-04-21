@@ -67,10 +67,9 @@ export interface SubmitWorkspacesRequest {
 export class SecurityInformationApi extends runtime.BaseAPI {
 
     /**
-     * Bulk delete all linked Security Workspaces that match the given request.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps.  e.g. DELETE /bulk?workspaceIds=111-222-333,444-555-666 
-     * Delete linked Security Workspaces
+     * Creates request options for deleteLinkedWorkspaces without sending the request
      */
-    async deleteLinkedWorkspacesRaw(requestParameters: DeleteLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteLinkedWorkspacesRequestOpts(requestParameters: DeleteLinkedWorkspacesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -89,12 +88,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/security/1.0/linkedWorkspaces/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all linked Security Workspaces that match the given request.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps.  e.g. DELETE /bulk?workspaceIds=111-222-333,444-555-666 
+     * Delete linked Security Workspaces
+     */
+    async deleteLinkedWorkspacesRaw(requestParameters: DeleteLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteLinkedWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -108,10 +116,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all Vulnerabilities that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). Read the POST bulk endpoint documentation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The GET vulnerability endpoint can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete Vulnerabilities by Property
+     * Creates request options for deleteVulnerabilitiesByProperty without sending the request
      */
-    async deleteVulnerabilitiesByPropertyRaw(requestParameters: DeleteVulnerabilitiesByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteVulnerabilitiesByPropertyRequestOpts(requestParameters: DeleteVulnerabilitiesByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -130,12 +137,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/security/1.0/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all Vulnerabilities that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). Read the POST bulk endpoint documentation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The GET vulnerability endpoint can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete Vulnerabilities by Property
+     */
+    async deleteVulnerabilitiesByPropertyRaw(requestParameters: DeleteVulnerabilitiesByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteVulnerabilitiesByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -149,10 +165,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the Vulnerability data currently stored for the given ID.  Deletion is performed asynchronously. The GET vulnerability endpoint can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete a Vulnerability by ID
+     * Creates request options for deleteVulnerabilityById without sending the request
      */
-    async deleteVulnerabilityByIdRaw(requestParameters: DeleteVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteVulnerabilityByIdRequestOpts(requestParameters: DeleteVulnerabilityByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -179,12 +194,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
         let urlPath = `/rest/security/1.0/vulnerability/{vulnerabilityId}`;
         urlPath = urlPath.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the Vulnerability data currently stored for the given ID.  Deletion is performed asynchronously. The GET vulnerability endpoint can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete a Vulnerability by ID
+     */
+    async deleteVulnerabilityByIdRaw(requestParameters: DeleteVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteVulnerabilityByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -198,10 +222,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a specific Security Workspace linked to the Jira site for the given workspace ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get a linked Security Workspace by ID
+     * Creates request options for getLinkedWorkspaceById without sending the request
      */
-    async getLinkedWorkspaceByIdRaw(requestParameters: GetLinkedWorkspaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceResponse>> {
+    async getLinkedWorkspaceByIdRequestOpts(requestParameters: GetLinkedWorkspaceByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -228,12 +251,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
         let urlPath = `/rest/security/1.0/linkedWorkspaces/{workspaceId}`;
         urlPath = urlPath.replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a specific Security Workspace linked to the Jira site for the given workspace ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get a linked Security Workspace by ID
+     */
+    async getLinkedWorkspaceByIdRaw(requestParameters: GetLinkedWorkspaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceResponse>> {
+        const requestOptions = await this.getLinkedWorkspaceByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -248,10 +280,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve all Security Workspaces linked with the Jira site.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get linked Security Workspaces
+     * Creates request options for getLinkedWorkspaces without sending the request
      */
-    async getLinkedWorkspacesRaw(requestParameters: GetLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceIds>> {
+    async getLinkedWorkspacesRequestOpts(requestParameters: GetLinkedWorkspacesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -270,12 +301,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/security/1.0/linkedWorkspaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve all Security Workspaces linked with the Jira site.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get linked Security Workspaces
+     */
+    async getLinkedWorkspacesRaw(requestParameters: GetLinkedWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecurityWorkspaceIds>> {
+        const requestOptions = await this.getLinkedWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -290,10 +330,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get a Vulnerability by ID
+     * Creates request options for getVulnerabilityById without sending the request
      */
-    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails>> {
+    async getVulnerabilityByIdRequestOpts(requestParameters: GetVulnerabilityByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -320,12 +359,21 @@ export class SecurityInformationApi extends runtime.BaseAPI {
         let urlPath = `/rest/security/1.0/vulnerability/{vulnerabilityId}`;
         urlPath = urlPath.replace(`{${"vulnerabilityId"}}`, encodeURIComponent(String(requestParameters['vulnerabilityId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored Vulnerability data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get a Vulnerability by ID
+     */
+    async getVulnerabilityByIdRaw(requestParameters: GetVulnerabilityByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VulnerabilityDetails>> {
+        const requestOptions = await this.getVulnerabilityByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -340,10 +388,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / Insert Vulnerability data.  Vulnerabilities are identified by their ID, any existing Vulnerability data with the same ID will be replaced if it exists and the updateSequenceNumber of the existing data is less than the incoming data.  Submissions are performed asynchronously. Most updates are available within a short period of time but may take some time during peak load and/or maintenance times. The GET vulnerability endpoint can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Vulnerabilities being submitted in one request, each is validated individually prior to submission. Details of Vulnerabilities that failed submission (if any) are available in the response object.  A maximum of 1000 vulnerabilities can be submitted in one request.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
-     * Submit Vulnerability data
+     * Creates request options for submitVulnerabilities without sending the request
      */
-    async submitVulnerabilitiesRaw(requestParameters: SubmitVulnerabilitiesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitVulnerabilitiesResponse>> {
+    async submitVulnerabilitiesRequestOpts(requestParameters: SubmitVulnerabilitiesOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -371,13 +418,22 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/security/1.0/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitVulnerabilitiesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / Insert Vulnerability data.  Vulnerabilities are identified by their ID, any existing Vulnerability data with the same ID will be replaced if it exists and the updateSequenceNumber of the existing data is less than the incoming data.  Submissions are performed asynchronously. Most updates are available within a short period of time but may take some time during peak load and/or maintenance times. The GET vulnerability endpoint can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Vulnerabilities being submitted in one request, each is validated individually prior to submission. Details of Vulnerabilities that failed submission (if any) are available in the response object.  A maximum of 1000 vulnerabilities can be submitted in one request.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Submit Vulnerability data
+     */
+    async submitVulnerabilitiesRaw(requestParameters: SubmitVulnerabilitiesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitVulnerabilitiesResponse>> {
+        const requestOptions = await this.submitVulnerabilitiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -392,10 +448,9 @@ export class SecurityInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Insert Security Workspace IDs to establish a relationship between them and the Jira site the app is installed on. If a relationship between the workspace ID and Jira already exists then the workspace ID will be ignored and Jira will process the rest of the entries.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
-     * Submit Security Workspaces to link
+     * Creates request options for submitWorkspaces without sending the request
      */
-    async submitWorkspacesRaw(requestParameters: SubmitWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async submitWorkspacesRequestOpts(requestParameters: SubmitWorkspacesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -423,13 +478,22 @@ export class SecurityInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/security/1.0/linkedWorkspaces/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitSecurityWorkspacesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Insert Security Workspace IDs to establish a relationship between them and the Jira site the app is installed on. If a relationship between the workspace ID and Jira already exists then the workspace ID will be ignored and Jira will process the rest of the entries.  Only Connect apps that define the `jiraSecurityInfoProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Submit Security Workspaces to link
+     */
+    async submitWorkspacesRaw(requestParameters: SubmitWorkspacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.submitWorkspacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

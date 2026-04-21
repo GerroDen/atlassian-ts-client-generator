@@ -62,10 +62,9 @@ export interface StoreDevelopmentInformationRequest {
 export class DevelopmentInformationApi extends runtime.BaseAPI {
 
     /**
-     * Deletes development information entities which have all the provided properties. Repositories which have properties that match ALL of the properties (i.e. treated as an AND), and all their related development information (such as commits, branches and pull requests), will be deleted. For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Optional param `_updateSequenceId` is no longer supported. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
-     * Delete development information by properties
+     * Creates request options for deleteByProperties without sending the request
      */
-    async deleteByPropertiesRaw(requestParameters: DeleteByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteByPropertiesRequestOpts(requestParameters: DeleteByPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -93,12 +92,21 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/devinfo/0.10/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes development information entities which have all the provided properties. Repositories which have properties that match ALL of the properties (i.e. treated as an AND), and all their related development information (such as commits, branches and pull requests), will be deleted. For example if request is `DELETE bulk?accountId=123&projectId=ABC` entities which have properties `accountId=123` and `projectId=ABC` will be deleted. Optional param `_updateSequenceId` is no longer supported. Deletion is performed asynchronously: specified entities will eventually be removed from Jira. 
+     * Delete development information by properties
+     */
+    async deleteByPropertiesRaw(requestParameters: DeleteByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteByPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -112,10 +120,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes particular development information entity. Deletion is performed asynchronously.
-     * Delete development information entity
+     * Creates request options for deleteEntity without sending the request
      */
-    async deleteEntityRaw(requestParameters: DeleteEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteEntityRequestOpts(requestParameters: DeleteEntityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -167,12 +174,21 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"entityType"}}`, encodeURIComponent(String(requestParameters['entityType'])));
         urlPath = urlPath.replace(`{${"entityId"}}`, encodeURIComponent(String(requestParameters['entityId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes particular development information entity. Deletion is performed asynchronously.
+     * Delete development information entity
+     */
+    async deleteEntityRaw(requestParameters: DeleteEntityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteEntityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -186,10 +202,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the repository data stored by the given ID and all related development information entities. Deletion is performed asynchronously.
-     * Delete repository
+     * Creates request options for deleteRepository without sending the request
      */
-    async deleteRepositoryRaw(requestParameters: DeleteRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRepositoryRequestOpts(requestParameters: DeleteRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -225,12 +240,21 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
         let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the repository data stored by the given ID and all related development information entities. Deletion is performed asynchronously.
+     * Delete repository
+     */
+    async deleteRepositoryRaw(requestParameters: DeleteRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -244,10 +268,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks if repositories which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
-     * Check if data exists for the supplied properties
+     * Creates request options for existsByProperties without sending the request
      */
-    async existsByPropertiesRaw(requestParameters: ExistsByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExistsForPropertiesResponse>> {
+    async existsByPropertiesRequestOpts(requestParameters: ExistsByPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -275,12 +298,21 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/devinfo/0.10/existsByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Checks if repositories which have all the provided properties exists. For example, if request is `GET existsByProperties?accountId=123&projectId=ABC` then result will be positive only if there is at least one repository with both properties `accountId=123` and `projectId=ABC`. Special property `_updateSequenceId` can be used to filter all entities with updateSequenceId less or equal than the value specified. In addition to the optional `_updateSequenceId`, one or more query params must be supplied to specify properties to search by. 
+     * Check if data exists for the supplied properties
+     */
+    async existsByPropertiesRaw(requestParameters: ExistsByPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExistsForPropertiesResponse>> {
+        const requestOptions = await this.existsByPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -295,10 +327,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * For the specified repository ID, retrieves the repository and the most recent 400 development information entities. The result will be what is currently stored, ignoring any pending updates or deletes.
-     * Get repository
+     * Creates request options for getRepository without sending the request
      */
-    async getRepositoryRaw(requestParameters: GetRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Repository>> {
+    async getRepositoryRequestOpts(requestParameters: GetRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -330,12 +361,21 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
         let urlPath = `/rest/devinfo/0.10/repository/{repositoryId}`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * For the specified repository ID, retrieves the repository and the most recent 400 development information entities. The result will be what is currently stored, ignoring any pending updates or deletes.
+     * Get repository
+     */
+    async getRepositoryRaw(requestParameters: GetRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Repository>> {
+        const requestOptions = await this.getRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -350,10 +390,9 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Stores development information provided in the request to make it available when viewing issues in Jira. Existing repository and entity data for the same ID will be replaced if the updateSequenceId of existing data is less than the incoming data. Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times.
-     * Store development information
+     * Creates request options for storeDevelopmentInformation without sending the request
      */
-    async storeDevelopmentInformationRaw(requestParameters: StoreDevelopmentInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoreDevinfoResult>> {
+    async storeDevelopmentInformationRequestOpts(requestParameters: StoreDevelopmentInformationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -386,13 +425,22 @@ export class DevelopmentInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/devinfo/0.10/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['devInformation'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Stores development information provided in the request to make it available when viewing issues in Jira. Existing repository and entity data for the same ID will be replaced if the updateSequenceId of existing data is less than the incoming data. Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times.
+     * Store development information
+     */
+    async storeDevelopmentInformationRaw(requestParameters: StoreDevelopmentInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoreDevinfoResult>> {
+        const requestOptions = await this.storeDevelopmentInformationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -59,10 +59,9 @@ export interface SubmitDeploymentsRequest {
 export class DeploymentsApi extends runtime.BaseAPI {
 
     /**
-     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete a deployment by key
+     * Creates request options for deleteDeploymentByKey without sending the request
      */
-    async deleteDeploymentByKeyRaw(requestParameters: DeleteDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDeploymentByKeyRequestOpts(requestParameters: DeleteDeploymentByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -114,12 +113,21 @@ export class DeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete a deployment by key
+     */
+    async deleteDeploymentByKeyRaw(requestParameters: DeleteDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDeploymentByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -133,10 +141,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
-     * Delete deployments by Property
+     * Creates request options for deleteDeploymentsByProperty without sending the request
      */
-    async deleteDeploymentsByPropertyRaw(requestParameters: DeleteDeploymentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDeploymentsByPropertyRequestOpts(requestParameters: DeleteDeploymentsByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -164,12 +171,21 @@ export class DeploymentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/deployments/0.1/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all deployments that match the given request.  One or more query params must be supplied to specify the Properties to delete by. Optional param `_updateSequenceNumber` is no longer supported. If more than one Property is provided, data will be deleted that matches ALL of the Properties (i.e. treated as AND). See the documentation for the `submitDeployments` operation for more details.  Example operation: DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The `getDeploymentByKey` operation can be used to confirm that data has been deleted successfully (if needed). 
+     * Delete deployments by Property
+     */
+    async deleteDeploymentsByPropertyRaw(requestParameters: DeleteDeploymentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDeploymentsByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -183,10 +199,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
-     * Get a deployment by key
+     * Creates request options for getDeploymentByKey without sending the request
      */
-    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
+    async getDeploymentByKeyRequestOpts(requestParameters: GetDeploymentByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -234,12 +249,21 @@ export class DeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored deployment data for the given `pipelineId`, `environmentId` and `deploymentSequenceNumber` combination.  The result will be what is currently stored, ignoring any pending updates or deletes. 
+     * Get a deployment by key
+     */
+    async getDeploymentByKeyRaw(requestParameters: GetDeploymentByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeploymentData1>> {
+        const requestOptions = await this.getDeploymentByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -254,10 +278,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the  Deployment gating status for the given `pipelineId + environmentId + deploymentSequenceNumber` combination. Only apps that define the `jiraDeploymentInfoProvider` module can access this resource. This resource requires the \'READ\' scope. 
-     * Get deployment gating status by key
+     * Creates request options for getDeploymentGatingStatusByKey without sending the request
      */
-    async getDeploymentGatingStatusByKeyRaw(requestParameters: GetDeploymentGatingStatusByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse1>> {
+    async getDeploymentGatingStatusByKeyRequestOpts(requestParameters: GetDeploymentGatingStatusByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pipelineId'] == null) {
             throw new runtime.RequiredError(
                 'pipelineId',
@@ -294,12 +317,21 @@ export class DeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"deploymentSequenceNumber"}}`, encodeURIComponent(String(requestParameters['deploymentSequenceNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the  Deployment gating status for the given `pipelineId + environmentId + deploymentSequenceNumber` combination. Only apps that define the `jiraDeploymentInfoProvider` module can access this resource. This resource requires the \'READ\' scope. 
+     * Get deployment gating status by key
+     */
+    async getDeploymentGatingStatusByKeyRaw(requestParameters: GetDeploymentGatingStatusByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse1>> {
+        const requestOptions = await this.getDeploymentGatingStatusByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -314,10 +346,9 @@ export class DeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object. 
-     * Submit deployment data
+     * Creates request options for submitDeployments without sending the request
      */
-    async submitDeploymentsRaw(requestParameters: SubmitDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse>> {
+    async submitDeploymentsRequestOpts(requestParameters: SubmitDeploymentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -350,13 +381,22 @@ export class DeploymentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/deployments/0.1/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitDeploymentRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / insert deployment data.  Deployments are identified by the combination of `pipelineId`, `environmentId` and `deploymentSequenceNumber`, and existing deployment data for the same deployment will be replaced if it exists and the `updateSequenceNumber` of existing data is less than the incoming data.  Submissions are processed asynchronously. Submitted data will eventually be available in Jira. Most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The `getDeploymentByKey` operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple deployments being submitted in one request, each is validated individually prior to submission. Details of which deployments failed submission (if any) are available in the response object. 
+     * Submit deployment data
+     */
+    async submitDeploymentsRaw(requestParameters: SubmitDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDeploymentsResponse>> {
+        const requestOptions = await this.submitDeploymentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

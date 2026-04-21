@@ -191,7 +191,7 @@ export class BaseAPI {
         return { url, init };
     }
 
-    private fetchApi = async (url: string, init: RequestInit) => {
+    private fetchApi = async (url: string, init?: RequestInit) => {
         let fetchParams = { url, init };
         for (const middleware of this.middleware) {
             if (middleware.pre) {
@@ -247,7 +247,7 @@ export class BaseAPI {
         next.middleware = this.middleware.slice();
         return next;
     }
-};
+}
 
 function isBlob(value: any): value is Blob {
     return typeof Blob !== 'undefined' && value instanceof Blob;
@@ -261,6 +261,12 @@ export class ResponseError extends Error {
     override name: "ResponseError" = "ResponseError";
     constructor(public response: Response, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -268,6 +274,12 @@ export class FetchError extends Error {
     override name: "FetchError" = "FetchError";
     constructor(public cause: Error, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -275,6 +287,12 @@ export class RequiredError extends Error {
     override name: "RequiredError" = "RequiredError";
     constructor(public field: string, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -285,7 +303,8 @@ export const COLLECTION_FORMATS = {
     pipes: "|",
 };
 
-export type FetchAPI = WindowOrWorkerGlobalScope['fetch'];
+export type FetchAPI = typeof globalThis.fetch;
+export type RequestCredentials = "omit" | "include" | "same-origin";
 
 export type Json = any;
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD';
@@ -359,20 +378,20 @@ export interface Consume {
 export interface RequestContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
 }
 
 export interface ResponseContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
     response: Response;
 }
 
 export interface ErrorContext {
     fetch: FetchAPI;
     url: string;
-    init: RequestInit;
+    init?: RequestInit
     error: unknown;
     response?: Response;
 }

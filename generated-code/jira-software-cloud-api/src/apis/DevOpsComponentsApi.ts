@@ -46,10 +46,9 @@ export interface SubmitComponentsRequest {
 export class DevOpsComponentsApi extends runtime.BaseAPI {
 
     /**
-     * Delete the Component data currently stored for the given ID.  Deletion is performed asynchronously. The getComponentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete a Component by ID
+     * Creates request options for deleteComponentById without sending the request
      */
-    async deleteComponentByIdRaw(requestParameters: DeleteComponentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteComponentByIdRequestOpts(requestParameters: DeleteComponentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -76,12 +75,21 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
         urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the Component data currently stored for the given ID.  Deletion is performed asynchronously. The getComponentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete a Component by ID
+     */
+    async deleteComponentByIdRaw(requestParameters: DeleteComponentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteComponentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -95,10 +103,9 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk delete all Components that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). See the documentation for the submitComponents operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The getComponentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
-     * Delete DevOps Components by Property
+     * Creates request options for deleteComponentsByProperty without sending the request
      */
-    async deleteComponentsByPropertyRaw(requestParameters: DeleteComponentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteComponentsByPropertyRequestOpts(requestParameters: DeleteComponentsByPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -117,12 +124,21 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/devopscomponents/1.0/bulkByProperties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk delete all Components that match the given request.  One or more query params must be supplied to specify Properties to delete by. If more than one Property is provided, data will be deleted that matches ALL of the Properties (e.g. treated as an AND). See the documentation for the submitComponents operation for more details.  e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456  Deletion is performed asynchronously. The getComponentById operation can be used to confirm that data has been deleted successfully (if needed).  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'DELETE\' scope for Connect apps. 
+     * Delete DevOps Components by Property
+     */
+    async deleteComponentsByPropertyRaw(requestParameters: DeleteComponentsByPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteComponentsByPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -136,10 +152,9 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the currently stored Component data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
-     * Get a Component by ID
+     * Creates request options for getComponentById without sending the request
      */
-    async getComponentByIdRaw(requestParameters: GetComponentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComponentById200Response>> {
+    async getComponentByIdRequestOpts(requestParameters: GetComponentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -166,12 +181,21 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
         let urlPath = `/rest/devopscomponents/1.0/devopscomponents/{componentId}`;
         urlPath = urlPath.replace(`{${"componentId"}}`, encodeURIComponent(String(requestParameters['componentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the currently stored Component data for the given ID.  The result will be what is currently stored, ignoring any pending updates or deletes.  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'READ\' scope for Connect apps. 
+     * Get a Component by ID
+     */
+    async getComponentByIdRaw(requestParameters: GetComponentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComponentById200Response>> {
+        const requestOptions = await this.getComponentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -186,10 +210,9 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update / insert DevOps Component data.  Components are identified by their ID, and existing Component data for the same ID will be replaced if it exists and the updateSequenceNumber of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The getComponentById operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Components being submitted in one request, each is validated individually prior to submission. Details of which Components failed submission (if any) are available in the response object.  A maximum of 1000 components can be submitted in one request.  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
-     * Submit DevOps Components
+     * Creates request options for submitComponents without sending the request
      */
-    async submitComponentsRaw(requestParameters: SubmitComponentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDevopsComponentsResponse>> {
+    async submitComponentsRequestOpts(requestParameters: SubmitComponentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['authorization'] == null) {
             throw new runtime.RequiredError(
                 'authorization',
@@ -217,13 +240,22 @@ export class DevOpsComponentsApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/devopscomponents/1.0/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['submitDevopsComponentsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update / insert DevOps Component data.  Components are identified by their ID, and existing Component data for the same ID will be replaced if it exists and the updateSequenceNumber of existing data is less than the incoming data.  Submissions are performed asynchronously. Submitted data will eventually be available in Jira; most updates are available within a short period of time, but may take some time during peak load and/or maintenance times. The getComponentById operation can be used to confirm that data has been stored successfully (if needed).  In the case of multiple Components being submitted in one request, each is validated individually prior to submission. Details of which Components failed submission (if any) are available in the response object.  A maximum of 1000 components can be submitted in one request.  Only Connect apps that define the `jiraDevOpsComponentProvider` module can access this resource. This resource requires the \'WRITE\' scope for Connect apps. 
+     * Submit DevOps Components
+     */
+    async submitComponentsRaw(requestParameters: SubmitComponentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubmitDevopsComponentsResponse>> {
+        const requestOptions = await this.submitComponentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -89,10 +89,9 @@ export interface UpdateSprintOperationRequest {
 export class SprintApi extends runtime.BaseAPI {
 
     /**
-     * Creates a future sprint. Sprint name and origin board id are required. Start date, end date, and goal are optional.  Note that the sprint name is trimmed. Also, when starting sprints from the UI, the \"endDate\" set through this call is ignored and instead the last sprint\'s duration is used to fill the form.
-     * Create sprint
+     * Creates request options for createSprint without sending the request
      */
-    async createSprintRaw(requestParameters: CreateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createSprintRequestOpts(requestParameters: CreateSprintOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createSprintRequest'] == null) {
             throw new runtime.RequiredError(
                 'createSprintRequest',
@@ -114,13 +113,22 @@ export class SprintApi extends runtime.BaseAPI {
 
         let urlPath = `/rest/agile/1.0/sprint`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createSprintRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a future sprint. Sprint name and origin board id are required. Start date, end date, and goal are optional.  Note that the sprint name is trimmed. Also, when starting sprints from the UI, the \"endDate\" set through this call is ignored and instead the last sprint\'s duration is used to fill the form.
+     * Create sprint
+     */
+    async createSprintRaw(requestParameters: CreateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -134,10 +142,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the property from the sprint identified by the id. Ths user removing the property is required to have permissions to modify the sprint.
-     * Delete property
+     * Creates request options for deleteProperty without sending the request
      */
-    async deletePropertyRaw(requestParameters: DeletePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePropertyRequestOpts(requestParameters: DeletePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -166,12 +173,21 @@ export class SprintApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the property from the sprint identified by the id. Ths user removing the property is required to have permissions to modify the sprint.
+     * Delete property
+     */
+    async deletePropertyRaw(requestParameters: DeletePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -185,10 +201,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a sprint. Once a sprint is deleted, all open issues in the sprint will be moved to the backlog.
-     * Delete sprint
+     * Creates request options for deleteSprint without sending the request
      */
-    async deleteSprintRaw(requestParameters: DeleteSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSprintRequestOpts(requestParameters: DeleteSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -209,12 +224,21 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a sprint. Once a sprint is deleted, all open issues in the sprint will be moved to the backlog.
+     * Delete sprint
+     */
+    async deleteSprintRaw(requestParameters: DeleteSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -228,10 +252,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all issues in a sprint, for a given sprint ID. This only includes issues that the user has permission to view. By default, the returned issues are ordered by rank.
-     * Get issues for sprint
+     * Creates request options for getIssuesForSprint without sending the request
      */
-    async getIssuesForSprintRaw(requestParameters: GetIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIssuesForSprintRequestOpts(requestParameters: GetIssuesForSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -276,12 +299,21 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all issues in a sprint, for a given sprint ID. This only includes issues that the user has permission to view. By default, the returned issues are ordered by rank.
+     * Get issues for sprint
+     */
+    async getIssuesForSprintRaw(requestParameters: GetIssuesForSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIssuesForSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -295,10 +327,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the keys of all properties for the sprint identified by the id. The user who retrieves the property keys is required to have permissions to view the sprint.
-     * Get properties keys
+     * Creates request options for getPropertiesKeys without sending the request
      */
-    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPropertiesKeysRequestOpts(requestParameters: GetPropertiesKeysRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -319,12 +350,21 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/properties`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the keys of all properties for the sprint identified by the id. The user who retrieves the property keys is required to have permissions to view the sprint.
+     * Get properties keys
+     */
+    async getPropertiesKeysRaw(requestParameters: GetPropertiesKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPropertiesKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -338,10 +378,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the value of the property with a given key from the sprint identified by the provided id. The user who retrieves the property is required to have permissions to view the sprint.
-     * Get property
+     * Creates request options for getProperty without sending the request
      */
-    async getPropertyRaw(requestParameters: GetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPropertyRequestOpts(requestParameters: GetPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -370,12 +409,21 @@ export class SprintApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the value of the property with a given key from the sprint identified by the provided id. The user who retrieves the property is required to have permissions to view the sprint.
+     * Get property
+     */
+    async getPropertyRaw(requestParameters: GetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -389,10 +437,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the sprint for a given sprint ID. The sprint will only be returned if the user can view the board that the sprint was created on, or view at least one of the issues in the sprint.
-     * Get sprint
+     * Creates request options for getSprint without sending the request
      */
-    async getSprintRaw(requestParameters: GetSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getSprintRequestOpts(requestParameters: GetSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -413,12 +460,21 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the sprint for a given sprint ID. The sprint will only be returned if the user can view the board that the sprint was created on, or view at least one of the issues in the sprint.
+     * Get sprint
+     */
+    async getSprintRaw(requestParameters: GetSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -432,10 +488,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves issues to a sprint, for a given sprint ID. Issues can only be moved to open or active sprints. The maximum number of issues that can be moved in one operation is 50.
-     * Move issues to sprint and rank
+     * Creates request options for moveIssuesToSprintAndRank without sending the request
      */
-    async moveIssuesToSprintAndRankRaw(requestParameters: MoveIssuesToSprintAndRankRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveIssuesToSprintAndRankRequestOpts(requestParameters: MoveIssuesToSprintAndRankRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -465,13 +520,22 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/issue`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['moveIssuesToBacklogForBoardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves issues to a sprint, for a given sprint ID. Issues can only be moved to open or active sprints. The maximum number of issues that can be moved in one operation is 50.
+     * Move issues to sprint and rank
+     */
+    async moveIssuesToSprintAndRankRaw(requestParameters: MoveIssuesToSprintAndRankRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveIssuesToSprintAndRankRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -485,10 +549,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
-     * Partially update sprint
+     * Creates request options for partiallyUpdateSprint without sending the request
      */
-    async partiallyUpdateSprintRaw(requestParameters: PartiallyUpdateSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async partiallyUpdateSprintRequestOpts(requestParameters: PartiallyUpdateSprintRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -518,13 +581,22 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateSprintRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a partial update of a sprint. A partial update means that fields not present in the request JSON will not be updated.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Partially update sprint
+     */
+    async partiallyUpdateSprintRaw(requestParameters: PartiallyUpdateSprintRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.partiallyUpdateSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -538,10 +610,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the value of the specified sprint\'s property.  You can use this resource to store a custom data against the sprint identified by the id. The user who stores the data is required to have permissions to modify the sprint.
-     * Set property
+     * Creates request options for setProperty without sending the request
      */
-    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async setPropertyRequestOpts(requestParameters: SetPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -579,13 +650,22 @@ export class SprintApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the value of the specified sprint\'s property.  You can use this resource to store a custom data against the sprint identified by the id. The user who stores the data is required to have permissions to modify the sprint.
+     * Set property
+     */
+    async setPropertyRaw(requestParameters: SetPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.setPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -604,10 +684,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Swap the position of the sprint with the second sprint.
-     * Swap sprint
+     * Creates request options for swapSprint without sending the request
      */
-    async swapSprintRaw(requestParameters: SwapSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async swapSprintRequestOpts(requestParameters: SwapSprintOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -637,13 +716,22 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}/swap`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['swapSprintRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Swap the position of the sprint with the second sprint.
+     * Swap sprint
+     */
+    async swapSprintRaw(requestParameters: SwapSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.swapSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -657,10 +745,9 @@ export class SprintApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
-     * Update sprint
+     * Creates request options for updateSprint without sending the request
      */
-    async updateSprintRaw(requestParameters: UpdateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateSprintRequestOpts(requestParameters: UpdateSprintOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['sprintId'] == null) {
             throw new runtime.RequiredError(
                 'sprintId',
@@ -690,13 +777,22 @@ export class SprintApi extends runtime.BaseAPI {
         let urlPath = `/rest/agile/1.0/sprint/{sprintId}`;
         urlPath = urlPath.replace(`{${"sprintId"}}`, encodeURIComponent(String(requestParameters['sprintId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateSprintRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a full update of a sprint. A full update means that the result will be exactly the same as the request body. Any fields not present in the request JSON will be set to null.  Notes:   *  For closed sprints, only the name and goal can be updated; changes to other fields will be ignored.  *  A sprint can be started by updating the state to \'active\'. This requires the sprint to be in the \'future\' state and have a startDate and endDate set.  *  A sprint can be completed by updating the state to \'closed\'. This action requires the sprint to be in the \'active\' state. This sets the completeDate to the time of the request.  *  Other changes to state are not allowed.  *  The completeDate field cannot be updated manually.
+     * Update sprint
+     */
+    async updateSprintRaw(requestParameters: UpdateSprintOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateSprintRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
