@@ -289,10 +289,9 @@ export interface UpdateWhiteboardPropertyByIdRequest {
 export class ContentPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new content property for an attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
-     * Create content property for attachment
+     * Creates request options for createAttachmentProperty without sending the request
      */
-    async createAttachmentPropertyRaw(requestParameters: CreateAttachmentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createAttachmentPropertyRequestOpts(requestParameters: CreateAttachmentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -325,13 +324,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{attachment-id}/properties`;
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for an attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the attachment.
+     * Create content property for attachment
+     */
+    async createAttachmentPropertyRaw(requestParameters: CreateAttachmentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createAttachmentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -346,10 +354,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new property for a blogpost.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
-     * Create content property for blog post
+     * Creates request options for createBlogpostProperty without sending the request
      */
-    async createBlogpostPropertyRaw(requestParameters: CreateBlogpostPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createBlogpostPropertyRequestOpts(requestParameters: CreateBlogpostPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -382,13 +389,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{blogpost-id}/properties`;
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new property for a blogpost.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the blog post.
+     * Create content property for blog post
+     */
+    async createBlogpostPropertyRaw(requestParameters: CreateBlogpostPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createBlogpostPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -403,10 +419,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
-     * Create content property for comment
+     * Creates request options for createCommentProperty without sending the request
      */
-    async createCommentPropertyRaw(requestParameters: CreateCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createCommentPropertyRequestOpts(requestParameters: CreateCommentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -439,13 +454,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/comments/{comment-id}/properties`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the comment.
+     * Create content property for comment
+     */
+    async createCommentPropertyRaw(requestParameters: CreateCommentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createCommentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -460,10 +484,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a piece of custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
-     * Create content property for custom content
+     * Creates request options for createCustomContentProperty without sending the request
      */
-    async createCustomContentPropertyRaw(requestParameters: CreateCustomContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createCustomContentPropertyRequestOpts(requestParameters: CreateCustomContentPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -496,13 +519,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{custom-content-id}/properties`;
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a piece of custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the custom content.
+     * Create content property for custom content
+     */
+    async createCustomContentPropertyRaw(requestParameters: CreateCustomContentPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createCustomContentPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -517,10 +549,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the database.
-     * Create content property for database
+     * Creates request options for createDatabaseProperty without sending the request
      */
-    async createDatabasePropertyRaw(requestParameters: CreateDatabasePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createDatabasePropertyRequestOpts(requestParameters: CreateDatabasePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -553,13 +584,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the database.
+     * Create content property for database
+     */
+    async createDatabasePropertyRaw(requestParameters: CreateDatabasePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createDatabasePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -574,10 +614,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the folder.
-     * Create content property for folder
+     * Creates request options for createFolderProperty without sending the request
      */
-    async createFolderPropertyRaw(requestParameters: CreateFolderPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createFolderPropertyRequestOpts(requestParameters: CreateFolderPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -610,13 +649,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/folders/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the folder.
+     * Create content property for folder
+     */
+    async createFolderPropertyRaw(requestParameters: CreateFolderPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createFolderPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -631,10 +679,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
-     * Create content property for page
+     * Creates request options for createPageProperty without sending the request
      */
-    async createPagePropertyRaw(requestParameters: CreatePagePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createPagePropertyRequestOpts(requestParameters: CreatePagePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -667,13 +714,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/pages/{page-id}/properties`;
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the page.
+     * Create content property for page
+     */
+    async createPagePropertyRaw(requestParameters: CreatePagePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createPagePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -688,10 +744,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the Smart Link in the content tree.
-     * Create content property for Smart Link in the content tree
+     * Creates request options for createSmartLinkProperty without sending the request
      */
-    async createSmartLinkPropertyRaw(requestParameters: CreateSmartLinkPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createSmartLinkPropertyRequestOpts(requestParameters: CreateSmartLinkPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -724,13 +779,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/embeds/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the Smart Link in the content tree.
+     * Create content property for Smart Link in the content tree
+     */
+    async createSmartLinkPropertyRaw(requestParameters: CreateSmartLinkPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createSmartLinkPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -745,10 +809,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new content property for a whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the whiteboard.
-     * Create content property for whiteboard
+     * Creates request options for createWhiteboardProperty without sending the request
      */
-    async createWhiteboardPropertyRaw(requestParameters: CreateWhiteboardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async createWhiteboardPropertyRequestOpts(requestParameters: CreateWhiteboardPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -781,13 +844,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content property for a whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the whiteboard.
+     * Create content property for whiteboard
+     */
+    async createWhiteboardPropertyRaw(requestParameters: CreateWhiteboardPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.createWhiteboardPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -802,10 +874,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for an attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
-     * Delete content property for attachment by id
+     * Creates request options for deleteAttachmentPropertyById without sending the request
      */
-    async deleteAttachmentPropertyByIdRaw(requestParameters: DeleteAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAttachmentPropertyByIdRequestOpts(requestParameters: DeleteAttachmentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -837,12 +908,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for an attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to attachment the page.
+     * Delete content property for attachment by id
+     */
+    async deleteAttachmentPropertyByIdRaw(requestParameters: DeleteAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAttachmentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -856,10 +936,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a blogpost by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Delete content property for blogpost by id
+     * Creates request options for deleteBlogpostPropertyById without sending the request
      */
-    async deleteBlogpostPropertyByIdRaw(requestParameters: DeleteBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBlogpostPropertyByIdRequestOpts(requestParameters: DeleteBlogpostPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -891,12 +970,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a blogpost by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Delete content property for blogpost by id
+     */
+    async deleteBlogpostPropertyByIdRaw(requestParameters: DeleteBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBlogpostPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -910,10 +998,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Delete content property for comment by id
+     * Creates request options for deleteCommentPropertyById without sending the request
      */
-    async deleteCommentPropertyByIdRaw(requestParameters: DeleteCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCommentPropertyByIdRequestOpts(requestParameters: DeleteCommentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -945,12 +1032,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Delete content property for comment by id
+     */
+    async deleteCommentPropertyByIdRaw(requestParameters: DeleteCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCommentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -964,10 +1060,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Delete content property for custom content by id
+     * Creates request options for deleteCustomContentPropertyById without sending the request
      */
-    async deleteCustomContentPropertyByIdRaw(requestParameters: DeleteCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCustomContentPropertyByIdRequestOpts(requestParameters: DeleteCustomContentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -999,12 +1094,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Delete content property for custom content by id
+     */
+    async deleteCustomContentPropertyByIdRaw(requestParameters: DeleteCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCustomContentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1018,10 +1122,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
-     * Delete content property for database by id
+     * Creates request options for deleteDatabasePropertyById without sending the request
      */
-    async deleteDatabasePropertyByIdRaw(requestParameters: DeleteDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDatabasePropertyByIdRequestOpts(requestParameters: DeleteDatabasePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['databaseId'] == null) {
             throw new runtime.RequiredError(
                 'databaseId',
@@ -1053,12 +1156,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Delete content property for database by id
+     */
+    async deleteDatabasePropertyByIdRaw(requestParameters: DeleteDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDatabasePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1072,10 +1184,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
-     * Delete content property for folder by id
+     * Creates request options for deleteFolderPropertyById without sending the request
      */
-    async deleteFolderPropertyByIdRaw(requestParameters: DeleteFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteFolderPropertyByIdRequestOpts(requestParameters: DeleteFolderPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['folderId'] == null) {
             throw new runtime.RequiredError(
                 'folderId',
@@ -1107,12 +1218,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Delete content property for folder by id
+     */
+    async deleteFolderPropertyByIdRaw(requestParameters: DeleteFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteFolderPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1126,10 +1246,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Delete content property for page by id
+     * Creates request options for deletePagePropertyById without sending the request
      */
-    async deletePagePropertyByIdRaw(requestParameters: DeletePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePagePropertyByIdRequestOpts(requestParameters: DeletePagePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -1161,12 +1280,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Delete content property for page by id
+     */
+    async deletePagePropertyByIdRaw(requestParameters: DeletePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePagePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1180,10 +1308,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
-     * Delete content property for Smart Link in the content tree by id
+     * Creates request options for deleteSmartLinkPropertyById without sending the request
      */
-    async deleteSmartLinkPropertyByIdRaw(requestParameters: DeleteSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSmartLinkPropertyByIdRequestOpts(requestParameters: DeleteSmartLinkPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['embedId'] == null) {
             throw new runtime.RequiredError(
                 'embedId',
@@ -1215,12 +1342,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Delete content property for Smart Link in the content tree by id
+     */
+    async deleteSmartLinkPropertyByIdRaw(requestParameters: DeleteSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSmartLinkPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1234,10 +1370,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
-     * Delete content property for whiteboard by id
+     * Creates request options for deleteWhiteboardPropertyById without sending the request
      */
-    async deleteWhiteboardPropertyByIdRaw(requestParameters: DeleteWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWhiteboardPropertyByIdRequestOpts(requestParameters: DeleteWhiteboardPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['whiteboardId'] == null) {
             throw new runtime.RequiredError(
                 'whiteboardId',
@@ -1269,12 +1404,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Delete content property for whiteboard by id
+     */
+    async deleteWhiteboardPropertyByIdRaw(requestParameters: DeleteWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWhiteboardPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1288,10 +1432,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all Content Properties tied to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
-     * Get content properties for attachment
+     * Creates request options for getAttachmentContentProperties without sending the request
      */
-    async getAttachmentContentPropertiesRaw(requestParameters: GetAttachmentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getAttachmentContentPropertiesRequestOpts(requestParameters: GetAttachmentContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -1331,12 +1474,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{attachment-id}/properties`;
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all Content Properties tied to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
+     * Get content properties for attachment
+     */
+    async getAttachmentContentPropertiesRaw(requestParameters: GetAttachmentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getAttachmentContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1351,10 +1503,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
-     * Get content property for attachment by id
+     * Creates request options for getAttachmentContentPropertiesById without sending the request
      */
-    async getAttachmentContentPropertiesByIdRaw(requestParameters: GetAttachmentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getAttachmentContentPropertiesByIdRequestOpts(requestParameters: GetAttachmentContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -1386,12 +1537,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
+     * Get content property for attachment by id
+     */
+    async getAttachmentContentPropertiesByIdRaw(requestParameters: GetAttachmentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getAttachmentContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1406,10 +1566,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all Content Properties tied to a specified blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
-     * Get content properties for blog post
+     * Creates request options for getBlogpostContentProperties without sending the request
      */
-    async getBlogpostContentPropertiesRaw(requestParameters: GetBlogpostContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getBlogpostContentPropertiesRequestOpts(requestParameters: GetBlogpostContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -1449,12 +1608,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{blogpost-id}/properties`;
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all Content Properties tied to a specified blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
+     * Get content properties for blog post
+     */
+    async getBlogpostContentPropertiesRaw(requestParameters: GetBlogpostContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getBlogpostContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1469,10 +1637,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
-     * Get content property for blog post by id
+     * Creates request options for getBlogpostContentPropertiesById without sending the request
      */
-    async getBlogpostContentPropertiesByIdRaw(requestParameters: GetBlogpostContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getBlogpostContentPropertiesByIdRequestOpts(requestParameters: GetBlogpostContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -1504,12 +1671,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
+     * Get content property for blog post by id
+     */
+    async getBlogpostContentPropertiesByIdRaw(requestParameters: GetBlogpostContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getBlogpostContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1524,10 +1700,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties attached to a specified comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the comment.
-     * Get content properties for comment
+     * Creates request options for getCommentContentProperties without sending the request
      */
-    async getCommentContentPropertiesRaw(requestParameters: GetCommentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getCommentContentPropertiesRequestOpts(requestParameters: GetCommentContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -1567,12 +1742,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/comments/{comment-id}/properties`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties attached to a specified comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the comment.
+     * Get content properties for comment
+     */
+    async getCommentContentPropertiesRaw(requestParameters: GetCommentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getCommentContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1587,10 +1771,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the comment.
-     * Get content property for comment by id
+     * Creates request options for getCommentContentPropertiesById without sending the request
      */
-    async getCommentContentPropertiesByIdRaw(requestParameters: GetCommentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getCommentContentPropertiesByIdRequestOpts(requestParameters: GetCommentContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -1622,12 +1805,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the comment.
+     * Get content property for comment by id
+     */
+    async getCommentContentPropertiesByIdRaw(requestParameters: GetCommentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getCommentContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1642,10 +1834,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content.
-     * Get content properties for custom content
+     * Creates request options for getCustomContentContentProperties without sending the request
      */
-    async getCustomContentContentPropertiesRaw(requestParameters: GetCustomContentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getCustomContentContentPropertiesRequestOpts(requestParameters: GetCustomContentContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -1685,12 +1876,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{custom-content-id}/properties`;
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content.
+     * Get content properties for custom content
+     */
+    async getCustomContentContentPropertiesRaw(requestParameters: GetCustomContentContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getCustomContentContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1705,10 +1905,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get content property for custom content by id
+     * Creates request options for getCustomContentContentPropertiesById without sending the request
      */
-    async getCustomContentContentPropertiesByIdRaw(requestParameters: GetCustomContentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getCustomContentContentPropertiesByIdRequestOpts(requestParameters: GetCustomContentContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -1740,12 +1939,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get content property for custom content by id
+     */
+    async getCustomContentContentPropertiesByIdRaw(requestParameters: GetCustomContentContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getCustomContentContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1760,10 +1968,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
-     * Get content properties for database
+     * Creates request options for getDatabaseContentProperties without sending the request
      */
-    async getDatabaseContentPropertiesRaw(requestParameters: GetDatabaseContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getDatabaseContentPropertiesRequestOpts(requestParameters: GetDatabaseContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1803,12 +2010,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content properties for database
+     */
+    async getDatabaseContentPropertiesRaw(requestParameters: GetDatabaseContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getDatabaseContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1823,10 +2039,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
-     * Get content property for database by id
+     * Creates request options for getDatabaseContentPropertiesById without sending the request
      */
-    async getDatabaseContentPropertiesByIdRaw(requestParameters: GetDatabaseContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getDatabaseContentPropertiesByIdRequestOpts(requestParameters: GetDatabaseContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['databaseId'] == null) {
             throw new runtime.RequiredError(
                 'databaseId',
@@ -1858,12 +2073,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database.
+     * Get content property for database by id
+     */
+    async getDatabaseContentPropertiesByIdRaw(requestParameters: GetDatabaseContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getDatabaseContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1878,10 +2102,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
-     * Get content properties for folder
+     * Creates request options for getFolderContentProperties without sending the request
      */
-    async getFolderContentPropertiesRaw(requestParameters: GetFolderContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getFolderContentPropertiesRequestOpts(requestParameters: GetFolderContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1921,12 +2144,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/folders/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content properties for folder
+     */
+    async getFolderContentPropertiesRaw(requestParameters: GetFolderContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getFolderContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1941,10 +2173,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
-     * Get content property for folder by id
+     * Creates request options for getFolderContentPropertiesById without sending the request
      */
-    async getFolderContentPropertiesByIdRaw(requestParameters: GetFolderContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getFolderContentPropertiesByIdRequestOpts(requestParameters: GetFolderContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['folderId'] == null) {
             throw new runtime.RequiredError(
                 'folderId',
@@ -1976,12 +2207,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder.
+     * Get content property for folder by id
+     */
+    async getFolderContentPropertiesByIdRaw(requestParameters: GetFolderContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getFolderContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1996,10 +2236,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get content properties for page
+     * Creates request options for getPageContentProperties without sending the request
      */
-    async getPageContentPropertiesRaw(requestParameters: GetPageContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getPageContentPropertiesRequestOpts(requestParameters: GetPageContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -2039,12 +2278,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/pages/{page-id}/properties`;
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get content properties for page
+     */
+    async getPageContentPropertiesRaw(requestParameters: GetPageContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getPageContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2059,10 +2307,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get content property for page by id
+     * Creates request options for getPageContentPropertiesById without sending the request
      */
-    async getPageContentPropertiesByIdRaw(requestParameters: GetPageContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getPageContentPropertiesByIdRequestOpts(requestParameters: GetPageContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -2094,12 +2341,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get content property for page by id
+     */
+    async getPageContentPropertiesByIdRaw(requestParameters: GetPageContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getPageContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2114,10 +2370,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
-     * Get content properties for Smart Link in the content tree
+     * Creates request options for getSmartLinkContentProperties without sending the request
      */
-    async getSmartLinkContentPropertiesRaw(requestParameters: GetSmartLinkContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getSmartLinkContentPropertiesRequestOpts(requestParameters: GetSmartLinkContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2157,12 +2412,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/embeds/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content properties for Smart Link in the content tree
+     */
+    async getSmartLinkContentPropertiesRaw(requestParameters: GetSmartLinkContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getSmartLinkContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2177,10 +2441,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
-     * Get content property for Smart Link in the content tree by id
+     * Creates request options for getSmartLinkContentPropertiesById without sending the request
      */
-    async getSmartLinkContentPropertiesByIdRaw(requestParameters: GetSmartLinkContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getSmartLinkContentPropertiesByIdRequestOpts(requestParameters: GetSmartLinkContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['embedId'] == null) {
             throw new runtime.RequiredError(
                 'embedId',
@@ -2212,12 +2475,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree.
+     * Get content property for Smart Link in the content tree by id
+     */
+    async getSmartLinkContentPropertiesByIdRaw(requestParameters: GetSmartLinkContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getSmartLinkContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2232,10 +2504,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Content Properties tied to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
-     * Get content properties for whiteboard
+     * Creates request options for getWhiteboardContentProperties without sending the request
      */
-    async getWhiteboardContentPropertiesRaw(requestParameters: GetWhiteboardContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+    async getWhiteboardContentPropertiesRequestOpts(requestParameters: GetWhiteboardContentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2275,12 +2546,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/properties`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Content Properties tied to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content properties for whiteboard
+     */
+    async getWhiteboardContentPropertiesRaw(requestParameters: GetWhiteboardContentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultContentProperty>> {
+        const requestOptions = await this.getWhiteboardContentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2295,10 +2575,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific Content Property by ID that is attached to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
-     * Get content property for whiteboard by id
+     * Creates request options for getWhiteboardContentPropertiesById without sending the request
      */
-    async getWhiteboardContentPropertiesByIdRaw(requestParameters: GetWhiteboardContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async getWhiteboardContentPropertiesByIdRequestOpts(requestParameters: GetWhiteboardContentPropertiesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['whiteboardId'] == null) {
             throw new runtime.RequiredError(
                 'whiteboardId',
@@ -2330,12 +2609,21 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a specific Content Property by ID that is attached to a specified whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard.
+     * Get content property for whiteboard by id
+     */
+    async getWhiteboardContentPropertiesByIdRaw(requestParameters: GetWhiteboardContentPropertiesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.getWhiteboardContentPropertiesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2350,10 +2638,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
-     * Update content property for attachment by id
+     * Creates request options for updateAttachmentPropertyById without sending the request
      */
-    async updateAttachmentPropertyByIdRaw(requestParameters: UpdateAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateAttachmentPropertyByIdRequestOpts(requestParameters: UpdateAttachmentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -2394,13 +2681,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for attachment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the attachment.
+     * Update content property for attachment by id
+     */
+    async updateAttachmentPropertyByIdRaw(requestParameters: UpdateAttachmentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateAttachmentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2415,10 +2711,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for blog post by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
-     * Update content property for blog post by id
+     * Creates request options for updateBlogpostPropertyById without sending the request
      */
-    async updateBlogpostPropertyByIdRaw(requestParameters: UpdateBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateBlogpostPropertyByIdRequestOpts(requestParameters: UpdateBlogpostPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -2459,13 +2754,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for blog post by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the blog post.
+     * Update content property for blog post by id
+     */
+    async updateBlogpostPropertyByIdRaw(requestParameters: UpdateBlogpostPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateBlogpostPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2480,10 +2784,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
-     * Update content property for comment by id
+     * Creates request options for updateCommentPropertyById without sending the request
      */
-    async updateCommentPropertyByIdRaw(requestParameters: UpdateCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateCommentPropertyByIdRequestOpts(requestParameters: UpdateCommentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -2524,13 +2827,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a comment by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the comment.
+     * Update content property for comment by id
+     */
+    async updateCommentPropertyByIdRaw(requestParameters: UpdateCommentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateCommentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2545,10 +2857,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
-     * Update content property for custom content by id
+     * Creates request options for updateCustomContentPropertyById without sending the request
      */
-    async updateCustomContentPropertyByIdRaw(requestParameters: UpdateCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateCustomContentPropertyByIdRequestOpts(requestParameters: UpdateCustomContentPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -2589,13 +2900,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a piece of custom content by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the custom content.
+     * Update content property for custom content by id
+     */
+    async updateCustomContentPropertyByIdRaw(requestParameters: UpdateCustomContentPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateCustomContentPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2610,10 +2930,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
-     * Update content property for database by id
+     * Creates request options for updateDatabasePropertyById without sending the request
      */
-    async updateDatabasePropertyByIdRaw(requestParameters: UpdateDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateDatabasePropertyByIdRequestOpts(requestParameters: UpdateDatabasePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['databaseId'] == null) {
             throw new runtime.RequiredError(
                 'databaseId',
@@ -2654,13 +2973,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"database-id"}}`, encodeURIComponent(String(requestParameters['databaseId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a database by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the database.
+     * Update content property for database by id
+     */
+    async updateDatabasePropertyByIdRaw(requestParameters: UpdateDatabasePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateDatabasePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2675,10 +3003,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
-     * Update content property for folder by id
+     * Creates request options for updateFolderPropertyById without sending the request
      */
-    async updateFolderPropertyByIdRaw(requestParameters: UpdateFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateFolderPropertyByIdRequestOpts(requestParameters: UpdateFolderPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['folderId'] == null) {
             throw new runtime.RequiredError(
                 'folderId',
@@ -2719,13 +3046,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"folder-id"}}`, encodeURIComponent(String(requestParameters['folderId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a folder by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the folder.
+     * Update content property for folder by id
+     */
+    async updateFolderPropertyByIdRaw(requestParameters: UpdateFolderPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateFolderPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2740,10 +3076,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
-     * Update content property for page by id
+     * Creates request options for updatePagePropertyById without sending the request
      */
-    async updatePagePropertyByIdRaw(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updatePagePropertyByIdRequestOpts(requestParameters: UpdatePagePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -2784,13 +3119,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a page by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the page.
+     * Update content property for page by id
+     */
+    async updatePagePropertyByIdRaw(requestParameters: UpdatePagePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updatePagePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2805,10 +3149,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
-     * Update content property for Smart Link in the content tree by id
+     * Creates request options for updateSmartLinkPropertyById without sending the request
      */
-    async updateSmartLinkPropertyByIdRaw(requestParameters: UpdateSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateSmartLinkPropertyByIdRequestOpts(requestParameters: UpdateSmartLinkPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['embedId'] == null) {
             throw new runtime.RequiredError(
                 'embedId',
@@ -2849,13 +3192,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"embed-id"}}`, encodeURIComponent(String(requestParameters['embedId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a Smart Link in the content tree by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the Smart Link in the content tree.
+     * Update content property for Smart Link in the content tree by id
+     */
+    async updateSmartLinkPropertyByIdRaw(requestParameters: UpdateSmartLinkPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateSmartLinkPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2870,10 +3222,9 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
-     * Update content property for whiteboard by id
+     * Creates request options for updateWhiteboardPropertyById without sending the request
      */
-    async updateWhiteboardPropertyByIdRaw(requestParameters: UpdateWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+    async updateWhiteboardPropertyByIdRequestOpts(requestParameters: UpdateWhiteboardPropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['whiteboardId'] == null) {
             throw new runtime.RequiredError(
                 'whiteboardId',
@@ -2914,13 +3265,22 @@ export class ContentPropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"whiteboard-id"}}`, encodeURIComponent(String(requestParameters['whiteboardId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentPropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a content property for a whiteboard by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the whiteboard.
+     * Update content property for whiteboard by id
+     */
+    async updateWhiteboardPropertyByIdRaw(requestParameters: UpdateWhiteboardPropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentProperty>> {
+        const requestOptions = await this.updateWhiteboardPropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -65,10 +65,9 @@ export interface GetPageLikeUsersRequest {
 export class LikeApi extends runtime.BaseAPI {
 
     /**
-     * Returns the count of likes of specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get like count for blog post
+     * Creates request options for getBlogPostLikeCount without sending the request
      */
-    async getBlogPostLikeCountRaw(requestParameters: GetBlogPostLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+    async getBlogPostLikeCountRequestOpts(requestParameters: GetBlogPostLikeCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -92,12 +91,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/likes/count`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the count of likes of specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get like count for blog post
+     */
+    async getBlogPostLikeCountRaw(requestParameters: GetBlogPostLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+        const requestOptions = await this.getBlogPostLikeCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -112,10 +120,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account IDs of likes of specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get account IDs of likes for blog post
+     * Creates request options for getBlogPostLikeUsers without sending the request
      */
-    async getBlogPostLikeUsersRaw(requestParameters: GetBlogPostLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+    async getBlogPostLikeUsersRequestOpts(requestParameters: GetBlogPostLikeUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -147,12 +154,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/likes/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the account IDs of likes of specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get account IDs of likes for blog post
+     */
+    async getBlogPostLikeUsersRaw(requestParameters: GetBlogPostLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+        const requestOptions = await this.getBlogPostLikeUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -167,10 +183,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the count of likes of specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
-     * Get like count for footer comment
+     * Creates request options for getFooterLikeCount without sending the request
      */
-    async getFooterLikeCountRaw(requestParameters: GetFooterLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+    async getFooterLikeCountRequestOpts(requestParameters: GetFooterLikeCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -194,12 +209,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{id}/likes/count`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the count of likes of specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
+     * Get like count for footer comment
+     */
+    async getFooterLikeCountRaw(requestParameters: GetFooterLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+        const requestOptions = await this.getFooterLikeCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -214,10 +238,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account IDs of likes of specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
-     * Get account IDs of likes for footer comment
+     * Creates request options for getFooterLikeUsers without sending the request
      */
-    async getFooterLikeUsersRaw(requestParameters: GetFooterLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+    async getFooterLikeUsersRequestOpts(requestParameters: GetFooterLikeUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -249,12 +272,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{id}/likes/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the account IDs of likes of specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
+     * Get account IDs of likes for footer comment
+     */
+    async getFooterLikeUsersRaw(requestParameters: GetFooterLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+        const requestOptions = await this.getFooterLikeUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -269,10 +301,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the count of likes of specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
-     * Get like count for inline comment
+     * Creates request options for getInlineLikeCount without sending the request
      */
-    async getInlineLikeCountRaw(requestParameters: GetInlineLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+    async getInlineLikeCountRequestOpts(requestParameters: GetInlineLikeCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -296,12 +327,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{id}/likes/count`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the count of likes of specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
+     * Get like count for inline comment
+     */
+    async getInlineLikeCountRaw(requestParameters: GetInlineLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+        const requestOptions = await this.getInlineLikeCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -316,10 +356,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account IDs of likes of specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
-     * Get account IDs of likes for inline comment
+     * Creates request options for getInlineLikeUsers without sending the request
      */
-    async getInlineLikeUsersRaw(requestParameters: GetInlineLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+    async getInlineLikeUsersRequestOpts(requestParameters: GetInlineLikeUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -351,12 +390,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{id}/likes/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the account IDs of likes of specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page/blogpost and its corresponding space.
+     * Get account IDs of likes for inline comment
+     */
+    async getInlineLikeUsersRaw(requestParameters: GetInlineLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+        const requestOptions = await this.getInlineLikeUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -371,10 +419,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the count of likes of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get like count for page
+     * Creates request options for getPageLikeCount without sending the request
      */
-    async getPageLikeCountRaw(requestParameters: GetPageLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+    async getPageLikeCountRequestOpts(requestParameters: GetPageLikeCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -398,12 +445,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/likes/count`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the count of likes of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get like count for page
+     */
+    async getPageLikeCountRaw(requestParameters: GetPageLikeCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelInteger>> {
+        const requestOptions = await this.getPageLikeCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -418,10 +474,9 @@ export class LikeApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account IDs of likes of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get account IDs of likes for page
+     * Creates request options for getPageLikeUsers without sending the request
      */
-    async getPageLikeUsersRaw(requestParameters: GetPageLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+    async getPageLikeUsersRequestOpts(requestParameters: GetPageLikeUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -453,12 +508,21 @@ export class LikeApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/likes/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the account IDs of likes of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get account IDs of likes for page
+     */
+    async getPageLikeUsersRaw(requestParameters: GetPageLikeUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultString>> {
+        const requestOptions = await this.getPageLikeUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

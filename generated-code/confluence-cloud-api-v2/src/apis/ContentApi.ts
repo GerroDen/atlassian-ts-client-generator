@@ -29,10 +29,9 @@ export interface ConvertContentIdsToContentTypesOperationRequest {
 export class ContentApi extends runtime.BaseAPI {
 
     /**
-     * Converts a list of content ids into their associated content types. This is useful for users migrating from v1 to v2 who may have stored just content ids without their associated type. This will return types as they should be used in v2. Notably, this will return `inline-comment` for inline comments and `footer-comment` for footer comments, which is distinct from them both being represented by `comment` in v1.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the requested content. Any content that the user does not have permission to view or does not exist will map to `null` in the response.
-     * Convert content ids to content types
+     * Creates request options for convertContentIdsToContentTypes without sending the request
      */
-    async convertContentIdsToContentTypesRaw(requestParameters: ConvertContentIdsToContentTypesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentIdToContentTypeResponse>> {
+    async convertContentIdsToContentTypesRequestOpts(requestParameters: ConvertContentIdsToContentTypesOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['convertContentIdsToContentTypesRequest'] == null) {
             throw new runtime.RequiredError(
                 'convertContentIdsToContentTypesRequest',
@@ -57,13 +56,22 @@ export class ContentApi extends runtime.BaseAPI {
 
         let urlPath = `/content/convert-ids-to-types`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['convertContentIdsToContentTypesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Converts a list of content ids into their associated content types. This is useful for users migrating from v1 to v2 who may have stored just content ids without their associated type. This will return types as they should be used in v2. Notably, this will return `inline-comment` for inline comments and `footer-comment` for footer comments, which is distinct from them both being represented by `comment` in v1.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the requested content. Any content that the user does not have permission to view or does not exist will map to `null` in the response.
+     * Convert content ids to content types
+     */
+    async convertContentIdsToContentTypesRaw(requestParameters: ConvertContentIdsToContentTypesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentIdToContentTypeResponse>> {
+        const requestOptions = await this.convertContentIdsToContentTypesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

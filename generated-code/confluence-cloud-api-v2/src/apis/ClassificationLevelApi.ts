@@ -100,10 +100,9 @@ export interface PutWhiteboardClassificationLevelOperationRequest {
 export class ClassificationLevelApi extends runtime.BaseAPI {
 
     /**
-     * Returns the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
-     * Delete space default classification level
+     * Creates request options for deleteSpaceDefaultClassificationLevel without sending the request
      */
-    async deleteSpaceDefaultClassificationLevelRaw(requestParameters: DeleteSpaceDefaultClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSpaceDefaultClassificationLevelRequestOpts(requestParameters: DeleteSpaceDefaultClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -127,12 +126,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/classification-level/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
+     * Delete space default classification level
+     */
+    async deleteSpaceDefaultClassificationLevelRaw(requestParameters: DeleteSpaceDefaultClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSpaceDefaultClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -146,10 +154,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the blog post. \'Permission to edit the blog post is required if trying to view classification level for a draft.
-     * Get blog post classification level
+     * Creates request options for getBlogPostClassificationLevel without sending the request
      */
-    async getBlogPostClassificationLevelRaw(requestParameters: GetBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+    async getBlogPostClassificationLevelRequestOpts(requestParameters: GetBlogPostClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -177,12 +184,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the blog post. \'Permission to edit the blog post is required if trying to view classification level for a draft.
+     * Get blog post classification level
+     */
+    async getBlogPostClassificationLevelRaw(requestParameters: GetBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+        const requestOptions = await this.getBlogPostClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -197,10 +213,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of [classification levels](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level)  available.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission).
-     * Get list of classification levels
+     * Creates request options for getClassificationLevels without sending the request
      */
-    async getClassificationLevelsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ClassificationLevel>>> {
+    async getClassificationLevelsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -216,12 +231,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
 
         let urlPath = `/classification-levels`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of [classification levels](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level)  available.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission).
+     * Get list of classification levels
+     */
+    async getClassificationLevelsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ClassificationLevel>>> {
+        const requestOptions = await this.getClassificationLevelsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -236,10 +260,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the database.
-     * Get database classification level
+     * Creates request options for getDatabaseClassificationLevel without sending the request
      */
-    async getDatabaseClassificationLevelRaw(requestParameters: GetDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+    async getDatabaseClassificationLevelRequestOpts(requestParameters: GetDatabaseClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -263,12 +286,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the database.
+     * Get database classification level
+     */
+    async getDatabaseClassificationLevelRaw(requestParameters: GetDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+        const requestOptions = await this.getDatabaseClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -283,10 +315,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the page. \'Permission to edit the page is required if trying to view classification level for a draft.
-     * Get page classification level
+     * Creates request options for getPageClassificationLevel without sending the request
      */
-    async getPageClassificationLevelRaw(requestParameters: GetPageClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+    async getPageClassificationLevelRequestOpts(requestParameters: GetPageClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -314,12 +345,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the page. \'Permission to edit the page is required if trying to view classification level for a draft.
+     * Get page classification level
+     */
+    async getPageClassificationLevelRaw(requestParameters: GetPageClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+        const requestOptions = await this.getPageClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -334,10 +374,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the space.
-     * Get space default classification level
+     * Creates request options for getSpaceDefaultClassificationLevel without sending the request
      */
-    async getSpaceDefaultClassificationLevelRaw(requestParameters: GetSpaceDefaultClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+    async getSpaceDefaultClassificationLevelRequestOpts(requestParameters: GetSpaceDefaultClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -361,12 +400,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/classification-level/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the space.
+     * Get space default classification level
+     */
+    async getSpaceDefaultClassificationLevelRaw(requestParameters: GetSpaceDefaultClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+        const requestOptions = await this.getSpaceDefaultClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -381,10 +429,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the whiteboard.
-     * Get whiteboard classification level
+     * Creates request options for getWhiteboardClassificationLevel without sending the request
      */
-    async getWhiteboardClassificationLevelRaw(requestParameters: GetWhiteboardClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+    async getWhiteboardClassificationLevelRequestOpts(requestParameters: GetWhiteboardClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -408,12 +455,21 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the whiteboard.
+     * Get whiteboard classification level
+     */
+    async getWhiteboardClassificationLevelRaw(requestParameters: GetWhiteboardClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClassificationLevel>> {
+        const requestOptions = await this.getWhiteboardClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -428,10 +484,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post for the space   [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the blog post.
-     * Reset blog post classification level
+     * Creates request options for postBlogPostClassificationLevel without sending the request
      */
-    async postBlogPostClassificationLevelRaw(requestParameters: PostBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async postBlogPostClassificationLevelRequestOpts(requestParameters: PostBlogPostClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -464,13 +519,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/classification-level/reset`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postPageClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post for the space   [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the blog post.
+     * Reset blog post classification level
+     */
+    async postBlogPostClassificationLevelRaw(requestParameters: PostBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.postBlogPostClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -484,10 +548,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the database.
-     * Reset database classification level
+     * Creates request options for postDatabaseClassificationLevel without sending the request
      */
-    async postDatabaseClassificationLevelRaw(requestParameters: PostDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async postDatabaseClassificationLevelRequestOpts(requestParameters: PostDatabaseClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -520,13 +583,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/classification-level/reset`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postWhiteboardClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the database.
+     * Reset database classification level
+     */
+    async postDatabaseClassificationLevelRaw(requestParameters: PostDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.postDatabaseClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -540,10 +612,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the page.
-     * Reset page classification level
+     * Creates request options for postPageClassificationLevel without sending the request
      */
-    async postPageClassificationLevelRaw(requestParameters: PostPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async postPageClassificationLevelRequestOpts(requestParameters: PostPageClassificationLevelOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -576,13 +647,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/classification-level/reset`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postPageClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the page.
+     * Reset page classification level
+     */
+    async postPageClassificationLevelRaw(requestParameters: PostPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.postPageClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -596,10 +676,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the whiteboard.
-     * Reset whiteboard classification level
+     * Creates request options for postWhiteboardClassificationLevel without sending the request
      */
-    async postWhiteboardClassificationLevelRaw(requestParameters: PostWhiteboardClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async postWhiteboardClassificationLevelRequestOpts(requestParameters: PostWhiteboardClassificationLevelOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -632,13 +711,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/classification-level/reset`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postWhiteboardClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard for the space  [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to view the whiteboard.
+     * Reset whiteboard classification level
+     */
+    async postWhiteboardClassificationLevelRaw(requestParameters: PostWhiteboardClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.postWhiteboardClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -652,10 +740,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the blog post.
-     * Update blog post classification level
+     * Creates request options for putBlogPostClassificationLevel without sending the request
      */
-    async putBlogPostClassificationLevelRaw(requestParameters: PutBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putBlogPostClassificationLevelRequestOpts(requestParameters: PutBlogPostClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -688,13 +775,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['putPageClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the blog post.
+     * Update blog post classification level
+     */
+    async putBlogPostClassificationLevelRaw(requestParameters: PutBlogPostClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putBlogPostClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -708,10 +804,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the database.
-     * Update database classification level
+     * Creates request options for putDatabaseClassificationLevel without sending the request
      */
-    async putDatabaseClassificationLevelRaw(requestParameters: PutDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putDatabaseClassificationLevelRequestOpts(requestParameters: PutDatabaseClassificationLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -744,13 +839,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['putWhiteboardClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the database.
+     * Update database classification level
+     */
+    async putDatabaseClassificationLevelRaw(requestParameters: PutDatabaseClassificationLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putDatabaseClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -764,10 +868,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the page.
-     * Update page classification level
+     * Creates request options for putPageClassificationLevel without sending the request
      */
-    async putPageClassificationLevelRaw(requestParameters: PutPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putPageClassificationLevelRequestOpts(requestParameters: PutPageClassificationLevelOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -800,13 +903,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['putPageClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the page.
+     * Update page classification level
+     */
+    async putPageClassificationLevelRaw(requestParameters: PutPageClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putPageClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -820,10 +932,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
-     * Update space default classification level
+     * Creates request options for putSpaceDefaultClassificationLevel without sending the request
      */
-    async putSpaceDefaultClassificationLevelRaw(requestParameters: PutSpaceDefaultClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putSpaceDefaultClassificationLevelRequestOpts(requestParameters: PutSpaceDefaultClassificationLevelOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -856,13 +967,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/classification-level/default`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['putSpaceDefaultClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the [default classification level](https://support.atlassian.com/security-and-access-policies/docs/what-is-a-default-classification-level/)  for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
+     * Update space default classification level
+     */
+    async putSpaceDefaultClassificationLevelRaw(requestParameters: PutSpaceDefaultClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putSpaceDefaultClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -876,10 +996,9 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the whiteboard.
-     * Update whiteboard classification level
+     * Creates request options for putWhiteboardClassificationLevel without sending the request
      */
-    async putWhiteboardClassificationLevelRaw(requestParameters: PutWhiteboardClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putWhiteboardClassificationLevelRequestOpts(requestParameters: PutWhiteboardClassificationLevelOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -912,13 +1031,22 @@ export class ClassificationLevelApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/classification-level`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['putWhiteboardClassificationLevelRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the [classification level](https://developer.atlassian.com/cloud/admin/dlp/rest/intro/#Classification%20level) for a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Permission to access the Confluence site (\'Can use\' global permission) and permission to edit the whiteboard.
+     * Update whiteboard classification level
+     */
+    async putWhiteboardClassificationLevelRaw(requestParameters: PutWhiteboardClassificationLevelOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putWhiteboardClassificationLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

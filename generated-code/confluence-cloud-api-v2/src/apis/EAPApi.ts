@@ -68,10 +68,9 @@ export interface SetSpaceRoleAssignmentsRequest {
 export class EAPApi extends runtime.BaseAPI {
 
     /**
-     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
-     * Create space
+     * Creates request options for createSpace without sending the request
      */
-    async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
+    async createSpaceRequestOpts(requestParameters: CreateSpaceOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createSpaceRequest'] == null) {
             throw new runtime.RequiredError(
                 'createSpaceRequest',
@@ -96,13 +95,22 @@ export class EAPApi extends runtime.BaseAPI {
 
         let urlPath = `/spaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createSpaceRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Create space
+     */
+    async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
+        const requestOptions = await this.createSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -117,10 +125,9 @@ export class EAPApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
-     * Get available space permissions
+     * Creates request options for getAvailableSpacePermissions without sending the request
      */
-    async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+    async getAvailableSpacePermissionsRequestOpts(requestParameters: GetAvailableSpacePermissionsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['cursor'] != null) {
@@ -144,12 +151,21 @@ export class EAPApi extends runtime.BaseAPI {
 
         let urlPath = `/space-permissions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Get available space permissions
+     */
+    async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+        const requestOptions = await this.getAvailableSpacePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -164,10 +180,9 @@ export class EAPApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the available space roles.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
-     * Get available space roles
+     * Creates request options for getAvailableSpaceRoles without sending the request
      */
-    async getAvailableSpaceRolesRaw(requestParameters: GetAvailableSpaceRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRole>> {
+    async getAvailableSpaceRolesRequestOpts(requestParameters: GetAvailableSpaceRolesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['spaceId'] != null) {
@@ -207,12 +222,21 @@ export class EAPApi extends runtime.BaseAPI {
 
         let urlPath = `/space-roles`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the available space roles.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site; if requesting a certain space\'s roles, permission to view the space.
+     * Get available space roles
+     */
+    async getAvailableSpaceRolesRaw(requestParameters: GetAvailableSpaceRolesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRole>> {
+        const requestOptions = await this.getAvailableSpaceRolesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -227,10 +251,9 @@ export class EAPApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role assignments.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
-     * Get space role assignments
+     * Creates request options for getSpaceRoleAssignments without sending the request
      */
-    async getSpaceRoleAssignmentsRaw(requestParameters: GetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
+    async getSpaceRoleAssignmentsRequestOpts(requestParameters: GetSpaceRoleAssignmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -278,12 +301,21 @@ export class EAPApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/role-assignments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the space role assignments.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Get space role assignments
+     */
+    async getSpaceRoleAssignmentsRaw(requestParameters: GetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
+        const requestOptions = await this.getSpaceRoleAssignmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -298,10 +330,9 @@ export class EAPApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the space role by ID.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
-     * Get space role by ID
+     * Creates request options for getSpaceRolesById without sending the request
      */
-    async getSpaceRolesByIdRaw(requestParameters: GetSpaceRolesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceRolesById200Response>> {
+    async getSpaceRolesByIdRequestOpts(requestParameters: GetSpaceRolesByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -325,12 +356,21 @@ export class EAPApi extends runtime.BaseAPI {
         let urlPath = `/space-roles/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the space role by ID.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Get space role by ID
+     */
+    async getSpaceRolesByIdRaw(requestParameters: GetSpaceRolesByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceRolesById200Response>> {
+        const requestOptions = await this.getSpaceRolesByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -345,10 +385,9 @@ export class EAPApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets space role assignments as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
-     * Set space role assignments
+     * Creates request options for setSpaceRoleAssignments without sending the request
      */
-    async setSpaceRoleAssignmentsRaw(requestParameters: SetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
+    async setSpaceRoleAssignmentsRequestOpts(requestParameters: SetSpaceRoleAssignmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -381,13 +420,22 @@ export class EAPApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/role-assignments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setSpaceRoleAssignmentsRequestInner'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets space role assignments as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to manage roles in the space.
+     * Set space role assignments
+     */
+    async setSpaceRoleAssignmentsRaw(requestParameters: SetSpaceRoleAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceRoleAssignment>> {
+        const requestOptions = await this.setSpaceRoleAssignmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

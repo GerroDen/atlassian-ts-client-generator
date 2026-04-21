@@ -36,10 +36,9 @@ export interface GetSpacePermissionsAssignmentsRequest {
 export class SpacePermissionsApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
-     * Get available space permissions
+     * Creates request options for getAvailableSpacePermissions without sending the request
      */
-    async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+    async getAvailableSpacePermissionsRequestOpts(requestParameters: GetAvailableSpacePermissionsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['cursor'] != null) {
@@ -63,12 +62,21 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/space-permissions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the available space permissions.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site.
+     * Get available space permissions
+     */
+    async getAvailableSpacePermissionsRaw(requestParameters: GetAvailableSpacePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermission>> {
+        const requestOptions = await this.getAvailableSpacePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -83,10 +91,9 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns space permission assignments for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
-     * Get space permissions assignments
+     * Creates request options for getSpacePermissionsAssignments without sending the request
      */
-    async getSpacePermissionsAssignmentsRaw(requestParameters: GetSpacePermissionsAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermissionAssignment>> {
+    async getSpacePermissionsAssignmentsRequestOpts(requestParameters: GetSpacePermissionsAssignmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -118,12 +125,21 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/permissions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns space permission assignments for a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Get space permissions assignments
+     */
+    async getSpacePermissionsAssignmentsRaw(requestParameters: GetSpacePermissionsAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpacePermissionAssignment>> {
+        const requestOptions = await this.getSpacePermissionsAssignmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

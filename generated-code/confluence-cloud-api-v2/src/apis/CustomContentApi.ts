@@ -92,10 +92,9 @@ export interface UpdateCustomContentOperationRequest {
 export class CustomContentApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
-     * Create custom content
+     * Creates request options for createCustomContent without sending the request
      */
-    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+    async createCustomContentRequestOpts(requestParameters: CreateCustomContentOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createCustomContentRequest'] == null) {
             throw new runtime.RequiredError(
                 'createCustomContentRequest',
@@ -120,13 +119,22 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         let urlPath = `/custom-content`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createCustomContentRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new custom content in the given space, page, blogpost or other custom content.  Only one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is required in the request body. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create custom content in the space.
+     * Create custom content
+     */
+    async createCustomContentRaw(requestParameters: CreateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        const requestOptions = await this.createCustomContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -141,10 +149,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a custom content by id.  Deleting a custom content will either move it to the trash or permanently delete it (purge it), depending on the apiSupport. To permanently delete a **trashed** custom content, the endpoint must be called with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space. Permission to administer the space (if attempting to purge).
-     * Delete custom content
+     * Creates request options for deleteCustomContent without sending the request
      */
-    async deleteCustomContentRaw(requestParameters: DeleteCustomContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCustomContentRequestOpts(requestParameters: DeleteCustomContentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -172,12 +179,21 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a custom content by id.  Deleting a custom content will either move it to the trash or permanently delete it (purge it), depending on the apiSupport. To permanently delete a **trashed** custom content, the endpoint must be called with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete custom content in the space. Permission to administer the space (if attempting to purge).
+     * Delete custom content
+     */
+    async deleteCustomContentRaw(requestParameters: DeleteCustomContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCustomContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -191,10 +207,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
-     * Get custom content by id
+     * Creates request options for getCustomContentById without sending the request
      */
-    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+    async getCustomContentByIdRequestOpts(requestParameters: GetCustomContentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -250,12 +265,21 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific piece of custom content.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
+     * Get custom content by id
+     */
+    async getCustomContentByIdRaw(requestParameters: GetCustomContentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        const requestOptions = await this.getCustomContentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -270,10 +294,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all custom content for a given type. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
-     * Get custom content by type
+     * Creates request options for getCustomContentByType without sending the request
      */
-    async getCustomContentByTypeRaw(requestParameters: GetCustomContentByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+    async getCustomContentByTypeRequestOpts(requestParameters: GetCustomContentByTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['type'] == null) {
             throw new runtime.RequiredError(
                 'type',
@@ -324,12 +347,21 @@ export class CustomContentApi extends runtime.BaseAPI {
 
         let urlPath = `/custom-content`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all custom content for a given type. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content, and the corresponding space (if different from the container).
+     * Get custom content by type
+     */
+    async getCustomContentByTypeRaw(requestParameters: GetCustomContentByTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+        const requestOptions = await this.getCustomContentByTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -344,10 +376,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all custom content for a given type within a given blogpost. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content (blog post), and the corresponding space.
-     * Get custom content by type in blog post
+     * Creates request options for getCustomContentByTypeInBlogPost without sending the request
      */
-    async getCustomContentByTypeInBlogPostRaw(requestParameters: GetCustomContentByTypeInBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+    async getCustomContentByTypeInBlogPostRequestOpts(requestParameters: GetCustomContentByTypeInBlogPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -398,12 +429,21 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/custom-content`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all custom content for a given type within a given blogpost. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content (blog post), and the corresponding space.
+     * Get custom content by type in blog post
+     */
+    async getCustomContentByTypeInBlogPostRaw(requestParameters: GetCustomContentByTypeInBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+        const requestOptions = await this.getCustomContentByTypeInBlogPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -418,10 +458,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all custom content for a given type within a given page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content (page), and the corresponding space.
-     * Get custom content by type in page
+     * Creates request options for getCustomContentByTypeInPage without sending the request
      */
-    async getCustomContentByTypeInPageRaw(requestParameters: GetCustomContentByTypeInPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+    async getCustomContentByTypeInPageRequestOpts(requestParameters: GetCustomContentByTypeInPageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -472,12 +511,21 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/custom-content`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all custom content for a given type within a given page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content, the container of the custom content (page), and the corresponding space.
+     * Get custom content by type in page
+     */
+    async getCustomContentByTypeInPageRaw(requestParameters: GetCustomContentByTypeInPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+        const requestOptions = await this.getCustomContentByTypeInPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -492,10 +540,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all custom content for a given type within a given space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and the corresponding space.
-     * Get custom content by type in space
+     * Creates request options for getCustomContentByTypeInSpace without sending the request
      */
-    async getCustomContentByTypeInSpaceRaw(requestParameters: GetCustomContentByTypeInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+    async getCustomContentByTypeInSpaceRequestOpts(requestParameters: GetCustomContentByTypeInSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -542,12 +589,21 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/custom-content`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all custom content for a given type within a given space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and the corresponding space.
+     * Get custom content by type in space
+     */
+    async getCustomContentByTypeInSpaceRaw(requestParameters: GetCustomContentByTypeInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContent>> {
+        const requestOptions = await this.getCustomContentByTypeInSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -562,10 +618,9 @@ export class CustomContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a custom content by id. At most one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. Note that if `spaceId` is specified, it must be the same as the `spaceId` used for creating the custom content as moving custom content to a different space is not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
-     * Update custom content
+     * Creates request options for updateCustomContent without sending the request
      */
-    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+    async updateCustomContentRequestOpts(requestParameters: UpdateCustomContentOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -598,13 +653,22 @@ export class CustomContentApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateCustomContentRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a custom content by id. At most one of `spaceId`, `pageId`, `blogPostId`, or `customContentId` is allowed in the request body. Note that if `spaceId` is specified, it must be the same as the `spaceId` used for creating the custom content as moving custom content to a different space is not supported.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to update custom content in the space.
+     * Update custom content
+     */
+    async updateCustomContentRaw(requestParameters: UpdateCustomContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateCustomContent201Response>> {
+        const requestOptions = await this.updateCustomContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

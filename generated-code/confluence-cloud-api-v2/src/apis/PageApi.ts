@@ -104,10 +104,9 @@ export interface UpdatePageTitleOperationRequest {
 export class PageApi extends runtime.BaseAPI {
 
     /**
-     * Creates a page in the space.  Pages are created as published by default unless specified as a draft in the status field. If creating a published page, the title must be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a page in the space.
-     * Create page
+     * Creates request options for createPage without sending the request
      */
-    async createPageRaw(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+    async createPageRequestOpts(requestParameters: CreatePageOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createPageRequest'] == null) {
             throw new runtime.RequiredError(
                 'createPageRequest',
@@ -144,13 +143,22 @@ export class PageApi extends runtime.BaseAPI {
 
         let urlPath = `/pages`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createPageRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a page in the space.  Pages are created as published by default unless specified as a draft in the status field. If creating a published page, the title must be specified.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a page in the space.
+     * Create page
+     */
+    async createPageRaw(requestParameters: CreatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+        const requestOptions = await this.createPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -165,10 +173,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a page by id.  By default this will delete pages that are non-drafts. To delete a page that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a page moves the page to the trash, where it can be restored later. To permanently delete a page (or \"purge\" it), the endpoint must be called on a **trashed** page with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to delete pages in the space. Permission to administer the space (if attempting to purge).
-     * Delete page
+     * Creates request options for deletePage without sending the request
      */
-    async deletePageRaw(requestParameters: DeletePageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePageRequestOpts(requestParameters: DeletePageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -200,12 +207,21 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a page by id.  By default this will delete pages that are non-drafts. To delete a page that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a page moves the page to the trash, where it can be restored later. To permanently delete a page (or \"purge\" it), the endpoint must be called on a **trashed** page with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to delete pages in the space. Permission to administer the space (if attempting to purge).
+     * Delete page
+     */
+    async deletePageRaw(requestParameters: DeletePageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -219,10 +235,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the pages of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get pages for label
+     * Creates request options for getLabelPages without sending the request
      */
-    async getLabelPagesRaw(requestParameters: GetLabelPagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+    async getLabelPagesRequestOpts(requestParameters: GetLabelPagesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -266,12 +281,21 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/labels/{id}/pages`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the pages of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get pages for label
+     */
+    async getLabelPagesRaw(requestParameters: GetLabelPagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+        const requestOptions = await this.getLabelPagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -286,10 +310,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
-     * Get page by id
+     * Creates request options for getPageById without sending the request
      */
-    async getPageByIdRaw(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+    async getPageByIdRequestOpts(requestParameters: GetPageByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -369,12 +392,21 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
+     * Get page by id
+     */
+    async getPageByIdRaw(requestParameters: GetPageByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+        const requestOptions = await this.getPageByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -389,10 +421,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all pages. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only pages that the user has permission to view will be returned.
-     * Get pages
+     * Creates request options for getPages without sending the request
      */
-    async getPagesRaw(requestParameters: GetPagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+    async getPagesRequestOpts(requestParameters: GetPagesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['id'] != null) {
@@ -444,12 +475,21 @@ export class PageApi extends runtime.BaseAPI {
 
         let urlPath = `/pages`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all pages. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only pages that the user has permission to view will be returned.
+     * Get pages
+     */
+    async getPagesRaw(requestParameters: GetPagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+        const requestOptions = await this.getPagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -464,10 +504,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all pages in a space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space. Only pages that the user has permission to view will be returned.
-     * Get pages in space
+     * Creates request options for getPagesInSpace without sending the request
      */
-    async getPagesInSpaceRaw(requestParameters: GetPagesInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+    async getPagesInSpaceRequestOpts(requestParameters: GetPagesInSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -519,12 +558,21 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/pages`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all pages in a space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space. Only pages that the user has permission to view will be returned.
+     * Get pages in space
+     */
+    async getPagesInSpaceRaw(requestParameters: GetPagesInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPage>> {
+        const requestOptions = await this.getPagesInSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -539,10 +587,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a page by id.  When the \"current\" version is updated, the provided body content is considered as the latest version. This latest body content will be attempted to be merged into the draft version through a content reconciliation algorithm. If two versions are significantly diverged,  the latest provided content may entirely override what was previously in the draft.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
-     * Update page
+     * Creates request options for updatePage without sending the request
      */
-    async updatePageRaw(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+    async updatePageRequestOpts(requestParameters: UpdatePageOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -575,13 +622,22 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updatePageRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a page by id.  When the \"current\" version is updated, the provided body content is considered as the latest version. This latest body content will be attempted to be merged into the draft version through a content reconciliation algorithm. If two versions are significantly diverged,  the latest provided content may entirely override what was previously in the draft.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update page
+     */
+    async updatePageRaw(requestParameters: UpdatePageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+        const requestOptions = await this.updatePageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -596,10 +652,9 @@ export class PageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the title of a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
-     * Update page title
+     * Creates request options for updatePageTitle without sending the request
      */
-    async updatePageTitleRaw(requestParameters: UpdatePageTitleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+    async updatePageTitleRequestOpts(requestParameters: UpdatePageTitleOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -632,13 +687,22 @@ export class PageApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/title`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updatePageTitleRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the title of a specified page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space. Permission to update pages in the space.
+     * Update page title
+     */
+    async updatePageTitleRaw(requestParameters: UpdatePageTitleOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreatePage200Response>> {
+        const requestOptions = await this.updatePageTitleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

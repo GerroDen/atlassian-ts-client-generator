@@ -41,10 +41,9 @@ export interface GetFolderByIdRequest {
 export class FolderApi extends runtime.BaseAPI {
 
     /**
-     * Creates a folder in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a folder in the space.
-     * Create folder
+     * Creates request options for createFolder without sending the request
      */
-    async createFolderRaw(requestParameters: CreateFolderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFolder200Response>> {
+    async createFolderRequestOpts(requestParameters: CreateFolderOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createFolderRequest'] == null) {
             throw new runtime.RequiredError(
                 'createFolderRequest',
@@ -69,13 +68,22 @@ export class FolderApi extends runtime.BaseAPI {
 
         let urlPath = `/folders`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createFolderRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a folder in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a folder in the space.
+     * Create folder
+     */
+    async createFolderRaw(requestParameters: CreateFolderOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFolder200Response>> {
+        const requestOptions = await this.createFolderRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -90,10 +98,9 @@ export class FolderApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a folder by id.  Deleting a folder moves the folder to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space. Permission to delete folders in the space.
-     * Delete folder
+     * Creates request options for deleteFolder without sending the request
      */
-    async deleteFolderRaw(requestParameters: DeleteFolderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteFolderRequestOpts(requestParameters: DeleteFolderRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -117,12 +124,21 @@ export class FolderApi extends runtime.BaseAPI {
         let urlPath = `/folders/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a folder by id.  Deleting a folder moves the folder to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space. Permission to delete folders in the space.
+     * Delete folder
+     */
+    async deleteFolderRaw(requestParameters: DeleteFolderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteFolderRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -136,10 +152,9 @@ export class FolderApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
-     * Get folder by id
+     * Creates request options for getFolderById without sending the request
      */
-    async getFolderByIdRaw(requestParameters: GetFolderByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFolder200Response>> {
+    async getFolderByIdRequestOpts(requestParameters: GetFolderByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -179,12 +194,21 @@ export class FolderApi extends runtime.BaseAPI {
         let urlPath = `/folders/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
+     * Get folder by id
+     */
+    async getFolderByIdRaw(requestParameters: GetFolderByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFolder200Response>> {
+        const requestOptions = await this.getFolderByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

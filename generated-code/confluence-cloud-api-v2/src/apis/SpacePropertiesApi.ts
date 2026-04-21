@@ -55,10 +55,9 @@ export interface UpdateSpacePropertyByIdRequest {
 export class SpacePropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new space property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
-     * Create space property in space
+     * Creates request options for createSpaceProperty without sending the request
      */
-    async createSpacePropertyRaw(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+    async createSpacePropertyRequestOpts(requestParameters: CreateSpacePropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceId'] == null) {
             throw new runtime.RequiredError(
                 'spaceId',
@@ -91,13 +90,22 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{space-id}/properties`;
         urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['spacePropertyCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new space property.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
+     * Create space property in space
+     */
+    async createSpacePropertyRaw(requestParameters: CreateSpacePropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+        const requestOptions = await this.createSpacePropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -112,10 +120,9 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
-     * Delete space property by id
+     * Creates request options for deleteSpacePropertyById without sending the request
      */
-    async deleteSpacePropertyByIdRaw(requestParameters: DeleteSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSpacePropertyByIdRequestOpts(requestParameters: DeleteSpacePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceId'] == null) {
             throw new runtime.RequiredError(
                 'spaceId',
@@ -147,12 +154,21 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
+     * Delete space property by id
+     */
+    async deleteSpacePropertyByIdRaw(requestParameters: DeleteSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSpacePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -166,10 +182,9 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all properties for the given space. Space properties are a key-value storage associated with a space. The limit parameter specifies the maximum number of results returned in a single response. Use the `link` response header to paginate through additional results.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space.
-     * Get space properties in space
+     * Creates request options for getSpaceProperties without sending the request
      */
-    async getSpacePropertiesRaw(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceProperty>> {
+    async getSpacePropertiesRequestOpts(requestParameters: GetSpacePropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceId'] == null) {
             throw new runtime.RequiredError(
                 'spaceId',
@@ -205,12 +220,21 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{space-id}/properties`;
         urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all properties for the given space. Space properties are a key-value storage associated with a space. The limit parameter specifies the maximum number of results returned in a single response. Use the `link` response header to paginate through additional results.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space.
+     * Get space properties in space
+     */
+    async getSpacePropertiesRaw(requestParameters: GetSpacePropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpaceProperty>> {
+        const requestOptions = await this.getSpacePropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -225,10 +249,9 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space.
-     * Get space property by id
+     * Creates request options for getSpacePropertyById without sending the request
      */
-    async getSpacePropertyByIdRaw(requestParameters: GetSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+    async getSpacePropertyByIdRequestOpts(requestParameters: GetSpacePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceId'] == null) {
             throw new runtime.RequiredError(
                 'spaceId',
@@ -260,12 +283,21 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'View\' permission for the space.
+     * Get space property by id
+     */
+    async getSpacePropertyByIdRaw(requestParameters: GetSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+        const requestOptions = await this.getSpacePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -280,10 +312,9 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
-     * Update space property by id
+     * Creates request options for updateSpacePropertyById without sending the request
      */
-    async updateSpacePropertyByIdRaw(requestParameters: UpdateSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+    async updateSpacePropertyByIdRequestOpts(requestParameters: UpdateSpacePropertyByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceId'] == null) {
             throw new runtime.RequiredError(
                 'spaceId',
@@ -324,13 +355,22 @@ export class SpacePropertiesApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"space-id"}}`, encodeURIComponent(String(requestParameters['spaceId'])));
         urlPath = urlPath.replace(`{${"property-id"}}`, encodeURIComponent(String(requestParameters['propertyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['spacePropertyUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a space property by its id.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and \'Admin\' permission for the space.
+     * Update space property by id
+     */
+    async updateSpacePropertyByIdRaw(requestParameters: UpdateSpacePropertyByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceProperty>> {
+        const requestOptions = await this.updateSpacePropertyByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

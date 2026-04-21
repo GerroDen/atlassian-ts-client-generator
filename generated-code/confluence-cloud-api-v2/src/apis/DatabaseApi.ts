@@ -42,10 +42,9 @@ export interface GetDatabaseByIdRequest {
 export class DatabaseApi extends runtime.BaseAPI {
 
     /**
-     * Creates a database in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a database in the space.
-     * Create database
+     * Creates request options for createDatabase without sending the request
      */
-    async createDatabaseRaw(requestParameters: CreateDatabaseOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateDatabase200Response>> {
+    async createDatabaseRequestOpts(requestParameters: CreateDatabaseOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createDatabaseRequest'] == null) {
             throw new runtime.RequiredError(
                 'createDatabaseRequest',
@@ -74,13 +73,22 @@ export class DatabaseApi extends runtime.BaseAPI {
 
         let urlPath = `/databases`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createDatabaseRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a database in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a database in the space.
+     * Create database
+     */
+    async createDatabaseRaw(requestParameters: CreateDatabaseOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateDatabase200Response>> {
+        const requestOptions = await this.createDatabaseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -95,10 +103,9 @@ export class DatabaseApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a database by id.  Deleting a database moves the database to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space. Permission to delete databases in the space.
-     * Delete database
+     * Creates request options for deleteDatabase without sending the request
      */
-    async deleteDatabaseRaw(requestParameters: DeleteDatabaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDatabaseRequestOpts(requestParameters: DeleteDatabaseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -122,12 +129,21 @@ export class DatabaseApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a database by id.  Deleting a database moves the database to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space. Permission to delete databases in the space.
+     * Delete database
+     */
+    async deleteDatabaseRaw(requestParameters: DeleteDatabaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDatabaseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -141,10 +157,9 @@ export class DatabaseApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
-     * Get database by id
+     * Creates request options for getDatabaseById without sending the request
      */
-    async getDatabaseByIdRaw(requestParameters: GetDatabaseByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateDatabase200Response>> {
+    async getDatabaseByIdRequestOpts(requestParameters: GetDatabaseByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -184,12 +199,21 @@ export class DatabaseApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
+     * Get database by id
+     */
+    async getDatabaseByIdRaw(requestParameters: GetDatabaseByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateDatabase200Response>> {
+        const requestOptions = await this.getDatabaseByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

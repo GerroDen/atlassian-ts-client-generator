@@ -43,10 +43,9 @@ export interface PutForgeAppPropertyRequest {
 export class AppPropertiesApi extends runtime.BaseAPI {
 
     /**
-     * Deletes a Forge app property. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
-     * Deletes a Forge app property.
+     * Creates request options for deleteForgeAppProperty without sending the request
      */
-    async deleteForgeAppPropertyRaw(requestParameters: DeleteForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteForgeAppPropertyRequestOpts(requestParameters: DeleteForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -67,12 +66,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a Forge app property. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
+     * Deletes a Forge app property.
+     */
+    async deleteForgeAppPropertyRaw(requestParameters: DeleteForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -86,10 +94,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets Forge app properties. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
-     * Get Forge app properties.
+     * Creates request options for getForgeAppProperties without sending the request
      */
-    async getForgeAppPropertiesRaw(requestParameters: GetForgeAppPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAppProperty>> {
+    async getForgeAppPropertiesRequestOpts(requestParameters: GetForgeAppPropertiesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['cursor'] != null) {
@@ -110,12 +117,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
 
         let urlPath = `/app/properties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets Forge app properties. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
+     * Get Forge app properties.
+     */
+    async getForgeAppPropertiesRaw(requestParameters: GetForgeAppPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAppProperty>> {
+        const requestOptions = await this.getForgeAppPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -130,10 +146,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a Forge app property by property key. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
-     * Get a Forge app property by key.
+     * Creates request options for getForgeAppProperty without sending the request
      */
-    async getForgeAppPropertyRaw(requestParameters: GetForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppProperty200Response>> {
+    async getForgeAppPropertyRequestOpts(requestParameters: GetForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -154,12 +169,21 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a Forge app property by property key. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
+     * Get a Forge app property by key.
+     */
+    async getForgeAppPropertyRaw(requestParameters: GetForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForgeAppProperty200Response>> {
+        const requestOptions = await this.getForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -174,10 +198,9 @@ export class AppPropertiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates a Forge app property. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
-     * Create or update a Forge app property.
+     * Creates request options for putForgeAppProperty without sending the request
      */
-    async putForgeAppPropertyRaw(requestParameters: PutForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putForgeAppPropertyRequestOpts(requestParameters: PutForgeAppPropertyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['propertyKey'] == null) {
             throw new runtime.RequiredError(
                 'propertyKey',
@@ -207,13 +230,22 @@ export class AppPropertiesApi extends runtime.BaseAPI {
         let urlPath = `/app/properties/{propertyKey}`;
         urlPath = urlPath.replace(`{${"propertyKey"}}`, encodeURIComponent(String(requestParameters['propertyKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates a Forge app property. This API can only be accessed using **[asApp()](https://developer.atlassian.com/platform/forge/apis-reference/fetch-api-product.requestconfluence/#method-signature)** requests from Forge.
+     * Create or update a Forge app property.
+     */
+    async putForgeAppPropertyRaw(requestParameters: PutForgeAppPropertyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putForgeAppPropertyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

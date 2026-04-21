@@ -109,10 +109,9 @@ export interface GetPageVersionsRequest {
 export class VersionApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves version details for the specified attachment and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
-     * Get version details for attachment version
+     * Creates request options for getAttachmentVersionDetails without sending the request
      */
-    async getAttachmentVersionDetailsRaw(requestParameters: GetAttachmentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getAttachmentVersionDetailsRequestOpts(requestParameters: GetAttachmentVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['attachmentId'] == null) {
             throw new runtime.RequiredError(
                 'attachmentId',
@@ -144,12 +143,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachment-id"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified attachment and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment.
+     * Get version details for attachment version
+     */
+    async getAttachmentVersionDetailsRaw(requestParameters: GetAttachmentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getAttachmentVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -164,10 +172,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions of specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
-     * Get attachment versions
+     * Creates request options for getAttachmentVersions without sending the request
      */
-    async getAttachmentVersionsRaw(requestParameters: GetAttachmentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion>> {
+    async getAttachmentVersionsRequestOpts(requestParameters: GetAttachmentVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -203,12 +210,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}/versions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the versions of specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
+     * Get attachment versions
+     */
+    async getAttachmentVersionsRaw(requestParameters: GetAttachmentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion>> {
+        const requestOptions = await this.getAttachmentVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -223,10 +239,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves version details for the specified blog post and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
-     * Get version details for blog post version
+     * Creates request options for getBlogPostVersionDetails without sending the request
      */
-    async getBlogPostVersionDetailsRaw(requestParameters: GetBlogPostVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getBlogPostVersionDetailsRequestOpts(requestParameters: GetBlogPostVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['blogpostId'] == null) {
             throw new runtime.RequiredError(
                 'blogpostId',
@@ -258,12 +273,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"blogpost-id"}}`, encodeURIComponent(String(requestParameters['blogpostId'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified blog post and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post.
+     * Get version details for blog post version
+     */
+    async getBlogPostVersionDetailsRaw(requestParameters: GetBlogPostVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getBlogPostVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -278,10 +302,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions of specific blog post.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
-     * Get blog post versions
+     * Creates request options for getBlogPostVersions without sending the request
      */
-    async getBlogPostVersionsRaw(requestParameters: GetBlogPostVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion1>> {
+    async getBlogPostVersionsRequestOpts(requestParameters: GetBlogPostVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -321,12 +344,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/versions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the versions of specific blog post.   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
+     * Get blog post versions
+     */
+    async getBlogPostVersionsRaw(requestParameters: GetBlogPostVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion1>> {
+        const requestOptions = await this.getBlogPostVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -341,10 +373,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves version details for the specified custom content and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get version details for custom content version
+     * Creates request options for getCustomContentVersionDetails without sending the request
      */
-    async getCustomContentVersionDetailsRaw(requestParameters: GetCustomContentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getCustomContentVersionDetailsRequestOpts(requestParameters: GetCustomContentVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -376,12 +407,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified custom content and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get version details for custom content version
+     */
+    async getCustomContentVersionDetailsRaw(requestParameters: GetCustomContentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getCustomContentVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -396,10 +436,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions of specific custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding page and space.
-     * Get custom content versions
+     * Creates request options for getCustomContentVersions without sending the request
      */
-    async getCustomContentVersionsRaw(requestParameters: GetCustomContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion3>> {
+    async getCustomContentVersionsRequestOpts(requestParameters: GetCustomContentVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['customContentId'] == null) {
             throw new runtime.RequiredError(
                 'customContentId',
@@ -439,12 +478,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{custom-content-id}/versions`;
         urlPath = urlPath.replace(`{${"custom-content-id"}}`, encodeURIComponent(String(requestParameters['customContentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the versions of specific custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding page and space.
+     * Get custom content versions
+     */
+    async getCustomContentVersionsRaw(requestParameters: GetCustomContentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion3>> {
+        const requestOptions = await this.getCustomContentVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -459,10 +507,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves version details for the specified footer comment version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
-     * Get version details for footer comment version
+     * Creates request options for getFooterCommentVersionDetails without sending the request
      */
-    async getFooterCommentVersionDetailsRaw(requestParameters: GetFooterCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getFooterCommentVersionDetailsRequestOpts(requestParameters: GetFooterCommentVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -494,12 +541,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified footer comment version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
+     * Get version details for footer comment version
+     */
+    async getFooterCommentVersionDetailsRaw(requestParameters: GetFooterCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getFooterCommentVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -514,10 +570,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the versions of the specified footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
-     * Get footer comment versions
+     * Creates request options for getFooterCommentVersions without sending the request
      */
-    async getFooterCommentVersionsRaw(requestParameters: GetFooterCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
+    async getFooterCommentVersionsRequestOpts(requestParameters: GetFooterCommentVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -557,12 +612,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{id}/versions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the versions of the specified footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
+     * Get footer comment versions
+     */
+    async getFooterCommentVersionsRaw(requestParameters: GetFooterCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
+        const requestOptions = await this.getFooterCommentVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -577,10 +641,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves version details for the specified inline comment version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
-     * Get version details for inline comment version
+     * Creates request options for getInlineCommentVersionDetails without sending the request
      */
-    async getInlineCommentVersionDetailsRaw(requestParameters: GetInlineCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getInlineCommentVersionDetailsRequestOpts(requestParameters: GetInlineCommentVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -612,12 +675,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified inline comment version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
+     * Get version details for inline comment version
+     */
+    async getInlineCommentVersionDetailsRaw(requestParameters: GetInlineCommentVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getInlineCommentVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -632,10 +704,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the versions of the specified inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
-     * Get inline comment versions
+     * Creates request options for getInlineCommentVersions without sending the request
      */
-    async getInlineCommentVersionsRaw(requestParameters: GetInlineCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
+    async getInlineCommentVersionsRequestOpts(requestParameters: GetInlineCommentVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -675,12 +746,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{id}/versions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the versions of the specified inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blog post and its corresponding space.
+     * Get inline comment versions
+     */
+    async getInlineCommentVersionsRaw(requestParameters: GetInlineCommentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion4>> {
+        const requestOptions = await this.getInlineCommentVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -695,10 +775,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves version details for the specified page and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
-     * Get version details for page version
+     * Creates request options for getPageVersionDetails without sending the request
      */
-    async getPageVersionDetailsRaw(requestParameters: GetPageVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+    async getPageVersionDetailsRequestOpts(requestParameters: GetPageVersionDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -730,12 +809,21 @@ export class VersionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"page-id"}}`, encodeURIComponent(String(requestParameters['pageId'])));
         urlPath = urlPath.replace(`{${"version-number"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves version details for the specified page and version number.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page.
+     * Get version details for page version
+     */
+    async getPageVersionDetailsRaw(requestParameters: GetPageVersionDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DetailedVersion>> {
+        const requestOptions = await this.getPageVersionDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -750,10 +838,9 @@ export class VersionApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the versions of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
-     * Get page versions
+     * Creates request options for getPageVersions without sending the request
      */
-    async getPageVersionsRaw(requestParameters: GetPageVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion2>> {
+    async getPageVersionsRequestOpts(requestParameters: GetPageVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -793,12 +880,21 @@ export class VersionApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/versions`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the versions of specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the page and its corresponding space.
+     * Get page versions
+     */
+    async getPageVersionsRaw(requestParameters: GetPageVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultVersion2>> {
+        const requestOptions = await this.getPageVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

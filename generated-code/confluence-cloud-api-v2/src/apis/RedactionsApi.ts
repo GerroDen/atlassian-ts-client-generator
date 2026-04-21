@@ -35,10 +35,9 @@ export interface PostRedactPageOperationRequest {
 export class RedactionsApi extends runtime.BaseAPI {
 
     /**
-     * Redacts sensitive content in a Confluence blog post by replacing specified text ranges with redaction markers.  Each redaction in the response includes a unique UUID for restoration (except code block redactions).  The response metadata items maintain the same order as the input redaction pointers, and completely  overlapping redactions are merged into a single redaction with one UUID.  **Note**: This endpoint requires **Atlassian Guard Premium**. 
-     * Redact Content in a Confluence Blog Post
+     * Creates request options for postRedactBlog without sending the request
      */
-    async postRedactBlogRaw(requestParameters: PostRedactBlogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionResponse>> {
+    async postRedactBlogRequestOpts(requestParameters: PostRedactBlogRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -64,13 +63,22 @@ export class RedactionsApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/redact`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postRedactPageRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Redacts sensitive content in a Confluence blog post by replacing specified text ranges with redaction markers.  Each redaction in the response includes a unique UUID for restoration (except code block redactions).  The response metadata items maintain the same order as the input redaction pointers, and completely  overlapping redactions are merged into a single redaction with one UUID.  **Note**: This endpoint requires **Atlassian Guard Premium**. 
+     * Redact Content in a Confluence Blog Post
+     */
+    async postRedactBlogRaw(requestParameters: PostRedactBlogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionResponse>> {
+        const requestOptions = await this.postRedactBlogRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -85,10 +93,9 @@ export class RedactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Redacts sensitive content in a Confluence page by replacing specified text ranges with redaction markers.  Each redaction in the response includes a unique UUID for restoration (except code block redactions).  The response metadata items maintain the same order as the input redaction pointers, and completely  overlapping redactions are merged into a single redaction with one UUID.  **Note**: This endpoint requires **Atlassian Guard Premium**. 
-     * Redact Content in a Confluence Page
+     * Creates request options for postRedactPage without sending the request
      */
-    async postRedactPageRaw(requestParameters: PostRedactPageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionResponse>> {
+    async postRedactPageRequestOpts(requestParameters: PostRedactPageOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -114,13 +121,22 @@ export class RedactionsApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/redact`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['postRedactPageRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Redacts sensitive content in a Confluence page by replacing specified text ranges with redaction markers.  Each redaction in the response includes a unique UUID for restoration (except code block redactions).  The response metadata items maintain the same order as the input redaction pointers, and completely  overlapping redactions are merged into a single redaction with one UUID.  **Note**: This endpoint requires **Atlassian Guard Premium**. 
+     * Redact Content in a Confluence Page
+     */
+    async postRedactPageRaw(requestParameters: PostRedactPageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RedactionResponse>> {
+        const requestOptions = await this.postRedactPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

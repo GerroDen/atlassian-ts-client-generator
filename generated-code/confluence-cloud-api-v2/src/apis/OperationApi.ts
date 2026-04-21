@@ -68,10 +68,9 @@ export interface GetWhiteboardOperationsRequest {
 export class OperationApi extends runtime.BaseAPI {
 
     /**
-     * Returns the permitted operations on specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the attachment and its corresponding space.
-     * Get permitted operations for attachment
+     * Creates request options for getAttachmentOperations without sending the request
      */
-    async getAttachmentOperationsRaw(requestParameters: GetAttachmentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getAttachmentOperationsRequestOpts(requestParameters: GetAttachmentOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -95,12 +94,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the attachment and its corresponding space.
+     * Get permitted operations for attachment
+     */
+    async getAttachmentOperationsRaw(requestParameters: GetAttachmentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getAttachmentOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -115,10 +123,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the blog post and its corresponding space.
-     * Get permitted operations for blog post
+     * Creates request options for getBlogPostOperations without sending the request
      */
-    async getBlogPostOperationsRaw(requestParameters: GetBlogPostOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getBlogPostOperationsRequestOpts(requestParameters: GetBlogPostOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -142,12 +149,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the blog post and its corresponding space.
+     * Get permitted operations for blog post
+     */
+    async getBlogPostOperationsRaw(requestParameters: GetBlogPostOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getBlogPostOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -162,10 +178,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the custom content and its corresponding space.
-     * Get permitted operations for custom content
+     * Creates request options for getCustomContentOperations without sending the request
      */
-    async getCustomContentOperationsRaw(requestParameters: GetCustomContentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getCustomContentOperationsRequestOpts(requestParameters: GetCustomContentOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,12 +204,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific custom content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the custom content and its corresponding space.
+     * Get permitted operations for custom content
+     */
+    async getCustomContentOperationsRaw(requestParameters: GetCustomContentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getCustomContentOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -209,10 +233,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
-     * Get permitted operations for a database
+     * Creates request options for getDatabaseOperations without sending the request
      */
-    async getDatabaseOperationsRaw(requestParameters: GetDatabaseOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getDatabaseOperationsRequestOpts(requestParameters: GetDatabaseOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -236,12 +259,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/databases/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific database.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the database and its corresponding space.
+     * Get permitted operations for a database
+     */
+    async getDatabaseOperationsRaw(requestParameters: GetDatabaseOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getDatabaseOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -256,10 +288,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
-     * Get permitted operations for a folder
+     * Creates request options for getFolderOperations without sending the request
      */
-    async getFolderOperationsRaw(requestParameters: GetFolderOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getFolderOperationsRequestOpts(requestParameters: GetFolderOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -283,12 +314,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/folders/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific folder.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the folder and its corresponding space.
+     * Get permitted operations for a folder
+     */
+    async getFolderOperationsRaw(requestParameters: GetFolderOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getFolderOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -303,10 +343,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the footer comment and its corresponding space.
-     * Get permitted operations for footer comment
+     * Creates request options for getFooterCommentOperations without sending the request
      */
-    async getFooterCommentOperationsRaw(requestParameters: GetFooterCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getFooterCommentOperationsRequestOpts(requestParameters: GetFooterCommentOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -330,12 +369,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific footer comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the footer comment and its corresponding space.
+     * Get permitted operations for footer comment
+     */
+    async getFooterCommentOperationsRaw(requestParameters: GetFooterCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getFooterCommentOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -350,10 +398,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the inline comment and its corresponding space.
-     * Get permitted operations for inline comment
+     * Creates request options for getInlineCommentOperations without sending the request
      */
-    async getInlineCommentOperationsRaw(requestParameters: GetInlineCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getInlineCommentOperationsRequestOpts(requestParameters: GetInlineCommentOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -377,12 +424,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific inline comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the inline comment and its corresponding space.
+     * Get permitted operations for inline comment
+     */
+    async getInlineCommentOperationsRaw(requestParameters: GetInlineCommentOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getInlineCommentOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -397,10 +453,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the page and its corresponding space.
-     * Get permitted operations for page
+     * Creates request options for getPageOperations without sending the request
      */
-    async getPageOperationsRaw(requestParameters: GetPageOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getPageOperationsRequestOpts(requestParameters: GetPageOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -424,12 +479,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific page.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the page and its corresponding space.
+     * Get permitted operations for page
+     */
+    async getPageOperationsRaw(requestParameters: GetPageOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getPageOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -444,10 +508,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
-     * Get permitted operations for a Smart Link in the content tree
+     * Creates request options for getSmartLinkOperations without sending the request
      */
-    async getSmartLinkOperationsRaw(requestParameters: GetSmartLinkOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getSmartLinkOperationsRequestOpts(requestParameters: GetSmartLinkOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -471,12 +534,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/embeds/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
+     * Get permitted operations for a Smart Link in the content tree
+     */
+    async getSmartLinkOperationsRaw(requestParameters: GetSmartLinkOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getSmartLinkOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -491,10 +563,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space.
-     * Get permitted operations for space
+     * Creates request options for getSpaceOperations without sending the request
      */
-    async getSpaceOperationsRaw(requestParameters: GetSpaceOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getSpaceOperationsRequestOpts(requestParameters: GetSpaceOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -518,12 +589,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space.
+     * Get permitted operations for space
+     */
+    async getSpaceOperationsRaw(requestParameters: GetSpaceOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getSpaceOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -538,10 +618,9 @@ export class OperationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the permitted operations on specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
-     * Get permitted operations for a whiteboard
+     * Creates request options for getWhiteboardOperations without sending the request
      */
-    async getWhiteboardOperationsRaw(requestParameters: GetWhiteboardOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+    async getWhiteboardOperationsRequestOpts(requestParameters: GetWhiteboardOperationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -565,12 +644,21 @@ export class OperationApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}/operations`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the permitted operations on specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
+     * Get permitted operations for a whiteboard
+     */
+    async getWhiteboardOperationsRaw(requestParameters: GetWhiteboardOperationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermittedOperationsResponse>> {
+        const requestOptions = await this.getWhiteboardOperationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

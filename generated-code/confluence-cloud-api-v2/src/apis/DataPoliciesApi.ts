@@ -34,10 +34,9 @@ export interface GetDataPolicySpacesRequest {
 export class DataPoliciesApi extends runtime.BaseAPI {
 
     /**
-     * Returns data policy metadata for the workspace.  **[Permissions](#permissions) required:** Only apps can make this request. Permission to access the Confluence site (\'Can use\' global permission).
-     * Get data policy metadata for the workspace
+     * Creates request options for getDataPolicyMetadata without sending the request
      */
-    async getDataPolicyMetadataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DataPolicyMetadata>> {
+    async getDataPolicyMetadataRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -53,12 +52,21 @@ export class DataPoliciesApi extends runtime.BaseAPI {
 
         let urlPath = `/data-policies/metadata`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns data policy metadata for the workspace.  **[Permissions](#permissions) required:** Only apps can make this request. Permission to access the Confluence site (\'Can use\' global permission).
+     * Get data policy metadata for the workspace
+     */
+    async getDataPolicyMetadataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DataPolicyMetadata>> {
+        const requestOptions = await this.getDataPolicyMetadataRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -73,10 +81,9 @@ export class DataPoliciesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all spaces. The results will be sorted by id ascending. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Only apps can make this request. Permission to access the Confluence site (\'Can use\' global permission). Only spaces that the app has permission to view will be returned.
-     * Get spaces with data policies
+     * Creates request options for getDataPolicySpaces without sending the request
      */
-    async getDataPolicySpacesRaw(requestParameters: GetDataPolicySpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultDataPolicySpace>> {
+    async getDataPolicySpacesRequestOpts(requestParameters: GetDataPolicySpacesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -112,12 +119,21 @@ export class DataPoliciesApi extends runtime.BaseAPI {
 
         let urlPath = `/data-policies/spaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all spaces. The results will be sorted by id ascending. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Only apps can make this request. Permission to access the Confluence site (\'Can use\' global permission). Only spaces that the app has permission to view will be returned.
+     * Get spaces with data policies
+     */
+    async getDataPolicySpacesRaw(requestParameters: GetDataPolicySpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultDataPolicySpace>> {
+        const requestOptions = await this.getDataPolicySpacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

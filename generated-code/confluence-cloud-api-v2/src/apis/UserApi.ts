@@ -39,10 +39,9 @@ export interface InviteByEmailRequest {
 export class UserApi extends runtime.BaseAPI {
 
     /**
-     * Returns the list of emails from the input list that do not have access to site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Check site access for a list of emails
+     * Creates request options for checkAccessByEmail without sending the request
      */
-    async checkAccessByEmailRaw(requestParameters: CheckAccessByEmailOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CheckAccessByEmail200Response>> {
+    async checkAccessByEmailRequestOpts(requestParameters: CheckAccessByEmailOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['checkAccessByEmailRequest'] == null) {
             throw new runtime.RequiredError(
                 'checkAccessByEmailRequest',
@@ -67,13 +66,22 @@ export class UserApi extends runtime.BaseAPI {
 
         let urlPath = `/user/access/check-access-by-email`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['checkAccessByEmailRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of emails from the input list that do not have access to site.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Check site access for a list of emails
+     */
+    async checkAccessByEmailRaw(requestParameters: CheckAccessByEmailOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CheckAccessByEmail200Response>> {
+        const requestOptions = await this.checkAccessByEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -88,10 +96,9 @@ export class UserApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns user details for the ids provided in the request body.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). The user must be able to view user profiles in the Confluence site.
-     * Create bulk user lookup using ids
+     * Creates request options for createBulkUserLookup without sending the request
      */
-    async createBulkUserLookupRaw(requestParameters: CreateBulkUserLookupOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultUser>> {
+    async createBulkUserLookupRequestOpts(requestParameters: CreateBulkUserLookupOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createBulkUserLookupRequest'] == null) {
             throw new runtime.RequiredError(
                 'createBulkUserLookupRequest',
@@ -116,13 +123,22 @@ export class UserApi extends runtime.BaseAPI {
 
         let urlPath = `/users-bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createBulkUserLookupRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns user details for the ids provided in the request body.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). The user must be able to view user profiles in the Confluence site.
+     * Create bulk user lookup using ids
+     */
+    async createBulkUserLookupRaw(requestParameters: CreateBulkUserLookupOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultUser>> {
+        const requestOptions = await this.createBulkUserLookupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -137,10 +153,9 @@ export class UserApi extends runtime.BaseAPI {
     }
 
     /**
-     * Invite a list of emails to the site.  Ignores all invalid emails and no action is taken for the emails that already have access to the site.  <b>NOTE:</b> This API is asynchronous and may take some time to complete.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Invite a list of emails to the site
+     * Creates request options for inviteByEmail without sending the request
      */
-    async inviteByEmailRaw(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async inviteByEmailRequestOpts(requestParameters: InviteByEmailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['checkAccessByEmailRequest'] == null) {
             throw new runtime.RequiredError(
                 'checkAccessByEmailRequest',
@@ -165,13 +180,22 @@ export class UserApi extends runtime.BaseAPI {
 
         let urlPath = `/user/access/invite-by-email`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['checkAccessByEmailRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Invite a list of emails to the site.  Ignores all invalid emails and no action is taken for the emails that already have access to the site.  <b>NOTE:</b> This API is asynchronous and may take some time to complete.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Invite a list of emails to the site
+     */
+    async inviteByEmailRaw(requestParameters: InviteByEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.inviteByEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

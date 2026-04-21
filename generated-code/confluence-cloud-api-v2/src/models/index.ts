@@ -585,7 +585,7 @@ export interface AttachmentVersion {
 export interface BlogPostBodyWrite {
     /**
      * Type of content representation used for the value field.
-     * @type {string}
+     * @type {BlogPostBodyWriteRepresentationEnum}
      * @memberof BlogPostBodyWrite
      */
     representation?: BlogPostBodyWriteRepresentationEnum;
@@ -1402,7 +1402,7 @@ export type ClassificationLevelStatus = typeof ClassificationLevelStatus[keyof t
 export interface CommentBodyWrite {
     /**
      * Type of content representation used for the value field.
-     * @type {string}
+     * @type {CommentBodyWriteRepresentationEnum}
      * @memberof CommentBodyWrite
      */
     representation?: CommentBodyWriteRepresentationEnum;
@@ -1815,7 +1815,7 @@ export interface CreateBlogPostRequest {
     spaceId: string;
     /**
      * The status of the blog post, specifies if the blog post will be created as a new blog post or a draft
-     * @type {string}
+     * @type {CreateBlogPostRequestStatusEnum}
      * @memberof CreateBlogPostRequest
      */
     status?: CreateBlogPostRequestStatusEnum;
@@ -2001,7 +2001,7 @@ export interface CreateCustomContentRequest {
     type: string;
     /**
      * The status of the custom content. Defaults to `current` when status not provided.
-     * @type {string}
+     * @type {CreateCustomContentRequestStatusEnum}
      * @memberof CreateCustomContentRequest
      */
     status?: CreateCustomContentRequestStatusEnum;
@@ -2742,7 +2742,7 @@ export interface CreatePageRequest {
     spaceId: string;
     /**
      * The status of the page, published or draft.
-     * @type {string}
+     * @type {CreatePageRequestStatusEnum}
      * @memberof CreatePageRequest
      */
     status?: CreatePageRequestStatusEnum;
@@ -2768,7 +2768,7 @@ export interface CreatePageRequest {
     body?: CreatePageRequestBody;
     /**
      * The subtype of the page. Provide the subtype live to create a live doc or no subtype to create a page.
-     * @type {string}
+     * @type {CreatePageRequestSubtypeEnum}
      * @memberof CreatePageRequest
      */
     subtype?: CreatePageRequestSubtypeEnum;
@@ -3234,13 +3234,13 @@ export interface CreateWhiteboardRequest {
     parentId?: string;
     /**
      * Providing a template key will add that template to the new whiteboard.
-     * @type {string}
+     * @type {CreateWhiteboardRequestTemplateKeyEnum}
      * @memberof CreateWhiteboardRequest
      */
     templateKey?: CreateWhiteboardRequestTemplateKeyEnum;
     /**
      * If templateKey is provided, locale will decide which language the template will be created with. If locale is omitted, the user's locale will be used.
-     * @type {string}
+     * @type {CreateWhiteboardRequestLocaleEnum}
      * @memberof CreateWhiteboardRequest
      */
     locale?: CreateWhiteboardRequestLocaleEnum;
@@ -3426,7 +3426,7 @@ export interface CustomContentBodySingle {
 export interface CustomContentBodyWrite {
     /**
      * Type of content representation used for the value field.
-     * @type {string}
+     * @type {CustomContentBodyWriteRepresentationEnum}
      * @memberof CustomContentBodyWrite
      */
     representation?: CustomContentBodyWriteRepresentationEnum;
@@ -4600,7 +4600,7 @@ export interface GetSpaceById200Response {
 export interface GetSpaceRoleMode200Response {
     /**
      * The space role mode.
-     * @type {string}
+     * @type {GetSpaceRoleMode200ResponseModeEnum}
      * @memberof GetSpaceRoleMode200Response
      */
     mode?: GetSpaceRoleMode200ResponseModeEnum;
@@ -5809,7 +5809,7 @@ export interface OptionalFieldMeta {
 export interface PageBodyWrite {
     /**
      * Type of content representation used for the value field.
-     * @type {string}
+     * @type {PageBodyWriteRepresentationEnum}
      * @memberof PageBodyWrite
      */
     representation?: PageBodyWriteRepresentationEnum;
@@ -6295,7 +6295,7 @@ export interface PermittedOperationsResponse {
 export interface PostPageClassificationLevelRequest {
     /**
      * Status of the content.
-     * @type {string}
+     * @type {PostPageClassificationLevelRequestStatusEnum}
      * @memberof PostPageClassificationLevelRequest
      */
     status: PostPageClassificationLevelRequestStatusEnum;
@@ -6376,7 +6376,7 @@ export interface PostRedactPageRequestBody {
 export interface PostWhiteboardClassificationLevelRequest {
     /**
      * Status of the content.
-     * @type {string}
+     * @type {PostWhiteboardClassificationLevelRequestStatusEnum}
      * @memberof PostWhiteboardClassificationLevelRequest
      */
     status: PostWhiteboardClassificationLevelRequestStatusEnum;
@@ -6465,7 +6465,7 @@ export interface PutPageClassificationLevelRequest {
     id: string;
     /**
      * Status of the content.
-     * @type {string}
+     * @type {PutPageClassificationLevelRequestStatusEnum}
      * @memberof PutPageClassificationLevelRequest
      */
     status: PutPageClassificationLevelRequestStatusEnum;
@@ -6508,7 +6508,7 @@ export interface PutWhiteboardClassificationLevelRequest {
     id: string;
     /**
      * Status of the content.
-     * @type {string}
+     * @type {PutWhiteboardClassificationLevelRequestStatusEnum}
      * @memberof PutWhiteboardClassificationLevelRequest
      */
     status: PutWhiteboardClassificationLevelRequestStatusEnum;
@@ -6992,13 +6992,13 @@ export interface SpacePermissionAssignment {
 export interface SpacePermissionAssignmentOperation {
     /**
      * The type of operation.
-     * @type {string}
+     * @type {SpacePermissionAssignmentOperationKeyEnum}
      * @memberof SpacePermissionAssignmentOperation
      */
     key?: SpacePermissionAssignmentOperationKeyEnum;
     /**
      * The type of entity the operation type targets.
-     * @type {string}
+     * @type {SpacePermissionAssignmentOperationTargetTypeEnum}
      * @memberof SpacePermissionAssignmentOperation
      */
     targetType?: SpacePermissionAssignmentOperationTargetTypeEnum;
@@ -7053,7 +7053,7 @@ export type SpacePermissionAssignmentOperationTargetTypeEnum = typeof SpacePermi
 export interface SpacePermissionAssignmentPrincipal {
     /**
      * 
-     * @type {string}
+     * @type {SpacePermissionAssignmentPrincipalTypeEnum}
      * @memberof SpacePermissionAssignmentPrincipal
      */
     type?: SpacePermissionAssignmentPrincipalTypeEnum;
@@ -7481,7 +7481,7 @@ export interface Task {
     blogPostId?: string;
     /**
      * Status of the task.
-     * @type {string}
+     * @type {TaskStatusEnum}
      * @memberof Task
      */
     status?: TaskStatusEnum;
@@ -7581,7 +7581,7 @@ export interface UpdateBlogPostRequest {
      * 
      * Note, if you change the status of a blog post from 'current' to 'draft' and it has an existing draft, the existing draft will be deleted in favor of the updated draft.
      * Additionally, this endpoint can be used to restore a 'trashed' or 'deleted' blog post to 'current' status. For restoration, blog post contents will not be updated and only the blog post status will be changed.
-     * @type {string}
+     * @type {UpdateBlogPostRequestStatusEnum}
      * @memberof UpdateBlogPostRequest
      */
     status: UpdateBlogPostRequestStatusEnum;
@@ -7671,7 +7671,7 @@ export interface UpdateCustomContentRequest {
     type: string;
     /**
      * The status of the custom content.
-     * @type {string}
+     * @type {UpdateCustomContentRequestStatusEnum}
      * @memberof UpdateCustomContentRequest
      */
     status: UpdateCustomContentRequestStatusEnum;
@@ -7854,7 +7854,7 @@ export interface UpdatePageRequest {
      * 
      * Note, if you change the status of a page from 'current' to 'draft' and it has an existing draft, the existing draft will be deleted in favor of the updated draft.
      * Additionally, this endpoint can be used to restore a 'trashed' or 'deleted' page to 'current' status. For restoration, page contents will not be updated and only the page status will be changed.
-     * @type {string}
+     * @type {UpdatePageRequestStatusEnum}
      * @memberof UpdatePageRequest
      */
     status: UpdatePageRequestStatusEnum;
@@ -7942,7 +7942,7 @@ export interface UpdatePageRequestVersion {
 export interface UpdatePageTitleRequest {
     /**
      * The status of the page, current or draft.
-     * @type {string}
+     * @type {UpdatePageTitleRequestStatusEnum}
      * @memberof UpdatePageTitleRequest
      */
     status: UpdatePageTitleRequestStatusEnum;
@@ -8078,7 +8078,7 @@ export interface UpdateTaskRequest {
     blogPostId?: string;
     /**
      * Status of the task.
-     * @type {string}
+     * @type {UpdateTaskRequestStatusEnum}
      * @memberof UpdateTaskRequest
      */
     status: UpdateTaskRequestStatusEnum;

@@ -42,10 +42,9 @@ export interface GetWhiteboardByIdRequest {
 export class WhiteboardApi extends runtime.BaseAPI {
 
     /**
-     * Creates a whiteboard in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a whiteboard in the space.
-     * Create whiteboard
+     * Creates request options for createWhiteboard without sending the request
      */
-    async createWhiteboardRaw(requestParameters: CreateWhiteboardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateWhiteboard200Response>> {
+    async createWhiteboardRequestOpts(requestParameters: CreateWhiteboardOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createWhiteboardRequest'] == null) {
             throw new runtime.RequiredError(
                 'createWhiteboardRequest',
@@ -74,13 +73,22 @@ export class WhiteboardApi extends runtime.BaseAPI {
 
         let urlPath = `/whiteboards`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createWhiteboardRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a whiteboard in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a whiteboard in the space.
+     * Create whiteboard
+     */
+    async createWhiteboardRaw(requestParameters: CreateWhiteboardOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateWhiteboard200Response>> {
+        const requestOptions = await this.createWhiteboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -95,10 +103,9 @@ export class WhiteboardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a whiteboard by id.  Deleting a whiteboard moves the whiteboard to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space. Permission to delete whiteboards in the space.
-     * Delete whiteboard
+     * Creates request options for deleteWhiteboard without sending the request
      */
-    async deleteWhiteboardRaw(requestParameters: DeleteWhiteboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWhiteboardRequestOpts(requestParameters: DeleteWhiteboardRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -122,12 +129,21 @@ export class WhiteboardApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a whiteboard by id.  Deleting a whiteboard moves the whiteboard to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space. Permission to delete whiteboards in the space.
+     * Delete whiteboard
+     */
+    async deleteWhiteboardRaw(requestParameters: DeleteWhiteboardRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWhiteboardRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -141,10 +157,9 @@ export class WhiteboardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
-     * Get whiteboard by id
+     * Creates request options for getWhiteboardById without sending the request
      */
-    async getWhiteboardByIdRaw(requestParameters: GetWhiteboardByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateWhiteboard200Response>> {
+    async getWhiteboardByIdRequestOpts(requestParameters: GetWhiteboardByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -184,12 +199,21 @@ export class WhiteboardApi extends runtime.BaseAPI {
         let urlPath = `/whiteboards/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific whiteboard.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the whiteboard and its corresponding space.
+     * Get whiteboard by id
+     */
+    async getWhiteboardByIdRaw(requestParameters: GetWhiteboardByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateWhiteboard200Response>> {
+        const requestOptions = await this.getWhiteboardByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

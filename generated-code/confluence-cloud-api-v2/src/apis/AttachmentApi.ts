@@ -88,10 +88,9 @@ export interface GetPageAttachmentsRequest {
 export class AttachmentApi extends runtime.BaseAPI {
 
     /**
-     * Delete an attachment by id.  Deleting an attachment moves the attachment to the trash, where it can be restored later. To permanently delete an attachment (or \"purge\" it), the endpoint must be called on a **trashed** attachment with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space. Permission to administer the space (if attempting to purge).
-     * Delete attachment
+     * Creates request options for deleteAttachment without sending the request
      */
-    async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAttachmentRequestOpts(requestParameters: DeleteAttachmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -119,12 +118,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete an attachment by id.  Deleting an attachment moves the attachment to the trash, where it can be restored later. To permanently delete an attachment (or \"purge\" it), the endpoint must be called on a **trashed** attachment with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment. Permission to delete attachments in the space. Permission to administer the space (if attempting to purge).
+     * Delete attachment
+     */
+    async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAttachmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -138,10 +146,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
-     * Get attachment by id
+     * Creates request options for getAttachmentById without sending the request
      */
-    async getAttachmentByIdRaw(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAttachmentById200Response>> {
+    async getAttachmentByIdRequestOpts(requestParameters: GetAttachmentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -193,12 +200,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific attachment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment\'s container.
+     * Get attachment by id
+     */
+    async getAttachmentByIdRaw(requestParameters: GetAttachmentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAttachmentById200Response>> {
+        const requestOptions = await this.getAttachmentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -213,10 +229,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all attachments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment.
-     * Get attachments
+     * Creates request options for getAttachments without sending the request
      */
-    async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+    async getAttachmentsRequestOpts(requestParameters: GetAttachmentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['sort'] != null) {
@@ -256,12 +271,21 @@ export class AttachmentApi extends runtime.BaseAPI {
 
         let urlPath = `/attachments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all attachments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the container of the attachment.
+     * Get attachments
+     */
+    async getAttachmentsRaw(requestParameters: GetAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const requestOptions = await this.getAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -276,10 +300,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get attachments for blog post
+     * Creates request options for getBlogpostAttachments without sending the request
      */
-    async getBlogpostAttachmentsRaw(requestParameters: GetBlogpostAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+    async getBlogpostAttachmentsRequestOpts(requestParameters: GetBlogpostAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -327,12 +350,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/attachments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the attachments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get attachments for blog post
+     */
+    async getBlogpostAttachmentsRaw(requestParameters: GetBlogpostAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const requestOptions = await this.getBlogpostAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -347,10 +379,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments of specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the custom content and its corresponding space.
-     * Get attachments for custom content
+     * Creates request options for getCustomContentAttachments without sending the request
      */
-    async getCustomContentAttachmentsRaw(requestParameters: GetCustomContentAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+    async getCustomContentAttachmentsRequestOpts(requestParameters: GetCustomContentAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -398,12 +429,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}/attachments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the attachments of specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the custom content and its corresponding space.
+     * Get attachments for custom content
+     */
+    async getCustomContentAttachmentsRaw(requestParameters: GetCustomContentAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const requestOptions = await this.getCustomContentAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -418,10 +458,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
-     * Get attachments for label
+     * Creates request options for getLabelAttachments without sending the request
      */
-    async getLabelAttachmentsRaw(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+    async getLabelAttachmentsRequestOpts(requestParameters: GetLabelAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -457,12 +496,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/labels/{id}/attachments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the attachments of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding space.
+     * Get attachments for label
+     */
+    async getLabelAttachmentsRaw(requestParameters: GetLabelAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const requestOptions = await this.getLabelAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -477,10 +525,9 @@ export class AttachmentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the attachments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get attachments for page
+     * Creates request options for getPageAttachments without sending the request
      */
-    async getPageAttachmentsRaw(requestParameters: GetPageAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+    async getPageAttachmentsRequestOpts(requestParameters: GetPageAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -528,12 +575,21 @@ export class AttachmentApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/attachments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the attachments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get attachments for page
+     */
+    async getPageAttachmentsRaw(requestParameters: GetPageAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachment>> {
+        const requestOptions = await this.getPageAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -81,10 +81,9 @@ export interface GetSpaceLabelsRequest {
 export class LabelApi extends runtime.BaseAPI {
 
     /**
-     * Returns the labels of specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the attachment and its corresponding space. Only labels that the user has permission to view will be returned.
-     * Get labels for attachment
+     * Creates request options for getAttachmentLabels without sending the request
      */
-    async getAttachmentLabelsRaw(requestParameters: GetAttachmentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getAttachmentLabelsRequestOpts(requestParameters: GetAttachmentLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -124,12 +123,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels of specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the parent content of the attachment and its corresponding space. Only labels that the user has permission to view will be returned.
+     * Get labels for attachment
+     */
+    async getAttachmentLabelsRaw(requestParameters: GetAttachmentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getAttachmentLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -144,10 +152,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space. Only labels that the user has permission to view will be returned.
-     * Get labels for blog post
+     * Creates request options for getBlogPostLabels without sending the request
      */
-    async getBlogPostLabelsRaw(requestParameters: GetBlogPostLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getBlogPostLabelsRequestOpts(requestParameters: GetBlogPostLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -187,12 +194,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space. Only labels that the user has permission to view will be returned.
+     * Get labels for blog post
+     */
+    async getBlogPostLabelsRaw(requestParameters: GetBlogPostLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getBlogPostLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -207,10 +223,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels for a specific piece of custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding space. Only labels that the user has permission to view will be returned.
-     * Get labels for custom content
+     * Creates request options for getCustomContentLabels without sending the request
      */
-    async getCustomContentLabelsRaw(requestParameters: GetCustomContentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getCustomContentLabelsRequestOpts(requestParameters: GetCustomContentLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -250,12 +265,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels for a specific piece of custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding space. Only labels that the user has permission to view will be returned.
+     * Get labels for custom content
+     */
+    async getCustomContentLabelsRaw(requestParameters: GetCustomContentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getCustomContentLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -270,10 +294,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all labels. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only labels that the user has permission to view will be returned.
-     * Get labels
+     * Creates request options for getLabels without sending the request
      */
-    async getLabelsRaw(requestParameters: GetLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getLabelsRequestOpts(requestParameters: GetLabelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['labelId'] != null) {
@@ -309,12 +332,21 @@ export class LabelApi extends runtime.BaseAPI {
 
         let urlPath = `/labels`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all labels. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only labels that the user has permission to view will be returned.
+     * Get labels
+     */
+    async getLabelsRaw(requestParameters: GetLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -329,10 +361,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space. Only labels that the user has permission to view will be returned.
-     * Get labels for page
+     * Creates request options for getPageLabels without sending the request
      */
-    async getPageLabelsRaw(requestParameters: GetPageLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getPageLabelsRequestOpts(requestParameters: GetPageLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -372,12 +403,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space. Only labels that the user has permission to view will be returned.
+     * Get labels for page
+     */
+    async getPageLabelsRaw(requestParameters: GetPageLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getPageLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -392,10 +432,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels of space content (pages, blogposts etc). The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space. Only labels that the user has permission to view will be returned.
-     * Get labels for space content
+     * Creates request options for getSpaceContentLabels without sending the request
      */
-    async getSpaceContentLabelsRaw(requestParameters: GetSpaceContentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getSpaceContentLabelsRequestOpts(requestParameters: GetSpaceContentLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -435,12 +474,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/content/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels of space content (pages, blogposts etc). The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space. Only labels that the user has permission to view will be returned.
+     * Get labels for space content
+     */
+    async getSpaceContentLabelsRaw(requestParameters: GetSpaceContentLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getSpaceContentLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -455,10 +503,9 @@ export class LabelApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the labels of specific space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space. Only labels that the user has permission to view will be returned.
-     * Get labels for space
+     * Creates request options for getSpaceLabels without sending the request
      */
-    async getSpaceLabelsRaw(requestParameters: GetSpaceLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+    async getSpaceLabelsRequestOpts(requestParameters: GetSpaceLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -498,12 +545,21 @@ export class LabelApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/labels`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the labels of specific space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space. Only labels that the user has permission to view will be returned.
+     * Get labels for space
+     */
+    async getSpaceLabelsRaw(requestParameters: GetSpaceLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultLabel>> {
+        const requestOptions = await this.getSpaceLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

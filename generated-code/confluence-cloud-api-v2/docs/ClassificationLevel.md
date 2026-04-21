@@ -8,12 +8,12 @@ A unit of [data classification](https://support.atlassian.com/security-and-acces
 Name | Type
 ------------ | -------------
 `id` | string
-`status` | [ClassificationLevelStatus](.md)
+`status` | [ClassificationLevelStatus](ClassificationLevelStatus.md)
 `order` | number
 `name` | string
 `description` | string
 `guideline` | string
-`color` | [ClassificationLevelColor](.md)
+`color` | [ClassificationLevelColor](ClassificationLevelColor.md)
 
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

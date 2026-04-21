@@ -93,10 +93,9 @@ export interface UpdateBlogPostOperationRequest {
 export class BlogPostApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new blog post in the space specified by the spaceId.  By default this will create the blog post as a non-draft, unless the status is specified as draft. If creating a non-draft, the title must not be empty.  Currently only supports the storage representation specified in the body.representation enums below
-     * Create blog post
+     * Creates request options for createBlogPost without sending the request
      */
-    async createBlogPostRaw(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+    async createBlogPostRequestOpts(requestParameters: CreateBlogPostOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createBlogPostRequest'] == null) {
             throw new runtime.RequiredError(
                 'createBlogPostRequest',
@@ -125,13 +124,22 @@ export class BlogPostApi extends runtime.BaseAPI {
 
         let urlPath = `/blogposts`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createBlogPostRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new blog post in the space specified by the spaceId.  By default this will create the blog post as a non-draft, unless the status is specified as draft. If creating a non-draft, the title must not be empty.  Currently only supports the storage representation specified in the body.representation enums below
+     * Create blog post
+     */
+    async createBlogPostRaw(requestParameters: CreateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        const requestOptions = await this.createBlogPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -146,10 +154,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a blog post by id.  By default this will delete blog posts that are non-drafts. To delete a blog post that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a blog post that is not a draft moves the blog post to the trash, where it can be restored later. To permanently delete a blog post (or \"purge\" it), the endpoint must be called on a **trashed** blog post with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space. Permission to administer the space (if attempting to purge).
-     * Delete blog post
+     * Creates request options for deleteBlogPost without sending the request
      */
-    async deleteBlogPostRaw(requestParameters: DeleteBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBlogPostRequestOpts(requestParameters: DeleteBlogPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -181,12 +188,21 @@ export class BlogPostApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a blog post by id.  By default this will delete blog posts that are non-drafts. To delete a blog post that is a draft, the endpoint must be called on a  draft with the following param `draft=true`. Discarded drafts are not sent to the trash and are permanently deleted.  Deleting a blog post that is not a draft moves the blog post to the trash, where it can be restored later. To permanently delete a blog post (or \"purge\" it), the endpoint must be called on a **trashed** blog post with the following param `purge=true`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to delete blog posts in the space. Permission to administer the space (if attempting to purge).
+     * Delete blog post
+     */
+    async deleteBlogPostRaw(requestParameters: DeleteBlogPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBlogPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -200,10 +216,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
-     * Get blog post by id
+     * Creates request options for getBlogPostById without sending the request
      */
-    async getBlogPostByIdRaw(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+    async getBlogPostByIdRequestOpts(requestParameters: GetBlogPostByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -279,12 +294,21 @@ export class BlogPostApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific blog post.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space.
+     * Get blog post by id
+     */
+    async getBlogPostByIdRaw(requestParameters: GetBlogPostByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        const requestOptions = await this.getBlogPostByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -299,10 +323,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all blog posts. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only blog posts that the user has permission to view will be returned.
-     * Get blog posts
+     * Creates request options for getBlogPosts without sending the request
      */
-    async getBlogPostsRaw(requestParameters: GetBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+    async getBlogPostsRequestOpts(requestParameters: GetBlogPostsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['id'] != null) {
@@ -350,12 +373,21 @@ export class BlogPostApi extends runtime.BaseAPI {
 
         let urlPath = `/blogposts`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all blog posts. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only blog posts that the user has permission to view will be returned.
+     * Get blog posts
+     */
+    async getBlogPostsRaw(requestParameters: GetBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+        const requestOptions = await this.getBlogPostsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -370,10 +402,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all blog posts in a space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and view the space. Only blog posts that the user has permission to view will be returned.
-     * Get blog posts in space
+     * Creates request options for getBlogPostsInSpace without sending the request
      */
-    async getBlogPostsInSpaceRaw(requestParameters: GetBlogPostsInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+    async getBlogPostsInSpaceRequestOpts(requestParameters: GetBlogPostsInSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -421,12 +452,21 @@ export class BlogPostApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}/blogposts`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all blog posts in a space. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) and view the space. Only blog posts that the user has permission to view will be returned.
+     * Get blog posts in space
+     */
+    async getBlogPostsInSpaceRaw(requestParameters: GetBlogPostsInSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+        const requestOptions = await this.getBlogPostsInSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -441,10 +481,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the blogposts of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get blog posts for label
+     * Creates request options for getLabelBlogPosts without sending the request
      */
-    async getLabelBlogPostsRaw(requestParameters: GetLabelBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+    async getLabelBlogPostsRequestOpts(requestParameters: GetLabelBlogPostsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -488,12 +527,21 @@ export class BlogPostApi extends runtime.BaseAPI {
         let urlPath = `/labels/{id}/blogposts`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the blogposts of specified label. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get blog posts for label
+     */
+    async getLabelBlogPostsRaw(requestParameters: GetLabelBlogPostsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPost>> {
+        const requestOptions = await this.getLabelBlogPostsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -508,10 +556,9 @@ export class BlogPostApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to update blog posts in the space.
-     * Update blog post
+     * Creates request options for updateBlogPost without sending the request
      */
-    async updateBlogPostRaw(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+    async updateBlogPostRequestOpts(requestParameters: UpdateBlogPostOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -544,13 +591,22 @@ export class BlogPostApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateBlogPostRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a blog post by id.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the blog post and its corresponding space. Permission to update blog posts in the space.
+     * Update blog post
+     */
+    async updateBlogPostRaw(requestParameters: UpdateBlogPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateBlogPost200Response>> {
+        const requestOptions = await this.updateBlogPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -29,10 +29,9 @@ export interface EnableAdminKeyOperationRequest {
 export class AdminKeyApi extends runtime.BaseAPI {
 
     /**
-     * Disables admin key access for the calling user within the site.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
-     * Disable Admin Key
+     * Creates request options for disableAdminKey without sending the request
      */
-    async disableAdminKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async disableAdminKeyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -40,12 +39,21 @@ export class AdminKeyApi extends runtime.BaseAPI {
 
         let urlPath = `/admin-key`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Disables admin key access for the calling user within the site.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
+     * Disable Admin Key
+     */
+    async disableAdminKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.disableAdminKeyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -59,10 +67,9 @@ export class AdminKeyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables admin key access for the calling user within the site. If an admin key already exists for the user, a new one will be issued with an updated expiration time.  **Note:** The `durationInMinutes` field within the request body is optional. If the request body is empty or if the `durationInMinutes` is set to 0 minutes, a new admin key will be issued to the calling user with a default duration of 10 minutes.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
-     * Enable Admin Key
+     * Creates request options for enableAdminKey without sending the request
      */
-    async enableAdminKeyRaw(requestParameters: EnableAdminKeyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminKeyResponse>> {
+    async enableAdminKeyRequestOpts(requestParameters: EnableAdminKeyOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -72,13 +79,22 @@ export class AdminKeyApi extends runtime.BaseAPI {
 
         let urlPath = `/admin-key`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['enableAdminKeyRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables admin key access for the calling user within the site. If an admin key already exists for the user, a new one will be issued with an updated expiration time.  **Note:** The `durationInMinutes` field within the request body is optional. If the request body is empty or if the `durationInMinutes` is set to 0 minutes, a new admin key will be issued to the calling user with a default duration of 10 minutes.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
+     * Enable Admin Key
+     */
+    async enableAdminKeyRaw(requestParameters: EnableAdminKeyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminKeyResponse>> {
+        const requestOptions = await this.enableAdminKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -93,10 +109,9 @@ export class AdminKeyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns information about the admin key if one is currently enabled for the calling user within the site.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
-     * Get Admin Key
+     * Creates request options for getAdminKey without sending the request
      */
-    async getAdminKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminKeyResponse>> {
+    async getAdminKeyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -104,12 +119,21 @@ export class AdminKeyApi extends runtime.BaseAPI {
 
         let urlPath = `/admin-key`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about the admin key if one is currently enabled for the calling user within the site.  **[Permissions](https://support.atlassian.com/user-management/docs/give-users-admin-permissions/#Centralized-user-management-content) required**: User must be an organization or site admin.
+     * Get Admin Key
+     */
+    async getAdminKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminKeyResponse>> {
+        const requestOptions = await this.getAdminKeyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

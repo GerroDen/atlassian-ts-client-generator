@@ -41,10 +41,9 @@ export interface GetSmartLinkByIdRequest {
 export class SmartLinkApi extends runtime.BaseAPI {
 
     /**
-     * Creates a Smart Link in the content tree in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a Smart Link in the content tree in the space.
-     * Create Smart Link in the content tree
+     * Creates request options for createSmartLink without sending the request
      */
-    async createSmartLinkRaw(requestParameters: CreateSmartLinkOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSmartLink200Response>> {
+    async createSmartLinkRequestOpts(requestParameters: CreateSmartLinkOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createSmartLinkRequest'] == null) {
             throw new runtime.RequiredError(
                 'createSmartLinkRequest',
@@ -69,13 +68,22 @@ export class SmartLinkApi extends runtime.BaseAPI {
 
         let urlPath = `/embeds`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createSmartLinkRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a Smart Link in the content tree in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the corresponding space. Permission to create a Smart Link in the content tree in the space.
+     * Create Smart Link in the content tree
+     */
+    async createSmartLinkRaw(requestParameters: CreateSmartLinkOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSmartLink200Response>> {
+        const requestOptions = await this.createSmartLinkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -90,10 +98,9 @@ export class SmartLinkApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a Smart Link in the content tree by id.  Deleting a Smart Link in the content tree moves the Smart Link to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space. Permission to delete Smart Links in the content tree in the space.
-     * Delete Smart Link in the content tree
+     * Creates request options for deleteSmartLink without sending the request
      */
-    async deleteSmartLinkRaw(requestParameters: DeleteSmartLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSmartLinkRequestOpts(requestParameters: DeleteSmartLinkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -117,12 +124,21 @@ export class SmartLinkApi extends runtime.BaseAPI {
         let urlPath = `/embeds/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a Smart Link in the content tree by id.  Deleting a Smart Link in the content tree moves the Smart Link to the trash, where it can be restored later  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space. Permission to delete Smart Links in the content tree in the space.
+     * Delete Smart Link in the content tree
+     */
+    async deleteSmartLinkRaw(requestParameters: DeleteSmartLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSmartLinkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -136,10 +152,9 @@ export class SmartLinkApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
-     * Get Smart Link in the content tree by id
+     * Creates request options for getSmartLinkById without sending the request
      */
-    async getSmartLinkByIdRaw(requestParameters: GetSmartLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSmartLink200Response>> {
+    async getSmartLinkByIdRequestOpts(requestParameters: GetSmartLinkByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -179,12 +194,21 @@ export class SmartLinkApi extends runtime.BaseAPI {
         let urlPath = `/embeds/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific Smart Link in the content tree.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the Smart Link in the content tree and its corresponding space.
+     * Get Smart Link in the content tree by id
+     */
+    async getSmartLinkByIdRaw(requestParameters: GetSmartLinkByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSmartLink200Response>> {
+        const requestOptions = await this.getSmartLinkByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

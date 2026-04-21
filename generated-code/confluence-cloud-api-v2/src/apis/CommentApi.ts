@@ -176,10 +176,9 @@ export interface UpdateInlineCommentRequest {
 export class CommentApi extends runtime.BaseAPI {
 
     /**
-     * Create a footer comment.  The footer comment can be made against several locations:  - at the top level (specifying pageId or blogPostId in the request body) - as a reply (specifying parentCommentId in the request body) - against an attachment (note: this is different than the comments added via the attachment properties page on the UI, which are referred to as version comments) - against a custom content  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
-     * Create footer comment
+     * Creates request options for createFooterComment without sending the request
      */
-    async createFooterCommentRaw(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+    async createFooterCommentRequestOpts(requestParameters: CreateFooterCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createFooterCommentModel'] == null) {
             throw new runtime.RequiredError(
                 'createFooterCommentModel',
@@ -204,13 +203,22 @@ export class CommentApi extends runtime.BaseAPI {
 
         let urlPath = `/footer-comments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createFooterCommentModel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a footer comment.  The footer comment can be made against several locations:  - at the top level (specifying pageId or blogPostId in the request body) - as a reply (specifying parentCommentId in the request body) - against an attachment (note: this is different than the comments added via the attachment properties page on the UI, which are referred to as version comments) - against a custom content  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Create footer comment
+     */
+    async createFooterCommentRaw(requestParameters: CreateFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+        const requestOptions = await this.createFooterCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -225,10 +233,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an inline comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body). Note the inlineCommentProperties object in the request body is used to select the text the inline comment should be tied to. This is what determines the text  highlighting when viewing a page in Confluence.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
-     * Create inline comment
+     * Creates request options for createInlineComment without sending the request
      */
-    async createInlineCommentRaw(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+    async createInlineCommentRequestOpts(requestParameters: CreateInlineCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createInlineCommentModel'] == null) {
             throw new runtime.RequiredError(
                 'createInlineCommentModel',
@@ -253,13 +260,22 @@ export class CommentApi extends runtime.BaseAPI {
 
         let urlPath = `/inline-comments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createInlineCommentModel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an inline comment. This can be at the top level (specifying pageId or blogPostId in the request body) or as a reply (specifying parentCommentId in the request body). Note the inlineCommentProperties object in the request body is used to select the text the inline comment should be tied to. This is what determines the text  highlighting when viewing a page in Confluence.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Create inline comment
+     */
+    async createInlineCommentRaw(requestParameters: CreateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        const requestOptions = await this.createInlineCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -274,10 +290,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a footer comment. This is a permanent deletion and cannot be reverted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete comments in the space.
-     * Delete footer comment
+     * Creates request options for deleteFooterComment without sending the request
      */
-    async deleteFooterCommentRaw(requestParameters: DeleteFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteFooterCommentRequestOpts(requestParameters: DeleteFooterCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -301,12 +316,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a footer comment. This is a permanent deletion and cannot be reverted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete comments in the space.
+     * Delete footer comment
+     */
+    async deleteFooterCommentRaw(requestParameters: DeleteFooterCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteFooterCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -320,10 +344,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an inline comment. This is a permanent deletion and cannot be reverted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete comments in the space.
-     * Delete inline comment
+     * Creates request options for deleteInlineComment without sending the request
      */
-    async deleteInlineCommentRaw(requestParameters: DeleteInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteInlineCommentRequestOpts(requestParameters: DeleteInlineCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -347,12 +370,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes an inline comment. This is a permanent deletion and cannot be reverted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to delete comments in the space.
+     * Delete inline comment
+     */
+    async deleteInlineCommentRaw(requestParameters: DeleteInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteInlineCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -366,10 +398,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the comments of the specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding containers.
-     * Get attachment comments
+     * Creates request options for getAttachmentComments without sending the request
      */
-    async getAttachmentCommentsRaw(requestParameters: GetAttachmentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachmentCommentModel>> {
+    async getAttachmentCommentsRequestOpts(requestParameters: GetAttachmentCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -413,12 +444,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/attachments/{id}/footer-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the comments of the specific attachment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the attachment and its corresponding containers.
+     * Get attachment comments
+     */
+    async getAttachmentCommentsRaw(requestParameters: GetAttachmentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultAttachmentCommentModel>> {
+        const requestOptions = await this.getAttachmentCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -433,10 +473,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the root footer comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get footer comments for blog post
+     * Creates request options for getBlogPostFooterComments without sending the request
      */
-    async getBlogPostFooterCommentsRaw(requestParameters: GetBlogPostFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostCommentModel>> {
+    async getBlogPostFooterCommentsRequestOpts(requestParameters: GetBlogPostFooterCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -480,12 +519,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/footer-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the root footer comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get footer comments for blog post
+     */
+    async getBlogPostFooterCommentsRaw(requestParameters: GetBlogPostFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostCommentModel>> {
+        const requestOptions = await this.getBlogPostFooterCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -500,10 +548,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the root inline comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
-     * Get inline comments for blog post
+     * Creates request options for getBlogPostInlineComments without sending the request
      */
-    async getBlogPostInlineCommentsRaw(requestParameters: GetBlogPostInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostInlineCommentModel>> {
+    async getBlogPostInlineCommentsRequestOpts(requestParameters: GetBlogPostInlineCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -551,12 +598,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/blogposts/{id}/inline-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the root inline comments of specific blog post. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the blog post and its corresponding space.
+     * Get inline comments for blog post
+     */
+    async getBlogPostInlineCommentsRaw(requestParameters: GetBlogPostInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultBlogPostInlineCommentModel>> {
+        const requestOptions = await this.getBlogPostInlineCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -571,10 +627,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the comments of the specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding containers.
-     * Get custom content comments
+     * Creates request options for getCustomContentComments without sending the request
      */
-    async getCustomContentCommentsRaw(requestParameters: GetCustomContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContentCommentModel>> {
+    async getCustomContentCommentsRequestOpts(requestParameters: GetCustomContentCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -614,12 +669,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/custom-content/{id}/footer-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the comments of the specific custom content. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the custom content and its corresponding containers.
+     * Get custom content comments
+     */
+    async getCustomContentCommentsRaw(requestParameters: GetCustomContentCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultCustomContentCommentModel>> {
+        const requestOptions = await this.getCustomContentCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -634,10 +698,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
-     * Get footer comment by id
+     * Creates request options for getFooterCommentById without sending the request
      */
-    async getFooterCommentByIdRaw(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+    async getFooterCommentByIdRequestOpts(requestParameters: GetFooterCommentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -689,12 +752,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a footer comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
+     * Get footer comment by id
+     */
+    async getFooterCommentByIdRaw(requestParameters: GetFooterCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFooterComment201Response>> {
+        const requestOptions = await this.getFooterCommentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -709,10 +781,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the children footer comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get children footer comments
+     * Creates request options for getFooterCommentChildren without sending the request
      */
-    async getFooterCommentChildrenRaw(requestParameters: GetFooterCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultChildrenCommentModel>> {
+    async getFooterCommentChildrenRequestOpts(requestParameters: GetFooterCommentChildrenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -752,12 +823,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{id}/children`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the children footer comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get children footer comments
+     */
+    async getFooterCommentChildrenRaw(requestParameters: GetFooterCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultChildrenCommentModel>> {
+        const requestOptions = await this.getFooterCommentChildrenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -772,10 +852,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
-     * Get footer comments
+     * Creates request options for getFooterComments without sending the request
      */
-    async getFooterCommentsRaw(requestParameters: GetFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultFooterCommentModel>> {
+    async getFooterCommentsRequestOpts(requestParameters: GetFooterCommentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['bodyFormat'] != null) {
@@ -807,12 +886,21 @@ export class CommentApi extends runtime.BaseAPI {
 
         let urlPath = `/footer-comments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all footer comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the container and its corresponding space.
+     * Get footer comments
+     */
+    async getFooterCommentsRaw(requestParameters: GetFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultFooterCommentModel>> {
+        const requestOptions = await this.getFooterCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -827,10 +915,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves an inline comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
-     * Get inline comment by id
+     * Creates request options for getInlineCommentById without sending the request
      */
-    async getInlineCommentByIdRaw(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+    async getInlineCommentByIdRequestOpts(requestParameters: GetInlineCommentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -882,12 +969,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves an inline comment by id  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space.
+     * Get inline comment by id
+     */
+    async getInlineCommentByIdRaw(requestParameters: GetInlineCommentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        const requestOptions = await this.getInlineCommentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -902,10 +998,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the children inline comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get children inline comments
+     * Creates request options for getInlineCommentChildren without sending the request
      */
-    async getInlineCommentChildrenRaw(requestParameters: GetInlineCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentChildrenModel>> {
+    async getInlineCommentChildrenRequestOpts(requestParameters: GetInlineCommentChildrenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -945,12 +1040,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{id}/children`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the children inline comments of specific comment. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get children inline comments
+     */
+    async getInlineCommentChildrenRaw(requestParameters: GetInlineCommentChildrenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentChildrenModel>> {
+        const requestOptions = await this.getInlineCommentChildrenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -965,10 +1069,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all inline comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get inline comments
+     * Creates request options for getInlineComments without sending the request
      */
-    async getInlineCommentsRaw(requestParameters: GetInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentModel>> {
+    async getInlineCommentsRequestOpts(requestParameters: GetInlineCommentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['bodyFormat'] != null) {
@@ -1000,12 +1103,21 @@ export class CommentApi extends runtime.BaseAPI {
 
         let urlPath = `/inline-comments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all inline comments. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get inline comments
+     */
+    async getInlineCommentsRaw(requestParameters: GetInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultInlineCommentModel>> {
+        const requestOptions = await this.getInlineCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1020,10 +1132,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the root footer comments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get footer comments for page
+     * Creates request options for getPageFooterComments without sending the request
      */
-    async getPageFooterCommentsRaw(requestParameters: GetPageFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageCommentModel>> {
+    async getPageFooterCommentsRequestOpts(requestParameters: GetPageFooterCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1067,12 +1178,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/footer-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the root footer comments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get footer comments for page
+     */
+    async getPageFooterCommentsRaw(requestParameters: GetPageFooterCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageCommentModel>> {
+        const requestOptions = await this.getPageFooterCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1087,10 +1207,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the root inline comments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
-     * Get inline comments for page
+     * Creates request options for getPageInlineComments without sending the request
      */
-    async getPageInlineCommentsRaw(requestParameters: GetPageInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageInlineCommentModel>> {
+    async getPageInlineCommentsRequestOpts(requestParameters: GetPageInlineCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1138,12 +1257,21 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/pages/{id}/inline-comments`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the root inline comments of specific page. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page and its corresponding space.
+     * Get inline comments for page
+     */
+    async getPageInlineCommentsRaw(requestParameters: GetPageInlineCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultPageInlineCommentModel>> {
+        const requestOptions = await this.getPageInlineCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1158,10 +1286,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a footer comment. This can be used to update the body text of a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
-     * Update footer comment
+     * Creates request options for updateFooterComment without sending the request
      */
-    async updateFooterCommentRaw(requestParameters: UpdateFooterCommentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
+    async updateFooterCommentRequestOpts(requestParameters: UpdateFooterCommentOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -1194,13 +1321,22 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/footer-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateFooterCommentRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a footer comment. This can be used to update the body text of a comment.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Update footer comment
+     */
+    async updateFooterCommentRaw(requestParameters: UpdateFooterCommentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FooterCommentModel>> {
+        const requestOptions = await this.updateFooterCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1215,10 +1351,9 @@ export class CommentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an inline comment. This can be used to update the body text of a comment and/or to resolve the comment  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
-     * Update inline comment
+     * Creates request options for updateInlineComment without sending the request
      */
-    async updateInlineCommentRaw(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+    async updateInlineCommentRequestOpts(requestParameters: UpdateInlineCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -1251,13 +1386,22 @@ export class CommentApi extends runtime.BaseAPI {
         let urlPath = `/inline-comments/{comment-id}`;
         urlPath = urlPath.replace(`{${"comment-id"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateInlineCommentModel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update an inline comment. This can be used to update the body text of a comment and/or to resolve the comment  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content of the page or blogpost and its corresponding space. Permission to create comments in the space.
+     * Update inline comment
+     */
+    async updateInlineCommentRaw(requestParameters: UpdateInlineCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateInlineComment201Response>> {
+        const requestOptions = await this.updateInlineCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

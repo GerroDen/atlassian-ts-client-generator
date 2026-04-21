@@ -59,10 +59,9 @@ export interface GetSpacesRequest {
 export class SpaceApi extends runtime.BaseAPI {
 
     /**
-     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
-     * Create space
+     * Creates request options for createSpace without sending the request
      */
-    async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
+    async createSpaceRequestOpts(requestParameters: CreateSpaceOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createSpaceRequest'] == null) {
             throw new runtime.RequiredError(
                 'createSpaceRequest',
@@ -87,13 +86,22 @@ export class SpaceApi extends runtime.BaseAPI {
 
         let urlPath = `/spaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createSpaceRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a Space as specified in the payload.  Available as part of the [Role-Based Access Controls Beta](https://community.atlassian.com/forums/Confluence-articles/Beta-Simplify-space-access-in-Confluence-with-roles/ba-p/3044550).   **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to create spaces.
+     * Create space
+     */
+    async createSpaceRaw(requestParameters: CreateSpaceOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateSpace201Response>> {
+        const requestOptions = await this.createSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -108,10 +116,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
-     * Get space by id
+     * Creates request options for getSpaceById without sending the request
      */
-    async getSpaceByIdRaw(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceById200Response>> {
+    async getSpaceByIdRequestOpts(requestParameters: GetSpaceByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -163,12 +170,21 @@ export class SpaceApi extends runtime.BaseAPI {
         let urlPath = `/spaces/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a specific space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the space.
+     * Get space by id
+     */
+    async getSpaceByIdRaw(requestParameters: GetSpaceByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSpaceById200Response>> {
+        const requestOptions = await this.getSpaceByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -183,10 +199,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all spaces. The results will be sorted by id ascending. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only spaces that the user has permission to view will be returned.
-     * Get spaces
+     * Creates request options for getSpaces without sending the request
      */
-    async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpace>> {
+    async getSpacesRequestOpts(requestParameters: GetSpacesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -250,12 +265,21 @@ export class SpaceApi extends runtime.BaseAPI {
 
         let urlPath = `/spaces`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all spaces. The results will be sorted by id ascending. The number of results is limited by the `limit` parameter and additional results (if available) will be available through the `next` URL present in the `Link` response header.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only spaces that the user has permission to view will be returned.
+     * Get spaces
+     */
+    async getSpacesRaw(requestParameters: GetSpacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiEntityResultSpace>> {
+        const requestOptions = await this.getSpacesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
