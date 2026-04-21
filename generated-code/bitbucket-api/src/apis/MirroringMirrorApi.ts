@@ -80,10 +80,9 @@ interface StopMirroringProjectRequest {
 export class MirroringMirrorApi extends runtime.BaseAPI {
 
     /**
-     * Finalizes the ZDU upgrade on the mirror farm denying heterogeneous cluster formation
-     * End ZDU upgrade on mirror farm
+     * Creates request options for endRollingUpgrade without sending the request
      */
-    async endRollingUpgradeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRollingUpgradeState>> {
+    async endRollingUpgradeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -91,12 +90,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/zdu/end`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Finalizes the ZDU upgrade on the mirror farm denying heterogeneous cluster formation
+     * End ZDU upgrade on mirror farm
+     */
+    async endRollingUpgradeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRollingUpgradeState>> {
+        const requestOptions = await this.endRollingUpgradeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -111,10 +119,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of repositories which have not synced on one or more mirror nodes for at least the threshold time limit after the content was changed in the corresponding upstream repositories. The threshold time limit is defined by a configuration property <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code>. The detection of out of sync repositories is dependent on the timing of a scheduled job which is controlled by a configuration property <code>plugin.mirroring.synchronization.interval</code> which means in worst case it can take upto <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code> + <code>plugin.mirroring.synchronization.interval</code> time to detect an out-of-sync repository.<p>Note: If <code>plugin.mirroring.repository.diagnostics.sync.enabled=false</code> is set on any of the mirror farm nodes, results will not be reported from that node.
-     * Get delayed sync repositories
+     * Creates request options for getDelayedSyncRepositories without sending the request
      */
-    async getDelayedSyncRepositoriesRaw(requestParameters: GetDelayedSyncRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDelayedSyncRepository>>> {
+    async getDelayedSyncRepositoriesRequestOpts(requestParameters: GetDelayedSyncRepositoriesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['delayThreshold'] != null) {
@@ -130,12 +137,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/mirrorRepos/delayed-sync`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of repositories which have not synced on one or more mirror nodes for at least the threshold time limit after the content was changed in the corresponding upstream repositories. The threshold time limit is defined by a configuration property <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code>. The detection of out of sync repositories is dependent on the timing of a scheduled job which is controlled by a configuration property <code>plugin.mirroring.synchronization.interval</code> which means in worst case it can take upto <code>plugin.mirroring.repository.diagnostics.sync.tolerance</code> + <code>plugin.mirroring.synchronization.interval</code> time to detect an out-of-sync repository.<p>Note: If <code>plugin.mirroring.repository.diagnostics.sync.enabled=false</code> is set on any of the mirror farm nodes, results will not be reported from that node.
+     * Get delayed sync repositories
+     */
+    async getDelayedSyncRepositoriesRaw(requestParameters: GetDelayedSyncRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDelayedSyncRepository>>> {
+        const requestOptions = await this.getDelayedSyncRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -150,10 +166,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the list of farm nodes in this cluster
-     * Get farm nodes
+     * Creates request options for getFarmNodes without sending the request
      */
-    async getFarmNodesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestClusterNode>>> {
+    async getFarmNodesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -161,12 +176,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/farmNodes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the list of farm nodes in this cluster
+     * Get farm nodes
+     */
+    async getFarmNodesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestClusterNode>>> {
+        const requestOptions = await this.getFarmNodesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -181,10 +205,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the current mirror mode
-     * Get mirror mode
+     * Creates request options for getMirrorMode without sending the request
      */
-    async getMirrorModeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getMirrorModeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -192,12 +215,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings/mode`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the current mirror mode
+     * Get mirror mode
+     */
+    async getMirrorModeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getMirrorModeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -211,10 +243,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves upstream settings
-     * Get upstream settings
+     * Creates request options for getMirrorSettings without sending the request
      */
-    async getMirrorSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamSettings>> {
+    async getMirrorSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -222,12 +253,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves upstream settings
+     * Get upstream settings
+     */
+    async getMirrorSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamSettings>> {
+        const requestOptions = await this.getMirrorSettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -242,10 +282,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the IDs of the projects that the mirror is configured to mirror
-     * Get mirrored project IDs
+     * Creates request options for getMirroredProjects without sending the request
      */
-    async getMirroredProjectsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getMirroredProjectsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -253,12 +292,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the IDs of the projects that the mirror is configured to mirror
+     * Get mirrored project IDs
+     */
+    async getMirroredProjectsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getMirroredProjectsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -272,10 +320,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all available clone urls for the specified repository.
-     * Get clone URLs
+     * Creates request options for getMirroredRepository without sending the request
      */
-    async getMirroredRepositoryRaw(requestParameters: GetMirroredRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroredRepository>> {
+    async getMirroredRepositoryRequestOpts(requestParameters: GetMirroredRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['externalRepositoryId'] == null) {
             throw new runtime.RequiredError(
                 'externalRepositoryId',
@@ -291,12 +338,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/mirrorRepos/{externalRepositoryId}`;
         urlPath = urlPath.replace(`{${"externalRepositoryId"}}`, encodeURIComponent(String(requestParameters['externalRepositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all available clone urls for the specified repository.
+     * Get clone URLs
+     */
+    async getMirroredRepositoryRaw(requestParameters: GetMirroredRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroredRepository>> {
+        const requestOptions = await this.getMirroredRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -311,10 +367,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of up to <code>plugin.mirroring.farm.max.ref.change.queue.dump.size</code> items currently in the ref changes queue. The ref changes queue is an internal component of every mirror farm, and is shared between all nodes. When the contents of an upstream repository changes, an item is added to this queue so that the mirror farm nodes know to synchronize. The mirror farm constantly polls and removes items from this queue for processing, so it is empty most of the time.
-     * Get items in ref changes queue
+     * Creates request options for getRefChangesQueue without sending the request
      */
-    async getRefChangesQueueRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncQueue>> {
+    async getRefChangesQueueRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -322,12 +377,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/supportInfo/refChangesQueue`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of up to <code>plugin.mirroring.farm.max.ref.change.queue.dump.size</code> items currently in the ref changes queue. The ref changes queue is an internal component of every mirror farm, and is shared between all nodes. When the contents of an upstream repository changes, an item is added to this queue so that the mirror farm nodes know to synchronize. The mirror farm constantly polls and removes items from this queue for processing, so it is empty most of the time.
+     * Get items in ref changes queue
+     */
+    async getRefChangesQueueRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncQueue>> {
+        const requestOptions = await this.getRefChangesQueueRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -342,10 +406,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the total number of items currently in the ref changes queue
-     * Get total number of items in ref changes queue
+     * Creates request options for getRefChangesQueueCount without sending the request
      */
-    async getRefChangesQueueCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getRefChangesQueueCountRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -353,12 +416,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/supportInfo/refChangesQueue/count`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the total number of items currently in the ref changes queue
+     * Get total number of items in ref changes queue
+     */
+    async getRefChangesQueueCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getRefChangesQueueCountRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -372,10 +444,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a page of sync statuses of the repositories on this mirror node
-     * Get sync status of repositories
+     * Creates request options for getRepoSyncStatus without sending the request
      */
-    async getRepoSyncStatusRaw(requestParameters: GetRepoSyncStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepoSyncStatus200Response>> {
+    async getRepoSyncStatusRequestOpts(requestParameters: GetRepoSyncStatusRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -391,12 +462,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/supportInfo/repoSyncStatus`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a page of sync statuses of the repositories on this mirror node
+     * Get sync status of repositories
+     */
+    async getRepoSyncStatusRaw(requestParameters: GetRepoSyncStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepoSyncStatus200Response>> {
+        const requestOptions = await this.getRepoSyncStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -411,10 +491,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves information about an external repository mirrored by the mirror server. Particularly the local ID & external ID of the repository
-     * Gets information about the mirrored repository
+     * Creates request options for getRepoSyncStatus1 without sending the request
      */
-    async getRepoSyncStatus1Raw(requestParameters: GetRepoSyncStatus1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorRepositorySynchronizationStatus>> {
+    async getRepoSyncStatus1RequestOpts(requestParameters: GetRepoSyncStatus1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -438,12 +517,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves information about an external repository mirrored by the mirror server. Particularly the local ID & external ID of the repository
+     * Gets information about the mirrored repository
+     */
+    async getRepoSyncStatus1Raw(requestParameters: GetRepoSyncStatus1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorRepositorySynchronizationStatus>> {
+        const requestOptions = await this.getRepoSyncStatus1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -458,10 +546,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the information about the process owning the sync lock for this repository. The process owning the lock could be running on any of the nodes in the mirror farm
-     * Get the repository lock owner for the syncing process
+     * Creates request options for getRepositoryLockOwner without sending the request
      */
-    async getRepositoryLockOwnerRaw(requestParameters: GetRepositoryLockOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryLockOwner>> {
+    async getRepositoryLockOwnerRequestOpts(requestParameters: GetRepositoryLockOwnerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -485,12 +572,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the information about the process owning the sync lock for this repository. The process owning the lock could be running on any of the nodes in the mirror farm
+     * Get the repository lock owner for the syncing process
+     */
+    async getRepositoryLockOwnerRaw(requestParameters: GetRepositoryLockOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryLockOwner>> {
+        const requestOptions = await this.getRepositoryLockOwnerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -505,10 +601,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the information about all the processes from the all the nodes in the mirror farm owning sync lock for any repository
-     * Get all the repository lock owners for the syncing process
+     * Creates request options for getRepositoryLockOwners without sending the request
      */
-    async getRepositoryLockOwnersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepositoryLockOwner>>> {
+    async getRepositoryLockOwnersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -516,12 +611,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/supportInfo/repo-lock-owners`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the information about all the processes from the all the nodes in the mirror farm owning sync lock for any repository
+     * Get all the repository lock owners for the syncing process
+     */
+    async getRepositoryLockOwnersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepositoryLockOwner>>> {
+        const requestOptions = await this.getRepositoryLockOwnersRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -536,10 +640,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Retrieves synchronization progress state.If there\'s no progress to report, this resource will return <pre><code> {\"discovering\":false,\"syncedRepos\":0,\"totalRepos\":0}</code></pre> If there are repositories in the process of synchronizing, but the precise number hasn\'t been discovered yet, this resource will return: <pre><code> {\"discovering\":true,\"syncedRepos\":3,\"totalRepos\":100}</code></pre> If there is progress to report and the total number of repositories is known, this resource will return: <pre> <code> {\"discovering\":false,\"syncedRepos\":242,\"totalRepos\":1071}</code> </pre>
-     * Get synchronization progress state
+     * Creates request options for getSynchronizationProgress without sending the request
      */
-    async getSynchronizationProgressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSyncProgress>> {
+    async getSynchronizationProgressRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -547,12 +650,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/progress`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     *  Retrieves synchronization progress state.If there\'s no progress to report, this resource will return <pre><code> {\"discovering\":false,\"syncedRepos\":0,\"totalRepos\":0}</code></pre> If there are repositories in the process of synchronizing, but the precise number hasn\'t been discovered yet, this resource will return: <pre><code> {\"discovering\":true,\"syncedRepos\":3,\"totalRepos\":100}</code></pre> If there is progress to report and the total number of repositories is known, this resource will return: <pre> <code> {\"discovering\":false,\"syncedRepos\":242,\"totalRepos\":1071}</code> </pre>
+     * Get synchronization progress state
+     */
+    async getSynchronizationProgressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSyncProgress>> {
+        const requestOptions = await this.getSynchronizationProgressRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -567,10 +679,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves upstream server details.
-     * Get upstream server
+     * Creates request options for getUpstreamServer without sending the request
      */
-    async getUpstreamServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamServer>> {
+    async getUpstreamServerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -578,12 +689,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/upstreamServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves upstream server details.
+     * Get upstream server
+     */
+    async getUpstreamServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamServer>> {
+        const requestOptions = await this.getUpstreamServerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -598,10 +718,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the mirror mode for the specified upstream
-     * Update mirror mode
+     * Creates request options for setMirrorMode without sending the request
      */
-    async setMirrorModeRaw(requestParameters: SetMirrorModeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setMirrorModeRequestOpts(requestParameters: SetMirrorModeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -611,13 +730,22 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings/mode`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the mirror mode for the specified upstream
+     * Update mirror mode
+     */
+    async setMirrorModeRaw(requestParameters: SetMirrorModeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setMirrorModeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -631,10 +759,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the settings for the specified upstream
-     * Update upstream settings
+     * Creates request options for setMirrorSettings without sending the request
      */
-    async setMirrorSettingsRaw(requestParameters: SetMirrorSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamSettings>> {
+    async setMirrorSettingsRequestOpts(requestParameters: SetMirrorSettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -644,13 +771,22 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUpstreamSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the settings for the specified upstream
+     * Update upstream settings
+     */
+    async setMirrorSettingsRaw(requestParameters: SetMirrorSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUpstreamSettings>> {
+        const requestOptions = await this.setMirrorSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -665,10 +801,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Configures the mirror to mirror the provided project
-     * Add project to be mirrored
+     * Creates request options for startMirroringProject without sending the request
      */
-    async startMirroringProjectRaw(requestParameters: StartMirroringProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async startMirroringProjectRequestOpts(requestParameters: StartMirroringProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -684,12 +819,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/syncSettings/projects/{projectId}`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Configures the mirror to mirror the provided project
+     * Add project to be mirrored
+     */
+    async startMirroringProjectRaw(requestParameters: StartMirroringProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.startMirroringProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -703,10 +847,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Configures the mirror to mirror the provided projects
-     * Add multiple projects to be mirrored
+     * Creates request options for startMirroringProjects without sending the request
      */
-    async startMirroringProjectsRaw(requestParameters: StartMirroringProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async startMirroringProjectsRequestOpts(requestParameters: StartMirroringProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -716,13 +859,22 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/syncSettings/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Configures the mirror to mirror the provided projects
+     * Add multiple projects to be mirrored
+     */
+    async startMirroringProjectsRaw(requestParameters: StartMirroringProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.startMirroringProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -736,10 +888,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables upgrading of individual nodes within the cluster, allowing a heterogeneous cluster formation
-     * Start ZDU upgrade on mirror farm
+     * Creates request options for startRollingUpgrade without sending the request
      */
-    async startRollingUpgradeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRollingUpgradeState>> {
+    async startRollingUpgradeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -747,12 +898,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/zdu/start`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables upgrading of individual nodes within the cluster, allowing a heterogeneous cluster formation
+     * Start ZDU upgrade on mirror farm
+     */
+    async startRollingUpgradeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRollingUpgradeState>> {
+        const requestOptions = await this.startRollingUpgradeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -767,10 +927,9 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
     }
 
     /**
-     * Configures the mirror to no longer mirror the provided project
-     * Stop mirroring project
+     * Creates request options for stopMirroringProject without sending the request
      */
-    async stopMirroringProjectRaw(requestParameters: StopMirroringProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async stopMirroringProjectRequestOpts(requestParameters: StopMirroringProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -786,12 +945,21 @@ export class MirroringMirrorApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/syncSettings/projects/{projectId}`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Configures the mirror to no longer mirror the provided project
+     * Stop mirroring project
+     */
+    async stopMirroringProjectRaw(requestParameters: StopMirroringProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.stopMirroringProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

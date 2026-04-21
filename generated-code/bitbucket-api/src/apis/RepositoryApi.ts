@@ -807,10 +807,9 @@ interface Watch2Request {
 export class RepositoryApi extends runtime.BaseAPI {
 
     /**
-     * Creates a default task for the supplied repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
-     * Add a default task
+     * Creates request options for addDefaultTask1 without sending the request
      */
-    async addDefaultTask1Raw(requestParameters: AddDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+    async addDefaultTask1RequestOpts(requestParameters: AddDefaultTask1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -843,13 +842,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultTaskRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a default task for the supplied repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
+     * Add a default task
+     */
+    async addDefaultTask1Raw(requestParameters: AddDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+        const requestOptions = await this.addDefaultTask1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -864,10 +872,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Applies a label to the repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository.
-     * Add repository label
+     * Creates request options for addLabel without sending the request
      */
-    async addLabelRaw(requestParameters: AddLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+    async addLabelRequestOpts(requestParameters: AddLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -893,13 +900,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restLabel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Applies a label to the repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository.
+     * Add repository label
+     */
+    async addLabelRaw(requestParameters: AddLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+        const requestOptions = await this.addLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -914,10 +930,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Creates a branch in the specified repository.   The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource. If branch permissions are set up in the repository, the authenticated user must also have access to the branch name that is to be created.
-     * Create branch
+     * Creates request options for createBranch without sending the request
      */
-    async createBranchRaw(requestParameters: CreateBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+    async createBranchRequestOpts(requestParameters: CreateBranchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -950,13 +965,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBranchCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     *  Creates a branch in the specified repository.   The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource. If branch permissions are set up in the repository, the authenticated user must also have access to the branch name that is to be created.
+     * Create branch
+     */
+    async createBranchRaw(requestParameters: CreateBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+        const requestOptions = await this.createBranchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -971,10 +995,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a branch using the information provided in the RestCreateBranchRequest request   The authenticated user must have <strong>REPO_WRITE</strong> permission for the context repository to call this resource.
-     * Create branch
+     * Creates request options for createBranchForRepository without sending the request
      */
-    async createBranchForRepositoryRaw(requestParameters: CreateBranchForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+    async createBranchForRepositoryRequestOpts(requestParameters: CreateBranchForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1000,13 +1023,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCreateBranchRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a branch using the information provided in the RestCreateBranchRequest request   The authenticated user must have <strong>REPO_WRITE</strong> permission for the context repository to call this resource.
+     * Create branch
+     */
+    async createBranchForRepositoryRaw(requestParameters: CreateBranchForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+        const requestOptions = await this.createBranchForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1021,10 +1053,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a new comment.  Comments can be added in a few places by setting different attributes:  General commit comment:  ```{       \"text\": \"An insightful general comment on a commit.\" }  </pre> Reply to a comment: <pre>{       \"text\": \"A measured reply.\",       \"parent\": {           \"id\": 1       } } </pre> General file comment: <pre>{       \"text\": \"An insightful general comment on a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       } } </pre> File line comment: <pre>{       \"text\": \"A pithy comment on a particular line within a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"line\": 1,           \"lineType\": \"CONTEXT\",           \"fileType\": \"FROM\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       } } ```  Note: general file comments are an experimental feature and may change in the near future!  For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves). Also, fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added. fromHash will be resolved automatically as first parent if not specified. Note that this behaviour differs from `/pull-requests/comments`  Finally diffType refers to the type of diff the comment was added on.  For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:- \'ADDED\' - for an added line;</li>- \'REMOVED\' - for a removed line; or</li>- \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff.</li>\'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:- \'FROM\' - the source file of the diff</li>- \'TO\' - the destination file of the diff</li>If the current user is not a participant the user is added as one and updated to watch the commit.  The authenticated user must have REPO_READ permission for the repository that the commit is in to call this resource.
-     * Add a new commit comment
+     * Creates request options for createComment without sending the request
      */
-    async createCommentRaw(requestParameters: CreateCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async createCommentRequestOpts(requestParameters: CreateCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1062,13 +1093,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a new comment.  Comments can be added in a few places by setting different attributes:  General commit comment:  ```{       \"text\": \"An insightful general comment on a commit.\" }  </pre> Reply to a comment: <pre>{       \"text\": \"A measured reply.\",       \"parent\": {           \"id\": 1       } } </pre> General file comment: <pre>{       \"text\": \"An insightful general comment on a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       } } </pre> File line comment: <pre>{       \"text\": \"A pithy comment on a particular line within a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"line\": 1,           \"lineType\": \"CONTEXT\",           \"fileType\": \"FROM\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       } } ```  Note: general file comments are an experimental feature and may change in the near future!  For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves). Also, fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added. fromHash will be resolved automatically as first parent if not specified. Note that this behaviour differs from `/pull-requests/comments`  Finally diffType refers to the type of diff the comment was added on.  For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:- \'ADDED\' - for an added line;</li>- \'REMOVED\' - for a removed line; or</li>- \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff.</li>\'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:- \'FROM\' - the source file of the diff</li>- \'TO\' - the destination file of the diff</li>If the current user is not a participant the user is added as one and updated to watch the commit.  The authenticated user must have REPO_READ permission for the repository that the commit is in to call this resource.
+     * Add a new commit comment
+     */
+    async createCommentRaw(requestParameters: CreateCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.createCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1083,10 +1123,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Allows creating multiple restrictions at once.
-     * Create multiple ref restrictions
+     * Creates request options for createRestrictions1 without sending the request
      */
-    async createRestrictions1Raw(requestParameters: CreateRestrictions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+    async createRestrictions1RequestOpts(requestParameters: CreateRestrictions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1112,13 +1151,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRestrictionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Allows creating multiple restrictions at once.
+     * Create multiple ref restrictions
+     */
+    async createRestrictions1Raw(requestParameters: CreateRestrictions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+        const requestOptions = await this.createRestrictions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1133,10 +1181,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a tag in the specified repository.  The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource.  \'LIGHTWEIGHT\' and \'ANNOTATED\' are the two type of tags that can be created. The \'startPoint\' can either be a ref or a \'commit\'.
-     * Create tag
+     * Creates request options for createTag without sending the request
      */
-    async createTagRaw(requestParameters: CreateTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+    async createTagRequestOpts(requestParameters: CreateTagRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1162,13 +1209,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGitTagCreateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a tag in the specified repository.  The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource.  \'LIGHTWEIGHT\' and \'ANNOTATED\' are the two type of tags that can be created. The \'startPoint\' can either be a ref or a \'commit\'.
+     * Create tag
+     */
+    async createTagRaw(requestParameters: CreateTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+        const requestOptions = await this.createTagRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1183,10 +1239,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a tag using the information provided in the RestCreateTagRequest request   The authenticated user must have <strong>REPO_WRITE</strong> permission for the context repository to call this resource.
-     * Create tag
+     * Creates request options for createTagForRepository without sending the request
      */
-    async createTagForRepositoryRaw(requestParameters: CreateTagForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+    async createTagForRepositoryRequestOpts(requestParameters: CreateTagForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1212,13 +1267,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCreateTagRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a tag using the information provided in the RestCreateTagRequest request   The authenticated user must have <strong>REPO_WRITE</strong> permission for the context repository to call this resource.
+     * Create tag
+     */
+    async createTagForRepositoryRaw(requestParameters: CreateTagForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+        const requestOptions = await this.createTagForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1233,10 +1297,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a webhook for the repository specified via the URL.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Create webhook
+     * Creates request options for createWebhook1 without sending the request
      */
-    async createWebhook1Raw(requestParameters: CreateWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async createWebhook1RequestOpts(requestParameters: CreateWebhook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1262,13 +1325,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhook'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a webhook for the repository specified via the URL.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Create webhook
+     */
+    async createWebhook1Raw(requestParameters: CreateWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.createWebhook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1283,10 +1355,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes pull request auto-merge settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
-     * Delete pull request auto-merge settings
+     * Creates request options for delete5 without sending the request
      */
-    async delete5Raw(requestParameters: Delete5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete5RequestOpts(requestParameters: Delete5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1310,12 +1381,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes pull request auto-merge settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
+     * Delete pull request auto-merge settings
+     */
+    async delete5Raw(requestParameters: Delete5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1329,10 +1409,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete all the default tasks for the supplied repository  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
-     * Deletes all default tasks for the repository
+     * Creates request options for deleteAllDefaultTasks1 without sending the request
      */
-    async deleteAllDefaultTasks1Raw(requestParameters: DeleteAllDefaultTasks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAllDefaultTasks1RequestOpts(requestParameters: DeleteAllDefaultTasks1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1356,12 +1435,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete all the default tasks for the supplied repository  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
+     * Deletes all default tasks for the repository
+     */
+    async deleteAllDefaultTasks1Raw(requestParameters: DeleteAllDefaultTasks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAllDefaultTasks1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1375,10 +1463,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete an attachment.  The user must be authenticated and have <strong>REPO_ADMIN</strong> permission for the specified repository.
-     * Delete an attachment
+     * Creates request options for deleteAttachment without sending the request
      */
-    async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAttachmentRequestOpts(requestParameters: DeleteAttachmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1410,12 +1497,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete an attachment.  The user must be authenticated and have <strong>REPO_ADMIN</strong> permission for the specified repository.
+     * Delete an attachment
+     */
+    async deleteAttachmentRaw(requestParameters: DeleteAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAttachmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1429,10 +1525,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete attachment metadata.  The user must be authenticated and have <strong>REPO_ADMIN</strong> permission for the specified repository.
-     * Delete attachment metadata
+     * Creates request options for deleteAttachmentMetadata without sending the request
      */
-    async deleteAttachmentMetadataRaw(requestParameters: DeleteAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAttachmentMetadataRequestOpts(requestParameters: DeleteAttachmentMetadataRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1464,12 +1559,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete attachment metadata.  The user must be authenticated and have <strong>REPO_ADMIN</strong> permission for the specified repository.
+     * Delete attachment metadata
+     */
+    async deleteAttachmentMetadataRaw(requestParameters: DeleteAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAttachmentMetadataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1483,10 +1587,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete auto decline settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
-     * Delete auto decline settings
+     * Creates request options for deleteAutoDeclineSettings1 without sending the request
      */
-    async deleteAutoDeclineSettings1Raw(requestParameters: DeleteAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAutoDeclineSettings1RequestOpts(requestParameters: DeleteAutoDeclineSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1510,12 +1613,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete auto decline settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
+     * Delete auto decline settings
+     */
+    async deleteAutoDeclineSettings1Raw(requestParameters: DeleteAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAutoDeclineSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1529,10 +1641,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Deletes a branch in the specified repository.    If the branch does not exist, this operation will not raise an error. In other words after calling this resource  and receiving a 204 response the branch provided in the request is guaranteed to not exist in the specified  repository any more, regardless of its existence beforehand.    The optional \'endPoint\' parameter of the request may contain a commit ID that the provided ref name is  expected to point to. Should the ref point to a different commit ID, a 400 response will be returned with  appropriate error details.    The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource. If  branch permissions are set up in the repository, the authenticated user must also have access to the branch name  that is to be deleted.
-     * Delete branch
+     * Creates request options for deleteBranch without sending the request
      */
-    async deleteBranchRaw(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBranchRequestOpts(requestParameters: DeleteBranchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1558,13 +1669,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBranchDeleteRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     *  Deletes a branch in the specified repository.    If the branch does not exist, this operation will not raise an error. In other words after calling this resource  and receiving a 204 response the branch provided in the request is guaranteed to not exist in the specified  repository any more, regardless of its existence beforehand.    The optional \'endPoint\' parameter of the request may contain a commit ID that the provided ref name is  expected to point to. Should the ref point to a different commit ID, a 400 response will be returned with  appropriate error details.    The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource. If  branch permissions are set up in the repository, the authenticated user must also have access to the branch name  that is to be deleted.
+     * Delete branch
+     */
+    async deleteBranchRaw(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBranchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1578,10 +1698,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a commit comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users. Comments which have replies <i>may not be deleted</i>, regardless of the user\'s granted permissions.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
-     * Delete a commit comment
+     * Creates request options for deleteComment without sending the request
      */
-    async deleteCommentRaw(requestParameters: DeleteCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCommentRequestOpts(requestParameters: DeleteCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1625,12 +1744,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a commit comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users. Comments which have replies <i>may not be deleted</i>, regardless of the user\'s granted permissions.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
+     * Delete a commit comment
+     */
+    async deleteCommentRaw(requestParameters: DeleteCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1644,10 +1772,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a specific default task for a repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
-     * Delete a specific default task
+     * Creates request options for deleteDefaultTask1 without sending the request
      */
-    async deleteDefaultTask1Raw(requestParameters: DeleteDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDefaultTask1RequestOpts(requestParameters: DeleteDefaultTask1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1679,12 +1806,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a specific default task for a repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
+     * Delete a specific default task
+     */
+    async deleteDefaultTask1Raw(requestParameters: DeleteDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDefaultTask1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1698,10 +1834,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete repository hook configuration for the supplied <strong>hookKey</strong> and <strong>repositorySlug</strong>  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Delete repository hook
+     * Creates request options for deleteRepositoryHook without sending the request
      */
-    async deleteRepositoryHookRaw(requestParameters: DeleteRepositoryHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRepositoryHookRequestOpts(requestParameters: DeleteRepositoryHookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1733,12 +1868,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete repository hook configuration for the supplied <strong>hookKey</strong> and <strong>repositorySlug</strong>  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Delete repository hook
+     */
+    async deleteRepositoryHookRaw(requestParameters: DeleteRepositoryHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRepositoryHookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1752,10 +1896,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a restriction as specified by a restriction id.  The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Delete a ref restriction
+     * Creates request options for deleteRestriction1 without sending the request
      */
-    async deleteRestriction1Raw(requestParameters: DeleteRestriction1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRestriction1RequestOpts(requestParameters: DeleteRestriction1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1787,12 +1930,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a restriction as specified by a restriction id.  The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Delete a ref restriction
+     */
+    async deleteRestriction1Raw(requestParameters: DeleteRestriction1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRestriction1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1806,10 +1958,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a tag in the specified repository.  The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource.
-     * Delete tag
+     * Creates request options for deleteTag without sending the request
      */
-    async deleteTagRaw(requestParameters: DeleteTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteTagRequestOpts(requestParameters: DeleteTagRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1841,12 +1992,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a tag in the specified repository.  The authenticated user must have an effective <strong>REPO_WRITE</strong> permission to call this resource.
+     * Delete tag
+     */
+    async deleteTagRaw(requestParameters: DeleteTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteTagRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1860,10 +2020,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a webhook for the repository specified via the URL.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Delete webhook
+     * Creates request options for deleteWebhook1 without sending the request
      */
-    async deleteWebhook1Raw(requestParameters: DeleteWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWebhook1RequestOpts(requestParameters: DeleteWebhook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1895,12 +2054,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a webhook for the repository specified via the URL.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Delete webhook
+     */
+    async deleteWebhook1Raw(requestParameters: DeleteWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWebhook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1914,10 +2082,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Disable a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Disable repository hook
+     * Creates request options for disableHook1 without sending the request
      */
-    async disableHook1Raw(requestParameters: DisableHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async disableHook1RequestOpts(requestParameters: DisableHook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1949,12 +2116,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Disable a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Disable repository hook
+     */
+    async disableHook1Raw(requestParameters: DisableHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.disableHook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1969,10 +2145,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the content of path, on the given repository and branch.   This resource accepts PUT multipart form data, containing the file in a form-field named content.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to update \'README.md\' would be:  ```curl -X PUT -u username:password -F content=@README.md  -F \'message=Updated using file-edit REST API\' -F branch=master -F  sourceCommitId=5636641a50b  http://example.com/rest/api/latest/projects/PROJECT_1/repos/repo_1/browse/README.md ```  - branch:  the branch on which the path should be modified or created - content: the full content of the file at path  - message: the message associated with this change, to be used as the commit message. Or null if the default message should be used. - sourceCommitId: the commit ID of the file before it was edited, used to identify if content has changed. Or null if this is a new file   The file can be updated or created on a new branch. In this case, the sourceBranch parameter should be provided to identify the starting point for the new branch and the branch parameter identifies the branch to create the new commit on.
-     * Edit file
+     * Creates request options for editFile without sending the request
      */
-    async editFileRaw(requestParameters: EditFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+    async editFileRequestOpts(requestParameters: EditFileRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -2038,13 +2213,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the content of path, on the given repository and branch.   This resource accepts PUT multipart form data, containing the file in a form-field named content.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to update \'README.md\' would be:  ```curl -X PUT -u username:password -F content=@README.md  -F \'message=Updated using file-edit REST API\' -F branch=master -F  sourceCommitId=5636641a50b  http://example.com/rest/api/latest/projects/PROJECT_1/repos/repo_1/browse/README.md ```  - branch:  the branch on which the path should be modified or created - content: the full content of the file at path  - message: the message associated with this change, to be used as the commit message. Or null if the default message should be used. - sourceCommitId: the commit ID of the file before it was edited, used to identify if content has changed. Or null if this is a new file   The file can be updated or created on a new branch. In this case, the sourceBranch parameter should be provided to identify the starting point for the new branch and the branch parameter identifies the branch to create the new commit on.
+     * Edit file
+     */
+    async editFileRaw(requestParameters: EditFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+        const requestOptions = await this.editFileRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2059,10 +2243,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable a repository hook for this repository and optionally apply new configuration.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.   A JSON document may be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
-     * Enable repository hook
+     * Creates request options for enableHook1 without sending the request
      */
-    async enableHook1Raw(requestParameters: EnableHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async enableHook1RequestOpts(requestParameters: EnableHook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2098,12 +2281,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable a repository hook for this repository and optionally apply new configuration.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.   A JSON document may be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
+     * Enable repository hook
+     */
+    async enableHook1Raw(requestParameters: EnableHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.enableHook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2118,10 +2310,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of branches with ref change activities for a specific repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission to call this resource.
-     * Get branches with ref change activities for repository
+     * Creates request options for findBranches without sending the request
      */
-    async findBranchesRaw(requestParameters: FindBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindByCommit200Response>> {
+    async findBranchesRequestOpts(requestParameters: FindBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2157,12 +2348,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of branches with ref change activities for a specific repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission to call this resource.
+     * Get branches with ref change activities for repository
+     */
+    async findBranchesRaw(requestParameters: FindBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindByCommit200Response>> {
+        const requestOptions = await this.findBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2177,10 +2377,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the branch information associated with a single commit from a given repository.
-     * Get branch
+     * Creates request options for findByCommit without sending the request
      */
-    async findByCommitRaw(requestParameters: FindByCommitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindByCommit200Response>> {
+    async findByCommitRequestOpts(requestParameters: FindByCommitRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2220,12 +2419,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the branch information associated with a single commit from a given repository.
+     * Get branch
+     */
+    async findByCommitRaw(requestParameters: FindByCommitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindByCommit200Response>> {
+        const requestOptions = await this.findByCommitRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2240,10 +2448,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find webhooks in this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Find webhooks
+     * Creates request options for findWebhooks1 without sending the request
      */
-    async findWebhooks1Raw(requestParameters: FindWebhooks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async findWebhooks1RequestOpts(requestParameters: FindWebhooks1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2275,12 +2482,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find webhooks in this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Find webhooks
+     */
+    async findWebhooks1Raw(requestParameters: FindWebhooks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.findWebhooks1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2294,10 +2510,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the pull request auto-merge settings for the supplied repository. Project settings will be returned if no explicit settings have been set for the repository. In the case that there are no project settings, the default settings will be returned. If the repository\'s project has restricted its auto-merge settings, then the settings of the project will be returned.  The authenticated user must have <strong>REPO_READ</strong> permission for this repository to call the resource.
-     * Get pull request auto-merge settings
+     * Creates request options for get5 without sending the request
      */
-    async get5Raw(requestParameters: Get5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+    async get5RequestOpts(requestParameters: Get5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2321,12 +2536,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the pull request auto-merge settings for the supplied repository. Project settings will be returned if no explicit settings have been set for the repository. In the case that there are no project settings, the default settings will be returned. If the repository\'s project has restricted its auto-merge settings, then the settings of the project will be returned.  The authenticated user must have <strong>REPO_READ</strong> permission for this repository to call the resource.
+     * Get pull request auto-merge settings
+     */
+    async get5Raw(requestParameters: Get5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+        const requestOptions = await this.get5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2341,10 +2565,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all labels applied to the given repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository.
-     * Get repository labels
+     * Creates request options for getAllLabelsForRepository without sending the request
      */
-    async getAllLabelsForRepositoryRaw(requestParameters: GetAllLabelsForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+    async getAllLabelsForRepositoryRequestOpts(requestParameters: GetAllLabelsForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2368,12 +2591,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all labels applied to the given repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository.
+     * Get repository labels
+     */
+    async getAllLabelsForRepositoryRaw(requestParameters: GetAllLabelsForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+        const requestOptions = await this.getAllLabelsForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2388,10 +2620,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams an archive of the repository\'s contents at the requested commit. If no `at=` commit is requested, an archive of the default branch is streamed.  The <code>filename=</code> query parameter may be used to specify the exact filename to include in the \"Content-Disposition\" header. If an explicit filename is not provided, one will be automatically generated based on what is being archived. Its format depends on the at= value:   - No <code>at=</code> commit:     &lt;slug&gt;-&lt;default-branch-name&gt;@&lt;commit&gt;.&lt;format&gt;;     e.g. example-master@43c2f8a0fe8.zip - <code>at=</code>sha: &lt;slug&gt;-&lt;at&gt;.&lt;format&gt;; e.g.     example-09bcbb00100cfbb5310fb6834a1d5ce6cac253e9.tar.gz - <code>at=</code>branchOrTag: &lt;slug&gt;-&lt;branchOrTag&gt;@&lt;commit&gt;.&lt;format&gt;;     e.g. example-feature@bbb225f16e1.tar       - If the branch or tag is qualified (e.g. refs/heads/master, the short name         (master) will be included in the filename     - If the branch or tag\'s <i>short name</i> includes slashes (e.g. release/4.6),         they will be converted to hyphens in the filename (release-4.5)     Archives may be requested in the following formats by adding the <code>format=</code> query parameter:   - zip: A zip file using standard compression (Default) - tar: An uncompressed tarball - tar.gz or tgz: A GZip-compressed tarball   The contents of the archive may be filtered by using the <code>path=</code> query parameter to specify paths to include. <code>path=</code> may be specified multiple times to include multiple paths.   The <code>prefix=</code> query parameter may be used to define a directory (or multiple directories) where the archive\'s contents should be placed. If the prefix does not end with /, one will be added automatically. The prefix is <i>always</i> treated as a directory; it is not possible to use it to prepend characters to the entries in the archive.   Archives of public repositories may be streamed by any authenticated or anonymous user. Streaming archives for non-public repositories requires an <i>authenticated user</i> with at least <b>REPO_READ</b> permission.
-     * Stream archive of repository
+     * Creates request options for getArchive without sending the request
      */
-    async getArchiveRaw(requestParameters: GetArchiveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getArchiveRequestOpts(requestParameters: GetArchiveRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2435,12 +2666,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams an archive of the repository\'s contents at the requested commit. If no `at=` commit is requested, an archive of the default branch is streamed.  The <code>filename=</code> query parameter may be used to specify the exact filename to include in the \"Content-Disposition\" header. If an explicit filename is not provided, one will be automatically generated based on what is being archived. Its format depends on the at= value:   - No <code>at=</code> commit:     &lt;slug&gt;-&lt;default-branch-name&gt;@&lt;commit&gt;.&lt;format&gt;;     e.g. example-master@43c2f8a0fe8.zip - <code>at=</code>sha: &lt;slug&gt;-&lt;at&gt;.&lt;format&gt;; e.g.     example-09bcbb00100cfbb5310fb6834a1d5ce6cac253e9.tar.gz - <code>at=</code>branchOrTag: &lt;slug&gt;-&lt;branchOrTag&gt;@&lt;commit&gt;.&lt;format&gt;;     e.g. example-feature@bbb225f16e1.tar       - If the branch or tag is qualified (e.g. refs/heads/master, the short name         (master) will be included in the filename     - If the branch or tag\'s <i>short name</i> includes slashes (e.g. release/4.6),         they will be converted to hyphens in the filename (release-4.5)     Archives may be requested in the following formats by adding the <code>format=</code> query parameter:   - zip: A zip file using standard compression (Default) - tar: An uncompressed tarball - tar.gz or tgz: A GZip-compressed tarball   The contents of the archive may be filtered by using the <code>path=</code> query parameter to specify paths to include. <code>path=</code> may be specified multiple times to include multiple paths.   The <code>prefix=</code> query parameter may be used to define a directory (or multiple directories) where the archive\'s contents should be placed. If the prefix does not end with /, one will be added automatically. The prefix is <i>always</i> treated as a directory; it is not possible to use it to prepend characters to the entries in the archive.   Archives of public repositories may be streamed by any authenticated or anonymous user. Streaming archives for non-public repositories requires an <i>authenticated user</i> with at least <b>REPO_READ</b> permission.
+     * Stream archive of repository
+     */
+    async getArchiveRaw(requestParameters: GetArchiveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getArchiveRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2454,10 +2694,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the attachment.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment.  Range requests (see IETF RFC7233) are supported. However only a single range issupported. If multiple ranges are passed the ranges will be ignored and the entire content will be returned in the response.
-     * Get an attachment
+     * Creates request options for getAttachment without sending the request
      */
-    async getAttachmentRaw(requestParameters: GetAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAttachmentRequestOpts(requestParameters: GetAttachmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2497,12 +2736,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the attachment.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment.  Range requests (see IETF RFC7233) are supported. However only a single range issupported. If multiple ranges are passed the ranges will be ignored and the entire content will be returned in the response.
+     * Get an attachment
+     */
+    async getAttachmentRaw(requestParameters: GetAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAttachmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2516,10 +2764,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the attachment metadata.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment that has the attachment metadata.
-     * Get attachment metadata
+     * Creates request options for getAttachmentMetadata without sending the request
      */
-    async getAttachmentMetadataRaw(requestParameters: GetAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAttachmentMetadata>> {
+    async getAttachmentMetadataRequestOpts(requestParameters: GetAttachmentMetadataRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2551,12 +2798,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the attachment metadata.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment that has the attachment metadata.
+     * Get attachment metadata
+     */
+    async getAttachmentMetadataRaw(requestParameters: GetAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAttachmentMetadata>> {
+        const requestOptions = await this.getAttachmentMetadataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2571,10 +2827,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the auto decline settings for the supplied repository. Project settings will be returned if no explicit settings have been set for the repository. In the case that there are no project settings, the default settings will be returned.  The authenticated user must have <strong>REPO_READ</strong> permission for this repository to call the resource.
-     * Get auto decline settings
+     * Creates request options for getAutoDeclineSettings1 without sending the request
      */
-    async getAutoDeclineSettings1Raw(requestParameters: GetAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+    async getAutoDeclineSettings1RequestOpts(requestParameters: GetAutoDeclineSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2598,12 +2853,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the auto decline settings for the supplied repository. Project settings will be returned if no explicit settings have been set for the repository. In the case that there are no project settings, the default settings will be returned.  The authenticated user must have <strong>REPO_READ</strong> permission for this repository to call the resource.
+     * Get auto decline settings
+     */
+    async getAutoDeclineSettings1Raw(requestParameters: GetAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+        const requestOptions = await this.getAutoDeclineSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2618,10 +2882,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the branches matching the supplied <strong>filterText</strong> param.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Find branches
+     * Creates request options for getBranches without sending the request
      */
-    async getBranchesRaw(requestParameters: GetBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBranches200Response>> {
+    async getBranchesRequestOpts(requestParameters: GetBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2677,12 +2940,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the branches matching the supplied <strong>filterText</strong> param.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Find branches
+     */
+    async getBranchesRaw(requestParameters: GetBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBranches200Response>> {
+        const requestOptions = await this.getBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2697,10 +2969,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of changes made in a specified commit.    <strong>Note:</strong> The implementation will apply a hard cap (<code>page.max.changes</code>) and it is not possible to request subsequent content when that cap is exceeded.    The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get changes in commit
+     * Creates request options for getChanges without sending the request
      */
-    async getChangesRaw(requestParameters: GetChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+    async getChangesRequestOpts(requestParameters: GetChangesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2748,12 +3019,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of changes made in a specified commit.    <strong>Note:</strong> The implementation will apply a hard cap (<code>page.max.changes</code>) and it is not possible to request subsequent content when that cap is exceeded.    The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get changes in commit
+     */
+    async getChangesRaw(requestParameters: GetChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+        const requestOptions = await this.getChangesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2768,10 +3048,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of changes made in a specified commit.   <strong>Note:</strong> The implementation will apply a hard cap ({@code page.max.changes}) and it is not possible to request subsequent content when that cap is exceeded.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get changes made in commit
+     * Creates request options for getChanges1 without sending the request
      */
-    async getChanges1Raw(requestParameters: GetChanges1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+    async getChanges1RequestOpts(requestParameters: GetChanges1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2811,12 +3090,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of changes made in a specified commit.   <strong>Note:</strong> The implementation will apply a hard cap ({@code page.max.changes}) and it is not possible to request subsequent content when that cap is exceeded.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get changes made in commit
+     */
+    async getChanges1Raw(requestParameters: GetChanges1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+        const requestOptions = await this.getChanges1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2831,10 +3119,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a commit discussion comment.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
-     * Get a commit comment
+     * Creates request options for getComment without sending the request
      */
-    async getCommentRaw(requestParameters: GetCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async getCommentRequestOpts(requestParameters: GetCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2874,12 +3161,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a commit discussion comment.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
+     * Get a commit comment
+     */
+    async getCommentRaw(requestParameters: GetCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.getCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2894,10 +3190,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the commit discussion comments that match the specified search criteria.  It is possible to retrieve commit discussion comments that are anchored to a range of commits by providing the sinceId that the comments anchored from.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
-     * Search for commit comments
+     * Creates request options for getComments without sending the request
      */
-    async getCommentsRaw(requestParameters: GetCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+    async getCommentsRequestOpts(requestParameters: GetCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2945,12 +3240,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the commit discussion comments that match the specified search criteria.  It is possible to retrieve commit discussion comments that are anchored to a range of commits by providing the sinceId that the comments anchored from.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
+     * Search for commit comments
+     */
+    async getCommentsRaw(requestParameters: GetCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+        const requestOptions = await this.getCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2965,10 +3269,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a single commit <i>identified by its ID</i>. In general, that ID is a SHA1. <u>From 2.11, ref names like \"refs/heads/master\" are no longer accepted by this resource.</u>  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get commit by ID
+     * Creates request options for getCommit without sending the request
      */
-    async getCommitRaw(requestParameters: GetCommitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+    async getCommitRequestOpts(requestParameters: GetCommitRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3004,12 +3307,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a single commit <i>identified by its ID</i>. In general, that ID is a SHA1. <u>From 2.11, ref names like \"refs/heads/master\" are no longer accepted by this resource.</u>  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get commit by ID
+     */
+    async getCommitRaw(requestParameters: GetCommitRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+        const requestOptions = await this.getCommitRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3024,10 +3336,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of commits from a given starting commit or \"between\" two commits. If no explicit commit is specified, the tip of the repository\'s default branch is assumed. commits may be identified by branch or tag name or by ID. A path may be supplied to restrict the returned commits to only those which affect that path.   The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
-     * Get commits
+     * Creates request options for getCommits without sending the request
      */
-    async getCommitsRaw(requestParameters: GetCommitsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+    async getCommitsRequestOpts(requestParameters: GetCommitsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3095,12 +3406,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of commits from a given starting commit or \"between\" two commits. If no explicit commit is specified, the tip of the repository\'s default branch is assumed. commits may be identified by branch or tag name or by ID. A path may be supplied to restrict the returned commits to only those which affect that path.   The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
+     * Get commits
+     */
+    async getCommitsRaw(requestParameters: GetCommitsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+        const requestOptions = await this.getCommitsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3115,10 +3435,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return a page of hook scripts configured for the specified repository.   This endpoint requires **REPO_ADMIN** permission.
-     * Get hook scripts
+     * Creates request options for getConfigurations1 without sending the request
      */
-    async getConfigurations1Raw(requestParameters: GetConfigurations1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigurations200Response>> {
+    async getConfigurations1RequestOpts(requestParameters: GetConfigurations1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3150,12 +3469,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return a page of hook scripts configured for the specified repository.   This endpoint requires **REPO_ADMIN** permission.
+     * Get hook scripts
+     */
+    async getConfigurations1Raw(requestParameters: GetConfigurations1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigurations200Response>> {
+        const requestOptions = await this.getConfigurations1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3170,10 +3498,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of content for a file path at a specified revision.   Responses from this endpoint vary widely depending on the query parameters. The example JSON is for a request that does not use size, type, blame or noContent.   1. size will return a response like {\"size\":10000} 2. type will return a response like {\"type\":\"FILE\"}, where possible values are    \"DIRECTORY\", \"FILE\" and \"SUBMODULE\" 3. blame <i>without</i> noContent will include blame for the lines of    content returned on the page 4. blame <i>with</i> noContent will omit file contents and only return    blame for the requested lines 5. noContent without blame is ignored and does nothing   The various parameters are \"processed\" in the above order. That means ?size=true&amp;type=truewill return a size response, not a type one; the type parameter will be ignored.   The blame and noContent query parameters are handled differently from size and type. For blame and noContent, the <i>presence</i> of the parameter implies \"true\" if no value is specified; size and and type both require an explicit=true or they\'re treated as \"false\".   - ?blame is the same as ?blame=true - ?blame&amp;noContent is the same as ?blame=true&amp;noContent=true - ?size is the same as ?size=false - ?type is the same as ?type=false   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get file content at revision
+     * Creates request options for getContent without sending the request
      */
-    async getContentRaw(requestParameters: GetContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getContentRequestOpts(requestParameters: GetContentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3217,12 +3544,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of content for a file path at a specified revision.   Responses from this endpoint vary widely depending on the query parameters. The example JSON is for a request that does not use size, type, blame or noContent.   1. size will return a response like {\"size\":10000} 2. type will return a response like {\"type\":\"FILE\"}, where possible values are    \"DIRECTORY\", \"FILE\" and \"SUBMODULE\" 3. blame <i>without</i> noContent will include blame for the lines of    content returned on the page 4. blame <i>with</i> noContent will omit file contents and only return    blame for the requested lines 5. noContent without blame is ignored and does nothing   The various parameters are \"processed\" in the above order. That means ?size=true&amp;type=truewill return a size response, not a type one; the type parameter will be ignored.   The blame and noContent query parameters are handled differently from size and type. For blame and noContent, the <i>presence</i> of the parameter implies \"true\" if no value is specified; size and and type both require an explicit=true or they\'re treated as \"false\".   - ?blame is the same as ?blame=true - ?blame&amp;noContent is the same as ?blame=true&amp;noContent=true - ?size is the same as ?size=false - ?type is the same as ?type=false   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get file content at revision
+     */
+    async getContentRaw(requestParameters: GetContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3236,10 +3572,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of content for a file path at a specified revision.   Responses from this endpoint vary widely depending on the query parameters. The example JSON is for a request that does not use size, type, blame or noContent.   1. size will return a response like {\"size\":10000} 2. type will return a response like {\"type\":\"FILE\"}, where possible values are    \"DIRECTORY\", \"FILE\" and \"SUBMODULE\" 3. blame <i>without</i> noContent will include blame for the lines of    content returned on the page 4. blame <i>with</i> noContent will omit file contents and only return    blame for the requested lines 5. noContent without blame is ignored and does nothing   The various parameters are \"processed\" in the above order. That means ?size=true&amp;type=truewill return a size response, not a type one; the type parameter will be ignored.   The blame and noContent query parameters are handled differently from size and type. For blame and noContent, the <i>presence</i> of the parameter implies \"true\" if no value is specified; size and and type both require an explicit=true or they\'re treated as \"false\".   - ?blame is the same as ?blame=true - ?blame&amp;noContent is the same as ?blame=true&amp;noContent=true - ?size is the same as ?size=false - ?type is the same as ?type=false   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get file content
+     * Creates request options for getContent1 without sending the request
      */
-    async getContent1Raw(requestParameters: GetContent1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getContent1RequestOpts(requestParameters: GetContent1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -3291,12 +3626,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of content for a file path at a specified revision.   Responses from this endpoint vary widely depending on the query parameters. The example JSON is for a request that does not use size, type, blame or noContent.   1. size will return a response like {\"size\":10000} 2. type will return a response like {\"type\":\"FILE\"}, where possible values are    \"DIRECTORY\", \"FILE\" and \"SUBMODULE\" 3. blame <i>without</i> noContent will include blame for the lines of    content returned on the page 4. blame <i>with</i> noContent will omit file contents and only return    blame for the requested lines 5. noContent without blame is ignored and does nothing   The various parameters are \"processed\" in the above order. That means ?size=true&amp;type=truewill return a size response, not a type one; the type parameter will be ignored.   The blame and noContent query parameters are handled differently from size and type. For blame and noContent, the <i>presence</i> of the parameter implies \"true\" if no value is specified; size and and type both require an explicit=true or they\'re treated as \"false\".   - ?blame is the same as ?blame=true - ?blame&amp;noContent is the same as ?blame=true&amp;noContent=true - ?size is the same as ?size=false - ?type is the same as ?type=false   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get file content
+     */
+    async getContent1Raw(requestParameters: GetContent1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getContent1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3310,11 +3654,10 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get default branch
+     * Creates request options for getDefaultBranch1 without sending the request
      * @deprecated
      */
-    async getDefaultBranch1Raw(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+    async getDefaultBranch1RequestOpts(requestParameters: GetDefaultBranch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3338,12 +3681,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get default branch
+     * @deprecated
+     */
+    async getDefaultBranch1Raw(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+        const requestOptions = await this.getDefaultBranch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3366,10 +3719,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the default tasks for the supplied repository.  The authenticated user must have **REPO_VIEW** permission for this repository to call the resource.
-     * Get a page of default tasks
+     * Creates request options for getDefaultTasks1 without sending the request
      */
-    async getDefaultTasks1Raw(requestParameters: GetDefaultTasks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDefaultTasks1200Response>> {
+    async getDefaultTasks1RequestOpts(requestParameters: GetDefaultTasks1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3405,12 +3757,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the default tasks for the supplied repository.  The authenticated user must have **REPO_VIEW** permission for this repository to call the resource.
+     * Get a page of default tasks
+     */
+    async getDefaultTasks1Raw(requestParameters: GetDefaultTasks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDefaultTasks1200Response>> {
+        const requestOptions = await this.getDefaultTasks1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3425,10 +3786,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the diff stats summary for a commit.  The stats summary include the total number of modified files, added lines, and deleted lines.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get diff stats summary between revisions
+     * Creates request options for getDiffStatsSummary without sending the request
      */
-    async getDiffStatsSummaryRaw(requestParameters: GetDiffStatsSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getDiffStatsSummaryRequestOpts(requestParameters: GetDiffStatsSummaryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -3484,12 +3844,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the diff stats summary for a commit.  The stats summary include the total number of modified files, added lines, and deleted lines.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get diff stats summary between revisions
+     */
+    async getDiffStatsSummaryRaw(requestParameters: GetDiffStatsSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getDiffStatsSummaryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -3508,10 +3877,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the diff stats summary of the changes available in the <code>from</code> commit but not in the <code> to</code> commit.  If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
-     * Retrieve the diff stats summary between commits
+     * Creates request options for getDiffStatsSummary1 without sending the request
      */
-    async getDiffStatsSummary1Raw(requestParameters: GetDiffStatsSummary1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+    async getDiffStatsSummary1RequestOpts(requestParameters: GetDiffStatsSummary1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -3563,12 +3931,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the diff stats summary of the changes available in the <code>from</code> commit but not in the <code> to</code> commit.  If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
+     * Retrieve the diff stats summary between commits
+     */
+    async getDiffStatsSummary1Raw(requestParameters: GetDiffStatsSummary1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+        const requestOptions = await this.getDiffStatsSummary1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3583,10 +3960,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the latest invocations for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get last webhook invocation details
+     * Creates request options for getLatestInvocation1 without sending the request
      */
-    async getLatestInvocation1Raw(requestParameters: GetLatestInvocation1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedInvocation>> {
+    async getLatestInvocation1RequestOpts(requestParameters: GetLatestInvocation1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3626,12 +4002,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the latest invocations for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get last webhook invocation details
+     */
+    async getLatestInvocation1Raw(requestParameters: GetLatestInvocation1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedInvocation>> {
+        const requestOptions = await this.getLatestInvocation1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3653,10 +4038,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the best common ancestor between two commits.  If more than one best common ancestor exists, only one will be returned. It is unspecified which will be returned.
-     * Get the common ancestor between two commits
+     * Creates request options for getMergeBase without sending the request
      */
-    async getMergeBaseRaw(requestParameters: GetMergeBaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+    async getMergeBaseRequestOpts(requestParameters: GetMergeBaseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3692,12 +4076,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the best common ancestor between two commits.  If more than one best common ancestor exists, only one will be returned. It is unspecified which will be returned.
+     * Get the common ancestor between two commits
+     */
+    async getMergeBaseRaw(requestParameters: GetMergeBaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+        const requestOptions = await this.getMergeBaseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3719,10 +4112,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the pull request settings for the context repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.   This resource will call all RestFragments that are registered with the key <strong>bitbucket.repository.settings.pullRequests</strong>. If any fragment fails validations by returning a non-empty Map of errors, then no fragments will execute.   The property keys for the settings that are bundled with the application are   - mergeConfig - the merge strategy configuration for pull requests - requiredApprovers - (Deprecated, please use com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook instead) the number of approvals required on a pull request for it to be mergeable, or 0 if the merge check is disabled - com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook - the merge check configuration for required approvers - requiredAllApprovers - whether or not all approvers must approve a pull request for it to be mergeable - requiredAllTasksComplete - whether or not all tasks on a pull request need to be completed for it to be mergeable - requiredSuccessfulBuilds - (Deprecated, please use com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck instead) the number of successful builds on a pull request for it to be mergeable, or 0 if the merge check is disabled - com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck - the merge check configuration for required builds   
-     * Get pull request settings
+     * Creates request options for getPullRequestSettings1 without sending the request
      */
-    async getPullRequestSettings1Raw(requestParameters: GetPullRequestSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPullRequestSettings>> {
+    async getPullRequestSettings1RequestOpts(requestParameters: GetPullRequestSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3746,12 +4138,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the pull request settings for the context repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.   This resource will call all RestFragments that are registered with the key <strong>bitbucket.repository.settings.pullRequests</strong>. If any fragment fails validations by returning a non-empty Map of errors, then no fragments will execute.   The property keys for the settings that are bundled with the application are   - mergeConfig - the merge strategy configuration for pull requests - requiredApprovers - (Deprecated, please use com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook instead) the number of approvals required on a pull request for it to be mergeable, or 0 if the merge check is disabled - com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook - the merge check configuration for required approvers - requiredAllApprovers - whether or not all approvers must approve a pull request for it to be mergeable - requiredAllTasksComplete - whether or not all tasks on a pull request need to be completed for it to be mergeable - requiredSuccessfulBuilds - (Deprecated, please use com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck instead) the number of successful builds on a pull request for it to be mergeable, or 0 if the merge check is disabled - com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck - the merge check configuration for required builds   
+     * Get pull request settings
+     */
+    async getPullRequestSettings1Raw(requestParameters: GetPullRequestSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPullRequestSettings>> {
+        const requestOptions = await this.getPullRequestSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3766,10 +4167,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of repository ref change activity.   The authenticated user must have <strong>REPO_ADMIN</strong> permission to call this resource.
-     * Get ref change activity
+     * Creates request options for getRefChangeActivity without sending the request
      */
-    async getRefChangeActivityRaw(requestParameters: GetRefChangeActivityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRefChangeActivity200Response>> {
+    async getRefChangeActivityRequestOpts(requestParameters: GetRefChangeActivityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3805,12 +4205,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of repository ref change activity.   The authenticated user must have <strong>REPO_ADMIN</strong> permission to call this resource.
+     * Get ref change activity
+     */
+    async getRefChangeActivityRaw(requestParameters: GetRefChangeActivityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRefChangeActivity200Response>> {
+        const requestOptions = await this.getRefChangeActivityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3825,10 +4234,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of repositories based on query parameters that control the search. See the documentation of the parameters for more details.   This resource is anonymously accessible, if anonymous access is enabled.   <b>Note on permissions.</b> In absence of the <code>permission</code> query parameter the implicit \'read\' permission is assumed. Please note that this permission is lower than the <tt>REPO_READ</tt> permission rather than being equal to it. The implicit \'read\' permission for a given repository is assigned to any user that has any of the higher permissions, such as <tt>REPO_READ</tt>, as well as to anonymous users if the repository is marked as public. The important implication of the above is that an anonymous request to this resource with a permission level <tt>REPO_READ</tt> is guaranteed to receive an empty list of repositories as a result. For anonymous requests it is therefore recommended to not specify the <tt>permission</tt> parameter at all.
-     * Search for repositories
+     * Creates request options for getRepositories1 without sending the request
      */
-    async getRepositories1Raw(requestParameters: GetRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async getRepositories1RequestOpts(requestParameters: GetRepositories1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['archived'] != null) {
@@ -3872,12 +4280,21 @@ export class RepositoryApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/repos`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of repositories based on query parameters that control the search. See the documentation of the parameters for more details.   This resource is anonymously accessible, if anonymous access is enabled.   <b>Note on permissions.</b> In absence of the <code>permission</code> query parameter the implicit \'read\' permission is assumed. Please note that this permission is lower than the <tt>REPO_READ</tt> permission rather than being equal to it. The implicit \'read\' permission for a given repository is assigned to any user that has any of the higher permissions, such as <tt>REPO_READ</tt>, as well as to anonymous users if the repository is marked as public. The important implication of the above is that an anonymous request to this resource with a permission level <tt>REPO_READ</tt> is guaranteed to receive an empty list of repositories as a result. For anonymous requests it is therefore recommended to not specify the <tt>permission</tt> parameter at all.
+     * Search for repositories
+     */
+    async getRepositories1Raw(requestParameters: GetRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.getRepositories1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3892,10 +4309,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of recently accessed repositories for the currently authenticated user.   Repositories are ordered from most recently to least recently accessed. <p>Only authenticated users may call this resource.
-     * Get recently accessed repositories
+     * Creates request options for getRepositoriesRecentlyAccessed without sending the request
      */
-    async getRepositoriesRecentlyAccessedRaw(requestParameters: GetRepositoriesRecentlyAccessedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async getRepositoriesRecentlyAccessedRequestOpts(requestParameters: GetRepositoriesRecentlyAccessedRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['permission'] != null) {
@@ -3915,12 +4331,21 @@ export class RepositoryApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/profile/recent/repos`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of recently accessed repositories for the currently authenticated user.   Repositories are ordered from most recently to least recently accessed. <p>Only authenticated users may call this resource.
+     * Get recently accessed repositories
+     */
+    async getRepositoriesRecentlyAccessedRaw(requestParameters: GetRepositoriesRecentlyAccessedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.getRepositoriesRecentlyAccessedRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3935,10 +4360,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get repository hook
+     * Creates request options for getRepositoryHook1 without sending the request
      */
-    async getRepositoryHook1Raw(requestParameters: GetRepositoryHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async getRepositoryHook1RequestOpts(requestParameters: GetRepositoryHook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3970,12 +4394,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get repository hook
+     */
+    async getRepositoryHook1Raw(requestParameters: GetRepositoryHook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.getRepositoryHook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3990,10 +4423,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of repository hooks for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get repository hooks
+     * Creates request options for getRepositoryHooks1 without sending the request
      */
-    async getRepositoryHooks1Raw(requestParameters: GetRepositoryHooks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoryHooks1200Response>> {
+    async getRepositoryHooks1RequestOpts(requestParameters: GetRepositoryHooks1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4029,12 +4461,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of repository hooks for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get repository hooks
+     */
+    async getRepositoryHooks1Raw(requestParameters: GetRepositoryHooks1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoryHooks1200Response>> {
+        const requestOptions = await this.getRepositoryHooks1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4049,10 +4490,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a restriction as specified by a restriction id.   The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Get a ref restriction
+     * Creates request options for getRestriction1 without sending the request
      */
-    async getRestriction1Raw(requestParameters: GetRestriction1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+    async getRestriction1RequestOpts(requestParameters: GetRestriction1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4084,12 +4524,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a restriction as specified by a restriction id.   The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Get a ref restriction
+     */
+    async getRestriction1Raw(requestParameters: GetRestriction1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+        const requestOptions = await this.getRestriction1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4104,10 +4553,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for restrictions using the supplied parameters.  The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Search for ref restrictions
+     * Creates request options for getRestrictions1 without sending the request
      */
-    async getRestrictions1Raw(requestParameters: GetRestrictions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRestrictions1200Response>> {
+    async getRestrictions1RequestOpts(requestParameters: GetRestrictions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4151,12 +4599,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for restrictions using the supplied parameters.  The authenticated user must have <strong>REPO_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Search for ref restrictions
+     */
+    async getRestrictions1Raw(requestParameters: GetRestrictions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRestrictions1200Response>> {
+        const requestOptions = await this.getRestrictions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4171,10 +4628,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the settings for a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get repository hook settings
+     * Creates request options for getSettings1 without sending the request
      */
-    async getSettings1Raw(requestParameters: GetSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+    async getSettings1RequestOpts(requestParameters: GetSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4206,12 +4662,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the settings for a repository hook for this repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get repository hook settings
+     */
+    async getSettings1Raw(requestParameters: GetSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+        const requestOptions = await this.getSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4226,10 +4691,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the statistics for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get webhook statistics
+     * Creates request options for getStatistics1 without sending the request
      */
-    async getStatistics1Raw(requestParameters: GetStatistics1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getStatistics1RequestOpts(requestParameters: GetStatistics1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4265,12 +4729,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the statistics for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get webhook statistics
+     */
+    async getStatistics1Raw(requestParameters: GetStatistics1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getStatistics1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -4289,10 +4762,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the statistics summary for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get webhook statistics summary
+     * Creates request options for getStatisticsSummary1 without sending the request
      */
-    async getStatisticsSummary1Raw(requestParameters: GetStatisticsSummary1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getStatisticsSummary1RequestOpts(requestParameters: GetStatisticsSummary1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4324,12 +4796,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the statistics summary for a specific webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get webhook statistics summary
+     */
+    async getStatisticsSummary1Raw(requestParameters: GetStatisticsSummary1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getStatisticsSummary1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -4348,10 +4829,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the synchronization status for the specified repository. In addition to listing refs which cannot be synchronized, if any, the status also provides the timestamp for the most recent synchronization and indicates whether synchronization is available and enabled. If \"?at\" is specified in the URL, the synchronization status for the specified ref is returned, rather than the complete repository status.  The authenticated user must have <b>REPO_READ</b> permission for the repository, or it must be public if the request is anonymous. Additionally, after synchronization is enabled for a repository, meaning synchronization was available at that time, permission changes and other actions can cause it to become unavailable. Even when synchronization is enabled, if it is no longer available for the repository it will not be performed.
-     * Get synchronization status
+     * Creates request options for getStatus without sending the request
      */
-    async getStatusRaw(requestParameters: GetStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncStatus>> {
+    async getStatusRequestOpts(requestParameters: GetStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4379,12 +4859,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the synchronization status for the specified repository. In addition to listing refs which cannot be synchronized, if any, the status also provides the timestamp for the most recent synchronization and indicates whether synchronization is available and enabled. If \"?at\" is specified in the URL, the synchronization status for the specified ref is returned, rather than the complete repository status.  The authenticated user must have <b>REPO_READ</b> permission for the repository, or it must be public if the request is anonymous. Additionally, after synchronization is enabled for a repository, meaning synchronization was available at that time, permission changes and other actions can cause it to become unavailable. Even when synchronization is enabled, if it is no longer available for the repository it will not be performed.
+     * Get synchronization status
+     */
+    async getStatusRaw(requestParameters: GetStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncStatus>> {
+        const requestOptions = await this.getStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4399,10 +4888,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a tag in the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.
-     * Get tag
+     * Creates request options for getTag without sending the request
      */
-    async getTagRaw(requestParameters: GetTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+    async getTagRequestOpts(requestParameters: GetTagRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4434,12 +4922,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a tag in the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.
+     * Get tag
+     */
+    async getTagRaw(requestParameters: GetTagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTag>> {
+        const requestOptions = await this.getTagRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4454,10 +4951,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the tags matching the supplied <strong>filterText</strong> param.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.
-     * Find tag
+     * Creates request options for getTags without sending the request
      */
-    async getTagsRaw(requestParameters: GetTagsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTags200Response>> {
+    async getTagsRequestOpts(requestParameters: GetTagsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4497,12 +4993,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the tags matching the supplied <strong>filterText</strong> param.   The authenticated user must have <strong>REPO_READ</strong> permission for the context repository to call this resource.
+     * Find tag
+     */
+    async getTagsRaw(requestParameters: GetTagsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTags200Response>> {
+        const requestOptions = await this.getTagsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4517,10 +5022,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a webhook by ID.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Get webhook
+     * Creates request options for getWebhook1 without sending the request
      */
-    async getWebhook1Raw(requestParameters: GetWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async getWebhook1RequestOpts(requestParameters: GetWebhook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4556,12 +5060,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a webhook by ID.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Get webhook
+     */
+    async getWebhook1Raw(requestParameters: GetWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.getWebhook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4576,10 +5089,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add an emoticon reaction to a comment
-     * React to a comment
+     * Creates request options for react without sending the request
      */
-    async reactRaw(requestParameters: ReactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserReaction>> {
+    async reactRequestOpts(requestParameters: ReactRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4627,12 +5139,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add an emoticon reaction to a comment
+     * React to a comment
+     */
+    async reactRaw(requestParameters: ReactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserReaction>> {
+        const requestOptions = await this.reactRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4647,10 +5168,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the hook script from the set of hook scripts configured to run in the repository.   This endpoint requires **REPO_ADMIN** permission.
-     * Remove a hook script
+     * Creates request options for removeConfiguration1 without sending the request
      */
-    async removeConfiguration1Raw(requestParameters: RemoveConfiguration1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeConfiguration1RequestOpts(requestParameters: RemoveConfiguration1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4682,12 +5202,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the hook script from the set of hook scripts configured to run in the repository.   This endpoint requires **REPO_ADMIN** permission.
+     * Remove a hook script
+     */
+    async removeConfiguration1Raw(requestParameters: RemoveConfiguration1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeConfiguration1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4701,10 +5230,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove label that is applied to the given repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository.
-     * Remove repository label
+     * Creates request options for removeLabel without sending the request
      */
-    async removeLabelRaw(requestParameters: RemoveLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeLabelRequestOpts(requestParameters: RemoveLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4736,12 +5264,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove label that is applied to the given repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository.
+     * Remove repository label
+     */
+    async removeLabelRaw(requestParameters: RemoveLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4755,10 +5292,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Save attachment metadata.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment that has the attachment metadata.
-     * Save attachment metadata
+     * Creates request options for saveAttachmentMetadata without sending the request
      */
-    async saveAttachmentMetadataRaw(requestParameters: SaveAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async saveAttachmentMetadataRequestOpts(requestParameters: SaveAttachmentMetadataRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4792,13 +5328,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Save attachment metadata.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository that is associated to the attachment that has the attachment metadata.
+     * Save attachment metadata
+     */
+    async saveAttachmentMetadataRaw(requestParameters: SaveAttachmentMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.saveAttachmentMetadataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4812,10 +5357,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search webhooks in this repository and parent project. This endpoint returns a superset of the results returned by the /webhooks endpoint because it allows filtering by project scope too, not just repository webhooks.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Search webhooks
+     * Creates request options for searchWebhooks without sending the request
      */
-    async searchWebhooksRaw(requestParameters: SearchWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async searchWebhooksRequestOpts(requestParameters: SearchWebhooksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4851,12 +5395,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search webhooks in this repository and parent project. This endpoint returns a superset of the results returned by the /webhooks endpoint because it allows filtering by project scope too, not just repository webhooks.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Search webhooks
+     */
+    async searchWebhooksRaw(requestParameters: SearchWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.searchWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4870,10 +5423,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the pull request auto-merge settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
-     * Create or update the pull request auto-merge settings
+     * Creates request options for set1 without sending the request
      */
-    async set1Raw(requestParameters: Set1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+    async set1RequestOpts(requestParameters: Set1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4899,13 +5451,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAutoMergeSettingsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the pull request auto-merge settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource.
+     * Create or update the pull request auto-merge settings
+     */
+    async set1Raw(requestParameters: Set1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+        const requestOptions = await this.set1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4920,10 +5481,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the auto decline settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource
-     * Create auto decline settings
+     * Creates request options for setAutoDeclineSettings1 without sending the request
      */
-    async setAutoDeclineSettings1Raw(requestParameters: SetAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+    async setAutoDeclineSettings1RequestOpts(requestParameters: SetAutoDeclineSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4949,13 +5509,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAutoDeclineSettingsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the auto decline settings for the supplied repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for this repository to call the resource
+     * Create auto decline settings
+     */
+    async setAutoDeclineSettings1Raw(requestParameters: SetAutoDeclineSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+        const requestOptions = await this.setAutoDeclineSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4970,10 +5539,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates/updates the hook script configuration for the provided hook script and repository.   This endpoint requires **REPO_ADMIN** permission.
-     * Create/update a hook script
+     * Creates request options for setConfiguration1 without sending the request
      */
-    async setConfiguration1Raw(requestParameters: SetConfiguration1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScriptConfig>> {
+    async setConfiguration1RequestOpts(requestParameters: SetConfiguration1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5007,13 +5575,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restHookScriptTriggers'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates/updates the hook script configuration for the provided hook script and repository.   This endpoint requires **REPO_ADMIN** permission.
+     * Create/update a hook script
+     */
+    async setConfiguration1Raw(requestParameters: SetConfiguration1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScriptConfig>> {
+        const requestOptions = await this.setConfiguration1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5028,11 +5605,10 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Update default branch
+     * Creates request options for setDefaultBranch1 without sending the request
      * @deprecated
      */
-    async setDefaultBranch1Raw(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setDefaultBranch1RequestOpts(requestParameters: SetDefaultBranch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5058,13 +5634,23 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBranch'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Update default branch
+     * @deprecated
+     */
+    async setDefaultBranch1Raw(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setDefaultBranch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -5079,10 +5665,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables or disables synchronization for the specified repository. When synchronization is enabled, branches within the repository are immediately synchronized and the status is updated with the outcome. That initial synchronization is performed before the REST request returns, allowing it to return the updated status.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository. Anonymous users cannot manage synchronization, even on public repositories. Additionally, synchronization must be available for the specified repository. Synchronization is only available if:  - The repository is a fork, since its origin is used as upstream - The owning user still has access to the fork\'s origin,  if the repository is a <i>personalfork</i>
-     * Disable synchronization
+     * Creates request options for setEnabled without sending the request
      */
-    async setEnabledRaw(requestParameters: SetEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncStatus>> {
+    async setEnabledRequestOpts(requestParameters: SetEnabledRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5108,13 +5693,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRefSyncStatus'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables or disables synchronization for the specified repository. When synchronization is enabled, branches within the repository are immediately synchronized and the status is updated with the outcome. That initial synchronization is performed before the REST request returns, allowing it to return the updated status.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository. Anonymous users cannot manage synchronization, even on public repositories. Additionally, synchronization must be available for the specified repository. Synchronization is only available if:  - The repository is a fork, since its origin is used as upstream - The owning user still has access to the fork\'s origin,  if the repository is a <i>personalfork</i>
+     * Disable synchronization
+     */
+    async setEnabledRaw(requestParameters: SetEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefSyncStatus>> {
+        const requestOptions = await this.setEnabledRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5136,10 +5730,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify the settings for a repository hook for this repository.   The service will reject any settings which are too large, the current limit is 32KB once serialized.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.   A JSON document can be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
-     * Update repository hook settings
+     * Creates request options for setSettings1 without sending the request
      */
-    async setSettings1Raw(requestParameters: SetSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+    async setSettings1RequestOpts(requestParameters: SetSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5173,13 +5766,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['exampleSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify the settings for a repository hook for this repository.   The service will reject any settings which are too large, the current limit is 32KB once serialized.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.   A JSON document can be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
+     * Update repository hook settings
+     */
+    async setSettings1Raw(requestParameters: SetSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+        const requestOptions = await this.setSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5194,10 +5796,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams files from the repository\'s root with the last commit to modify each file. Commit modifications are traversed starting from the <code>at</code> commit or, if not specified, from the tip of the default branch.  Unless the repository is public, the authenticated user must have <b>REPO_READ</b> access to call this resource.
-     * Stream files
+     * Creates request options for stream without sending the request
      */
-    async _streamRaw(requestParameters: StreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleFiles>> {
+    async streamRequestOpts(requestParameters: StreamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5225,12 +5826,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams files from the repository\'s root with the last commit to modify each file. Commit modifications are traversed starting from the <code>at</code> commit or, if not specified, from the tip of the default branch.  Unless the repository is public, the authenticated user must have <b>REPO_READ</b> access to call this resource.
+     * Stream files
+     */
+    async _streamRaw(requestParameters: StreamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleFiles>> {
+        const requestOptions = await this.streamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5245,10 +5855,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams files in the requested <code>path</code> with the last commit to modify each file. Commit modifications are traversed starting from the <code>at</code> commit or, if not specified, from the tip of the default branch.  Unless the repository is public, the authenticated user must have <b>REPO_READ</b> access to call this resource.
-     * Stream files with last modified commit in path
+     * Creates request options for stream1 without sending the request
      */
-    async stream1Raw(requestParameters: Stream1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleFiles>> {
+    async stream1RequestOpts(requestParameters: Stream1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -5284,12 +5893,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams files in the requested <code>path</code> with the last commit to modify each file. Commit modifications are traversed starting from the <code>at</code> commit or, if not specified, from the tip of the default branch.  Unless the repository is public, the authenticated user must have <b>REPO_READ</b> access to call this resource.
+     * Stream files with last modified commit in path
+     */
+    async stream1Raw(requestParameters: Stream1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleFiles>> {
+        const requestOptions = await this.stream1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5304,10 +5922,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the file changes available in the <code> from</code> commit but not in the <code> to</code> commit.   If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
-     * Compare commits
+     * Creates request options for streamChanges without sending the request
      */
-    async streamChangesRaw(requestParameters: StreamChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+    async streamChangesRequestOpts(requestParameters: StreamChangesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5351,12 +5968,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the file changes available in the <code> from</code> commit but not in the <code> to</code> commit.   If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
+     * Compare commits
+     */
+    async streamChangesRaw(requestParameters: StreamChangesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChanges1200Response>> {
+        const requestOptions = await this.streamChangesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5371,10 +5997,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the commits accessible from the <code>from</code> commit but not in the <code>to</code> commit.  If either the <code>from</code> or <code>to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
-     * Get accessible commits
+     * Creates request options for streamCommits without sending the request
      */
-    async streamCommitsRaw(requestParameters: StreamCommitsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+    async streamCommitsRequestOpts(requestParameters: StreamCommitsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5418,12 +6043,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the commits accessible from the <code>from</code> commit but not in the <code>to</code> commit.  If either the <code>from</code> or <code>to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
+     * Get accessible commits
+     */
+    async streamCommitsRaw(requestParameters: StreamCommitsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+        const requestOptions = await this.streamCommitsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5438,10 +6072,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the diff between two provided revisions.  To stream a raw text representation of the diff, this endpoint can be called with the request header \'Accept: text/plain\'.   Note:</strong> This resource is currently <i>not paged</i>. The server will internally apply a hard cap to the streamed lines, and it is not possible to request subsequent pages if that cap is exceeded. In the event that the cap is reached, the diff will be cut short and one or more {@code truncated} flags will be set to true on the \"segments\", \"hunks\" and \"diffs\" properties, as well as the top-level object, in the returned JSON response.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get diff between revisions
+     * Creates request options for streamDiff without sending the request
      */
-    async streamDiffRaw(requestParameters: StreamDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+    async streamDiffRequestOpts(requestParameters: StreamDiffRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commitId'] == null) {
             throw new runtime.RequiredError(
                 'commitId',
@@ -5517,12 +6150,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"path"}}`, encodeURIComponent(String(requestParameters['path'])));
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the diff between two provided revisions.  To stream a raw text representation of the diff, this endpoint can be called with the request header \'Accept: text/plain\'.   Note:</strong> This resource is currently <i>not paged</i>. The server will internally apply a hard cap to the streamed lines, and it is not possible to request subsequent pages if that cap is exceeded. In the event that the cap is reached, the diff will be cut short and one or more {@code truncated} flags will be set to true on the \"segments\", \"hunks\" and \"diffs\" properties, as well as the top-level object, in the returned JSON response.  The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get diff between revisions
+     */
+    async streamDiffRaw(requestParameters: StreamDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+        const requestOptions = await this.streamDiffRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5537,10 +6179,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a diff of the changes available in the <code>from</code> commit but not in the <code> to</code> commit.  If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
-     * Get diff between commits
+     * Creates request options for streamDiff1 without sending the request
      */
-    async streamDiff1Raw(requestParameters: StreamDiff1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+    async streamDiff1RequestOpts(requestParameters: StreamDiff1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -5596,12 +6237,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a diff of the changes available in the <code>from</code> commit but not in the <code> to</code> commit.  If either the <code> from</code> or <code> to</code> commit are not specified, they will be replaced by the default branch of their containing repository.
+     * Get diff between commits
+     */
+    async streamDiff1Raw(requestParameters: StreamDiff1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+        const requestOptions = await this.streamDiff1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5616,10 +6266,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of files from particular directory of a repository. The search is done recursively, so all files from any sub-directory of the specified directory will be returned.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get files in directory
+     * Creates request options for streamFiles without sending the request
      */
-    async streamFilesRaw(requestParameters: StreamFilesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StreamFiles200Response>> {
+    async streamFilesRequestOpts(requestParameters: StreamFilesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5655,12 +6304,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of files from particular directory of a repository. The search is done recursively, so all files from any sub-directory of the specified directory will be returned.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get files in directory
+     */
+    async streamFilesRaw(requestParameters: StreamFilesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StreamFiles200Response>> {
+        const requestOptions = await this.streamFilesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5675,10 +6333,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of files from particular directory of a repository. The search is done recursively, so all files from any sub-directory of the specified directory will be returned.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get files in directory
+     * Creates request options for streamFiles1 without sending the request
      */
-    async streamFiles1Raw(requestParameters: StreamFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StreamFiles200Response>> {
+    async streamFiles1RequestOpts(requestParameters: StreamFiles1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -5722,12 +6379,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of files from particular directory of a repository. The search is done recursively, so all files from any sub-directory of the specified directory will be returned.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get files in directory
+     */
+    async streamFiles1Raw(requestParameters: StreamFiles1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StreamFiles200Response>> {
+        const requestOptions = await this.streamFiles1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5742,10 +6408,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the patch content for a repository at a specified revision.   Cache headers are added to the response (only if full commit hashes are used, not in the case of short hashes).   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get patch content at revision
+     * Creates request options for streamPatch without sending the request
      */
-    async streamPatchRaw(requestParameters: StreamPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamPatchRequestOpts(requestParameters: StreamPatchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5781,12 +6446,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the patch content for a repository at a specified revision.   Cache headers are added to the response (only if full commit hashes are used, not in the case of short hashes).   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get patch content at revision
+     */
+    async streamPatchRaw(requestParameters: StreamPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamPatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -5800,10 +6474,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the raw content for a file path at a specified revision.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get raw content of a file at revision
+     * Creates request options for streamRaw without sending the request
      */
-    async streamRawRaw(requestParameters: StreamRawRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamRawRequestOpts(requestParameters: StreamRawRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -5855,12 +6528,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the raw content for a file path at a specified revision.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get raw content of a file at revision
+     */
+    async streamRawRaw(requestParameters: StreamRawRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamRawRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -5874,10 +6556,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Stream the raw diff between two provided revisions.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get raw diff for path
+     * Creates request options for streamRawDiff without sending the request
      */
-    async streamRawDiffRaw(requestParameters: StreamRawDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamRawDiffRequestOpts(requestParameters: StreamRawDiffRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5921,12 +6602,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Stream the raw diff between two provided revisions.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get raw diff for path
+     */
+    async streamRawDiffRaw(requestParameters: StreamRawDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamRawDiffRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -5940,10 +6630,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Stream the raw diff between two provided revisions.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get raw diff for path
+     * Creates request options for streamRawDiff1 without sending the request
      */
-    async streamRawDiff1Raw(requestParameters: StreamRawDiff1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamRawDiff1RequestOpts(requestParameters: StreamRawDiff1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -5995,12 +6684,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Stream the raw diff between two provided revisions.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get raw diff for path
+     */
+    async streamRawDiff1Raw(requestParameters: StreamRawDiff1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamRawDiff1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6014,10 +6712,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Allows developers to apply a manual operation to bring a ref back in sync with upstream when it becomes out of sync due to conflicting changes. The following actions are supported:  - <tt>MERGE</tt>: Merges in commits from the upstream ref. After applying this action, the   synchronized ref will be <tt>AHEAD</tt> (as it still includes commits that do not exist   upstream.    - This action is only supported for <tt>DIVERGED</tt> refs    - If a \"commitMessage\" is provided in the context, it will be used on the merge commit.      Otherwise a default message is used. - <tt>DISCARD</tt>: <i>Throws away</i> local changes in favour of those made upstream. This is a   <i>destructive</i> operation where commits in the local repository are lost.    - No context entries are supported for this action    - If the upstream ref has been deleted, the local ref is deleted as well    - Otherwise, the local ref is updated to reference the same commit as upstream, even if      the update is not fast-forward (similar to a forced push)   The authenticated user must have <b>REPO_WRITE</b> permission for the specified repository. Anonymous users cannot synchronize refs, even on public repositories. Additionally, synchronization must be <i>enabled</i> and <i>available</i> for the specified repository.
-     * Manual synchronization
+     * Creates request options for synchronize without sending the request
      */
-    async synchronizeRaw(requestParameters: SynchronizeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRejectedRef>> {
+    async synchronizeRequestOpts(requestParameters: SynchronizeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6043,13 +6740,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRefSyncRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Allows developers to apply a manual operation to bring a ref back in sync with upstream when it becomes out of sync due to conflicting changes. The following actions are supported:  - <tt>MERGE</tt>: Merges in commits from the upstream ref. After applying this action, the   synchronized ref will be <tt>AHEAD</tt> (as it still includes commits that do not exist   upstream.    - This action is only supported for <tt>DIVERGED</tt> refs    - If a \"commitMessage\" is provided in the context, it will be used on the merge commit.      Otherwise a default message is used. - <tt>DISCARD</tt>: <i>Throws away</i> local changes in favour of those made upstream. This is a   <i>destructive</i> operation where commits in the local repository are lost.    - No context entries are supported for this action    - If the upstream ref has been deleted, the local ref is deleted as well    - Otherwise, the local ref is updated to reference the same commit as upstream, even if      the update is not fast-forward (similar to a forced push)   The authenticated user must have <b>REPO_WRITE</b> permission for the specified repository. Anonymous users cannot synchronize refs, even on public repositories. Additionally, synchronization must be <i>enabled</i> and <i>available</i> for the specified repository.
+     * Manual synchronization
+     */
+    async synchronizeRaw(requestParameters: SynchronizeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRejectedRef>> {
+        const requestOptions = await this.synchronizeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6071,10 +6777,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Test connectivity to a specific endpoint.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Test webhook
+     * Creates request options for testWebhook1 without sending the request
      */
-    async testWebhook1Raw(requestParameters: TestWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async testWebhook1RequestOpts(requestParameters: TestWebhook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6112,13 +6817,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhookCredentials'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Test connectivity to a specific endpoint.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Test webhook
+     */
+    async testWebhook1Raw(requestParameters: TestWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.testWebhook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -6137,10 +6851,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove an emoticon reaction from a comment
-     * Remove a reaction from comment
+     * Creates request options for unReact without sending the request
      */
-    async unReactRaw(requestParameters: UnReactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unReactRequestOpts(requestParameters: UnReactRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6188,12 +6901,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove an emoticon reaction from a comment
+     * Remove a reaction from comment
+     */
+    async unReactRaw(requestParameters: UnReactRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unReactRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6207,10 +6929,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove the authenticated user as a watcher for the specified commit.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the commit to call this resource.
-     * Stop watching commit
+     * Creates request options for unwatch without sending the request
      */
-    async unwatchRaw(requestParameters: UnwatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unwatchRequestOpts(requestParameters: UnwatchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6242,12 +6963,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove the authenticated user as a watcher for the specified commit.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the commit to call this resource.
+     * Stop watching commit
+     */
+    async unwatchRaw(requestParameters: UnwatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unwatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6261,10 +6991,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove the authenticated user as a watcher for the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
-     * Stop watching repository
+     * Creates request options for unwatch2 without sending the request
      */
-    async unwatch2Raw(requestParameters: Unwatch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unwatch2RequestOpts(requestParameters: Unwatch2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6288,12 +7017,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove the authenticated user as a watcher for the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
+     * Stop watching repository
+     */
+    async unwatch2Raw(requestParameters: Unwatch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unwatch2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6307,10 +7045,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a comment, with the following restrictions:  - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment or repository admins and above may update the other   fields of a comment   <strong>Note:</strong> the supplied supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
-     * Update a commit comment
+     * Creates request options for updateComment without sending the request
      */
-    async updateCommentRaw(requestParameters: UpdateCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async updateCommentRequestOpts(requestParameters: UpdateCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6352,13 +7089,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a comment, with the following restrictions:  - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment or repository admins and above may update the other   fields of a comment   <strong>Note:</strong> the supplied supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that the commit is in to call this resource.
+     * Update a commit comment
+     */
+    async updateCommentRaw(requestParameters: UpdateCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.updateCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6373,10 +7119,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a default task for the supplied repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
-     * Update a default task
+     * Creates request options for updateDefaultTask1 without sending the request
      */
-    async updateDefaultTask1Raw(requestParameters: UpdateDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+    async updateDefaultTask1RequestOpts(requestParameters: UpdateDefaultTask1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6417,13 +7162,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultTaskRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a default task for the supplied repository.  The authenticated user must have **REPO_ADMIN** permission for this repository to call the resource.
+     * Update a default task
+     */
+    async updateDefaultTask1Raw(requestParameters: UpdateDefaultTask1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+        const requestOptions = await this.updateDefaultTask1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6438,10 +7192,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the pull request settings for the context repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the context repository to call this resource.   This resource will call all RestFragments that are registered with the key <strong>bitbucket.repository.settings.pullRequests</strong>. If any fragment fails validations by returning a non-empty Map of errors, then no fragments will execute.   Only the settings that should be updated need to be included in the request.   The property keys for the settings that are bundled with the application are   - mergeConfig - the merge strategy configuration for pull requests - requiredApprovers - (Deprecated, please use com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook instead) the number of approvals required on a pull request for it to be mergeable, or 0 to disable the merge check - com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook - a json map containing the keys \'enabled\' (a boolean to enable or disable this merge check) and \'count\' (an integer to set the number of required approvals) - requiredAllApprovers - whether or not all approvers must approve a pull request for it to be mergeable - requiredAllTasksComplete - whether or not all tasks on a pull request need to be completed for it to be mergeable - requiredSuccessfulBuilds - (Deprecated, please use com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck instead) the number of successful builds on a pull request for it to be mergeable, or 0 to disable the merge check - com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck - a json map containing the keys \'enabled\' (a boolean to enable or disable this merge check) and \'count\' (an integer to set the number of required builds)   <strong>Merge strategy configuration deletion:</strong>  An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty \"mergeConfig\" attribute. i.e:    ```{      \"mergeConfig\": {      }  }  ```  Upon completion of this request, the effective configuration will be:   - The configuration set for this repository\'s SCM type as set at the project level, if present, otherwise - the configuration set for this repository\'s SCM type as set at the instance level, if present, otherwise - the default configuration for this repository\'s SCM type   
-     * Update pull request settings
+     * Creates request options for updatePullRequestSettings1 without sending the request
      */
-    async updatePullRequestSettings1Raw(requestParameters: UpdatePullRequestSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPullRequestSettings>> {
+    async updatePullRequestSettings1RequestOpts(requestParameters: UpdatePullRequestSettings1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6467,13 +7220,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositoryPullRequestSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the pull request settings for the context repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the context repository to call this resource.   This resource will call all RestFragments that are registered with the key <strong>bitbucket.repository.settings.pullRequests</strong>. If any fragment fails validations by returning a non-empty Map of errors, then no fragments will execute.   Only the settings that should be updated need to be included in the request.   The property keys for the settings that are bundled with the application are   - mergeConfig - the merge strategy configuration for pull requests - requiredApprovers - (Deprecated, please use com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook instead) the number of approvals required on a pull request for it to be mergeable, or 0 to disable the merge check - com.atlassian.bitbucket.server.bundled-hooks.requiredApproversMergeHook - a json map containing the keys \'enabled\' (a boolean to enable or disable this merge check) and \'count\' (an integer to set the number of required approvals) - requiredAllApprovers - whether or not all approvers must approve a pull request for it to be mergeable - requiredAllTasksComplete - whether or not all tasks on a pull request need to be completed for it to be mergeable - requiredSuccessfulBuilds - (Deprecated, please use com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck instead) the number of successful builds on a pull request for it to be mergeable, or 0 to disable the merge check - com.atlassian.bitbucket.server.bitbucket-build.requiredBuildsMergeCheck - a json map containing the keys \'enabled\' (a boolean to enable or disable this merge check) and \'count\' (an integer to set the number of required builds)   <strong>Merge strategy configuration deletion:</strong>  An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty \"mergeConfig\" attribute. i.e:    ```{      \"mergeConfig\": {      }  }  ```  Upon completion of this request, the effective configuration will be:   - The configuration set for this repository\'s SCM type as set at the project level, if present, otherwise - the configuration set for this repository\'s SCM type as set at the instance level, if present, otherwise - the default configuration for this repository\'s SCM type   
+     * Update pull request settings
+     */
+    async updatePullRequestSettings1Raw(requestParameters: UpdatePullRequestSettings1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPullRequestSettings>> {
+        const requestOptions = await this.updatePullRequestSettings1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6488,10 +7250,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an existing webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Update webhook
+     * Creates request options for updateWebhook1 without sending the request
      */
-    async updateWebhook1Raw(requestParameters: UpdateWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async updateWebhook1RequestOpts(requestParameters: UpdateWebhook1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6525,13 +7286,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhook'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update an existing webhook.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Update webhook
+     */
+    async updateWebhook1Raw(requestParameters: UpdateWebhook1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.updateWebhook1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6546,10 +7316,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add the authenticated user as a watcher for the specified commit.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the commit to call this resource.
-     * Watch commit
+     * Creates request options for watch without sending the request
      */
-    async watchRaw(requestParameters: WatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async watchRequestOpts(requestParameters: WatchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6581,12 +7350,21 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add the authenticated user as a watcher for the specified commit.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the commit to call this resource.
+     * Watch commit
+     */
+    async watchRaw(requestParameters: WatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.watchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6600,10 +7378,9 @@ export class RepositoryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add the authenticated user as a watcher for the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
-     * Watch repository
+     * Creates request options for watch2 without sending the request
      */
-    async watch2Raw(requestParameters: Watch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async watch2RequestOpts(requestParameters: Watch2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6629,13 +7406,22 @@ export class RepositoryApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepository'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add the authenticated user as a watcher for the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
+     * Watch repository
+     */
+    async watch2Raw(requestParameters: Watch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.watch2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

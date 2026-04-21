@@ -25,10 +25,9 @@ import type {
 export class CapabilitiesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the build capabilities of this instance
-     * Get build capabilities
+     * Creates request options for getCapabilities without sending the request
      */
-    async getCapabilitiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildCapabilities>> {
+    async getCapabilitiesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -36,12 +35,21 @@ export class CapabilitiesApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/build/capabilities`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the build capabilities of this instance
+     * Get build capabilities
+     */
+    async getCapabilitiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildCapabilities>> {
+        const requestOptions = await this.getCapabilitiesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -56,10 +64,9 @@ export class CapabilitiesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the Deployment capabilities of this instance
-     * Get deployment capabilities
+     * Creates request options for getCapabilities1 without sending the request
      */
-    async getCapabilities1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getCapabilities1RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -67,12 +74,21 @@ export class CapabilitiesApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deployment/capabilities`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the Deployment capabilities of this instance
+     * Get deployment capabilities
+     */
+    async getCapabilities1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getCapabilities1RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

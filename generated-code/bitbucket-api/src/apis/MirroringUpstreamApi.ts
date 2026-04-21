@@ -119,10 +119,9 @@ interface UpgradeRequest {
 export class MirroringUpstreamApi extends runtime.BaseAPI {
 
     /**
-     * Accepts a mirroring request
-     * Accept a mirroring request
+     * Creates request options for accept without sending the request
      */
-    async acceptRaw(requestParameters: AcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+    async acceptRequestOpts(requestParameters: AcceptRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirroringRequestId'] == null) {
             throw new runtime.RequiredError(
                 'mirroringRequestId',
@@ -138,12 +137,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/requests/{mirroringRequestId}/accept`;
         urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Accepts a mirroring request
+     * Accept a mirroring request
+     */
+    async acceptRaw(requestParameters: AcceptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+        const requestOptions = await this.acceptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -158,10 +166,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the analytics settings from the mirroring upstream
-     * Get analytics settings from upstream
+     * Creates request options for analyticsSettings without sending the request
      */
-    async analyticsSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnalyticsSettings>> {
+    async analyticsSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -169,12 +176,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/analyticsSettings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the analytics settings from the mirroring upstream
+     * Get analytics settings from upstream
+     */
+    async analyticsSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnalyticsSettings>> {
+        const requestOptions = await this.analyticsSettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -189,10 +205,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Authenticates on behalf of a user. Used by mirrors to check the credentials supplied to them by users. If successful a user and their effective permissions are returned as follows -  * For SSH credentials - all the effective user permissions are returned. * For all other credentials - the highest global permission is returned along with highest repository permission if repository ID is also provided in the request.  Currently only username/password, bearer token and SSH credentials are supported.
-     * Authenticate on behalf of a user
+     * Creates request options for authenticate without sending the request
      */
-    async authenticateRaw(requestParameters: AuthenticateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUserWithPermissions>> {
+    async authenticateRequestOpts(requestParameters: AuthenticateRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -202,13 +217,22 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/authenticate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAuthenticationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Authenticates on behalf of a user. Used by mirrors to check the credentials supplied to them by users. If successful a user and their effective permissions are returned as follows -  * For SSH credentials - all the effective user permissions are returned. * For all other credentials - the highest global permission is returned along with highest repository permission if repository ID is also provided in the request.  Currently only username/password, bearer token and SSH credentials are supported.
+     * Authenticate on behalf of a user
+     */
+    async authenticateRaw(requestParameters: AuthenticateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUserWithPermissions>> {
+        const requestOptions = await this.authenticateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -223,10 +247,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a mirroring request
-     * Delete a mirroring request
+     * Creates request options for deleteMirroringRequest without sending the request
      */
-    async deleteMirroringRequestRaw(requestParameters: DeleteMirroringRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteMirroringRequestRequestOpts(requestParameters: DeleteMirroringRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirroringRequestId'] == null) {
             throw new runtime.RequiredError(
                 'mirroringRequestId',
@@ -242,12 +265,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/requests/{mirroringRequestId}`;
         urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a mirroring request
+     * Delete a mirroring request
+     */
+    async deleteMirroringRequestRaw(requestParameters: DeleteMirroringRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteMirroringRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -261,10 +293,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the current user\'s preferred mirror
-     * Remove preferred mirror
+     * Creates request options for deletePreferredMirrorId without sending the request
      */
-    async deletePreferredMirrorIdRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePreferredMirrorIdRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -272,12 +303,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the current user\'s preferred mirror
+     * Remove preferred mirror
+     */
+    async deletePreferredMirrorIdRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePreferredMirrorIdRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -291,10 +331,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of repositories enriched with a content hash and default branch
-     * Get content hashes for repositories
+     * Creates request options for getAllContentHashes without sending the request
      */
-    async getAllContentHashesRaw(requestParameters: GetAllContentHashesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
+    async getAllContentHashesRequestOpts(requestParameters: GetAllContentHashesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['includeDefaultBranch'] != null) {
@@ -306,12 +345,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/repos`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of repositories enriched with a content hash and default branch
+     * Get content hashes for repositories
+     */
+    async getAllContentHashesRaw(requestParameters: GetAllContentHashesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
+        const requestOptions = await this.getAllContentHashesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -326,10 +374,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of repositories for a given project, enriched with a content hash
-     * Get hashes for repositories in project
+     * Creates request options for getAllReposForProject without sending the request
      */
-    async getAllReposForProjectRaw(requestParameters: GetAllReposForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllReposForProject200Response>> {
+    async getAllReposForProjectRequestOpts(requestParameters: GetAllReposForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -357,12 +404,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/projects/{projectId}/repos`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of repositories for a given project, enriched with a content hash
+     * Get hashes for repositories in project
+     */
+    async getAllReposForProjectRaw(requestParameters: GetAllReposForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllReposForProject200Response>> {
+        const requestOptions = await this.getAllReposForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -377,10 +433,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a repository enriched with a content hash and default branch
-     * Get content hash for a repository
+     * Creates request options for getContentHashById without sending the request
      */
-    async getContentHashByIdRaw(requestParameters: GetContentHashByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
+    async getContentHashByIdRequestOpts(requestParameters: GetContentHashByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repoId'] == null) {
             throw new runtime.RequiredError(
                 'repoId',
@@ -400,12 +455,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/repos/{repoId}`;
         urlPath = urlPath.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a repository enriched with a content hash and default branch
+     * Get content hash for a repository
+     */
+    async getContentHashByIdRaw(requestParameters: GetContentHashByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnrichedRepository>> {
+        const requestOptions = await this.getContentHashByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -420,10 +484,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the mirror specified by a mirror ID
-     * Get mirror by ID
+     * Creates request options for getMirror without sending the request
      */
-    async getMirrorRaw(requestParameters: GetMirrorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+    async getMirrorRequestOpts(requestParameters: GetMirrorRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirrorId'] == null) {
             throw new runtime.RequiredError(
                 'mirrorId',
@@ -439,12 +502,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
         urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the mirror specified by a mirror ID
+     * Get mirror by ID
+     */
+    async getMirrorRaw(requestParameters: GetMirrorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+        const requestOptions = await this.getMirrorRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -459,10 +531,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a mirroring request
-     * Get a mirroring request
+     * Creates request options for getMirroringRequest without sending the request
      */
-    async getMirroringRequestRaw(requestParameters: GetMirroringRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroringRequest>> {
+    async getMirroringRequestRequestOpts(requestParameters: GetMirroringRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirroringRequestId'] == null) {
             throw new runtime.RequiredError(
                 'mirroringRequestId',
@@ -478,12 +549,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/requests/{mirroringRequestId}`;
         urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a mirroring request
+     * Get a mirroring request
+     */
+    async getMirroringRequestRaw(requestParameters: GetMirroringRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroringRequest>> {
+        const requestOptions = await this.getMirroringRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -498,10 +578,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the current user\'s preferred mirror server
-     * Get preferred mirror
+     * Creates request options for getPreferredMirrorId without sending the request
      */
-    async getPreferredMirrorIdRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+    async getPreferredMirrorIdRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -509,12 +588,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the current user\'s preferred mirror server
+     * Get preferred mirror
+     */
+    async getPreferredMirrorIdRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+        const requestOptions = await this.getPreferredMirrorIdRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -529,10 +617,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the requested project using its primary key ID.<br> Since 6.7
-     * Get project
+     * Creates request options for getProjectById without sending the request
      */
-    async getProjectByIdRaw(requestParameters: GetProjectByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+    async getProjectByIdRequestOpts(requestParameters: GetProjectByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -548,12 +635,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/projects/{projectId}`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the requested project using its primary key ID.<br> Since 6.7
+     * Get project
+     */
+    async getProjectByIdRaw(requestParameters: GetProjectByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+        const requestOptions = await this.getProjectByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -568,10 +664,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of mirrors for a repository. This resource will return <strong>all mirrors</strong> along with authorized links to the mirror\'s repository REST resource. To determine if a repository is available on the mirror, the returned URL needs to be called.
-     * Get mirrors for repository
+     * Creates request options for getRepositoryMirrors without sending the request
      */
-    async getRepositoryMirrorsRaw(requestParameters: GetRepositoryMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroredRepositoryDescriptor>> {
+    async getRepositoryMirrorsRequestOpts(requestParameters: GetRepositoryMirrorsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repoId'] == null) {
             throw new runtime.RequiredError(
                 'repoId',
@@ -591,12 +686,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/repos/{repoId}/mirrors`;
         urlPath = urlPath.replace(`{${"repoId"}}`, encodeURIComponent(String(requestParameters['repoId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of mirrors for a repository. This resource will return <strong>all mirrors</strong> along with authorized links to the mirror\'s repository REST resource. To determine if a repository is available on the mirror, the returned URL needs to be called.
+     * Get mirrors for repository
+     */
+    async getRepositoryMirrorsRaw(requestParameters: GetRepositoryMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroredRepositoryDescriptor>> {
+        const requestOptions = await this.getRepositoryMirrorsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -611,10 +715,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of mirrors
-     * Get all mirrors
+     * Creates request options for listMirrors without sending the request
      */
-    async listMirrorsRaw(requestParameters: ListMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListMirrors200Response>> {
+    async listMirrorsRequestOpts(requestParameters: ListMirrorsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -630,12 +733,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/mirrorServers`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of mirrors
+     * Get all mirrors
+     */
+    async listMirrorsRaw(requestParameters: ListMirrorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListMirrors200Response>> {
+        const requestOptions = await this.listMirrorsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -650,10 +762,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a mirroring request
-     * Get mirroring requests
+     * Creates request options for listRequests without sending the request
      */
-    async listRequestsRaw(requestParameters: ListRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRequests200Response>> {
+    async listRequestsRequestOpts(requestParameters: ListRequestsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['state'] != null) {
@@ -673,12 +784,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/requests`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a mirroring request
+     * Get mirroring requests
+     */
+    async listRequestsRaw(requestParameters: ListRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRequests200Response>> {
+        const requestOptions = await this.listRequestsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -693,10 +813,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Publishes a RepositoryMirrorEvent on the event queue.
-     * Publish RepositoryMirrorEvent
+     * Creates request options for publishEvent without sending the request
      */
-    async publishEventRaw(requestParameters: PublishEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async publishEventRequestOpts(requestParameters: PublishEventRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirrorId'] == null) {
             throw new runtime.RequiredError(
                 'mirrorId',
@@ -714,13 +833,22 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}/events`;
         urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositoryMirrorEvent'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Publishes a RepositoryMirrorEvent on the event queue.
+     * Publish RepositoryMirrorEvent
+     */
+    async publishEventRaw(requestParameters: PublishEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.publishEventRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -734,10 +862,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new mirroring request
-     * Create a mirroring request
+     * Creates request options for register without sending the request
      */
-    async registerRaw(requestParameters: RegisterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroringRequest>> {
+    async registerRequestOpts(requestParameters: RegisterRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -747,13 +874,22 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/requests`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMirroringRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new mirroring request
+     * Create a mirroring request
+     */
+    async registerRaw(requestParameters: RegisterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirroringRequest>> {
+        const requestOptions = await this.registerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -768,10 +904,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rejects a mirroring request
-     * Reject a mirroring request
+     * Creates request options for reject without sending the request
      */
-    async rejectRaw(requestParameters: RejectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+    async rejectRequestOpts(requestParameters: RejectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirroringRequestId'] == null) {
             throw new runtime.RequiredError(
                 'mirroringRequestId',
@@ -787,12 +922,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/requests/{mirroringRequestId}/reject`;
         urlPath = urlPath.replace(`{${"mirroringRequestId"}}`, encodeURIComponent(String(requestParameters['mirroringRequestId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Rejects a mirroring request
+     * Reject a mirroring request
+     */
+    async rejectRaw(requestParameters: RejectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+        const requestOptions = await this.rejectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -807,10 +951,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a mirror, disabling all access and notifications for the mirror server in question
-     * Delete mirror by ID
+     * Creates request options for remove without sending the request
      */
-    async removeRaw(requestParameters: RemoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeRequestOpts(requestParameters: RemoveRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirrorId'] == null) {
             throw new runtime.RequiredError(
                 'mirrorId',
@@ -826,12 +969,21 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
         urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a mirror, disabling all access and notifications for the mirror server in question
+     * Delete mirror by ID
+     */
+    async removeRaw(requestParameters: RemoveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -845,10 +997,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the mirror specified by a mirror ID as the current user\'s preferred mirror
-     * Set preferred mirror
+     * Creates request options for setPreferredMirrorId without sending the request
      */
-    async setPreferredMirrorIdRaw(requestParameters: SetPreferredMirrorIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPreferredMirrorIdRequestOpts(requestParameters: SetPreferredMirrorIdRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -858,13 +1009,22 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
 
         let urlPath = `/mirroring/latest/account/settings/preferred-mirror`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the mirror specified by a mirror ID as the current user\'s preferred mirror
+     * Set preferred mirror
+     */
+    async setPreferredMirrorIdRaw(requestParameters: SetPreferredMirrorIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPreferredMirrorIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -878,10 +1038,9 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
     }
 
     /**
-     * Upgrades the mirror server in question with the provided details.This endpoint can only be called by the mirror instance or system administrators<br>Since 5.8
-     * Upgrade mirror server
+     * Creates request options for upgrade without sending the request
      */
-    async upgradeRaw(requestParameters: UpgradeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+    async upgradeRequestOpts(requestParameters: UpgradeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['mirrorId'] == null) {
             throw new runtime.RequiredError(
                 'mirrorId',
@@ -899,13 +1058,22 @@ export class MirroringUpstreamApi extends runtime.BaseAPI {
         let urlPath = `/mirroring/latest/mirrorServers/{mirrorId}`;
         urlPath = urlPath.replace(`{${"mirrorId"}}`, encodeURIComponent(String(requestParameters['mirrorId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMirrorUpgradeRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Upgrades the mirror server in question with the provided details.This endpoint can only be called by the mirror instance or system administrators<br>Since 5.8
+     * Upgrade mirror server
+     */
+    async upgradeRaw(requestParameters: UpgradeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMirrorServer>> {
+        const requestOptions = await this.upgradeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -27,10 +27,9 @@ interface GetPullRequests2Request {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
-     * Returns the total number of pull requests in the user\'s inbox
-     * Get total number of pull requests in inbox
+     * Creates request options for getPullRequestCount without sending the request
      */
-    async getPullRequestCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPullRequestCountRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -38,12 +37,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/inbox/pull-requests/count`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the total number of pull requests in the user\'s inbox
+     * Get total number of pull requests in inbox
+     */
+    async getPullRequestCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPullRequestCountRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -57,10 +65,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of pull requests in the user\'s inbox.
-     * Get pull requests in inbox
+     * Creates request options for getPullRequests2 without sending the request
      */
-    async getPullRequests2Raw(requestParameters: GetPullRequests2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPullRequests2RequestOpts(requestParameters: GetPullRequests2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['role'] != null) {
@@ -80,12 +87,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/inbox/pull-requests`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of pull requests in the user\'s inbox.
+     * Get pull requests in inbox
+     */
+    async getPullRequests2Raw(requestParameters: GetPullRequests2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPullRequests2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

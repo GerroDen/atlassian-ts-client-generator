@@ -275,11 +275,10 @@ interface ValidateErasableRequest {
 export class PermissionManagementApi extends runtime.BaseAPI {
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add user to group
+     * Creates request options for addGroupToUser without sending the request
      * @deprecated
      */
-    async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addGroupToUserRequestOpts(requestParameters: AddGroupToUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -289,13 +288,23 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/add-group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['groupPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add user to group
+     * @deprecated
+     */
+    async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addGroupToUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -310,11 +319,10 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add user to group
+     * Creates request options for addUserToGroup without sending the request
      * @deprecated
      */
-    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUserToGroupRequestOpts(requestParameters: AddUserToGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -324,13 +332,23 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/add-user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add user to group
+     * @deprecated
+     */
+    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUserToGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -345,10 +363,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a user to one or more groups.    The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add user to groups
+     * Creates request options for addUserToGroups without sending the request
      */
-    async addUserToGroupsRaw(requestParameters: AddUserToGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUserToGroupsRequestOpts(requestParameters: AddUserToGroupsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -358,13 +375,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/add-groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userAndGroups'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a user to one or more groups.    The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add user to groups
+     */
+    async addUserToGroupsRaw(requestParameters: AddUserToGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUserToGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -378,10 +404,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add multiple users to a group.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add multiple users to group
+     * Creates request options for addUsersToGroup without sending the request
      */
-    async addUsersToGroupRaw(requestParameters: AddUsersToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUsersToGroupRequestOpts(requestParameters: AddUsersToGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -391,13 +416,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/add-users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['groupAndUsers'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add multiple users to a group.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add multiple users to group
+     */
+    async addUsersToGroupRaw(requestParameters: AddUsersToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUsersToGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -411,10 +445,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Clears any CAPTCHA challenge that may constrain the user with the supplied username when they authenticate. Additionally any counter or metric that contributed towards the user being issued the CAPTCHA challenge (for instance too many consecutive failed logins) will also be reset.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource, and may not clear the CAPTCHA of a user with greater permissions than themselves.
-     * Clear CAPTCHA for user
+     * Creates request options for clearUserCaptchaChallenge without sending the request
      */
-    async clearUserCaptchaChallengeRaw(requestParameters: ClearUserCaptchaChallengeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async clearUserCaptchaChallengeRequestOpts(requestParameters: ClearUserCaptchaChallengeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -433,12 +466,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/captcha`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Clears any CAPTCHA challenge that may constrain the user with the supplied username when they authenticate. Additionally any counter or metric that contributed towards the user being issued the CAPTCHA challenge (for instance too many consecutive failed logins) will also be reset.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource, and may not clear the CAPTCHA of a user with greater permissions than themselves.
+     * Clear CAPTCHA for user
+     */
+    async clearUserCaptchaChallengeRaw(requestParameters: ClearUserCaptchaChallengeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.clearUserCaptchaChallengeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -452,10 +494,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new group.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Create group
+     * Creates request options for createGroup without sending the request
      */
-    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
+    async createGroupRequestOpts(requestParameters: CreateGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -474,12 +515,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new group.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Create group
+     */
+    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
+        const requestOptions = await this.createGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -494,10 +544,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new user from the assembled query parameters.  The default group can be used to control initial permissions for new users, such as granting users the ability to login or providing read access to certain projects or repositories. If the user is not added to the default group, they may not be able to login after their account is created until explicit permissions are configured.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Create user
+     * Creates request options for createUser without sending the request
      */
-    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createUserRequestOpts(requestParameters: CreateUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['emailAddress'] == null) {
             throw new runtime.RequiredError(
                 'emailAddress',
@@ -550,12 +599,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new user from the assembled query parameters.  The default group can be used to control initial permissions for new users, such as granting users the ability to login or providing read access to certain projects or repositories. If the user is not added to the default group, they may not be able to login after their account is created until explicit permissions are configured.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Create user
+     */
+    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -569,10 +627,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the specified group, removing them from the system. This also removes any permissions that may have been granted to the group.  A user may not delete the last group that is granting them administrative permissions, or a group with greater permissions than themselves.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Remove group
+     * Creates request options for deleteGroup without sending the request
      */
-    async deleteGroupRaw(requestParameters: DeleteGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
+    async deleteGroupRequestOpts(requestParameters: DeleteGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -591,12 +648,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the specified group, removing them from the system. This also removes any permissions that may have been granted to the group.  A user may not delete the last group that is granting them administrative permissions, or a group with greater permissions than themselves.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Remove group
+     */
+    async deleteGroupRaw(requestParameters: DeleteGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedGroup>> {
+        const requestOptions = await this.deleteGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -611,10 +677,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the specified user, removing them from the system. This also removes any permissions that may have been granted to the user.  A user may not delete themselves, and a user with <strong>ADMIN</strong> permissions may not delete a user with <strong>SYS_ADMIN</strong>permissions.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Remove user
+     * Creates request options for deleteUser without sending the request
      */
-    async deleteUserRaw(requestParameters: DeleteUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+    async deleteUserRequestOpts(requestParameters: DeleteUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -633,12 +698,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the specified user, removing them from the system. This also removes any permissions that may have been granted to the user.  A user may not delete themselves, and a user with <strong>ADMIN</strong> permissions may not delete a user with <strong>SYS_ADMIN</strong>permissions.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Remove user
+     */
+    async deleteUserRaw(requestParameters: DeleteUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+        const requestOptions = await this.deleteUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -653,10 +727,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Erases personally identifying user data for a deleted user.  References in the application to the original username will be either removed or updated to a new non-identifying username. Refer to the <a href=\"https://confluence.atlassian.com/gdpr/bitbucket-right-to-erasure-949770560.html\">support guide</a> for details about what data is and isn\'t erased.  User erasure can only be performed on a deleted user. If the user has not been deleted first then this endpoint will return a bad request and no erasure will be performed.  Erasing user data is <strong>irreversible</strong> and may lead to a degraded user experience. This method should not be used as part of a standard user deletion and cleanup process.  Plugins can participate in user erasure by defining a <code>&lt;user-erasure-handler&gt;</code> module. If one or more plugin modules fail, an error summary of the failing modules is returned.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Erase user information
+     * Creates request options for eraseUser without sending the request
      */
-    async eraseUserRaw(requestParameters: EraseUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestErasedUser>> {
+    async eraseUserRequestOpts(requestParameters: EraseUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -675,12 +748,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/erasure`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Erases personally identifying user data for a deleted user.  References in the application to the original username will be either removed or updated to a new non-identifying username. Refer to the <a href=\"https://confluence.atlassian.com/gdpr/bitbucket-right-to-erasure-949770560.html\">support guide</a> for details about what data is and isn\'t erased.  User erasure can only be performed on a deleted user. If the user has not been deleted first then this endpoint will return a bad request and no erasure will be performed.  Erasing user data is <strong>irreversible</strong> and may lead to a degraded user experience. This method should not be used as part of a standard user deletion and cleanup process.  Plugins can participate in user erasure by defining a <code>&lt;user-erasure-handler&gt;</code> module. If one or more plugin modules fail, an error summary of the failing modules is returned.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Erase user information
+     */
+    async eraseUserRaw(requestParameters: EraseUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestErasedUser>> {
+        const requestOptions = await this.eraseUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -695,10 +777,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of users that are <em>not</em> members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
-     * Get groups for user
+     * Creates request options for findGroupsForUser without sending the request
      */
-    async findGroupsForUserRaw(requestParameters: FindGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async findGroupsForUserRequestOpts(requestParameters: FindGroupsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['context'] == null) {
             throw new runtime.RequiredError(
                 'context',
@@ -729,12 +810,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/more-members`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of users that are <em>not</em> members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
+     * Get groups for user
+     */
+    async findGroupsForUserRaw(requestParameters: FindGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.findGroupsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -749,10 +839,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of groups the specified user is <em>not</em> a member of. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
-     * Find other groups for user
+     * Creates request options for findOtherGroupsForUser without sending the request
      */
-    async findOtherGroupsForUserRaw(requestParameters: FindOtherGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+    async findOtherGroupsForUserRequestOpts(requestParameters: FindOtherGroupsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['context'] == null) {
             throw new runtime.RequiredError(
                 'context',
@@ -783,12 +872,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/more-non-members`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of groups the specified user is <em>not</em> a member of. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
+     * Find other groups for user
+     */
+    async findOtherGroupsForUserRaw(requestParameters: FindOtherGroupsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+        const requestOptions = await this.findOtherGroupsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -803,10 +901,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of users that are members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
-     * Get group members
+     * Creates request options for findUsersInGroup without sending the request
      */
-    async findUsersInGroupRaw(requestParameters: FindUsersInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async findUsersInGroupRequestOpts(requestParameters: FindUsersInGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['context'] == null) {
             throw new runtime.RequiredError(
                 'context',
@@ -837,12 +934,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/more-members`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of users that are members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
+     * Get group members
+     */
+    async findUsersInGroupRaw(requestParameters: FindUsersInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.findUsersInGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -857,10 +963,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of users that are <em>not</em> members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
-     * Get members not in group
+     * Creates request options for findUsersNotInGroup without sending the request
      */
-    async findUsersNotInGroupRaw(requestParameters: FindUsersNotInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async findUsersNotInGroupRequestOpts(requestParameters: FindUsersNotInGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['context'] == null) {
             throw new runtime.RequiredError(
                 'context',
@@ -891,12 +996,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/more-non-members`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of users that are <em>not</em> members of a specified group. <p>The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
+     * Get members not in group
+     */
+    async findUsersNotInGroupRaw(requestParameters: FindUsersNotInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.findUsersNotInGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -911,10 +1025,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of group names.  The authenticated user must have <strong>LICENSED_USER</strong> permission or higher to call this resource.
-     * Get group names
+     * Creates request options for getGroups without sending the request
      */
-    async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getGroupsRequestOpts(requestParameters: GetGroupsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -934,12 +1047,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of group names.  The authenticated user must have <strong>LICENSED_USER</strong> permission or higher to call this resource.
+     * Get group names
+     */
+    async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -954,10 +1076,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups.   The authenticated user must have <strong>LICENSED_USER</strong> permission or higher to call this resource.
-     * Get groups
+     * Creates request options for getGroups1 without sending the request
      */
-    async getGroups1Raw(requestParameters: GetGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+    async getGroups1RequestOpts(requestParameters: GetGroups1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -977,12 +1098,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups.   The authenticated user must have <strong>LICENSED_USER</strong> permission or higher to call this resource.
+     * Get groups
+     */
+    async getGroups1Raw(requestParameters: GetGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+        const requestOptions = await this.getGroups1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -997,10 +1127,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have been granted at least one global permission.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Get groups with a global permission
+     * Creates request options for getGroupsWithAnyPermission without sending the request
      */
-    async getGroupsWithAnyPermissionRaw(requestParameters: GetGroupsWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+    async getGroupsWithAnyPermissionRequestOpts(requestParameters: GetGroupsWithAnyPermissionRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1020,12 +1149,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have been granted at least one global permission.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Get groups with a global permission
+     */
+    async getGroupsWithAnyPermissionRaw(requestParameters: GetGroupsWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+        const requestOptions = await this.getGroupsWithAnyPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1040,10 +1178,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have been granted at least one permission for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
-     * Get groups with permission to repository
+     * Creates request options for getGroupsWithAnyPermission2 without sending the request
      */
-    async getGroupsWithAnyPermission2Raw(requestParameters: GetGroupsWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+    async getGroupsWithAnyPermission2RequestOpts(requestParameters: GetGroupsWithAnyPermission2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1079,12 +1216,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have been granted at least one permission for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
+     * Get groups with permission to repository
+     */
+    async getGroupsWithAnyPermission2Raw(requestParameters: GetGroupsWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+        const requestOptions = await this.getGroupsWithAnyPermission2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1099,10 +1245,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have no granted global permissions.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Get groups with no global permission
+     * Creates request options for getGroupsWithoutAnyPermission without sending the request
      */
-    async getGroupsWithoutAnyPermissionRaw(requestParameters: GetGroupsWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+    async getGroupsWithoutAnyPermissionRequestOpts(requestParameters: GetGroupsWithoutAnyPermissionRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1122,12 +1267,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/groups/none`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have no granted global permissions.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Get groups with no global permission
+     */
+    async getGroupsWithoutAnyPermissionRaw(requestParameters: GetGroupsWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+        const requestOptions = await this.getGroupsWithoutAnyPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1142,10 +1296,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have no granted permissions for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
-     * Get groups without repository permission
+     * Creates request options for getGroupsWithoutAnyPermission2 without sending the request
      */
-    async getGroupsWithoutAnyPermission2Raw(requestParameters: GetGroupsWithoutAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+    async getGroupsWithoutAnyPermission2RequestOpts(requestParameters: GetGroupsWithoutAnyPermission2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1181,12 +1334,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have no granted permissions for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
+     * Get groups without repository permission
+     */
+    async getGroupsWithoutAnyPermission2Raw(requestParameters: GetGroupsWithoutAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+        const requestOptions = await this.getGroupsWithoutAnyPermission2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1201,10 +1363,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of active directories.    The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Get directories
+     * Creates request options for getUserDirectories without sending the request
      */
-    async getUserDirectoriesRaw(requestParameters: GetUserDirectoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDirectory>> {
+    async getUserDirectoriesRequestOpts(requestParameters: GetUserDirectoriesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['includeInactive'] != null) {
@@ -1216,12 +1377,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/user-directories`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of active directories.    The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Get directories
+     */
+    async getUserDirectoriesRaw(requestParameters: GetUserDirectoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDirectory>> {
+        const requestOptions = await this.getUserDirectoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1236,10 +1406,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users.    The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
-     * Get users
+     * Creates request options for getUsers1 without sending the request
      */
-    async getUsers1Raw(requestParameters: GetUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async getUsers1RequestOpts(requestParameters: GetUsers1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1259,12 +1428,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users.    The authenticated user must have the <strong>LICENSED_USER</strong> permission to call this resource.
+     * Get users
+     */
+    async getUsers1Raw(requestParameters: GetUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.getUsers1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1279,10 +1457,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users that have been granted at least one global permission.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Get users with a global permission
+     * Creates request options for getUsersWithAnyPermission without sending the request
      */
-    async getUsersWithAnyPermissionRaw(requestParameters: GetUsersWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+    async getUsersWithAnyPermissionRequestOpts(requestParameters: GetUsersWithAnyPermissionRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1302,12 +1479,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users that have been granted at least one global permission.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Get users with a global permission
+     */
+    async getUsersWithAnyPermissionRaw(requestParameters: GetUsersWithAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+        const requestOptions = await this.getUsersWithAnyPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1322,10 +1508,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users that have been granted at least one permission for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
-     * Get users with permission to repository
+     * Creates request options for getUsersWithAnyPermission2 without sending the request
      */
-    async getUsersWithAnyPermission2Raw(requestParameters: GetUsersWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithAnyPermission1200Response>> {
+    async getUsersWithAnyPermission2RequestOpts(requestParameters: GetUsersWithAnyPermission2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1361,12 +1546,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users that have been granted at least one permission for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
+     * Get users with permission to repository
+     */
+    async getUsersWithAnyPermission2Raw(requestParameters: GetUsersWithAnyPermission2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithAnyPermission1200Response>> {
+        const requestOptions = await this.getUsersWithAnyPermission2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1381,10 +1575,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users that have no granted global permissions.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Get users with no global permission
+     * Creates request options for getUsersWithoutAnyPermission without sending the request
      */
-    async getUsersWithoutAnyPermissionRaw(requestParameters: GetUsersWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+    async getUsersWithoutAnyPermissionRequestOpts(requestParameters: GetUsersWithoutAnyPermissionRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1404,12 +1597,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/users/none`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users that have no granted global permissions.   The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Get users with no global permission
+     */
+    async getUsersWithoutAnyPermissionRaw(requestParameters: GetUsersWithoutAnyPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+        const requestOptions = await this.getUsersWithoutAnyPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1424,10 +1626,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of <i>licensed</i> users that have no granted permissions for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
-     * Get users without repository permission
+     * Creates request options for getUsersWithoutPermission1 without sending the request
      */
-    async getUsersWithoutPermission1Raw(requestParameters: GetUsersWithoutPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+    async getUsersWithoutPermission1RequestOpts(requestParameters: GetUsersWithoutPermission1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1463,12 +1664,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of <i>licensed</i> users that have no granted permissions for the specified repository.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.
+     * Get users without repository permission
+     */
+    async getUsersWithoutPermission1Raw(requestParameters: GetUsersWithoutPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+        const requestOptions = await this.getUsersWithoutPermission1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1483,10 +1693,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove a user from a group. This is very similar to <code>groups/remove-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Remove user from group
+     * Creates request options for removeGroupFromUser without sending the request
      */
-    async removeGroupFromUserRaw(requestParameters: RemoveGroupFromUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeGroupFromUserRequestOpts(requestParameters: RemoveGroupFromUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1496,13 +1705,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/remove-group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['groupPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove a user from a group. This is very similar to <code>groups/remove-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Remove user from group
+     */
+    async removeGroupFromUserRaw(requestParameters: RemoveGroupFromUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeGroupFromUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1516,11 +1734,10 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
-     * Remove user from group
+     * Creates request options for removeUserFromGroup without sending the request
      * @deprecated
      */
-    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUserFromGroupRequestOpts(requestParameters: RemoveUserFromGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1530,13 +1747,23 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/remove-user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
+     * Remove user from group
+     * @deprecated
+     */
+    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUserFromGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1551,10 +1778,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rename a user.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Rename user
+     * Creates request options for renameUser without sending the request
      */
-    async renameUserRaw(requestParameters: RenameUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+    async renameUserRequestOpts(requestParameters: RenameUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1564,13 +1790,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/rename`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userRename'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Rename a user.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Rename user
+     */
+    async renameUserRaw(requestParameters: RenameUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+        const requestOptions = await this.renameUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1585,10 +1820,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all permissions for the specified repository for the given groups and users.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified repository or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permission if their own permission would be revoked as a result, nor may they revoke their own permission unless they have a global permission that already implies that permission.
-     * Revoke all repository permissions for users and groups
+     * Creates request options for revokePermissions1 without sending the request
      */
-    async revokePermissions1Raw(requestParameters: RevokePermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissions1RequestOpts(requestParameters: RevokePermissions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1620,12 +1854,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all permissions for the specified repository for the given groups and users.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified repository or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permission if their own permission would be revoked as a result, nor may they revoke their own permission unless they have a global permission that already implies that permission.
+     * Revoke all repository permissions for users and groups
+     */
+    async revokePermissions1Raw(requestParameters: RevokePermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1639,10 +1882,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all global permissions for a group.    The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - greater or equal permissions than the current permission level of the group (a user may not demote the     permission level of a group with higher permissions than them)   to call this resource. In addition, a user may not revoke a group\'s permissions if their own permission level would be reduced as a result.
-     * Revoke all global permissions for group
+     * Creates request options for revokePermissionsForGroup without sending the request
      */
-    async revokePermissionsForGroupRaw(requestParameters: RevokePermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForGroupRequestOpts(requestParameters: RevokePermissionsForGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1661,12 +1903,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all global permissions for a group.    The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - greater or equal permissions than the current permission level of the group (a user may not demote the     permission level of a group with higher permissions than them)   to call this resource. In addition, a user may not revoke a group\'s permissions if their own permission level would be reduced as a result.
+     * Revoke all global permissions for group
+     */
+    async revokePermissionsForGroupRaw(requestParameters: RevokePermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1680,10 +1931,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all permissions for the specified repository for a group.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.  In addition, a user may not revoke a group\'s permissions if it will reduce their own permission level.
-     * Revoke group repository permission
+     * Creates request options for revokePermissionsForGroup2 without sending the request
      */
-    async revokePermissionsForGroup2Raw(requestParameters: RevokePermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForGroup2RequestOpts(requestParameters: RevokePermissionsForGroup2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1718,12 +1968,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all permissions for the specified repository for a group.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.  In addition, a user may not revoke a group\'s permissions if it will reduce their own permission level.
+     * Revoke group repository permission
+     */
+    async revokePermissionsForGroup2Raw(requestParameters: RevokePermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForGroup2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1737,10 +1996,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all global permissions for a user.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - greater or equal permissions than the current permission level of the user (a user may not demote the     permission level of a user with higher permissions than them)   to call this resource. In addition, a user may not demote their own permission level.
-     * Revoke all global permissions for user
+     * Creates request options for revokePermissionsForUser without sending the request
      */
-    async revokePermissionsForUserRaw(requestParameters: RevokePermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForUserRequestOpts(requestParameters: RevokePermissionsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1759,12 +2017,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all global permissions for a user.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - greater or equal permissions than the current permission level of the user (a user may not demote the     permission level of a user with higher permissions than them)   to call this resource. In addition, a user may not demote their own permission level.
+     * Revoke all global permissions for user
+     */
+    async revokePermissionsForUserRaw(requestParameters: RevokePermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1778,10 +2045,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all permissions for the specified repository for a user.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.  In addition, a user may not revoke their own repository permissions if they do not have a higher project or global permission.
-     * Revoke user repository permission
+     * Creates request options for revokePermissionsForUser2 without sending the request
      */
-    async revokePermissionsForUser2Raw(requestParameters: RevokePermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForUser2RequestOpts(requestParameters: RevokePermissionsForUser2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1816,12 +2082,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all permissions for the specified repository for a user.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource.  In addition, a user may not revoke their own repository permissions if they do not have a higher project or global permission.
+     * Revoke user repository permission
+     */
+    async revokePermissionsForUser2Raw(requestParameters: RevokePermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForUser2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1835,10 +2110,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search direct and implied permissions of users and groups. This endpoint returns a superset of the results returned by the /users and /groups endpoints because it allows filtering by project and global permissions too.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project/global permission to call this resource.
-     * Search repository permissions
+     * Creates request options for searchPermissions1 without sending the request
      */
-    async searchPermissions1Raw(requestParameters: SearchPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async searchPermissions1RequestOpts(requestParameters: SearchPermissions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1874,12 +2148,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search direct and implied permissions of users and groups. This endpoint returns a superset of the results returned by the /users and /groups endpoints because it allows filtering by project and global permissions too.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project/global permission to call this resource.
+     * Search repository permissions
+     */
+    async searchPermissions1Raw(requestParameters: SearchPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.searchPermissions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1893,10 +2176,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote a group\'s permission level for the specified repository. Available repository permissions are:  - REPO_READ - REPO_WRITE - REPO_ADMIN   See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource. In addition, a user may not demote a group\'s permission level if their own permission level would be reduced as a result.
-     * Update group repository permission
+     * Creates request options for setPermissionForGroup without sending the request
      */
-    async setPermissionForGroupRaw(requestParameters: SetPermissionForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForGroupRequestOpts(requestParameters: SetPermissionForGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1942,12 +2224,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote a group\'s permission level for the specified repository. Available repository permissions are:  - REPO_READ - REPO_WRITE - REPO_ADMIN   See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource. In addition, a user may not demote a group\'s permission level if their own permission level would be reduced as a result.
+     * Update group repository permission
+     */
+    async setPermissionForGroupRaw(requestParameters: SetPermissionForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1961,10 +2252,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote a group\'s global permission level. Available global permissions are:   - LICENSED_USER - PROJECT_CREATE - ADMIN - SYS_ADMIN  See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Global+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - the permission they are attempting to grant or higher; and - greater or equal permissions than the current permission level of the group (a user may not demote the     permission level of a group with higher permissions than them)   to call this resource. In addition, a user may not demote a group\'s permission level if their own permission level would be reduced as a result.
-     * Update global permission for group
+     * Creates request options for setPermissionForGroups without sending the request
      */
-    async setPermissionForGroupsRaw(requestParameters: SetPermissionForGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForGroupsRequestOpts(requestParameters: SetPermissionForGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1994,12 +2284,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote a group\'s global permission level. Available global permissions are:   - LICENSED_USER - PROJECT_CREATE - ADMIN - SYS_ADMIN  See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Global+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - the permission they are attempting to grant or higher; and - greater or equal permissions than the current permission level of the group (a user may not demote the     permission level of a group with higher permissions than them)   to call this resource. In addition, a user may not demote a group\'s permission level if their own permission level would be reduced as a result.
+     * Update global permission for group
+     */
+    async setPermissionForGroupsRaw(requestParameters: SetPermissionForGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2013,10 +2312,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote a user\'s permission level for the specified repository. Available repository permissions are:  - REPO_READ</li>- REPO_WRITE</li>- REPO_ADMIN</li></ul>See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource. In addition, a user may not reduce their own permission level unless they have a project or global permission that already implies that permission.
-     * Update user repository permission
+     * Creates request options for setPermissionForUser without sending the request
      */
-    async setPermissionForUserRaw(requestParameters: SetPermissionForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForUserRequestOpts(requestParameters: SetPermissionForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2062,12 +2360,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote a user\'s permission level for the specified repository. Available repository permissions are:  - REPO_READ</li>- REPO_WRITE</li>- REPO_ADMIN</li></ul>See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Using+repository+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository or a higher project or global permission to call this resource. In addition, a user may not reduce their own permission level unless they have a project or global permission that already implies that permission.
+     * Update user repository permission
+     */
+    async setPermissionForUserRaw(requestParameters: SetPermissionForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2081,10 +2388,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote the global permission level of a user. Available global permissions are:   - LICENSED_USER - PROJECT_CREATE - ADMIN - SYS_ADMIN   See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Global+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - the permission they are attempting to grant; and - greater or equal permissions than the current permission level of the user (a user may not demote the     permission level of a user with higher permissions than them)   to call this resource. In addition, a user may not demote their own permission level.
-     * Update global permission for user
+     * Creates request options for setPermissionForUsers without sending the request
      */
-    async setPermissionForUsersRaw(requestParameters: SetPermissionForUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForUsersRequestOpts(requestParameters: SetPermissionForUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -2114,12 +2420,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/permissions/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote the global permission level of a user. Available global permissions are:   - LICENSED_USER - PROJECT_CREATE - ADMIN - SYS_ADMIN   See the <a href=\"https://confluence.atlassian.com/display/BitbucketServer/Global+permissions\">Bitbucket Data Center documentation</a> for a detailed explanation of what each permission entails.   The authenticated user must have:   - <strong>ADMIN</strong> permission or higher; and - the permission they are attempting to grant; and - greater or equal permissions than the current permission level of the user (a user may not demote the     permission level of a user with higher permissions than them)   to call this resource. In addition, a user may not demote their own permission level.
+     * Update global permission for user
+     */
+    async setPermissionForUsersRaw(requestParameters: SetPermissionForUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2133,10 +2448,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a user\'s details.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Update user details
+     * Creates request options for updateUserDetails without sending the request
      */
-    async updateUserDetailsRaw(requestParameters: UpdateUserDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+    async updateUserDetailsRequestOpts(requestParameters: UpdateUserDetailsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2146,13 +2460,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a user\'s details.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Update user details
+     */
+    async updateUserDetailsRaw(requestParameters: UpdateUserDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedUser>> {
+        const requestOptions = await this.updateUserDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2167,10 +2490,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a user\'s password.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource, and may not update the password of a user with greater permissions than themselves.
-     * Set password for user
+     * Creates request options for updateUserPassword without sending the request
      */
-    async updateUserPasswordRaw(requestParameters: UpdateUserPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateUserPasswordRequestOpts(requestParameters: UpdateUserPasswordRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2180,13 +2502,22 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/credentials`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['adminPasswordUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a user\'s password.   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource, and may not update the password of a user with greater permissions than themselves.
+     * Set password for user
+     */
+    async updateUserPasswordRaw(requestParameters: UpdateUserPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateUserPasswordRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2200,10 +2531,9 @@ export class PermissionManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Validate if a user can be erased.  A username is only valid for erasure if it exists as the username of a deleted user. This endpoint will return an appropriate error response if the supplied username is invalid for erasure.  This endpoint does <strong>not</strong> perform the actual user erasure, and will not modify the application in any way.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Check user removal
+     * Creates request options for validateErasable without sending the request
      */
-    async validateErasableRaw(requestParameters: ValidateErasableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async validateErasableRequestOpts(requestParameters: ValidateErasableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -2222,12 +2552,21 @@ export class PermissionManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/erasure`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Validate if a user can be erased.  A username is only valid for erasure if it exists as the username of a deleted user. This endpoint will return an appropriate error response if the supplied username is invalid for erasure.  This endpoint does <strong>not</strong> perform the actual user erasure, and will not modify the application in any way.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Check user removal
+     */
+    async validateErasableRaw(requestParameters: ValidateErasableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.validateErasableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

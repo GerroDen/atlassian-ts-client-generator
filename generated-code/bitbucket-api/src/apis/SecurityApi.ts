@@ -242,11 +242,10 @@ interface UpdateSystemSigningConfigurationOperationRequest {
 export class SecurityApi extends runtime.BaseAPI {
 
     /**
-     * Exempt a repository from being scanned for secrets   <strong>Deprecated since 8.6</strong>. Exemptions are now managed by scope.  Use POST /rest/api/1.0/secret-scanning/exempt for global scope  Use POST /rest/api/1.0/projects/{projectKey}/secret-scanning/exempt for the project scope
-     * Exempt a repo from secret scanning
+     * Creates request options for addExemptRepo without sending the request
      * @deprecated
      */
-    async addExemptRepoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addExemptRepoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -254,12 +253,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Exempt a repository from being scanned for secrets   <strong>Deprecated since 8.6</strong>. Exemptions are now managed by scope.  Use POST /rest/api/1.0/secret-scanning/exempt for global scope  Use POST /rest/api/1.0/projects/{projectKey}/secret-scanning/exempt for the project scope
+     * Exempt a repo from secret scanning
+     * @deprecated
+     */
+    async addExemptRepoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addExemptRepoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -274,10 +283,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a GPG key to the authenticated user\'s account. Optionally, users with ADMIN and higher permissions may choose to specify the <code>user</code> parameter to add a GPG key for another user.  Only authenticated users may call this endpoint.
-     * Create a GPG key
+     * Creates request options for addKey without sending the request
      */
-    async addKeyRaw(requestParameters: AddKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGpgKey>> {
+    async addKeyRequestOpts(requestParameters: AddKeyRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['user'] != null) {
@@ -291,13 +299,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/gpg/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGpgKey'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a GPG key to the authenticated user\'s account. Optionally, users with ADMIN and higher permissions may choose to specify the <code>user</code> parameter to add a GPG key for another user.  Only authenticated users may call this endpoint.
+     * Create a GPG key
+     */
+    async addKeyRaw(requestParameters: AddKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGpgKey>> {
+        const requestOptions = await this.addKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -312,10 +329,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk exempt a  list of repositories from being scanned for secrets. User must be have global **ADMIN** permissions.
-     * Bulk exempt repos from secret scanning
+     * Creates request options for bulkAddExemptRepositories without sending the request
      */
-    async bulkAddExemptRepositoriesRaw(requestParameters: BulkAddExemptRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async bulkAddExemptRepositoriesRequestOpts(requestParameters: BulkAddExemptRepositoriesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -325,13 +341,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositorySelector'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk exempt a  list of repositories from being scanned for secrets. User must be have global **ADMIN** permissions.
+     * Bulk exempt repos from secret scanning
+     */
+    async bulkAddExemptRepositoriesRaw(requestParameters: BulkAddExemptRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.bulkAddExemptRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -345,10 +370,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk exempt a  list of repositories from being scanned for secrets. User must be have **PROJECT ADMIN** permissions.
-     * Bulk exempt repos from secret scanning
+     * Creates request options for bulkAddExemptRepositories1 without sending the request
      */
-    async bulkAddExemptRepositories1Raw(requestParameters: BulkAddExemptRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async bulkAddExemptRepositories1RequestOpts(requestParameters: BulkAddExemptRepositories1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -358,13 +382,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositorySelector'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk exempt a  list of repositories from being scanned for secrets. User must be have **PROJECT ADMIN** permissions.
+     * Bulk exempt repos from secret scanning
+     */
+    async bulkAddExemptRepositories1Raw(requestParameters: BulkAddExemptRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.bulkAddExemptRepositories1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -378,10 +411,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new project level secret scanning allowlist rule. Project allowlist rules are used when scanning all non exempt repositories in the provided project.  Project **Admin** is required
-     * Create project secret scanning allowlist rule
+     * Creates request options for createAllowlistRule without sending the request
      */
-    async createAllowlistRuleRaw(requestParameters: CreateAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async createAllowlistRuleRequestOpts(requestParameters: CreateAllowlistRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -406,13 +438,22 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new project level secret scanning allowlist rule. Project allowlist rules are used when scanning all non exempt repositories in the provided project.  Project **Admin** is required
+     * Create project secret scanning allowlist rule
+     */
+    async createAllowlistRuleRaw(requestParameters: CreateAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.createAllowlistRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -427,10 +468,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new repository secret scanning allowlist rule. Repository allowlist rules are used when scanning the given repository.  Repository **Admin** is required
-     * Create repository secret scanning allowlist rule
+     * Creates request options for createAllowlistRule1 without sending the request
      */
-    async createAllowlistRule1Raw(requestParameters: CreateAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async createAllowlistRule1RequestOpts(requestParameters: CreateAllowlistRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -463,13 +503,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new repository secret scanning allowlist rule. Repository allowlist rules are used when scanning the given repository.  Repository **Admin** is required
+     * Create repository secret scanning allowlist rule
+     */
+    async createAllowlistRule1Raw(requestParameters: CreateAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.createAllowlistRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -484,10 +533,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an X.509 certificate. This will add the given X.509 certificate to the system. Existing entries will not be overridden if an X.509 certificate already exists. Once added, an X.509 certificate cannot be updated.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Create an X.509 certificate
+     * Creates request options for createCertificate without sending the request
      */
-    async createCertificateRaw(requestParameters: CreateCertificateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+    async createCertificateRequestOpts(requestParameters: CreateCertificateRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -515,13 +563,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/signing/x509-certificates`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an X.509 certificate. This will add the given X.509 certificate to the system. Existing entries will not be overridden if an X.509 certificate already exists. Once added, an X.509 certificate cannot be updated.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Create an X.509 certificate
+     */
+    async createCertificateRaw(requestParameters: CreateCertificateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+        const requestOptions = await this.createCertificateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -536,10 +593,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new project level secret scanning rule. Project rules are used when scanning all non exempt repositories in the provided project.  Project **Admin** is required
-     * Create project secret scanning rule
+     * Creates request options for createRule without sending the request
      */
-    async createRuleRaw(requestParameters: CreateRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async createRuleRequestOpts(requestParameters: CreateRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -564,13 +620,22 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new project level secret scanning rule. Project rules are used when scanning all non exempt repositories in the provided project.  Project **Admin** is required
+     * Create project secret scanning rule
+     */
+    async createRuleRaw(requestParameters: CreateRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.createRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -585,10 +650,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new repository secret scanning rule. Repository rules are used when scanning the given repository.  Repository **Admin** is required
-     * Create repository secret scanning rule
+     * Creates request options for createRule1 without sending the request
      */
-    async createRule1Raw(requestParameters: CreateRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async createRule1RequestOpts(requestParameters: CreateRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -621,13 +685,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new repository secret scanning rule. Repository rules are used when scanning the given repository.  Repository **Admin** is required
+     * Create repository secret scanning rule
+     */
+    async createRule1Raw(requestParameters: CreateRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.createRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -642,10 +715,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new global secret scanning rule. Global rules are used when scanning all non exempt repositories.
-     * Create global secret scanning rule
+     * Creates request options for createRule2 without sending the request
      */
-    async createRule2Raw(requestParameters: CreateRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async createRule2RequestOpts(requestParameters: CreateRule2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['restSecretScanningRuleSetRequest'] == null) {
             throw new runtime.RequiredError(
                 'restSecretScanningRuleSetRequest',
@@ -662,13 +734,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/secret-scanning/rules`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new global secret scanning rule. Global rules are used when scanning all non exempt repositories.
+     * Create global secret scanning rule
+     */
+    async createRule2Raw(requestParameters: CreateRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.createRule2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -683,10 +764,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a project secret scanning allowlist rule with the provided ID.  Project **Admin** is required
-     * Delete a project secret scanning allowlist rule
+     * Creates request options for deleteAllowlistRule without sending the request
      */
-    async deleteAllowlistRuleRaw(requestParameters: DeleteAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAllowlistRuleRequestOpts(requestParameters: DeleteAllowlistRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -710,12 +790,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a project secret scanning allowlist rule with the provided ID.  Project **Admin** is required
+     * Delete a project secret scanning allowlist rule
+     */
+    async deleteAllowlistRuleRaw(requestParameters: DeleteAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAllowlistRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -729,10 +818,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a repository secret scanning allowlist rule with the provided ID.  Repository **Admin** is required
-     * Delete a repository secret scanning allowlist rule
+     * Creates request options for deleteAllowlistRule1 without sending the request
      */
-    async deleteAllowlistRule1Raw(requestParameters: DeleteAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAllowlistRule1RequestOpts(requestParameters: DeleteAllowlistRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -764,12 +852,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a repository secret scanning allowlist rule with the provided ID.  Repository **Admin** is required
+     * Delete a repository secret scanning allowlist rule
+     */
+    async deleteAllowlistRule1Raw(requestParameters: DeleteAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAllowlistRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -783,10 +880,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete an X.509 certificate specified by the given ID.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Delete an X.509 certificate
+     * Creates request options for deleteCertificate without sending the request
      */
-    async deleteCertificateRaw(requestParameters: DeleteCertificateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+    async deleteCertificateRequestOpts(requestParameters: DeleteCertificateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -802,12 +898,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/signing/x509-certificates/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete an X.509 certificate specified by the given ID.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Delete an X.509 certificate
+     */
+    async deleteCertificateRaw(requestParameters: DeleteCertificateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+        const requestOptions = await this.deleteCertificateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -822,10 +927,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove a repository from being exempt from secret scanning
-     * Delete an exempt repository
+     * Creates request options for deleteExemptRepo without sending the request
      */
-    async deleteExemptRepoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteExemptRepoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -833,12 +937,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove a repository from being exempt from secret scanning
+     * Delete an exempt repository
+     */
+    async deleteExemptRepoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteExemptRepoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -852,10 +965,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete all GPG keys for a supplied user.
-     * Delete all GPG keys for user
+     * Creates request options for deleteForUser without sending the request
      */
-    async deleteForUserRaw(requestParameters: DeleteForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteForUserRequestOpts(requestParameters: DeleteForUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['user'] != null) {
@@ -867,12 +979,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/gpg/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete all GPG keys for a supplied user.
+     * Delete all GPG keys for user
+     */
+    async deleteForUserRaw(requestParameters: DeleteForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -886,10 +1007,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the inactive AES encryption key(s). Post rotation, inactive AES key(s) can be cleaned up.
-     * Delete inactive AES key(s)
+     * Creates request options for deleteInactiveKeys without sending the request
      */
-    async deleteInactiveKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteInactiveKeysRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -897,12 +1017,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/secrets/1.0/keys/inactive`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the inactive AES encryption key(s). Post rotation, inactive AES key(s) can be cleaned up.
+     * Delete inactive AES key(s)
+     */
+    async deleteInactiveKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteInactiveKeysRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -916,10 +1045,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the GPG key with the specified ID or Key Fingerprint.
-     * Delete a GPG key
+     * Creates request options for deleteKey without sending the request
      */
-    async deleteKeyRaw(requestParameters: DeleteKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteKeyRequestOpts(requestParameters: DeleteKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fingerprintOrId'] == null) {
             throw new runtime.RequiredError(
                 'fingerprintOrId',
@@ -935,12 +1063,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/gpg/latest/keys/{fingerprintOrId}`;
         urlPath = urlPath.replace(`{${"fingerprintOrId"}}`, encodeURIComponent(String(requestParameters['fingerprintOrId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the GPG key with the specified ID or Key Fingerprint.
+     * Delete a GPG key
+     */
+    async deleteKeyRaw(requestParameters: DeleteKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -954,10 +1091,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a project secret scanning rule with the provided ID.  Project **Admin** is required
-     * Delete a project secret scanning rule
+     * Creates request options for deleteRule without sending the request
      */
-    async deleteRuleRaw(requestParameters: DeleteRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRuleRequestOpts(requestParameters: DeleteRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -981,12 +1117,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a project secret scanning rule with the provided ID.  Project **Admin** is required
+     * Delete a project secret scanning rule
+     */
+    async deleteRuleRaw(requestParameters: DeleteRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1000,10 +1145,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a repository secret scanning rule with the provided ID.  Repository **Admin** is required
-     * Delete a repository secret scanning rule
+     * Creates request options for deleteRule1 without sending the request
      */
-    async deleteRule1Raw(requestParameters: DeleteRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRule1RequestOpts(requestParameters: DeleteRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1035,12 +1179,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a repository secret scanning rule with the provided ID.  Repository **Admin** is required
+     * Delete a repository secret scanning rule
+     */
+    async deleteRule1Raw(requestParameters: DeleteRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1054,10 +1207,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a global secret scanning rule with the provided ID
-     * Delete a global secret scanning rule
+     * Creates request options for deleteRule2 without sending the request
      */
-    async deleteRule2Raw(requestParameters: DeleteRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRule2RequestOpts(requestParameters: DeleteRule2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1073,12 +1225,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/secret-scanning/rules/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a global secret scanning rule with the provided ID
+     * Delete a global secret scanning rule
+     */
+    async deleteRule2Raw(requestParameters: DeleteRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRule2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1092,10 +1253,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit a project secret scanning allowlist rule.  Project **Admin** is required
-     * Edit an existing project secret scanning allowlist rule
+     * Creates request options for editAllowlistRule without sending the request
      */
-    async editAllowlistRuleRaw(requestParameters: EditAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async editAllowlistRuleRequestOpts(requestParameters: EditAllowlistRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1128,13 +1288,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit a project secret scanning allowlist rule.  Project **Admin** is required
+     * Edit an existing project secret scanning allowlist rule
+     */
+    async editAllowlistRuleRaw(requestParameters: EditAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.editAllowlistRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1149,10 +1318,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit a repository secret scanning allowlist rule.  Repository **Admin** is required
-     * Edit an existing repository secret scanning allowlist rule
+     * Creates request options for editAllowlistRule1 without sending the request
      */
-    async editAllowlistRule1Raw(requestParameters: EditAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async editAllowlistRule1RequestOpts(requestParameters: EditAllowlistRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1193,13 +1361,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningAllowlistRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit a repository secret scanning allowlist rule.  Repository **Admin** is required
+     * Edit an existing repository secret scanning allowlist rule
+     */
+    async editAllowlistRule1Raw(requestParameters: EditAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.editAllowlistRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1214,10 +1391,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit a project secret scanning rule.  Project **Admin** is required
-     * Edit an existing project secret scanning rule
+     * Creates request options for editRule without sending the request
      */
-    async editRuleRaw(requestParameters: EditRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async editRuleRequestOpts(requestParameters: EditRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1250,13 +1426,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit a project secret scanning rule.  Project **Admin** is required
+     * Edit an existing project secret scanning rule
+     */
+    async editRuleRaw(requestParameters: EditRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.editRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1271,10 +1456,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit a repository secret scanning rule.  Repository **Admin** is required
-     * Edit an existing repository secret scanning rule
+     * Creates request options for editRule1 without sending the request
      */
-    async editRule1Raw(requestParameters: EditRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async editRule1RequestOpts(requestParameters: EditRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1315,13 +1499,22 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit a repository secret scanning rule.  Repository **Admin** is required
+     * Edit an existing repository secret scanning rule
+     */
+    async editRule1Raw(requestParameters: EditRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.editRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1336,10 +1529,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Edit an existing global secret scanning rule
-     * Edit a global secret scanning rule.
+     * Creates request options for editRule2 without sending the request
      */
-    async editRule2Raw(requestParameters: EditRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async editRule2RequestOpts(requestParameters: EditRule2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1364,13 +1556,22 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/secret-scanning/rules/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecretScanningRuleSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Edit an existing global secret scanning rule
+     * Edit a global secret scanning rule.
+     */
+    async editRule2Raw(requestParameters: EditRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.editRule2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1385,10 +1586,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find repositories exempt from secret scanning in a project
-     * Find repos exempt from secret scanning for a project
+     * Creates request options for findExemptReposByProject without sending the request
      */
-    async findExemptReposByProjectRaw(requestParameters: FindExemptReposByProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async findExemptReposByProjectRequestOpts(requestParameters: FindExemptReposByProjectRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['order'] != null) {
@@ -1408,12 +1608,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find repositories exempt from secret scanning in a project
+     * Find repos exempt from secret scanning for a project
+     */
+    async findExemptReposByProjectRaw(requestParameters: FindExemptReposByProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.findExemptReposByProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1428,10 +1637,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find all repositories exempt from secret scanning
-     * Find all repos exempt from secret scan
+     * Creates request options for findExemptReposByScope without sending the request
      */
-    async findExemptReposByScopeRaw(requestParameters: FindExemptReposByScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async findExemptReposByScopeRequestOpts(requestParameters: FindExemptReposByScopeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['order'] != null) {
@@ -1451,12 +1659,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find all repositories exempt from secret scanning
+     * Find all repos exempt from secret scan
+     */
+    async findExemptReposByScopeRaw(requestParameters: FindExemptReposByScopeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.findExemptReposByScopeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1471,10 +1688,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all X.509 certificates that have been added to the system.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Get all X.509 certificates
+     * Creates request options for getAllCertificates without sending the request
      */
-    async getAllCertificatesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+    async getAllCertificatesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1482,12 +1698,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/signing/x509-certificates`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all X.509 certificates that have been added to the system.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Get all X.509 certificates
+     */
+    async getAllCertificatesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestX509Certificate>> {
+        const requestOptions = await this.getAllCertificatesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1502,10 +1727,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a project secret scanning allowlist rule by ID.  Project **Admin** is required
-     * Get a project secret scanning allowlist rule
+     * Creates request options for getAllowlistRule without sending the request
      */
-    async getAllowlistRuleRaw(requestParameters: GetAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async getAllowlistRuleRequestOpts(requestParameters: GetAllowlistRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1529,12 +1753,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a project secret scanning allowlist rule by ID.  Project **Admin** is required
+     * Get a project secret scanning allowlist rule
+     */
+    async getAllowlistRuleRaw(requestParameters: GetAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.getAllowlistRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1549,10 +1782,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a repository secret scanning allowlist rule by ID.  Repository **Admin** is required
-     * Get a repository secret scanning allowlist rule
+     * Creates request options for getAllowlistRule1 without sending the request
      */
-    async getAllowlistRule1Raw(requestParameters: GetAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+    async getAllowlistRule1RequestOpts(requestParameters: GetAllowlistRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1584,12 +1816,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a repository secret scanning allowlist rule by ID.  Repository **Admin** is required
+     * Get a repository secret scanning allowlist rule
+     */
+    async getAllowlistRule1Raw(requestParameters: GetAllowlistRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningAllowlistRule>> {
+        const requestOptions = await this.getAllowlistRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1604,10 +1845,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of inactive AES encryption key(s). An AES key becomes inactive after it has been rotated.
-     * Retrieve inactive AES key(s)
+     * Creates request options for getInactiveKeys without sending the request
      */
-    async getInactiveKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getInactiveKeysRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1615,12 +1855,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/secrets/1.0/keys/inactive`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of inactive AES encryption key(s). An AES key becomes inactive after it has been rotated.
+     * Retrieve inactive AES key(s)
+     */
+    async getInactiveKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getInactiveKeysRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1634,10 +1883,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find all the keys for the currently authenticated user. Optionally, users with ADMIN and higher permissions may choose to specify the <code>user</code> parameter to retrieve GPG keys for another user.  Only authenticated users may call this endpoint.
-     * Get all GPG keys
+     * Creates request options for getKeysForUser without sending the request
      */
-    async getKeysForUserRaw(requestParameters: GetKeysForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetKeysForUser200Response>> {
+    async getKeysForUserRequestOpts(requestParameters: GetKeysForUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['user'] != null) {
@@ -1657,12 +1905,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/gpg/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find all the keys for the currently authenticated user. Optionally, users with ADMIN and higher permissions may choose to specify the <code>user</code> parameter to retrieve GPG keys for another user.  Only authenticated users may call this endpoint.
+     * Get all GPG keys
+     */
+    async getKeysForUserRaw(requestParameters: GetKeysForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetKeysForUser200Response>> {
+        const requestOptions = await this.getKeysForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1677,10 +1934,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a project secret scanning rule by ID.  Project **Admin** is required
-     * Get a project secret scanning rule
+     * Creates request options for getRule without sending the request
      */
-    async getRuleRaw(requestParameters: GetRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async getRuleRequestOpts(requestParameters: GetRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1704,12 +1960,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a project secret scanning rule by ID.  Project **Admin** is required
+     * Get a project secret scanning rule
+     */
+    async getRuleRaw(requestParameters: GetRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.getRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1724,10 +1989,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a repository secret scanning rule by ID.  Repository **Admin** is required
-     * Get a repository secret scanning rule
+     * Creates request options for getRule1 without sending the request
      */
-    async getRule1Raw(requestParameters: GetRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async getRule1RequestOpts(requestParameters: GetRule1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1759,12 +2023,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a repository secret scanning rule by ID.  Repository **Admin** is required
+     * Get a repository secret scanning rule
+     */
+    async getRule1Raw(requestParameters: GetRule1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.getRule1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1779,10 +2052,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a global secret scanning rule by ID.
-     * Get a global secret scanning rule
+     * Creates request options for getRule2 without sending the request
      */
-    async getRule2Raw(requestParameters: GetRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+    async getRule2RequestOpts(requestParameters: GetRule2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1798,12 +2070,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/secret-scanning/rules/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a global secret scanning rule by ID.
+     * Get a global secret scanning rule
+     */
+    async getRule2Raw(requestParameters: GetRule2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecretScanningRule>> {
+        const requestOptions = await this.getRule2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1818,10 +2099,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the configuration details for system signing Git objects.
-     * Get system signing configuration
+     * Creates request options for getSystemSigningConfiguration without sending the request
      */
-    async getSystemSigningConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSystemSigningConfiguration>> {
+    async getSystemSigningConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1829,12 +2109,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/system-signing/configuration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the configuration details for system signing Git objects.
+     * Get system signing configuration
+     */
+    async getSystemSigningConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSystemSigningConfiguration>> {
+        const requestOptions = await this.getSystemSigningConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1849,10 +2138,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Check whether a repository is exempt from secret scanning
-     * Get whether a repository is exempt
+     * Creates request options for isRepoExempt without sending the request
      */
-    async isRepoExemptRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async isRepoExemptRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1860,12 +2148,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects/{projectKey}/repos/{repositorySlug}/secret-scanning/exempt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Check whether a repository is exempt from secret scanning
+     * Get whether a repository is exempt
+     */
+    async isRepoExemptRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.isRepoExemptRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1879,10 +2176,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rotate the current AES encryption key. Existing secrets will be re-encrypted with the new key.
-     * Rotate the current AES key
+     * Creates request options for rotateKey without sending the request
      */
-    async rotateKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async rotateKeyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1890,12 +2186,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/secrets/1.0/keys/rotate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Rotate the current AES encryption key. Existing secrets will be re-encrypted with the new key.
+     * Rotate the current AES key
+     */
+    async rotateKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.rotateKeyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1909,10 +2214,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find project secret scanning rules by filtering.  Project **Admin** is required
-     * Find project secret scanning rules
+     * Creates request options for search1 without sending the request
      */
-    async search1Raw(requestParameters: Search1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+    async search1RequestOpts(requestParameters: Search1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1944,12 +2248,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/rules`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find project secret scanning rules by filtering.  Project **Admin** is required
+     * Find project secret scanning rules
+     */
+    async search1Raw(requestParameters: Search1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+        const requestOptions = await this.search1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1964,10 +2277,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find repository secret scanning allowlist rules by filtering.  Repository **Admin** is required
-     * Find repository secret scanning allowlist rules
+     * Creates request options for search2 without sending the request
      */
-    async search2Raw(requestParameters: Search2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
+    async search2RequestOpts(requestParameters: Search2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2007,12 +2319,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find repository secret scanning allowlist rules by filtering.  Repository **Admin** is required
+     * Find repository secret scanning allowlist rules
+     */
+    async search2Raw(requestParameters: Search2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
+        const requestOptions = await this.search2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2027,10 +2348,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find repository secret scanning rules by filtering.  Repository **Admin** is required
-     * Find repository secret scanning rules
+     * Creates request options for search3 without sending the request
      */
-    async search3Raw(requestParameters: Search3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+    async search3RequestOpts(requestParameters: Search3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2070,12 +2390,21 @@ export class SecurityApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find repository secret scanning rules by filtering.  Repository **Admin** is required
+     * Find repository secret scanning rules
+     */
+    async search3Raw(requestParameters: Search3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+        const requestOptions = await this.search3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2090,10 +2419,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find global secret scanning rules by filtering.
-     * Find global secret scanning rules
+     * Creates request options for search4 without sending the request
      */
-    async search4Raw(requestParameters: Search4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+    async search4RequestOpts(requestParameters: Search4Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -2117,12 +2445,21 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/secret-scanning/rules`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find global secret scanning rules by filtering.
+     * Find global secret scanning rules
+     */
+    async search4Raw(requestParameters: Search4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search3200Response>> {
+        const requestOptions = await this.search4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2137,10 +2474,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find project secret scanning allowlist rules by filtering.  Project **Admin** is required
-     * Find project secret scanning allowlist rules
+     * Creates request options for searchAllowlistRule without sending the request
      */
-    async searchAllowlistRuleRaw(requestParameters: SearchAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
+    async searchAllowlistRuleRequestOpts(requestParameters: SearchAllowlistRuleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2172,12 +2508,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/secret-scanning/allowlist`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find project secret scanning allowlist rules by filtering.  Project **Admin** is required
+     * Find project secret scanning allowlist rules
+     */
+    async searchAllowlistRuleRaw(requestParameters: SearchAllowlistRuleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Search2200Response>> {
+        const requestOptions = await this.searchAllowlistRuleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2192,10 +2537,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the certificate revocation list (CRL) entries for an issuer X.509 certificate in the system, identified by <code>id</code>. This will add any new revoked X.509 certificates that were issued by the given issuer X.509 certificate.  This endpoint will schedule a request to asynchronously perform the task. Please allow time for the task to complete as it will vary depending on how many CRLs there are to retrieve and process.  Note: CRL updates are scheduled to run every 24 hours. You may wish to trigger a refresh manually using this endpoint, otherwise, entries will be updated daily.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Update X.509 CRL entries
+     * Creates request options for updateCertificateRevocationListEntries without sending the request
      */
-    async updateCertificateRevocationListEntriesRaw(requestParameters: UpdateCertificateRevocationListEntriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateCertificateRevocationListEntriesRequestOpts(requestParameters: UpdateCertificateRevocationListEntriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2211,12 +2555,21 @@ export class SecurityApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/signing/x509-certificates/crl/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the certificate revocation list (CRL) entries for an issuer X.509 certificate in the system, identified by <code>id</code>. This will add any new revoked X.509 certificates that were issued by the given issuer X.509 certificate.  This endpoint will schedule a request to asynchronously perform the task. Please allow time for the task to complete as it will vary depending on how many CRLs there are to retrieve and process.  Note: CRL updates are scheduled to run every 24 hours. You may wish to trigger a refresh manually using this endpoint, otherwise, entries will be updated daily.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Update X.509 CRL entries
+     */
+    async updateCertificateRevocationListEntriesRaw(requestParameters: UpdateCertificateRevocationListEntriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateCertificateRevocationListEntriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2230,10 +2583,9 @@ export class SecurityApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the configuration for system signing Git objects.
-     * Update system signing configuration
+     * Creates request options for updateSystemSigningConfiguration without sending the request
      */
-    async updateSystemSigningConfigurationRaw(requestParameters: UpdateSystemSigningConfigurationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSystemSigningConfiguration>> {
+    async updateSystemSigningConfigurationRequestOpts(requestParameters: UpdateSystemSigningConfigurationOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2243,13 +2595,22 @@ export class SecurityApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/system-signing/configuration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updateSystemSigningConfigurationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the configuration for system signing Git objects.
+     * Update system signing configuration
+     */
+    async updateSystemSigningConfigurationRaw(requestParameters: UpdateSystemSigningConfigurationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSystemSigningConfiguration>> {
+        const requestOptions = await this.updateSystemSigningConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -94,11 +94,10 @@ interface WithdrawApprovalRequest {
 export class DeprecatedApi extends runtime.BaseAPI {
 
     /**
-     * Associates a build status with a commit.The <code>state</code>, the <code>key</code> and the <code>url</code> fields are mandatory. The <code>name</code> and<code>description</code> fields are optional.All fields (mandatory or optional) are limited to 255 characters, except for the <code>url</code>,which is limited to 450 characters.Supported values for the <code>state</code> are <code>SUCCESSFUL</code>, <code>FAILED</code>and <code>INPROGRESS</code>.The authenticated user must have <strong>LICENSED</strong> permission or higher to call this resource.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
-     * Create build status for commit
+     * Creates request options for addBuildStatus without sending the request
      * @deprecated
      */
-    async addBuildStatusRaw(requestParameters: AddBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addBuildStatusRequestOpts(requestParameters: AddBuildStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commitId'] == null) {
             throw new runtime.RequiredError(
                 'commitId',
@@ -116,13 +115,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
         let urlPath = `/build-status/latest/commits/{commitId}`;
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBuildStatus'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Associates a build status with a commit.The <code>state</code>, the <code>key</code> and the <code>url</code> fields are mandatory. The <code>name</code> and<code>description</code> fields are optional.All fields (mandatory or optional) are limited to 255 characters, except for the <code>url</code>,which is limited to 450 characters.Supported values for the <code>state</code> are <code>SUCCESSFUL</code>, <code>FAILED</code>and <code>INPROGRESS</code>.The authenticated user must have <strong>LICENSED</strong> permission or higher to call this resource.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
+     * Create build status for commit
+     * @deprecated
+     */
+    async addBuildStatusRaw(requestParameters: AddBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addBuildStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -137,11 +146,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add user to group
+     * Creates request options for addGroupToUser without sending the request
      * @deprecated
      */
-    async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addGroupToUserRequestOpts(requestParameters: AddGroupToUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -151,13 +159,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/add-group`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['groupPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group. This is very similar to <code>groups/add-user</code>, but with the <em>context</em> and <em>itemName</em> attributes of the supplied request entity reversed. On the face of it this may appear redundant, but it facilitates a specific UI component in the application.  In the request entity, the <em>context</em> attribute is the user and the <em>itemName</em> is the group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add user to group
+     * @deprecated
+     */
+    async addGroupToUserRaw(requestParameters: AddGroupToUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addGroupToUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -172,11 +190,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Add user to group
+     * Creates request options for addUserToGroup without sending the request
      * @deprecated
      */
-    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUserToGroupRequestOpts(requestParameters: AddUserToGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -186,13 +203,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/add-user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/add-groups instead.  Add a user to a group.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Add user to group
+     * @deprecated
+     */
+    async addUserToGroupRaw(requestParameters: AddUserToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUserToGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -207,11 +234,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
-     * Approve pull request
+     * Creates request options for approve without sending the request
      * @deprecated
      */
-    async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async approveRequestOpts(requestParameters: ApproveRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -243,12 +269,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
+     * Approve pull request
+     * @deprecated
+     */
+    async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.approveRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -264,11 +300,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets build statuses associated with a commit.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
-     * Get build statuses for commit
+     * Creates request options for getBuildStatus without sending the request
      * @deprecated
      */
-    async getBuildStatusRaw(requestParameters: GetBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBuildStatus200Response>> {
+    async getBuildStatusRequestOpts(requestParameters: GetBuildStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commitId'] == null) {
             throw new runtime.RequiredError(
                 'commitId',
@@ -296,12 +331,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
         let urlPath = `/build-status/latest/commits/{commitId}`;
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets build statuses associated with a commit.  <strong>Deprecated in 7.14, please use the repository based builds resource instead.</strong>
+     * Get build statuses for commit
+     * @deprecated
+     */
+    async getBuildStatusRaw(requestParameters: GetBuildStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBuildStatus200Response>> {
+        const requestOptions = await this.getBuildStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -317,10 +362,9 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets statistics regarding the builds associated with a commit
-     * Get build status statistics for commit
+     * Creates request options for getBuildStatusStats without sending the request
      */
-    async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
+    async getBuildStatusStatsRequestOpts(requestParameters: GetBuildStatusStatsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commitId'] == null) {
             throw new runtime.RequiredError(
                 'commitId',
@@ -340,12 +384,21 @@ export class DeprecatedApi extends runtime.BaseAPI {
         let urlPath = `/build-status/latest/commits/stats/{commitId}`;
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets statistics regarding the builds associated with a commit
+     * Get build status statistics for commit
+     */
+    async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
+        const requestOptions = await this.getBuildStatusStatsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -360,11 +413,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get default branch
+     * Creates request options for getDefaultBranch1 without sending the request
      * @deprecated
      */
-    async getDefaultBranch1Raw(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+    async getDefaultBranch1RequestOpts(requestParameters: GetDefaultBranch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -388,12 +440,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the repository\'s default branch, if it has been created. If the repository is empty, 204 No Content will be returned. For non-empty repositories, if the configured default branch has not yet been created a 404 Not Found will be returned.   This URL is deprecated. Callers should use <code>GET /projects/{key}/repos/{slug}/default-branch</code> instead, which allows retrieving the <i>configured</i> default branch even if the ref has not been created yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get default branch
+     * @deprecated
+     */
+    async getDefaultBranch1Raw(requestParameters: GetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranch>> {
+        const requestOptions = await this.getDefaultBranch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -416,10 +478,9 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Produces a list of the build statistics for multiple commits. Commits <em>without any builds associated with them</em> will not be returned.<br> For example if the commit <code>e00cf62997a027bbf785614a93e2e55bb331d268</code> does not have any build statuses associated with it, it will not be present in the response.
-     * Get build status statistics for multiple commits
+     * Creates request options for getMultipleBuildStatusStats without sending the request
      */
-    async getMultipleBuildStatusStatsRaw(requestParameters: GetMultipleBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getMultipleBuildStatusStatsRequestOpts(requestParameters: GetMultipleBuildStatusStatsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -429,13 +490,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         let urlPath = `/build-status/latest/commits/stats`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Produces a list of the build statistics for multiple commits. Commits <em>without any builds associated with them</em> will not be returned.<br> For example if the commit <code>e00cf62997a027bbf785614a93e2e55bb331d268</code> does not have any build statuses associated with it, it will not be present in the response.
+     * Get build status statistics for multiple commits
+     */
+    async getMultipleBuildStatusStatsRaw(requestParameters: GetMultipleBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getMultipleBuildStatusStatsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -454,11 +524,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
-     * Remove user from group
+     * Creates request options for removeUserFromGroup without sending the request
      * @deprecated
      */
-    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUserFromGroupRequestOpts(requestParameters: RemoveUserFromGroupRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -468,13 +537,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups/remove-user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userPickerContext'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * <strong>Deprecated since 2.10</strong>. Use /rest/users/remove-groups instead.  Remove a user from a group.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.  In the request entity, the <em>context</em> attribute is the group and the <em>itemName</em> is the user.
+     * Remove user from group
+     * @deprecated
+     */
+    async removeUserFromGroupRaw(requestParameters: RemoveUserFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUserFromGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -489,11 +568,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Update default branch
+     * Creates request options for setDefaultBranch1 without sending the request
      * @deprecated
      */
-    async setDefaultBranch1Raw(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setDefaultBranch1RequestOpts(requestParameters: SetDefaultBranch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -519,13 +597,23 @@ export class DeprecatedApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBranch'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the default branch of a repository.   This URL is deprecated. Callers should use <code>PUT /projects/{key}/repos/{slug}/default-branch</code> instead.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Update default branch
+     * @deprecated
+     */
+    async setDefaultBranch1Raw(requestParameters: SetDefaultBranch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setDefaultBranch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -540,11 +628,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
-     * Unassign pull request participant
+     * Creates request options for unassignParticipantRole1 without sending the request
      * @deprecated
      */
-    async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unassignParticipantRole1RequestOpts(requestParameters: UnassignParticipantRole1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -580,12 +667,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
+     * Unassign pull request participant
+     * @deprecated
+     */
+    async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unassignParticipantRole1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -600,11 +697,10 @@ export class DeprecatedApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
-     * Unapprove pull request
+     * Creates request options for withdrawApproval without sending the request
      * @deprecated
      */
-    async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async withdrawApprovalRequestOpts(requestParameters: WithdrawApprovalRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -636,12 +732,22 @@ export class DeprecatedApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
+     * Unapprove pull request
+     * @deprecated
+     */
+    async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.withdrawApprovalRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

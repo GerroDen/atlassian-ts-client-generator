@@ -337,10 +337,9 @@ interface UploadAvatar1Request {
 export class SystemMaintenanceApi extends runtime.BaseAPI {
 
     /**
-     * Requests the cancellation of an export job.  The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.  There might be a small delay between accepting the request and actually cancelling the job. In most cases, the delay will be close to instantaneously. In the unlikely case of communication issues across a cluster, it can however take a few seconds to cancel a job.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Cancel export job
+     * Creates request options for cancelExportJob without sending the request
      */
-    async cancelExportJobRaw(requestParameters: CancelExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async cancelExportJobRequestOpts(requestParameters: CancelExportJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -356,12 +355,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/exports/{jobId}/cancel`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Requests the cancellation of an export job.  The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.  There might be a small delay between accepting the request and actually cancelling the job. In most cases, the delay will be close to instantaneously. In the unlikely case of communication issues across a cluster, it can however take a few seconds to cancel a job.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Cancel export job
+     */
+    async cancelExportJobRaw(requestParameters: CancelExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelExportJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -375,10 +383,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Requests the cancellation of an import job.  The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.  Note that import jobs are not canceled as instantaneously as export jobs. Rather, once the request has been accepted, there are a number of checkpoints at which the job will actually apply it and stop. This is to keep the system in a reasonably consistent state:  - After the current fork hierarchy has been imported and verified. - Before the next repository is imported. - Before the next pull request is imported.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Cancel import job
+     * Creates request options for cancelImportJob without sending the request
      */
-    async cancelImportJobRaw(requestParameters: CancelImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async cancelImportJobRequestOpts(requestParameters: CancelImportJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -394,12 +401,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/imports/{jobId}/cancel`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Requests the cancellation of an import job.  The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.  Note that import jobs are not canceled as instantaneously as export jobs. Rather, once the request has been accepted, there are a number of checkpoints at which the job will actually apply it and stop. This is to keep the system in a reasonably consistent state:  - After the current fork hierarchy has been imported and verified. - Before the next repository is imported. - Before the next pull request is imported.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Cancel import job
+     */
+    async cancelImportJobRaw(requestParameters: CancelImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelImportJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -413,10 +429,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Requests the cancellation of a migration job.   The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.   There might be a small delay between accepting the request and actually cancelling the job. In most cases, the delay will be close to instantaneously. In the unlikely case of communication issues across a cluster, it can however take a few seconds to cancel a job.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Cancel Mesh migration job
+     * Creates request options for cancelMeshMigrationJob without sending the request
      */
-    async cancelMeshMigrationJobRaw(requestParameters: CancelMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async cancelMeshMigrationJobRequestOpts(requestParameters: CancelMeshMigrationJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -432,12 +447,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/mesh/{jobId}/cancel`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Requests the cancellation of a migration job.   The request to cancel a job will be processed successfully if the job is actually still running. If it has already finished (successfully or with errors) or if it has already been canceled before, then an error will be returned.   There might be a small delay between accepting the request and actually cancelling the job. In most cases, the delay will be close to instantaneously. In the unlikely case of communication issues across a cluster, it can however take a few seconds to cancel a job.  A client should always actively query the job status to confirm that a job has been successfully canceled.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Cancel Mesh migration job
+     */
+    async cancelMeshMigrationJobRaw(requestParameters: CancelMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelMeshMigrationJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -451,10 +475,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Clears the global default branch, which is used when creating new repositories if an explicit default branch is not specified, if one has been configured.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Clear default branch
+     * Creates request options for clearDefaultBranch without sending the request
      */
-    async clearDefaultBranchRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async clearDefaultBranchRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -462,12 +485,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/default-branch`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Clears the global default branch, which is used when creating new repositories if an explicit default branch is not specified, if one has been configured.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Clear default branch
+     */
+    async clearDefaultBranchRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.clearDefaultBranchRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -481,10 +513,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Clears the server email address.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Update mail configuration
+     * Creates request options for clearSenderAddress without sending the request
      */
-    async clearSenderAddressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async clearSenderAddressRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -492,12 +523,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server/sender-address`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Clears the server email address.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Update mail configuration
+     */
+    async clearSenderAddressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.clearSenderAddressRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -511,10 +551,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Generates a connectivity report between the Bitbucket node(s) and the Mesh node(s).  The authenticated user must have **SYS_ADMIN** permission.
-     * Generate Mesh connectivity report
+     * Creates request options for connectivity without sending the request
      */
-    async connectivityRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshConnectivityReport>> {
+    async connectivityRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -522,12 +561,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/git/mesh/diagnostics/connectivity`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Generates a connectivity report between the Bitbucket node(s) and the Mesh node(s).  The authenticated user must have **SYS_ADMIN** permission.
+     * Generate Mesh connectivity report
+     */
+    async connectivityRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshConnectivityReport>> {
+        const requestOptions = await this.connectivityRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -542,10 +590,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new hook script.  This endpoint requires **SYS_ADMIN** permission.
-     * Create a new hook script
+     * Creates request options for createHookScript without sending the request
      */
-    async createHookScriptRaw(requestParameters: CreateHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+    async createHookScriptRequestOpts(requestParameters: CreateHookScriptRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -583,13 +630,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/hook-scripts`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new hook script.  This endpoint requires **SYS_ADMIN** permission.
+     * Create a new hook script
+     */
+    async createHookScriptRaw(requestParameters: CreateHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+        const requestOptions = await this.createHookScriptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -604,10 +660,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a Mesh node  The authenticated user must have **SYS_ADMIN** permission.
-     * Delete Mesh node
+     * Creates request options for delete2 without sending the request
      */
-    async delete2Raw(requestParameters: Delete2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete2RequestOpts(requestParameters: Delete2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -627,12 +682,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a Mesh node  The authenticated user must have **SYS_ADMIN** permission.
+     * Delete Mesh node
+     */
+    async delete2Raw(requestParameters: Delete2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -646,10 +710,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the user-specific rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Delete user specific rate limit settings
+     * Creates request options for delete8 without sending the request
      */
-    async delete8Raw(requestParameters: Delete8Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete8RequestOpts(requestParameters: Delete8Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -665,12 +728,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the user-specific rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Delete user specific rate limit settings
+     */
+    async delete8Raw(requestParameters: Delete8Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete8RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -684,10 +756,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the avatar associated to a user.   Users are always allowed to delete their own avatar. To delete someone else\'s avatar the authenticated user must have global <strong>ADMIN</strong> permission, or global <strong>SYS_ADMIN</strong> permission to update a <strong>SYS_ADMIN</strong> user\'s avatar.
-     * Delete user avatar
+     * Creates request options for deleteAvatar without sending the request
      */
-    async deleteAvatarRaw(requestParameters: DeleteAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamedLink>> {
+    async deleteAvatarRequestOpts(requestParameters: DeleteAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -703,12 +774,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/users/{userSlug}/avatar.png`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the avatar associated to a user.   Users are always allowed to delete their own avatar. To delete someone else\'s avatar the authenticated user must have global <strong>ADMIN</strong> permission, or global <strong>SYS_ADMIN</strong> permission to update a <strong>SYS_ADMIN</strong> user\'s avatar.
+     * Delete user avatar
+     */
+    async deleteAvatarRaw(requestParameters: DeleteAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamedLink>> {
+        const requestOptions = await this.deleteAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -723,10 +803,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a banner, if one is present in the database.
-     * Delete announcement banner
+     * Creates request options for deleteBanner without sending the request
      */
-    async deleteBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteBannerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -734,12 +813,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/banner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a banner, if one is present in the database.
+     * Delete announcement banner
+     */
+    async deleteBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteBannerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -753,10 +841,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a registered hook script.  This endpoint requires **SYS_ADMIN** permission.
-     * Delete a hook script.
+     * Creates request options for deleteHookScript without sending the request
      */
-    async deleteHookScriptRaw(requestParameters: DeleteHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteHookScriptRequestOpts(requestParameters: DeleteHookScriptRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scriptId'] == null) {
             throw new runtime.RequiredError(
                 'scriptId',
@@ -772,12 +859,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/hook-scripts/{scriptId}`;
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a registered hook script.  This endpoint requires **SYS_ADMIN** permission.
+     * Delete a hook script.
+     */
+    async deleteHookScriptRaw(requestParameters: DeleteHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteHookScriptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -791,10 +887,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the current mail configuration.  The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Delete mail configuration
+     * Creates request options for deleteMailConfig without sending the request
      */
-    async deleteMailConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteMailConfigRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -802,12 +897,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the current mail configuration.  The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Delete mail configuration
+     */
+    async deleteMailConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteMailConfigRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -821,10 +925,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Dismisses the retention config review notification displayed by the audit plugin for the user that\'s currently logged in.
-     * Dismiss retention config notification
+     * Creates request options for dismissRetentionConfigReviewNotification without sending the request
      */
-    async dismissRetentionConfigReviewNotificationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async dismissRetentionConfigReviewNotificationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -832,12 +935,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/audit/latest/notification-settings/retention-config-review`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Dismisses the retention config review notification displayed by the audit plugin for the user that\'s currently logged in.
+     * Dismiss retention config notification
+     */
+    async dismissRetentionConfigReviewNotificationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.dismissRetentionConfigReviewNotificationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -851,10 +963,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves details about the current license, as well as the current status of the system with regards to the installed license. The status includes the current number of users applied toward the license limit, as well as any status messages about the license (warnings about expiry or user counts exceeding license limits).   The authenticated user must have <b>ADMIN</b> permission. Unauthenticated users, and non-administrators, are not permitted to access license details.
-     * Get license details
+     * Creates request options for get2 without sending the request
      */
-    async get2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBitbucketLicense>> {
+    async get2RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -862,12 +973,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/license`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves details about the current license, as well as the current status of the system with regards to the installed license. The status includes the current number of users applied toward the license limit, as well as any status messages about the license (warnings about expiry or user counts exceeding license limits).   The authenticated user must have <b>ADMIN</b> permission. Unauthenticated users, and non-administrators, are not permitted to access license details.
+     * Get license details
+     */
+    async get2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBitbucketLicense>> {
+        const requestOptions = await this.get2RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -882,10 +1002,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the user-specific rate limit settings for the given user.  To call this resource, the user must be authenticated and either have <strong>ADMIN</strong> permission or be the same user as the one whose settings are requested. A user with <strong>ADMIN</strong> permission cannot get the settings of a user with <strong>SYS_ADMIN</strong> permission.
-     * Get user specific rate limit settings
+     * Creates request options for get6 without sending the request
      */
-    async get6Raw(requestParameters: Get6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+    async get6RequestOpts(requestParameters: Get6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -901,12 +1020,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the user-specific rate limit settings for the given user.  To call this resource, the user must be authenticated and either have <strong>ADMIN</strong> permission or be the same user as the one whose settings are requested. A user with <strong>ADMIN</strong> permission cannot get the settings of a user with <strong>SYS_ADMIN</strong> permission.
+     * Get user specific rate limit settings
+     */
+    async get6Raw(requestParameters: Get6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+        const requestOptions = await this.get6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -921,10 +1049,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the summary, including the queue status and progress, of the currently active Mesh migration job.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Get summary for Mesh migration job
+     * Creates request options for getActiveMeshMigrationSummary without sending the request
      */
-    async getActiveMeshMigrationSummaryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshMigrationSummary>> {
+    async getActiveMeshMigrationSummaryRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -932,12 +1059,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/mesh/summary`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the summary, including the queue status and progress, of the currently active Mesh migration job.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Get summary for Mesh migration job
+     */
+    async getActiveMeshMigrationSummaryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshMigrationSummary>> {
+        const requestOptions = await this.getActiveMeshMigrationSummaryRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -952,10 +1088,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of Mesh migration job summaries. Jobs are ordered by when they were started, newest first.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Get all Mesh migration job summaries
+     * Creates request options for getAllMeshMigrationSummaries without sending the request
      */
-    async getAllMeshMigrationSummariesRaw(requestParameters: GetAllMeshMigrationSummariesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllMeshMigrationSummaries200Response>> {
+    async getAllMeshMigrationSummariesRequestOpts(requestParameters: GetAllMeshMigrationSummariesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -971,12 +1106,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/mesh/summaries`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of Mesh migration job summaries. Jobs are ordered by when they were started, newest first.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Get all Mesh migration job summaries
+     */
+    async getAllMeshMigrationSummariesRaw(requestParameters: GetAllMeshMigrationSummariesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllMeshMigrationSummaries200Response>> {
+        const requestOptions = await this.getAllMeshMigrationSummariesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -991,10 +1135,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the user-specific rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Get rate limit settings for user
+     * Creates request options for getAllRateLimitSettings without sending the request
      */
-    async getAllRateLimitSettingsRaw(requestParameters: GetAllRateLimitSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllRateLimitSettings200Response>> {
+    async getAllRateLimitSettingsRequestOpts(requestParameters: GetAllRateLimitSettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -1014,12 +1157,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/rate-limit/settings/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the user-specific rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Get rate limit settings for user
+     */
+    async getAllRateLimitSettingsRaw(requestParameters: GetAllRateLimitSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllRateLimitSettings200Response>> {
+        const requestOptions = await this.getAllRateLimitSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1034,10 +1186,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all the registered Mesh nodes.  The authenticated user must have **SYS_ADMIN** permission.
-     * Get all registered Mesh nodes
+     * Creates request options for getAllRegisteredMeshNodes without sending the request
      */
-    async getAllRegisteredMeshNodesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+    async getAllRegisteredMeshNodesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1045,12 +1196,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/git/mesh/nodes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all the registered Mesh nodes.  The authenticated user must have **SYS_ADMIN** permission.
+     * Get all registered Mesh nodes
+     */
+    async getAllRegisteredMeshNodesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+        const requestOptions = await this.getAllRegisteredMeshNodesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1065,10 +1225,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve version information and other application properties.  No authentication is required to call this resource.
-     * Get application properties
+     * Creates request options for getApplicationProperties without sending the request
      */
-    async getApplicationPropertiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationProperties>> {
+    async getApplicationPropertiesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1076,12 +1235,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/application-properties`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve version information and other application properties.  No authentication is required to call this resource.
+     * Get application properties
+     */
+    async getApplicationPropertiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationProperties>> {
+        const requestOptions = await this.getApplicationPropertiesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1096,10 +1264,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the announcement banner, if one exists and is available to the user
-     * Get announcement banner
+     * Creates request options for getBanner without sending the request
      */
-    async getBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnnouncementBanner>> {
+    async getBannerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1107,12 +1274,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/banner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the announcement banner, if one exists and is available to the user
+     * Get announcement banner
+     */
+    async getBannerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnnouncementBanner>> {
+        const requestOptions = await this.getBannerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1134,10 +1310,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Obtain the control plane PEM.  The authenticated user must have **SYS_ADMIN** permission.
-     * Get the control plane PEM
+     * Creates request options for getControlPlanePublicKey without sending the request
      */
-    async getControlPlanePublicKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getControlPlanePublicKeyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1145,12 +1320,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/git/mesh/config/control-plane.pem`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Obtain the control plane PEM.  The authenticated user must have **SYS_ADMIN** permission.
+     * Get the control plane PEM
+     */
+    async getControlPlanePublicKeyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getControlPlanePublicKeyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1164,10 +1348,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the configured global default branch, which is used when creating new repositories if an explicit default branch is not specified.  The user must be authenticated to call this resource.
-     * Get the default branch
+     * Creates request options for getDefaultBranch without sending the request
      */
-    async getDefaultBranchRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getDefaultBranchRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1175,12 +1358,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/default-branch`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the configured global default branch, which is used when creating new repositories if an explicit default branch is not specified.  The user must be authenticated to call this resource.
+     * Get the default branch
+     */
+    async getDefaultBranchRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getDefaultBranchRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1194,10 +1386,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the details, including the current status and progress, of the export job identified by the given ID.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Get export job details
+     * Creates request options for getExportJob without sending the request
      */
-    async getExportJobRaw(requestParameters: GetExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+    async getExportJobRequestOpts(requestParameters: GetExportJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1213,12 +1404,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/exports/{jobId}`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the details, including the current status and progress, of the export job identified by the given ID.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Get export job details
+     */
+    async getExportJobRaw(requestParameters: GetExportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+        const requestOptions = await this.getExportJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1233,10 +1433,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the messages generated by the job.  Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.  - INFO - WARN - ERROR  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Get job messages
+     * Creates request options for getExportJobMessages without sending the request
      */
-    async getExportJobMessagesRaw(requestParameters: GetExportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+    async getExportJobMessagesRequestOpts(requestParameters: GetExportJobMessagesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1268,12 +1467,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/exports/{jobId}/messages`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the messages generated by the job.  Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.  - INFO - WARN - ERROR  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Get job messages
+     */
+    async getExportJobMessagesRaw(requestParameters: GetExportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+        const requestOptions = await this.getExportJobMessagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1288,10 +1496,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the global settings that enforce the maximum expiry of SSH keys and restrictions on SSH key types.
-     * Get global SSH key settings
+     * Creates request options for getGlobalSettings without sending the request
      */
-    async getGlobalSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKeySettings>> {
+    async getGlobalSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1299,12 +1506,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/admin`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the global settings that enforce the maximum expiry of SSH keys and restrictions on SSH key types.
+     * Get global SSH key settings
+     */
+    async getGlobalSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKeySettings>> {
+        const requestOptions = await this.getGlobalSettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1319,10 +1535,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the recent rate limit history for the instance.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Get rate limit history
+     * Creates request options for getHistory without sending the request
      */
-    async getHistoryRaw(requestParameters: GetHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetHistory200Response>> {
+    async getHistoryRequestOpts(requestParameters: GetHistoryRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['order'] != null) {
@@ -1342,12 +1557,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/rate-limit/history`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the recent rate limit history for the instance.  The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Get rate limit history
+     */
+    async getHistoryRaw(requestParameters: GetHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetHistory200Response>> {
+        const requestOptions = await this.getHistoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1362,10 +1586,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a hook script by ID.
-     * Get a hook script
+     * Creates request options for getHookScript without sending the request
      */
-    async getHookScriptRaw(requestParameters: GetHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+    async getHookScriptRequestOpts(requestParameters: GetHookScriptRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scriptId'] == null) {
             throw new runtime.RequiredError(
                 'scriptId',
@@ -1381,12 +1604,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/hook-scripts/{scriptId}`;
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a hook script by ID.
+     * Get a hook script
+     */
+    async getHookScriptRaw(requestParameters: GetHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+        const requestOptions = await this.getHookScriptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1401,10 +1633,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the details, including the current status and progress, of the import job identified by the given ID.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Get import job status
+     * Creates request options for getImportJob without sending the request
      */
-    async getImportJobRaw(requestParameters: GetImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+    async getImportJobRequestOpts(requestParameters: GetImportJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1420,12 +1651,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/imports/{jobId}`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the details, including the current status and progress, of the import job identified by the given ID.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Get import job status
+     */
+    async getImportJobRaw(requestParameters: GetImportJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+        const requestOptions = await this.getImportJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1440,10 +1680,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the messages generated by the job.  Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.  - INFO - WARN - ERROR  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Get import job messages
+     * Creates request options for getImportJobMessages without sending the request
      */
-    async getImportJobMessagesRaw(requestParameters: GetImportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+    async getImportJobMessagesRequestOpts(requestParameters: GetImportJobMessagesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1475,12 +1714,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/imports/{jobId}/messages`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the messages generated by the job.  Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.  - INFO - WARN - ERROR  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Get import job messages
+     */
+    async getImportJobMessagesRaw(requestParameters: GetImportJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+        const requestOptions = await this.getImportJobMessagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1495,10 +1743,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets information about the nodes that currently make up the stash cluster.  The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Get cluster node information
+     * Creates request options for getInformation without sending the request
      */
-    async getInformationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestClusterInformation>> {
+    async getInformationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1506,12 +1753,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/cluster`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets information about the nodes that currently make up the stash cluster.  The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Get cluster node information
+     */
+    async getInformationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestClusterInformation>> {
+        const requestOptions = await this.getInformationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1526,10 +1782,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a label.  The user needs to be authenticated to use this resource.
-     * Get label
+     * Creates request options for getLabel without sending the request
      */
-    async getLabelRaw(requestParameters: GetLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+    async getLabelRequestOpts(requestParameters: GetLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['labelName'] == null) {
             throw new runtime.RequiredError(
                 'labelName',
@@ -1545,12 +1800,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/labels/{labelName}`;
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a label.  The user needs to be authenticated to use this resource.
+     * Get label
+     */
+    async getLabelRaw(requestParameters: GetLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLabel>> {
+        const requestOptions = await this.getLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1565,10 +1829,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of labelables for a given label.  Only labelables that the authenticated user has view access to will be returned.
-     * Get labelables for label
+     * Creates request options for getLabelables without sending the request
      */
-    async getLabelablesRaw(requestParameters: GetLabelablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabelables200Response>> {
+    async getLabelablesRequestOpts(requestParameters: GetLabelablesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['labelName'] == null) {
             throw new runtime.RequiredError(
                 'labelName',
@@ -1596,12 +1859,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/labels/{labelName}/labeled`;
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of labelables for a given label.  Only labelables that the authenticated user has view access to will be returned.
+     * Get labelables for label
+     */
+    async getLabelablesRaw(requestParameters: GetLabelablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabelables200Response>> {
+        const requestOptions = await this.getLabelablesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1616,10 +1888,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a paged response of all the labels in the system.  The user needs to be authenticated to use this resource.
-     * Get all labels
+     * Creates request options for getLabels without sending the request
      */
-    async getLabelsRaw(requestParameters: GetLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabels200Response>> {
+    async getLabelsRequestOpts(requestParameters: GetLabelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['prefix'] != null) {
@@ -1639,12 +1910,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/labels`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a paged response of all the labels in the system.  The user needs to be authenticated to use this resource.
+     * Get all labels
+     */
+    async getLabelsRaw(requestParameters: GetLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLabels200Response>> {
+        const requestOptions = await this.getLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1659,10 +1939,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the current log level for a given logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
-     * Get current log level
+     * Creates request options for getLevel without sending the request
      */
-    async getLevelRaw(requestParameters: GetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLogLevel>> {
+    async getLevelRequestOpts(requestParameters: GetLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['loggerName'] == null) {
             throw new runtime.RequiredError(
                 'loggerName',
@@ -1678,12 +1957,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/logs/logger/{loggerName}`;
         urlPath = urlPath.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the current log level for a given logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
+     * Get current log level
+     */
+    async getLevelRaw(requestParameters: GetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLogLevel>> {
+        const requestOptions = await this.getLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1698,10 +1986,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the current mail configuration.   The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Get mail configuration
+     * Creates request options for getMailConfig without sending the request
      */
-    async getMailConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+    async getMailConfigRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1709,12 +1996,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the current mail configuration.   The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Get mail configuration
+     */
+    async getMailConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+        const requestOptions = await this.getMailConfigRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1729,10 +2025,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the details, including the current status and progress, of the job identified by the given ID.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Get Mesh migration job details
+     * Creates request options for getMeshMigrationJob without sending the request
      */
-    async getMeshMigrationJobRaw(requestParameters: GetMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getMeshMigrationJobRequestOpts(requestParameters: GetMeshMigrationJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1748,12 +2043,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/mesh/{jobId}`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the details, including the current status and progress, of the job identified by the given ID.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Get Mesh migration job details
+     */
+    async getMeshMigrationJobRaw(requestParameters: GetMeshMigrationJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getMeshMigrationJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1767,10 +2071,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the messages generated by the job.   Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.        - INFO      - WARN      - ERROR   The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Get Mesh migration job messages
+     * Creates request options for getMeshMigrationJobMessages without sending the request
      */
-    async getMeshMigrationJobMessagesRaw(requestParameters: GetMeshMigrationJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+    async getMeshMigrationJobMessagesRequestOpts(requestParameters: GetMeshMigrationJobMessagesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1802,12 +2105,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/mesh/{jobId}/messages`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the messages generated by the job.   Without any filter, all messages will be returned, but the response can optionally be filtered for the following severities. The severity parameter can be repeated to include multiple severities in one response.        - INFO      - WARN      - ERROR   The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Get Mesh migration job messages
+     */
+    async getMeshMigrationJobMessagesRaw(requestParameters: GetMeshMigrationJobMessagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetExportJobMessages200Response>> {
+        const requestOptions = await this.getMeshMigrationJobMessagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1822,10 +2134,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the summary, including the queue status and progress, of a Mesh migration job.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Get Mesh migration job summary
+     * Creates request options for getMeshMigrationJobSummary without sending the request
      */
-    async getMeshMigrationJobSummaryRaw(requestParameters: GetMeshMigrationJobSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshMigrationSummary>> {
+    async getMeshMigrationJobSummaryRequestOpts(requestParameters: GetMeshMigrationJobSummaryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobId'] == null) {
             throw new runtime.RequiredError(
                 'jobId',
@@ -1841,12 +2152,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/migration/mesh/{jobId}/summary`;
         urlPath = urlPath.replace(`{${"jobId"}}`, encodeURIComponent(String(requestParameters['jobId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the summary, including the queue status and progress, of a Mesh migration job.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Get Mesh migration job summary
+     */
+    async getMeshMigrationJobSummaryRaw(requestParameters: GetMeshMigrationJobSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshMigrationSummary>> {
+        const requestOptions = await this.getMeshMigrationJobSummaryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1861,10 +2181,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the registered Mesh node that matches the supplied ID.  The authenticated user must have **SYS_ADMIN** permission.
-     * Get Mesh node
+     * Creates request options for getRegisteredMeshNodeById without sending the request
      */
-    async getRegisteredMeshNodeByIdRaw(requestParameters: GetRegisteredMeshNodeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+    async getRegisteredMeshNodeByIdRequestOpts(requestParameters: GetRegisteredMeshNodeByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1880,12 +2199,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the registered Mesh node that matches the supplied ID.  The authenticated user must have **SYS_ADMIN** permission.
+     * Get Mesh node
+     */
+    async getRegisteredMeshNodeByIdRaw(requestParameters: GetRegisteredMeshNodeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+        const requestOptions = await this.getRegisteredMeshNodeByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1900,10 +2228,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the repository archive policy for the instance.  The user must be authenticated to access this resource.
-     * Get repository archive policy
+     * Creates request options for getRepositoryArchivePolicy without sending the request
      */
-    async getRepositoryArchivePolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+    async getRepositoryArchivePolicyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1911,12 +2238,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/policies/latest/admin/repos/archive`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the repository archive policy for the instance.  The user must be authenticated to access this resource.
+     * Get repository archive policy
+     */
+    async getRepositoryArchivePolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+        const requestOptions = await this.getRepositoryArchivePolicyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1931,10 +2267,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the repository delete policy for the instance.  The user must be authenticated to access this resource.
-     * Get repository delete policy
+     * Creates request options for getRepositoryDeletePolicy without sending the request
      */
-    async getRepositoryDeletePolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+    async getRepositoryDeletePolicyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1942,12 +2277,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/policies/latest/admin/repos/delete`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the repository delete policy for the instance.  The user must be authenticated to access this resource.
+     * Get repository delete policy
+     */
+    async getRepositoryDeletePolicyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+        const requestOptions = await this.getRepositoryDeletePolicyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1962,10 +2306,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the current log level for the root logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
-     * Get root log level
+     * Creates request options for getRootLevel without sending the request
      */
-    async getRootLevelRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLogLevel>> {
+    async getRootLevelRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1973,12 +2316,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/logs/rootLogger`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the current log level for the root logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
+     * Get root log level
+     */
+    async getRootLevelRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLogLevel>> {
+        const requestOptions = await this.getRootLevelRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1993,10 +2345,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the server email address
-     * Get server mail address
+     * Creates request options for getSenderAddress without sending the request
      */
-    async getSenderAddressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getSenderAddressRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2004,12 +2355,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server/sender-address`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the server email address
+     * Get server mail address
+     */
+    async getSenderAddressRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getSenderAddressRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2023,10 +2383,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether debug logging and profiling are enabled.  The authenticated user must have <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Get debug logging and profiling
+     * Creates request options for getSettings2 without sending the request
      */
-    async getSettings2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLoggingSettings>> {
+    async getSettings2RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2034,12 +2393,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/logs/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether debug logging and profiling are enabled.  The authenticated user must have <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Get debug logging and profiling
+     */
+    async getSettings2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLoggingSettings>> {
+        const requestOptions = await this.getSettings2RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2054,10 +2422,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the rate limit settings for the instance.  The user must be authenticated to call this resource.
-     * Get rate limit settings
+     * Creates request options for getSettings3 without sending the request
      */
-    async getSettings3Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRateLimitSettings>> {
+    async getSettings3RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2065,12 +2432,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/rate-limit/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the rate limit settings for the instance.  The user must be authenticated to call this resource.
+     * Get rate limit settings
+     */
+    async getSettings3Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRateLimitSettings>> {
+        const requestOptions = await this.getSettings3RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2085,10 +2461,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the support zip for the Mesh node that matches the specified ID.  The authenticated user must have **SYS_ADMIN** permission.
-     * Get support zip for node
+     * Creates request options for getSupportZip without sending the request
      */
-    async getSupportZipRaw(requestParameters: GetSupportZipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getSupportZipRequestOpts(requestParameters: GetSupportZipRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2104,12 +2479,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/git/mesh/support-zips/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the support zip for the Mesh node that matches the specified ID.  The authenticated user must have **SYS_ADMIN** permission.
+     * Get support zip for node
+     */
+    async getSupportZipRaw(requestParameters: GetSupportZipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getSupportZipRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2123,10 +2507,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the support zips for all the Mesh nodes.  The authenticated user must have **SYS_ADMIN** permission.
-     * Get support zips for all Mesh nodes
+     * Creates request options for getSupportZips without sending the request
      */
-    async getSupportZipsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getSupportZipsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2134,12 +2517,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/git/mesh/support-zips`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the support zips for all the Mesh nodes.  The authenticated user must have **SYS_ADMIN** permission.
+     * Get support zips for all Mesh nodes
+     */
+    async getSupportZipsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getSupportZipsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2153,10 +2545,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of all supported SSH key algorithms and lengths.
-     * Get supported SSH key algorithms and lengths
+     * Creates request options for getSupportedKeyTypes without sending the request
      */
-    async getSupportedKeyTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getSupportedKeyTypesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2164,12 +2555,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/supported-key-types`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of all supported SSH key algorithms and lengths.
+     * Get supported SSH key algorithms and lengths
+     */
+    async getSupportedKeyTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getSupportedKeyTypesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2183,10 +2583,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the user matching the supplied <strong>userSlug</strong>.
-     * Get user
+     * Creates request options for getUser without sending the request
      */
-    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+    async getUserRequestOpts(requestParameters: GetUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -2202,12 +2601,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the user matching the supplied <strong>userSlug</strong>.
+     * Get user
+     */
+    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+        const requestOptions = await this.getUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2222,10 +2630,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a map of user setting key values for a specific user identified by the user slug.
-     * Get user settings
+     * Creates request options for getUserSettings without sending the request
      */
-    async getUserSettingsRaw(requestParameters: GetUserSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettingsMap>> {
+    async getUserSettingsRequestOpts(requestParameters: GetUserSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -2241,12 +2648,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/users/{userSlug}/settings`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a map of user setting key values for a specific user identified by the user slug.
+     * Get user settings
+     */
+    async getUserSettingsRaw(requestParameters: GetUserSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettingsMap>> {
+        const requestOptions = await this.getUserSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2261,10 +2677,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users, optionally run through provided filters.   Only authenticated users may call this resource. ### Permission Filters   The following three sub-sections list parameters supported for permission filters (where <code>[root]</code> is the root permission filter name, e.g. <code>permission</code>, <code>permission.1</code> etc.) depending on the permission resource. The system determines which filter to apply (Global, Project or Repository permission) based on the `[root]` permission value. E.g. <code>ADMIN</code> is a global permission, <code>PROJECT_ADMIN</code> is a project permission and <code>REPO_ADMIN</code> is a repository permission. Note that the parameters for a given resource will be looked up in the order as they are listed below, that is e.g. for a project resource, if both <code>projectId</code> and <code>projectKey</code> are provided, the system will use <code>projectId</code> for the lookup. <h4>Global permissions</h4>   The permission value under <code>[root]</code> is the only required and recognized parameter, as global permissions do not apply to a specific resource.   Example valid filter: <code>permission=ADMIN</code>. <h4>Project permissions</h4>   - <code>[root]</code>- specifies the project permission - <code>[root].projectId</code> - specifies the project ID to lookup the project by - <code>[root].projectKey</code> - specifies the project key to lookup the project by   Example valid filter: <code>permission.1=PROJECT_ADMIN&amp;permission.1.projectKey=TEST_PROJECT</code>. #### Repository permissions   - <code>[root]</code>- specifies the repository permission - <code>[root].projectId</code> - specifies the repository ID to lookup the repository by - <code>[root].projectKey</code> and <code>[root].repositorySlug</code>- specifies the project key and     repository slug to lookup the repository by; both values <i>need to</i> be provided for this look up to be     triggered   Example valid filter: <code>permission.2=REPO_ADMIN&amp;permission.2.projectKey=TEST_PROJECT&amp;permission.2.repositorySlug=test_repo</code>.
-     * Get all users
+     * Creates request options for getUsers2 without sending the request
      */
-    async getUsers2Raw(requestParameters: GetUsers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+    async getUsers2RequestOpts(requestParameters: GetUsers2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -2288,12 +2703,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users, optionally run through provided filters.   Only authenticated users may call this resource. ### Permission Filters   The following three sub-sections list parameters supported for permission filters (where <code>[root]</code> is the root permission filter name, e.g. <code>permission</code>, <code>permission.1</code> etc.) depending on the permission resource. The system determines which filter to apply (Global, Project or Repository permission) based on the `[root]` permission value. E.g. <code>ADMIN</code> is a global permission, <code>PROJECT_ADMIN</code> is a project permission and <code>REPO_ADMIN</code> is a repository permission. Note that the parameters for a given resource will be looked up in the order as they are listed below, that is e.g. for a project resource, if both <code>projectId</code> and <code>projectKey</code> are provided, the system will use <code>projectId</code> for the lookup. <h4>Global permissions</h4>   The permission value under <code>[root]</code> is the only required and recognized parameter, as global permissions do not apply to a specific resource.   Example valid filter: <code>permission=ADMIN</code>. <h4>Project permissions</h4>   - <code>[root]</code>- specifies the project permission - <code>[root].projectId</code> - specifies the project ID to lookup the project by - <code>[root].projectKey</code> - specifies the project key to lookup the project by   Example valid filter: <code>permission.1=PROJECT_ADMIN&amp;permission.1.projectKey=TEST_PROJECT</code>. #### Repository permissions   - <code>[root]</code>- specifies the repository permission - <code>[root].projectId</code> - specifies the repository ID to lookup the repository by - <code>[root].projectKey</code> and <code>[root].repositorySlug</code>- specifies the project key and     repository slug to lookup the repository by; both values <i>need to</i> be provided for this look up to be     triggered   Example valid filter: <code>permission.2=REPO_ADMIN&amp;permission.2.projectKey=TEST_PROJECT&amp;permission.2.repositorySlug=test_repo</code>.
+     * Get all users
+     */
+    async getUsers2Raw(requestParameters: GetUsers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+        const requestOptions = await this.getUsers2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2308,10 +2732,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enumerates the projects and repositories that would be exported for a given export request.  All affected repositories will be enumerated explicitly, and while projects are listed as individual items in responses from this endpoint, their presence does not imply that all their repositories are included.  While this endpoint can be used to verify that all selectors in the request apply as intended, it should be noted that a subsequent, actual export might contain a different set of repositories, as they might have been added or deleted in the meantime.  Note that the overall response from this endpoint can become very large when a lot of repositories end up in the selection. This is why the server is streaming the response while it is being generated (as opposed to creating it in memory and then sending it all at once) and it can be consumed in a streaming way, too.  Also, due to the potential size of the response, projects and repositories are listed with fewer details than in other REST responses.  For a more detailed description of selectors, see the endpoint documentation for starting an export.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Preview export
+     * Creates request options for previewExport without sending the request
      */
-    async previewExportRaw(requestParameters: PreviewExportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestScopesExample>> {
+    async previewExportRequestOpts(requestParameters: PreviewExportRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2321,13 +2744,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/exports/preview`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restExportRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enumerates the projects and repositories that would be exported for a given export request.  All affected repositories will be enumerated explicitly, and while projects are listed as individual items in responses from this endpoint, their presence does not imply that all their repositories are included.  While this endpoint can be used to verify that all selectors in the request apply as intended, it should be noted that a subsequent, actual export might contain a different set of repositories, as they might have been added or deleted in the meantime.  Note that the overall response from this endpoint can become very large when a lot of repositories end up in the selection. This is why the server is streaming the response while it is being generated (as opposed to creating it in memory and then sending it all at once) and it can be consumed in a streaming way, too.  Also, due to the potential size of the response, projects and repositories are listed with fewer details than in other REST responses.  For a more detailed description of selectors, see the endpoint documentation for starting an export.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Preview export
+     */
+    async previewExportRaw(requestParameters: PreviewExportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestScopesExample>> {
+        const requestOptions = await this.previewExportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2342,10 +2774,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enumerates the projects and repositories that would be migrated for a given request.  All affected repositories will be enumerated explicitly, and while projects are listed as individual items in responses from this endpoint, their presence does not imply that all their repositories are included.  While this endpoint can be used to verify that all selectors in the request apply as intended, it should be noted that a subsequent, actual export might contain a different set of repositories, as they might have been added or deleted in the meantime.  Note that the overall response from this endpoint can become very large when a lot of repositories end up in the selection. This is why the server is streaming the response while it is being generated (as opposed to creating it in memory and then sending it all at once) and it can be consumed in a streaming way, too.  Also, due to the potential size of the response, projects and repositories are listed with fewer details than in other REST responses.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Preview Mesh migration
+     * Creates request options for previewMeshMigration without sending the request
      */
-    async previewMeshMigrationRaw(requestParameters: PreviewMeshMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExamplePreviewMigration>> {
+    async previewMeshMigrationRequestOpts(requestParameters: PreviewMeshMigrationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2355,13 +2786,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/mesh/preview`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMeshMigrationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enumerates the projects and repositories that would be migrated for a given request.  All affected repositories will be enumerated explicitly, and while projects are listed as individual items in responses from this endpoint, their presence does not imply that all their repositories are included.  While this endpoint can be used to verify that all selectors in the request apply as intended, it should be noted that a subsequent, actual export might contain a different set of repositories, as they might have been added or deleted in the meantime.  Note that the overall response from this endpoint can become very large when a lot of repositories end up in the selection. This is why the server is streaming the response while it is being generated (as opposed to creating it in memory and then sending it all at once) and it can be consumed in a streaming way, too.  Also, due to the potential size of the response, projects and repositories are listed with fewer details than in other REST responses.  The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Preview Mesh migration
+     */
+    async previewMeshMigrationRaw(requestParameters: PreviewMeshMigrationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExamplePreviewMigration>> {
+        const requestOptions = await this.previewMeshMigrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2376,10 +2816,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the hook script content.  This endpoint requires **SYS_ADMIN** permission.
-     * Get hook script content
+     * Creates request options for read without sending the request
      */
-    async readRaw(requestParameters: ReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async readRequestOpts(requestParameters: ReadRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scriptId'] == null) {
             throw new runtime.RequiredError(
                 'scriptId',
@@ -2395,12 +2834,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/hook-scripts/{scriptId}/content`;
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the hook script content.  This endpoint requires **SYS_ADMIN** permission.
+     * Get hook script content
+     */
+    async readRaw(requestParameters: ReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.readRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2414,10 +2862,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Register a new Mesh node.  The authenticated user must have **SYS_ADMIN** permission.
-     * Register new Mesh node
+     * Creates request options for registerNewMeshNode without sending the request
      */
-    async registerNewMeshNodeRaw(requestParameters: RegisterNewMeshNodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+    async registerNewMeshNodeRequestOpts(requestParameters: RegisterNewMeshNodeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2427,13 +2874,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/git/mesh/nodes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMeshNode'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Register a new Mesh node.  The authenticated user must have **SYS_ADMIN** permission.
+     * Register new Mesh node
+     */
+    async registerNewMeshNodeRaw(requestParameters: RegisterNewMeshNodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+        const requestOptions = await this.registerNewMeshNodeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2448,10 +2904,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Searches for repositories in the system matching the specified criteria and enriches their MeshMigrationQueueState migration state if a migration is currently in progress.   The currently active migration can optionally be specified by passing a migrationId, if known. If this isn\'t passed, an attempt is made to locate the active migration and its ID is used.   If a migration is currently active, only repositories that are a part of the migration are filtered and returned. Otherwise, all repositories in the systems are filtered and returned.   Filtering by state is ignored when no migration is currently in progress. In such a case, results are not enriched with their MeshMigrationQueueState migration state.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Find repositories by Mesh migration state
+     * Creates request options for searchMeshMigrationRepos without sending the request
      */
-    async searchMeshMigrationReposRaw(requestParameters: SearchMeshMigrationReposRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchMeshMigrationRepos200Response>> {
+    async searchMeshMigrationReposRequestOpts(requestParameters: SearchMeshMigrationReposRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['migrationId'] != null) {
@@ -2487,12 +2942,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/mesh/repos`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Searches for repositories in the system matching the specified criteria and enriches their MeshMigrationQueueState migration state if a migration is currently in progress.   The currently active migration can optionally be specified by passing a migrationId, if known. If this isn\'t passed, an attempt is made to locate the active migration and its ID is used.   If a migration is currently active, only repositories that are a part of the migration are filtered and returned. Otherwise, all repositories in the systems are filtered and returned.   Filtering by state is ignored when no migration is currently in progress. In such a case, results are not enriched with their MeshMigrationQueueState migration state.   The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Find repositories by Mesh migration state
+     */
+    async searchMeshMigrationReposRaw(requestParameters: SearchMeshMigrationReposRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchMeshMigrationRepos200Response>> {
+        const requestOptions = await this.searchMeshMigrationReposRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2507,10 +2971,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the given rate limit settings for the given users.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Set rate limit settings for users
+     * Creates request options for set2 without sending the request
      */
-    async set2Raw(requestParameters: Set2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+    async set2RequestOpts(requestParameters: Set2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2520,13 +2983,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/rate-limit/settings/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBulkUserRateLimitSettingsUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the given rate limit settings for the given users.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Set rate limit settings for users
+     */
+    async set2Raw(requestParameters: Set2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+        const requestOptions = await this.set2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2541,10 +3013,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the given rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Set rate limit settings for user
+     * Creates request options for set3 without sending the request
      */
-    async set3Raw(requestParameters: Set3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+    async set3RequestOpts(requestParameters: Set3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -2562,13 +3033,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/rate-limit/settings/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserRateLimitSettingsUpdateRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the given rate limit settings for the given user.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Set rate limit settings for user
+     */
+    async set3Raw(requestParameters: Set3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserRateLimitSettings>> {
+        const requestOptions = await this.set3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2583,10 +3063,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the announcement banner with the provided JSON. Only users authenticated as Admins may call this resource
-     * Update/Set announcement banner
+     * Creates request options for setBanner without sending the request
      */
-    async setBannerRaw(requestParameters: SetBannerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setBannerRequestOpts(requestParameters: SetBannerOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2596,13 +3075,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/banner`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setBannerRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the announcement banner with the provided JSON. Only users authenticated as Admins may call this resource
+     * Update/Set announcement banner
+     */
+    async setBannerRaw(requestParameters: SetBannerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setBannerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2616,10 +3104,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Configures the global default branch, which is used when creating new repositories if an explicit default branch is not specified.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Update/Set default branch
+     * Creates request options for setDefaultBranch without sending the request
      */
-    async setDefaultBranchRaw(requestParameters: SetDefaultBranchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setDefaultBranchRequestOpts(requestParameters: SetDefaultBranchOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2629,13 +3116,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/default-branch`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setDefaultBranchRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Configures the global default branch, which is used when creating new repositories if an explicit default branch is not specified.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Update/Set default branch
+     */
+    async setDefaultBranchRaw(requestParameters: SetDefaultBranchOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setDefaultBranchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2649,10 +3145,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set the current log level for a given logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
-     * Set log level
+     * Creates request options for setLevel without sending the request
      */
-    async setLevelRaw(requestParameters: SetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setLevelRequestOpts(requestParameters: SetLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['levelName'] == null) {
             throw new runtime.RequiredError(
                 'levelName',
@@ -2676,12 +3171,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName'])));
         urlPath = urlPath.replace(`{${"loggerName"}}`, encodeURIComponent(String(requestParameters['loggerName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Set the current log level for a given logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
+     * Set log level
+     */
+    async setLevelRaw(requestParameters: SetLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2695,10 +3199,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the mail configuration.   The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Update mail configuration
+     * Creates request options for setMailConfig without sending the request
      */
-    async setMailConfigRaw(requestParameters: SetMailConfigOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+    async setMailConfigRequestOpts(requestParameters: SetMailConfigOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2708,13 +3211,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setMailConfigRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the mail configuration.   The authenticated user must have the <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Update mail configuration
+     */
+    async setMailConfigRaw(requestParameters: SetMailConfigOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+        const requestOptions = await this.setMailConfigRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2729,10 +3241,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the repository archive policy for the instance.  The authenticated user must have <b>SYS_ADMIN</b> permission.
-     * Update repository archive policy
+     * Creates request options for setRepositoryArchivePolicy without sending the request
      */
-    async setRepositoryArchivePolicyRaw(requestParameters: SetRepositoryArchivePolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+    async setRepositoryArchivePolicyRequestOpts(requestParameters: SetRepositoryArchivePolicyRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2742,13 +3253,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/policies/latest/admin/repos/archive`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositoryPolicy'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the repository archive policy for the instance.  The authenticated user must have <b>SYS_ADMIN</b> permission.
+     * Update repository archive policy
+     */
+    async setRepositoryArchivePolicyRaw(requestParameters: SetRepositoryArchivePolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+        const requestOptions = await this.setRepositoryArchivePolicyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2763,10 +3283,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the repository delete policy for the instance.  The authenticated user must have <b>SYS_ADMIN</b> permission.
-     * Update the repository delete policy
+     * Creates request options for setRepositoryDeletePolicy without sending the request
      */
-    async setRepositoryDeletePolicyRaw(requestParameters: SetRepositoryDeletePolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+    async setRepositoryDeletePolicyRequestOpts(requestParameters: SetRepositoryDeletePolicyRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2776,13 +3295,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/policies/latest/admin/repos/delete`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepositoryPolicy'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the repository delete policy for the instance.  The authenticated user must have <b>SYS_ADMIN</b> permission.
+     * Update the repository delete policy
+     */
+    async setRepositoryDeletePolicyRaw(requestParameters: SetRepositoryDeletePolicyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryPolicy>> {
+        const requestOptions = await this.setRepositoryDeletePolicyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2797,10 +3325,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set the current log level for the root logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
-     * Set root log level
+     * Creates request options for setRootLevel without sending the request
      */
-    async setRootLevelRaw(requestParameters: SetRootLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setRootLevelRequestOpts(requestParameters: SetRootLevelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['levelName'] == null) {
             throw new runtime.RequiredError(
                 'levelName',
@@ -2816,12 +3343,21 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/logs/rootLogger/{levelName}`;
         urlPath = urlPath.replace(`{${"levelName"}}`, encodeURIComponent(String(requestParameters['levelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Set the current log level for the root logger.  The authenticated user must have <strong>SYS_ADMIN</strong> permission or higher to call this resource.
+     * Set root log level
+     */
+    async setRootLevelRaw(requestParameters: SetRootLevelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setRootLevelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2835,10 +3371,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the server email address   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
-     * Update server mail address
+     * Creates request options for setSenderAddress without sending the request
      */
-    async setSenderAddressRaw(requestParameters: SetSenderAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setSenderAddressRequestOpts(requestParameters: SetSenderAddressRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2848,13 +3383,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/mail-server/sender-address`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the server email address   The authenticated user must have the <strong>ADMIN</strong> permission to call this resource.
+     * Update server mail address
+     */
+    async setSenderAddressRaw(requestParameters: SetSenderAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setSenderAddressRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2868,10 +3412,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set whether debug logging and profiling should be enabled. This setting persists on restarts.  The authenticated user must have <strong>SYS_ADMIN</strong> permission to call this resource.
-     * Set debug logging and profiling
+     * Creates request options for setSettings2 without sending the request
      */
-    async setSettings2Raw(requestParameters: SetSettings2OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLoggingSettings>> {
+    async setSettings2RequestOpts(requestParameters: SetSettings2OperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2881,13 +3424,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/logs/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['setSettings2Request'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Set whether debug logging and profiling should be enabled. This setting persists on restarts.  The authenticated user must have <strong>SYS_ADMIN</strong> permission to call this resource.
+     * Set debug logging and profiling
+     */
+    async setSettings2Raw(requestParameters: SetSettings2OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestLoggingSettings>> {
+        const requestOptions = await this.setSettings2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2902,10 +3454,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the rate limit settings for the instance.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
-     * Set rate limit
+     * Creates request options for setSettings3 without sending the request
      */
-    async setSettings3Raw(requestParameters: SetSettings3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRateLimitSettings>> {
+    async setSettings3RequestOpts(requestParameters: SetSettings3Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2915,13 +3466,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/rate-limit/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRateLimitSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the rate limit settings for the instance.  The authenticated user must have <strong>ADMIN</strong> permission to call this resource.
+     * Set rate limit
+     */
+    async setSettings3Raw(requestParameters: SetSettings3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRateLimitSettings>> {
+        const requestOptions = await this.setSettings3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2936,10 +3496,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Starts a background job that exports the selected repositories.  Only 2 concurrent exports are supported _per cluster node_. If a request ends up on a node that is already running that many export jobs, the request will be rejected and an error returned.  The response includes a description of the job that has been started, and its ID can be used to query these details again, including the current progress, warnings and errors that occurred while processing the job, and to interrupt and cancel the execution of this job.  The request to start an export is similar to the one for previewing an export. Additionally, it accepts an optional parameter, `exportLocation`, which can be used to specify a _relative_ path within `data/migration/export` in the shared home directory. No locations outside of that directory will be accepted for exports.  There are essentially three ways to select repositories for export. Regardless of which you use, a few general rules apply:  - You can supply a list of selectors. The selection will be additive. - Repositories that are selected more than once due to overlapping selectors will be de-duplicated and effectively exported only once. - For every selected repository, its full fork hierarchy will be considered selected, even if parts of that hierarchy would otherwise not be matched by the provided selectors. For example, when you explicitly select a single repository only, but that repository is a fork, then its origin will be exported (and eventually imported), too.  Now, a single repository can be selected like this:  ```    {       \"projectKey\": \"PRJ\",       \"slug\": \"my-repo\" }  ```  Second, all repositories in a specific project can be selected like this:  ```    {       \"projectKey\": \"PRJ\",       \"slug\": *\" }  ```  And third, all projects and repositories in the system would be selected like this:  ```    {       \"projectKey\": \"*\",       \"slug\": *\" }  ```  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Start export job
+     * Creates request options for startExport without sending the request
      */
-    async startExportRaw(requestParameters: StartExportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+    async startExportRequestOpts(requestParameters: StartExportRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2949,13 +3508,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/exports`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restExportRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Starts a background job that exports the selected repositories.  Only 2 concurrent exports are supported _per cluster node_. If a request ends up on a node that is already running that many export jobs, the request will be rejected and an error returned.  The response includes a description of the job that has been started, and its ID can be used to query these details again, including the current progress, warnings and errors that occurred while processing the job, and to interrupt and cancel the execution of this job.  The request to start an export is similar to the one for previewing an export. Additionally, it accepts an optional parameter, `exportLocation`, which can be used to specify a _relative_ path within `data/migration/export` in the shared home directory. No locations outside of that directory will be accepted for exports.  There are essentially three ways to select repositories for export. Regardless of which you use, a few general rules apply:  - You can supply a list of selectors. The selection will be additive. - Repositories that are selected more than once due to overlapping selectors will be de-duplicated and effectively exported only once. - For every selected repository, its full fork hierarchy will be considered selected, even if parts of that hierarchy would otherwise not be matched by the provided selectors. For example, when you explicitly select a single repository only, but that repository is a fork, then its origin will be exported (and eventually imported), too.  Now, a single repository can be selected like this:  ```    {       \"projectKey\": \"PRJ\",       \"slug\": \"my-repo\" }  ```  Second, all repositories in a specific project can be selected like this:  ```    {       \"projectKey\": \"PRJ\",       \"slug\": *\" }  ```  And third, all projects and repositories in the system would be selected like this:  ```    {       \"projectKey\": \"*\",       \"slug\": *\" }  ```  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Start export job
+     */
+    async startExportRaw(requestParameters: StartExportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+        const requestOptions = await this.startExportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2970,10 +3538,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Starts a background job that imports the specified archive.  Only 1 import at a time is supported _per cluster_. If another request is made while an import is already running, the request will be rejected and an error returned.  The path in the request must point to a valid archive file. The file must be located within the `data/migration/import` directory in the shared home directory.  The authenticated user must have **ADMIN** permission or higher to call this resource.
-     * Start import job
+     * Creates request options for startImport without sending the request
      */
-    async startImportRaw(requestParameters: StartImportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+    async startImportRequestOpts(requestParameters: StartImportRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2983,13 +3550,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/imports`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restImportRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Starts a background job that imports the specified archive.  Only 1 import at a time is supported _per cluster_. If another request is made while an import is already running, the request will be rejected and an error returned.  The path in the request must point to a valid archive file. The file must be located within the `data/migration/import` directory in the shared home directory.  The authenticated user must have **ADMIN** permission or higher to call this resource.
+     * Start import job
+     */
+    async startImportRaw(requestParameters: StartImportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+        const requestOptions = await this.startImportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3004,10 +3580,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Starts a background job that migrates selected projects/repositories to Mesh.   Only 1 job is supported _per cluster_.  The response includes a description of the job that has been started, and its ID can be used to query these details again, including the current progress, and to interrupt and cancel the execution of this job.   The request to start a migration is similar to the one for previewing a migration.   There are essentially three ways to select repositories for migration. Regardless of which you use, a few general rules apply:       - You can supply a list of repository IDs and project IDs. The selection will be additive. All repositories     in the system are migrated if both lists are empty.     - Repositories that are selected more than once due to overlapping IDs will be de-duplicated and     effectively migrated only once.     - For every selected repository, its full fork hierarchy will be considered selected, even if parts of that     hierarchy would otherwise not be matched by the provided IDs. For example, when you explicitly     select a single repository only, but that repository is a fork, then its origin will be migrated too.   Now, a single repository can be selected like this:   ```       {      \"repositoryIds\": [1]      } ```  Multiple repositories can be selected like this:    ```       {      \"repositoryIds\": [1, 2]      } ```  Second, all repositories in a specific project can be selected like this:    ```       {      \"projectIds\": [1]      } ```  And third, all projects and repositories in the system would be selected like this:    ```       {      \"projectIds\": [],      \"repositoryIds\": []      } ```  The authenticated user must have **SYS_ADMIN** permission to call this resource.
-     * Start Mesh migration job
+     * Creates request options for startMeshMigration without sending the request
      */
-    async startMeshMigrationRaw(requestParameters: StartMeshMigrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+    async startMeshMigrationRequestOpts(requestParameters: StartMeshMigrationOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3017,13 +3592,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/migration/mesh`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['startMeshMigrationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Starts a background job that migrates selected projects/repositories to Mesh.   Only 1 job is supported _per cluster_.  The response includes a description of the job that has been started, and its ID can be used to query these details again, including the current progress, and to interrupt and cancel the execution of this job.   The request to start a migration is similar to the one for previewing a migration.   There are essentially three ways to select repositories for migration. Regardless of which you use, a few general rules apply:       - You can supply a list of repository IDs and project IDs. The selection will be additive. All repositories     in the system are migrated if both lists are empty.     - Repositories that are selected more than once due to overlapping IDs will be de-duplicated and     effectively migrated only once.     - For every selected repository, its full fork hierarchy will be considered selected, even if parts of that     hierarchy would otherwise not be matched by the provided IDs. For example, when you explicitly     select a single repository only, but that repository is a fork, then its origin will be migrated too.   Now, a single repository can be selected like this:   ```       {      \"repositoryIds\": [1]      } ```  Multiple repositories can be selected like this:    ```       {      \"repositoryIds\": [1, 2]      } ```  Second, all repositories in a specific project can be selected like this:    ```       {      \"projectIds\": [1]      } ```  And third, all projects and repositories in the system would be selected like this:    ```       {      \"projectIds\": [],      \"repositoryIds\": []      } ```  The authenticated user must have **SYS_ADMIN** permission to call this resource.
+     * Start Mesh migration job
+     */
+    async startMeshMigrationRaw(requestParameters: StartMeshMigrationOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJob>> {
+        const requestOptions = await this.startMeshMigrationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3038,10 +3622,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the global settings that enforces the maximum expiry of SSH keys and restrictions on SSH key types.
-     * Update global SSH key settings
+     * Creates request options for updateGlobalSettings without sending the request
      */
-    async updateGlobalSettingsRaw(requestParameters: UpdateGlobalSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateGlobalSettingsRequestOpts(requestParameters: UpdateGlobalSettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3051,13 +3634,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/admin`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSshKeySettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the global settings that enforces the maximum expiry of SSH keys and restrictions on SSH key types.
+     * Update global SSH key settings
+     */
+    async updateGlobalSettingsRaw(requestParameters: UpdateGlobalSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateGlobalSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3071,10 +3663,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a hook script.  This endpoint requires **SYS_ADMIN** permission.
-     * Update a hook script
+     * Creates request options for updateHookScript without sending the request
      */
-    async updateHookScriptRaw(requestParameters: UpdateHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+    async updateHookScriptRequestOpts(requestParameters: UpdateHookScriptRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scriptId'] == null) {
             throw new runtime.RequiredError(
                 'scriptId',
@@ -3092,13 +3683,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/hook-scripts/{scriptId}`;
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['examplePutMultipartFormData'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a hook script.  This endpoint requires **SYS_ADMIN** permission.
+     * Update a hook script
+     */
+    async updateHookScriptRaw(requestParameters: UpdateHookScriptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScript>> {
+        const requestOptions = await this.updateHookScriptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3113,10 +3713,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Decodes the provided encoded license and sets it as the active license. If no license was provided, a 400 is returned. If the license cannot be decoded, or cannot be applied, a 409 is returned. Some possible reasons a license may not be applied include:   - It is for a different product - It is already expired   Otherwise, if the license is updated successfully, details for the new license are returned with a 200 response.  <b>Warning</b>: It is possible to downgrade the license during update, applying a license with a lower number of permitted users. If the number of currently-licensed users exceeds the limits of the new license, pushing will be disabled until the licensed user count is brought into compliance with the new license.  The authenticated user must have <b>SYS_ADMIN</b> permission. <b>ADMIN</b> users may <i>view</i> the current license details, but they may not <i>update</i> the license.
-     * Update license
+     * Creates request options for updateLicense without sending the request
      */
-    async updateLicenseRaw(requestParameters: UpdateLicenseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBitbucketLicense>> {
+    async updateLicenseRequestOpts(requestParameters: UpdateLicenseRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3126,13 +3725,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/license`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBitbucketLicense'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Decodes the provided encoded license and sets it as the active license. If no license was provided, a 400 is returned. If the license cannot be decoded, or cannot be applied, a 409 is returned. Some possible reasons a license may not be applied include:   - It is for a different product - It is already expired   Otherwise, if the license is updated successfully, details for the new license are returned with a 200 response.  <b>Warning</b>: It is possible to downgrade the license during update, applying a license with a lower number of permitted users. If the number of currently-licensed users exceeds the limits of the new license, pushing will be disabled until the licensed user count is brought into compliance with the new license.  The authenticated user must have <b>SYS_ADMIN</b> permission. <b>ADMIN</b> users may <i>view</i> the current license details, but they may not <i>update</i> the license.
+     * Update license
+     */
+    async updateLicenseRaw(requestParameters: UpdateLicenseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBitbucketLicense>> {
+        const requestOptions = await this.updateLicenseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3147,10 +3755,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a Mesh node.  The authenticated user must have **SYS_ADMIN** permission.
-     * Update Mesh node
+     * Creates request options for updateMeshNode without sending the request
      */
-    async updateMeshNodeRaw(requestParameters: UpdateMeshNodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+    async updateMeshNodeRequestOpts(requestParameters: UpdateMeshNodeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -3168,13 +3775,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/git/mesh/nodes/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMeshNode'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a Mesh node.  The authenticated user must have **SYS_ADMIN** permission.
+     * Update Mesh node
+     */
+    async updateMeshNodeRaw(requestParameters: UpdateMeshNodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMeshNode>> {
+        const requestOptions = await this.updateMeshNodeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3189,10 +3805,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the entries of a map of user setting key/values for a specific user identified by the user slug.
-     * Update user settings
+     * Creates request options for updateSettings without sending the request
      */
-    async updateSettingsRaw(requestParameters: UpdateSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateSettingsRequestOpts(requestParameters: UpdateSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -3210,13 +3825,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/users/{userSlug}/settings`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['exampleSettingsMap'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the entries of a map of user setting key/values for a specific user identified by the user slug.
+     * Update user settings
+     */
+    async updateSettingsRaw(requestParameters: UpdateSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3230,10 +3854,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the currently authenticated user\'s details. The update will always be applied to the currently authenticated user.
-     * Update user details
+     * Creates request options for updateUserDetails1 without sending the request
      */
-    async updateUserDetails1Raw(requestParameters: UpdateUserDetails1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+    async updateUserDetails1RequestOpts(requestParameters: UpdateUserDetails1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3243,13 +3866,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userUpdateWithCredentials'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the currently authenticated user\'s details. The update will always be applied to the currently authenticated user.
+     * Update user details
+     */
+    async updateUserDetails1Raw(requestParameters: UpdateUserDetails1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestApplicationUser>> {
+        const requestOptions = await this.updateUserDetails1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3264,10 +3896,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the currently authenticated user\'s password.
-     * Set password
+     * Creates request options for updateUserPassword1 without sending the request
      */
-    async updateUserPassword1Raw(requestParameters: UpdateUserPassword1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateUserPassword1RequestOpts(requestParameters: UpdateUserPassword1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3277,13 +3908,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/users/credentials`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['userPasswordUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the currently authenticated user\'s password.
+     * Set password
+     */
+    async updateUserPassword1Raw(requestParameters: UpdateUserPassword1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateUserPassword1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3297,10 +3937,9 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the avatar for the user with the supplied <strong>slug</strong>.   This resource accepts POST multipart form data, containing a single image in a form-field named \'avatar\'.   There are configurable server limits on both the dimensions (1024x1024 pixels by default) and uploaded file size (1MB by default). Several different image formats are supported, but <strong>PNG</strong> and <strong>JPEG</strong> are preferred due to the file size limit.   This resource has Cross-Site Request Forgery (XSRF) protection. To allow the request to pass the XSRF check the caller needs to send an <code>X-Atlassian-Token</code> HTTP header with the value <code>no-check</code>.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to upload an image name \'avatar.png\' would be: ``` curl -X POST -u username:password -H \"X-Atlassian-Token: no-check\" http://example.com/rest/api/latest/users/jdoe/avatar.png -F avatar=@avatar.png ```   Users are always allowed to update their own avatar. To update someone else\'s avatar the authenticated user must have global <strong>ADMIN</strong> permission, or global <strong>SYS_ADMIN</strong> permission to update a <strong>SYS_ADMIN</strong> user\'s avatar.
-     * Update user avatar
+     * Creates request options for uploadAvatar1 without sending the request
      */
-    async uploadAvatar1Raw(requestParameters: UploadAvatar1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async uploadAvatar1RequestOpts(requestParameters: UploadAvatar1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -3340,13 +3979,22 @@ export class SystemMaintenanceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/users/{userSlug}/avatar.png`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the avatar for the user with the supplied <strong>slug</strong>.   This resource accepts POST multipart form data, containing a single image in a form-field named \'avatar\'.   There are configurable server limits on both the dimensions (1024x1024 pixels by default) and uploaded file size (1MB by default). Several different image formats are supported, but <strong>PNG</strong> and <strong>JPEG</strong> are preferred due to the file size limit.   This resource has Cross-Site Request Forgery (XSRF) protection. To allow the request to pass the XSRF check the caller needs to send an <code>X-Atlassian-Token</code> HTTP header with the value <code>no-check</code>.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to upload an image name \'avatar.png\' would be: ``` curl -X POST -u username:password -H \"X-Atlassian-Token: no-check\" http://example.com/rest/api/latest/users/jdoe/avatar.png -F avatar=@avatar.png ```   Users are always allowed to update their own avatar. To update someone else\'s avatar the authenticated user must have global <strong>ADMIN</strong> permission, or global <strong>SYS_ADMIN</strong> permission to update a <strong>SYS_ADMIN</strong> user\'s avatar.
+     * Update user avatar
+     */
+    async uploadAvatar1Raw(requestParameters: UploadAvatar1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.uploadAvatar1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

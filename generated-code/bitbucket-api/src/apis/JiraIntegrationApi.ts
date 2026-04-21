@@ -51,10 +51,9 @@ interface GetIssueKeysForPullRequestRequest {
 export class JiraIntegrationApi extends runtime.BaseAPI {
 
     /**
-     * Create a Jira issue and associate it with a comment on a pull request.  This resource can only be used with comments on a pull request. Attempting to call this resource with a different type of comment (for example, a comment on a commit) will result in an error.    The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the comment to call this resource.  The JSON structure for the create issue format is specified by Jira\'s REST v2 API.
-     * Create Jira Issue
+     * Creates request options for createIssue without sending the request
      */
-    async createIssueRaw(requestParameters: CreateIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommentJiraIssue>> {
+    async createIssueRequestOpts(requestParameters: CreateIssueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commentId'] == null) {
             throw new runtime.RequiredError(
                 'commentId',
@@ -76,13 +75,22 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         let urlPath = `/jira/latest/comments/{commentId}/issues`;
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a Jira issue and associate it with a comment on a pull request.  This resource can only be used with comments on a pull request. Attempting to call this resource with a different type of comment (for example, a comment on a commit) will result in an error.    The authenticated user must have <strong>REPO_READ</strong> permission for the repository containing the comment to call this resource.  The JSON structure for the create issue format is specified by Jira\'s REST v2 API.
+     * Create Jira Issue
+     */
+    async createIssueRaw(requestParameters: CreateIssueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommentJiraIssue>> {
+        const requestOptions = await this.createIssueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -97,10 +105,9 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of changesets associated with the given issue key.
-     * Get changesets for issue key
+     * Creates request options for getCommitsByIssueKey without sending the request
      */
-    async getCommitsByIssueKeyRaw(requestParameters: GetCommitsByIssueKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommitsByIssueKey200Response>> {
+    async getCommitsByIssueKeyRequestOpts(requestParameters: GetCommitsByIssueKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueKey'] == null) {
             throw new runtime.RequiredError(
                 'issueKey',
@@ -128,12 +135,21 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         let urlPath = `/jira/latest/issues/{issueKey}/commits`;
         urlPath = urlPath.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of changesets associated with the given issue key.
+     * Get changesets for issue key
+     */
+    async getCommitsByIssueKeyRaw(requestParameters: GetCommitsByIssueKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommitsByIssueKey200Response>> {
+        const requestOptions = await this.getCommitsByIssueKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -148,10 +164,9 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the enchanced primary entitylink   The authenticated user must have <strong>PROJECT_READ</strong> permission for the project having the primary enhanced entitylink.   
-     * Get entity link
+     * Creates request options for getEnhancedEntityLinkForProject without sending the request
      */
-    async getEnhancedEntityLinkForProjectRaw(requestParameters: GetEnhancedEntityLinkForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEnhancedEntityLink>> {
+    async getEnhancedEntityLinkForProjectRequestOpts(requestParameters: GetEnhancedEntityLinkForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -167,12 +182,21 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         let urlPath = `/jira/latest/projects/{projectKey}/primary-enhanced-entitylink`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the enchanced primary entitylink   The authenticated user must have <strong>PROJECT_READ</strong> permission for the project having the primary enhanced entitylink.   
+     * Get entity link
+     */
+    async getEnhancedEntityLinkForProjectRaw(requestParameters: GetEnhancedEntityLinkForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEnhancedEntityLink>> {
+        const requestOptions = await this.getEnhancedEntityLinkForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -187,10 +211,9 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Jira issue keys that are associated with the commits in the specified pull request. The number of commits checked for issues is limited to a default of 100.
-     * Get issues for a pull request
+     * Creates request options for getIssueKeysForPullRequest without sending the request
      */
-    async getIssueKeysForPullRequestRaw(requestParameters: GetIssueKeysForPullRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestJiraIssue>>> {
+    async getIssueKeysForPullRequestRequestOpts(requestParameters: GetIssueKeysForPullRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -222,12 +245,21 @@ export class JiraIntegrationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Jira issue keys that are associated with the commits in the specified pull request. The number of commits checked for issues is limited to a default of 100.
+     * Get issues for a pull request
+     */
+    async getIssueKeysForPullRequestRaw(requestParameters: GetIssueKeysForPullRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestJiraIssue>>> {
+        const requestOptions = await this.getIssueKeysForPullRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

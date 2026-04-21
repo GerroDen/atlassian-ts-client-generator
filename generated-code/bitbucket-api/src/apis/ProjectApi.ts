@@ -484,10 +484,9 @@ interface UploadAvatarRequest {
 export class ProjectApi extends runtime.BaseAPI {
 
     /**
-     * Creates a default task for the project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
-     * Add a default task
+     * Creates request options for addDefaultTask without sending the request
      */
-    async addDefaultTaskRaw(requestParameters: AddDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+    async addDefaultTaskRequestOpts(requestParameters: AddDefaultTaskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -512,13 +511,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultTaskRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a default task for the project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
+     * Add a default task
+     */
+    async addDefaultTaskRaw(requestParameters: AddDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+        const requestOptions = await this.addDefaultTaskRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -533,10 +541,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new project settings restriction for the given project.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to create a settings restriction.
-     * Enforce project restriction
+     * Creates request options for create3 without sending the request
      */
-    async create3Raw(requestParameters: Create3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectSettingsRestriction>> {
+    async create3RequestOpts(requestParameters: Create3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -561,13 +568,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restProjectSettingsRestrictionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new project settings restriction for the given project.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to create a settings restriction.
+     * Enforce project restriction
+     */
+    async create3Raw(requestParameters: Create3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectSettingsRestriction>> {
+        const requestOptions = await this.create3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -582,10 +598,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new project.   To include a custom avatar for the project, the project definition should contain an additional attribute with the key <code>avatar</code> and the value a data URI containing Base64-encoded image data. The URI should be in the following format: <pre>    data:(content type, e.g. image/png);base64,(data) </pre>If the data is not Base64-encoded, or if a character set is defined in the URI, or the URI is otherwise invalid, <em>project creation will fail</em>.   The authenticated user must have <strong>PROJECT_CREATE</strong> permission to call this resource.
-     * Create a new project
+     * Creates request options for createProject without sending the request
      */
-    async createProjectRaw(requestParameters: CreateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+    async createProjectRequestOpts(requestParameters: CreateProjectRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -595,13 +610,22 @@ export class ProjectApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restProject'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new project.   To include a custom avatar for the project, the project definition should contain an additional attribute with the key <code>avatar</code> and the value a data URI containing Base64-encoded image data. The URI should be in the following format: <pre>    data:(content type, e.g. image/png);base64,(data) </pre>If the data is not Base64-encoded, or if a character set is defined in the URI, or the URI is otherwise invalid, <em>project creation will fail</em>.   The authenticated user must have <strong>PROJECT_CREATE</strong> permission to call this resource.
+     * Create a new project
+     */
+    async createProjectRaw(requestParameters: CreateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+        const requestOptions = await this.createProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -616,10 +640,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new repository. Requires an existing project in which this repository will be created. The only parameters which will be used are name and scmId.   The authenticated user must have <strong>REPO_CREATE</strong> permission or higher, for the context project to call this resource.
-     * Create repository
+     * Creates request options for createRepository without sending the request
      */
-    async createRepositoryRaw(requestParameters: CreateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+    async createRepositoryRequestOpts(requestParameters: CreateRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -637,13 +660,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/repos`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepository'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new repository. Requires an existing project in which this repository will be created. The only parameters which will be used are name and scmId.   The authenticated user must have <strong>REPO_CREATE</strong> permission or higher, for the context project to call this resource.
+     * Create repository
+     */
+    async createRepositoryRaw(requestParameters: CreateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+        const requestOptions = await this.createRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -658,10 +690,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Allows creating multiple restrictions at once.
-     * Create multiple ref restrictions
+     * Creates request options for createRestrictions without sending the request
      */
-    async createRestrictionsRaw(requestParameters: CreateRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+    async createRestrictionsRequestOpts(requestParameters: CreateRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -679,13 +710,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRestrictionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Allows creating multiple restrictions at once.
+     * Create multiple ref restrictions
+     */
+    async createRestrictionsRaw(requestParameters: CreateRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+        const requestOptions = await this.createRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -700,10 +740,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a webhook for the project specified via the URL.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Create webhook
+     * Creates request options for createWebhook without sending the request
      */
-    async createWebhookRaw(requestParameters: CreateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async createWebhookRequestOpts(requestParameters: CreateWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -721,13 +760,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/webhooks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhook'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a webhook for the project specified via the URL.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Create webhook
+     */
+    async createWebhookRaw(requestParameters: CreateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.createWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -742,10 +790,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes pull request auto-merge settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
-     * Delete pull request auto-merge settings
+     * Creates request options for delete4 without sending the request
      */
-    async delete4Raw(requestParameters: Delete4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete4RequestOpts(requestParameters: Delete4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -761,12 +808,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes pull request auto-merge settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
+     * Delete pull request auto-merge settings
+     */
+    async delete4Raw(requestParameters: Delete4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -780,10 +836,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a specified project settings restriction.  If a restriction does not exist for the specified project, namespace, featureKey, and componentKey, the request will be ignored and a 204 response will be returned.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to delete a settings restriction.
-     * Stop enforcing project restriction
+     * Creates request options for delete9 without sending the request
      */
-    async delete9Raw(requestParameters: Delete9Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete9RequestOpts(requestParameters: Delete9Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -825,12 +880,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a specified project settings restriction.  If a restriction does not exist for the specified project, namespace, featureKey, and componentKey, the request will be ignored and a 204 response will be returned.  The authenticated user must have **PROJECT_ADMIN** permission for the target project to delete a settings restriction.
+     * Stop enforcing project restriction
+     */
+    async delete9Raw(requestParameters: Delete9Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete9RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -844,10 +908,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete all the default tasks for the supplied project  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
-     * Deletes all default tasks for the project
+     * Creates request options for deleteAllDefaultTasks without sending the request
      */
-    async deleteAllDefaultTasksRaw(requestParameters: DeleteAllDefaultTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAllDefaultTasksRequestOpts(requestParameters: DeleteAllDefaultTasksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -863,12 +926,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete all the default tasks for the supplied project  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
+     * Deletes all default tasks for the project
+     */
+    async deleteAllDefaultTasksRaw(requestParameters: DeleteAllDefaultTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAllDefaultTasksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -882,10 +954,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete auto decline settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
-     * Delete auto decline settings
+     * Creates request options for deleteAutoDeclineSettings without sending the request
      */
-    async deleteAutoDeclineSettingsRaw(requestParameters: DeleteAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAutoDeclineSettingsRequestOpts(requestParameters: DeleteAutoDeclineSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -901,12 +972,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete auto decline settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
+     * Delete auto decline settings
+     */
+    async deleteAutoDeclineSettingsRaw(requestParameters: DeleteAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAutoDeclineSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -920,10 +1000,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a specific default task for a project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
-     * Delete a specific default task
+     * Creates request options for deleteDefaultTask without sending the request
      */
-    async deleteDefaultTaskRaw(requestParameters: DeleteDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDefaultTaskRequestOpts(requestParameters: DeleteDefaultTaskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -947,12 +1026,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a specific default task for a project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
+     * Delete a specific default task
+     */
+    async deleteDefaultTaskRaw(requestParameters: DeleteDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDefaultTaskRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -966,10 +1054,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Delete project
+     * Creates request options for deleteProject without sending the request
      */
-    async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectRequestOpts(requestParameters: DeleteProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -985,12 +1072,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Delete project
+     */
+    async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1004,10 +1100,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Schedule the repository matching the supplied <strong>projectKey</strong> and <strong>repositorySlug</strong> to be deleted.   The authenticated user must have sufficient permissions specified by the repository delete policy to call this resource. The default permission required is <strong>REPO_ADMIN</strong> permission.
-     * Delete repository
+     * Creates request options for deleteRepository without sending the request
      */
-    async deleteRepositoryRaw(requestParameters: DeleteRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRepositoryRequestOpts(requestParameters: DeleteRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1031,12 +1126,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Schedule the repository matching the supplied <strong>projectKey</strong> and <strong>repositorySlug</strong> to be deleted.   The authenticated user must have sufficient permissions specified by the repository delete policy to call this resource. The default permission required is <strong>REPO_ADMIN</strong> permission.
+     * Delete repository
+     */
+    async deleteRepositoryRaw(requestParameters: DeleteRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1050,10 +1154,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a restriction as specified by a restriction id.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Delete a ref restriction
+     * Creates request options for deleteRestriction without sending the request
      */
-    async deleteRestrictionRaw(requestParameters: DeleteRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRestrictionRequestOpts(requestParameters: DeleteRestrictionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1077,12 +1180,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a restriction as specified by a restriction id.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Delete a ref restriction
+     */
+    async deleteRestrictionRaw(requestParameters: DeleteRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRestrictionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1096,10 +1208,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a webhook for the project specified via the URL.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Delete webhook
+     * Creates request options for deleteWebhook without sending the request
      */
-    async deleteWebhookRaw(requestParameters: DeleteWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWebhookRequestOpts(requestParameters: DeleteWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1123,12 +1234,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a webhook for the project specified via the URL.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Delete webhook
+     */
+    async deleteWebhookRaw(requestParameters: DeleteWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1142,10 +1262,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Disable a repository hook for this project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Disable repository hook
+     * Creates request options for disableHook without sending the request
      */
-    async disableHookRaw(requestParameters: DisableHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async disableHookRequestOpts(requestParameters: DisableHookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1169,12 +1288,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Disable a repository hook for this project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Disable repository hook
+     */
+    async disableHookRaw(requestParameters: DisableHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.disableHookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1189,10 +1317,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable a repository hook for this project and optionally apply new configuration.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.   A JSON document may be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
-     * Enable repository hook
+     * Creates request options for enableHook without sending the request
      */
-    async enableHookRaw(requestParameters: EnableHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async enableHookRequestOpts(requestParameters: EnableHookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1220,12 +1347,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable a repository hook for this project and optionally apply new configuration.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.   A JSON document may be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
+     * Enable repository hook
+     */
+    async enableHookRaw(requestParameters: EnableHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.enableHookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1240,10 +1376,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find webhooks in this project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Find webhooks
+     * Creates request options for findWebhooks without sending the request
      */
-    async findWebhooksRaw(requestParameters: FindWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async findWebhooksRequestOpts(requestParameters: FindWebhooksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1267,12 +1402,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/webhooks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find webhooks in this project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Find webhooks
+     */
+    async findWebhooksRaw(requestParameters: FindWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.findWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1286,10 +1430,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new repository forked from an existing repository.   The JSON body for this <code>POST</code> is not required to contain <i>any</i> properties. Even the name may be omitted. The following properties will be used, if provided:   - <code>\"name\":\"Fork name\"</code> - Specifies the forked repository\'s name    - Defaults to the name of the origin repository if not specified - <code>\"defaultBranch\":\"main\"</code> - Specifies the forked repository\'s default branch   - Defaults to the origin repository\'s default branch if not specified - <code>\"project\":{\"key\":\"TARGET_KEY\"}</code> - Specifies the forked repository\'s target project by key   - Defaults to the current user\'s personal project if not specified   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository and <strong>PROJECT_ADMIN</strong> on the target project to call this resource. Note that users <i>always</i> have <b>PROJECT_ADMIN</b> permission on their personal projects.
-     * Fork repository
+     * Creates request options for forkRepository without sending the request
      */
-    async forkRepositoryRaw(requestParameters: ForkRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+    async forkRepositoryRequestOpts(requestParameters: ForkRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1315,13 +1458,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepository'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new repository forked from an existing repository.   The JSON body for this <code>POST</code> is not required to contain <i>any</i> properties. Even the name may be omitted. The following properties will be used, if provided:   - <code>\"name\":\"Fork name\"</code> - Specifies the forked repository\'s name    - Defaults to the name of the origin repository if not specified - <code>\"defaultBranch\":\"main\"</code> - Specifies the forked repository\'s default branch   - Defaults to the origin repository\'s default branch if not specified - <code>\"project\":{\"key\":\"TARGET_KEY\"}</code> - Specifies the forked repository\'s target project by key   - Defaults to the current user\'s personal project if not specified   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository and <strong>PROJECT_ADMIN</strong> on the target project to call this resource. Note that users <i>always</i> have <b>PROJECT_ADMIN</b> permission on their personal projects.
+     * Fork repository
+     */
+    async forkRepositoryRaw(requestParameters: ForkRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+        const requestOptions = await this.forkRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1336,10 +1488,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the pull request auto-merge settings for the supplied project. Default settings will be returned if no explicit settings have been set for the project  The authenticated user must have <strong>PROJECT_VIEW</strong> permission for this project to call the resource.
-     * Get pull request auto-merge settings
+     * Creates request options for get4 without sending the request
      */
-    async get4Raw(requestParameters: Get4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+    async get4RequestOpts(requestParameters: Get4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1355,12 +1506,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the pull request auto-merge settings for the supplied project. Default settings will be returned if no explicit settings have been set for the project  The authenticated user must have <strong>PROJECT_VIEW</strong> permission for this project to call the resource.
+     * Get pull request auto-merge settings
+     */
+    async get4Raw(requestParameters: Get4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+        const requestOptions = await this.get4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1375,10 +1535,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a specified project settings restriction for the given namespace, feature key and component key. Note that not providing the component key will **not** return restrictions for the namespace and feature key with a component key set.  The authenticated user must have **PROJECT_VIEW** permission for the target project to retrieve a settings restriction.
-     * Get enforcing project setting
+     * Creates request options for get7 without sending the request
      */
-    async get7Raw(requestParameters: Get7Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectSettingsRestriction>> {
+    async get7RequestOpts(requestParameters: Get7Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1420,12 +1579,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings-restriction`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a specified project settings restriction for the given namespace, feature key and component key. Note that not providing the component key will **not** return restrictions for the namespace and feature key with a component key set.  The authenticated user must have **PROJECT_VIEW** permission for the target project to retrieve a settings restriction.
+     * Get enforcing project setting
+     */
+    async get7Raw(requestParameters: Get7Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectSettingsRestriction>> {
+        const requestOptions = await this.get7RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1440,10 +1608,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all project settings restrictions for the given namespace and feature key, including those with a component key set.  The authenticated user must have **PROJECT_VIEW** permission for the target project to retrieve a settings restrictions.
-     * Get all enforcing project settings
+     * Creates request options for getAll without sending the request
      */
-    async getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAll200Response>> {
+    async getAllRequestOpts(requestParameters: GetAllRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1489,12 +1656,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings-restriction/all`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all project settings restrictions for the given namespace and feature key, including those with a component key set.  The authenticated user must have **PROJECT_VIEW** permission for the target project to retrieve a settings restrictions.
+     * Get all enforcing project settings
+     */
+    async getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAll200Response>> {
+        const requestOptions = await this.getAllRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1509,10 +1685,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the auto decline settings for the supplied project. Default settings are returned if no explicit settings have been set for the project.
-     * Get auto decline settings
+     * Creates request options for getAutoDeclineSettings without sending the request
      */
-    async getAutoDeclineSettingsRaw(requestParameters: GetAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+    async getAutoDeclineSettingsRequestOpts(requestParameters: GetAutoDeclineSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1528,12 +1703,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the auto decline settings for the supplied project. Default settings are returned if no explicit settings have been set for the project.
+     * Get auto decline settings
+     */
+    async getAutoDeclineSettingsRaw(requestParameters: GetAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+        const requestOptions = await this.getAutoDeclineSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1548,10 +1732,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the avatar for the project matching the supplied <strong>moduleKey</strong>.
-     * Get project avatar
+     * Creates request options for getAvatar without sending the request
      */
-    async getAvatarRaw(requestParameters: GetAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAvatarRequestOpts(requestParameters: GetAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['hookKey'] == null) {
             throw new runtime.RequiredError(
                 'hookKey',
@@ -1571,12 +1754,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/hooks/{hookKey}/avatar`;
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the avatar for the project matching the supplied <strong>moduleKey</strong>.
+     * Get project avatar
+     */
+    async getAvatarRaw(requestParameters: GetAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1590,10 +1782,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return a page of hook scripts configured for the specified project.   This endpoint requires **PROJECT_ADMIN** permission.
-     * Get configured hook scripts
+     * Creates request options for getConfigurations without sending the request
      */
-    async getConfigurationsRaw(requestParameters: GetConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigurations200Response>> {
+    async getConfigurationsRequestOpts(requestParameters: GetConfigurationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1617,12 +1808,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/hook-scripts`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return a page of hook scripts configured for the specified project.   This endpoint requires **PROJECT_ADMIN** permission.
+     * Get configured hook scripts
+     */
+    async getConfigurationsRaw(requestParameters: GetConfigurationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigurations200Response>> {
+        const requestOptions = await this.getConfigurationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1637,10 +1837,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the repository\'s <i>configured</i> default branch.   Every repository has a <i>configured</i> default branch, but that branch may not actually <i>exist</i> in the repository. For example, a newly-created repository will have a configured default branch even though no branches have been pushed yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get repository default branch
+     * Creates request options for getDefaultBranch2 without sending the request
      */
-    async getDefaultBranch2Raw(requestParameters: GetDefaultBranch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMinimalRef>> {
+    async getDefaultBranch2RequestOpts(requestParameters: GetDefaultBranch2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1664,12 +1863,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the repository\'s <i>configured</i> default branch.   Every repository has a <i>configured</i> default branch, but that branch may not actually <i>exist</i> in the repository. For example, a newly-created repository will have a configured default branch even though no branches have been pushed yet.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get repository default branch
+     */
+    async getDefaultBranch2Raw(requestParameters: GetDefaultBranch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMinimalRef>> {
+        const requestOptions = await this.getDefaultBranch2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1684,10 +1892,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the default tasks for the supplied project.  The authenticated user must have **PROJECT_VIEW** permission for this project to call the resource.
-     * Get a page of default tasks
+     * Creates request options for getDefaultTasks without sending the request
      */
-    async getDefaultTasksRaw(requestParameters: GetDefaultTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDefaultTasks1200Response>> {
+    async getDefaultTasksRequestOpts(requestParameters: GetDefaultTasksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1715,12 +1922,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/default-tasks/latest/projects/{projectKey}/tasks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the default tasks for the supplied project.  The authenticated user must have **PROJECT_VIEW** permission for this project to call the resource.
+     * Get a page of default tasks
+     */
+    async getDefaultTasksRaw(requestParameters: GetDefaultTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDefaultTasks1200Response>> {
+        const requestOptions = await this.getDefaultTasksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1735,10 +1951,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve repositories which have been forked from this one. Unlike #getRelatedRepositories(Repository, PageRequest) related repositories, this only looks at a given repository\'s direct forks. If those forks have themselves been the origin of more forks, such \"grandchildren\" repositories will not be retrieved.   Only repositories to which the authenticated user has <b>REPO_READ</b> permission will be included, even if other repositories have been forked from this one.
-     * Get repository forks
+     * Creates request options for getForkedRepositories without sending the request
      */
-    async getForkedRepositoriesRaw(requestParameters: GetForkedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async getForkedRepositoriesRequestOpts(requestParameters: GetForkedRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1770,12 +1985,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve repositories which have been forked from this one. Unlike #getRelatedRepositories(Repository, PageRequest) related repositories, this only looks at a given repository\'s direct forks. If those forks have themselves been the origin of more forks, such \"grandchildren\" repositories will not be retrieved.   Only repositories to which the authenticated user has <b>REPO_READ</b> permission will be included, even if other repositories have been forked from this one.
+     * Get repository forks
+     */
+    async getForkedRepositoriesRaw(requestParameters: GetForkedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.getForkedRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1790,10 +2014,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have been granted at least one permission for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Get groups with permission to project
+     * Creates request options for getGroupsWithAnyPermission1 without sending the request
      */
-    async getGroupsWithAnyPermission1Raw(requestParameters: GetGroupsWithAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+    async getGroupsWithAnyPermission1RequestOpts(requestParameters: GetGroupsWithAnyPermission1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1821,12 +2044,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have been granted at least one permission for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Get groups with permission to project
+     */
+    async getGroupsWithAnyPermission1Raw(requestParameters: GetGroupsWithAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroupsWithAnyPermission200Response>> {
+        const requestOptions = await this.getGroupsWithAnyPermission1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1841,10 +2073,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of groups that have no granted permissions for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher
-     * Get groups without project permission
+     * Creates request options for getGroupsWithoutAnyPermission1 without sending the request
      */
-    async getGroupsWithoutAnyPermission1Raw(requestParameters: GetGroupsWithoutAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+    async getGroupsWithoutAnyPermission1RequestOpts(requestParameters: GetGroupsWithoutAnyPermission1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1872,12 +2103,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/groups/none`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of groups that have no granted permissions for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher
+     * Get groups without project permission
+     */
+    async getGroupsWithoutAnyPermission1Raw(requestParameters: GetGroupsWithoutAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups1200Response>> {
+        const requestOptions = await this.getGroupsWithoutAnyPermission1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1892,10 +2132,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the latest invocations for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Get last webhook invocation details
+     * Creates request options for getLatestInvocation without sending the request
      */
-    async getLatestInvocationRaw(requestParameters: GetLatestInvocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedInvocation>> {
+    async getLatestInvocationRequestOpts(requestParameters: GetLatestInvocationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1927,12 +2166,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the latest invocations for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Get last webhook invocation details
+     */
+    async getLatestInvocationRaw(requestParameters: GetLatestInvocationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDetailedInvocation>> {
+        const requestOptions = await this.getLatestInvocationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1947,10 +2195,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_VIEW</strong> permission for the specified project to call this resource.
-     * Get a project
+     * Creates request options for getProject without sending the request
      */
-    async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+    async getProjectRequestOpts(requestParameters: GetProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1966,12 +2213,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_VIEW</strong> permission for the specified project to call this resource.
+     * Get a project
+     */
+    async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+        const requestOptions = await this.getProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1986,10 +2242,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the avatar for the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_VIEW</strong> permission for the specified project to call this resource.
-     * Get avatar for project
+     * Creates request options for getProjectAvatar without sending the request
      */
-    async getProjectAvatarRaw(requestParameters: GetProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getProjectAvatarRequestOpts(requestParameters: GetProjectAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2009,12 +2264,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/avatar.png`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the avatar for the project matching the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_VIEW</strong> permission for the specified project to call this resource.
+     * Get avatar for project
+     */
+    async getProjectAvatarRaw(requestParameters: GetProjectAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getProjectAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2028,10 +2292,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of projects.   Only projects for which the authenticated user has the <strong>PROJECT_VIEW</strong> permission will be returned.
-     * Get projects
+     * Creates request options for getProjects without sending the request
      */
-    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjects200Response>> {
+    async getProjectsRequestOpts(requestParameters: GetProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['name'] != null) {
@@ -2055,12 +2318,21 @@ export class ProjectApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of projects.   Only projects for which the authenticated user has the <strong>PROJECT_VIEW</strong> permission will be returned.
+     * Get projects
+     */
+    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetProjects200Response>> {
+        const requestOptions = await this.getProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2075,10 +2347,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the merge strategy configuration for this project and SCM.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the context repository to call this resource.
-     * Get merge strategy
+     * Creates request options for getPullRequestSettings without sending the request
      */
-    async getPullRequestSettingsRaw(requestParameters: GetPullRequestSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestSettings>> {
+    async getPullRequestSettingsRequestOpts(requestParameters: GetPullRequestSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2102,12 +2373,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the merge strategy configuration for this project and SCM.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the context repository to call this resource.
+     * Get merge strategy
+     */
+    async getPullRequestSettingsRaw(requestParameters: GetPullRequestSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestSettings>> {
+        const requestOptions = await this.getPullRequestSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2122,10 +2402,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve repositories which are related to this one. Related repositories are from the same Repository#getHierarchyId() hierarchy as this repository.   Only repositories to which the authenticated user has <b>REPO_READ</b> permission will be included, even if more repositories are part of this repository\'s hierarchy.
-     * Get related repository
+     * Creates request options for getRelatedRepositories without sending the request
      */
-    async getRelatedRepositoriesRaw(requestParameters: GetRelatedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async getRelatedRepositoriesRequestOpts(requestParameters: GetRelatedRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2157,12 +2436,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve repositories which are related to this one. Related repositories are from the same Repository#getHierarchyId() hierarchy as this repository.   Only repositories to which the authenticated user has <b>REPO_READ</b> permission will be included, even if more repositories are part of this repository\'s hierarchy.
+     * Get related repository
+     */
+    async getRelatedRepositoriesRaw(requestParameters: GetRelatedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.getRelatedRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2177,10 +2465,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve repositories from the project corresponding to the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
-     * Get repositories for project
+     * Creates request options for getRepositories without sending the request
      */
-    async getRepositoriesRaw(requestParameters: GetRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+    async getRepositoriesRequestOpts(requestParameters: GetRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2204,12 +2491,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/repos`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve repositories from the project corresponding to the supplied <strong>projectKey</strong>.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
+     * Get repositories for project
+     */
+    async getRepositoriesRaw(requestParameters: GetRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoriesRecentlyAccessed200Response>> {
+        const requestOptions = await this.getRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2224,10 +2520,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the repository matching the supplied <strong>projectKey</strong> and <strong>repositorySlug</strong>.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get repository
+     * Creates request options for getRepository without sending the request
      */
-    async getRepositoryRaw(requestParameters: GetRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+    async getRepositoryRequestOpts(requestParameters: GetRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2251,12 +2546,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the repository matching the supplied <strong>projectKey</strong> and <strong>repositorySlug</strong>.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get repository
+     */
+    async getRepositoryRaw(requestParameters: GetRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+        const requestOptions = await this.getRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2271,10 +2575,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a repository hook for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
-     * Get a repository hook
+     * Creates request options for getRepositoryHook without sending the request
      */
-    async getRepositoryHookRaw(requestParameters: GetRepositoryHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+    async getRepositoryHookRequestOpts(requestParameters: GetRepositoryHookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2298,12 +2601,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a repository hook for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
+     * Get a repository hook
+     */
+    async getRepositoryHookRaw(requestParameters: GetRepositoryHookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryHook>> {
+        const requestOptions = await this.getRepositoryHookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2318,10 +2630,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of repository hooks for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
-     * Get repository hooks
+     * Creates request options for getRepositoryHooks without sending the request
      */
-    async getRepositoryHooksRaw(requestParameters: GetRepositoryHooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoryHooks1200Response>> {
+    async getRepositoryHooksRequestOpts(requestParameters: GetRepositoryHooksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2349,12 +2660,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/hooks`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of repository hooks for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
+     * Get repository hooks
+     */
+    async getRepositoryHooksRaw(requestParameters: GetRepositoryHooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRepositoryHooks1200Response>> {
+        const requestOptions = await this.getRepositoryHooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2369,10 +2689,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a restriction as specified by a restriction id.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Get a ref restriction
+     * Creates request options for getRestriction without sending the request
      */
-    async getRestrictionRaw(requestParameters: GetRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+    async getRestrictionRequestOpts(requestParameters: GetRestrictionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2396,12 +2715,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a restriction as specified by a restriction id.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Get a ref restriction
+     */
+    async getRestrictionRaw(requestParameters: GetRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRefRestriction>> {
+        const requestOptions = await this.getRestrictionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2416,10 +2744,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for restrictions using the supplied parameters.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
-     * Search for ref restrictions
+     * Creates request options for getRestrictions without sending the request
      */
-    async getRestrictionsRaw(requestParameters: GetRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRestrictions1200Response>> {
+    async getRestrictionsRequestOpts(requestParameters: GetRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2455,12 +2782,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/branch-permissions/latest/projects/{projectKey}/restrictions`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for restrictions using the supplied parameters.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission or higher to call this resource. Only authenticated users may call this resource.
+     * Search for ref restrictions
+     */
+    async getRestrictionsRaw(requestParameters: GetRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRestrictions1200Response>> {
+        const requestOptions = await this.getRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2475,10 +2811,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the settings for a repository hook for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
-     * Get repository hook settings
+     * Creates request options for getSettings without sending the request
      */
-    async getSettingsRaw(requestParameters: GetSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+    async getSettingsRequestOpts(requestParameters: GetSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2502,12 +2837,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the settings for a repository hook for this project.   The authenticated user must have <strong>PROJECT_READ</strong> permission for the specified project to call this resource.
+     * Get repository hook settings
+     */
+    async getSettingsRaw(requestParameters: GetSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+        const requestOptions = await this.getSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2522,10 +2866,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the statistics for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Get webhook statistics
+     * Creates request options for getStatistics without sending the request
      */
-    async getStatisticsRaw(requestParameters: GetStatisticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getStatisticsRequestOpts(requestParameters: GetStatisticsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2553,12 +2896,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the statistics for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Get webhook statistics
+     */
+    async getStatisticsRaw(requestParameters: GetStatisticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getStatisticsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -2577,10 +2929,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the statistics summary for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Get webhook statistics summary
+     * Creates request options for getStatisticsSummary without sending the request
      */
-    async getStatisticsSummaryRaw(requestParameters: GetStatisticsSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getStatisticsSummaryRequestOpts(requestParameters: GetStatisticsSummaryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2604,12 +2955,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the statistics summary for a specific webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Get webhook statistics summary
+     */
+    async getStatisticsSummaryRaw(requestParameters: GetStatisticsSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getStatisticsSummaryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -2635,10 +2995,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users that have been granted at least one permission for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Get users with permission to project
+     * Creates request options for getUsersWithAnyPermission1 without sending the request
      */
-    async getUsersWithAnyPermission1Raw(requestParameters: GetUsersWithAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithAnyPermission1200Response>> {
+    async getUsersWithAnyPermission1RequestOpts(requestParameters: GetUsersWithAnyPermission1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2666,12 +3025,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users that have been granted at least one permission for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Get users with permission to project
+     */
+    async getUsersWithAnyPermission1Raw(requestParameters: GetUsersWithAnyPermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithAnyPermission1200Response>> {
+        const requestOptions = await this.getUsersWithAnyPermission1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2686,10 +3054,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of <i>licensed</i> users that have no granted permissions for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Get users without project permission
+     * Creates request options for getUsersWithoutPermission without sending the request
      */
-    async getUsersWithoutPermissionRaw(requestParameters: GetUsersWithoutPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+    async getUsersWithoutPermissionRequestOpts(requestParameters: GetUsersWithoutPermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2717,12 +3084,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/users/none`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of <i>licensed</i> users that have no granted permissions for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Get users without project permission
+     */
+    async getUsersWithoutPermissionRaw(requestParameters: GetUsersWithoutPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+        const requestOptions = await this.getUsersWithoutPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2737,10 +3113,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a webhook by ID.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Get webhook
+     * Creates request options for getWebhook without sending the request
      */
-    async getWebhookRaw(requestParameters: GetWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async getWebhookRequestOpts(requestParameters: GetWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2768,12 +3143,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a webhook by ID.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Get webhook
+     */
+    async getWebhookRaw(requestParameters: GetWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.getWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2788,10 +3172,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Check whether the specified permission is the default permission (granted to all users) for a project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Check default project permission
+     * Creates request options for hasAllUserPermission without sending the request
      */
-    async hasAllUserPermissionRaw(requestParameters: HasAllUserPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPermitted>> {
+    async hasAllUserPermissionRequestOpts(requestParameters: HasAllUserPermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2815,12 +3198,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Check whether the specified permission is the default permission (granted to all users) for a project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Check default project permission
+     */
+    async hasAllUserPermissionRaw(requestParameters: HasAllUserPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPermitted>> {
+        const requestOptions = await this.hasAllUserPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2835,10 +3227,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grant or revoke a project permission to all users, i.e. set the default permission.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Grant project permission
+     * Creates request options for modifyAllUserPermission without sending the request
      */
-    async modifyAllUserPermissionRaw(requestParameters: ModifyAllUserPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async modifyAllUserPermissionRequestOpts(requestParameters: ModifyAllUserPermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2866,12 +3257,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grant or revoke a project permission to all users, i.e. set the default permission.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Grant project permission
+     */
+    async modifyAllUserPermissionRaw(requestParameters: ModifyAllUserPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.modifyAllUserPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2885,10 +3285,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the hook script from the set of hook scripts configured to run in all repositories under the project.   This endpoint requires **PROJECT_ADMIN** permission.
-     * Remove a hook script
+     * Creates request options for removeConfiguration without sending the request
      */
-    async removeConfigurationRaw(requestParameters: RemoveConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeConfigurationRequestOpts(requestParameters: RemoveConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2912,12 +3311,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the hook script from the set of hook scripts configured to run in all repositories under the project.   This endpoint requires **PROJECT_ADMIN** permission.
+     * Remove a hook script
+     */
+    async removeConfigurationRaw(requestParameters: RemoveConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2931,10 +3339,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * If a create or fork operation fails, calling this method will clean up the broken repository and try again. The repository must be in an INITIALISATION_FAILED state.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Retry repository creation
+     * Creates request options for retryCreateRepository without sending the request
      */
-    async retryCreateRepositoryRaw(requestParameters: RetryCreateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+    async retryCreateRepositoryRequestOpts(requestParameters: RetryCreateRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2958,12 +3365,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * If a create or fork operation fails, calling this method will clean up the broken repository and try again. The repository must be in an INITIALISATION_FAILED state.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Retry repository creation
+     */
+    async retryCreateRepositoryRaw(requestParameters: RetryCreateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+        const requestOptions = await this.retryCreateRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2978,10 +3394,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all permissions for the specified project for the given groups and users.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permission if their own permission would be revoked as a result, nor may they revoke their own permission unless they have a global permission that already implies that permission.
-     * Revoke project permissions
+     * Creates request options for revokePermissions without sending the request
      */
-    async revokePermissionsRaw(requestParameters: RevokePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsRequestOpts(requestParameters: RevokePermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3005,12 +3420,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all permissions for the specified project for the given groups and users.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permission if their own permission would be revoked as a result, nor may they revoke their own permission unless they have a global permission that already implies that permission.
+     * Revoke project permissions
+     */
+    async revokePermissionsRaw(requestParameters: RevokePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3024,10 +3448,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     *  Revoke all permissions for the specified project for a group.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permissions if it will reduce their own permission level.
-     * Revoke group project permission
+     * Creates request options for revokePermissionsForGroup1 without sending the request
      */
-    async revokePermissionsForGroup1Raw(requestParameters: RevokePermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForGroup1RequestOpts(requestParameters: RevokePermissionsForGroup1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3047,12 +3470,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     *  Revoke all permissions for the specified project for a group.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke a group\'s permissions if it will reduce their own permission level.
+     * Revoke group project permission
+     */
+    async revokePermissionsForGroup1Raw(requestParameters: RevokePermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForGroup1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3066,10 +3498,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke all permissions for the specified project for a user.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke their own project permissions if they do not have a higher global permission.
-     * Revoke user project permission
+     * Creates request options for revokePermissionsForUser1 without sending the request
      */
-    async revokePermissionsForUser1Raw(requestParameters: RevokePermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionsForUser1RequestOpts(requestParameters: RevokePermissionsForUser1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3089,12 +3520,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke all permissions for the specified project for a user.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.  In addition, a user may not revoke their own project permissions if they do not have a higher global permission.
+     * Revoke user project permission
+     */
+    async revokePermissionsForUser1Raw(requestParameters: RevokePermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionsForUser1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3108,10 +3548,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search direct and implied permissions of principals (users and groups). This endpoint returns a superset of the results returned by the /users and /groups endpoints because it allows filtering by global permissions too.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
-     * Search project permissions
+     * Creates request options for searchPermissions without sending the request
      */
-    async searchPermissionsRaw(requestParameters: SearchPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async searchPermissionsRequestOpts(requestParameters: SearchPermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3139,12 +3578,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/search`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search direct and implied permissions of principals (users and groups). This endpoint returns a superset of the results returned by the /users and /groups endpoints because it allows filtering by global permissions too.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource.
+     * Search project permissions
+     */
+    async searchPermissionsRaw(requestParameters: SearchPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.searchPermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3158,10 +3606,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the pull request auto-merge settings for the supplied project, and applies the restriction action specified in the request.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
-     * Create or update the pull request auto-merge settings
+     * Creates request options for set without sending the request
      */
-    async setRaw(requestParameters: SetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+    async setRequestOpts(requestParameters: SetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3179,13 +3626,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-merge`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAutoMergeProjectSettingsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the pull request auto-merge settings for the supplied project, and applies the restriction action specified in the request.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
+     * Create or update the pull request auto-merge settings
+     */
+    async setRaw(requestParameters: SetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRestrictedSettings>> {
+        const requestOptions = await this.setRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3200,10 +3656,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates or updates the auto decline settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
-     * Create/Update auto decline settings
+     * Creates request options for setAutoDeclineSettings without sending the request
      */
-    async setAutoDeclineSettingsRaw(requestParameters: SetAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+    async setAutoDeclineSettingsRequestOpts(requestParameters: SetAutoDeclineSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3221,13 +3676,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/auto-decline`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAutoDeclineSettingsRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates or updates the auto decline settings for the supplied project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for this project to call the resource.
+     * Create/Update auto decline settings
+     */
+    async setAutoDeclineSettingsRaw(requestParameters: SetAutoDeclineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoDeclineSettings>> {
+        const requestOptions = await this.setAutoDeclineSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3242,10 +3706,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates/updates the hook script configuration for the provided hook script and project.   This endpoint requires **PROJECT_ADMIN** permission.
-     * Create/update a hook script
+     * Creates request options for setConfiguration without sending the request
      */
-    async setConfigurationRaw(requestParameters: SetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScriptConfig>> {
+    async setConfigurationRequestOpts(requestParameters: SetConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3271,13 +3734,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"scriptId"}}`, encodeURIComponent(String(requestParameters['scriptId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restHookScriptTriggers'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates/updates the hook script configuration for the provided hook script and project.   This endpoint requires **PROJECT_ADMIN** permission.
+     * Create/update a hook script
+     */
+    async setConfigurationRaw(requestParameters: SetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestHookScriptConfig>> {
+        const requestOptions = await this.setConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3292,10 +3764,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the default branch of a repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Update default branch for repository
+     * Creates request options for setDefaultBranch2 without sending the request
      */
-    async setDefaultBranch2Raw(requestParameters: SetDefaultBranch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setDefaultBranch2RequestOpts(requestParameters: SetDefaultBranch2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3321,13 +3792,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBranch'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the default branch of a repository.   The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Update default branch for repository
+     */
+    async setDefaultBranch2Raw(requestParameters: SetDefaultBranch2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setDefaultBranch2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3341,10 +3821,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote a group\'s permission level for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource. In addition, a user may not demote a group\'s permission level if theirown permission level would be reduced as a result.
-     * Update group project permission
+     * Creates request options for setPermissionForGroups1 without sending the request
      */
-    async setPermissionForGroups1Raw(requestParameters: SetPermissionForGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForGroups1RequestOpts(requestParameters: SetPermissionForGroups1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3368,12 +3847,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/groups`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote a group\'s permission level for the specified project.  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource. In addition, a user may not demote a group\'s permission level if theirown permission level would be reduced as a result.
+     * Update group project permission
+     */
+    async setPermissionForGroups1Raw(requestParameters: SetPermissionForGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForGroups1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3387,10 +3875,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Promote or demote a user\'s permission level for the specified project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource. In addition, a user may not reduce their own permission level unless they have a global permission that already implies that permission.
-     * Update user project permission
+     * Creates request options for setPermissionForUsers1 without sending the request
      */
-    async setPermissionForUsers1Raw(requestParameters: SetPermissionForUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setPermissionForUsers1RequestOpts(requestParameters: SetPermissionForUsers1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3414,12 +3901,21 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/permissions/users`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Promote or demote a user\'s permission level for the specified project.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project or a higher global permission to call this resource. In addition, a user may not reduce their own permission level unless they have a global permission that already implies that permission.
+     * Update user project permission
+     */
+    async setPermissionForUsers1Raw(requestParameters: SetPermissionForUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setPermissionForUsers1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3433,10 +3929,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify the settings for a repository hook for this project.   The service will reject any settings which are too large, the current limit is 32KB once serialized.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.   A JSON document can be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
-     * Update repository hook settings
+     * Creates request options for setSettings without sending the request
      */
-    async setSettingsRaw(requestParameters: SetSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+    async setSettingsRequestOpts(requestParameters: SetSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3462,13 +3957,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"hookKey"}}`, encodeURIComponent(String(requestParameters['hookKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['exampleSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify the settings for a repository hook for this project.   The service will reject any settings which are too large, the current limit is 32KB once serialized.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.   A JSON document can be provided to use as the settings for the hook. These structure and validity of the document is decided by the plugin providing the hook.
+     * Update repository hook settings
+     */
+    async setSettingsRaw(requestParameters: SetSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExampleSettings>> {
+        const requestOptions = await this.setSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3483,10 +3987,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the contributing guidelines for the repository, if they\'ve been defined.   This checks the repository for a CONTRIBUTING file, optionally with an md or txt extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <code>?markup</code> to the URL will stream an HTML-rendered version instead.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get repository contributing guidelines
+     * Creates request options for streamContributing without sending the request
      */
-    async streamContributingRaw(requestParameters: StreamContributingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamContributingRequestOpts(requestParameters: StreamContributingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3530,12 +4033,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the contributing guidelines for the repository, if they\'ve been defined.   This checks the repository for a CONTRIBUTING file, optionally with an md or txt extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <code>?markup</code> to the URL will stream an HTML-rendered version instead.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get repository contributing guidelines
+     */
+    async streamContributingRaw(requestParameters: StreamContributingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamContributingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3549,10 +4061,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the license for the repository, if it\'s been defined.   This checks the repository for a <pre>LICENSE</pre> file, optionally with an <pre>md</pre> or <pre>txt</pre>extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <pre>?markup</pre> to the URL will stream an HTML-rendered version instead.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get repository license
+     * Creates request options for streamLicense without sending the request
      */
-    async streamLicenseRaw(requestParameters: StreamLicenseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamLicenseRequestOpts(requestParameters: StreamLicenseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3596,12 +4107,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the license for the repository, if it\'s been defined.   This checks the repository for a <pre>LICENSE</pre> file, optionally with an <pre>md</pre> or <pre>txt</pre>extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <pre>?markup</pre> to the URL will stream an HTML-rendered version instead.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get repository license
+     */
+    async streamLicenseRaw(requestParameters: StreamLicenseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamLicenseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3615,10 +4135,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the README for the repository, if it\'s been defined.   This checks the repository for a <pre>README</pre> file, optionally with an <pre>md</pre> or <pre>txt</pre>extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <pre>?markup</pre> to the URL will stream an HTML-rendered version instead. Note that, when streaming HTML, relative URLs in the README will not work if applied relative to this URL.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
-     * Get repository readme
+     * Creates request options for streamReadme without sending the request
      */
-    async streamReadmeRaw(requestParameters: StreamReadmeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamReadmeRequestOpts(requestParameters: StreamReadmeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3662,12 +4181,21 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the README for the repository, if it\'s been defined.   This checks the repository for a <pre>README</pre> file, optionally with an <pre>md</pre> or <pre>txt</pre>extension, and, if found, streams it. By default, the <i>raw content</i> of the file is streamed. Appending <pre>?markup</pre> to the URL will stream an HTML-rendered version instead. Note that, when streaming HTML, relative URLs in the README will not work if applied relative to this URL.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.
+     * Get repository readme
+     */
+    async streamReadmeRaw(requestParameters: StreamReadmeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamReadmeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3681,10 +4209,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Test connectivity to a specific endpoint.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Test webhook
+     * Creates request options for testWebhook without sending the request
      */
-    async testWebhookRaw(requestParameters: TestWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async testWebhookRequestOpts(requestParameters: TestWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3714,13 +4241,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/webhooks/test`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhookCredentials'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Test connectivity to a specific endpoint.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Test webhook
+     */
+    async testWebhookRaw(requestParameters: TestWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.testWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -3739,10 +4275,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a default task for the supplied project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
-     * Update a default task
+     * Creates request options for updateDefaultTask without sending the request
      */
-    async updateDefaultTaskRaw(requestParameters: UpdateDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+    async updateDefaultTaskRequestOpts(requestParameters: UpdateDefaultTaskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3775,13 +4310,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"taskId"}}`, encodeURIComponent(String(requestParameters['taskId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultTaskRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a default task for the supplied project.  The authenticated user must have **PROJECT_ADMIN** permission for this project to call the resource.
+     * Update a default task
+     */
+    async updateDefaultTaskRaw(requestParameters: UpdateDefaultTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDefaultTask>> {
+        const requestOptions = await this.updateDefaultTaskRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3796,10 +4340,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the project matching the <strong>projectKey</strong> supplied in the resource path.   To include a custom avatar for the updated project, the project definition should contain an additional attribute with the key <code>avatar</code> and the value a data URI containing Base64-encoded image data. The URI should be in the following format:  ```    data:(content type, e.g. image/png);base64,(data)```  If the data is not Base64-encoded, or if a character set is defined in the URI, or the URI is otherwise invalid, <em>project creation will fail</em>.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Update project
+     * Creates request options for updateProject without sending the request
      */
-    async updateProjectRaw(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+    async updateProjectRequestOpts(requestParameters: UpdateProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3817,13 +4360,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restProject'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the project matching the <strong>projectKey</strong> supplied in the resource path.   To include a custom avatar for the updated project, the project definition should contain an additional attribute with the key <code>avatar</code> and the value a data URI containing Base64-encoded image data. The URI should be in the following format:  ```    data:(content type, e.g. image/png);base64,(data)```  If the data is not Base64-encoded, or if a character set is defined in the URI, or the URI is otherwise invalid, <em>project creation will fail</em>.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Update project
+     */
+    async updateProjectRaw(requestParameters: UpdateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+        const requestOptions = await this.updateProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3838,10 +4390,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the pull request merge strategy configuration for this project and SCM.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the context repository to call this resource.   Only the strategies provided will be enabled, the default must be set and included in the set of strategies.   An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty \"mergeConfig\" attribute. i.e:  <pre>{      \"mergeConfig\": {}  }  </pre>  Upon completion of this request, the effective configuration will be the configuration explicitly set for the SCM, or if no such explicit configuration is set then the default configuration will be used.
-     * Update merge strategy
+     * Creates request options for updatePullRequestSettings without sending the request
      */
-    async updatePullRequestSettingsRaw(requestParameters: UpdatePullRequestSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestSettings>> {
+    async updatePullRequestSettingsRequestOpts(requestParameters: UpdatePullRequestSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3867,13 +4418,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the pull request merge strategy configuration for this project and SCM.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the context repository to call this resource.   Only the strategies provided will be enabled, the default must be set and included in the set of strategies.   An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty \"mergeConfig\" attribute. i.e:  <pre>{      \"mergeConfig\": {}  }  </pre>  Upon completion of this request, the effective configuration will be the configuration explicitly set for the SCM, or if no such explicit configuration is set then the default configuration will be used.
+     * Update merge strategy
+     */
+    async updatePullRequestSettingsRaw(requestParameters: UpdatePullRequestSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestSettings>> {
+        const requestOptions = await this.updatePullRequestSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3888,10 +4448,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the repository matching the <strong>repositorySlug</strong> supplied in the resource path.   The repository\'s slug is derived from its name. If the name changes the slug may also change.   This resource can be used to change the repository\'s default branch by specifying a new default branch in the request. For example: <code>\"defaultBranch\":\"main\"</code>  This resource can be used to move the repository to a different project by specifying a new project in the request. For example: <code>\"project\":{\"key\":\"NEW_KEY\"}</code>  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
-     * Update repository
+     * Creates request options for updateRepository without sending the request
      */
-    async updateRepositoryRaw(requestParameters: UpdateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+    async updateRepositoryRequestOpts(requestParameters: UpdateRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3917,13 +4476,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRepository'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the repository matching the <strong>repositorySlug</strong> supplied in the resource path.   The repository\'s slug is derived from its name. If the name changes the slug may also change.   This resource can be used to change the repository\'s default branch by specifying a new default branch in the request. For example: <code>\"defaultBranch\":\"main\"</code>  This resource can be used to move the repository to a different project by specifying a new project in the request. For example: <code>\"project\":{\"key\":\"NEW_KEY\"}</code>  The authenticated user must have <strong>REPO_ADMIN</strong> permission for the specified repository to call this resource.
+     * Update repository
+     */
+    async updateRepositoryRaw(requestParameters: UpdateRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepository>> {
+        const requestOptions = await this.updateRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3938,10 +4506,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an existing webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Update webhook
+     * Creates request options for updateWebhook without sending the request
      */
-    async updateWebhookRaw(requestParameters: UpdateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+    async updateWebhookRequestOpts(requestParameters: UpdateWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3967,13 +4534,22 @@ export class ProjectApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restWebhook'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update an existing webhook.   The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Update webhook
+     */
+    async updateWebhookRaw(requestParameters: UpdateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestWebhook>> {
+        const requestOptions = await this.updateWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3988,10 +4564,9 @@ export class ProjectApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the avatar for the project matching the supplied <strong>projectKey</strong>.   This resource accepts POST multipart form data, containing a single image in a form-field named \'avatar\'.   There are configurable server limits on both the dimensions (1024x1024 pixels by default) and uploaded file size (1MB by default). Several different image formats are supported, but <strong>PNG</strong> and <strong>JPEG</strong> are preferred due to the file size limit.   This resource has Cross-Site Request Forgery (XSRF) protection. To allow the request to pass the XSRF check the caller needs to send an <code>X-Atlassian-Token</code> HTTP header with the value <code>no-check</code>.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to upload an image name \'avatar.png\' would be: ```curl -X POST -u username:password -H \"X-Atlassian-Token: no-check\" http://example.com/rest/api/1.0/projects/STASH/avatar.png -F avatar=@avatar.png ```  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
-     * Update project avatar
+     * Creates request options for uploadAvatar without sending the request
      */
-    async uploadAvatarRaw(requestParameters: UploadAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async uploadAvatarRequestOpts(requestParameters: UploadAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4027,13 +4602,22 @@ export class ProjectApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/avatar.png`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the avatar for the project matching the supplied <strong>projectKey</strong>.   This resource accepts POST multipart form data, containing a single image in a form-field named \'avatar\'.   There are configurable server limits on both the dimensions (1024x1024 pixels by default) and uploaded file size (1MB by default). Several different image formats are supported, but <strong>PNG</strong> and <strong>JPEG</strong> are preferred due to the file size limit.   This resource has Cross-Site Request Forgery (XSRF) protection. To allow the request to pass the XSRF check the caller needs to send an <code>X-Atlassian-Token</code> HTTP header with the value <code>no-check</code>.   An example <a href=\"http://curl.haxx.se/\">curl</a> request to upload an image name \'avatar.png\' would be: ```curl -X POST -u username:password -H \"X-Atlassian-Token: no-check\" http://example.com/rest/api/1.0/projects/STASH/avatar.png -F avatar=@avatar.png ```  The authenticated user must have <strong>PROJECT_ADMIN</strong> permission for the specified project to call this resource.
+     * Update project avatar
+     */
+    async uploadAvatarRaw(requestParameters: UploadAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.uploadAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

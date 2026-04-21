@@ -42,10 +42,9 @@ interface GetPullRequests1Request {
 export class DashboardApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves a page of suggestions for pull requests that the currently authenticated user may wish to raise. Such suggestions are based on ref changes occurring and so contain the ref change that prompted the suggestion plus the time the change event occurred. Changes will be returned in descending order based on the time the change that prompted the suggestion occurred.   Note that although the response is a page object, the interface does not support paging, however a limit can be applied to the size of the returned page.
-     * Get pull request suggestions
+     * Creates request options for getPullRequestSuggestions without sending the request
      */
-    async getPullRequestSuggestionsRaw(requestParameters: GetPullRequestSuggestionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequestSuggestions200Response>> {
+    async getPullRequestSuggestionsRequestOpts(requestParameters: GetPullRequestSuggestionsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['changesSince'] != null) {
@@ -61,12 +60,21 @@ export class DashboardApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/dashboard/pull-request-suggestions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a page of suggestions for pull requests that the currently authenticated user may wish to raise. Such suggestions are based on ref changes occurring and so contain the ref change that prompted the suggestion plus the time the change event occurred. Changes will be returned in descending order based on the time the change that prompted the suggestion occurred.   Note that although the response is a page object, the interface does not support paging, however a limit can be applied to the size of the returned page.
+     * Get pull request suggestions
+     */
+    async getPullRequestSuggestionsRaw(requestParameters: GetPullRequestSuggestionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequestSuggestions200Response>> {
+        const requestOptions = await this.getPullRequestSuggestionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -81,10 +89,9 @@ export class DashboardApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of pull requests where a user is involved as either a reviewer, author or a participant. The request may be filtered by pull request state, role or participant status.
-     * Get pull requests for a user
+     * Creates request options for getPullRequests1 without sending the request
      */
-    async getPullRequests1Raw(requestParameters: GetPullRequests1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+    async getPullRequests1RequestOpts(requestParameters: GetPullRequests1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['closedSince'] != null) {
@@ -124,12 +131,21 @@ export class DashboardApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/dashboard/pull-requests`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of pull requests where a user is involved as either a reviewer, author or a participant. The request may be filtered by pull request state, role or participant status.
+     * Get pull requests for a user
+     */
+    async getPullRequests1Raw(requestParameters: GetPullRequests1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+        const requestOptions = await this.getPullRequests1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -333,10 +333,9 @@ interface VerifyCodeRequest {
 export class AuthenticationApi extends runtime.BaseAPI {
 
     /**
-     * Register a new SSH key and grants access to the project identified in the URL.
-     * Add project SSH key
+     * Creates request options for addForProject without sending the request
      */
-    async addForProjectRaw(requestParameters: AddForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async addForProjectRequestOpts(requestParameters: AddForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -354,13 +353,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/keys/latest/projects/{projectKey}/ssh`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSshAccessKey'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Register a new SSH key and grants access to the project identified in the URL.
+     * Add project SSH key
+     */
+    async addForProjectRaw(requestParameters: AddForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.addForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -375,10 +383,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Register a new SSH key and grants access to the repository identified in the URL.
-     * Add repository SSH key
+     * Creates request options for addForRepository without sending the request
      */
-    async addForRepositoryRaw(requestParameters: AddForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async addForRepositoryRequestOpts(requestParameters: AddForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -404,13 +411,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSshAccessKey'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Register a new SSH key and grants access to the repository identified in the URL.
+     * Add repository SSH key
+     */
+    async addForRepositoryRaw(requestParameters: AddForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.addForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -425,10 +441,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new IdP configuration.
-     * Create IdP configuration
+     * Creates request options for addIdp without sending the request
      */
-    async addIdpRaw(requestParameters: AddIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+    async addIdpRequestOpts(requestParameters: AddIdpRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -438,13 +453,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/idps`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['idpConfigEntity'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new IdP configuration.
+     * Create IdP configuration
+     */
+    async addIdpRaw(requestParameters: AddIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+        const requestOptions = await this.addIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -459,10 +483,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a new SSH key to a supplied user.
-     * Add SSH key for user
+     * Creates request options for addSshKey without sending the request
      */
-    async addSshKeyRaw(requestParameters: AddSshKeyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKey>> {
+    async addSshKeyRequestOpts(requestParameters: AddSshKeyOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['user'] != null) {
@@ -476,13 +499,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/ssh/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['addSshKeyRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a new SSH key to a supplied user.
+     * Add SSH key for user
+     */
+    async addSshKeyRaw(requestParameters: AddSshKeyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKey>> {
+        const requestOptions = await this.addSshKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -497,10 +529,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Authenticates as the given user. This endpoint <strong>may</strong>:  - Ask for two-step verification if the user has enrolled; or - Enforce enrollment in two-step verification if two-step verification enforcement is configured for the instance and the user is not yet enrolled.
-     * Authenticate with 2SV
+     * Creates request options for authenticate without sending the request
      */
-    async authenticateRaw(requestParameters: AuthenticateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthenticationResponse>> {
+    async authenticateRequestOpts(requestParameters: AuthenticateRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -510,13 +541,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/authenticate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['authenticationEntity'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Authenticates as the given user. This endpoint <strong>may</strong>:  - Ask for two-step verification if the user has enrolled; or - Enforce enrollment in two-step verification if two-step verification enforcement is configured for the instance and the user is not yet enrolled.
+     * Authenticate with 2SV
+     */
+    async authenticateRaw(requestParameters: AuthenticateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthenticationResponse>> {
+        const requestOptions = await this.authenticateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -531,10 +571,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Authenticate as the given user using a recovery code.
-     * Authenticate using recovery code
+     * Creates request options for authenticateWithRecoveryCode without sending the request
      */
-    async authenticateWithRecoveryCodeRaw(requestParameters: AuthenticateWithRecoveryCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthenticationResponse>> {
+    async authenticateWithRecoveryCodeRequestOpts(requestParameters: AuthenticateWithRecoveryCodeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -544,13 +583,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/authenticate/recovery-code`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpRecoveryCodeAuthenticationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Authenticate as the given user using a recovery code.
+     * Authenticate using recovery code
+     */
+    async authenticateWithRecoveryCodeRaw(requestParameters: AuthenticateWithRecoveryCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthenticationResponse>> {
+        const requestOptions = await this.authenticateWithRecoveryCodeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -565,10 +613,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete update of the authentication app used for two-step verification by verifying the provided TOTP code.
-     * Complete authentication app update for 2SV
+     * Creates request options for completeAuthenticationChange without sending the request
      */
-    async completeAuthenticationChangeRaw(requestParameters: CompleteAuthenticationChangeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+    async completeAuthenticationChangeRequestOpts(requestParameters: CompleteAuthenticationChangeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -578,13 +625,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/complete-enrollment-update`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpCodeVerificationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Complete update of the authentication app used for two-step verification by verifying the provided TOTP code.
+     * Complete authentication app update for 2SV
+     */
+    async completeAuthenticationChangeRaw(requestParameters: CompleteAuthenticationChangeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+        const requestOptions = await this.completeAuthenticationChangeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -599,10 +655,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete enforced enrollment in two-step verification by verifying the provided TOTP code and creating a new session for the given user.
-     * Complete enforced enrollment in 2SV
+     * Creates request options for completeEnforcedEnrollment without sending the request
      */
-    async completeEnforcedEnrollmentRaw(requestParameters: CompleteEnforcedEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+    async completeEnforcedEnrollmentRequestOpts(requestParameters: CompleteEnforcedEnrollmentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -612,13 +667,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/complete-enforced-enrollment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpCodeVerificationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Complete enforced enrollment in two-step verification by verifying the provided TOTP code and creating a new session for the given user.
+     * Complete enforced enrollment in 2SV
+     */
+    async completeEnforcedEnrollmentRaw(requestParameters: CompleteEnforcedEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+        const requestOptions = await this.completeEnforcedEnrollmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -633,10 +697,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete voluntary enrollment in two-step verification by verifying the provided TOTP code and creating a new session for the given user.
-     * Complete voluntary enrollment in 2SV
+     * Creates request options for completeVoluntaryEnrollment without sending the request
      */
-    async completeVoluntaryEnrollmentRaw(requestParameters: CompleteVoluntaryEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+    async completeVoluntaryEnrollmentRequestOpts(requestParameters: CompleteVoluntaryEnrollmentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -646,13 +709,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/complete-voluntary-enrollment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpCodeVerificationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Complete voluntary enrollment in two-step verification by verifying the provided TOTP code and creating a new session for the given user.
+     * Complete voluntary enrollment in 2SV
+     */
+    async completeVoluntaryEnrollmentRaw(requestParameters: CompleteVoluntaryEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+        const requestOptions = await this.completeVoluntaryEnrollmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -667,10 +739,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an access token for the project according to the given request.
-     * Create project HTTP token
+     * Creates request options for createAccessToken without sending the request
      */
-    async createAccessTokenRaw(requestParameters: CreateAccessTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+    async createAccessTokenRequestOpts(requestParameters: CreateAccessTokenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -688,13 +759,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/access-tokens/latest/projects/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an access token for the project according to the given request.
+     * Create project HTTP token
+     */
+    async createAccessTokenRaw(requestParameters: CreateAccessTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+        const requestOptions = await this.createAccessTokenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -709,10 +789,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an access token for the repository according to the given request.
-     * Create repository HTTP token
+     * Creates request options for createAccessToken1 without sending the request
      */
-    async createAccessToken1Raw(requestParameters: CreateAccessToken1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+    async createAccessToken1RequestOpts(requestParameters: CreateAccessToken1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -738,13 +817,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an access token for the repository according to the given request.
+     * Create repository HTTP token
+     */
+    async createAccessToken1Raw(requestParameters: CreateAccessToken1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+        const requestOptions = await this.createAccessToken1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -759,10 +847,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an access token for the user according to the given request.
-     * Create personal HTTP token
+     * Creates request options for createAccessToken2 without sending the request
      */
-    async createAccessToken2Raw(requestParameters: CreateAccessToken2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+    async createAccessToken2RequestOpts(requestParameters: CreateAccessToken2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -780,13 +867,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/access-tokens/latest/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an access token for the user according to the given request.
+     * Create personal HTTP token
+     */
+    async createAccessToken2Raw(requestParameters: CreateAccessToken2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRawAccessToken>> {
+        const requestOptions = await this.createAccessToken2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -801,10 +897,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the access token identified by the given ID.
-     * Delete a HTTP token
+     * Creates request options for deleteById without sending the request
      */
-    async deleteByIdRaw(requestParameters: DeleteByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteByIdRequestOpts(requestParameters: DeleteByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -828,12 +923,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the access token identified by the given ID.
+     * Delete a HTTP token
+     */
+    async deleteByIdRaw(requestParameters: DeleteByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -847,10 +951,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the access token identified by the given ID.
-     * Delete a HTTP token
+     * Creates request options for deleteById1 without sending the request
      */
-    async deleteById1Raw(requestParameters: DeleteById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteById1RequestOpts(requestParameters: DeleteById1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -882,12 +985,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the access token identified by the given ID.
+     * Delete a HTTP token
+     */
+    async deleteById1Raw(requestParameters: DeleteById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteById1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -901,10 +1013,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the access token identified by the given ID.
-     * Delete a HTTP token
+     * Creates request options for deleteById2 without sending the request
      */
-    async deleteById2Raw(requestParameters: DeleteById2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteById2RequestOpts(requestParameters: DeleteById2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['tokenId'] == null) {
             throw new runtime.RequiredError(
                 'tokenId',
@@ -928,12 +1039,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the access token identified by the given ID.
+     * Delete a HTTP token
+     */
+    async deleteById2Raw(requestParameters: DeleteById2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteById2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -947,10 +1067,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete an SSH key.  The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Remove SSH key
+     * Creates request options for deleteSshKey without sending the request
      */
-    async deleteSshKeyRaw(requestParameters: DeleteSshKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSshKeyRequestOpts(requestParameters: DeleteSshKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
@@ -966,12 +1085,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/ssh/latest/keys/{keyId}`;
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete an SSH key.  The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Remove SSH key
+     */
+    async deleteSshKeyRaw(requestParameters: DeleteSshKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSshKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -985,10 +1113,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete all SSH keys for a supplied user.
-     * Delete all user SSH key
+     * Creates request options for deleteSshKeys without sending the request
      */
-    async deleteSshKeysRaw(requestParameters: DeleteSshKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteSshKeysRequestOpts(requestParameters: DeleteSshKeysRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['userName'] != null) {
@@ -1004,12 +1131,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/ssh/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete all SSH keys for a supplied user.
+     * Delete all user SSH key
+     */
+    async deleteSshKeysRaw(requestParameters: DeleteSshKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteSshKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1023,10 +1159,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Elevate permissions by providing the password for the currently authenticated user. This will create an elevated session.
-     * Create elevated session with password
+     * Creates request options for elevatePermissionsWithPassword without sending the request
      */
-    async elevatePermissionsWithPasswordRaw(requestParameters: ElevatePermissionsWithPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async elevatePermissionsWithPasswordRequestOpts(requestParameters: ElevatePermissionsWithPasswordRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['actionType'] != null) {
@@ -1040,13 +1175,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/elevate-permissions/password`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpElevationRestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Elevate permissions by providing the password for the currently authenticated user. This will create an elevated session.
+     * Create elevated session with password
+     */
+    async elevatePermissionsWithPasswordRaw(requestParameters: ElevatePermissionsWithPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.elevatePermissionsWithPasswordRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1060,10 +1204,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Elevate permissions by providing a recovery code for the currently authenticated user. This will create an elevated session.
-     * Create elevated session with recovery code
+     * Creates request options for elevatePermissionsWithRecoveryCode without sending the request
      */
-    async elevatePermissionsWithRecoveryCodeRaw(requestParameters: ElevatePermissionsWithRecoveryCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+    async elevatePermissionsWithRecoveryCodeRequestOpts(requestParameters: ElevatePermissionsWithRecoveryCodeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['actionType'] != null) {
@@ -1077,13 +1220,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/elevate-permissions/recovery-code`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpRecoveryCodeDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Elevate permissions by providing a recovery code for the currently authenticated user. This will create an elevated session.
+     * Create elevated session with recovery code
+     */
+    async elevatePermissionsWithRecoveryCodeRaw(requestParameters: ElevatePermissionsWithRecoveryCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+        const requestOptions = await this.elevatePermissionsWithRecoveryCodeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1098,10 +1250,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Elevate permissions by providing a TOTP code for the currently authenticated user. This will create an elevated session.
-     * Create elevated session with TOTP
+     * Creates request options for elevatePermissionsWithTotp without sending the request
      */
-    async elevatePermissionsWithTotpRaw(requestParameters: ElevatePermissionsWithTotpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async elevatePermissionsWithTotpRequestOpts(requestParameters: ElevatePermissionsWithTotpRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['actionType'] != null) {
@@ -1115,13 +1266,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/elevate-permissions/totp`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpElevationRestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Elevate permissions by providing a TOTP code for the currently authenticated user. This will create an elevated session.
+     * Create elevated session with TOTP
+     */
+    async elevatePermissionsWithTotpRaw(requestParameters: ElevatePermissionsWithTotpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.elevatePermissionsWithTotpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1135,10 +1295,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the current configuration for blocking basic authentication requests.
-     * Get basic auth configuration
+     * Creates request options for get without sending the request
      */
-    async getRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BasicAuthConfigEntity>> {
+    async getRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1146,12 +1305,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/basicauth/latest/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the current configuration for blocking basic authentication requests.
+     * Get basic auth configuration
+     */
+    async getRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BasicAuthConfigEntity>> {
+        const requestOptions = await this.getRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1166,10 +1334,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all access tokens associated with the given project.
-     * Get project HTTP tokens
+     * Creates request options for getAllAccessTokens without sending the request
      */
-    async getAllAccessTokensRaw(requestParameters: GetAllAccessTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+    async getAllAccessTokensRequestOpts(requestParameters: GetAllAccessTokensRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1193,12 +1360,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/access-tokens/latest/projects/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all access tokens associated with the given project.
+     * Get project HTTP tokens
+     */
+    async getAllAccessTokensRaw(requestParameters: GetAllAccessTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+        const requestOptions = await this.getAllAccessTokensRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1213,10 +1389,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all access tokens associated with the given repository.
-     * Get repository HTTP tokens
+     * Creates request options for getAllAccessTokens1 without sending the request
      */
-    async getAllAccessTokens1Raw(requestParameters: GetAllAccessTokens1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+    async getAllAccessTokens1RequestOpts(requestParameters: GetAllAccessTokens1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1248,12 +1423,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all access tokens associated with the given repository.
+     * Get repository HTTP tokens
+     */
+    async getAllAccessTokens1Raw(requestParameters: GetAllAccessTokens1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+        const requestOptions = await this.getAllAccessTokens1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1268,10 +1452,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all access tokens associated with the given user.
-     * Get personal HTTP tokens
+     * Creates request options for getAllAccessTokens2 without sending the request
      */
-    async getAllAccessTokens2Raw(requestParameters: GetAllAccessTokens2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+    async getAllAccessTokens2RequestOpts(requestParameters: GetAllAccessTokens2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userSlug'] == null) {
             throw new runtime.RequiredError(
                 'userSlug',
@@ -1295,12 +1478,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/access-tokens/latest/users/{userSlug}`;
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all access tokens associated with the given user.
+     * Get personal HTTP tokens
+     */
+    async getAllAccessTokens2Raw(requestParameters: GetAllAccessTokens2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllAccessTokens200Response>> {
+        const requestOptions = await this.getAllAccessTokens2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1315,10 +1507,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the access token identified by the given ID.
-     * Get HTTP token by ID
+     * Creates request options for getById without sending the request
      */
-    async getByIdRaw(requestParameters: GetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async getByIdRequestOpts(requestParameters: GetByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1342,12 +1533,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the access token identified by the given ID.
+     * Get HTTP token by ID
+     */
+    async getByIdRaw(requestParameters: GetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.getByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1362,10 +1562,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the access token identified by the given ID.
-     * Get HTTP token by ID
+     * Creates request options for getById1 without sending the request
      */
-    async getById1Raw(requestParameters: GetById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async getById1RequestOpts(requestParameters: GetById1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1397,12 +1596,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the access token identified by the given ID.
+     * Get HTTP token by ID
+     */
+    async getById1Raw(requestParameters: GetById1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.getById1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1417,10 +1625,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the access token identified by the given ID.
-     * Get HTTP token by ID
+     * Creates request options for getById2 without sending the request
      */
-    async getById2Raw(requestParameters: GetById2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async getById2RequestOpts(requestParameters: GetById2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['tokenId'] == null) {
             throw new runtime.RequiredError(
                 'tokenId',
@@ -1444,12 +1651,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the access token identified by the given ID.
+     * Get HTTP token by ID
+     */
+    async getById2Raw(requestParameters: GetById2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.getById2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1464,10 +1680,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides data for a CAPTCHA challenge.
-     * Get CAPTCHA challenge
+     * Creates request options for getCaptchaData without sending the request
      */
-    async getCaptchaDataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CaptchaDataEntity>> {
+    async getCaptchaDataRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1475,12 +1690,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/authenticate/captcha`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides data for a CAPTCHA challenge.
+     * Get CAPTCHA challenge
+     */
+    async getCaptchaDataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CaptchaDataEntity>> {
+        const requestOptions = await this.getCaptchaDataRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1495,10 +1719,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the SSO configuration.
-     * Get SSO configuration
+     * Creates request options for getConfig without sending the request
      */
-    async getConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoConfigEntity>> {
+    async getConfigRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1506,12 +1729,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/sso`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the SSO configuration.
+     * Get SSO configuration
+     */
+    async getConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoConfigEntity>> {
+        const requestOptions = await this.getConfigRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1526,10 +1758,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks the state of an elevated session for the currently authenticated user.
-     * Get elevated session status
+     * Creates request options for getElevatedPermissionStatus without sending the request
      */
-    async getElevatedPermissionStatusRaw(requestParameters: GetElevatedPermissionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getElevatedPermissionStatusRequestOpts(requestParameters: GetElevatedPermissionStatusRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['actionType'] != null) {
@@ -1541,12 +1772,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/elevate-permissions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Checks the state of an elevated session for the currently authenticated user.
+     * Get elevated session status
+     */
+    async getElevatedPermissionStatusRaw(requestParameters: GetElevatedPermissionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getElevatedPermissionStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1560,10 +1800,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the access key for the SSH key with id <code>keyId</code> on the project identified in the URL.
-     * Get project SSH key
+     * Creates request options for getForProject without sending the request
      */
-    async getForProjectRaw(requestParameters: GetForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async getForProjectRequestOpts(requestParameters: GetForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1587,12 +1826,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the access key for the SSH key with id <code>keyId</code> on the project identified in the URL.
+     * Get project SSH key
+     */
+    async getForProjectRaw(requestParameters: GetForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.getForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1607,10 +1855,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all project-related access keys for the SSH key with id <code>keyId</code>. If the current user is not an admin any of the projects the key provides access to, none are returned.
-     * Get project SSH keys
+     * Creates request options for getForProjects without sending the request
      */
-    async getForProjectsRaw(requestParameters: GetForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getForProjectsRequestOpts(requestParameters: GetForProjectsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
@@ -1626,12 +1873,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/keys/latest/ssh/{keyId}/projects`;
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all project-related access keys for the SSH key with id <code>keyId</code>. If the current user is not an admin any of the projects the key provides access to, none are returned.
+     * Get project SSH keys
+     */
+    async getForProjectsRaw(requestParameters: GetForProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getForProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1645,10 +1901,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all repository-related access keys for the SSH key with id <code>keyId</code>. If the current user is not an admin of any of the projects the key provides access to, none are returned.
-     * Get repository SSH key
+     * Creates request options for getForRepositories without sending the request
      */
-    async getForRepositoriesRaw(requestParameters: GetForRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getForRepositoriesRequestOpts(requestParameters: GetForRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
@@ -1668,12 +1923,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/keys/latest/ssh/{keyId}/repos`;
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves all repository-related access keys for the SSH key with id <code>keyId</code>. If the current user is not an admin of any of the projects the key provides access to, none are returned.
+     * Get repository SSH key
+     */
+    async getForRepositoriesRaw(requestParameters: GetForRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getForRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1687,10 +1951,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the access key for the SSH key with id <code>keyId</code> on the repository identified in the URL.
-     * Get repository SSH key
+     * Creates request options for getForRepository without sending the request
      */
-    async getForRepositoryRaw(requestParameters: GetForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async getForRepositoryRequestOpts(requestParameters: GetForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1722,12 +1985,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the access key for the SSH key with id <code>keyId</code> on the repository identified in the URL.
+     * Get repository SSH key
+     */
+    async getForRepositoryRaw(requestParameters: GetForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.getForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1742,10 +2014,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the access keys for the repository identified in the URL.
-     * Get repository SSH keys
+     * Creates request options for getForRepository1 without sending the request
      */
-    async getForRepository1Raw(requestParameters: GetForRepository1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForRepository1200Response>> {
+    async getForRepository1RequestOpts(requestParameters: GetForRepository1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1793,12 +2064,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the access keys for the repository identified in the URL.
+     * Get repository SSH keys
+     */
+    async getForRepository1Raw(requestParameters: GetForRepository1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForRepository1200Response>> {
+        const requestOptions = await this.getForRepository1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1813,10 +2093,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the configuration for the IdP that matches the given ID.
-     * Get IdP configuration
+     * Creates request options for getIdp without sending the request
      */
-    async getIdpRaw(requestParameters: GetIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+    async getIdpRequestOpts(requestParameters: GetIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1832,12 +2111,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/authconfig/latest/idps/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the configuration for the IdP that matches the given ID.
+     * Get IdP configuration
+     */
+    async getIdpRaw(requestParameters: GetIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+        const requestOptions = await this.getIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1852,10 +2140,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of configured IdPs.   This endpoint makes no guarantees to ordering besides the ordering being consistent.
-     * Get all configured IdPs
+     * Creates request options for getIdps without sending the request
      */
-    async getIdpsRaw(requestParameters: GetIdpsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetIdps200Response>> {
+    async getIdpsRequestOpts(requestParameters: GetIdpsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -1871,12 +2158,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/idps`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of configured IdPs.   This endpoint makes no guarantees to ordering besides the ordering being consistent.
+     * Get all configured IdPs
+     */
+    async getIdpsRaw(requestParameters: GetIdpsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetIdps200Response>> {
+        const requestOptions = await this.getIdpsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1891,10 +2187,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of all the users created by JIT (Just-in-time) provisioning.  Just-in-time user provisioning (JIT provisioning) allows users to be created and updated automatically when they log in through SAML SSO or OpenID Connect (OIDC) SSO.
-     * Get all JIT provisioned users
+     * Creates request options for getJitProvisionedUsers without sending the request
      */
-    async getJitProvisionedUsersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JitUserEntity>> {
+    async getJitProvisionedUsersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1902,12 +2197,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/jit-users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of all the users created by JIT (Just-in-time) provisioning.  Just-in-time user provisioning (JIT provisioning) allows users to be created and updated automatically when they log in through SAML SSO or OpenID Connect (OIDC) SSO.
+     * Get all JIT provisioned users
+     */
+    async getJitProvisionedUsersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JitUserEntity>> {
+        const requestOptions = await this.getJitProvisionedUsersRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1922,10 +2226,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of available login options, which contains details about the metadata required for the login page.  Only enabled login options will be returned. Login options can either be the native login form or the configured IdPs.
-     * Get available login options
+     * Creates request options for getLoginOptions without sending the request
      */
-    async getLoginOptionsRaw(requestParameters: GetLoginOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLoginOptions200Response>> {
+    async getLoginOptionsRequestOpts(requestParameters: GetLoginOptionsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -1941,12 +2244,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/login-options`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of available login options, which contains details about the metadata required for the login page.  Only enabled login options will be returned. Login options can either be the native login form or the configured IdPs.
+     * Get available login options
+     */
+    async getLoginOptionsRaw(requestParameters: GetLoginOptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLoginOptions200Response>> {
+        const requestOptions = await this.getLoginOptionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1961,10 +2273,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve an SSH key by keyId  The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
-     * Get SSH key for user by keyId
+     * Creates request options for getSshKey without sending the request
      */
-    async getSshKeyRaw(requestParameters: GetSshKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKey>> {
+    async getSshKeyRequestOpts(requestParameters: GetSshKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
@@ -1980,12 +2291,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/ssh/latest/keys/{keyId}`;
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve an SSH key by keyId  The authenticated user must have <strong>ADMIN</strong> permission or higher to call this resource.
+     * Get SSH key for user by keyId
+     */
+    async getSshKeyRaw(requestParameters: GetSshKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshKey>> {
+        const requestOptions = await this.getSshKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2000,10 +2320,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of SSH keys.
-     * Get SSH keys for user
+     * Creates request options for getSshKeys without sending the request
      */
-    async getSshKeysRaw(requestParameters: GetSshKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSshKeys200Response>> {
+    async getSshKeysRequestOpts(requestParameters: GetSshKeysRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['userName'] != null) {
@@ -2027,12 +2346,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/ssh/latest/keys`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of SSH keys.
+     * Get SSH keys for user
+     */
+    async getSshKeysRaw(requestParameters: GetSshKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSshKeys200Response>> {
+        const requestOptions = await this.getSshKeysRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2047,10 +2375,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the access keys for the project identified in the URL.
-     * Get SSH key
+     * Creates request options for getSshKeysForProject without sending the request
      */
-    async getSshKeysForProjectRaw(requestParameters: GetSshKeysForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForRepository1200Response>> {
+    async getSshKeysForProjectRequestOpts(requestParameters: GetSshKeysForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2082,12 +2409,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/keys/latest/projects/{projectKey}/ssh`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the access keys for the project identified in the URL.
+     * Get SSH key
+     */
+    async getSshKeysForProjectRaw(requestParameters: GetSshKeysForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetForRepository1200Response>> {
+        const requestOptions = await this.getSshKeysForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2102,10 +2438,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the status of the SSO management for the currently authenticated user.
-     * Get SSO management status
+     * Creates request options for getSsoManagementStatus without sending the request
      */
-    async getSsoManagementStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoManagementStatusDTO>> {
+    async getSsoManagementStatusRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2113,12 +2448,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/sso-management-status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the status of the SSO management for the currently authenticated user.
+     * Get SSO management status
+     */
+    async getSsoManagementStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoManagementStatusDTO>> {
+        const requestOptions = await this.getSsoManagementStatusRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2133,10 +2477,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the status of two-step verification for the currently authenticated user.
-     * Get two-step verification status
+     * Creates request options for getStatus without sending the request
      */
-    async getStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusDTO>> {
+    async getStatusRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2144,12 +2487,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the status of two-step verification for the currently authenticated user.
+     * Get two-step verification status
+     */
+    async getStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StatusDTO>> {
+        const requestOptions = await this.getStatusRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2164,10 +2516,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Store a new configuration for blocking basic authentication requests.
-     * Update basic auth configuration
+     * Creates request options for put without sending the request
      */
-    async putRaw(requestParameters: PutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async putRequestOpts(requestParameters: PutRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2177,13 +2528,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/basicauth/latest/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['basicAuthConfigEntity'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Store a new configuration for blocking basic authentication requests.
+     * Update basic auth configuration
+     */
+    async putRaw(requestParameters: PutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.putRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2197,10 +2557,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the configuration for the IdP that matches the given ID.
-     * Delete IdP configuration
+     * Creates request options for removeIdp without sending the request
      */
-    async removeIdpRaw(requestParameters: RemoveIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+    async removeIdpRequestOpts(requestParameters: RemoveIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2216,12 +2575,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/authconfig/latest/idps/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the configuration for the IdP that matches the given ID.
+     * Delete IdP configuration
+     */
+    async removeIdpRaw(requestParameters: RemoveIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+        const requestOptions = await this.removeIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2236,10 +2604,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove an existing access key for the project identified in the URL. If the same SSH key is used as an access key for multiple projects or repositories, only the access to the project identified in the URL will be revoked.
-     * Revoke project SSH key
+     * Creates request options for revokeForProject without sending the request
      */
-    async revokeForProjectRaw(requestParameters: RevokeForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokeForProjectRequestOpts(requestParameters: RevokeForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2263,12 +2630,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove an existing access key for the project identified in the URL. If the same SSH key is used as an access key for multiple projects or repositories, only the access to the project identified in the URL will be revoked.
+     * Revoke project SSH key
+     */
+    async revokeForProjectRaw(requestParameters: RevokeForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2282,10 +2658,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove an existing access key for the repository identified in the URL. If the same SSH key is used as an access key for multiple projects or repositories, only the access to the repository identified in the URL will be revoked.
-     * Revoke repository SSH key
+     * Creates request options for revokeForRepository without sending the request
      */
-    async revokeForRepositoryRaw(requestParameters: RevokeForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokeForRepositoryRequestOpts(requestParameters: RevokeForRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2317,12 +2692,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove an existing access key for the repository identified in the URL. If the same SSH key is used as an access key for multiple projects or repositories, only the access to the repository identified in the URL will be revoked.
+     * Revoke repository SSH key
+     */
+    async revokeForRepositoryRaw(requestParameters: RevokeForRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeForRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2336,10 +2720,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove an existing access key for the projects and repositories in the submitted entity. If the same SSH key is used as an access key for multiple projects or repositories not supplied, only the access to the projects or repositories identified will be revoked.
-     * Revoke project SSH key
+     * Creates request options for revokeMany without sending the request
      */
-    async revokeManyRaw(requestParameters: RevokeManyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokeManyRequestOpts(requestParameters: RevokeManyOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
@@ -2357,13 +2740,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/keys/latest/ssh/{keyId}`;
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['revokeManyRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove an existing access key for the projects and repositories in the submitted entity. If the same SSH key is used as an access key for multiple projects or repositories not supplied, only the access to the projects or repositories identified will be revoked.
+     * Revoke project SSH key
+     */
+    async revokeManyRaw(requestParameters: RevokeManyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeManyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2377,10 +2769,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rotates the recovery code for the currently authentication user.
-     * Rotate recovery code
+     * Creates request options for rotateRecoverCode without sending the request
      */
-    async rotateRecoverCodeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+    async rotateRecoverCodeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2388,12 +2779,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/recovery-code/rotate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Rotates the recovery code for the currently authentication user.
+     * Rotate recovery code
+     */
+    async rotateRecoverCodeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpRecoveryCodeDTO>> {
+        const requestOptions = await this.rotateRecoverCodeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2408,10 +2808,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the SSH settings from the upstream.
-     * Get SSH settings
+     * Creates request options for sshSettings without sending the request
      */
-    async sshSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshSettings>> {
+    async sshSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2419,12 +2818,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/ssh/latest/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the SSH settings from the upstream.
+     * Get SSH settings
+     */
+    async sshSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshSettings>> {
+        const requestOptions = await this.sshSettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2439,10 +2847,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Start or resume enforced enrollment in two-step verification by returning the conversation details.  There are two ways to enroll in two-step verification: voluntary and enforced. Enrollment is a two-step process. First, the user starts the enrollment process via <code>/start-voluntary-enrollment</code> or <code>/start-enforced-enrollment</code>. Second and final step is to complete the enrollment via <code>/complete-voluntary-enrollment</code> or <code>/complete-enforced-enrollment</code>. In the case of enforced enrollment, the conversation is started at the time of login via <code>/authenticate</code>.
-     * Start enforced enrollment in 2SV
+     * Creates request options for startEnforcedEnrollment without sending the request
      */
-    async startEnforcedEnrollmentRaw(requestParameters: StartEnforcedEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+    async startEnforcedEnrollmentRequestOpts(requestParameters: StartEnforcedEnrollmentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2452,13 +2859,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/start-enforced-enrollment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['conversationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Start or resume enforced enrollment in two-step verification by returning the conversation details.  There are two ways to enroll in two-step verification: voluntary and enforced. Enrollment is a two-step process. First, the user starts the enrollment process via <code>/start-voluntary-enrollment</code> or <code>/start-enforced-enrollment</code>. Second and final step is to complete the enrollment via <code>/complete-voluntary-enrollment</code> or <code>/complete-enforced-enrollment</code>. In the case of enforced enrollment, the conversation is started at the time of login via <code>/authenticate</code>.
+     * Start enforced enrollment in 2SV
+     */
+    async startEnforcedEnrollmentRaw(requestParameters: StartEnforcedEnrollmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+        const requestOptions = await this.startEnforcedEnrollmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2473,10 +2889,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Start the process of changing the authentication app used for two-step verification by creating a conversation.
-     * Start authentication app update for 2SV
+     * Creates request options for startEnrollmentUpdate without sending the request
      */
-    async startEnrollmentUpdateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+    async startEnrollmentUpdateRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2484,12 +2899,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/start-enrollment-update`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Start the process of changing the authentication app used for two-step verification by creating a conversation.
+     * Start authentication app update for 2SV
+     */
+    async startEnrollmentUpdateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+        const requestOptions = await this.startEnrollmentUpdateRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2504,10 +2928,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Start voluntary enrollment in two-step verification by creating a conversation.  There are two ways to enroll in two-step verification: voluntary and enforced. Enrollment is a two-step process. First, the user starts the enrollment process via <code>/start-voluntary-enrollment</code> or <code>/start-enforced-enrollment</code>. Second and final step is to complete the enrollment via <code>/complete-voluntary-enrollment</code> or <code>/complete-enforced-enrollment</code>. In the case of enforced enrollment, the conversation is started at the time of login via <code>/authenticate</code>.
-     * Start voluntary enrollment in 2SV
+     * Creates request options for startVoluntaryEnrollment without sending the request
      */
-    async startVoluntaryEnrollmentRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+    async startVoluntaryEnrollmentRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2515,12 +2938,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/start-voluntary-enrollment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Start voluntary enrollment in two-step verification by creating a conversation.  There are two ways to enroll in two-step verification: voluntary and enforced. Enrollment is a two-step process. First, the user starts the enrollment process via <code>/start-voluntary-enrollment</code> or <code>/start-enforced-enrollment</code>. Second and final step is to complete the enrollment via <code>/complete-voluntary-enrollment</code> or <code>/complete-enforced-enrollment</code>. In the case of enforced enrollment, the conversation is started at the time of login via <code>/authenticate</code>.
+     * Start voluntary enrollment in 2SV
+     */
+    async startVoluntaryEnrollmentRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TotpUserEnrollmentDTO>> {
+        const requestOptions = await this.startVoluntaryEnrollmentRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2535,10 +2967,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unenroll the currently authenticated user from two-step verification.
-     * Uneroll current user from two-step verification
+     * Creates request options for unenroll without sending the request
      */
-    async unenrollRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unenrollRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2546,12 +2977,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/totp/unenroll`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unenroll the currently authenticated user from two-step verification.
+     * Uneroll current user from two-step verification
+     */
+    async unenrollRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unenrollRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2565,10 +3005,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unenroll a user from two-step verification specified by the given username.
-     * Unenroll specific user from two-step verification
+     * Creates request options for unenrollUser without sending the request
      */
-    async unenrollUserRaw(requestParameters: UnenrollUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unenrollUserRequestOpts(requestParameters: UnenrollUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userName'] == null) {
             throw new runtime.RequiredError(
                 'userName',
@@ -2586,13 +3025,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/tsv/latest/totp/unenroll/user/{userName}`;
         urlPath = urlPath.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpElevationRestDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unenroll a user from two-step verification specified by the given username.
+     * Unenroll specific user from two-step verification
+     */
+    async unenrollUserRaw(requestParameters: UnenrollUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unenrollUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2606,10 +3054,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify an access token according to the given request. Any fields not specified will not be altered.
-     * Update HTTP token
+     * Creates request options for updateAccessToken without sending the request
      */
-    async updateAccessTokenRaw(requestParameters: UpdateAccessTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async updateAccessTokenRequestOpts(requestParameters: UpdateAccessTokenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2635,13 +3082,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify an access token according to the given request. Any fields not specified will not be altered.
+     * Update HTTP token
+     */
+    async updateAccessTokenRaw(requestParameters: UpdateAccessTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.updateAccessTokenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2656,10 +3112,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify an access token according to the given request. Any fields not specified will not be altered.
-     * Update HTTP token
+     * Creates request options for updateAccessToken1 without sending the request
      */
-    async updateAccessToken1Raw(requestParameters: UpdateAccessToken1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async updateAccessToken1RequestOpts(requestParameters: UpdateAccessToken1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2693,13 +3148,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify an access token according to the given request. Any fields not specified will not be altered.
+     * Update HTTP token
+     */
+    async updateAccessToken1Raw(requestParameters: UpdateAccessToken1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.updateAccessToken1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2714,10 +3178,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify an access token according to the given request. Any fields not specified will not be altered.
-     * Update HTTP token
+     * Creates request options for updateAccessToken2 without sending the request
      */
-    async updateAccessToken2Raw(requestParameters: UpdateAccessToken2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async updateAccessToken2RequestOpts(requestParameters: UpdateAccessToken2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['tokenId'] == null) {
             throw new runtime.RequiredError(
                 'tokenId',
@@ -2743,13 +3206,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"userSlug"}}`, encodeURIComponent(String(requestParameters['userSlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify an access token according to the given request. Any fields not specified will not be altered.
+     * Update HTTP token
+     */
+    async updateAccessToken2Raw(requestParameters: UpdateAccessToken2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.updateAccessToken2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2764,10 +3236,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the SSO configuration.
-     * Update SSO configuration
+     * Creates request options for updateConfig without sending the request
      */
-    async updateConfigRaw(requestParameters: UpdateConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoConfigEntity>> {
+    async updateConfigRequestOpts(requestParameters: UpdateConfigRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2777,13 +3248,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/authconfig/latest/sso`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['ssoConfigEntity'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the SSO configuration.
+     * Update SSO configuration
+     */
+    async updateConfigRaw(requestParameters: UpdateConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SsoConfigEntity>> {
+        const requestOptions = await this.updateConfigRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2798,10 +3278,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the configuration for the IdP that matches the given ID.   Only the provided properties will be applied to the IdP configuration.
-     * Update IdP configuration
+     * Creates request options for updateIdp without sending the request
      */
-    async updateIdpRaw(requestParameters: UpdateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+    async updateIdpRequestOpts(requestParameters: UpdateIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2819,13 +3298,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
         let urlPath = `/authconfig/latest/idps/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['idpConfigEntity'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the configuration for the IdP that matches the given ID.   Only the provided properties will be applied to the IdP configuration.
+     * Update IdP configuration
+     */
+    async updateIdpRaw(requestParameters: UpdateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdpConfigEntity>> {
+        const requestOptions = await this.updateIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2840,10 +3328,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the permission granted to the specified SSH key to the project identified in the URL.
-     * Update project SSH key permission
+     * Creates request options for updatePermission without sending the request
      */
-    async updatePermissionRaw(requestParameters: UpdatePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async updatePermissionRequestOpts(requestParameters: UpdatePermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2875,12 +3362,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"keyId"}}`, encodeURIComponent(String(requestParameters['keyId'])));
         urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the permission granted to the specified SSH key to the project identified in the URL.
+     * Update project SSH key permission
+     */
+    async updatePermissionRaw(requestParameters: UpdatePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.updatePermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2895,10 +3391,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the permission granted to the specified SSH key to the repository identified in the URL.
-     * Update repository SSH key permission
+     * Creates request options for updatePermission1 without sending the request
      */
-    async updatePermission1Raw(requestParameters: UpdatePermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+    async updatePermission1RequestOpts(requestParameters: UpdatePermission1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2938,12 +3433,21 @@ export class AuthenticationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"permission"}}`, encodeURIComponent(String(requestParameters['permission'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the permission granted to the specified SSH key to the repository identified in the URL.
+     * Update repository SSH key permission
+     */
+    async updatePermission1Raw(requestParameters: UpdatePermission1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSshAccessKey>> {
+        const requestOptions = await this.updatePermission1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2958,10 +3462,9 @@ export class AuthenticationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Authenticate as the given user using a TOTP code.
-     * Authenticate using TOTP code
+     * Creates request options for verifyCode without sending the request
      */
-    async verifyCodeRaw(requestParameters: VerifyCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async verifyCodeRequestOpts(requestParameters: VerifyCodeRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2971,13 +3474,22 @@ export class AuthenticationApi extends runtime.BaseAPI {
 
         let urlPath = `/tsv/latest/authenticate/totp-code`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['totpCodeVerificationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Authenticate as the given user using a TOTP code.
+     * Authenticate using TOTP code
+     */
+    async verifyCodeRaw(requestParameters: VerifyCodeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.verifyCodeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

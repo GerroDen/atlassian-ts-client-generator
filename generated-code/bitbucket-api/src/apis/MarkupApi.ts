@@ -33,10 +33,9 @@ interface PreviewRequest {
 export class MarkupApi extends runtime.BaseAPI {
 
     /**
-     * Preview generated HTML for the given markdown content.  Only authenticated users may call this resource.
-     * Preview markdown render
+     * Creates request options for preview without sending the request
      */
-    async previewRaw(requestParameters: PreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMarkup>> {
+    async previewRequestOpts(requestParameters: PreviewRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['htmlEscape'] != null) {
@@ -62,13 +61,22 @@ export class MarkupApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/markup/preview`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Preview generated HTML for the given markdown content.  Only authenticated users may call this resource.
+     * Preview markdown render
+     */
+    async previewRaw(requestParameters: PreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMarkup>> {
+        const requestOptions = await this.previewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

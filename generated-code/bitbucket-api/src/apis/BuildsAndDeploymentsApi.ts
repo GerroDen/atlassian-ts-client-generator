@@ -192,10 +192,9 @@ interface UpdateRequiredBuildsMergeCheckRequest {
 export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
 
     /**
-     * Delete a specific build status.   The authenticated user must have **REPO_ADMIN** permission for the provided repository.
-     * Delete a specific build status
+     * Creates request options for _delete without sending the request
      */
-    async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async _deleteRequestOpts(requestParameters: DeleteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -238,12 +237,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a specific build status.   The authenticated user must have **REPO_ADMIN** permission for the provided repository.
+     * Delete a specific build status
+     */
+    async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this._deleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -257,10 +265,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Store a build status.   The authenticated user must have **REPO_READ** permission for the repository that this build status is for. The request can also be made with anonymous 2-legged OAuth.
-     * Store a build status
+     * Creates request options for add without sending the request
      */
-    async addRaw(requestParameters: AddRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addRequestOpts(requestParameters: AddRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -294,13 +301,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBuildStatusSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Store a build status.   The authenticated user must have **REPO_READ** permission for the repository that this build status is for. The request can also be made with anonymous 2-legged OAuth.
+     * Store a build status
+     */
+    async addRaw(requestParameters: AddRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -314,10 +330,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add annotations to the given report. The request should be a JSON object mapping the string \"annotations\" to an array of maps containing the annotation data, as described below. See also the example request.  A few things to note:- Annotations are an extension of a report, so a report must first exist in order to post annotations.   Annotations are posted separately from the report, and can be posted in bulk using this endpoint. - Only the annotations that are on lines changed in the unified diff will be displayed. This means it is  likely not all annotations posted will be displayed on the pull request  It also means that if the user is viewing a side-by-side diff,  commit diff or iterative review diff they will not be able to view the annotations. - A report cannot have more than 1000 annotations by default, however this property is congurable at an  instance level. If the request would result in more than the maximum number of annotations being stored  then the entire request is rejected and no new annotations are stored.  - There is no de-duplication of annotations on Bitbucket so be sure that reruns of builds will first  delete the report and annotations before creating them.  # Annotation parameters  |Parameter|Description|Required?|Restrictions|Type| |--- |--- |--- |--- |--- | |path|The path of the file on which this annotation should be placed. This is the path of the filerelative to the git repository. If no path is provided, then it will appear in the overview modalon all pull requests where the tip of the branch is the given commit, regardless of which files weremodified.|No||String| |line|The line number that the annotation should belong to. If no line number is provided, then it willdefault to 0 and in a pull request it will appear at the top of the file specified by the path field.|No|Non-negative integer|Integer| |message|The message to display to users|Yes|The maximum length accepted is 2000 characters, however the user interface may truncate this valuefor display purposes. We recommend that the message is short and succinct, with further detailsavailable to the user if needed on the page linked to by the the annotation link.|String| |severity|The severity of the annotation|Yes|One of: LOW, MEDIUM, HIGH|String| |link|An http or https URL representing the location of the annotation in the external tool|No||String| |type|The type of annotation posted|No|One of: VULNERABILITY, CODE_SMELL, BUG|String| |externalId|If the caller requires a link to get or modify this annotation, then an ID must be provided. It isnot used or required by Bitbucket, but only by the annotation creator for updating or deleting thisspecific annotation.|No|A string value shorter than 450 characters|String|
-     * Add Code Insights annotations
+     * Creates request options for addAnnotations without sending the request
      */
-    async addAnnotationsRaw(requestParameters: AddAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addAnnotationsRequestOpts(requestParameters: AddAnnotationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -359,13 +374,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBulkAddInsightAnnotationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add annotations to the given report. The request should be a JSON object mapping the string \"annotations\" to an array of maps containing the annotation data, as described below. See also the example request.  A few things to note:- Annotations are an extension of a report, so a report must first exist in order to post annotations.   Annotations are posted separately from the report, and can be posted in bulk using this endpoint. - Only the annotations that are on lines changed in the unified diff will be displayed. This means it is  likely not all annotations posted will be displayed on the pull request  It also means that if the user is viewing a side-by-side diff,  commit diff or iterative review diff they will not be able to view the annotations. - A report cannot have more than 1000 annotations by default, however this property is congurable at an  instance level. If the request would result in more than the maximum number of annotations being stored  then the entire request is rejected and no new annotations are stored.  - There is no de-duplication of annotations on Bitbucket so be sure that reruns of builds will first  delete the report and annotations before creating them.  # Annotation parameters  |Parameter|Description|Required?|Restrictions|Type| |--- |--- |--- |--- |--- | |path|The path of the file on which this annotation should be placed. This is the path of the filerelative to the git repository. If no path is provided, then it will appear in the overview modalon all pull requests where the tip of the branch is the given commit, regardless of which files weremodified.|No||String| |line|The line number that the annotation should belong to. If no line number is provided, then it willdefault to 0 and in a pull request it will appear at the top of the file specified by the path field.|No|Non-negative integer|Integer| |message|The message to display to users|Yes|The maximum length accepted is 2000 characters, however the user interface may truncate this valuefor display purposes. We recommend that the message is short and succinct, with further detailsavailable to the user if needed on the page linked to by the the annotation link.|String| |severity|The severity of the annotation|Yes|One of: LOW, MEDIUM, HIGH|String| |link|An http or https URL representing the location of the annotation in the external tool|No||String| |type|The type of annotation posted|No|One of: VULNERABILITY, CODE_SMELL, BUG|String| |externalId|If the caller requires a link to get or modify this annotation, then an ID must be provided. It isnot used or required by Bitbucket, but only by the annotation creator for updating or deleting thisspecific annotation.|No|A string value shorter than 450 characters|String|
+     * Add Code Insights annotations
+     */
+    async addAnnotationsRaw(requestParameters: AddAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addAnnotationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -379,10 +403,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a deployment.    The authenticated user must have REPO_READ permission for the repository.
-     * Create or update a deployment
+     * Creates request options for createOrUpdateDeployment without sending the request
      */
-    async createOrUpdateDeploymentRaw(requestParameters: CreateOrUpdateDeploymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
+    async createOrUpdateDeploymentRequestOpts(requestParameters: CreateOrUpdateDeploymentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -416,13 +439,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDeploymentSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create or update a deployment.    The authenticated user must have REPO_READ permission for the repository.
+     * Create or update a deployment
+     */
+    async createOrUpdateDeploymentRaw(requestParameters: CreateOrUpdateDeploymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
+        const requestOptions = await this.createOrUpdateDeploymentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -437,10 +469,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a required build merge check for the given repository.  The authenticated user must have **REPO_ADMIN** permission for the target repository to register a required build merge check.  The contents of the required build merge check request are:  These fields are **required**:  - **buildParentKeys**: A non-empty list of build parent keys that require green builds for this merge check to pass - **refMatcher.id**: The value to match refs against in the target branch - **refMatcher.type.id**: The type of ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   These fields are optional:  - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   
-     * Create a required builds merge check
+     * Creates request options for createRequiredBuildsMergeCheck without sending the request
      */
-    async createRequiredBuildsMergeCheckRaw(requestParameters: CreateRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
+    async createRequiredBuildsMergeCheckRequestOpts(requestParameters: CreateRequiredBuildsMergeCheckRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -466,13 +497,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRequiredBuildConditionSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a required build merge check for the given repository.  The authenticated user must have **REPO_ADMIN** permission for the target repository to register a required build merge check.  The contents of the required build merge check request are:  These fields are **required**:  - **buildParentKeys**: A non-empty list of build parent keys that require green builds for this merge check to pass - **refMatcher.id**: The value to match refs against in the target branch - **refMatcher.type.id**: The type of ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   These fields are optional:  - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   
+     * Create a required builds merge check
+     */
+    async createRequiredBuildsMergeCheckRaw(requestParameters: CreateRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
+        const requestOptions = await this.createRequiredBuildsMergeCheckRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -487,10 +527,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the deployment matching the specified Repository, key, environmentKey and deploymentSequenceNumber.   The user must have REPO_ADMIN.
-     * Delete a deployment
+     * Creates request options for delete1 without sending the request
      */
-    async delete1Raw(requestParameters: Delete1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete1RequestOpts(requestParameters: Delete1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -534,12 +573,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the deployment matching the specified Repository, key, environmentKey and deploymentSequenceNumber.   The user must have REPO_ADMIN.
+     * Delete a deployment
+     */
+    async delete1Raw(requestParameters: Delete1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -553,10 +601,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a report for the given commit. Also deletes any annotations associated with this report.
-     * Delete a Code Insights report
+     * Creates request options for deleteACodeInsightsReport without sending the request
      */
-    async deleteACodeInsightsReportRaw(requestParameters: DeleteACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteACodeInsightsReportRequestOpts(requestParameters: DeleteACodeInsightsReportRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -596,12 +643,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a report for the given commit. Also deletes any annotations associated with this report.
+     * Delete a Code Insights report
+     */
+    async deleteACodeInsightsReportRaw(requestParameters: DeleteACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteACodeInsightsReportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -615,10 +671,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete annotations for a given report that match the given external IDs, or all annotations if no external IDs are provided.
-     * Delete Code Insights annotations
+     * Creates request options for deleteAnnotations without sending the request
      */
-    async deleteAnnotationsRaw(requestParameters: DeleteAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAnnotationsRequestOpts(requestParameters: DeleteAnnotationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -662,12 +717,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete annotations for a given report that match the given external IDs, or all annotations if no external IDs are provided.
+     * Delete Code Insights annotations
+     */
+    async deleteAnnotationsRaw(requestParameters: DeleteAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAnnotationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -681,10 +745,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a required build existing merge check, given it\'s ID.  The authenticated user must have **REPO_ADMIN** permission for the target repository to delete a required build merge check.
-     * Delete a required builds merge check
+     * Creates request options for deleteRequiredBuildsMergeCheck without sending the request
      */
-    async deleteRequiredBuildsMergeCheckRaw(requestParameters: DeleteRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRequiredBuildsMergeCheckRequestOpts(requestParameters: DeleteRequiredBuildsMergeCheckRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -716,12 +779,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a required build existing merge check, given it\'s ID.  The authenticated user must have **REPO_ADMIN** permission for the target repository to delete a required build merge check.
+     * Delete a required builds merge check
+     */
+    async deleteRequiredBuildsMergeCheckRaw(requestParameters: DeleteRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRequiredBuildsMergeCheckRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -735,10 +807,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a specific build status.   The authenticated user must have **REPO_READ** permission for the provided repository.The request can also be made with anonymous 2-legged OAuth.<br>Since 7.14
-     * Get a specific build status
+     * Creates request options for get without sending the request
      */
-    async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStatus>> {
+    async getRequestOpts(requestParameters: GetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -781,12 +852,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a specific build status.   The authenticated user must have **REPO_READ** permission for the provided repository.The request can also be made with anonymous 2-legged OAuth.<br>Since 7.14
+     * Get a specific build status
+     */
+    async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStatus>> {
+        const requestOptions = await this.getRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -801,10 +881,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the deployment matching the specified Repository, key, environmentKey and deploymentSequenceNumber.   The user must have REPO_READ.
-     * Get a deployment
+     * Creates request options for get1 without sending the request
      */
-    async get1Raw(requestParameters: Get1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
+    async get1RequestOpts(requestParameters: Get1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -848,12 +927,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the deployment matching the specified Repository, key, environmentKey and deploymentSequenceNumber.   The user must have REPO_READ.
+     * Get a deployment
+     */
+    async get1Raw(requestParameters: Get1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeployment>> {
+        const requestOptions = await this.get1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -868,10 +956,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the specified report.
-     * Get a Code Insights report
+     * Creates request options for getACodeInsightsReport without sending the request
      */
-    async getACodeInsightsReportRaw(requestParameters: GetACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
+    async getACodeInsightsReportRequestOpts(requestParameters: GetACodeInsightsReportRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -911,12 +998,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the specified report.
+     * Get a Code Insights report
+     */
+    async getACodeInsightsReportRaw(requestParameters: GetACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
+        const requestOptions = await this.getACodeInsightsReportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -931,10 +1027,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the specified report\'s annotations.
-     * Get Code Insights annotations for a report
+     * Creates request options for getAnnotations without sending the request
      */
-    async getAnnotationsRaw(requestParameters: GetAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
+    async getAnnotationsRequestOpts(requestParameters: GetAnnotationsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -974,12 +1069,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the specified report\'s annotations.
+     * Get Code Insights annotations for a report
+     */
+    async getAnnotationsRaw(requestParameters: GetAnnotationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
+        const requestOptions = await this.getAnnotationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -994,10 +1098,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get annotations for the given commit ID, filtered by any query parameters given.
-     * Get Code Insights annotations for a commit
+     * Creates request options for getAnnotations1 without sending the request
      */
-    async getAnnotations1Raw(requestParameters: GetAnnotations1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
+    async getAnnotations1RequestOpts(requestParameters: GetAnnotations1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1049,12 +1152,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get annotations for the given commit ID, filtered by any query parameters given.
+     * Get Code Insights annotations for a commit
+     */
+    async getAnnotations1Raw(requestParameters: GetAnnotations1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightAnnotationsResponse>> {
+        const requestOptions = await this.getAnnotations1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1069,10 +1181,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets statistics regarding the builds associated with a commit
-     * Get build status statistics for commit
+     * Creates request options for getBuildStatusStats without sending the request
      */
-    async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
+    async getBuildStatusStatsRequestOpts(requestParameters: GetBuildStatusStatsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['commitId'] == null) {
             throw new runtime.RequiredError(
                 'commitId',
@@ -1092,12 +1203,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         let urlPath = `/build-status/latest/commits/stats/{commitId}`;
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets statistics regarding the builds associated with a commit
+     * Get build status statistics for commit
+     */
+    async getBuildStatusStatsRaw(requestParameters: GetBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildStats>> {
+        const requestOptions = await this.getBuildStatusStatsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1112,10 +1232,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Produces a list of the build statistics for multiple commits. Commits <em>without any builds associated with them</em> will not be returned.<br> For example if the commit <code>e00cf62997a027bbf785614a93e2e55bb331d268</code> does not have any build statuses associated with it, it will not be present in the response.
-     * Get build status statistics for multiple commits
+     * Creates request options for getMultipleBuildStatusStats without sending the request
      */
-    async getMultipleBuildStatusStatsRaw(requestParameters: GetMultipleBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getMultipleBuildStatusStatsRequestOpts(requestParameters: GetMultipleBuildStatusStatsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1125,13 +1244,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
 
         let urlPath = `/build-status/latest/commits/stats`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Produces a list of the build statistics for multiple commits. Commits <em>without any builds associated with them</em> will not be returned.<br> For example if the commit <code>e00cf62997a027bbf785614a93e2e55bb331d268</code> does not have any build statuses associated with it, it will not be present in the response.
+     * Get build status statistics for multiple commits
+     */
+    async getMultipleBuildStatusStatsRaw(requestParameters: GetMultipleBuildStatusStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getMultipleBuildStatusStatsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -1150,10 +1278,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a page of required build merge checks that have been configured for this repository.  The authenticated user must have **REPO_READ** permission for the target repository to request a page of required build merge checks.
-     * Get required builds merge checks
+     * Creates request options for getPageOfRequiredBuildsMergeChecks without sending the request
      */
-    async getPageOfRequiredBuildsMergeChecksRaw(requestParameters: GetPageOfRequiredBuildsMergeChecksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPageOfRequiredBuildsMergeChecks200Response>> {
+    async getPageOfRequiredBuildsMergeChecksRequestOpts(requestParameters: GetPageOfRequiredBuildsMergeChecksRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1185,12 +1312,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a page of required build merge checks that have been configured for this repository.  The authenticated user must have **REPO_READ** permission for the target repository to request a page of required build merge checks.
+     * Get required builds merge checks
+     */
+    async getPageOfRequiredBuildsMergeChecksRaw(requestParameters: GetPageOfRequiredBuildsMergeChecksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPageOfRequiredBuildsMergeChecks200Response>> {
+        const requestOptions = await this.getPageOfRequiredBuildsMergeChecksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1205,10 +1341,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve all reports for the given commit.
-     * Get all Code Insights reports for a commit
+     * Creates request options for getReports without sending the request
      */
-    async getReportsRaw(requestParameters: GetReportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReports200Response>> {
+    async getReportsRequestOpts(requestParameters: GetReportsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1248,12 +1383,21 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve all reports for the given commit.
+     * Get all Code Insights reports for a commit
+     */
+    async getReportsRaw(requestParameters: GetReportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReports200Response>> {
+        const requestOptions = await this.getReportsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1268,10 +1412,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new insight report, or replace the existing one if a report already exists for the given repository, commit, and report key. A request to replace an existing report will be rejected if the authenticated user was not the creator of the specified report.  The report key should be a unique string chosen by the reporter and should be unique enough not to potentially clash with report keys from other reporters. We recommend using reverse DNS namespacing or a similar standard to ensure that collision is avoided.<h1>Report parameters</h1><table summary=\"Report parameters\">    <tr>        <th>Parameter</th>        <th>Description</th>        <th>Required?</th>        <th>Restrictions</th>        <th>Type</th>    </tr>    <tr>        <td>title</td>        <td>A short string representing the name of the report</td>        <td>Yes</td>        <td>Max length: 450 characters (but we recommend that it is shorter so that the display is nicer)</td>        <td>String</td>    </tr>    <tr>        <td>details</td>        <td>             A string to describe the purpose of the report. This string may contain             escaped newlines and if it does it will display the content accordingly.        </td>        <td>No</td>        <td>Max length: 2000 characters</td>        <td>String</td>    </tr>    <tr>        <td>result</td>        <td>Indicates whether the report is in a passed or failed state</td>        <td>No</td>        <td>One of: PASS, FAIL</td>        <td>String</td>    </tr>    <tr>        <td>data</td>        <td>An array of data fields (described below) to display information on the report</td>        <td>No</td>        <td>Maximum 6 data fields</td>        <td>Array</td>    </tr>    <tr>        <td>reporter</td>        <td>A string to describe the tool or company who created the report</td>        <td>No</td>        <td>Max length: 450 characters</td>        <td>String</td>    </tr>    <tr>        <td>link</td>        <td>A URL linking to the results of the report in an external tool.</td>        <td>No</td>        <td>Must be a valid http or https URL</td>        <td>String</td>    </tr>    <tr>        <td>logoUrl</td>        <td>A URL to the report logo. If none is provided, the default insights logo will be used.</td>        <td>No</td>        <td>Must be a valid http or https URL</td>        <td>String</td>    </tr></table><h1>Data parameters</h1>The data field on the report is an array with at most 6 data fields (JSON maps) containing information that is to be displayed on the report (see the request example).<table summary=\"Data parameters\">    <tr>        <th>Parameter</th>        <th>Description</th>        <th>Type</th>    </tr>    <tr>        <td>title</td>        <td>A string describing what this data field represents</td>        <td>String</td>    </tr>    <tr>        <td>type</td>        <td>             The type of data contained in the value field. If not provided,             then the value will be detected as a boolean, number or string.             One of: BOOLEAN, DATE, DURATION, LINK, NUMBER, PERCENTAGE, TEXT        </td>        <td>String</td>    </tr>    <tr>        <td>value</td>        <td>            A value based on the type provided. Either a raw value             (string, number or boolean) or a map. See below.        </td>    </tr></table><table summary=\"Types\">    <tr>        <th>Type Field</th>        <th>Value Field Type</th>        <th>Value Field Display</th>    </tr>    <tr>        <td>None/Omitted</td>        <td>Number, String or Boolean (not an array or object)</td>        <td>Plain text</td>    </tr>    <tr>        <td>BOOLEAN</td>        <td>Boolean</td>        <td>The value will be read as a JSON boolean and displayed as \'Yes\' or \'No\'.</td>    </tr>    <tr>        <td>DATE</td>        <td>Number</td>        <td>             The value will be read as a JSON number in the form of a Unix timestamp              (milliseconds) and will be displayed as a relative date if the date is less             than one week ago, otherwise it will be displayed as an absolute date.        </td>    </tr>    <tr>        <td>DURATION</td>        <td>Number</td>        <td>             The value will be read as a JSON number in milliseconds and             will be displayed in a human readable duration format.        </td>    </tr>    <tr>        <td>LINK</td>        <td>Object: {\"linktext\": \"Link text here\", \"href\": \"https://link.to.annotation/in/external/tool\"}</td>        <td>             The value will be read as a JSON object containing the fields \"linktext\"             and \"href\" and will be displayed as a clickable link on the report.        </td>    </tr>    <tr>        <td>NUMBER</td>        <td>Number</td>        <td>             The value will be read as a JSON number and large numbers will             be displayed in a human readable format (e.g. 14.3k).        </td>    </tr>    <tr>        <td>PERCENTAGE</td>        <td>Number (between 0 and 100)</td>        <td>             The value will be read as a JSON number between 0 and 100              and will be displayed with a percentage sign.        </td>    </tr>    <tr>        <td>TEXT</td>        <td>String</td>        <td>The value will be read as a JSON string and will be displayed as-is</td>    </tr></table>
-     * Create a Code Insights report
+     * Creates request options for setACodeInsightsReport without sending the request
      */
-    async setACodeInsightsReportRaw(requestParameters: SetACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
+    async setACodeInsightsReportRequestOpts(requestParameters: SetACodeInsightsReportRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1313,13 +1456,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSetInsightReportRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new insight report, or replace the existing one if a report already exists for the given repository, commit, and report key. A request to replace an existing report will be rejected if the authenticated user was not the creator of the specified report.  The report key should be a unique string chosen by the reporter and should be unique enough not to potentially clash with report keys from other reporters. We recommend using reverse DNS namespacing or a similar standard to ensure that collision is avoided.<h1>Report parameters</h1><table summary=\"Report parameters\">    <tr>        <th>Parameter</th>        <th>Description</th>        <th>Required?</th>        <th>Restrictions</th>        <th>Type</th>    </tr>    <tr>        <td>title</td>        <td>A short string representing the name of the report</td>        <td>Yes</td>        <td>Max length: 450 characters (but we recommend that it is shorter so that the display is nicer)</td>        <td>String</td>    </tr>    <tr>        <td>details</td>        <td>             A string to describe the purpose of the report. This string may contain             escaped newlines and if it does it will display the content accordingly.        </td>        <td>No</td>        <td>Max length: 2000 characters</td>        <td>String</td>    </tr>    <tr>        <td>result</td>        <td>Indicates whether the report is in a passed or failed state</td>        <td>No</td>        <td>One of: PASS, FAIL</td>        <td>String</td>    </tr>    <tr>        <td>data</td>        <td>An array of data fields (described below) to display information on the report</td>        <td>No</td>        <td>Maximum 6 data fields</td>        <td>Array</td>    </tr>    <tr>        <td>reporter</td>        <td>A string to describe the tool or company who created the report</td>        <td>No</td>        <td>Max length: 450 characters</td>        <td>String</td>    </tr>    <tr>        <td>link</td>        <td>A URL linking to the results of the report in an external tool.</td>        <td>No</td>        <td>Must be a valid http or https URL</td>        <td>String</td>    </tr>    <tr>        <td>logoUrl</td>        <td>A URL to the report logo. If none is provided, the default insights logo will be used.</td>        <td>No</td>        <td>Must be a valid http or https URL</td>        <td>String</td>    </tr></table><h1>Data parameters</h1>The data field on the report is an array with at most 6 data fields (JSON maps) containing information that is to be displayed on the report (see the request example).<table summary=\"Data parameters\">    <tr>        <th>Parameter</th>        <th>Description</th>        <th>Type</th>    </tr>    <tr>        <td>title</td>        <td>A string describing what this data field represents</td>        <td>String</td>    </tr>    <tr>        <td>type</td>        <td>             The type of data contained in the value field. If not provided,             then the value will be detected as a boolean, number or string.             One of: BOOLEAN, DATE, DURATION, LINK, NUMBER, PERCENTAGE, TEXT        </td>        <td>String</td>    </tr>    <tr>        <td>value</td>        <td>            A value based on the type provided. Either a raw value             (string, number or boolean) or a map. See below.        </td>    </tr></table><table summary=\"Types\">    <tr>        <th>Type Field</th>        <th>Value Field Type</th>        <th>Value Field Display</th>    </tr>    <tr>        <td>None/Omitted</td>        <td>Number, String or Boolean (not an array or object)</td>        <td>Plain text</td>    </tr>    <tr>        <td>BOOLEAN</td>        <td>Boolean</td>        <td>The value will be read as a JSON boolean and displayed as \'Yes\' or \'No\'.</td>    </tr>    <tr>        <td>DATE</td>        <td>Number</td>        <td>             The value will be read as a JSON number in the form of a Unix timestamp              (milliseconds) and will be displayed as a relative date if the date is less             than one week ago, otherwise it will be displayed as an absolute date.        </td>    </tr>    <tr>        <td>DURATION</td>        <td>Number</td>        <td>             The value will be read as a JSON number in milliseconds and             will be displayed in a human readable duration format.        </td>    </tr>    <tr>        <td>LINK</td>        <td>Object: {\"linktext\": \"Link text here\", \"href\": \"https://link.to.annotation/in/external/tool\"}</td>        <td>             The value will be read as a JSON object containing the fields \"linktext\"             and \"href\" and will be displayed as a clickable link on the report.        </td>    </tr>    <tr>        <td>NUMBER</td>        <td>Number</td>        <td>             The value will be read as a JSON number and large numbers will             be displayed in a human readable format (e.g. 14.3k).        </td>    </tr>    <tr>        <td>PERCENTAGE</td>        <td>Number (between 0 and 100)</td>        <td>             The value will be read as a JSON number between 0 and 100              and will be displayed with a percentage sign.        </td>    </tr>    <tr>        <td>TEXT</td>        <td>String</td>        <td>The value will be read as a JSON string and will be displayed as-is</td>    </tr></table>
+     * Create a Code Insights report
+     */
+    async setACodeInsightsReportRaw(requestParameters: SetACodeInsightsReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInsightReport>> {
+        const requestOptions = await this.setACodeInsightsReportRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1334,10 +1486,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create an annotation with the given external ID, or replace it if it already exists. A request to replace an existing annotation will be rejected if the authenticated user was not the creator of the specified report.
-     * Create or replace a Code Insights annotation
+     * Creates request options for setAnnotation without sending the request
      */
-    async setAnnotationRaw(requestParameters: SetAnnotationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setAnnotationRequestOpts(requestParameters: SetAnnotationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1387,13 +1538,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSingleAddInsightAnnotationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create an annotation with the given external ID, or replace it if it already exists. A request to replace an existing annotation will be rejected if the authenticated user was not the creator of the specified report.
+     * Create or replace a Code Insights annotation
+     */
+    async setAnnotationRaw(requestParameters: SetAnnotationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setAnnotationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1407,10 +1567,9 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the required builds merge check for the given ID.  The authenticated user must have **REPO_ADMIN** permission for the target repository to update a required build merge check.  The contents of the required build merge check request are:  These fields are **required**:  - **buildParentKeys**: A non-empty list of build parent keys that require green builds for this merge check to pass - **refMatcher.id**: The value to match refs against in the target branch - **refMatcher.type.id**: The type of ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   These fields are optional:  - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   
-     * Update a required builds merge check
+     * Creates request options for updateRequiredBuildsMergeCheck without sending the request
      */
-    async updateRequiredBuildsMergeCheckRaw(requestParameters: UpdateRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
+    async updateRequiredBuildsMergeCheckRequestOpts(requestParameters: UpdateRequiredBuildsMergeCheckRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1444,13 +1603,22 @@ export class BuildsAndDeploymentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRequiredBuildConditionSetRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the required builds merge check for the given ID.  The authenticated user must have **REPO_ADMIN** permission for the target repository to update a required build merge check.  The contents of the required build merge check request are:  These fields are **required**:  - **buildParentKeys**: A non-empty list of build parent keys that require green builds for this merge check to pass - **refMatcher.id**: The value to match refs against in the target branch - **refMatcher.type.id**: The type of ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   These fields are optional:  - **exemptRefMatcher.id** The value to exempt refs in the source branch from this check - **exemptRefMatcher.type.id**: The type of exempt ref matcher, one of: \"ANY_REF\", \"BRANCH\", \"PATTERN\", \"MODEL_CATEGORY\" or \"MODEL_BRANCH\"   
+     * Update a required builds merge check
+     */
+    async updateRequiredBuildsMergeCheckRaw(requestParameters: UpdateRequiredBuildsMergeCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequiredBuildCondition>> {
+        const requestOptions = await this.updateRequiredBuildsMergeCheckRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

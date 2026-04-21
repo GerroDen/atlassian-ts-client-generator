@@ -136,7 +136,7 @@ export interface ApplicationUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {ApplicationUserTypeEnum}
      * @memberof ApplicationUser
      */
     type?: ApplicationUserTypeEnum;
@@ -320,13 +320,13 @@ export interface Comment {
     resolver?: ApplicationUser;
     /**
      * 
-     * @type {string}
+     * @type {CommentSeverityEnum}
      * @memberof Comment
      */
     severity?: CommentSeverityEnum;
     /**
      * 
-     * @type {string}
+     * @type {CommentStateEnum}
      * @memberof Comment
      */
     state?: CommentStateEnum;
@@ -476,7 +476,7 @@ export interface CommentThread {
 export interface CommentThreadDiffAnchor {
     /**
      * 
-     * @type {string}
+     * @type {CommentThreadDiffAnchorDiffTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
     diffType?: CommentThreadDiffAnchorDiffTypeEnum;
@@ -488,7 +488,7 @@ export interface CommentThreadDiffAnchor {
     fileAnchor?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {CommentThreadDiffAnchorFileTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
     fileType?: CommentThreadDiffAnchorFileTypeEnum;
@@ -512,7 +512,7 @@ export interface CommentThreadDiffAnchor {
     lineAnchor?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {CommentThreadDiffAnchorLineTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
     lineType?: CommentThreadDiffAnchorLineTypeEnum;
@@ -542,7 +542,7 @@ export interface CommentThreadDiffAnchor {
     multilineStartLine?: number;
     /**
      * 
-     * @type {string}
+     * @type {CommentThreadDiffAnchorMultilineStartLineTypeEnum}
      * @memberof CommentThreadDiffAnchor
      */
     multilineStartLineType?: CommentThreadDiffAnchorMultilineStartLineTypeEnum;
@@ -671,7 +671,7 @@ export interface CredentialsCheckFailedDTO {
 export interface ElevationMethodRestDTO {
     /**
      * 
-     * @type {Set<string>}
+     * @type {Set<ElevationMethodRestDTOElevationMethodsEnum>}
      * @memberof ElevationMethodRestDTO
      */
     elevationMethods?: Array<ElevationMethodRestDTOElevationMethodsEnum>;
@@ -797,7 +797,7 @@ export interface EnrichedRepository {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedRepositoryStateEnum}
      * @memberof EnrichedRepository
      */
     readonly state?: EnrichedRepositoryStateEnum;
@@ -3029,7 +3029,7 @@ export interface IdpConfigEntity {
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {IdpConfigEntityIdpTypeEnum}
      * @memberof IdpConfigEntity
      */
     idpType?: IdpConfigEntityIdpTypeEnum;
@@ -3071,7 +3071,7 @@ export interface IdpConfigEntity {
     ssoIssuer?: string;
     /**
      * 
-     * @type {string}
+     * @type {IdpConfigEntitySsoTypeEnum}
      * @memberof IdpConfigEntity
      */
     ssoType?: IdpConfigEntitySsoTypeEnum;
@@ -3369,7 +3369,7 @@ export interface LoginOptionEntity {
     loginLink?: string;
     /**
      * 
-     * @type {string}
+     * @type {LoginOptionEntityTypeEnum}
      * @memberof LoginOptionEntity
      */
     type?: LoginOptionEntityTypeEnum;
@@ -3406,7 +3406,7 @@ export interface MethodStateDTO {
     enabledAt?: string;
     /**
      * 
-     * @type {string}
+     * @type {MethodStateDTOTypeEnum}
      * @memberof MethodStateDTO
      */
     type?: MethodStateDTOTypeEnum;
@@ -3435,7 +3435,7 @@ export interface NextLoginStepDTO {
     conversationId?: string;
     /**
      * 
-     * @type {string}
+     * @type {NextLoginStepDTONextLoginStepEnum}
      * @memberof NextLoginStepDTO
      */
     nextLoginStep?: NextLoginStepDTONextLoginStepEnum;
@@ -3521,7 +3521,7 @@ export interface Project {
     public?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {ProjectTypeEnum}
      * @memberof Project
      */
     type?: ProjectTypeEnum;
@@ -3629,7 +3629,7 @@ export interface PullRequest {
     reviewers?: Array<PullRequestParticipant>;
     /**
      * 
-     * @type {string}
+     * @type {PullRequestStateEnum}
      * @memberof PullRequest
      */
     state?: PullRequestStateEnum;
@@ -3696,13 +3696,13 @@ export interface PullRequestParticipant {
     pullRequest?: PullRequest;
     /**
      * 
-     * @type {string}
+     * @type {PullRequestParticipantRoleEnum}
      * @memberof PullRequestParticipant
      */
     role?: PullRequestParticipantRoleEnum;
     /**
      * 
-     * @type {string}
+     * @type {PullRequestParticipantStatusEnum}
      * @memberof PullRequestParticipant
      */
     status?: PullRequestParticipantStatusEnum;
@@ -3882,7 +3882,7 @@ export interface Repository {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RepositoryStateEnum}
      * @memberof Repository
      */
     state?: RepositoryStateEnum;
@@ -3938,13 +3938,13 @@ export interface RepositoryHookDetails {
     name?: string;
     /**
      * 
-     * @type {Set<string>}
+     * @type {Set<RepositoryHookDetailsSupportedScopesEnum>}
      * @memberof RepositoryHookDetails
      */
     supportedScopes?: Array<RepositoryHookDetailsSupportedScopesEnum>;
     /**
      * 
-     * @type {string}
+     * @type {RepositoryHookDetailsTypeEnum}
      * @memberof RepositoryHookDetails
      */
     type?: RepositoryHookDetailsTypeEnum;
@@ -4085,7 +4085,7 @@ export interface RestAnalyticsSettings {
 export interface RestAnnouncementBanner {
     /**
      * 
-     * @type {string}
+     * @type {RestAnnouncementBannerAudienceEnum}
      * @memberof RestAnnouncementBanner
      */
     audience?: RestAnnouncementBannerAudienceEnum;
@@ -4200,7 +4200,7 @@ export interface RestApplicationUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestApplicationUserTypeEnum}
      * @memberof RestApplicationUser
      */
     type?: RestApplicationUserTypeEnum;
@@ -4278,7 +4278,7 @@ export interface RestApplicationUserWithPermissions {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestApplicationUserWithPermissionsTypeEnum}
      * @memberof RestApplicationUserWithPermissions
      */
     type?: RestApplicationUserWithPermissionsTypeEnum;
@@ -4421,7 +4421,7 @@ export interface RestAutoDeclineSettingsRequest {
 export interface RestAutoMergeProcessingResult {
     /**
      * 
-     * @type {string}
+     * @type {RestAutoMergeProcessingResultAutoMergeProcessingStatusEnum}
      * @memberof RestAutoMergeProcessingResult
      */
     autoMergeProcessingStatus?: RestAutoMergeProcessingResultAutoMergeProcessingStatusEnum;
@@ -4545,7 +4545,7 @@ export interface RestAutoMergeProcessingResultPullRequest {
     reviewers?: Array<RestPullRequestParticipant>;
     /**
      * 
-     * @type {string}
+     * @type {RestAutoMergeProcessingResultPullRequestStateEnum}
      * @memberof RestAutoMergeProcessingResultPullRequest
      */
     state?: RestAutoMergeProcessingResultPullRequestStateEnum;
@@ -4600,7 +4600,7 @@ export interface RestAutoMergeProjectSettingsRequest {
     enabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestAutoMergeProjectSettingsRequestRestrictionActionEnum}
      * @memberof RestAutoMergeProjectSettingsRequest
      */
     restrictionAction?: RestAutoMergeProjectSettingsRequestRestrictionActionEnum;
@@ -4674,7 +4674,7 @@ export interface RestAutoMergeRestrictedSettings {
     enabled?: boolean;
     /**
      * The restriction state of this scope's project.
-     * @type {string}
+     * @type {RestAutoMergeRestrictedSettingsRestrictionStateEnum}
      * @memberof RestAutoMergeRestrictedSettings
      */
     restrictionState?: RestAutoMergeRestrictedSettingsRestrictionStateEnum;
@@ -4711,7 +4711,7 @@ export interface RestAutoMergeRestrictedSettingsScope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestAutoMergeRestrictedSettingsScopeTypeEnum}
      * @memberof RestAutoMergeRestrictedSettingsScope
      */
     type?: RestAutoMergeRestrictedSettingsScopeTypeEnum;
@@ -5075,7 +5075,7 @@ export interface RestBuildStatus {
     repositorySlug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestBuildStatusStateEnum}
      * @memberof RestBuildStatus
      */
     state?: RestBuildStatusStateEnum;
@@ -5168,7 +5168,7 @@ export interface RestBuildStatusSetRequest {
     ref?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestBuildStatusSetRequestStateEnum}
      * @memberof RestBuildStatusSetRequest
      */
     state: RestBuildStatusSetRequestStateEnum;
@@ -5319,7 +5319,7 @@ export interface RestChange {
     links?: object;
     /**
      * 
-     * @type {string}
+     * @type {RestChangeNodeTypeEnum}
      * @memberof RestChange
      */
     nodeType?: RestChangeNodeTypeEnum;
@@ -5349,7 +5349,7 @@ export interface RestChange {
     srcPath?: RestCommentAnchorPath;
     /**
      * 
-     * @type {string}
+     * @type {RestChangeTypeEnum}
      * @memberof RestChange
      */
     type?: RestChangeTypeEnum;
@@ -5418,7 +5418,7 @@ export interface RestChangeConflictOurChange {
     srcPath?: RestCommentAnchorPath;
     /**
      * 
-     * @type {string}
+     * @type {RestChangeConflictOurChangeTypeEnum}
      * @memberof RestChangeConflictOurChange
      */
     type?: RestChangeConflictOurChangeTypeEnum;
@@ -5641,7 +5641,7 @@ export interface RestChangesetRepository {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestChangesetRepositoryStateEnum}
      * @memberof RestChangesetRepository
      */
     readonly state?: RestChangesetRepositoryStateEnum;
@@ -5763,7 +5763,7 @@ export interface RestChangesetRepositoryOrigin {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestChangesetRepositoryOriginStateEnum}
      * @memberof RestChangesetRepositoryOrigin
      */
     readonly state?: RestChangesetRepositoryOriginStateEnum;
@@ -5849,7 +5849,7 @@ export interface RestChangesetRepositoryOriginProject {
     readonly scope?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestChangesetRepositoryOriginProjectTypeEnum}
      * @memberof RestChangesetRepositoryOriginProject
      */
     readonly type?: RestChangesetRepositoryOriginProjectTypeEnum;
@@ -6204,13 +6204,13 @@ export interface RestComment {
 export interface RestCommentAnchor {
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorDiffTypeEnum}
      * @memberof RestCommentAnchor
      */
     diffType?: RestCommentAnchorDiffTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorFileTypeEnum}
      * @memberof RestCommentAnchor
      */
     fileType?: RestCommentAnchorFileTypeEnum;
@@ -6228,7 +6228,7 @@ export interface RestCommentAnchor {
     line?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorLineTypeEnum}
      * @memberof RestCommentAnchor
      */
     lineType?: RestCommentAnchorLineTypeEnum;
@@ -6314,7 +6314,7 @@ export interface RestCommentAnchorMultilineMarker {
     startLine?: number;
     /**
      * The segment type of the start line of the multiline comment
-     * @type {string}
+     * @type {RestCommentAnchorMultilineMarkerStartLineTypeEnum}
      * @memberof RestCommentAnchorMultilineMarker
      */
     startLineType: RestCommentAnchorMultilineMarkerStartLineTypeEnum;
@@ -6491,7 +6491,7 @@ export interface RestCommentAnchorPullRequest {
     reviewers?: Array<RestPullRequestParticipant>;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorPullRequestStateEnum}
      * @memberof RestCommentAnchorPullRequest
      */
     state?: RestCommentAnchorPullRequestStateEnum;
@@ -6552,13 +6552,13 @@ export interface RestCommentAnchorPullRequestAuthor {
     lastReviewedCommit?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorPullRequestAuthorRoleEnum}
      * @memberof RestCommentAnchorPullRequestAuthor
      */
     role?: RestCommentAnchorPullRequestAuthorRoleEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorPullRequestAuthorStatusEnum}
      * @memberof RestCommentAnchorPullRequestAuthor
      */
     status?: RestCommentAnchorPullRequestAuthorStatusEnum;
@@ -6647,7 +6647,7 @@ export interface RestCommentAnchorPullRequestAuthorUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorPullRequestAuthorUserTypeEnum}
      * @memberof RestCommentAnchorPullRequestAuthorUser
      */
     type?: RestCommentAnchorPullRequestAuthorUserTypeEnum;
@@ -6695,7 +6695,7 @@ export interface RestCommentAnchorPullRequestFromRef {
     repository?: RestChangesetRepository;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAnchorPullRequestFromRefTypeEnum}
      * @memberof RestCommentAnchorPullRequestFromRef
      */
     type?: RestCommentAnchorPullRequestFromRefTypeEnum;
@@ -6767,7 +6767,7 @@ export interface RestCommentAuthor {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentAuthorTypeEnum}
      * @memberof RestCommentAuthor
      */
     type?: RestCommentAuthorTypeEnum;
@@ -6937,13 +6937,13 @@ export interface RestCommentParent {
 export interface RestCommentThreadDiffAnchor {
     /**
      * 
-     * @type {string}
+     * @type {RestCommentThreadDiffAnchorDiffTypeEnum}
      * @memberof RestCommentThreadDiffAnchor
      */
     diffType?: RestCommentThreadDiffAnchorDiffTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentThreadDiffAnchorFileTypeEnum}
      * @memberof RestCommentThreadDiffAnchor
      */
     fileType?: RestCommentThreadDiffAnchorFileTypeEnum;
@@ -6961,7 +6961,7 @@ export interface RestCommentThreadDiffAnchor {
     line?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestCommentThreadDiffAnchorLineTypeEnum}
      * @memberof RestCommentThreadDiffAnchor
      */
     lineType?: RestCommentThreadDiffAnchorLineTypeEnum;
@@ -7146,7 +7146,7 @@ export interface RestConflictChange {
     srcPath?: RestCommentAnchorPath;
     /**
      * 
-     * @type {string}
+     * @type {RestConflictChangeTypeEnum}
      * @memberof RestConflictChange
      */
     type?: RestConflictChangeTypeEnum;
@@ -7422,7 +7422,7 @@ export interface RestDeployment {
     repository?: RestChangesetRepository;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentStateEnum}
      * @memberof RestDeployment
      */
     state?: RestDeploymentStateEnum;
@@ -7530,7 +7530,7 @@ export interface RestDeploymentSetRequest {
     lastUpdated?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentSetRequestStateEnum}
      * @memberof RestDeploymentSetRequest
      */
     state: RestDeploymentSetRequestStateEnum;
@@ -7736,7 +7736,7 @@ export interface RestDetailedUser {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestDetailedUserTypeEnum}
      * @memberof RestDetailedUser
      */
     type?: RestDetailedUserTypeEnum;
@@ -7864,7 +7864,7 @@ export interface RestDiffLine {
     commentIds?: Array<number>;
     /**
      * 
-     * @type {string}
+     * @type {RestDiffLineConflictMarkerEnum}
      * @memberof RestDiffLine
      */
     conflictMarker?: RestDiffLineConflictMarkerEnum;
@@ -7925,7 +7925,7 @@ export interface RestDiffSegment {
     truncated?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestDiffSegmentTypeEnum}
      * @memberof RestDiffSegment
      */
     type?: RestDiffSegmentTypeEnum;
@@ -8113,7 +8113,7 @@ export interface RestFarmSynchronizationRequest {
     externalRepoId?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestFarmSynchronizationRequestTypeEnum}
      * @memberof RestFarmSynchronizationRequest
      */
     type?: RestFarmSynchronizationRequestTypeEnum;
@@ -8161,7 +8161,7 @@ export interface RestGitTagCreateRequest {
     startPoint?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestGitTagCreateRequestTypeEnum}
      * @memberof RestGitTagCreateRequest
      */
     type?: RestGitTagCreateRequestTypeEnum;
@@ -8277,7 +8277,7 @@ export interface RestHookScript {
     pluginKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestHookScriptTypeEnum}
      * @memberof RestHookScript
      */
     type?: RestHookScriptTypeEnum;
@@ -8368,7 +8368,7 @@ export interface RestHookScriptConfigScript {
     pluginKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestHookScriptConfigScriptTypeEnum}
      * @memberof RestHookScriptConfigScript
      */
     type?: RestHookScriptConfigScriptTypeEnum;
@@ -8540,7 +8540,7 @@ export interface RestInsightReport {
     reporter?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestInsightReportResultEnum}
      * @memberof RestInsightReport
      */
     result?: RestInsightReportResultEnum;
@@ -8650,7 +8650,7 @@ export interface RestJob {
     startDate?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestJobStateEnum}
      * @memberof RestJob
      */
     state?: RestJobStateEnum;
@@ -8706,7 +8706,7 @@ export interface RestJobMessage {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestJobMessageSeverityEnum}
      * @memberof RestJobMessage
      */
     severity?: RestJobMessageSeverityEnum;
@@ -8811,7 +8811,7 @@ export interface RestLabelable {
     readonly id?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestLabelableLabelableTypeEnum}
      * @memberof RestLabelable
      */
     labelableType?: RestLabelableLabelableTypeEnum;
@@ -8877,7 +8877,7 @@ export interface RestLabelable {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestLabelableStateEnum}
      * @memberof RestLabelable
      */
     readonly state?: RestLabelableStateEnum;
@@ -8967,7 +8967,7 @@ export interface RestMailConfiguration {
     port?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestMailConfigurationProtocolEnum}
      * @memberof RestMailConfiguration
      */
     protocol?: RestMailConfigurationProtocolEnum;
@@ -9163,7 +9163,7 @@ export interface RestMeshNode {
     rpcUrl?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMeshNodeStateEnum}
      * @memberof RestMeshNode
      */
     state?: RestMeshNodeStateEnum;
@@ -9190,7 +9190,7 @@ export type RestMeshNodeStateEnum = typeof RestMeshNodeStateEnum[keyof typeof Re
 export interface RestMigrationRepository {
     /**
      * 
-     * @type {string}
+     * @type {RestMigrationRepositoryMigrationStateEnum}
      * @memberof RestMigrationRepository
      */
     migrationState?: RestMigrationRepositoryMigrationStateEnum;
@@ -9256,7 +9256,7 @@ export interface RestMinimalRef {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMinimalRefTypeEnum}
      * @memberof RestMinimalRef
      */
     type?: RestMinimalRefTypeEnum;
@@ -9397,7 +9397,7 @@ export interface RestMirrorServer {
     lastSeenDate?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMirrorServerMirrorTypeEnum}
      * @memberof RestMirrorServer
      */
     mirrorType?: RestMirrorServerMirrorTypeEnum;
@@ -9488,7 +9488,7 @@ export interface RestMirroredRepository {
     repositoryId?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMirroredRepositoryStatusEnum}
      * @memberof RestMirroredRepository
      */
     status?: RestMirroredRepositoryStatusEnum;
@@ -9558,7 +9558,7 @@ export interface RestMirroredRepositoryDescriptorMirrorServer {
     lastSeenDate: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum}
      * @memberof RestMirroredRepositoryDescriptorMirrorServer
      */
     mirrorType?: RestMirroredRepositoryDescriptorMirrorServerMirrorTypeEnum;
@@ -9618,7 +9618,7 @@ export interface RestMirroringRequest {
     mirrorName?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMirroringRequestMirrorTypeEnum}
      * @memberof RestMirroringRequest
      */
     mirrorType?: RestMirroringRequestMirrorTypeEnum;
@@ -9630,7 +9630,7 @@ export interface RestMirroringRequest {
     productVersion?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestMirroringRequestStateEnum}
      * @memberof RestMirroringRequest
      */
     state?: RestMirroringRequestStateEnum;
@@ -9670,7 +9670,7 @@ export interface RestMultilineCommentMarker {
     startLine?: number;
     /**
      * The segment type of the start line of the multiline comment
-     * @type {string}
+     * @type {RestMultilineCommentMarkerStartLineTypeEnum}
      * @memberof RestMultilineCommentMarker
      */
     startLineType?: RestMultilineCommentMarkerStartLineTypeEnum;
@@ -9757,7 +9757,7 @@ export interface RestNode {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestNodeTypeEnum}
      * @memberof RestNode
      */
     type?: RestNodeTypeEnum;
@@ -9812,7 +9812,7 @@ export interface RestNodeConnectivityReportNode {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestNodeConnectivityReportNodeTypeEnum}
      * @memberof RestNodeConnectivityReportNode
      */
     type?: RestNodeConnectivityReportNodeTypeEnum;
@@ -10073,7 +10073,7 @@ export interface RestPermittedGroupGroup {
 export interface RestPermittedUser {
     /**
      * 
-     * @type {string}
+     * @type {RestPermittedUserPermissionEnum}
      * @memberof RestPermittedUser
      */
     permission?: RestPermittedUserPermissionEnum;
@@ -10212,7 +10212,7 @@ export interface RestProject {
     readonly scope?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestProjectTypeEnum}
      * @memberof RestProject
      */
     readonly type?: RestProjectTypeEnum;
@@ -10254,7 +10254,7 @@ export interface RestProjectSettingsRestriction {
     namespace?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestProjectSettingsRestrictionProcessedStateEnum}
      * @memberof RestProjectSettingsRestriction
      */
     processedState?: RestProjectSettingsRestrictionProcessedStateEnum;
@@ -10426,7 +10426,7 @@ export interface RestPullRequest {
     reviewers?: Array<RestPullRequestParticipant>;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestStateEnum}
      * @memberof RestPullRequest
      */
     state?: RestPullRequestStateEnum;
@@ -10475,7 +10475,7 @@ export type RestPullRequestStateEnum = typeof RestPullRequestStateEnum[keyof typ
 export interface RestPullRequestActivity {
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestActivityActionEnum}
      * @memberof RestPullRequestActivity
      */
     action?: RestPullRequestActivityActionEnum;
@@ -10531,7 +10531,7 @@ export type RestPullRequestActivityActionEnum = typeof RestPullRequestActivityAc
 export interface RestPullRequestAssignParticipantRoleRequest {
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestAssignParticipantRoleRequestRoleEnum}
      * @memberof RestPullRequestAssignParticipantRoleRequest
      */
     role?: RestPullRequestAssignParticipantRoleRequestRoleEnum;
@@ -10568,7 +10568,7 @@ export interface RestPullRequestAssignStatusRequest {
     lastReviewedCommit?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestAssignStatusRequestStatusEnum}
      * @memberof RestPullRequestAssignStatusRequest
      */
     status?: RestPullRequestAssignStatusRequestStatusEnum;
@@ -10667,7 +10667,7 @@ export interface RestPullRequestConditionScope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestConditionScopeTypeEnum}
      * @memberof RestPullRequestConditionScope
      */
     type?: RestPullRequestConditionScopeTypeEnum;
@@ -10934,7 +10934,7 @@ export interface RestPullRequestMergeability {
     conflicted?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestMergeabilityOutcomeEnum}
      * @memberof RestPullRequestMergeability
      */
     outcome?: RestPullRequestMergeabilityOutcomeEnum;
@@ -10977,13 +10977,13 @@ export interface RestPullRequestParticipant {
     lastReviewedCommit?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestParticipantRoleEnum}
      * @memberof RestPullRequestParticipant
      */
     role?: RestPullRequestParticipantRoleEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestParticipantStatusEnum}
      * @memberof RestPullRequestParticipant
      */
     status?: RestPullRequestParticipantStatusEnum;
@@ -11074,7 +11074,7 @@ export interface RestPullRequestRebaseResultRefChange {
     toHash?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestRebaseResultRefChangeTypeEnum}
      * @memberof RestPullRequestRebaseResultRefChange
      */
     type?: RestPullRequestRebaseResultRefChangeTypeEnum;
@@ -11111,7 +11111,7 @@ export interface RestPullRequestRebaseResultRefChangeRef {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestRebaseResultRefChangeRefTypeEnum}
      * @memberof RestPullRequestRebaseResultRefChangeRef
      */
     type?: RestPullRequestRebaseResultRefChangeRefTypeEnum;
@@ -11172,7 +11172,7 @@ export interface RestPullRequestRef {
     repository?: RestChangesetRepository;
     /**
      * 
-     * @type {string}
+     * @type {RestPullRequestRefTypeEnum}
      * @memberof RestPullRequestRef
      */
     type?: RestPullRequestRefTypeEnum;
@@ -11320,13 +11320,13 @@ export interface RestPushRefChange {
     toHash?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestPushRefChangeTypeEnum}
      * @memberof RestPushRefChange
      */
     type?: RestPushRefChangeTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestPushRefChangeUpdatedTypeEnum}
      * @memberof RestPushRefChange
      */
     updatedType?: RestPushRefChangeUpdatedTypeEnum;
@@ -11436,7 +11436,7 @@ export interface RestRefChange {
     toHash?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRefChangeTypeEnum}
      * @memberof RestRefChange
      */
     type?: RestRefChangeTypeEnum;
@@ -11486,7 +11486,7 @@ export interface RestRefMatcher {
 export interface RestRefMatcherType {
     /**
      * 
-     * @type {string}
+     * @type {RestRefMatcherTypeIdEnum}
      * @memberof RestRefMatcherType
      */
     id?: RestRefMatcherTypeIdEnum;
@@ -11581,7 +11581,7 @@ export interface RestRefSyncQueue {
 export interface RestRefSyncRequest {
     /**
      * 
-     * @type {string}
+     * @type {RestRefSyncRequestActionEnum}
      * @memberof RestRefSyncRequest
      */
     action?: RestRefSyncRequestActionEnum;
@@ -11673,7 +11673,7 @@ export interface RestRefSyncStatusAheadRefs {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRefSyncStatusAheadRefsStateEnum}
      * @memberof RestRefSyncStatusAheadRefs
      */
     state?: RestRefSyncStatusAheadRefsStateEnum;
@@ -11685,7 +11685,7 @@ export interface RestRefSyncStatusAheadRefs {
     tag?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestRefSyncStatusAheadRefsTypeEnum}
      * @memberof RestRefSyncStatusAheadRefs
      */
     type?: RestRefSyncStatusAheadRefsTypeEnum;
@@ -11731,7 +11731,7 @@ export interface RestRejectedRef {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRejectedRefStateEnum}
      * @memberof RestRejectedRef
      */
     state?: RestRejectedRefStateEnum;
@@ -11743,7 +11743,7 @@ export interface RestRejectedRef {
     tag?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestRejectedRefTypeEnum}
      * @memberof RestRejectedRef
      */
     type?: RestRejectedRefTypeEnum;
@@ -11886,7 +11886,7 @@ export interface RestRepository {
     slug?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRepositoryStateEnum}
      * @memberof RestRepository
      */
     readonly state?: RestRepositoryStateEnum;
@@ -12011,7 +12011,7 @@ export interface RestRepositoryMirrorEvent {
     mirrorRepoId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestRepositoryMirrorEventTypeEnum}
      * @memberof RestRepositoryMirrorEvent
      */
     type?: RestRepositoryMirrorEventTypeEnum;
@@ -12041,7 +12041,7 @@ export type RestRepositoryMirrorEventTypeEnum = typeof RestRepositoryMirrorEvent
 export interface RestRepositoryPolicy {
     /**
      * The permission required to delete repositories. Must be one of: "SYS_ADMIN", "ADMIN", "PROJECT_ADMIN", "REPO_ADMIN".
-     * @type {string}
+     * @type {RestRepositoryPolicyPermissionEnum}
      * @memberof RestRepositoryPolicy
      */
     permission?: RestRepositoryPolicyPermissionEnum;
@@ -12202,13 +12202,13 @@ export interface RestRepositoryRefChangeActivityRefChange {
     toHash?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRepositoryRefChangeActivityRefChangeTypeEnum}
      * @memberof RestRepositoryRefChangeActivityRefChange
      */
     type?: RestRepositoryRefChangeActivityRefChangeTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestRepositoryRefChangeActivityRefChangeUpdatedTypeEnum}
      * @memberof RestRepositoryRefChangeActivityRefChange
      */
     updatedType?: RestRepositoryRefChangeActivityRefChangeUpdatedTypeEnum;
@@ -12435,7 +12435,7 @@ export interface RestReviewerGroupScope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestReviewerGroupScopeTypeEnum}
      * @memberof RestReviewerGroupScope
      */
     type?: RestReviewerGroupScopeTypeEnum;
@@ -12485,7 +12485,7 @@ export interface RestScope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestScopeTypeEnum}
      * @memberof RestScope
      */
     type?: RestScopeTypeEnum;
@@ -12628,7 +12628,7 @@ export interface RestSecretScanningRuleScope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestSecretScanningRuleScopeTypeEnum}
      * @memberof RestSecretScanningRuleScope
      */
     type?: RestSecretScanningRuleScopeTypeEnum;
@@ -12794,7 +12794,7 @@ export interface RestSshAccessKey {
     key?: AddSshKeyRequest;
     /**
      * 
-     * @type {string}
+     * @type {RestSshAccessKeyPermissionEnum}
      * @memberof RestSshAccessKey
      */
     permission?: RestSshAccessKeyPermissionEnum;
@@ -13101,7 +13101,7 @@ export interface RestTag {
     readonly latestCommit?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestTagTypeEnum}
      * @memberof RestTag
      */
     type?: RestTagTypeEnum;
@@ -13181,7 +13181,7 @@ export interface RestUpstreamServer {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestUpstreamServerStateEnum}
      * @memberof RestUpstreamServer
      */
     state?: RestUpstreamServerStateEnum;
@@ -13208,7 +13208,7 @@ export type RestUpstreamServerStateEnum = typeof RestUpstreamServerStateEnum[key
 export interface RestUpstreamSettings {
     /**
      * 
-     * @type {string}
+     * @type {RestUpstreamSettingsModeEnum}
      * @memberof RestUpstreamSettings
      */
     mode?: RestUpstreamSettingsModeEnum;
@@ -13658,7 +13658,7 @@ export interface Scope {
     resourceId?: number;
     /**
      * 
-     * @type {string}
+     * @type {ScopeTypeEnum}
      * @memberof Scope
      */
     type?: ScopeTypeEnum;
@@ -13812,7 +13812,7 @@ export interface SearchMeshMigrationRepos200Response {
 export interface SetBannerRequest {
     /**
      * 
-     * @type {string}
+     * @type {SetBannerRequestAudienceEnum}
      * @memberof SetBannerRequest
      */
     audience: SetBannerRequestAudienceEnum;
@@ -13879,7 +13879,7 @@ export interface SetMailConfigRequest {
     port?: number;
     /**
      * 
-     * @type {string}
+     * @type {SetMailConfigRequestProtocolEnum}
      * @memberof SetMailConfigRequest
      */
     protocol?: SetMailConfigRequestProtocolEnum;
@@ -14290,7 +14290,7 @@ export interface UpdatePullRequestCondition1RequestSourceMatcher {
 export interface UpdatePullRequestCondition1RequestSourceMatcherType {
     /**
      * 
-     * @type {string}
+     * @type {UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum}
      * @memberof UpdatePullRequestCondition1RequestSourceMatcherType
      */
     id?: UpdatePullRequestCondition1RequestSourceMatcherTypeIdEnum;

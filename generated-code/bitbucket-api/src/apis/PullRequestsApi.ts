@@ -589,10 +589,9 @@ interface WithdrawApprovalRequest {
 export class PullRequestsApi extends runtime.BaseAPI {
 
     /**
-     * Apply a suggestion contained within a comment.
-     * Apply pull request suggestion
+     * Creates request options for applySuggestion without sending the request
      */
-    async applySuggestionRaw(requestParameters: ApplySuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async applySuggestionRequestOpts(requestParameters: ApplySuggestionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -634,13 +633,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restApplySuggestionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Apply a suggestion contained within a comment.
+     * Apply pull request suggestion
+     */
+    async applySuggestionRaw(requestParameters: ApplySuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.applySuggestionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -654,11 +662,10 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
-     * Approve pull request
+     * Creates request options for approve without sending the request
      * @deprecated
      */
-    async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async approveRequestOpts(requestParameters: ApproveRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -690,12 +697,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Approve a pull request as the current user. Implicitly adds the user as a participant if they are not already.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
+     * Approve pull request
+     * @deprecated
+     */
+    async approveRaw(requestParameters: ApproveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.approveRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -711,10 +728,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Assigns a participant to an explicit role in pull request. Currently only the REVIEWER role may be assigned.   If the user is not yet a participant in the pull request, they are made one and assigned the supplied role.   If the user is already a participant in the pull request, their previous role is replaced with the supplied role unless they are already assigned the AUTHOR role which cannot be changed and will result in a Bad Request (400) response code.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
-     * Assign pull request participant role
+     * Creates request options for assignParticipantRole without sending the request
      */
-    async assignParticipantRoleRaw(requestParameters: AssignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async assignParticipantRoleRequestOpts(requestParameters: AssignParticipantRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -755,13 +771,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestAssignParticipantRoleRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Assigns a participant to an explicit role in pull request. Currently only the REVIEWER role may be assigned.   If the user is not yet a participant in the pull request, they are made one and assigned the supplied role.   If the user is already a participant in the pull request, their previous role is replaced with the supplied role unless they are already assigned the AUTHOR role which cannot be changed and will result in a Bad Request (400) response code.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
+     * Assign pull request participant role
+     */
+    async assignParticipantRoleRaw(requestParameters: AssignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.assignParticipantRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -776,10 +801,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Test whether a pull request can be merged.   A pull request may not be merged if:   - there are conflicts that need to be manually resolved before merging; and/or - one or more merge checks have vetoed the merge.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Test if pull request can be merged
+     * Creates request options for canMerge without sending the request
      */
-    async canMergeRaw(requestParameters: CanMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeability>> {
+    async canMergeRequestOpts(requestParameters: CanMergeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -811,12 +835,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Test whether a pull request can be merged.   A pull request may not be merged if:   - there are conflicts that need to be manually resolved before merging; and/or - one or more merge checks have vetoed the merge.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Test if pull request can be merged
+     */
+    async canMergeRaw(requestParameters: CanMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeability>> {
+        const requestOptions = await this.canMergeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -831,10 +864,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Checks preconditions to determine whether the pull request can be rebased.  Some of the preconditions are:  - The pull request is between Git repositories - The pull request is currently open - The pull request\'s {@link PullRequest#getFromRef \"from\" ref} is a <i>branch</i>    - In other words, the qualified ID for the \"from\" ref must start with <code>refs/heads/</code>    - Tags, and other non-standard refs, cannot be rebased - The current user has an e-mail address    - Pull requests cannot be rebased anonymously    - `git rebase` records the current user as the committer for the rebased commits, which        requires a name and e-mail address - The current user has <i>write</i> access to the {@link PullRequest#getFromRef \"from\" ref}\'s repository    - Note that in order to <i>view</i> a pull request a user is only required to have <i>read</i>      access to the {@link PullRequest#getToRef toRef}\'s repository, so just because a user can <i>see</i>      a pull request does not mean they can request a rebase   This list is not exhaustive, and the exact set of preconditions applied can be extended by third-party add-ons.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Check PR rebase precondition
+     * Creates request options for canRebase without sending the request
      */
-    async canRebaseRaw(requestParameters: CanRebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseability>> {
+    async canRebaseRequestOpts(requestParameters: CanRebaseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -866,12 +898,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Checks preconditions to determine whether the pull request can be rebased.  Some of the preconditions are:  - The pull request is between Git repositories - The pull request is currently open - The pull request\'s {@link PullRequest#getFromRef \"from\" ref} is a <i>branch</i>    - In other words, the qualified ID for the \"from\" ref must start with <code>refs/heads/</code>    - Tags, and other non-standard refs, cannot be rebased - The current user has an e-mail address    - Pull requests cannot be rebased anonymously    - `git rebase` records the current user as the committer for the rebased commits, which        requires a name and e-mail address - The current user has <i>write</i> access to the {@link PullRequest#getFromRef \"from\" ref}\'s repository    - Note that in order to <i>view</i> a pull request a user is only required to have <i>read</i>      access to the {@link PullRequest#getToRef toRef}\'s repository, so just because a user can <i>see</i>      a pull request does not mean they can request a rebase   This list is not exhaustive, and the exact set of preconditions applied can be extended by third-party add-ons.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Check PR rebase precondition
+     */
+    async canRebaseRaw(requestParameters: CanRebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseability>> {
+        const requestOptions = await this.canRebaseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -886,10 +927,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cancels a request to auto-merge the pull request, if the pull request was not merged yet.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
-     * Cancel auto-merge for pull request
+     * Creates request options for cancelAutoMerge without sending the request
      */
-    async cancelAutoMergeRaw(requestParameters: CancelAutoMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async cancelAutoMergeRequestOpts(requestParameters: CancelAutoMergeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -921,12 +961,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Cancels a request to auto-merge the pull request, if the pull request was not merged yet.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
+     * Cancel auto-merge for pull request
+     */
+    async cancelAutoMergeRaw(requestParameters: CancelAutoMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.cancelAutoMergeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -940,10 +989,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new pull request from a source branch or tag to a target branch. The source and target may be in the same repository, or different ones. (Note that different repositories must belong to the same <code>Repository#getHierarchyId()</code> hierarchy.)   The <code>fromRef</code> may be a branch or a tag. The <code>toRef</code> is required to be a branch. Tags are not allowed as targets because tags are intended to be immutable and should not be changed after they are created.   The authenticated user must have <strong>REPO_READ</strong> permission for the <code>fromRef</code> and <code>toRef</code> repositories to call this resource.
-     * Create pull request
+     * Creates request options for create without sending the request
      */
-    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async createRequestOpts(requestParameters: CreateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -969,13 +1017,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new pull request from a source branch or tag to a target branch. The source and target may be in the same repository, or different ones. (Note that different repositories must belong to the same <code>Repository#getHierarchyId()</code> hierarchy.)   The <code>fromRef</code> may be a branch or a tag. The <code>toRef</code> is required to be a branch. Tags are not allowed as targets because tags are intended to be immutable and should not be changed after they are created.   The authenticated user must have <strong>REPO_READ</strong> permission for the <code>fromRef</code> and <code>toRef</code> repositories to call this resource.
+     * Create pull request
+     */
+    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.createRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -990,10 +1047,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a reviewer group.  The authenticated user must have <b>PROJECT_ADMIN</b> permission for the specified project to call this resource.
-     * Create reviewer group
+     * Creates request options for create1 without sending the request
      */
-    async create1Raw(requestParameters: Create1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async create1RequestOpts(requestParameters: Create1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1011,13 +1067,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/reviewer-groups`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restReviewerGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a reviewer group.  The authenticated user must have <b>PROJECT_ADMIN</b> permission for the specified project to call this resource.
+     * Create reviewer group
+     */
+    async create1Raw(requestParameters: Create1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.create1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1032,10 +1097,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
-     * Create reviewer group
+     * Creates request options for create2 without sending the request
      */
-    async create2Raw(requestParameters: Create2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async create2RequestOpts(requestParameters: Create2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1061,13 +1125,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restReviewerGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
+     * Create reviewer group
+     */
+    async create2Raw(requestParameters: Create2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.create2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1082,10 +1155,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a new blocker comment.   Comments can be added in a few places by setting different attributes:   General pull request blocker comment:  ```  {       \"text\": \"A task on a pull request.\"  } ```  Blocker reply to a comment:   ```  {      \"text\": \"This reply is a task.\",       \"parent\": {           \"id\": 1       }  }  ```  General blocker file comment:  ```  {      \"text\": \"A blocker comment on a file.\",       \"anchor\": {           \"diffType\": \"RANGE\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       }   }  ```  Blocker file line comment:   ```  {       \"text\": \"A task on a particular line within a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"line\": 1,           \"lineType\": \"CONTEXT\",           \"fileType\": \"FROM\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       }   }  ```  For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves). Also, fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added. Finally diffType refers to the type of diff the comment was added on. For backwards compatibility purposes if no diffType is provided and no fromHash/toHash pair is provided the diffType will be resolved to \'EFFECTIVE\'. In any other cases the diffType is REQUIRED.   For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:   - \'ADDED\' - for an added line; - \'REMOVED\' - for a removed line; or - \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff.    \'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:   - \'FROM\' - the source file of the diff  - \'TO\' - the destination file of the diff   If the current user is not a participant the user is added as a watcher of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Add new blocker comment
+     * Creates request options for createComment1 without sending the request
      */
-    async createComment1Raw(requestParameters: CreateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async createComment1RequestOpts(requestParameters: CreateComment1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1119,13 +1191,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a new blocker comment.   Comments can be added in a few places by setting different attributes:   General pull request blocker comment:  ```  {       \"text\": \"A task on a pull request.\"  } ```  Blocker reply to a comment:   ```  {      \"text\": \"This reply is a task.\",       \"parent\": {           \"id\": 1       }  }  ```  General blocker file comment:  ```  {      \"text\": \"A blocker comment on a file.\",       \"anchor\": {           \"diffType\": \"RANGE\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       }   }  ```  Blocker file line comment:   ```  {       \"text\": \"A task on a particular line within a file.\",       \"anchor\": {           \"diffType\": \"COMMIT\",           \"line\": 1,           \"lineType\": \"CONTEXT\",           \"fileType\": \"FROM\",           \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",           \"path\": \"path/to/file\",           \"srcPath\": \"path/to/file\",           \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"       }   }  ```  For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves). Also, fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added. Finally diffType refers to the type of diff the comment was added on. For backwards compatibility purposes if no diffType is provided and no fromHash/toHash pair is provided the diffType will be resolved to \'EFFECTIVE\'. In any other cases the diffType is REQUIRED.   For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:   - \'ADDED\' - for an added line; - \'REMOVED\' - for a removed line; or - \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff.    \'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:   - \'FROM\' - the source file of the diff  - \'TO\' - the destination file of the diff   If the current user is not a participant the user is added as a watcher of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Add new blocker comment
+     */
+    async createComment1Raw(requestParameters: CreateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.createComment1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1140,10 +1221,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a new comment.   Comments can be added in a few places by setting different attributes: </p>General pull request comment:   <pre> {     \"text\": \"An insightful general comment on a pull request.\"   }   </pre> Reply to a comment:  <pre> {     \"text\": \"A measured reply.\",     \"parent\": {        \"id\": 1      }   }   </pre> General file comment:  <pre> {     \"text\": \"An insightful general comment on a file.\",     \"anchor\": {        \"diffType\": \"RANGE\",        \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",        \"path\": \"path/to/file\",        \"srcPath\": \"path/to/file\",        \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"     }   }   </pre> File line comment:  <pre> {     \"text\": \"A pithy comment on a particular line within a file.\",     \"anchor\": {        \"diffType\": \"COMMIT\",        \"line\": 1,        \"lineType\": \"CONTEXT\",        \"fileType\": \"FROM\",        \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",        \"path\": \"path/to/file\",        \"srcPath\": \"path/to/file\",        \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"      }   }   </pre>    Add a new task.   Tasks are just comments with the attribute \'severity\' set to \'BLOCKER\':   General pull request task:  <pre> {     \"text\": \"A task on a pull request.\",     \"severity\": \"BLOCKER\"   }   </pre>    Add a pending comment.    Pending comments are just comments with the attribute \'state\' set to \'PENDING\':   Pending comment: <pre> {     \"text\": \"This is a pending comment\",     \"state\": \"PENDING\"   }   </pre>   For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves).  fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added.  For diffType \'COMMIT\' or \'RANGE\', you must specify both the fromHash and toHash. Note that this behaviour differs from `/commits/comments`  Finally diffType refers to the type of diff the comment was added on. For backwards compatibility purposes if no diffType is provided and no fromHash/toHash pair is provided the diffType will be resolved to \'EFFECTIVE\'. In any other cases the diffType is REQUIRED.  For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:   - \'ADDED\' - for an added line; - \'REMOVED\' - for a removed line; or - \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff. </ul>\'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:   - \'FROM\' - the source file of the diff - \'TO\' - the destination file of the diff </ul>If the current user is not a participant the user is added as a watcher of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Add pull request comment
+     * Creates request options for createComment2 without sending the request
      */
-    async createComment2Raw(requestParameters: CreateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async createComment2RequestOpts(requestParameters: CreateComment2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1177,13 +1257,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a new comment.   Comments can be added in a few places by setting different attributes: </p>General pull request comment:   <pre> {     \"text\": \"An insightful general comment on a pull request.\"   }   </pre> Reply to a comment:  <pre> {     \"text\": \"A measured reply.\",     \"parent\": {        \"id\": 1      }   }   </pre> General file comment:  <pre> {     \"text\": \"An insightful general comment on a file.\",     \"anchor\": {        \"diffType\": \"RANGE\",        \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",        \"path\": \"path/to/file\",        \"srcPath\": \"path/to/file\",        \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"     }   }   </pre> File line comment:  <pre> {     \"text\": \"A pithy comment on a particular line within a file.\",     \"anchor\": {        \"diffType\": \"COMMIT\",        \"line\": 1,        \"lineType\": \"CONTEXT\",        \"fileType\": \"FROM\",        \"fromHash\": \"6df3858eeb9a53a911cd17e66a9174d44ffb02cd\",        \"path\": \"path/to/file\",        \"srcPath\": \"path/to/file\",        \"toHash\": \"04c7c5c931b9418ca7b66f51fe934d0bd9b2ba4b\"      }   }   </pre>    Add a new task.   Tasks are just comments with the attribute \'severity\' set to \'BLOCKER\':   General pull request task:  <pre> {     \"text\": \"A task on a pull request.\",     \"severity\": \"BLOCKER\"   }   </pre>    Add a pending comment.    Pending comments are just comments with the attribute \'state\' set to \'PENDING\':   Pending comment: <pre> {     \"text\": \"This is a pending comment\",     \"state\": \"PENDING\"   }   </pre>   For file and line comments, \'path\' refers to the path of the file to which the comment should be applied and \'srcPath\' refers to the path the that file used to have (only required for copies and moves).  fromHash and toHash refer to the sinceId / untilId (respectively) used to produce the diff on which the comment was added.  For diffType \'COMMIT\' or \'RANGE\', you must specify both the fromHash and toHash. Note that this behaviour differs from `/commits/comments`  Finally diffType refers to the type of diff the comment was added on. For backwards compatibility purposes if no diffType is provided and no fromHash/toHash pair is provided the diffType will be resolved to \'EFFECTIVE\'. In any other cases the diffType is REQUIRED.  For line comments, \'line\' refers to the line in the diff that the comment should apply to. \'lineType\' refers to the type of diff hunk, which can be:   - \'ADDED\' - for an added line; - \'REMOVED\' - for a removed line; or - \'CONTEXT\' - for a line that was unmodified but is in the vicinity of the diff. </ul>\'fileType\' refers to the file of the diff to which the anchor should be attached - which is of relevance when displaying the diff in a side-by-side way. Currently the supported values are:   - \'FROM\' - the source file of the diff - \'TO\' - the destination file of the diff </ul>If the current user is not a participant the user is added as a watcher of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Add pull request comment
+     */
+    async createComment2Raw(requestParameters: CreateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.createComment2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1198,10 +1287,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a default reviewer pull request condition for the given project.
-     * Create default reviewer condition
+     * Creates request options for createPullRequestCondition without sending the request
      */
-    async createPullRequestConditionRaw(requestParameters: CreatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+    async createPullRequestConditionRequestOpts(requestParameters: CreatePullRequestConditionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1219,13 +1307,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/default-reviewers/latest/projects/{projectKey}/condition`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultReviewersRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a default reviewer pull request condition for the given project.
+     * Create default reviewer condition
+     */
+    async createPullRequestConditionRaw(requestParameters: CreatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+        const requestOptions = await this.createPullRequestConditionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1240,10 +1337,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a default reviewer pull request condition for the given repository.
-     * Create default reviewer condition
+     * Creates request options for createPullRequestCondition1 without sending the request
      */
-    async createPullRequestCondition1Raw(requestParameters: CreatePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+    async createPullRequestCondition1RequestOpts(requestParameters: CreatePullRequestCondition1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1269,13 +1365,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultReviewersRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a default reviewer pull request condition for the given repository.
+     * Create default reviewer condition
+     */
+    async createPullRequestCondition1Raw(requestParameters: CreatePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+        const requestOptions = await this.createPullRequestCondition1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1290,10 +1395,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Decline a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Decline pull request
+     * Creates request options for decline without sending the request
      */
-    async declineRaw(requestParameters: DeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async declineRequestOpts(requestParameters: DeclineRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1331,13 +1435,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestDeclineRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Decline a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Decline pull request
+     */
+    async declineRaw(requestParameters: DeclineRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.declineRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1352,10 +1465,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a pull request.   To call this resource, users must be authenticated and have permission to view the pull request. Additionally, they must:   - be the pull request author, if the system is configured to allow authors to delete their own   pull requests (this is the default) OR  - have repository administrator permission for the repository the pull request is targeting   A body containing the version of the pull request must be provided with this request.   `{ \"version\": 1 }`
-     * Delete pull request
+     * Creates request options for delete3 without sending the request
      */
-    async delete3Raw(requestParameters: Delete3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete3RequestOpts(requestParameters: Delete3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1389,13 +1501,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestDeleteRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a pull request.   To call this resource, users must be authenticated and have permission to view the pull request. Additionally, they must:   - be the pull request author, if the system is configured to allow authors to delete their own   pull requests (this is the default) OR  - have repository administrator permission for the repository the pull request is targeting   A body containing the version of the pull request must be provided with this request.   `{ \"version\": 1 }`
+     * Delete pull request
+     */
+    async delete3Raw(requestParameters: Delete3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1409,10 +1530,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a reviewer group.  The authenticated user must have <b>PROJECT_ADMIN</b> permission for the specified project to call this resource.
-     * Delete reviewer group
+     * Creates request options for delete6 without sending the request
      */
-    async delete6Raw(requestParameters: Delete6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete6RequestOpts(requestParameters: Delete6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1436,12 +1556,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a reviewer group.  The authenticated user must have <b>PROJECT_ADMIN</b> permission for the specified project to call this resource.
+     * Delete reviewer group
+     */
+    async delete6Raw(requestParameters: Delete6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1455,10 +1584,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
-     * Delete reviewer group
+     * Creates request options for delete7 without sending the request
      */
-    async delete7Raw(requestParameters: Delete7Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async delete7RequestOpts(requestParameters: Delete7Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1490,12 +1618,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
+     * Delete reviewer group
+     */
+    async delete7Raw(requestParameters: Delete7Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.delete7RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1509,10 +1646,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a pull request comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Delete pull request comment
+     * Creates request options for deleteComment1 without sending the request
      */
-    async deleteComment1Raw(requestParameters: DeleteComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteComment1RequestOpts(requestParameters: DeleteComment1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1556,12 +1692,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a pull request comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Delete pull request comment
+     */
+    async deleteComment1Raw(requestParameters: DeleteComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteComment1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1575,10 +1720,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a pull request comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Delete a pull request comment
+     * Creates request options for deleteComment2 without sending the request
      */
-    async deleteComment2Raw(requestParameters: DeleteComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteComment2RequestOpts(requestParameters: DeleteComment2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1622,12 +1766,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a pull request comment. Anyone can delete their own comment. Only users with <strong>REPO_ADMIN</strong> and above may delete comments created by other users.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Delete a pull request comment
+     */
+    async deleteComment2Raw(requestParameters: DeleteComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteComment2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1641,10 +1794,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the default reviewer pull request condition associated with the given ID.
-     * Delete default reviewer condition
+     * Creates request options for deletePullRequestCondition without sending the request
      */
-    async deletePullRequestConditionRaw(requestParameters: DeletePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePullRequestConditionRequestOpts(requestParameters: DeletePullRequestConditionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1668,12 +1820,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the default reviewer pull request condition associated with the given ID.
+     * Delete default reviewer condition
+     */
+    async deletePullRequestConditionRaw(requestParameters: DeletePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePullRequestConditionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1687,10 +1848,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the default reviewer pull request condition associated with the given ID.
-     * Delete default reviewer condition
+     * Creates request options for deletePullRequestCondition1 without sending the request
      */
-    async deletePullRequestCondition1Raw(requestParameters: DeletePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePullRequestCondition1RequestOpts(requestParameters: DeletePullRequestCondition1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1722,12 +1882,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the default reviewer pull request condition associated with the given ID.
+     * Delete default reviewer condition
+     */
+    async deletePullRequestCondition1Raw(requestParameters: DeletePullRequestCondition1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePullRequestCondition1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1741,10 +1910,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Discard a pull request review for the authenticated user.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
-     * Discard pull request review
+     * Creates request options for discardReview without sending the request
      */
-    async discardReviewRaw(requestParameters: DiscardReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async discardReviewRequestOpts(requestParameters: DiscardReviewRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1776,12 +1944,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Discard a pull request review for the authenticated user.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository to call this resource.
+     * Discard pull request review
+     */
+    async discardReviewRaw(requestParameters: DiscardReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.discardReviewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1795,10 +1972,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Complete a review on a pull request.
-     * Complete pull request review
+     * Creates request options for finishReview without sending the request
      */
-    async finishReviewRaw(requestParameters: FinishReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async finishReviewRequestOpts(requestParameters: FinishReviewRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1836,13 +2012,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestFinishReviewRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Complete a review on a pull request.
+     * Complete pull request review
+     */
+    async finishReviewRaw(requestParameters: FinishReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.finishReviewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1856,10 +2041,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request
+     * Creates request options for get3 without sending the request
      */
-    async get3Raw(requestParameters: Get3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async get3RequestOpts(requestParameters: Get3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1891,12 +2075,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request
+     */
+    async get3Raw(requestParameters: Get3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.get3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1911,10 +2104,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of activity associated with a pull request.   Activity items include comments, approvals, rescopes (i.e. adding and removing of commits), merges and more.   Different types of activity items may be introduced in newer versions of Stash or by user installed plugins, so clients should be flexible enough to handle unexpected entity shapes in the returned page.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request activity
+     * Creates request options for getActivities without sending the request
      */
-    async getActivitiesRaw(requestParameters: GetActivitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetActivities200Response>> {
+    async getActivitiesRequestOpts(requestParameters: GetActivitiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1962,12 +2154,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of activity associated with a pull request.   Activity items include comments, approvals, rescopes (i.e. adding and removing of commits), merges and more.   Different types of activity items may be introduced in newer versions of Stash or by user installed plugins, so clients should be flexible enough to handle unexpected entity shapes in the returned page.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request activity
+     */
+    async getActivitiesRaw(requestParameters: GetActivitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetActivities200Response>> {
+        const requestOptions = await this.getActivitiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1982,10 +2183,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an auto-merge request for the pull request, if requested.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get auto-merge request for pull request
+     * Creates request options for getAutoMergeRequest without sending the request
      */
-    async getAutoMergeRequestRaw(requestParameters: GetAutoMergeRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRequest>> {
+    async getAutoMergeRequestRequestOpts(requestParameters: GetAutoMergeRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2017,12 +2217,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns an auto-merge request for the pull request, if requested.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get auto-merge request for pull request
+     */
+    async getAutoMergeRequestRaw(requestParameters: GetAutoMergeRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeRequest>> {
+        const requestOptions = await this.getAutoMergeRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2037,10 +2246,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a pull request comment.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request comment
+     * Creates request options for getComment1 without sending the request
      */
-    async getComment1Raw(requestParameters: GetComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async getComment1RequestOpts(requestParameters: GetComment1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2080,12 +2288,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a pull request comment.  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request comment
+     */
+    async getComment1Raw(requestParameters: GetComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.getComment1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2100,10 +2317,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a pull request comment.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get a pull request comment
+     * Creates request options for getComment2 without sending the request
      */
-    async getComment2Raw(requestParameters: GetComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async getComment2RequestOpts(requestParameters: GetComment2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2143,12 +2359,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a pull request comment.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get a pull request comment
+     */
+    async getComment2Raw(requestParameters: GetComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.getComment2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2163,10 +2388,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets comments matching the given set of field values for the specified pull request. (Note this does <b>not</b> perform any kind of searching for comments by their text).   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Search pull request comments
+     * Creates request options for getComments1 without sending the request
      */
-    async getComments1Raw(requestParameters: GetComments1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+    async getComments1RequestOpts(requestParameters: GetComments1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2218,12 +2442,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets comments matching the given set of field values for the specified pull request. (Note this does <b>not</b> perform any kind of searching for comments by their text).   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Search pull request comments
+     */
+    async getComments1Raw(requestParameters: GetComments1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+        const requestOptions = await this.getComments1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2238,10 +2471,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets comments for the specified pull request and path.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request comments for path
+     * Creates request options for getComments2 without sending the request
      */
-    async getComments2Raw(requestParameters: GetComments2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+    async getComments2RequestOpts(requestParameters: GetComments2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -2320,12 +2552,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets comments for the specified pull request and path.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request comments for path
+     */
+    async getComments2Raw(requestParameters: GetComments2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+        const requestOptions = await this.getComments2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2340,10 +2581,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a suggested commit message for the given Pull Request.
-     * Get commit message suggestion
+     * Creates request options for getCommitMessageSuggestion without sending the request
      */
-    async getCommitMessageSuggestionRaw(requestParameters: GetCommitMessageSuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommitMessageSuggestion>> {
+    async getCommitMessageSuggestionRequestOpts(requestParameters: GetCommitMessageSuggestionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2375,12 +2615,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a suggested commit message for the given Pull Request.
+     * Get commit message suggestion
+     */
+    async getCommitMessageSuggestionRaw(requestParameters: GetCommitMessageSuggestionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommitMessageSuggestion>> {
+        const requestOptions = await this.getCommitMessageSuggestionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2395,10 +2644,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve commits for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request commits
+     * Creates request options for getCommits1 without sending the request
      */
-    async getCommits1Raw(requestParameters: GetCommits1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+    async getCommits1RequestOpts(requestParameters: GetCommits1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2450,12 +2698,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve commits for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request commits
+     */
+    async getCommits1Raw(requestParameters: GetCommits1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetCommits200Response>> {
+        const requestOptions = await this.getCommits1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2470,10 +2727,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the diff stats summary for the given Pull Request.   The stats summary include the total number of modified files, added lines, and deleted lines.   Note: The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get diff stats summary for pull request
+     * Creates request options for getDiffStatsSummary2 without sending the request
      */
-    async getDiffStatsSummary2Raw(requestParameters: GetDiffStatsSummary2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getDiffStatsSummary2RequestOpts(requestParameters: GetDiffStatsSummary2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -2529,12 +2785,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the diff stats summary for the given Pull Request.   The stats summary include the total number of modified files, added lines, and deleted lines.   Note: The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get diff stats summary for pull request
+     */
+    async getDiffStatsSummary2Raw(requestParameters: GetDiffStatsSummary2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getDiffStatsSummary2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -2553,10 +2818,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the best common ancestor between the latest commits of the source and target branches of the pull request.  If more than one best common ancestor exists, only one will be returned. It is unspecified which will be returned.
-     * Get the common ancestor between the latest commits of the source and target branches of the pull request
+     * Creates request options for getMergeBase1 without sending the request
      */
-    async getMergeBase1Raw(requestParameters: GetMergeBase1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+    async getMergeBase1RequestOpts(requestParameters: GetMergeBase1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2588,12 +2852,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the best common ancestor between the latest commits of the source and target branches of the pull request.  If more than one best common ancestor exists, only one will be returned. It is unspecified which will be returned.
+     * Get the common ancestor between the latest commits of the source and target branches of the pull request
+     */
+    async getMergeBase1Raw(requestParameters: GetMergeBase1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCommit>> {
+        const requestOptions = await this.getMergeBase1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2615,10 +2888,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the merge strategies available for this instance.   The user must be authenticated to call this resource.
-     * Get merge strategies
+     * Creates request options for getMergeConfig without sending the request
      */
-    async getMergeConfigRaw(requestParameters: GetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
+    async getMergeConfigRequestOpts(requestParameters: GetMergeConfigRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scmId'] == null) {
             throw new runtime.RequiredError(
                 'scmId',
@@ -2634,12 +2906,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/pull-requests/{scmId}`;
         urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the merge strategies available for this instance.   The user must be authenticated to call this resource.
+     * Get merge strategies
+     */
+    async getMergeConfigRaw(requestParameters: GetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
+        const requestOptions = await this.getMergeConfigRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2654,10 +2935,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of pull requests to or from the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.  Optionally clients can specify PR participant filters. Each filter has a mandatory username.N parameter, and the optional role.N and approved.N parameters.   - username.N - the \"root\" of a single participant filter, where \"N\" is a natural number   starting from 1. This allows clients to specify multiple participant filters, by providing consecutive   filters as username.1, username.2 etc. Note that the filters numbering has to start   with 1 and be continuous for all filters to be processed. The total allowed number of participant   filters is 10 and all filters exceeding that limit will be dropped. - role.N(optional) the role associated with username.N.   This must be one of AUTHOR, REVIEWER, or PARTICIPANT - approved.N (optional) the approved status associated with username.N.   That is whether username.N has approved the PR. Either true, or false 
-     * Get pull requests for repository
+     * Creates request options for getPage without sending the request
      */
-    async getPageRaw(requestParameters: GetPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+    async getPageRequestOpts(requestParameters: GetPageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2721,12 +3001,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of pull requests to or from the specified repository.   The authenticated user must have <strong>REPO_READ</strong> permission for the specified repository to call this resource.  Optionally clients can specify PR participant filters. Each filter has a mandatory username.N parameter, and the optional role.N and approved.N parameters.   - username.N - the \"root\" of a single participant filter, where \"N\" is a natural number   starting from 1. This allows clients to specify multiple participant filters, by providing consecutive   filters as username.1, username.2 etc. Note that the filters numbering has to start   with 1 and be continuous for all filters to be processed. The total allowed number of participant   filters is 10 and all filters exceeding that limit will be dropped. - role.N(optional) the role associated with username.N.   This must be one of AUTHOR, REVIEWER, or PARTICIPANT - approved.N (optional) the approved status associated with username.N.   That is whether username.N has approved the PR. Either true, or false 
+     * Get pull requests for repository
+     */
+    async getPageRaw(requestParameters: GetPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+        const requestOptions = await this.getPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2741,10 +3030,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return a page of default reviewer pull request conditions that have been configured for this project.
-     * Get default reviewer conditions
+     * Creates request options for getPullRequestConditions without sending the request
      */
-    async getPullRequestConditionsRaw(requestParameters: GetPullRequestConditionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+    async getPullRequestConditionsRequestOpts(requestParameters: GetPullRequestConditionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2760,12 +3048,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/default-reviewers/latest/projects/{projectKey}/conditions`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return a page of default reviewer pull request conditions that have been configured for this project.
+     * Get default reviewer conditions
+     */
+    async getPullRequestConditionsRaw(requestParameters: GetPullRequestConditionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+        const requestOptions = await this.getPullRequestConditionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2780,10 +3077,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return a page of default reviewer pull request conditions that have been configured for this repository.
-     * Get default reviewer conditions
+     * Creates request options for getPullRequestConditions1 without sending the request
      */
-    async getPullRequestConditions1Raw(requestParameters: GetPullRequestConditions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+    async getPullRequestConditions1RequestOpts(requestParameters: GetPullRequestConditions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2807,12 +3103,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return a page of default reviewer pull request conditions that have been configured for this repository.
+     * Get default reviewer conditions
+     */
+    async getPullRequestConditions1Raw(requestParameters: GetPullRequestConditions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+        const requestOptions = await this.getPullRequestConditions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2827,10 +3132,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of pull requests in the current repository that contain the given commit.  The user must be authenticated and have access to the specified repository to call this resource.
-     * Get repository pull requests containing commit
+     * Creates request options for getPullRequests without sending the request
      */
-    async getPullRequestsRaw(requestParameters: GetPullRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+    async getPullRequestsRequestOpts(requestParameters: GetPullRequestsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2870,12 +3174,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commitId"}}`, encodeURIComponent(String(requestParameters['commitId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of pull requests in the current repository that contain the given commit.  The user must be authenticated and have access to the specified repository to call this resource.
+     * Get repository pull requests containing commit
+     */
+    async getPullRequestsRaw(requestParameters: GetPullRequestsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPullRequests1200Response>> {
+        const requestOptions = await this.getPullRequestsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2890,10 +3203,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the <code>CommentThread</code> threads which have <code>Comment</code> comments that have a <code>CommentState#PENDING</code> pending state and are part of the pull request review for the authenticated user.
-     * Get pull request comment thread
+     * Creates request options for getReview without sending the request
      */
-    async getReviewRaw(requestParameters: GetReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+    async getReviewRequestOpts(requestParameters: GetReviewRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2933,12 +3245,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the <code>CommentThread</code> threads which have <code>Comment</code> comments that have a <code>CommentState#PENDING</code> pending state and are part of the pull request review for the authenticated user.
+     * Get pull request comment thread
+     */
+    async getReviewRaw(requestParameters: GetReviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComments200Response>> {
+        const requestOptions = await this.getReviewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2953,10 +3274,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a reviewer group.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
-     * Get reviewer group
+     * Creates request options for getReviewerGroup without sending the request
      */
-    async getReviewerGroupRaw(requestParameters: GetReviewerGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async getReviewerGroupRequestOpts(requestParameters: GetReviewerGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2980,12 +3300,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a reviewer group.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
+     * Get reviewer group
+     */
+    async getReviewerGroupRaw(requestParameters: GetReviewerGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.getReviewerGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3000,10 +3329,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a reviewer group.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
-     * Get reviewer group
+     * Creates request options for getReviewerGroup1 without sending the request
      */
-    async getReviewerGroup1Raw(requestParameters: GetReviewerGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async getReviewerGroup1RequestOpts(requestParameters: GetReviewerGroup1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3035,12 +3363,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a reviewer group.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
+     * Get reviewer group
+     */
+    async getReviewerGroup1Raw(requestParameters: GetReviewerGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.getReviewerGroup1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3055,10 +3392,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of reviewer groups of a given scope.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
-     * Get all reviewer groups
+     * Creates request options for getReviewerGroups without sending the request
      */
-    async getReviewerGroupsRaw(requestParameters: GetReviewerGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
+    async getReviewerGroupsRequestOpts(requestParameters: GetReviewerGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3082,12 +3418,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/projects/{projectKey}/settings/reviewer-groups`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of reviewer groups of a given scope.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
+     * Get all reviewer groups
+     */
+    async getReviewerGroupsRaw(requestParameters: GetReviewerGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
+        const requestOptions = await this.getReviewerGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3102,10 +3447,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of reviewer groups of a given scope.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
-     * Get all reviewer groups
+     * Creates request options for getReviewerGroups1 without sending the request
      */
-    async getReviewerGroups1Raw(requestParameters: GetReviewerGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
+    async getReviewerGroups1RequestOpts(requestParameters: GetReviewerGroups1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3137,12 +3481,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of reviewer groups of a given scope.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
+     * Get all reviewer groups
+     */
+    async getReviewerGroups1Raw(requestParameters: GetReviewerGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetReviewerGroups1200Response>> {
+        const requestOptions = await this.getReviewerGroups1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3157,10 +3510,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return a set of users who are required reviewers for pull requests created from the given source repository and ref to the given target ref in this repository.
-     * Get required reviewers for PR creation
+     * Creates request options for getReviewers without sending the request
      */
-    async getReviewersRaw(requestParameters: GetReviewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+    async getReviewersRequestOpts(requestParameters: GetReviewersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3200,12 +3552,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return a set of users who are required reviewers for pull requests created from the given source repository and ref to the given target ref in this repository.
+     * Get required reviewers for PR creation
+     */
+    async getReviewersRaw(requestParameters: GetReviewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestPullRequestCondition>>> {
+        const requestOptions = await this.getReviewersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3220,10 +3581,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of the users of a reviewer group.  This does not return all the users of the group, only the users who are licensed and have <b>REPO_READ</b> permission for the specified repository.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
-     * Get reviewer group users
+     * Creates request options for getUsers without sending the request
      */
-    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestApplicationUser>>> {
+    async getUsersRequestOpts(requestParameters: GetUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3255,12 +3615,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of the users of a reviewer group.  This does not return all the users of the group, only the users who are licensed and have <b>REPO_READ</b> permission for the specified repository.  The authenticated user must have <b>REPO_READ</b> permission for the specified repository to call this resource.
+     * Get reviewer group users
+     */
+    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestApplicationUser>>> {
+        const requestOptions = await this.getUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3275,10 +3644,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a page of the participants for a given pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Get pull request participants
+     * Creates request options for listParticipants without sending the request
      */
-    async listParticipantsRaw(requestParameters: ListParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListParticipants200Response>> {
+    async listParticipantsRequestOpts(requestParameters: ListParticipantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3318,12 +3686,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a page of the participants for a given pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Get pull request participants
+     */
+    async listParticipantsRaw(requestParameters: ListParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListParticipants200Response>> {
+        const requestOptions = await this.listParticipantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3338,10 +3715,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Merge the specified pull request immediately or set the pull request to auto-merge when all the merge checks pass by setting <strong>autoMerge</strong> field in the request body.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
-     * Merge pull request
+     * Creates request options for merge without sending the request
      */
-    async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async mergeRequestOpts(requestParameters: MergeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3379,13 +3755,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestMergeRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Merge the specified pull request immediately or set the pull request to auto-merge when all the merge checks pass by setting <strong>autoMerge</strong> field in the request body.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
+     * Merge pull request
+     */
+    async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.mergeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3400,10 +3785,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add an emoticon reaction to a pull request comment
-     * React to a PR comment
+     * Creates request options for react1 without sending the request
      */
-    async react1Raw(requestParameters: React1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserReaction>> {
+    async react1RequestOpts(requestParameters: React1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3451,12 +3835,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add an emoticon reaction to a pull request comment
+     * React to a PR comment
+     */
+    async react1Raw(requestParameters: React1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserReaction>> {
+        const requestOptions = await this.react1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3471,10 +3864,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rebases the specified pull request, rewriting the incoming commits to start from the tip commit of the pull request\'s target branch. <i>This operation alters the pull request\'s source branch and cannot be undone.</i>  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets <i>and</i> <strong>REPO_WRITE</strong> permission for the pull request\'s source repository to call this resource.
-     * Rebase pull request
+     * Creates request options for rebase without sending the request
      */
-    async rebaseRaw(requestParameters: RebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseResult>> {
+    async rebaseRequestOpts(requestParameters: RebaseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3508,13 +3900,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestRebaseRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Rebases the specified pull request, rewriting the incoming commits to start from the tip commit of the pull request\'s target branch. <i>This operation alters the pull request\'s source branch and cannot be undone.</i>  The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets <i>and</i> <strong>REPO_WRITE</strong> permission for the pull request\'s source repository to call this resource.
+     * Rebase pull request
+     */
+    async rebaseRaw(requestParameters: RebaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestRebaseResult>> {
+        const requestOptions = await this.rebaseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3529,10 +3930,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Re-open a declined pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Re-open pull request
+     * Creates request options for reopen without sending the request
      */
-    async reopenRaw(requestParameters: ReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async reopenRequestOpts(requestParameters: ReopenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3570,13 +3970,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestReopenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Re-open a declined pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Re-open pull request
+     */
+    async reopenRaw(requestParameters: ReopenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.reopenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3591,10 +4000,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of participant users for all the pull requests to or from the specified repository.   Optionally clients can specify following filters.
-     * Search pull request participants
+     * Creates request options for search without sending the request
      */
-    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+    async searchRequestOpts(requestParameters: SearchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3638,12 +4046,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of participant users for all the pull requests to or from the specified repository.   Optionally clients can specify following filters.
+     * Search pull request participants
+     */
+    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUsersWithoutAnyPermission200Response>> {
+        const requestOptions = await this.searchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3658,10 +4075,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the pull request merge strategies for the context repository.   The authenticated user must have <strong>ADMIN</strong> permission to call this resource.   Only the strategies provided will be enabled, only one may be set to default   The commit message template will not be updated if not provided, and will be deleted if the `commitMessageTemplate` attribute is empty, i.e: `commitMessageTemplate: {}`.  An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty `mergeConfig` attribute. i.e: ``` {      \"mergeConfig\": {}  }  ```  Upon completion of this request, the effective configuration will be the default configuration.
-     * Update merge strategies
+     * Creates request options for setMergeConfig without sending the request
      */
-    async setMergeConfigRaw(requestParameters: SetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
+    async setMergeConfigRequestOpts(requestParameters: SetMergeConfigRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['scmId'] == null) {
             throw new runtime.RequiredError(
                 'scmId',
@@ -3679,13 +4095,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/pull-requests/{scmId}`;
         urlPath = urlPath.replace(`{${"scmId"}}`, encodeURIComponent(String(requestParameters['scmId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestSettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the pull request merge strategies for the context repository.   The authenticated user must have <strong>ADMIN</strong> permission to call this resource.   Only the strategies provided will be enabled, only one may be set to default   The commit message template will not be updated if not provided, and will be deleted if the `commitMessageTemplate` attribute is empty, i.e: `commitMessageTemplate: {}`.  An explicitly set pull request merge strategy configuration can be deleted by POSTing a document with an empty `mergeConfig` attribute. i.e: ``` {      \"mergeConfig\": {}  }  ```  Upon completion of this request, the effective configuration will be the default configuration.
+     * Update merge strategies
+     */
+    async setMergeConfigRaw(requestParameters: SetMergeConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestMergeConfig>> {
+        const requestOptions = await this.setMergeConfigRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3700,10 +4125,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets changes for the specified PullRequest.  If the changeScope query parameter is set to \'UNREVIEWED\', the application will attempt to stream unreviewed changes based on the lastReviewedCommit of the current user, which are the changes between the lastReviewedCommit and the latest commit of the source branch. The current user is considered to <i>not</i> have any unreviewed changes for the pull request when the lastReviewedCommit is either null (everything is unreviewed, so all changes are streamed), equal to the latest commit of the source branch (everything is reviewed), or no longer on the source branch (the source branch has been rebased). In these cases, the application will fall back to streaming all changes (the default), which is the effective diff for the pull request. The type of changes streamed can be determined by the changeScope parameter included in the properties map of the response.   Note: This resource is currently <i>not paged</i>. The server will return at most one page. The server will truncate the number of changes to either the request\'s page limit or an internal maximum, whichever is smaller. The start parameter of the page request is also ignored.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Gets pull request changes
+     * Creates request options for streamChanges1 without sending the request
      */
-    async streamChanges1Raw(requestParameters: StreamChanges1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChange>> {
+    async streamChanges1RequestOpts(requestParameters: StreamChanges1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3759,12 +4183,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets changes for the specified PullRequest.  If the changeScope query parameter is set to \'UNREVIEWED\', the application will attempt to stream unreviewed changes based on the lastReviewedCommit of the current user, which are the changes between the lastReviewedCommit and the latest commit of the source branch. The current user is considered to <i>not</i> have any unreviewed changes for the pull request when the lastReviewedCommit is either null (everything is unreviewed, so all changes are streamed), equal to the latest commit of the source branch (everything is reviewed), or no longer on the source branch (the source branch has been rebased). In these cases, the application will fall back to streaming all changes (the default), which is the effective diff for the pull request. The type of changes streamed can be determined by the changeScope parameter included in the properties map of the response.   Note: This resource is currently <i>not paged</i>. The server will return at most one page. The server will truncate the number of changes to either the request\'s page limit or an internal maximum, whichever is smaller. The start parameter of the page request is also ignored.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Gets pull request changes
+     */
+    async streamChanges1Raw(requestParameters: StreamChanges1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChange>> {
+        const requestOptions = await this.streamChanges1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3779,10 +4212,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams a diff within a pull request.   If the specified file has been copied, moved or renamed, the <code>srcPath</code> must also be specified to produce the correct diff.   To stream a raw text representation of the diff, this endpoint can be called with the request header \'Accept: text/plain\'.   Note: This RESTful endpoint is currently <i>not paged</i>. The server will internally apply a hard cap to the streamed lines, and it is not possible to request subsequent pages if that cap is exceeded.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Stream a diff within a pull request
+     * Creates request options for streamDiff2 without sending the request
      */
-    async streamDiff2Raw(requestParameters: StreamDiff2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+    async streamDiff2RequestOpts(requestParameters: StreamDiff2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['path'] == null) {
             throw new runtime.RequiredError(
                 'path',
@@ -3858,12 +4290,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams a diff within a pull request.   If the specified file has been copied, moved or renamed, the <code>srcPath</code> must also be specified to produce the correct diff.   To stream a raw text representation of the diff, this endpoint can be called with the request header \'Accept: text/plain\'.   Note: This RESTful endpoint is currently <i>not paged</i>. The server will internally apply a hard cap to the streamed lines, and it is not possible to request subsequent pages if that cap is exceeded.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Stream a diff within a pull request
+     */
+    async streamDiff2Raw(requestParameters: StreamDiff2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDiff>> {
+        const requestOptions = await this.streamDiff2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3878,10 +4319,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams a patch representing a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Stream pull request as patch
+     * Creates request options for streamPatch1 without sending the request
      */
-    async streamPatch1Raw(requestParameters: StreamPatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamPatch1RequestOpts(requestParameters: StreamPatch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3913,12 +4353,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams a patch representing a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Stream pull request as patch
+     */
+    async streamPatch1Raw(requestParameters: StreamPatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamPatch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3932,10 +4381,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Streams the raw diff for a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Stream raw pull request diff
+     * Creates request options for streamRawDiff2 without sending the request
      */
-    async streamRawDiff2Raw(requestParameters: StreamRawDiff2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async streamRawDiff2RequestOpts(requestParameters: StreamRawDiff2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3975,12 +4423,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Streams the raw diff for a pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Stream raw pull request diff
+     */
+    async streamRawDiff2Raw(requestParameters: StreamRawDiff2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.streamRawDiff2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3994,10 +4451,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Requests the system to try merging the pull request if auto-merge was requested on it.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
-     * Auto-merge pull request
+     * Creates request options for tryAutoMerge without sending the request
      */
-    async tryAutoMergeRaw(requestParameters: TryAutoMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeProcessingResult>> {
+    async tryAutoMergeRequestOpts(requestParameters: TryAutoMergeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4029,12 +4485,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Requests the system to try merging the pull request if auto-merge was requested on it.  The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
+     * Auto-merge pull request
+     */
+    async tryAutoMergeRaw(requestParameters: TryAutoMergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAutoMergeProcessingResult>> {
+        const requestOptions = await this.tryAutoMergeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4049,10 +4514,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove an emoticon reaction from a pull request comment
-     * Remove a reaction from a PR comment
+     * Creates request options for unReact1 without sending the request
      */
-    async unReact1Raw(requestParameters: UnReact1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unReact1RequestOpts(requestParameters: UnReact1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4100,12 +4564,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"emoticon"}}`, encodeURIComponent(String(requestParameters['emoticon'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove an emoticon reaction from a pull request comment
+     * Remove a reaction from a PR comment
+     */
+    async unReact1Raw(requestParameters: UnReact1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unReact1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4119,10 +4592,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
-     * Unassign pull request participant
+     * Creates request options for unassignParticipantRole without sending the request
      */
-    async unassignParticipantRoleRaw(requestParameters: UnassignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unassignParticipantRoleRequestOpts(requestParameters: UnassignParticipantRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4162,12 +4634,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.
+     * Unassign pull request participant
+     */
+    async unassignParticipantRoleRaw(requestParameters: UnassignParticipantRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unassignParticipantRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4181,11 +4662,10 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
-     * Unassign pull request participant
+     * Creates request options for unassignParticipantRole1 without sending the request
      * @deprecated
      */
-    async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unassignParticipantRole1RequestOpts(requestParameters: UnassignParticipantRole1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4221,12 +4701,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unassigns a participant from the REVIEWER role they may have been given in a pull request.   If the participant has no explicit role this method has no effect.   Afterwards, the user will still remain a participant in the pull request but their role will be reduced to PARTICIPANT. This is because once made a participant of a pull request, a user will forever remain a participant. Only their role may be altered.   The authenticated user must have <strong>REPO_WRITE</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead.
+     * Unassign pull request participant
+     * @deprecated
+     */
+    async unassignParticipantRole1Raw(requestParameters: UnassignParticipantRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unassignParticipantRole1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4241,10 +4731,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove the authenticated user as a watcher for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Stop watching pull request
+     * Creates request options for unwatch1 without sending the request
      */
-    async unwatch1Raw(requestParameters: Unwatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unwatch1RequestOpts(requestParameters: Unwatch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4276,12 +4765,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove the authenticated user as a watcher for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Stop watching pull request
+     */
+    async unwatch1Raw(requestParameters: Unwatch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unwatch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4295,10 +4793,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the title, description, reviewers, destination branch or draft status of an existing pull request.   **Note:** the <em>reviewers</em> list may be updated using this resource. However the <em>author</em> and <em>participants</em> list may not.   The authenticated user must either:   - be the author of the pull request and have the <strong>REPO_READ</strong> permission for the repository that this pull request targets; or - have the <strong>REPO_WRITE</strong> permission for the repository that this pull request targets   to call this resource.
-     * Update pull request metadata
+     * Creates request options for update without sending the request
      */
-    async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+    async updateRequestOpts(requestParameters: UpdateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4332,13 +4829,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the title, description, reviewers, destination branch or draft status of an existing pull request.   **Note:** the <em>reviewers</em> list may be updated using this resource. However the <em>author</em> and <em>participants</em> list may not.   The authenticated user must either:   - be the author of the pull request and have the <strong>REPO_READ</strong> permission for the repository that this pull request targets; or - have the <strong>REPO_WRITE</strong> permission for the repository that this pull request targets   to call this resource.
+     * Update pull request metadata
+     */
+    async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequest>> {
+        const requestOptions = await this.updateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4353,10 +4859,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the attributes of a reviewer group.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
-     * Update reviewer group attributes
+     * Creates request options for update1 without sending the request
      */
-    async update1Raw(requestParameters: Update1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async update1RequestOpts(requestParameters: Update1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4382,13 +4887,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restReviewerGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the attributes of a reviewer group.  The authenticated user must have <b>PROJECT_READ</b> permission for the specified project to call this resource.
+     * Update reviewer group attributes
+     */
+    async update1Raw(requestParameters: Update1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.update1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4403,10 +4917,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the attributes of a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
-     * Update reviewer group attributes
+     * Creates request options for update2 without sending the request
      */
-    async update2Raw(requestParameters: Update2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+    async update2RequestOpts(requestParameters: Update2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4440,13 +4953,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restReviewerGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the attributes of a reviewer group.  The authenticated user must have <b>REPO_ADMIN</b> permission for the specified repository to call this resource.
+     * Update reviewer group attributes
+     */
+    async update2Raw(requestParameters: Update2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReviewerGroup>> {
+        const requestOptions = await this.update2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4461,10 +4983,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a comment, with the following restrictions:   - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment, the author of the pull request or repository admins and above may update   the other fields of a comment   Convert a comment to a task or vice versa.   Comments can be converted to tasks by setting the \'severity\' attribute to \'BLOCKER\':  ```  {  \"severity\": \"BLOCKER\"  }  ```  Tasks can be converted to comments by setting the \'severity\' attribute to \'NORMAL\': ```  {  \"severity\": \"NORMAL\"  }  ```  Resolve a blocker comment.   Blocker comments can be resolved by setting the \'state\' attribute to \'RESOLVED\': ```  {  \"state\": \"RESOLVED\"  }  ```  <strong>Note:</strong> the supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Update pull request comment
+     * Creates request options for updateComment1 without sending the request
      */
-    async updateComment1Raw(requestParameters: UpdateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async updateComment1RequestOpts(requestParameters: UpdateComment1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4506,13 +5027,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a comment, with the following restrictions:   - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment, the author of the pull request or repository admins and above may update   the other fields of a comment   Convert a comment to a task or vice versa.   Comments can be converted to tasks by setting the \'severity\' attribute to \'BLOCKER\':  ```  {  \"severity\": \"BLOCKER\"  }  ```  Tasks can be converted to comments by setting the \'severity\' attribute to \'NORMAL\': ```  {  \"severity\": \"NORMAL\"  }  ```  Resolve a blocker comment.   Blocker comments can be resolved by setting the \'state\' attribute to \'RESOLVED\': ```  {  \"state\": \"RESOLVED\"  }  ```  <strong>Note:</strong> the supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Update pull request comment
+     */
+    async updateComment1Raw(requestParameters: UpdateComment1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.updateComment1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4527,10 +5057,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a comment, with the following restrictions:   - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment, the author of the pull request or repository admins and above may update the other fields of a comment </ul>   Convert a comment to a task or vice versa.   Comments can be converted to tasks by setting the \'severity\' attribute to \'BLOCKER\':   <pre> {   \"severity\": \"BLOCKER\"   }   </pre>  Tasks can be converted to comments by setting the \'severity\' attribute to \'NORMAL\':  <pre> {   \"severity\": \"NORMAL\"   }   </pre>  Resolve a task.   Tasks can be resolved by setting the \'state\' attribute to \'RESOLVED\':  <pre> {   \"state\": \"RESOLVED\"   }   </pre>  <strong>Note:</strong> the supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Update pull request comment
+     * Creates request options for updateComment2 without sending the request
      */
-    async updateComment2Raw(requestParameters: UpdateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+    async updateComment2RequestOpts(requestParameters: UpdateComment2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4572,13 +5101,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restComment'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a comment, with the following restrictions:   - only the author of the comment may update the <i>text</i> of the comment - only the author of the comment, the author of the pull request or repository admins and above may update the other fields of a comment </ul>   Convert a comment to a task or vice versa.   Comments can be converted to tasks by setting the \'severity\' attribute to \'BLOCKER\':   <pre> {   \"severity\": \"BLOCKER\"   }   </pre>  Tasks can be converted to comments by setting the \'severity\' attribute to \'NORMAL\':  <pre> {   \"severity\": \"NORMAL\"   }   </pre>  Resolve a task.   Tasks can be resolved by setting the \'state\' attribute to \'RESOLVED\':  <pre> {   \"state\": \"RESOLVED\"   }   </pre>  <strong>Note:</strong> the supplied JSON object must contain a <code>version</code> that must match the server\'s version of the comment or the update will fail. To determine the current version of the comment, the comment should be fetched from the server prior to the update. Look for the \'version\' attribute in the returned JSON structure.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Update pull request comment
+     */
+    async updateComment2Raw(requestParameters: UpdateComment2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComment>> {
+        const requestOptions = await this.updateComment2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4593,10 +5131,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the default reviewer pull request condition for the given ID.
-     * Update default reviewer condition
+     * Creates request options for updatePullRequestCondition without sending the request
      */
-    async updatePullRequestConditionRaw(requestParameters: UpdatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+    async updatePullRequestConditionRequestOpts(requestParameters: UpdatePullRequestConditionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4622,13 +5159,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDefaultReviewersRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the default reviewer pull request condition for the given ID.
+     * Update default reviewer condition
+     */
+    async updatePullRequestConditionRaw(requestParameters: UpdatePullRequestConditionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+        const requestOptions = await this.updatePullRequestConditionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4643,10 +5189,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the default reviewer pull request condition for the given ID.
-     * Update default reviewer condition
+     * Creates request options for updatePullRequestCondition1 without sending the request
      */
-    async updatePullRequestCondition1Raw(requestParameters: UpdatePullRequestCondition1OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+    async updatePullRequestCondition1RequestOpts(requestParameters: UpdatePullRequestCondition1OperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4680,13 +5225,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['updatePullRequestCondition1Request'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the default reviewer pull request condition for the given ID.
+     * Update default reviewer condition
+     */
+    async updatePullRequestCondition1Raw(requestParameters: UpdatePullRequestCondition1OperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestCondition>> {
+        const requestOptions = await this.updatePullRequestCondition1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4701,10 +5255,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Change the current user\'s status for a pull request. Implicitly adds the user as a participant if they are not already. If the current user is the author, this method will fail.   The possible values for {@code status} are <strong>UNAPPROVED</strong>, <strong>NEEDS_WORK</strong> (which is referred to as \"Requested changes\" in the frontend from 8.10 onward), or <strong>APPROVED</strong>.   If the new {@code status} is <strong>NEEDS_WORK</strong> or <strong>APPROVED</strong> then the {@code lastReviewedCommit} for the participant will be updated to the latest commit of the source branch of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Change pull request status
+     * Creates request options for updateStatus without sending the request
      */
-    async updateStatusRaw(requestParameters: UpdateStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async updateStatusRequestOpts(requestParameters: UpdateStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4757,13 +5310,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPullRequestAssignStatusRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Change the current user\'s status for a pull request. Implicitly adds the user as a participant if they are not already. If the current user is the author, this method will fail.   The possible values for {@code status} are <strong>UNAPPROVED</strong>, <strong>NEEDS_WORK</strong> (which is referred to as \"Requested changes\" in the frontend from 8.10 onward), or <strong>APPROVED</strong>.   If the new {@code status} is <strong>NEEDS_WORK</strong> or <strong>APPROVED</strong> then the {@code lastReviewedCommit} for the participant will be updated to the latest commit of the source branch of the pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Change pull request status
+     */
+    async updateStatusRaw(requestParameters: UpdateStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.updateStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4778,10 +5340,9 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add the authenticated user as a watcher for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
-     * Watch pull request
+     * Creates request options for watch1 without sending the request
      */
-    async watch1Raw(requestParameters: Watch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async watch1RequestOpts(requestParameters: Watch1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4813,12 +5374,21 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add the authenticated user as a watcher for the specified pull request.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.
+     * Watch pull request
+     */
+    async watch1Raw(requestParameters: Watch1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.watch1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4832,11 +5402,10 @@ export class PullRequestsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
-     * Unapprove pull request
+     * Creates request options for withdrawApproval without sending the request
      * @deprecated
      */
-    async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+    async withdrawApprovalRequestOpts(requestParameters: WithdrawApprovalRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4868,12 +5437,22 @@ export class PullRequestsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"pullRequestId"}}`, encodeURIComponent(String(requestParameters['pullRequestId'])));
         urlPath = urlPath.replace(`{${"repositorySlug"}}`, encodeURIComponent(String(requestParameters['repositorySlug'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove approval from a pull request as the current user. This does not remove the user as a participant.   The authenticated user must have <strong>REPO_READ</strong> permission for the repository that this pull request targets to call this resource.   <strong>Deprecated since 4.2</strong>. Use /rest/api/1.0/projects/{projectKey}/repos/{repositorySlug}/pull-requests/{pullRequestId}/participants/{userSlug} instead
+     * Unapprove pull request
+     * @deprecated
+     */
+    async withdrawApprovalRaw(requestParameters: WithdrawApprovalRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPullRequestParticipant>> {
+        const requestOptions = await this.withdrawApprovalRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
