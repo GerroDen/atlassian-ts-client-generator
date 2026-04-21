@@ -66,9 +66,9 @@ export interface StartDeploymentRequest {
 export class DeploymentApi extends runtime.BaseAPI {
 
     /**
-     * Provide list of deployment results scheduled for execution and waiting in queue.
+     * Creates request options for getBuildQueue without sending the request
      */
-    async getBuildQueueRaw(requestParameters: GetBuildQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedDeployments>> {
+    async getBuildQueueRequestOpts(requestParameters: GetBuildQueueRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -80,12 +80,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/queue/deployment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of deployment results scheduled for execution and waiting in queue.
+     */
+    async getBuildQueueRaw(requestParameters: GetBuildQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedDeployments>> {
+        const requestOptions = await this.getBuildQueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -99,9 +107,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get possible deployment results.
+     * Creates request options for getPossibleResults without sending the request
      */
-    async getPossibleResultsRaw(requestParameters: GetPossibleResultsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPossibleResultsRequestOpts(requestParameters: GetPossibleResultsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -124,12 +132,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/preview/possibleResults`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get possible deployment results.
+     */
+    async getPossibleResultsRaw(requestParameters: GetPossibleResultsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPossibleResultsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -142,9 +158,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get version name.
+     * Creates request options for getVersionName without sending the request
      */
-    async getVersionNameRaw(requestParameters: GetVersionNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getVersionNameRequestOpts(requestParameters: GetVersionNameRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -167,12 +183,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/preview/versionName`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get version name.
+     */
+    async getVersionNameRaw(requestParameters: GetVersionNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getVersionNameRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -190,9 +214,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a preview of the deployment version.
+     * Creates request options for getVersionPreview without sending the request
      */
-    async getVersionPreviewRaw(requestParameters: GetVersionPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionPreview>> {
+    async getVersionPreviewRequestOpts(requestParameters: GetVersionPreviewRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['previousVersionId'] != null) {
@@ -216,12 +240,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/preview/version`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a preview of the deployment version.
+     */
+    async getVersionPreviewRaw(requestParameters: GetVersionPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionPreview>> {
+        const requestOptions = await this.getVersionPreviewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -235,9 +267,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a preview of the deployment version.
+     * Creates request options for getVersionPreview1 without sending the request
      */
-    async getVersionPreview1Raw(requestParameters: GetVersionPreview1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionPreview>> {
+    async getVersionPreview1RequestOpts(requestParameters: GetVersionPreview1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['previousVersionId'] != null) {
@@ -265,12 +297,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/preview/result`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a preview of the deployment version.
+     */
+    async getVersionPreview1Raw(requestParameters: GetVersionPreview1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionPreview>> {
+        const requestOptions = await this.getVersionPreview1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -284,9 +324,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove deployment result from queue.
+     * Creates request options for removeDeploymentFromQueue without sending the request
      */
-    async removeDeploymentFromQueueRaw(requestParameters: RemoveDeploymentFromQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeDeploymentFromQueueRequestOpts(requestParameters: RemoveDeploymentFromQueueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentResultId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentResultId',
@@ -302,12 +342,20 @@ export class DeploymentApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/queue/deployment/{deploymentResultId}`;
         urlPath = urlPath.replace(`{${"deploymentResultId"}}`, encodeURIComponent(String(requestParameters['deploymentResultId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove deployment result from queue.
+     */
+    async removeDeploymentFromQueueRaw(requestParameters: RemoveDeploymentFromQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeDeploymentFromQueueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -320,9 +368,9 @@ export class DeploymentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Trigger deployment for deployment environment and version.
+     * Creates request options for startDeployment without sending the request
      */
-    async startDeploymentRaw(requestParameters: StartDeploymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedDeployment>> {
+    async startDeploymentRequestOpts(requestParameters: StartDeploymentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['versionId'] == null) {
             throw new runtime.RequiredError(
                 'versionId',
@@ -356,12 +404,20 @@ export class DeploymentApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/queue/deployment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Trigger deployment for deployment environment and version.
+     */
+    async startDeploymentRaw(requestParameters: StartDeploymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedDeployment>> {
+        const requestOptions = await this.startDeploymentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

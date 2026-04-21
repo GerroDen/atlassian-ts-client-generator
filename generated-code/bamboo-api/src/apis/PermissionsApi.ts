@@ -519,9 +519,9 @@ export interface RemovePermissionsForUser6Request {
 export class PermissionsApi extends runtime.BaseAPI {
 
     /**
-     * Grants deployment project permissions to a given group.
+     * Creates request options for addPermissionsForGroup without sending the request
      */
-    async addPermissionsForGroupRaw(requestParameters: AddPermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroupRequestOpts(requestParameters: AddPermissionsForGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -547,13 +547,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment project permissions to a given group.
+     */
+    async addPermissionsForGroupRaw(requestParameters: AddPermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -566,9 +574,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants deployment environment permissions to a given group.
+     * Creates request options for addPermissionsForGroup1 without sending the request
      */
-    async addPermissionsForGroup1Raw(requestParameters: AddPermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup1RequestOpts(requestParameters: AddPermissionsForGroup1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -594,13 +602,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment environment permissions to a given group.
+     */
+    async addPermissionsForGroup1Raw(requestParameters: AddPermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -613,9 +629,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants global permissions to a given group.
+     * Creates request options for addPermissionsForGroup2 without sending the request
      */
-    async addPermissionsForGroup2Raw(requestParameters: AddPermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup2RequestOpts(requestParameters: AddPermissionsForGroup2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -637,13 +653,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/groups/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants global permissions to a given group.
+     */
+    async addPermissionsForGroup2Raw(requestParameters: AddPermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -656,9 +680,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants plan permissions to a given group.
+     * Creates request options for addPermissionsForGroup3 without sending the request
      */
-    async addPermissionsForGroup3Raw(requestParameters: AddPermissionsForGroup3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup3RequestOpts(requestParameters: AddPermissionsForGroup3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -684,13 +708,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants plan permissions to a given group.
+     */
+    async addPermissionsForGroup3Raw(requestParameters: AddPermissionsForGroup3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -703,9 +735,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project permissions to a given group.
+     * Creates request options for addPermissionsForGroup4 without sending the request
      */
-    async addPermissionsForGroup4Raw(requestParameters: AddPermissionsForGroup4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup4RequestOpts(requestParameters: AddPermissionsForGroup4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -731,13 +763,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project permissions to a given group.
+     */
+    async addPermissionsForGroup4Raw(requestParameters: AddPermissionsForGroup4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -750,9 +790,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project plan permissions to a given group.
+     * Creates request options for addPermissionsForGroup5 without sending the request
      */
-    async addPermissionsForGroup5Raw(requestParameters: AddPermissionsForGroup5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup5RequestOpts(requestParameters: AddPermissionsForGroup5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -778,13 +818,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project plan permissions to a given group.
+     */
+    async addPermissionsForGroup5Raw(requestParameters: AddPermissionsForGroup5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -797,9 +845,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants repository permissions to a given group.
+     * Creates request options for addPermissionsForGroup6 without sending the request
      */
-    async addPermissionsForGroup6Raw(requestParameters: AddPermissionsForGroup6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForGroup6RequestOpts(requestParameters: AddPermissionsForGroup6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -825,13 +873,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants repository permissions to a given group.
+     */
+    async addPermissionsForGroup6Raw(requestParameters: AddPermissionsForGroup6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForGroup6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -844,9 +900,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants deployment project permissions to a given role.
+     * Creates request options for addPermissionsForRole without sending the request
      */
-    async addPermissionsForRoleRaw(requestParameters: AddPermissionsForRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRoleRequestOpts(requestParameters: AddPermissionsForRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -872,13 +928,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment project permissions to a given role.
+     */
+    async addPermissionsForRoleRaw(requestParameters: AddPermissionsForRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -891,9 +955,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants deployment environment permissions to a given role.
+     * Creates request options for addPermissionsForRole1 without sending the request
      */
-    async addPermissionsForRole1Raw(requestParameters: AddPermissionsForRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole1RequestOpts(requestParameters: AddPermissionsForRole1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -919,13 +983,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment environment permissions to a given role.
+     */
+    async addPermissionsForRole1Raw(requestParameters: AddPermissionsForRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -938,9 +1010,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants global permissions to a given role.
+     * Creates request options for addPermissionsForRole2 without sending the request
      */
-    async addPermissionsForRole2Raw(requestParameters: AddPermissionsForRole2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole2RequestOpts(requestParameters: AddPermissionsForRole2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -962,13 +1034,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/roles/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants global permissions to a given role.
+     */
+    async addPermissionsForRole2Raw(requestParameters: AddPermissionsForRole2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -981,9 +1061,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants plan permissions to a given role.
+     * Creates request options for addPermissionsForRole3 without sending the request
      */
-    async addPermissionsForRole3Raw(requestParameters: AddPermissionsForRole3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole3RequestOpts(requestParameters: AddPermissionsForRole3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1009,13 +1089,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants plan permissions to a given role.
+     */
+    async addPermissionsForRole3Raw(requestParameters: AddPermissionsForRole3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1028,9 +1116,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project permissions to a given role.
+     * Creates request options for addPermissionsForRole4 without sending the request
      */
-    async addPermissionsForRole4Raw(requestParameters: AddPermissionsForRole4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole4RequestOpts(requestParameters: AddPermissionsForRole4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1056,13 +1144,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project permissions to a given role.
+     */
+    async addPermissionsForRole4Raw(requestParameters: AddPermissionsForRole4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1075,9 +1171,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project plan permissions to a given role.
+     * Creates request options for addPermissionsForRole5 without sending the request
      */
-    async addPermissionsForRole5Raw(requestParameters: AddPermissionsForRole5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole5RequestOpts(requestParameters: AddPermissionsForRole5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1103,13 +1199,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project plan permissions to a given role.
+     */
+    async addPermissionsForRole5Raw(requestParameters: AddPermissionsForRole5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1122,9 +1226,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants repository permissions to a given role.
+     * Creates request options for addPermissionsForRole6 without sending the request
      */
-    async addPermissionsForRole6Raw(requestParameters: AddPermissionsForRole6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForRole6RequestOpts(requestParameters: AddPermissionsForRole6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1150,13 +1254,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants repository permissions to a given role.
+     */
+    async addPermissionsForRole6Raw(requestParameters: AddPermissionsForRole6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForRole6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1169,9 +1281,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants deployment project permissions to a given user.
+     * Creates request options for addPermissionsForUser without sending the request
      */
-    async addPermissionsForUserRaw(requestParameters: AddPermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUserRequestOpts(requestParameters: AddPermissionsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1197,13 +1309,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment project permissions to a given user.
+     */
+    async addPermissionsForUserRaw(requestParameters: AddPermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1216,9 +1336,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants deployment environment permissions to a given user.
+     * Creates request options for addPermissionsForUser1 without sending the request
      */
-    async addPermissionsForUser1Raw(requestParameters: AddPermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser1RequestOpts(requestParameters: AddPermissionsForUser1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1244,13 +1364,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants deployment environment permissions to a given user.
+     */
+    async addPermissionsForUser1Raw(requestParameters: AddPermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1263,9 +1391,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants global permissions to a given user.
+     * Creates request options for addPermissionsForUser2 without sending the request
      */
-    async addPermissionsForUser2Raw(requestParameters: AddPermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser2RequestOpts(requestParameters: AddPermissionsForUser2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1287,13 +1415,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/users/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants global permissions to a given user.
+     */
+    async addPermissionsForUser2Raw(requestParameters: AddPermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1306,9 +1442,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants plan permissions to a given user.
+     * Creates request options for addPermissionsForUser3 without sending the request
      */
-    async addPermissionsForUser3Raw(requestParameters: AddPermissionsForUser3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser3RequestOpts(requestParameters: AddPermissionsForUser3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1334,13 +1470,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants plan permissions to a given user.
+     */
+    async addPermissionsForUser3Raw(requestParameters: AddPermissionsForUser3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1353,9 +1497,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project permissions to a given user.
+     * Creates request options for addPermissionsForUser4 without sending the request
      */
-    async addPermissionsForUser4Raw(requestParameters: AddPermissionsForUser4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser4RequestOpts(requestParameters: AddPermissionsForUser4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1381,13 +1525,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project permissions to a given user.
+     */
+    async addPermissionsForUser4Raw(requestParameters: AddPermissionsForUser4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1400,9 +1552,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants project plan permissions to a given user.
+     * Creates request options for addPermissionsForUser5 without sending the request
      */
-    async addPermissionsForUser5Raw(requestParameters: AddPermissionsForUser5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser5RequestOpts(requestParameters: AddPermissionsForUser5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1428,13 +1580,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants project plan permissions to a given user.
+     */
+    async addPermissionsForUser5Raw(requestParameters: AddPermissionsForUser5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1447,9 +1607,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grants repository permissions to a given user.
+     * Creates request options for addPermissionsForUser6 without sending the request
      */
-    async addPermissionsForUser6Raw(requestParameters: AddPermissionsForUser6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPermissionsForUser6RequestOpts(requestParameters: AddPermissionsForUser6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1475,13 +1635,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grants repository permissions to a given user.
+     */
+    async addPermissionsForUser6Raw(requestParameters: AddPermissionsForUser6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPermissionsForUser6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1494,9 +1662,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any deployment project permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups without sending the request
      */
-    async getAvailableGroupsRaw(requestParameters: GetAvailableGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroupsRequestOpts(requestParameters: GetAvailableGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1524,12 +1692,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/deployment/{id}/available-groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any deployment project permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroupsRaw(requestParameters: GetAvailableGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1543,9 +1719,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any deployment environment permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups1 without sending the request
      */
-    async getAvailableGroups1Raw(requestParameters: GetAvailableGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups1RequestOpts(requestParameters: GetAvailableGroups1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1573,12 +1749,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/environment/{id}/available-groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any deployment environment permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups1Raw(requestParameters: GetAvailableGroups1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1592,9 +1776,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups2 without sending the request
      */
-    async getAvailableGroups2Raw(requestParameters: GetAvailableGroups2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups2RequestOpts(requestParameters: GetAvailableGroups2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -1618,12 +1802,20 @@ export class PermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/permissions/global/available-groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups2Raw(requestParameters: GetAvailableGroups2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1637,9 +1829,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any plan permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups3 without sending the request
      */
-    async getAvailableGroups3Raw(requestParameters: GetAvailableGroups3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups3RequestOpts(requestParameters: GetAvailableGroups3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -1667,12 +1859,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/plan/{key}/available-groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any plan permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups3Raw(requestParameters: GetAvailableGroups3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1686,9 +1886,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any project permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups4 without sending the request
      */
-    async getAvailableGroups4Raw(requestParameters: GetAvailableGroups4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups4RequestOpts(requestParameters: GetAvailableGroups4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -1716,12 +1916,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/project/{key}/available-groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any project permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups4Raw(requestParameters: GetAvailableGroups4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1735,9 +1943,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any project plan permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups5 without sending the request
      */
-    async getAvailableGroups5Raw(requestParameters: GetAvailableGroups5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups5RequestOpts(requestParameters: GetAvailableGroups5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -1765,12 +1973,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/projectplan/{key}/available-groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any project plan permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups5Raw(requestParameters: GetAvailableGroups5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1784,9 +2000,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of groups which weren\'t granted explicitly any repository permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableGroups6 without sending the request
      */
-    async getAvailableGroups6Raw(requestParameters: GetAvailableGroups6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getAvailableGroups6RequestOpts(requestParameters: GetAvailableGroups6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1814,12 +2030,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/repository/{id}/available-groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of groups which weren\'t granted explicitly any repository permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableGroups6Raw(requestParameters: GetAvailableGroups6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getAvailableGroups6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1833,9 +2057,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any deployment project permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers without sending the request
      */
-    async getAvailableUsersRaw(requestParameters: GetAvailableUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsersRequestOpts(requestParameters: GetAvailableUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1863,12 +2087,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/deployment/{id}/available-users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any deployment project permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsersRaw(requestParameters: GetAvailableUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1882,9 +2114,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any deployment environment permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers1 without sending the request
      */
-    async getAvailableUsers1Raw(requestParameters: GetAvailableUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers1RequestOpts(requestParameters: GetAvailableUsers1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1912,12 +2144,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/environment/{id}/available-users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any deployment environment permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers1Raw(requestParameters: GetAvailableUsers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1931,9 +2171,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers2 without sending the request
      */
-    async getAvailableUsers2Raw(requestParameters: GetAvailableUsers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers2RequestOpts(requestParameters: GetAvailableUsers2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -1957,12 +2197,20 @@ export class PermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/permissions/global/available-users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers2Raw(requestParameters: GetAvailableUsers2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1976,9 +2224,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any plan permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers3 without sending the request
      */
-    async getAvailableUsers3Raw(requestParameters: GetAvailableUsers3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers3RequestOpts(requestParameters: GetAvailableUsers3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2006,12 +2254,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/plan/{key}/available-users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any plan permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers3Raw(requestParameters: GetAvailableUsers3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2025,9 +2281,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any project permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers4 without sending the request
      */
-    async getAvailableUsers4Raw(requestParameters: GetAvailableUsers4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers4RequestOpts(requestParameters: GetAvailableUsers4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2055,12 +2311,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/project/{key}/available-users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any project permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers4Raw(requestParameters: GetAvailableUsers4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2074,9 +2338,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any project plan permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers5 without sending the request
      */
-    async getAvailableUsers5Raw(requestParameters: GetAvailableUsers5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers5RequestOpts(requestParameters: GetAvailableUsers5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2104,12 +2368,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/projectplan/{key}/available-users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any project plan permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers5Raw(requestParameters: GetAvailableUsers5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2123,9 +2395,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns list of users which weren\'t granted explicitly any repository permissions. Resource is paged, returns single page of resources.
+     * Creates request options for getAvailableUsers6 without sending the request
      */
-    async getAvailableUsers6Raw(requestParameters: GetAvailableUsers6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+    async getAvailableUsers6RequestOpts(requestParameters: GetAvailableUsers6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2153,12 +2425,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/repository/{id}/available-users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns list of users which weren\'t granted explicitly any repository permissions. Resource is paged, returns single page of resources.
+     */
+    async getAvailableUsers6Raw(requestParameters: GetAvailableUsers6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAvailableUsers200Response>> {
+        const requestOptions = await this.getAvailableUsers6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2172,9 +2452,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their deployment project permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions without sending the request
      */
-    async listGroupPermissionsRaw(requestParameters: ListGroupPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissionsRequestOpts(requestParameters: ListGroupPermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2202,12 +2482,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/deployment/{id}/groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their deployment project permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissionsRaw(requestParameters: ListGroupPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2221,9 +2509,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their deployment environment permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions1 without sending the request
      */
-    async listGroupPermissions1Raw(requestParameters: ListGroupPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions1RequestOpts(requestParameters: ListGroupPermissions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2251,12 +2539,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/environment/{id}/groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their deployment environment permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions1Raw(requestParameters: ListGroupPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2270,9 +2566,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their global permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions2 without sending the request
      */
-    async listGroupPermissions2Raw(requestParameters: ListGroupPermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions2RequestOpts(requestParameters: ListGroupPermissions2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -2296,12 +2592,20 @@ export class PermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/permissions/global/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their global permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions2Raw(requestParameters: ListGroupPermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2315,9 +2619,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their plan permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions3 without sending the request
      */
-    async listGroupPermissions3Raw(requestParameters: ListGroupPermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions3RequestOpts(requestParameters: ListGroupPermissions3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2345,12 +2649,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/plan/{key}/groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their plan permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions3Raw(requestParameters: ListGroupPermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2364,9 +2676,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their project permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions4 without sending the request
      */
-    async listGroupPermissions4Raw(requestParameters: ListGroupPermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions4RequestOpts(requestParameters: ListGroupPermissions4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2394,12 +2706,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/project/{key}/groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their project permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions4Raw(requestParameters: ListGroupPermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2413,9 +2733,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their project plan permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions5 without sending the request
      */
-    async listGroupPermissions5Raw(requestParameters: ListGroupPermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions5RequestOpts(requestParameters: ListGroupPermissions5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2443,12 +2763,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/projectplan/{key}/groups`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their project plan permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions5Raw(requestParameters: ListGroupPermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2462,9 +2790,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups with their repository permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     * Creates request options for listGroupPermissions6 without sending the request
      */
-    async listGroupPermissions6Raw(requestParameters: ListGroupPermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+    async listGroupPermissions6RequestOpts(requestParameters: ListGroupPermissions6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2492,12 +2820,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/repository/{id}/groups`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups with their repository permissions. The list can be filtered by some attributes. This resource is paged returns a single page of results.
+     */
+    async listGroupPermissions6Raw(requestParameters: ListGroupPermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListGroupPermissions200Response>> {
+        const requestOptions = await this.listGroupPermissions6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2511,9 +2847,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their deployment project permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     * Creates request options for listRolePermissions without sending the request
      */
-    async listRolePermissionsRaw(requestParameters: ListRolePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissionsRequestOpts(requestParameters: ListRolePermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2537,12 +2873,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/deployment/{id}/roles`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their deployment project permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     */
+    async listRolePermissionsRaw(requestParameters: ListRolePermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2556,9 +2900,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their deployment environment permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users
+     * Creates request options for listRolePermissions1 without sending the request
      */
-    async listRolePermissions1Raw(requestParameters: ListRolePermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions1RequestOpts(requestParameters: ListRolePermissions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2582,12 +2926,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/environment/{id}/roles`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their deployment environment permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users
+     */
+    async listRolePermissions1Raw(requestParameters: ListRolePermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2601,9 +2953,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their global permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users
+     * Creates request options for listRolePermissions2 without sending the request
      */
-    async listRolePermissions2Raw(requestParameters: ListRolePermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions2RequestOpts(requestParameters: ListRolePermissions2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -2623,12 +2975,20 @@ export class PermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/permissions/global/roles`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their global permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users
+     */
+    async listRolePermissions2Raw(requestParameters: ListRolePermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2642,9 +3002,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their plan permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     * Creates request options for listRolePermissions3 without sending the request
      */
-    async listRolePermissions3Raw(requestParameters: ListRolePermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions3RequestOpts(requestParameters: ListRolePermissions3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2668,12 +3028,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/plan/{key}/roles`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their plan permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     */
+    async listRolePermissions3Raw(requestParameters: ListRolePermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2687,9 +3055,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their project permissions. This resource is paged returns a single page of results, although only LOGGED IN users role is supported
+     * Creates request options for listRolePermissions4 without sending the request
      */
-    async listRolePermissions4Raw(requestParameters: ListRolePermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions4RequestOpts(requestParameters: ListRolePermissions4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2713,12 +3081,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/project/{key}/roles`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their project permissions. This resource is paged returns a single page of results, although only LOGGED IN users role is supported
+     */
+    async listRolePermissions4Raw(requestParameters: ListRolePermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2732,9 +3108,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their project plan permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     * Creates request options for listRolePermissions5 without sending the request
      */
-    async listRolePermissions5Raw(requestParameters: ListRolePermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions5RequestOpts(requestParameters: ListRolePermissions5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2758,12 +3134,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/projectplan/{key}/roles`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their project plan permissions. This resource is paged returns a single page of results, although only 2 roles are supported: LOGGED IN users, ANONYMOUS users.
+     */
+    async listRolePermissions5Raw(requestParameters: ListRolePermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2777,9 +3161,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of roles with their repository permissions. This resource is paged returns a single page of results, although only LOGGED IN users role is supported.
+     * Creates request options for listRolePermissions6 without sending the request
      */
-    async listRolePermissions6Raw(requestParameters: ListRolePermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+    async listRolePermissions6RequestOpts(requestParameters: ListRolePermissions6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2803,12 +3187,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/repository/{id}/roles`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of roles with their repository permissions. This resource is paged returns a single page of results, although only LOGGED IN users role is supported.
+     */
+    async listRolePermissions6Raw(requestParameters: ListRolePermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListRolePermissions200Response>> {
+        const requestOptions = await this.listRolePermissions6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2822,9 +3214,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions without sending the request
      */
-    async listUserPermissionsRaw(requestParameters: ListUserPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissionsRequestOpts(requestParameters: ListUserPermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2852,12 +3244,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/deployment/{id}/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissionsRaw(requestParameters: ListUserPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2871,9 +3271,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions1 without sending the request
      */
-    async listUserPermissions1Raw(requestParameters: ListUserPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions1RequestOpts(requestParameters: ListUserPermissions1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2901,12 +3301,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/environment/{id}/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions1Raw(requestParameters: ListUserPermissions1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2920,9 +3328,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their global permissions. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions2 without sending the request
      */
-    async listUserPermissions2Raw(requestParameters: ListUserPermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions2RequestOpts(requestParameters: ListUserPermissions2Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -2946,12 +3354,20 @@ export class PermissionsApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/permissions/global/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their global permissions. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions2Raw(requestParameters: ListUserPermissions2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2965,9 +3381,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions3 without sending the request
      */
-    async listUserPermissions3Raw(requestParameters: ListUserPermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions3RequestOpts(requestParameters: ListUserPermissions3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -2995,12 +3411,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/plan/{key}/users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions3Raw(requestParameters: ListUserPermissions3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3014,9 +3438,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions4 without sending the request
      */
-    async listUserPermissions4Raw(requestParameters: ListUserPermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions4RequestOpts(requestParameters: ListUserPermissions4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -3044,12 +3468,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/project/{key}/users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions4Raw(requestParameters: ListUserPermissions4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3063,9 +3495,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions5 without sending the request
      */
-    async listUserPermissions5Raw(requestParameters: ListUserPermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions5RequestOpts(requestParameters: ListUserPermissions5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -3093,12 +3525,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/projectplan/{key}/users`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions5Raw(requestParameters: ListUserPermissions5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3112,9 +3552,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     * Creates request options for listUserPermissions6 without sending the request
      */
-    async listUserPermissions6Raw(requestParameters: ListUserPermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+    async listUserPermissions6RequestOpts(requestParameters: ListUserPermissions6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -3142,12 +3582,20 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/repository/{id}/users`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of users with their explicit permissions to given resource. The list can be filtered by some attributes. This resource is paged and returns a single page of results.
+     */
+    async listUserPermissions6Raw(requestParameters: ListUserPermissions6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListUserPermissions200Response>> {
+        const requestOptions = await this.listUserPermissions6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3161,9 +3609,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment project permissions from a given group.
+     * Creates request options for removePermissionsForGroup without sending the request
      */
-    async removePermissionsForGroupRaw(requestParameters: RemovePermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroupRequestOpts(requestParameters: RemovePermissionsForGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3189,13 +3637,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment project permissions from a given group.
+     */
+    async removePermissionsForGroupRaw(requestParameters: RemovePermissionsForGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3208,9 +3664,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment environment permissions from a given group.
+     * Creates request options for removePermissionsForGroup1 without sending the request
      */
-    async removePermissionsForGroup1Raw(requestParameters: RemovePermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup1RequestOpts(requestParameters: RemovePermissionsForGroup1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3236,13 +3692,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment environment permissions from a given group.
+     */
+    async removePermissionsForGroup1Raw(requestParameters: RemovePermissionsForGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3255,9 +3719,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes global permissions from a given group.
+     * Creates request options for removePermissionsForGroup2 without sending the request
      */
-    async removePermissionsForGroup2Raw(requestParameters: RemovePermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup2RequestOpts(requestParameters: RemovePermissionsForGroup2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3279,13 +3743,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/groups/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes global permissions from a given group.
+     */
+    async removePermissionsForGroup2Raw(requestParameters: RemovePermissionsForGroup2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3298,9 +3770,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes plan permissions from a given group.
+     * Creates request options for removePermissionsForGroup3 without sending the request
      */
-    async removePermissionsForGroup3Raw(requestParameters: RemovePermissionsForGroup3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup3RequestOpts(requestParameters: RemovePermissionsForGroup3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3326,13 +3798,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes plan permissions from a given group.
+     */
+    async removePermissionsForGroup3Raw(requestParameters: RemovePermissionsForGroup3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3345,9 +3825,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project permissions from a given group.
+     * Creates request options for removePermissionsForGroup4 without sending the request
      */
-    async removePermissionsForGroup4Raw(requestParameters: RemovePermissionsForGroup4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup4RequestOpts(requestParameters: RemovePermissionsForGroup4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3373,13 +3853,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project permissions from a given group.
+     */
+    async removePermissionsForGroup4Raw(requestParameters: RemovePermissionsForGroup4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3392,9 +3880,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project plan permissions from a given group.
+     * Creates request options for removePermissionsForGroup5 without sending the request
      */
-    async removePermissionsForGroup5Raw(requestParameters: RemovePermissionsForGroup5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup5RequestOpts(requestParameters: RemovePermissionsForGroup5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3420,13 +3908,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project plan permissions from a given group.
+     */
+    async removePermissionsForGroup5Raw(requestParameters: RemovePermissionsForGroup5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3439,9 +3935,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes repository permissions from a given group.
+     * Creates request options for removePermissionsForGroup6 without sending the request
      */
-    async removePermissionsForGroup6Raw(requestParameters: RemovePermissionsForGroup6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForGroup6RequestOpts(requestParameters: RemovePermissionsForGroup6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3467,13 +3963,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes repository permissions from a given group.
+     */
+    async removePermissionsForGroup6Raw(requestParameters: RemovePermissionsForGroup6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForGroup6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3486,9 +3990,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment project permissions from a given role.
+     * Creates request options for removePermissionsForRole without sending the request
      */
-    async removePermissionsForRoleRaw(requestParameters: RemovePermissionsForRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRoleRequestOpts(requestParameters: RemovePermissionsForRoleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3514,13 +4018,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment project permissions from a given role.
+     */
+    async removePermissionsForRoleRaw(requestParameters: RemovePermissionsForRoleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRoleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3533,9 +4045,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment environment permissions from a given role.
+     * Creates request options for removePermissionsForRole1 without sending the request
      */
-    async removePermissionsForRole1Raw(requestParameters: RemovePermissionsForRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole1RequestOpts(requestParameters: RemovePermissionsForRole1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3561,13 +4073,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment environment permissions from a given role.
+     */
+    async removePermissionsForRole1Raw(requestParameters: RemovePermissionsForRole1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3580,9 +4100,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes global permissions from a given role.
+     * Creates request options for removePermissionsForRole2 without sending the request
      */
-    async removePermissionsForRole2Raw(requestParameters: RemovePermissionsForRole2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole2RequestOpts(requestParameters: RemovePermissionsForRole2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3604,13 +4124,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/roles/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes global permissions from a given role.
+     */
+    async removePermissionsForRole2Raw(requestParameters: RemovePermissionsForRole2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3623,9 +4151,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes plan permissions from a given role.
+     * Creates request options for removePermissionsForRole3 without sending the request
      */
-    async removePermissionsForRole3Raw(requestParameters: RemovePermissionsForRole3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole3RequestOpts(requestParameters: RemovePermissionsForRole3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3651,13 +4179,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes plan permissions from a given role.
+     */
+    async removePermissionsForRole3Raw(requestParameters: RemovePermissionsForRole3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3670,9 +4206,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project permissions from a given role.
+     * Creates request options for removePermissionsForRole4 without sending the request
      */
-    async removePermissionsForRole4Raw(requestParameters: RemovePermissionsForRole4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole4RequestOpts(requestParameters: RemovePermissionsForRole4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3698,13 +4234,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project permissions from a given role.
+     */
+    async removePermissionsForRole4Raw(requestParameters: RemovePermissionsForRole4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3717,9 +4261,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project plan permissions from a given role.
+     * Creates request options for removePermissionsForRole5 without sending the request
      */
-    async removePermissionsForRole5Raw(requestParameters: RemovePermissionsForRole5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole5RequestOpts(requestParameters: RemovePermissionsForRole5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3745,13 +4289,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project plan permissions from a given role.
+     */
+    async removePermissionsForRole5Raw(requestParameters: RemovePermissionsForRole5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3764,9 +4316,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes repository permissions from a given role.
+     * Creates request options for removePermissionsForRole6 without sending the request
      */
-    async removePermissionsForRole6Raw(requestParameters: RemovePermissionsForRole6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForRole6RequestOpts(requestParameters: RemovePermissionsForRole6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3792,13 +4344,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes repository permissions from a given role.
+     */
+    async removePermissionsForRole6Raw(requestParameters: RemovePermissionsForRole6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForRole6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3811,9 +4371,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment project permissions from a given user.
+     * Creates request options for removePermissionsForUser without sending the request
      */
-    async removePermissionsForUserRaw(requestParameters: RemovePermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUserRequestOpts(requestParameters: RemovePermissionsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3839,13 +4399,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment project permissions from a given user.
+     */
+    async removePermissionsForUserRaw(requestParameters: RemovePermissionsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3858,9 +4426,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes deployment environment permissions from a given user.
+     * Creates request options for removePermissionsForUser1 without sending the request
      */
-    async removePermissionsForUser1Raw(requestParameters: RemovePermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser1RequestOpts(requestParameters: RemovePermissionsForUser1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3886,13 +4454,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes deployment environment permissions from a given user.
+     */
+    async removePermissionsForUser1Raw(requestParameters: RemovePermissionsForUser1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3905,9 +4481,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes global permissions from a given user.
+     * Creates request options for removePermissionsForUser2 without sending the request
      */
-    async removePermissionsForUser2Raw(requestParameters: RemovePermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser2RequestOpts(requestParameters: RemovePermissionsForUser2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3929,13 +4505,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/permissions/global/users/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes global permissions from a given user.
+     */
+    async removePermissionsForUser2Raw(requestParameters: RemovePermissionsForUser2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3948,9 +4532,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes plan permissions from a given user.
+     * Creates request options for removePermissionsForUser3 without sending the request
      */
-    async removePermissionsForUser3Raw(requestParameters: RemovePermissionsForUser3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser3RequestOpts(requestParameters: RemovePermissionsForUser3Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3976,13 +4560,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes plan permissions from a given user.
+     */
+    async removePermissionsForUser3Raw(requestParameters: RemovePermissionsForUser3Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser3RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3995,9 +4587,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project permissions from a given user.
+     * Creates request options for removePermissionsForUser4 without sending the request
      */
-    async removePermissionsForUser4Raw(requestParameters: RemovePermissionsForUser4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser4RequestOpts(requestParameters: RemovePermissionsForUser4Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -4023,13 +4615,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project permissions from a given user.
+     */
+    async removePermissionsForUser4Raw(requestParameters: RemovePermissionsForUser4Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser4RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4042,9 +4642,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes project plan permissions from a given user.
+     * Creates request options for removePermissionsForUser5 without sending the request
      */
-    async removePermissionsForUser5Raw(requestParameters: RemovePermissionsForUser5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser5RequestOpts(requestParameters: RemovePermissionsForUser5Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -4070,13 +4670,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes project plan permissions from a given user.
+     */
+    async removePermissionsForUser5Raw(requestParameters: RemovePermissionsForUser5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser5RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4089,9 +4697,9 @@ export class PermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revokes repository permissions from a given user.
+     * Creates request options for removePermissionsForUser6 without sending the request
      */
-    async removePermissionsForUser6Raw(requestParameters: RemovePermissionsForUser6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionsForUser6RequestOpts(requestParameters: RemovePermissionsForUser6Request): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -4117,13 +4725,21 @@ export class PermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revokes repository permissions from a given user.
+     */
+    async removePermissionsForUser6Raw(requestParameters: RemovePermissionsForUser6Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionsForUser6RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

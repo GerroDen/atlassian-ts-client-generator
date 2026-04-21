@@ -26,9 +26,9 @@ export interface InvalidateUserSessionsRequest {
 export class SessionApi extends runtime.BaseAPI {
 
     /**
-     * Invalidate active sessions of the given user
+     * Creates request options for invalidateUserSessions without sending the request
      */
-    async invalidateUserSessionsRaw(requestParameters: InvalidateUserSessionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async invalidateUserSessionsRequestOpts(requestParameters: InvalidateUserSessionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -52,12 +52,20 @@ export class SessionApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"user"}}`, encodeURIComponent(String(requestParameters['user'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Invalidate active sessions of the given user
+     */
+    async invalidateUserSessionsRaw(requestParameters: InvalidateUserSessionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.invalidateUserSessionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

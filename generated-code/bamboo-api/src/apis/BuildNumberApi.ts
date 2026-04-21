@@ -35,9 +35,9 @@ export interface GetNextBuildNumberRequest {
 export class BuildNumberApi extends runtime.BaseAPI {
 
     /**
-     * Bump the next build number for a given plan or plan branch to the specified value.
+     * Creates request options for bumpBuildNumber without sending the request
      */
-    async bumpBuildNumberRaw(requestParameters: BumpBuildNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async bumpBuildNumberRequestOpts(requestParameters: BumpBuildNumberRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -70,13 +70,21 @@ export class BuildNumberApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['nextBuildNumber'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bump the next build number for a given plan or plan branch to the specified value.
+     */
+    async bumpBuildNumberRaw(requestParameters: BumpBuildNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.bumpBuildNumberRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -89,9 +97,9 @@ export class BuildNumberApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the next build number for a given plan or plan branch.
+     * Creates request options for getNextBuildNumber without sending the request
      */
-    async getNextBuildNumberRaw(requestParameters: GetNextBuildNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NextBuildNumber>> {
+    async getNextBuildNumberRequestOpts(requestParameters: GetNextBuildNumberRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -115,12 +123,20 @@ export class BuildNumberApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the next build number for a given plan or plan branch.
+     */
+    async getNextBuildNumberRaw(requestParameters: GetNextBuildNumberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NextBuildNumber>> {
+        const requestOptions = await this.getNextBuildNumberRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

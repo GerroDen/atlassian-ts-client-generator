@@ -184,9 +184,9 @@ export interface UpdateRequirementForEnvironmentRequest {
 export class CoreApi extends runtime.BaseAPI {
 
     /**
-     * Add agent assignment for environment. agentAssignmentKey is a map with one key-value: name - agentAssignmentKey.  agentAssignmentKey is parsed by ExecutorKey.
+     * Creates request options for addAgentAssignmentForEnvironment without sending the request
      */
-    async addAgentAssignmentForEnvironmentRaw(requestParameters: AddAgentAssignmentForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentAssignmentExecutorDetails>> {
+    async addAgentAssignmentForEnvironmentRequestOpts(requestParameters: AddAgentAssignmentForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -204,13 +204,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/agent-assignment`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add agent assignment for environment. agentAssignmentKey is a map with one key-value: name - agentAssignmentKey.  agentAssignmentKey is parsed by ExecutorKey.
+     */
+    async addAgentAssignmentForEnvironmentRaw(requestParameters: AddAgentAssignmentForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentAssignmentExecutorDetails>> {
+        const requestOptions = await this.addAgentAssignmentForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -224,9 +232,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add agent assignment for job. agentAssignmentKey is a map with one key-value: name - agentAssignmentKey.  agentAssignmentKey is parsed by ExecutorKey.
+     * Creates request options for addAgentAssignmentForJob without sending the request
      */
-    async addAgentAssignmentForJobRaw(requestParameters: AddAgentAssignmentForJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentAssignmentExecutorDetails>> {
+    async addAgentAssignmentForJobRequestOpts(requestParameters: AddAgentAssignmentForJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobKey'] == null) {
             throw new runtime.RequiredError(
                 'jobKey',
@@ -244,13 +252,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/config/job/{jobKey}/agent-assignment`;
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add agent assignment for job. agentAssignmentKey is a map with one key-value: name - agentAssignmentKey.  agentAssignmentKey is parsed by ExecutorKey.
+     */
+    async addAgentAssignmentForJobRaw(requestParameters: AddAgentAssignmentForJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentAssignmentExecutorDetails>> {
+        const requestOptions = await this.addAgentAssignmentForJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -264,9 +280,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds a requirement for a given environment.
+     * Creates request options for addRequirementForEnvironment without sending the request
      */
-    async addRequirementForEnvironmentRaw(requestParameters: AddRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+    async addRequirementForEnvironmentRequestOpts(requestParameters: AddRequirementForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -284,13 +300,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/requirement`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRequirement'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a requirement for a given environment.
+     */
+    async addRequirementForEnvironmentRaw(requestParameters: AddRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+        const requestOptions = await this.addRequirementForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -304,9 +328,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create the environment variable.
+     * Creates request options for createEnvironmentVariable without sending the request
      */
-    async createEnvironmentVariableRaw(requestParameters: CreateEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+    async createEnvironmentVariableRequestOpts(requestParameters: CreateEnvironmentVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -324,13 +348,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/variable`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create the environment variable.
+     */
+    async createEnvironmentVariableRaw(requestParameters: CreateEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+        const requestOptions = await this.createEnvironmentVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -344,9 +376,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the environment variable.
+     * Creates request options for deleteEnvironmentVariable without sending the request
      */
-    async deleteEnvironmentVariableRaw(requestParameters: DeleteEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteEnvironmentVariableRequestOpts(requestParameters: DeleteEnvironmentVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableName'] == null) {
             throw new runtime.RequiredError(
                 'variableName',
@@ -370,12 +402,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the environment variable.
+     */
+    async deleteEnvironmentVariableRaw(requestParameters: DeleteEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteEnvironmentVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -388,9 +428,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of agents/images assigned to given environment.
+     * Creates request options for findAssignedAgentsByEnvironment without sending the request
      */
-    async findAssignedAgentsByEnvironmentRaw(requestParameters: FindAssignedAgentsByEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestAgentAssignmentExecutorDetails>>> {
+    async findAssignedAgentsByEnvironmentRequestOpts(requestParameters: FindAssignedAgentsByEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -406,12 +446,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/agent-assignment`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of agents/images assigned to given environment.
+     */
+    async findAssignedAgentsByEnvironmentRaw(requestParameters: FindAssignedAgentsByEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestAgentAssignmentExecutorDetails>>> {
+        const requestOptions = await this.findAssignedAgentsByEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -425,9 +473,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of agents/images assigned to given job.
+     * Creates request options for findAssignedAgentsByJob without sending the request
      */
-    async findAssignedAgentsByJobRaw(requestParameters: FindAssignedAgentsByJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestAgentAssignmentExecutorDetails>>> {
+    async findAssignedAgentsByJobRequestOpts(requestParameters: FindAssignedAgentsByJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobKey'] == null) {
             throw new runtime.RequiredError(
                 'jobKey',
@@ -443,12 +491,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/config/job/{jobKey}/agent-assignment`;
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of agents/images assigned to given job.
+     */
+    async findAssignedAgentsByJobRaw(requestParameters: FindAssignedAgentsByJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestAgentAssignmentExecutorDetails>>> {
+        const requestOptions = await this.findAssignedAgentsByJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -462,9 +518,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of agents/images/templates which can be dedicated for given environment.
+     * Creates request options for findPossibleAgentsForEnvironment without sending the request
      */
-    async findPossibleAgentsForEnvironmentRaw(requestParameters: FindPossibleAgentsForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async findPossibleAgentsForEnvironmentRequestOpts(requestParameters: FindPossibleAgentsForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -492,12 +548,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/possible-agent-assignment`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of agents/images/templates which can be dedicated for given environment.
+     */
+    async findPossibleAgentsForEnvironmentRaw(requestParameters: FindPossibleAgentsForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.findPossibleAgentsForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -510,9 +574,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of agents/images/templates which can be dedicated for given job.
+     * Creates request options for findPossibleAgentsForJob without sending the request
      */
-    async findPossibleAgentsForJobRaw(requestParameters: FindPossibleAgentsForJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async findPossibleAgentsForJobRequestOpts(requestParameters: FindPossibleAgentsForJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobKey'] == null) {
             throw new runtime.RequiredError(
                 'jobKey',
@@ -540,12 +604,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/config/job/{jobKey}/agent-assignment/possible-agent-assignment`;
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of agents/images/templates which can be dedicated for given job.
+     */
+    async findPossibleAgentsForJobRaw(requestParameters: FindPossibleAgentsForJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.findPossibleAgentsForJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -558,9 +630,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a summary of the agents that are capable of running an environment, based of its requirements.
+     * Creates request options for getAgentMatchesForEnvironment without sending the request
      */
-    async getAgentMatchesForEnvironmentRaw(requestParameters: GetAgentMatchesForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentSummary>> {
+    async getAgentMatchesForEnvironmentRequestOpts(requestParameters: GetAgentMatchesForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -576,12 +648,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/requirement/summary`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a summary of the agents that are capable of running an environment, based of its requirements.
+     */
+    async getAgentMatchesForEnvironmentRaw(requestParameters: GetAgentMatchesForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentSummary>> {
+        const requestOptions = await this.getAgentMatchesForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -595,9 +675,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of environment variables.
+     * Creates request options for getAllEnvironmentVariables without sending the request
      */
-    async getAllEnvironmentVariablesRaw(requestParameters: GetAllEnvironmentVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAllEnvironmentVariablesRequestOpts(requestParameters: GetAllEnvironmentVariablesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -613,12 +693,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/variables`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of environment variables.
+     */
+    async getAllEnvironmentVariablesRaw(requestParameters: GetAllEnvironmentVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAllEnvironmentVariablesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -631,9 +719,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of versions deployed to the environment. Sorted by started date: newest first.
+     * Creates request options for getDeploymentResultList without sending the request
      */
-    async getDeploymentResultListRaw(requestParameters: GetDeploymentResultListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentResultList>> {
+    async getDeploymentResultListRequestOpts(requestParameters: GetDeploymentResultListRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -653,12 +741,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/results`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of versions deployed to the environment. Sorted by started date: newest first.
+     */
+    async getDeploymentResultListRaw(requestParameters: GetDeploymentResultListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentResultList>> {
+        const requestOptions = await this.getDeploymentResultListRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -672,9 +768,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a detailed summary of the agents that are capable of running an environment, based of its requirements.
+     * Creates request options for getDetailedAgentMatchesForEnvironment without sending the request
      */
-    async getDetailedAgentMatchesForEnvironmentRaw(requestParameters: GetDetailedAgentMatchesForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentSummary>> {
+    async getDetailedAgentMatchesForEnvironmentRequestOpts(requestParameters: GetDetailedAgentMatchesForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -690,12 +786,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/requirement/detailedSummary`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets a detailed summary of the agents that are capable of running an environment, based of its requirements.
+     */
+    async getDetailedAgentMatchesForEnvironmentRaw(requestParameters: GetDetailedAgentMatchesForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentSummary>> {
+        const requestOptions = await this.getDetailedAgentMatchesForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -709,9 +813,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get Docker configuration for given environment.
+     * Creates request options for getDockerPipelinesConfiguration without sending the request
      */
-    async getDockerPipelinesConfigurationRaw(requestParameters: GetDockerPipelinesConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDockerPipelineConfiguration>> {
+    async getDockerPipelinesConfigurationRequestOpts(requestParameters: GetDockerPipelinesConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -727,12 +831,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/docker`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get Docker configuration for given environment.
+     */
+    async getDockerPipelinesConfigurationRaw(requestParameters: GetDockerPipelinesConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDockerPipelineConfiguration>> {
+        const requestOptions = await this.getDockerPipelinesConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -746,9 +858,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a summary of a single environment.
+     * Creates request options for getEnvironment without sending the request
      */
-    async getEnvironmentRaw(requestParameters: GetEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEnvironmentWithConfigCounts>> {
+    async getEnvironmentRequestOpts(requestParameters: GetEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -764,12 +876,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a summary of a single environment.
+     */
+    async getEnvironmentRaw(requestParameters: GetEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEnvironmentWithConfigCounts>> {
+        const requestOptions = await this.getEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -783,9 +903,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the environment variable by its name.
+     * Creates request options for getEnvironmentVariable without sending the request
      */
-    async getEnvironmentVariableRaw(requestParameters: GetEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+    async getEnvironmentVariableRequestOpts(requestParameters: GetEnvironmentVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableName'] == null) {
             throw new runtime.RequiredError(
                 'variableName',
@@ -809,12 +929,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the environment variable by its name.
+     */
+    async getEnvironmentVariableRaw(requestParameters: GetEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+        const requestOptions = await this.getEnvironmentVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -828,9 +956,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide a paginated list of minimal information about environments executable by a given agent.
+     * Creates request options for getEnvironmentsExecutableByAgent without sending the request
      */
-    async getEnvironmentsExecutableByAgentRaw(requestParameters: GetEnvironmentsExecutableByAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+    async getEnvironmentsExecutableByAgentRequestOpts(requestParameters: GetEnvironmentsExecutableByAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -858,12 +986,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/agent/{agentId}`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide a paginated list of minimal information about environments executable by a given agent.
+     */
+    async getEnvironmentsExecutableByAgentRaw(requestParameters: GetEnvironmentsExecutableByAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+        const requestOptions = await this.getEnvironmentsExecutableByAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -877,9 +1013,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide a paginated list of minimal information about environments executable by a given elastic image configuration.
+     * Creates request options for getEnvironmentsExecutableByElasticConfiguration without sending the request
      */
-    async getEnvironmentsExecutableByElasticConfigurationRaw(requestParameters: GetEnvironmentsExecutableByElasticConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+    async getEnvironmentsExecutableByElasticConfigurationRequestOpts(requestParameters: GetEnvironmentsExecutableByElasticConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -907,12 +1043,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/elasticImageConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide a paginated list of minimal information about environments executable by a given elastic image configuration.
+     */
+    async getEnvironmentsExecutableByElasticConfigurationRaw(requestParameters: GetEnvironmentsExecutableByElasticConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+        const requestOptions = await this.getEnvironmentsExecutableByElasticConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -926,9 +1070,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide a paginated list of minimal information about environments executable by a given ephemeral agent template.
+     * Creates request options for getEnvironmentsExecutableByEphemeralAgentTemplate without sending the request
      */
-    async getEnvironmentsExecutableByEphemeralAgentTemplateRaw(requestParameters: GetEnvironmentsExecutableByEphemeralAgentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+    async getEnvironmentsExecutableByEphemeralAgentTemplateRequestOpts(requestParameters: GetEnvironmentsExecutableByEphemeralAgentTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['templateId'] == null) {
             throw new runtime.RequiredError(
                 'templateId',
@@ -956,12 +1100,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/ephemeral/{templateId}`;
         urlPath = urlPath.replace(`{${"templateId"}}`, encodeURIComponent(String(requestParameters['templateId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide a paginated list of minimal information about environments executable by a given ephemeral agent template.
+     */
+    async getEnvironmentsExecutableByEphemeralAgentTemplateRaw(requestParameters: GetEnvironmentsExecutableByEphemeralAgentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEnvironmentsExecutableByAgent200Response>> {
+        const requestOptions = await this.getEnvironmentsExecutableByEphemeralAgentTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -975,9 +1127,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the details of a requirement for a given environment.
+     * Creates request options for getRequirementForEnvironment without sending the request
      */
-    async getRequirementForEnvironmentRaw(requestParameters: GetRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+    async getRequirementForEnvironmentRequestOpts(requestParameters: GetRequirementForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1001,12 +1153,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"requirementId"}}`, encodeURIComponent(String(requestParameters['requirementId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the details of a requirement for a given environment.
+     */
+    async getRequirementForEnvironmentRaw(requestParameters: GetRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+        const requestOptions = await this.getRequirementForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1020,9 +1180,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets all the requirements of an environment.
+     * Creates request options for getRequirementsForEnvironment without sending the request
      */
-    async getRequirementsForEnvironmentRaw(requestParameters: GetRequirementsForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRequirement>>> {
+    async getRequirementsForEnvironmentRequestOpts(requestParameters: GetRequirementsForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1038,12 +1198,20 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/requirement`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets all the requirements of an environment.
+     */
+    async getRequirementsForEnvironmentRaw(requestParameters: GetRequirementsForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRequirement>>> {
+        const requestOptions = await this.getRequirementsForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1057,9 +1225,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Change environment position within deployment project.
+     * Creates request options for moveEnvironment without sending the request
      */
-    async moveEnvironmentRaw(requestParameters: MoveEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async moveEnvironmentRequestOpts(requestParameters: MoveEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1091,12 +1259,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"relativeEnvironmentId"}}`, encodeURIComponent(String(requestParameters['relativeEnvironmentId'])));
         urlPath = urlPath.replace(`{${"position"}}`, encodeURIComponent(String(requestParameters['position'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Change environment position within deployment project.
+     */
+    async moveEnvironmentRaw(requestParameters: MoveEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.moveEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1109,9 +1285,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove agent/image from list of dedicated executors for given environment.
+     * Creates request options for removeAgentAssignmentFromEnvironment without sending the request
      */
-    async removeAgentAssignmentFromEnvironmentRaw(requestParameters: RemoveAgentAssignmentFromEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeAgentAssignmentFromEnvironmentRequestOpts(requestParameters: RemoveAgentAssignmentFromEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1135,12 +1311,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"executorKey"}}`, encodeURIComponent(String(requestParameters['executorKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove agent/image from list of dedicated executors for given environment.
+     */
+    async removeAgentAssignmentFromEnvironmentRaw(requestParameters: RemoveAgentAssignmentFromEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeAgentAssignmentFromEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1153,9 +1337,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove agent/image from list of dedicated executors for given job.
+     * Creates request options for removeAgentAssignmentFromJob without sending the request
      */
-    async removeAgentAssignmentFromJobRaw(requestParameters: RemoveAgentAssignmentFromJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeAgentAssignmentFromJobRequestOpts(requestParameters: RemoveAgentAssignmentFromJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['executorKey'] == null) {
             throw new runtime.RequiredError(
                 'executorKey',
@@ -1179,12 +1363,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"executorKey"}}`, encodeURIComponent(String(requestParameters['executorKey'])));
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove agent/image from list of dedicated executors for given job.
+     */
+    async removeAgentAssignmentFromJobRaw(requestParameters: RemoveAgentAssignmentFromJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeAgentAssignmentFromJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1197,9 +1389,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a requirement for an environment.
+     * Creates request options for removeRequirementFromEnvironment without sending the request
      */
-    async removeRequirementFromEnvironmentRaw(requestParameters: RemoveRequirementFromEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeRequirementFromEnvironmentRequestOpts(requestParameters: RemoveRequirementFromEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1223,12 +1415,20 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"requirementId"}}`, encodeURIComponent(String(requestParameters['requirementId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a requirement for an environment.
+     */
+    async removeRequirementFromEnvironmentRaw(requestParameters: RemoveRequirementFromEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeRequirementFromEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1241,9 +1441,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Save Docker configuration for given environment.
+     * Creates request options for saveDockerPipelinesConfiguration without sending the request
      */
-    async saveDockerPipelinesConfigurationRaw(requestParameters: SaveDockerPipelinesConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async saveDockerPipelinesConfigurationRequestOpts(requestParameters: SaveDockerPipelinesConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1261,13 +1461,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/docker`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDockerPipelineConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Save Docker configuration for given environment.
+     */
+    async saveDockerPipelinesConfigurationRaw(requestParameters: SaveDockerPipelinesConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.saveDockerPipelinesConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1280,9 +1488,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the environment prerequisites.
+     * Creates request options for updateEnvironmentPrerequisites without sending the request
      */
-    async updateEnvironmentPrerequisitesRaw(requestParameters: UpdateEnvironmentPrerequisitesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateEnvironmentPrerequisitesRequestOpts(requestParameters: UpdateEnvironmentPrerequisitesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1300,13 +1508,21 @@ export class CoreApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/environment/{environmentId}/prerequisites`;
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnvironmentPrerequisites'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the environment prerequisites.
+     */
+    async updateEnvironmentPrerequisitesRaw(requestParameters: UpdateEnvironmentPrerequisitesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateEnvironmentPrerequisitesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1319,9 +1535,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the environment variable.
+     * Creates request options for updateEnvironmentVariable without sending the request
      */
-    async updateEnvironmentVariableRaw(requestParameters: UpdateEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+    async updateEnvironmentVariableRequestOpts(requestParameters: UpdateEnvironmentVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableName'] == null) {
             throw new runtime.RequiredError(
                 'variableName',
@@ -1347,13 +1563,21 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the environment variable.
+     */
+    async updateEnvironmentVariableRaw(requestParameters: UpdateEnvironmentVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+        const requestOptions = await this.updateEnvironmentVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1367,9 +1591,9 @@ export class CoreApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a requirement for a given environment.
+     * Creates request options for updateRequirementForEnvironment without sending the request
      */
-    async updateRequirementForEnvironmentRaw(requestParameters: UpdateRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+    async updateRequirementForEnvironmentRequestOpts(requestParameters: UpdateRequirementForEnvironmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentId'] == null) {
             throw new runtime.RequiredError(
                 'environmentId',
@@ -1395,13 +1619,21 @@ export class CoreApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"environmentId"}}`, encodeURIComponent(String(requestParameters['environmentId'])));
         urlPath = urlPath.replace(`{${"requirementId"}}`, encodeURIComponent(String(requestParameters['requirementId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRequirement'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a requirement for a given environment.
+     */
+    async updateRequirementForEnvironmentRaw(requestParameters: UpdateRequirementForEnvironmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRequirement>> {
+        const requestOptions = await this.updateRequirementForEnvironmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

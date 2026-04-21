@@ -32,9 +32,9 @@ export interface CreateRequest {
 export class TrustedKeysManagementApi extends runtime.BaseAPI {
 
     /**
-     * Delete trusted key.
+     * Creates request options for _delete without sending the request
      */
-    async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async _deleteRequestOpts(requestParameters: DeleteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -50,12 +50,20 @@ export class TrustedKeysManagementApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/security/trustedKey/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete trusted key.
+     */
+    async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this._deleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -68,9 +76,9 @@ export class TrustedKeysManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create new trusted key.
+     * Creates request options for create without sending the request
      */
-    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTrustedKey>> {
+    async createRequestOpts(requestParameters: CreateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restTrustedKey'] == null) {
             throw new runtime.RequiredError(
                 'restTrustedKey',
@@ -87,13 +95,21 @@ export class TrustedKeysManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/trustedKey`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restTrustedKey'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create new trusted key.
+     */
+    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestTrustedKey>> {
+        const requestOptions = await this.createRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -107,9 +123,9 @@ export class TrustedKeysManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all trusted keys.
+     * Creates request options for findAll without sending the request
      */
-    async findAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestTrustedKey>>> {
+    async findAllRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -117,12 +133,20 @@ export class TrustedKeysManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/trustedKey`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all trusted keys.
+     */
+    async findAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestTrustedKey>>> {
+        const requestOptions = await this.findAllRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

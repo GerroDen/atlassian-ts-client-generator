@@ -35,9 +35,9 @@ export interface UploadAvatarRequest {
 export class AvatarApi extends runtime.BaseAPI {
 
     /**
-     * Deletes the current avatar for the currently authenticated user.
+     * Creates request options for deleteAvatar without sending the request
      */
-    async deleteAvatarRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAvatarRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -45,12 +45,20 @@ export class AvatarApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/avatar/user/avatar.png`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the current avatar for the currently authenticated user.
+     */
+    async deleteAvatarRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAvatarRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -63,9 +71,9 @@ export class AvatarApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns either the avatar file for a specified user or the gravatar URL. The priority order: custom user avatar as a file, gravatar URL, default avatar as a file. The endpoint supports Last-Modified/If-Modified-Since headers and sets cache policy with expiration equal by default to 90 seconds.
+     * Creates request options for retrieveAvatar without sending the request
      */
-    async retrieveAvatarRaw(requestParameters: RetrieveAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async retrieveAvatarRequestOpts(requestParameters: RetrieveAvatarRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userName'] == null) {
             throw new runtime.RequiredError(
                 'userName',
@@ -85,12 +93,20 @@ export class AvatarApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/avatar/user/{userName}/avatar.png`;
         urlPath = urlPath.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns either the avatar file for a specified user or the gravatar URL. The priority order: custom user avatar as a file, gravatar URL, default avatar as a file. The endpoint supports Last-Modified/If-Modified-Since headers and sets cache policy with expiration equal by default to 90 seconds.
+     */
+    async retrieveAvatarRaw(requestParameters: RetrieveAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.retrieveAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -103,9 +119,9 @@ export class AvatarApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updated the avatar for the currently authenticated user.
+     * Creates request options for uploadAvatar without sending the request
      */
-    async uploadAvatarRaw(requestParameters: UploadAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async uploadAvatarRequestOpts(requestParameters: UploadAvatarRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -152,13 +168,21 @@ export class AvatarApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/avatar/user/avatar.png`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updated the avatar for the currently authenticated user.
+     */
+    async uploadAvatarRaw(requestParameters: UploadAvatarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.uploadAvatarRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

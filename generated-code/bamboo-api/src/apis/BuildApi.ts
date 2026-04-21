@@ -204,9 +204,9 @@ export interface UnmarkPlanFavouriteRequest {
 export class BuildApi extends runtime.BaseAPI {
 
     /**
-     * Add new label to plan.
+     * Creates request options for addPlanLabel without sending the request
      */
-    async addPlanLabelRaw(requestParameters: AddPlanLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addPlanLabelRequestOpts(requestParameters: AddPlanLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -239,13 +239,21 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restPlanLabel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add new label to plan.
+     */
+    async addPlanLabelRaw(requestParameters: AddPlanLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addPlanLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -258,9 +266,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a new plan variable.
+     * Creates request options for addPlanVariable without sending the request
      */
-    async addPlanVariableRaw(requestParameters: AddPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+    async addPlanVariableRequestOpts(requestParameters: AddPlanVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -293,13 +301,21 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a new plan variable.
+     */
+    async addPlanVariableRaw(requestParameters: AddPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+        const requestOptions = await this.addPlanVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -313,9 +329,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create branch for a plan. You can use **vcsBranch** query param to define which vcsBranch should newly created branch use. If not specified it will not override vcsBranch from the plan.
+     * Creates request options for createNewBranch without sending the request
      */
-    async createNewBranchRaw(requestParameters: CreateNewBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlanBranch>> {
+    async createNewBranchRequestOpts(requestParameters: CreateNewBranchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -359,12 +375,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters['branchName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create branch for a plan. You can use **vcsBranch** query param to define which vcsBranch should newly created branch use. If not specified it will not override vcsBranch from the plan.
+     */
+    async createNewBranchRaw(requestParameters: CreateNewBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlanBranch>> {
+        const requestOptions = await this.createNewBranchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -378,9 +402,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Marks plan for deletion. Plan will be deleted by a batch job.
+     * Creates request options for deletePlan without sending the request
      */
-    async deletePlanRaw(requestParameters: DeletePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePlanRequestOpts(requestParameters: DeletePlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -404,12 +428,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Marks plan for deletion. Plan will be deleted by a batch job.
+     */
+    async deletePlanRaw(requestParameters: DeletePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -422,9 +454,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the plan variable.
+     * Creates request options for deletePlanVariable without sending the request
      */
-    async deletePlanVariableRaw(requestParameters: DeletePlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deletePlanVariableRequestOpts(requestParameters: DeletePlanVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -456,12 +488,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the plan variable.
+     */
+    async deletePlanVariableRaw(requestParameters: DeletePlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePlanVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -474,9 +514,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Disable plan.
+     * Creates request options for disablePlan without sending the request
      */
-    async disablePlanRaw(requestParameters: DisablePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async disablePlanRequestOpts(requestParameters: DisablePlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -500,12 +540,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Disable plan.
+     */
+    async disablePlanRaw(requestParameters: DisablePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.disablePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -518,9 +566,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the plan variable.
+     * Creates request options for editPlanVariable without sending the request
      */
-    async editPlanVariableRaw(requestParameters: EditPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+    async editPlanVariableRequestOpts(requestParameters: EditPlanVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -561,13 +609,21 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the plan variable.
+     */
+    async editPlanVariableRaw(requestParameters: EditPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+        const requestOptions = await this.editPlanVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -581,9 +637,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable plan.
+     * Creates request options for enablePlan without sending the request
      */
-    async enablePlanRaw(requestParameters: EnablePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enablePlanRequestOpts(requestParameters: EnablePlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -607,12 +663,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable plan.
+     */
+    async enablePlanRaw(requestParameters: EnablePlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enablePlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -625,9 +689,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable specs scanning for all branches.
+     * Creates request options for enableSpecsForBranches without sending the request
      */
-    async enableSpecsForBranchesRaw(requestParameters: EnableSpecsForBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableSpecsForBranchesRequestOpts(requestParameters: EnableSpecsForBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -651,12 +715,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable specs scanning for all branches.
+     */
+    async enableSpecsForBranchesRaw(requestParameters: EnableSpecsForBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableSpecsForBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -669,9 +741,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Export plan as Bamboo Specs code.
+     * Creates request options for exportPlanSpec without sending the request
      */
-    async exportPlanSpecRaw(requestParameters: ExportPlanSpecRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async exportPlanSpecRequestOpts(requestParameters: ExportPlanSpecRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -703,12 +775,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Export plan as Bamboo Specs code.
+     */
+    async exportPlanSpecRaw(requestParameters: ExportPlanSpecRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.exportPlanSpecRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -726,9 +806,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all plans that user has READ permission for and allowed to see.  Possible expand parameters:  - <tt>plans</tt> - list of plans  - <tt>plans.plan</tt> - list of plans with plan details  - <tt>plans.plan.actions</tt> - list of plans with actions details
+     * Creates request options for getAllPlanList without sending the request
      */
-    async getAllPlanListRaw(requestParameters: GetAllPlanListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlans>> {
+    async getAllPlanListRequestOpts(requestParameters: GetAllPlanListRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -740,12 +820,20 @@ export class BuildApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/plan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List all plans that user has READ permission for and allowed to see.  Possible expand parameters:  - <tt>plans</tt> - list of plans  - <tt>plans.plan</tt> - list of plans with plan details  - <tt>plans.plan.actions</tt> - list of plans with actions details
+     */
+    async getAllPlanListRaw(requestParameters: GetAllPlanListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlans>> {
+        const requestOptions = await this.getAllPlanListRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -759,9 +847,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves Docker configuration for given job.
+     * Creates request options for getDockerPipelineConfiguration without sending the request
      */
-    async getDockerPipelineConfigurationRaw(requestParameters: GetDockerPipelineConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDockerPipelineConfiguration>> {
+    async getDockerPipelineConfigurationRequestOpts(requestParameters: GetDockerPipelineConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobKey'] == null) {
             throw new runtime.RequiredError(
                 'jobKey',
@@ -777,12 +865,20 @@ export class BuildApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/job/{jobKey}/docker`;
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves Docker configuration for given job.
+     */
+    async getDockerPipelineConfigurationRaw(requestParameters: GetDockerPipelineConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDockerPipelineConfiguration>> {
+        const requestOptions = await this.getDockerPipelineConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -796,9 +892,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch linked Jira issue details.
+     * Creates request options for getIssueDetails without sending the request
      */
-    async getIssueDetailsRaw(requestParameters: GetIssueDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJiraIssue>> {
+    async getIssueDetailsRequestOpts(requestParameters: GetIssueDetailsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -830,12 +926,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch linked Jira issue details.
+     */
+    async getIssueDetailsRaw(requestParameters: GetIssueDetailsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJiraIssue>> {
+        const requestOptions = await this.getIssueDetailsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -849,9 +953,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch plan details.
+     * Creates request options for getPlan without sending the request
      */
-    async getPlanRaw(requestParameters: GetPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+    async getPlanRequestOpts(requestParameters: GetPlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -879,12 +983,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch plan details.
+     */
+    async getPlanRaw(requestParameters: GetPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+        const requestOptions = await this.getPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -898,9 +1010,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch plan details.
+     * Creates request options for getPlanAlias without sending the request
      */
-    async getPlanAliasRaw(requestParameters: GetPlanAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+    async getPlanAliasRequestOpts(requestParameters: GetPlanAliasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -928,12 +1040,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch plan details.
+     */
+    async getPlanAliasRaw(requestParameters: GetPlanAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+        const requestOptions = await this.getPlanAliasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -947,9 +1067,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch plan\'s shared artifact definitions.
+     * Creates request options for getPlanArtifactDefinition without sending the request
      */
-    async getPlanArtifactDefinitionRaw(requestParameters: GetPlanArtifactDefinitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactDefinitions>> {
+    async getPlanArtifactDefinitionRequestOpts(requestParameters: GetPlanArtifactDefinitionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -981,12 +1101,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch plan\'s shared artifact definitions.
+     */
+    async getPlanArtifactDefinitionRaw(requestParameters: GetPlanArtifactDefinitionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactDefinitions>> {
+        const requestOptions = await this.getPlanArtifactDefinitionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1000,9 +1128,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide details for specified branch of a specified plan.
+     * Creates request options for getPlanBranch without sending the request
      */
-    async getPlanBranchRaw(requestParameters: GetPlanBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlanBranch>> {
+    async getPlanBranchRequestOpts(requestParameters: GetPlanBranchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1034,12 +1162,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters['branchName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide details for specified branch of a specified plan.
+     */
+    async getPlanBranchRaw(requestParameters: GetPlanBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlanBranch>> {
+        const requestOptions = await this.getPlanBranchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1053,9 +1189,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch list of branches for specified plan.
+     * Creates request options for getPlanBranches without sending the request
      */
-    async getPlanBranchesRaw(requestParameters: GetPlanBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getPlanBranchesRequestOpts(requestParameters: GetPlanBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1095,12 +1231,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch list of branches for specified plan.
+     */
+    async getPlanBranchesRaw(requestParameters: GetPlanBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getPlanBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -1118,9 +1262,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides the directories where artifacts and build logs can be found for a given plan key. Disabled by default.  See https://confluence.atlassian.com/display/BAMBOO/Plan+directory+information+REST+API for more information.
+     * Creates request options for getPlanDirectory without sending the request
      */
-    async getPlanDirectoryRaw(requestParameters: GetPlanDirectoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DirectoryInformationResponse>> {
+    async getPlanDirectoryRequestOpts(requestParameters: GetPlanDirectoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -1136,12 +1280,20 @@ export class BuildApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/planDirectoryInfo/{planKey}`;
         urlPath = urlPath.replace(`{${"planKey"}}`, encodeURIComponent(String(requestParameters['planKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides the directories where artifacts and build logs can be found for a given plan key. Disabled by default.  See https://confluence.atlassian.com/display/BAMBOO/Plan+directory+information+REST+API for more information.
+     */
+    async getPlanDirectoryRaw(requestParameters: GetPlanDirectoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DirectoryInformationResponse>> {
+        const requestOptions = await this.getPlanDirectoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1155,9 +1307,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * List of labels for plan.
+     * Creates request options for getPlanLabels without sending the request
      */
-    async getPlanLabelsRaw(requestParameters: GetPlanLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildLabels>> {
+    async getPlanLabelsRequestOpts(requestParameters: GetPlanLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1181,12 +1333,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List of labels for plan.
+     */
+    async getPlanLabelsRaw(requestParameters: GetPlanLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildLabels>> {
+        const requestOptions = await this.getPlanLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1200,9 +1360,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the plan variable by given name.
+     * Creates request options for getPlanVariable without sending the request
      */
-    async getPlanVariableRaw(requestParameters: GetPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+    async getPlanVariableRequestOpts(requestParameters: GetPlanVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1234,12 +1394,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the plan variable by given name.
+     */
+    async getPlanVariableRaw(requestParameters: GetPlanVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+        const requestOptions = await this.getPlanVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1253,9 +1421,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the list of all variables for a plan.
+     * Creates request options for getPlanVariables without sending the request
      */
-    async getPlanVariablesRaw(requestParameters: GetPlanVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getPlanVariablesRequestOpts(requestParameters: GetPlanVariablesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1279,12 +1447,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the list of all variables for a plan.
+     */
+    async getPlanVariablesRaw(requestParameters: GetPlanVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getPlanVariablesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1297,9 +1473,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * List of vcs branch names for branches that exist on the default repository of this plan.
+     * Creates request options for getVcsBranches without sending the request
      */
-    async getVcsBranchesRaw(requestParameters: GetVcsBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getVcsBranchesRequestOpts(requestParameters: GetVcsBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1335,12 +1511,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List of vcs branch names for branches that exist on the default repository of this plan.
+     */
+    async getVcsBranchesRaw(requestParameters: GetVcsBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.getVcsBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
@@ -1358,9 +1542,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add plan to favourite.
+     * Creates request options for markPlanFavourite without sending the request
      */
-    async markPlanFavouriteRaw(requestParameters: MarkPlanFavouriteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async markPlanFavouriteRequestOpts(requestParameters: MarkPlanFavouriteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1384,12 +1568,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add plan to favourite.
+     */
+    async markPlanFavouriteRaw(requestParameters: MarkPlanFavouriteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.markPlanFavouriteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1402,9 +1594,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Quarantine plan\'s test.
+     * Creates request options for quarantineTest without sending the request
      */
-    async quarantineTestRaw(requestParameters: QuarantineTestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async quarantineTestRequestOpts(requestParameters: QuarantineTestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1436,12 +1628,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"testId"}}`, encodeURIComponent(String(requestParameters['testId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Quarantine plan\'s test.
+     */
+    async quarantineTestRaw(requestParameters: QuarantineTestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.quarantineTestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1454,9 +1654,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove label from plan.
+     * Creates request options for removePlanLabel without sending the request
      */
-    async removePlanLabelRaw(requestParameters: RemovePlanLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePlanLabelRequestOpts(requestParameters: RemovePlanLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1488,12 +1688,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove label from plan.
+     */
+    async removePlanLabelRaw(requestParameters: RemovePlanLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePlanLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1506,9 +1714,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates Docker configuration for given job.
+     * Creates request options for setDockerPipelineConfiguration without sending the request
      */
-    async setDockerPipelineConfigurationRaw(requestParameters: SetDockerPipelineConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setDockerPipelineConfigurationRequestOpts(requestParameters: SetDockerPipelineConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['jobKey'] == null) {
             throw new runtime.RequiredError(
                 'jobKey',
@@ -1533,13 +1741,21 @@ export class BuildApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/job/{jobKey}/docker`;
         urlPath = urlPath.replace(`{${"jobKey"}}`, encodeURIComponent(String(requestParameters['jobKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDockerPipelineConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates Docker configuration for given job.
+     */
+    async setDockerPipelineConfigurationRaw(requestParameters: SetDockerPipelineConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setDockerPipelineConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1552,9 +1768,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unleash plan\'s test from quarantine.
+     * Creates request options for unleashTest without sending the request
      */
-    async unleashTestRaw(requestParameters: UnleashTestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unleashTestRequestOpts(requestParameters: UnleashTestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1586,12 +1802,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"testId"}}`, encodeURIComponent(String(requestParameters['testId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unleash plan\'s test from quarantine.
+     */
+    async unleashTestRaw(requestParameters: UnleashTestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unleashTestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1604,9 +1828,9 @@ export class BuildApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove plan from favorites.
+     * Creates request options for unmarkPlanFavourite without sending the request
      */
-    async unmarkPlanFavouriteRaw(requestParameters: UnmarkPlanFavouriteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unmarkPlanFavouriteRequestOpts(requestParameters: UnmarkPlanFavouriteRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1630,12 +1854,20 @@ export class BuildApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove plan from favorites.
+     */
+    async unmarkPlanFavouriteRaw(requestParameters: UnmarkPlanFavouriteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unmarkPlanFavouriteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

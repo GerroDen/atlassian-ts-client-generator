@@ -240,7 +240,7 @@ export interface BambooEntityOid {
     entityOid?: number;
     /**
      * 
-     * @type {string}
+     * @type {BambooEntityOidEntityTypeEnum}
      * @memberof BambooEntityOid
      */
     entityType?: BambooEntityOidEntityTypeEnum;
@@ -309,7 +309,7 @@ export interface BranchIntegrationConfiguration {
     pushEnabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {BranchIntegrationConfigurationStrategyEnum}
      * @memberof BranchIntegrationConfiguration
      */
     strategy?: BranchIntegrationConfigurationStrategyEnum;
@@ -358,7 +358,7 @@ export interface BranchIntegrationPoint {
 export interface BranchMonitoringConfiguration {
     /**
      * 
-     * @type {string}
+     * @type {BranchMonitoringConfigurationBranchTriggeringOptionEnum}
      * @memberof BranchMonitoringConfiguration
      */
     branchTriggeringOption?: BranchMonitoringConfigurationBranchTriggeringOptionEnum;
@@ -370,7 +370,7 @@ export interface BranchMonitoringConfiguration {
     defaultBranchIntegrationConfiguration?: BranchIntegrationConfiguration;
     /**
      * 
-     * @type {string}
+     * @type {BranchMonitoringConfigurationDefaultBranchNotificationStrategyEnum}
      * @memberof BranchMonitoringConfiguration
      */
     defaultBranchNotificationStrategy?: BranchMonitoringConfigurationDefaultBranchNotificationStrategyEnum;
@@ -406,7 +406,7 @@ export interface BranchMonitoringConfiguration {
     planBranchCreationEnabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {BranchMonitoringConfigurationPlanBranchWorkflowEnum}
      * @memberof BranchMonitoringConfiguration
      */
     planBranchWorkflow?: BranchMonitoringConfigurationPlanBranchWorkflowEnum;
@@ -494,13 +494,13 @@ export interface BranchSpecificConfiguration {
     ignoreSpecs?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {BranchSpecificConfigurationNotificationStrategyEnum}
      * @memberof BranchSpecificConfiguration
      */
     notificationStrategy?: BranchSpecificConfigurationNotificationStrategyEnum;
     /**
      * 
-     * @type {string}
+     * @type {BranchSpecificConfigurationPlanBranchWorkflowEnum}
      * @memberof BranchSpecificConfiguration
      */
     planBranchWorkflow?: BranchSpecificConfigurationPlanBranchWorkflowEnum;
@@ -596,7 +596,7 @@ export interface BuildAgent {
     requestedToBeStopped?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {BuildAgentTypeEnum}
      * @memberof BuildAgent
      */
     type?: BuildAgentTypeEnum;
@@ -800,7 +800,7 @@ export interface BuildResultsSummary {
     buildAgentId?: number;
     /**
      * 
-     * @type {string}
+     * @type {BuildResultsSummaryBuildAgentTypeEnum}
      * @memberof BuildResultsSummary
      */
     buildAgentType?: BuildResultsSummaryBuildAgentTypeEnum;
@@ -842,7 +842,7 @@ export interface BuildResultsSummary {
     buildResultKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {BuildResultsSummaryBuildStateEnum}
      * @memberof BuildResultsSummary
      */
     buildState?: BuildResultsSummaryBuildStateEnum;
@@ -884,7 +884,7 @@ export interface BuildResultsSummary {
     customBuildData?: object;
     /**
      * 
-     * @type {string}
+     * @type {BuildResultsSummaryDeltaStateEnum}
      * @memberof BuildResultsSummary
      */
     deltaState?: BuildResultsSummaryDeltaStateEnum;
@@ -992,7 +992,7 @@ export interface BuildResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {BuildResultsSummaryLifeCycleStateEnum}
      * @memberof BuildResultsSummary
      */
     lifeCycleState?: BuildResultsSummaryLifeCycleStateEnum;
@@ -1322,7 +1322,7 @@ export interface ChainResultsSummary {
     buildAgentId?: number;
     /**
      * 
-     * @type {string}
+     * @type {ChainResultsSummaryBuildAgentTypeEnum}
      * @memberof ChainResultsSummary
      */
     buildAgentType?: ChainResultsSummaryBuildAgentTypeEnum;
@@ -1364,7 +1364,7 @@ export interface ChainResultsSummary {
     buildResultKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {ChainResultsSummaryBuildStateEnum}
      * @memberof ChainResultsSummary
      */
     buildState?: ChainResultsSummaryBuildStateEnum;
@@ -1406,7 +1406,7 @@ export interface ChainResultsSummary {
     customBuildData?: object;
     /**
      * 
-     * @type {string}
+     * @type {ChainResultsSummaryDeltaStateEnum}
      * @memberof ChainResultsSummary
      */
     deltaState?: ChainResultsSummaryDeltaStateEnum;
@@ -1514,7 +1514,7 @@ export interface ChainResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {ChainResultsSummaryLifeCycleStateEnum}
      * @memberof ChainResultsSummary
      */
     lifeCycleState?: ChainResultsSummaryLifeCycleStateEnum;
@@ -1904,7 +1904,7 @@ export interface ChainStageResult {
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {ChainStageResultLifeCycleStateEnum}
      * @memberof ChainStageResult
      */
     lifeCycleState?: ChainStageResultLifeCycleStateEnum;
@@ -1970,7 +1970,7 @@ export interface ChainStageResult {
     sortedBuildResults?: Array<BuildResultsSummary>;
     /**
      * 
-     * @type {string}
+     * @type {ChainStageResultStateEnum}
      * @memberof ChainStageResult
      */
     state?: ChainStageResultStateEnum;
@@ -2389,7 +2389,7 @@ export interface DeploymentVersionItem {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {DeploymentVersionItemTypeEnum}
      * @memberof DeploymentVersionItem
      */
     type?: DeploymentVersionItemTypeEnum;
@@ -2443,7 +2443,7 @@ export interface DeploymentVersionStatus {
     userName?: string;
     /**
      * 
-     * @type {string}
+     * @type {DeploymentVersionStatusVersionStateEnum}
      * @memberof DeploymentVersionStatus
      */
     versionState?: DeploymentVersionStatusVersionStateEnum;
@@ -2556,7 +2556,7 @@ export interface DockerPipelineConfiguration {
 export interface Environment {
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentConfigurationStateEnum}
      * @memberof Environment
      */
     configurationState?: EnvironmentConfigurationStateEnum;
@@ -2604,7 +2604,7 @@ export interface Environment {
     position?: number;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentReleaseApprovalPrerequisiteEnum}
      * @memberof Environment
      */
     releaseApprovalPrerequisite?: EnvironmentReleaseApprovalPrerequisiteEnum;
@@ -3705,7 +3705,7 @@ export interface ImmutableChain {
     effectiveVariables?: Array<VariableDefinition>;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableChainEntityTypeEnum}
      * @memberof ImmutableChain
      */
     entityType?: ImmutableChainEntityTypeEnum;
@@ -3819,7 +3819,7 @@ export interface ImmutableChain {
     planRepositoryDefinitions?: Array<PlanRepositoryDefinition>;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableChainPlanTypeEnum}
      * @memberof ImmutableChain
      */
     planType?: ImmutableChainPlanTypeEnum;
@@ -3946,7 +3946,7 @@ export interface ImmutableChainStage {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableChainStageEntityTypeEnum}
      * @memberof ImmutableChainStage
      */
     entityType?: ImmutableChainStageEntityTypeEnum;
@@ -4117,7 +4117,7 @@ export interface ImmutableJob {
     effectiveVariables?: Array<VariableDefinition>;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableJobEntityTypeEnum}
      * @memberof ImmutableJob
      */
     entityType?: ImmutableJobEntityTypeEnum;
@@ -4213,7 +4213,7 @@ export interface ImmutableJob {
     planKey?: PlanKey;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableJobPlanTypeEnum}
      * @memberof ImmutableJob
      */
     planType?: ImmutableJobPlanTypeEnum;
@@ -4408,7 +4408,7 @@ export interface ImmutablePlan {
     effectiveVariables?: Array<VariableDefinition>;
     /**
      * 
-     * @type {string}
+     * @type {ImmutablePlanEntityTypeEnum}
      * @memberof ImmutablePlan
      */
     entityType?: ImmutablePlanEntityTypeEnum;
@@ -4498,7 +4498,7 @@ export interface ImmutablePlan {
     planKey?: PlanKey;
     /**
      * 
-     * @type {string}
+     * @type {ImmutablePlanPlanTypeEnum}
      * @memberof ImmutablePlan
      */
     planType?: ImmutablePlanPlanTypeEnum;
@@ -4613,7 +4613,7 @@ export interface ImmutableRequirement {
     regexMatch?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableRequirementTypeOfMatchEnum}
      * @memberof ImmutableRequirement
      */
     typeOfMatch?: ImmutableRequirementTypeOfMatchEnum;
@@ -4681,7 +4681,7 @@ export interface ImmutableResultsSummary {
     buildAgentId?: number;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableResultsSummaryBuildAgentTypeEnum}
      * @memberof ImmutableResultsSummary
      */
     buildAgentType?: ImmutableResultsSummaryBuildAgentTypeEnum;
@@ -4711,7 +4711,7 @@ export interface ImmutableResultsSummary {
     buildNumber?: number;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableResultsSummaryBuildStateEnum}
      * @memberof ImmutableResultsSummary
      */
     buildState?: ImmutableResultsSummaryBuildStateEnum;
@@ -4747,7 +4747,7 @@ export interface ImmutableResultsSummary {
     customBuildData?: object;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableResultsSummaryDeltaStateEnum}
      * @memberof ImmutableResultsSummary
      */
     deltaState?: ImmutableResultsSummaryDeltaStateEnum;
@@ -4837,7 +4837,7 @@ export interface ImmutableResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableResultsSummaryLifeCycleStateEnum}
      * @memberof ImmutableResultsSummary
      */
     lifeCycleState?: ImmutableResultsSummaryLifeCycleStateEnum;
@@ -5156,7 +5156,7 @@ export interface ImmutableVcsLocationBambooSpecsState {
     revision?: string;
     /**
      * 
-     * @type {string}
+     * @type {ImmutableVcsLocationBambooSpecsStateSpecImportStateEnum}
      * @memberof ImmutableVcsLocationBambooSpecsState
      */
     specImportState?: ImmutableVcsLocationBambooSpecsStateSpecImportStateEnum;
@@ -6136,7 +6136,7 @@ export interface LinkedJiraIssue {
     issueKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {LinkedJiraIssueIssueTypeEnum}
      * @memberof LinkedJiraIssue
      */
     issueType?: LinkedJiraIssueIssueTypeEnum;
@@ -6376,7 +6376,7 @@ export interface MergeResultSummary {
     integrationRepositoryId?: number;
     /**
      * 
-     * @type {string}
+     * @type {MergeResultSummaryIntegrationStrategyEnum}
      * @memberof MergeResultSummary
      */
     integrationStrategy?: MergeResultSummaryIntegrationStrategyEnum;
@@ -6388,13 +6388,13 @@ export interface MergeResultSummary {
     mergeResultVcsKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {MergeResultSummaryMergeStateEnum}
      * @memberof MergeResultSummary
      */
     mergeState?: MergeResultSummaryMergeStateEnum;
     /**
      * 
-     * @type {string}
+     * @type {MergeResultSummaryPushStateEnum}
      * @memberof MergeResultSummary
      */
     pushState?: MergeResultSummaryPushStateEnum;
@@ -6444,7 +6444,7 @@ export type MergeResultSummaryPushStateEnum = typeof MergeResultSummaryPushState
 export interface MutableArtifact {
     /**
      * 
-     * @type {string}
+     * @type {MutableArtifactArchiverTypeEnum}
      * @memberof MutableArtifact
      */
     archiverType?: MutableArtifactArchiverTypeEnum;
@@ -6529,55 +6529,55 @@ export interface NextBuildNumber {
 export interface NodeLifecycleState {
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStatePAUSEDEnum}
      * @memberof NodeLifecycleState
      */
     pAUSED?: NodeLifecycleStatePAUSEDEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStatePAUSINGEnum}
      * @memberof NodeLifecycleState
      */
     pAUSING?: NodeLifecycleStatePAUSINGEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStatePREPARINGFORRESTARTEnum}
      * @memberof NodeLifecycleState
      */
     pREPARINGFORRESTART?: NodeLifecycleStatePREPARINGFORRESTARTEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateREADYFORRESTARTEnum}
      * @memberof NodeLifecycleState
      */
     rEADYFORRESTART?: NodeLifecycleStateREADYFORRESTARTEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateRUNNINGEnum}
      * @memberof NodeLifecycleState
      */
     rUNNING?: NodeLifecycleStateRUNNINGEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateRUNNINGASSECONDARYEnum}
      * @memberof NodeLifecycleState
      */
     rUNNINGASSECONDARY?: NodeLifecycleStateRUNNINGASSECONDARYEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateSETUPEnum}
      * @memberof NodeLifecycleState
      */
     sETUP?: NodeLifecycleStateSETUPEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateSTARTINGEnum}
      * @memberof NodeLifecycleState
      */
     sTARTING?: NodeLifecycleStateSTARTINGEnum;
     /**
      * 
-     * @type {string}
+     * @type {NodeLifecycleStateCorrespondingClusterStateEnum}
      * @memberof NodeLifecycleState
      */
     correspondingClusterState?: NodeLifecycleStateCorrespondingClusterStateEnum;
@@ -6797,7 +6797,7 @@ export interface NotificationRecipient {
     recipientConfig?: string;
     /**
      * 
-     * @type {Set<string>}
+     * @type {Set<NotificationRecipientScopesEnum>}
      * @memberof NotificationRecipient
      */
     scopes?: Set<NotificationRecipientScopesEnum>;
@@ -6895,7 +6895,7 @@ export interface NotificationSet {
     notificationRules?: Set<NotificationRule>;
     /**
      * 
-     * @type {string}
+     * @type {NotificationSetNotificationSetTypeEnum}
      * @memberof NotificationSet
      */
     notificationSetType?: NotificationSetNotificationSetTypeEnum;
@@ -6961,7 +6961,7 @@ export interface NotificationType {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {NotificationTypeScopeEnum}
      * @memberof NotificationType
      */
     scope?: NotificationTypeScopeEnum;
@@ -7145,7 +7145,7 @@ export interface PipelineDefinition {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {PipelineDefinitionTypeEnum}
      * @memberof PipelineDefinition
      */
     type?: PipelineDefinitionTypeEnum;
@@ -7243,7 +7243,7 @@ export interface Plan {
     effectiveVariables?: Array<VariableDefinition>;
     /**
      * 
-     * @type {string}
+     * @type {PlanEntityTypeEnum}
      * @memberof Plan
      */
     entityType?: PlanEntityTypeEnum;
@@ -7339,7 +7339,7 @@ export interface Plan {
     planKey?: PlanKey;
     /**
      * 
-     * @type {string}
+     * @type {PlanPlanTypeEnum}
      * @memberof Plan
      */
     planType?: PlanPlanTypeEnum;
@@ -7455,7 +7455,7 @@ export interface PlanRepositoryDefinition {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {PlanRepositoryDefinitionEntityTypeEnum}
      * @memberof PlanRepositoryDefinition
      */
     entityType?: PlanRepositoryDefinitionEntityTypeEnum;
@@ -7713,7 +7713,7 @@ export interface Project {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {ProjectEntityTypeEnum}
      * @memberof Project
      */
     entityType?: ProjectEntityTypeEnum;
@@ -7899,7 +7899,7 @@ export interface RepositoryDataEntity {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {RepositoryDataEntityEntityTypeEnum}
      * @memberof RepositoryDataEntity
      */
     entityType?: RepositoryDataEntityEntityTypeEnum;
@@ -8046,7 +8046,7 @@ export interface Requirement {
     systemRequirement?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RequirementTypeOfMatchEnum}
      * @memberof Requirement
      */
     typeOfMatch?: RequirementTypeOfMatchEnum;
@@ -8220,7 +8220,7 @@ export interface RestAgent {
 export interface RestAgentAssignmentExecutorDetails {
     /**
      * 
-     * @type {string}
+     * @type {RestAgentAssignmentExecutorDetailsAgentTypeEnum}
      * @memberof RestAgentAssignmentExecutorDetails
      */
     agentType?: RestAgentAssignmentExecutorDetailsAgentTypeEnum;
@@ -8262,7 +8262,7 @@ export interface RestAgentAssignmentExecutorDetails {
     removable?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestAgentAssignmentExecutorDetailsTypeEnum}
      * @memberof RestAgentAssignmentExecutorDetails
      */
     type?: RestAgentAssignmentExecutorDetailsTypeEnum;
@@ -8719,7 +8719,7 @@ export interface RestBuildAgent {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestBuildAgentTypeEnum}
      * @memberof RestBuildAgent
      */
     type?: RestBuildAgentTypeEnum;
@@ -9535,7 +9535,7 @@ export interface RestDedicatedAgent {
     executableId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestDedicatedAgentExecutableTypeEnum}
      * @memberof RestDedicatedAgent
      */
     executableType?: RestDedicatedAgentExecutableTypeEnum;
@@ -9547,7 +9547,7 @@ export interface RestDedicatedAgent {
     executorId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestDedicatedAgentExecutorTypeEnum}
      * @memberof RestDedicatedAgent
      */
     executorType?: RestDedicatedAgentExecutorTypeEnum;
@@ -9750,7 +9750,7 @@ export interface RestDeploymentResult {
     agentId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentResultAgentTypeEnum}
      * @memberof RestDeploymentResult
      */
     agentType?: RestDeploymentResultAgentTypeEnum;
@@ -9762,7 +9762,7 @@ export interface RestDeploymentResult {
     customData?: object;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentResultDeploymentStateEnum}
      * @memberof RestDeploymentResult
      */
     deploymentState?: RestDeploymentResultDeploymentStateEnum;
@@ -9816,7 +9816,7 @@ export interface RestDeploymentResult {
     key?: DeploymentResultKey;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentResultLifeCycleStateEnum}
      * @memberof RestDeploymentResult
      */
     lifeCycleState?: RestDeploymentResultLifeCycleStateEnum;
@@ -10103,7 +10103,7 @@ export interface RestDeploymentVersionStatus {
     userName?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentVersionStatusVersionStateEnum}
      * @memberof RestDeploymentVersionStatus
      */
     versionState?: RestDeploymentVersionStatusVersionStateEnum;
@@ -10129,7 +10129,7 @@ export type RestDeploymentVersionStatusVersionStateEnum = typeof RestDeploymentV
 export interface RestDeploymentVersionStatusForDashboard {
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum}
      * @memberof RestDeploymentVersionStatusForDashboard
      */
     deploymentVersionState?: RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum;
@@ -10173,7 +10173,7 @@ export type RestDeploymentVersionStatusForDashboardDeploymentVersionStateEnum = 
 export interface RestDeploymentVersionStatuses {
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentVersionStatusesCurrentUserStateEnum}
      * @memberof RestDeploymentVersionStatuses
      */
     currentUserState?: RestDeploymentVersionStatusesCurrentUserStateEnum;
@@ -10185,7 +10185,7 @@ export interface RestDeploymentVersionStatuses {
     statuses?: Array<RestDeploymentVersionStatus>;
     /**
      * 
-     * @type {string}
+     * @type {RestDeploymentVersionStatusesVersionGeneralStateEnum}
      * @memberof RestDeploymentVersionStatuses
      */
     versionGeneralState?: RestDeploymentVersionStatusesVersionGeneralStateEnum;
@@ -10265,7 +10265,7 @@ export interface RestElasticConfiguration {
     allocatePublicIpToVpcInstances?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {RestElasticConfigurationAwsCredentialsTypeEnum}
      * @memberof RestElasticConfiguration
      */
     awsCredentialsType?: RestElasticConfigurationAwsCredentialsTypeEnum;
@@ -10588,7 +10588,7 @@ export interface RestEnableContainer {
 export interface RestEnvironment {
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentConfigurationStateEnum}
      * @memberof RestEnvironment
      */
     configurationState?: RestEnvironmentConfigurationStateEnum;
@@ -10636,7 +10636,7 @@ export interface RestEnvironment {
     position?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentReleaseApprovalPrerequisiteEnum}
      * @memberof RestEnvironment
      */
     releaseApprovalPrerequisite?: RestEnvironmentReleaseApprovalPrerequisiteEnum;
@@ -10739,7 +10739,7 @@ export interface RestEnvironmentForExecutablesView {
 export interface RestEnvironmentPrerequisites {
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum}
      * @memberof RestEnvironmentPrerequisites
      */
     releaseApprovalPrerequisite?: RestEnvironmentPrerequisitesReleaseApprovalPrerequisiteEnum;
@@ -10776,7 +10776,7 @@ export interface RestEnvironmentStatusForDashboard {
     deploymentResultId?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentStatusForDashboardDeploymentStateEnum}
      * @memberof RestEnvironmentStatusForDashboard
      */
     deploymentState?: RestEnvironmentStatusForDashboardDeploymentStateEnum;
@@ -10824,7 +10824,7 @@ export interface RestEnvironmentStatusForDashboard {
     finishedDate?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentStatusForDashboardLifeCycleStateEnum}
      * @memberof RestEnvironmentStatusForDashboard
      */
     lifeCycleState?: RestEnvironmentStatusForDashboardLifeCycleStateEnum;
@@ -10879,7 +10879,7 @@ export interface RestEnvironmentStatusOfIssue {
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentStatusOfIssueIssueStatusEnum}
      * @memberof RestEnvironmentStatusOfIssue
      */
     issueStatus?: RestEnvironmentStatusOfIssueIssueStatusEnum;
@@ -10934,7 +10934,7 @@ export interface RestEnvironmentWithConfigCounts {
     compatibleAgentsCount?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentWithConfigCountsConfigurationStateEnum}
      * @memberof RestEnvironmentWithConfigCounts
      */
     configurationState?: RestEnvironmentWithConfigCountsConfigurationStateEnum;
@@ -10988,7 +10988,7 @@ export interface RestEnvironmentWithConfigCounts {
     position?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum}
      * @memberof RestEnvironmentWithConfigCounts
      */
     releaseApprovalPrerequisite?: RestEnvironmentWithConfigCountsReleaseApprovalPrerequisiteEnum;
@@ -11614,7 +11614,7 @@ export interface RestInfo {
     specsVersion?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestInfoStateEnum}
      * @memberof RestInfo
      */
     state?: RestInfoStateEnum;
@@ -11945,7 +11945,7 @@ export interface RestManualEncryptionConfiguration {
     limit?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestManualEncryptionConfigurationLimitUnitEnum}
      * @memberof RestManualEncryptionConfiguration
      */
     limitUnit?: RestManualEncryptionConfigurationLimitUnitEnum;
@@ -12109,7 +12109,7 @@ export interface RestOfflineAgentRemovalConfig {
     offlineElasticAgentRemovalIntervalHours?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum}
      * @memberof RestOfflineAgentRemovalConfig
      */
     offlineElasticAgentRemovalPolicy?: RestOfflineAgentRemovalConfigOfflineElasticAgentRemovalPolicyEnum;
@@ -12121,7 +12121,7 @@ export interface RestOfflineAgentRemovalConfig {
     offlineRemoteAgentRemovalIntervalHours?: number;
     /**
      * 
-     * @type {string}
+     * @type {RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum}
      * @memberof RestOfflineAgentRemovalConfig
      */
     offlineRemoteAgentRemovalPolicy?: RestOfflineAgentRemovalConfigOfflineRemoteAgentRemovalPolicyEnum;
@@ -14572,7 +14572,7 @@ export interface RestRequirement {
     readonly self?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestRequirementTypeOfMatchEnum}
      * @memberof RestRequirement
      */
     typeOfMatch?: RestRequirementTypeOfMatchEnum;
@@ -14961,13 +14961,13 @@ export interface RestSecuritySettings {
 export interface RestServerNodesInfo {
     /**
      * 
-     * @type {string}
+     * @type {RestServerNodesInfoAskedNodeStateEnum}
      * @memberof RestServerNodesInfo
      */
     askedNodeState?: RestServerNodesInfoAskedNodeStateEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestServerNodesInfoClusterStateEnum}
      * @memberof RestServerNodesInfo
      */
     clusterState?: RestServerNodesInfoClusterStateEnum;
@@ -15021,13 +15021,13 @@ export type RestServerNodesInfoClusterStateEnum = typeof RestServerNodesInfoClus
 export interface RestServerStatusInfo {
     /**
      * 
-     * @type {string}
+     * @type {RestServerStatusInfoAskedNodeStateEnum}
      * @memberof RestServerStatusInfo
      */
     askedNodeState?: RestServerStatusInfoAskedNodeStateEnum;
     /**
      * 
-     * @type {string}
+     * @type {RestServerStatusInfoClusterStateEnum}
      * @memberof RestServerStatusInfo
      */
     clusterState?: RestServerStatusInfoClusterStateEnum;
@@ -15683,7 +15683,7 @@ export interface RestVcsLocationBambooSpecsState {
     revision?: string;
     /**
      * 
-     * @type {string}
+     * @type {RestVcsLocationBambooSpecsStateSpecImportStateEnum}
      * @memberof RestVcsLocationBambooSpecsState
      */
     specImportState?: RestVcsLocationBambooSpecsStateSpecImportStateEnum;
@@ -16138,7 +16138,7 @@ export interface ResultsSummary {
     buildAgentId?: number;
     /**
      * 
-     * @type {string}
+     * @type {ResultsSummaryBuildAgentTypeEnum}
      * @memberof ResultsSummary
      */
     buildAgentType?: ResultsSummaryBuildAgentTypeEnum;
@@ -16180,7 +16180,7 @@ export interface ResultsSummary {
     buildResultKey?: string;
     /**
      * 
-     * @type {string}
+     * @type {ResultsSummaryBuildStateEnum}
      * @memberof ResultsSummary
      */
     buildState?: ResultsSummaryBuildStateEnum;
@@ -16216,7 +16216,7 @@ export interface ResultsSummary {
     customBuildData?: object;
     /**
      * 
-     * @type {string}
+     * @type {ResultsSummaryDeltaStateEnum}
      * @memberof ResultsSummary
      */
     deltaState?: ResultsSummaryDeltaStateEnum;
@@ -16312,7 +16312,7 @@ export interface ResultsSummary {
     labelNames?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {ResultsSummaryLifeCycleStateEnum}
      * @memberof ResultsSummary
      */
     lifeCycleState?: ResultsSummaryLifeCycleStateEnum;
@@ -16750,7 +16750,7 @@ export interface StageVariableContext {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {StageVariableContextVariableTypeEnum}
      * @memberof StageVariableContext
      */
     variableType?: StageVariableContextVariableTypeEnum;
@@ -17026,7 +17026,7 @@ export interface TaskDefinition {
     enabled?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {TaskDefinitionEntityTypeEnum}
      * @memberof TaskDefinition
      */
     entityType?: TaskDefinitionEntityTypeEnum;
@@ -17101,7 +17101,7 @@ export interface TaskRootDirectorySelector {
     repositoryDefiningWorkingDirectory?: number;
     /**
      * 
-     * @type {string}
+     * @type {TaskRootDirectorySelectorTaskRootDirectoryTypeEnum}
      * @memberof TaskRootDirectorySelector
      */
     taskRootDirectoryType?: TaskRootDirectorySelectorTaskRootDirectoryTypeEnum;
@@ -17235,7 +17235,7 @@ export interface TestCase {
 export interface TestCaseResult {
     /**
      * 
-     * @type {string}
+     * @type {TestCaseResultDeltaStateEnum}
      * @memberof TestCaseResult
      */
     deltaState?: TestCaseResultDeltaStateEnum;
@@ -17289,7 +17289,7 @@ export interface TestCaseResult {
     quarantined?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {TestCaseResultStateEnum}
      * @memberof TestCaseResult
      */
     state?: TestCaseResultStateEnum;
@@ -17835,7 +17835,7 @@ export interface VariableContextSnapshot {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {VariableContextSnapshotVariableTypeEnum}
      * @memberof VariableContextSnapshot
      */
     variableType?: VariableContextSnapshotVariableTypeEnum;
@@ -17916,7 +17916,7 @@ export interface VariableDefinition {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {VariableDefinitionVariableTypeEnum}
      * @memberof VariableDefinition
      */
     variableType?: VariableDefinitionVariableTypeEnum;
@@ -17973,7 +17973,7 @@ export interface VariableSubstitution {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {VariableSubstitutionVariableTypeEnum}
      * @memberof VariableSubstitution
      */
     variableType?: VariableSubstitutionVariableTypeEnum;
@@ -18018,7 +18018,7 @@ export interface VariableSubstitutionContext {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {VariableSubstitutionContextVariableTypeEnum}
      * @memberof VariableSubstitutionContext
      */
     variableType?: VariableSubstitutionContextVariableTypeEnum;
@@ -18219,7 +18219,7 @@ export interface VcsLocationBambooSpecsState {
     revision?: string;
     /**
      * 
-     * @type {string}
+     * @type {VcsLocationBambooSpecsStateSpecImportStateEnum}
      * @memberof VcsLocationBambooSpecsState
      */
     specImportState?: VcsLocationBambooSpecsStateSpecImportStateEnum;
@@ -18419,7 +18419,7 @@ export interface VersionPreview {
     rollback?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {VersionPreviewVersionGeneralStateEnum}
      * @memberof VersionPreview
      */
     versionGeneralState?: VersionPreviewVersionGeneralStateEnum;

@@ -24,9 +24,9 @@ import type {
 export class SystemInformationApi extends runtime.BaseAPI {
 
     /**
-     * Read system information.
+     * Creates request options for getSystemInfo without sending the request
      */
-    async getSystemInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SystemStatusInfo>> {
+    async getSystemInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -34,12 +34,20 @@ export class SystemInformationApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/systemInfo`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Read system information.
+     */
+    async getSystemInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SystemStatusInfo>> {
+        const requestOptions = await this.getSystemInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

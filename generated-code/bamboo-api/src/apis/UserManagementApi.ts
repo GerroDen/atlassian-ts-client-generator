@@ -162,9 +162,9 @@ export interface UnlinkUserRepositoryAliasRequest {
 export class UserManagementApi extends runtime.BaseAPI {
 
     /**
-     * Add multiple users to a group. The list of usernames should be passed as request body. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for addUsersToGroup without sending the request
      */
-    async addUsersToGroupRaw(requestParameters: AddUsersToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUsersToGroupRequestOpts(requestParameters: AddUsersToGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -182,13 +182,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/groups/{name}/add-users`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add multiple users to a group. The list of usernames should be passed as request body. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async addUsersToGroupRaw(requestParameters: AddUsersToGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUsersToGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -201,9 +209,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a user to multiple groups. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for assignGroups without sending the request
      */
-    async assignGroupsRaw(requestParameters: AssignGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async assignGroupsRequestOpts(requestParameters: AssignGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -228,13 +236,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/groups`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a user to multiple groups. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async assignGroupsRaw(requestParameters: AssignGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.assignGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -247,9 +263,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Change password of specified user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for changeUserPassword without sending the request
      */
-    async changeUserPasswordRaw(requestParameters: ChangeUserPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async changeUserPasswordRequestOpts(requestParameters: ChangeUserPasswordRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restUserPasswordUpdate'] == null) {
             throw new runtime.RequiredError(
                 'restUserPasswordUpdate',
@@ -266,13 +282,21 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/credentials`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserPasswordUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Change password of specified user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async changeUserPasswordRaw(requestParameters: ChangeUserPasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.changeUserPasswordRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -285,9 +309,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for createGroup1 without sending the request
      */
-    async createGroup1Raw(requestParameters: CreateGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createGroup1RequestOpts(requestParameters: CreateGroup1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['restGroup'] == null) {
             throw new runtime.RequiredError(
                 'restGroup',
@@ -304,13 +328,21 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async createGroup1Raw(requestParameters: CreateGroup1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createGroup1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -323,9 +355,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for createUser without sending the request
      */
-    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createUserRequestOpts(requestParameters: CreateUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restNewUser'] == null) {
             throw new runtime.RequiredError(
                 'restNewUser',
@@ -342,13 +374,21 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restNewUser'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async createUserRaw(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -361,9 +401,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Link existing unlined alias or create the new one. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for createUserRepositoryAlias without sending the request
      */
-    async createUserRepositoryAliasRaw(requestParameters: CreateUserRepositoryAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createUserRepositoryAliasRequestOpts(requestParameters: CreateUserRepositoryAliasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -388,13 +428,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/alias`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Link existing unlined alias or create the new one. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async createUserRepositoryAliasRaw(requestParameters: CreateUserRepositoryAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createUserRepositoryAliasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -407,9 +455,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the specified group, removing it from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for deleteGroup without sending the request
      */
-    async deleteGroupRaw(requestParameters: DeleteGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteGroupRequestOpts(requestParameters: DeleteGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -425,12 +473,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/groups/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the specified group, removing it from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async deleteGroupRaw(requestParameters: DeleteGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -443,9 +499,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes the specified user, removing them from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for deleteUser without sending the request
      */
-    async deleteUserRaw(requestParameters: DeleteUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteUserRequestOpts(requestParameters: DeleteUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -461,12 +517,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes the specified user, removing them from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async deleteUserRaw(requestParameters: DeleteUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -479,9 +543,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of groups to which the user belongs. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for findAssignedGroups without sending the request
      */
-    async findAssignedGroupsRaw(requestParameters: FindAssignedGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async findAssignedGroupsRequestOpts(requestParameters: FindAssignedGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -509,12 +573,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/assigned-groups`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of groups to which the user belongs. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async findAssignedGroupsRaw(requestParameters: FindAssignedGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.findAssignedGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -528,9 +600,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of groups to which the user does not belong. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for findUnassignedGroups without sending the request
      */
-    async findUnassignedGroupsRaw(requestParameters: FindUnassignedGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async findUnassignedGroupsRequestOpts(requestParameters: FindUnassignedGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -558,12 +630,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/unassigned-groups`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of groups to which the user does not belong. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async findUnassignedGroupsRaw(requestParameters: FindUnassignedGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.findUnassignedGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -577,9 +657,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of unlinked aliases to which the user does not belong. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for findUnassignedUserRepositoryAliases without sending the request
      */
-    async findUnassignedUserRepositoryAliasesRaw(requestParameters: FindUnassignedUserRepositoryAliasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserRepositoryAliases200Response>> {
+    async findUnassignedUserRepositoryAliasesRequestOpts(requestParameters: FindUnassignedUserRepositoryAliasesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -607,12 +687,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/unassigned-aliases`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of unlinked aliases to which the user does not belong. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async findUnassignedUserRepositoryAliasesRaw(requestParameters: FindUnassignedUserRepositoryAliasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserRepositoryAliases200Response>> {
+        const requestOptions = await this.findUnassignedUserRepositoryAliasesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -626,9 +714,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of users that are members of a specified group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for findUsersInGroup without sending the request
      */
-    async findUsersInGroupRaw(requestParameters: FindUsersInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async findUsersInGroupRequestOpts(requestParameters: FindUsersInGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -656,12 +744,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/groups/{name}/more-members`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of users that are members of a specified group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async findUsersInGroupRaw(requestParameters: FindUsersInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.findUsersInGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -675,9 +771,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of users that are not members of a specified group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for findUsersNotInGroup without sending the request
      */
-    async findUsersNotInGroupRaw(requestParameters: FindUsersNotInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async findUsersNotInGroupRequestOpts(requestParameters: FindUsersNotInGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -705,12 +801,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/groups/{name}/more-non-members`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of users that are not members of a specified group. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async findUsersNotInGroupRaw(requestParameters: FindUsersNotInGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.findUsersNotInGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -724,9 +828,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a paginated list of groups. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for getGroups without sending the request
      */
-    async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+    async getGroupsRequestOpts(requestParameters: GetGroupsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -746,12 +850,20 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a paginated list of groups. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async getGroupsRaw(requestParameters: GetGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetGroups200Response>> {
+        const requestOptions = await this.getGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -765,9 +877,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of user\'s access tokens. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for getUserAccessTokens without sending the request
      */
-    async getUserAccessTokensRaw(requestParameters: GetUserAccessTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserTokens200Response>> {
+    async getUserAccessTokensRequestOpts(requestParameters: GetUserAccessTokensRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -791,12 +903,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/access-token`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of user\'s access tokens. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async getUserAccessTokensRaw(requestParameters: GetUserAccessTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserTokens200Response>> {
+        const requestOptions = await this.getUserAccessTokensRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -810,9 +930,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of aliases. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for getUserRepositoryAliases without sending the request
      */
-    async getUserRepositoryAliasesRaw(requestParameters: GetUserRepositoryAliasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserRepositoryAliases200Response>> {
+    async getUserRepositoryAliasesRequestOpts(requestParameters: GetUserRepositoryAliasesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -836,12 +956,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/alias`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of aliases. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async getUserRepositoryAliasesRaw(requestParameters: GetUserRepositoryAliasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserRepositoryAliases200Response>> {
+        const requestOptions = await this.getUserRepositoryAliasesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -855,9 +983,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of users. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for getUsers without sending the request
      */
-    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+    async getUsersRequestOpts(requestParameters: GetUsersRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -877,12 +1005,20 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of users. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindUsersInGroup200Response>> {
+        const requestOptions = await this.getUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -896,9 +1032,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove multiple users from a group. The list of usernames should be passed as request body. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for removeUsersFromGroup without sending the request
      */
-    async removeUsersFromGroupRaw(requestParameters: RemoveUsersFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUsersFromGroupRequestOpts(requestParameters: RemoveUsersFromGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -916,13 +1052,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/groups/{name}/remove-users`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove multiple users from a group. The list of usernames should be passed as request body. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async removeUsersFromGroupRaw(requestParameters: RemoveUsersFromGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUsersFromGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -935,9 +1079,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Renames specified user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for renameUser without sending the request
      */
-    async renameUserRaw(requestParameters: RenameUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async renameUserRequestOpts(requestParameters: RenameUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restUserRenameRequest'] == null) {
             throw new runtime.RequiredError(
                 'restUserRenameRequest',
@@ -954,13 +1098,21 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/users/rename`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserRenameRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Renames specified user. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async renameUserRaw(requestParameters: RenameUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.renameUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -973,9 +1125,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Renames specified user.
+     * Creates request options for renameUserPost without sending the request
      */
-    async renameUserPostRaw(requestParameters: RenameUserPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async renameUserPostRequestOpts(requestParameters: RenameUserPostRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restUserRenameRequest'] == null) {
             throw new runtime.RequiredError(
                 'restUserRenameRequest',
@@ -996,13 +1148,21 @@ export class UserManagementApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserRenameRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Renames specified user.
+     */
+    async renameUserPostRaw(requestParameters: RenameUserPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.renameUserPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1015,9 +1175,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Renames specified user.
+     * Creates request options for renameUserPut without sending the request
      */
-    async renameUserPutRaw(requestParameters: RenameUserPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async renameUserPutRequestOpts(requestParameters: RenameUserPutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['newUserName'] == null) {
             throw new runtime.RequiredError(
                 'newUserName',
@@ -1046,13 +1206,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/user/{newUserName}`;
         urlPath = urlPath.replace(`{${"newUserName"}}`, encodeURIComponent(String(requestParameters['newUserName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserRenameRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Renames specified user.
+     */
+    async renameUserPutRaw(requestParameters: RenameUserPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.renameUserPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1065,9 +1233,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke user\'s access token. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for revokeUserToken without sending the request
      */
-    async revokeUserTokenRaw(requestParameters: RevokeUserTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokeUserTokenRequestOpts(requestParameters: RevokeUserTokenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['tokenId'] == null) {
             throw new runtime.RequiredError(
                 'tokenId',
@@ -1091,12 +1259,20 @@ export class UserManagementApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke user\'s access token. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async revokeUserTokenRaw(requestParameters: RevokeUserTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeUserTokenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1109,9 +1285,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove a user from multiple groups.  The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for unassignGroups without sending the request
      */
-    async unassignGroupsRaw(requestParameters: UnassignGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unassignGroupsRequestOpts(requestParameters: UnassignGroupsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1136,13 +1312,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/groups`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove a user from multiple groups.  The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async unassignGroupsRaw(requestParameters: UnassignGroupsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unassignGroupsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1155,9 +1339,9 @@ export class UserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unlink the specified alias from user, removing them from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     * Creates request options for unlinkUserRepositoryAlias without sending the request
      */
-    async unlinkUserRepositoryAliasRaw(requestParameters: UnlinkUserRepositoryAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async unlinkUserRepositoryAliasRequestOpts(requestParameters: UnlinkUserRepositoryAliasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1182,13 +1366,21 @@ export class UserManagementApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/users/{name}/alias`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUserAlias'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unlink the specified alias from user, removing them from the system. The authenticated user must have restricted administrative permission or higher to use this resource.
+     */
+    async unlinkUserRepositoryAliasRaw(requestParameters: UnlinkUserRepositoryAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unlinkUserRepositoryAliasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

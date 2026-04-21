@@ -26,9 +26,9 @@ export interface ScheduleChangeDetectionRequest {
 export class TriggersApi extends runtime.BaseAPI {
 
     /**
-     * Schedule change detection
+     * Creates request options for scheduleChangeDetection without sending the request
      */
-    async scheduleChangeDetectionRaw(requestParameters: ScheduleChangeDetectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async scheduleChangeDetectionRequestOpts(requestParameters: ScheduleChangeDetectionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -51,12 +51,20 @@ export class TriggersApi extends runtime.BaseAPI {
 
         let urlPath = `/triggers/latest/remote/changeDetection`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Schedule change detection
+     */
+    async scheduleChangeDetectionRaw(requestParameters: ScheduleChangeDetectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.scheduleChangeDetectionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

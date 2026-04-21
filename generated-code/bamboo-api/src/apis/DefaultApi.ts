@@ -1055,9 +1055,9 @@ export interface VerifyGlobalVariableValueRequest {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
-     * Activates a quick filter for currently logged in user.
+     * Creates request options for activateFilter without sending the request
      */
-    async activateFilterRaw(requestParameters: ActivateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async activateFilterRequestOpts(requestParameters: ActivateFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1073,12 +1073,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/quickFilter/{id}/activate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Activates a quick filter for currently logged in user.
+     */
+    async activateFilterRaw(requestParameters: ActivateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.activateFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1091,9 +1099,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grant permission to create/edit plan in given deployment project by Bamboo Specs from given repository.
+     * Creates request options for addAssignedRepository without sending the request
      */
-    async addAssignedRepositoryRaw(requestParameters: AddAssignedRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+    async addAssignedRepositoryRequestOpts(requestParameters: AddAssignedRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -1118,13 +1126,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/repository`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restIdContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grant permission to create/edit plan in given deployment project by Bamboo Specs from given repository.
+     */
+    async addAssignedRepositoryRaw(requestParameters: AddAssignedRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+        const requestOptions = await this.addAssignedRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1138,9 +1154,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grant permission to create/edit plan in given project by Bamboo Specs from given repository.
+     * Creates request options for addAssignedRepository1 without sending the request
      */
-    async addAssignedRepository1Raw(requestParameters: AddAssignedRepository1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+    async addAssignedRepository1RequestOpts(requestParameters: AddAssignedRepository1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1165,13 +1181,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/repository`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restIdContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grant permission to create/edit plan in given project by Bamboo Specs from given repository.
+     */
+    async addAssignedRepository1Raw(requestParameters: AddAssignedRepository1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+        const requestOptions = await this.addAssignedRepository1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1185,9 +1209,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds new comment to build result.
+     * Creates request options for addBuildComment without sending the request
      */
-    async addBuildCommentRaw(requestParameters: AddBuildCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addBuildCommentRequestOpts(requestParameters: AddBuildCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1228,13 +1252,21 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createCommentRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds new comment to build result.
+     */
+    async addBuildCommentRaw(requestParameters: AddBuildCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addBuildCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1247,9 +1279,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds new label to build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for addBuildLabel without sending the request
      */
-    async addBuildLabelRaw(requestParameters: AddBuildLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addBuildLabelRequestOpts(requestParameters: AddBuildLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1290,13 +1322,21 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBuildLabel'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds new label to build result specified by projectKey-buildKey-buildNumber.
+     */
+    async addBuildLabelRaw(requestParameters: AddBuildLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addBuildLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1309,9 +1349,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add ephemeral agent template capability.
+     * Creates request options for addCapability without sending the request
      */
-    async addCapabilityRaw(requestParameters: AddCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addCapabilityRequestOpts(requestParameters: AddCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -1336,13 +1376,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}/capability`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCapability'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add ephemeral agent template capability.
+     */
+    async addCapabilityRaw(requestParameters: AddCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1355,9 +1403,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create deployment project.
+     * Creates request options for addDeploymentProject without sending the request
      */
-    async addDeploymentProjectRaw(requestParameters: AddDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+    async addDeploymentProjectRequestOpts(requestParameters: AddDeploymentProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restCreateDeploymentProjectRequest'] == null) {
             throw new runtime.RequiredError(
                 'restCreateDeploymentProjectRequest',
@@ -1374,13 +1422,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCreateDeploymentProjectRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create deployment project.
+     */
+    async addDeploymentProjectRaw(requestParameters: AddDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+        const requestOptions = await this.addDeploymentProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1394,9 +1450,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Add a responsible user for broken build.
+     * Creates request options for addResponsible without sending the request
      */
-    async addResponsibleRaw(requestParameters: AddResponsibleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addResponsibleRequestOpts(requestParameters: AddResponsibleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -1420,12 +1476,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"planResultKeyOrPlanKey"}}`, encodeURIComponent(String(requestParameters['planResultKeyOrPlanKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a responsible user for broken build.
+     */
+    async addResponsibleRaw(requestParameters: AddResponsibleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addResponsibleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1438,9 +1502,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Authenticates a pending agent with the given UUID. If the agent has already been authenticated, the call will not      * change it\'s state.
+     * Creates request options for authenticateAgent without sending the request
      */
-    async authenticateAgentRaw(requestParameters: AuthenticateAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async authenticateAgentRequestOpts(requestParameters: AuthenticateAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentUuid'] == null) {
             throw new runtime.RequiredError(
                 'agentUuid',
@@ -1456,12 +1520,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/authentication/{agentUuid}`;
         urlPath = urlPath.replace(`{${"agentUuid"}}`, encodeURIComponent(String(requestParameters['agentUuid'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Authenticates a pending agent with the given UUID. If the agent has already been authenticated, the call will not      * change it\'s state.
+     */
+    async authenticateAgentRaw(requestParameters: AuthenticateAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.authenticateAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1474,9 +1546,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Continue partially done build.  Effectively, this method adds build to the build queue, so is not guarantied that build would be executed immediately. Depending on currently executed builds and length of build queue, build may be executed when queue would be drained. Additional variables could be passed to this method only query parameters (variableName=variableValue). Variables defined in Bamboo as global variables or plan variables MUST be prefixed with bamboo.variable ie. bamboo.variable.myVariable=valueForMyVariable. When global or plan variables would be passed to this method, will override values valid for previous build execution (override).
+     * Creates request options for continueBuild without sending the request
      */
-    async continueBuildRaw(requestParameters: ContinueBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuild>> {
+    async continueBuildRequestOpts(requestParameters: ContinueBuildRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1516,12 +1588,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Continue partially done build.  Effectively, this method adds build to the build queue, so is not guarantied that build would be executed immediately. Depending on currently executed builds and length of build queue, build may be executed when queue would be drained. Additional variables could be passed to this method only query parameters (variableName=variableValue). Variables defined in Bamboo as global variables or plan variables MUST be prefixed with bamboo.variable ie. bamboo.variable.myVariable=valueForMyVariable. When global or plan variables would be passed to this method, will override values valid for previous build execution (override).
+     */
+    async continueBuildRaw(requestParameters: ContinueBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuild>> {
+        const requestOptions = await this.continueBuildRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1535,9 +1615,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create new agent capability.
+     * Creates request options for createAgentCapability without sending the request
      */
-    async createAgentCapabilityRaw(requestParameters: CreateAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createAgentCapabilityRequestOpts(requestParameters: CreateAgentCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -1562,13 +1642,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/capability`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCapability'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create new agent capability.
+     */
+    async createAgentCapabilityRaw(requestParameters: CreateAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createAgentCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1581,9 +1669,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a single global variable.
+     * Creates request options for createGlobalVariable without sending the request
      */
-    async createGlobalVariableRaw(requestParameters: CreateGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+    async createGlobalVariableRequestOpts(requestParameters: CreateGlobalVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restGlobalVariable'] == null) {
             throw new runtime.RequiredError(
                 'restGlobalVariable',
@@ -1600,13 +1688,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/globalVariables`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGlobalVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a single global variable.
+     */
+    async createGlobalVariableRaw(requestParameters: CreateGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+        const requestOptions = await this.createGlobalVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1620,9 +1716,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a group.
+     * Creates request options for createGroup without sending the request
      */
-    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGroup>> {
+    async createGroupRequestOpts(requestParameters: CreateGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restGroup'] == null) {
             throw new runtime.RequiredError(
                 'restGroup',
@@ -1639,13 +1735,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGroup'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a group.
+     */
+    async createGroupRaw(requestParameters: CreateGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGroup>> {
+        const requestOptions = await this.createGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1659,9 +1763,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create elastic image configuration.
+     * Creates request options for createImageConfiguration without sending the request
      */
-    async createImageConfigurationRaw(requestParameters: CreateImageConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+    async createImageConfigurationRequestOpts(requestParameters: CreateImageConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restElasticImageConfig'] == null) {
             throw new runtime.RequiredError(
                 'restElasticImageConfig',
@@ -1678,13 +1782,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/elasticConfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restElasticImageConfig'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create elastic image configuration.
+     */
+    async createImageConfigurationRaw(requestParameters: CreateImageConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+        const requestOptions = await this.createImageConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1698,9 +1810,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update project variable.
+     * Creates request options for createOrUpdateVariable without sending the request
      */
-    async createOrUpdateVariableRaw(requestParameters: CreateOrUpdateVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+    async createOrUpdateVariableRequestOpts(requestParameters: CreateOrUpdateVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -1725,13 +1837,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/variable`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create or update project variable.
+     */
+    async createOrUpdateVariableRaw(requestParameters: CreateOrUpdateVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariableDefinitionContext>> {
+        const requestOptions = await this.createOrUpdateVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1745,9 +1865,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create project.
+     * Creates request options for createProject without sending the request
      */
-    async createProjectRaw(requestParameters: CreateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectCreate>> {
+    async createProjectRequestOpts(requestParameters: CreateProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restProjectCreate'] == null) {
             throw new runtime.RequiredError(
                 'restProjectCreate',
@@ -1764,13 +1884,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restProjectCreate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create project.
+     */
+    async createProjectRaw(requestParameters: CreateProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjectCreate>> {
+        const requestOptions = await this.createProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1784,9 +1912,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new quick filter with basic configuration, e.g. name or position on list. This method does not allow to configure quick filter\'s rules.
+     * Creates request options for createQuickFilter without sending the request
      */
-    async createQuickFilterRaw(requestParameters: CreateQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+    async createQuickFilterRequestOpts(requestParameters: CreateQuickFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restQuickFilter'] == null) {
             throw new runtime.RequiredError(
                 'restQuickFilter',
@@ -1803,13 +1931,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restQuickFilter'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new quick filter with basic configuration, e.g. name or position on list. This method does not allow to configure quick filter\'s rules.
+     */
+    async createQuickFilterRaw(requestParameters: CreateQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+        const requestOptions = await this.createQuickFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1823,9 +1959,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create ephemeral template configuration.
+     * Creates request options for createTemplateConfiguration without sending the request
      */
-    async createTemplateConfigurationRaw(requestParameters: CreateTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+    async createTemplateConfigurationRequestOpts(requestParameters: CreateTemplateConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restEphemeralAgentTemplate'] == null) {
             throw new runtime.RequiredError(
                 'restEphemeralAgentTemplate',
@@ -1842,13 +1978,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/ephemeral/templateConfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEphemeralAgentTemplate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create ephemeral template configuration.
+     */
+    async createTemplateConfigurationRaw(requestParameters: CreateTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+        const requestOptions = await this.createTemplateConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1862,9 +2006,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create deployment version for given deployment project.
+     * Creates request options for createVersion without sending the request
      */
-    async createVersionRaw(requestParameters: CreateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersion>> {
+    async createVersionRequestOpts(requestParameters: CreateVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -1889,13 +2033,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/version`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCreateVersionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create deployment version for given deployment project.
+     */
+    async createVersionRaw(requestParameters: CreateVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersion>> {
+        const requestOptions = await this.createVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -1909,9 +2061,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deactivates all quick filter for currently logged in user.
+     * Creates request options for deactivateAllFilters without sending the request
      */
-    async deactivateAllFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deactivateAllFiltersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1919,12 +2071,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter/deactivate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deactivates all quick filter for currently logged in user.
+     */
+    async deactivateAllFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deactivateAllFiltersRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1937,9 +2097,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deactivates a quick filter for currently logged in user.
+     * Creates request options for deactivateFilter without sending the request
      */
-    async deactivateFilterRaw(requestParameters: DeactivateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deactivateFilterRequestOpts(requestParameters: DeactivateFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -1955,12 +2115,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/quickFilter/{id}/deactivate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deactivates a quick filter for currently logged in user.
+     */
+    async deactivateFilterRaw(requestParameters: DeactivateFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deactivateFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -1973,9 +2141,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove build agent.
+     * Creates request options for deleteAgent without sending the request
      */
-    async deleteAgentRaw(requestParameters: DeleteAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAgentRequestOpts(requestParameters: DeleteAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -1991,12 +2159,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove build agent.
+     */
+    async deleteAgentRaw(requestParameters: DeleteAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2009,9 +2185,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove build agent capability.
+     * Creates request options for deleteAgentCapability without sending the request
      */
-    async deleteAgentCapabilityRaw(requestParameters: DeleteAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAgentCapabilityRequestOpts(requestParameters: DeleteAgentCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -2035,12 +2211,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
         urlPath = urlPath.replace(`{${"capabilityKey"}}`, encodeURIComponent(String(requestParameters['capabilityKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove build agent capability.
+     */
+    async deleteAgentCapabilityRaw(requestParameters: DeleteAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAgentCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2053,9 +2237,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove all capabilities of build agent.
+     * Creates request options for deleteAllAgentCapabilities without sending the request
      */
-    async deleteAllAgentCapabilitiesRaw(requestParameters: DeleteAllAgentCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteAllAgentCapabilitiesRequestOpts(requestParameters: DeleteAllAgentCapabilitiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -2071,12 +2255,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/capability`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove all capabilities of build agent.
+     */
+    async deleteAllAgentCapabilitiesRaw(requestParameters: DeleteAllAgentCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteAllAgentCapabilitiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2089,9 +2281,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove ephemeral agent template capability.
+     * Creates request options for deleteCapability without sending the request
      */
-    async deleteCapabilityRaw(requestParameters: DeleteCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteCapabilityRequestOpts(requestParameters: DeleteCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -2115,12 +2307,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove ephemeral agent template capability.
+     */
+    async deleteCapabilityRaw(requestParameters: DeleteCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2133,9 +2333,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete elastic image configuration.
+     * Creates request options for deleteConfiguration without sending the request
      */
-    async deleteConfigurationRaw(requestParameters: DeleteConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteConfigurationRequestOpts(requestParameters: DeleteConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -2151,12 +2351,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/elasticConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete elastic image configuration.
+     */
+    async deleteConfigurationRaw(requestParameters: DeleteConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2169,9 +2377,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete deployment project.
+     * Creates request options for deleteDeploymentProject without sending the request
      */
-    async deleteDeploymentProjectRaw(requestParameters: DeleteDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteDeploymentProjectRequestOpts(requestParameters: DeleteDeploymentProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -2187,12 +2395,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete deployment project.
+     */
+    async deleteDeploymentProjectRaw(requestParameters: DeleteDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteDeploymentProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2205,9 +2421,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a global variable.
+     * Creates request options for deleteGlobalVariable without sending the request
      */
-    async deleteGlobalVariableRaw(requestParameters: DeleteGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteGlobalVariableRequestOpts(requestParameters: DeleteGlobalVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableId'] == null) {
             throw new runtime.RequiredError(
                 'variableId',
@@ -2223,12 +2439,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/globalVariables/{variableId}`;
         urlPath = urlPath.replace(`{${"variableId"}}`, encodeURIComponent(String(requestParameters['variableId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a global variable.
+     */
+    async deleteGlobalVariableRaw(requestParameters: DeleteGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteGlobalVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2241,9 +2465,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete current IM Server configuration.
+     * Creates request options for deleteIMServerConfiguration without sending the request
      */
-    async deleteIMServerConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIMServerConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2251,12 +2475,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/imServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete current IM Server configuration.
+     */
+    async deleteIMServerConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIMServerConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2269,9 +2501,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete current mail configuration.
+     * Creates request options for deleteMailConfiguration without sending the request
      */
-    async deleteMailConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteMailConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2279,12 +2511,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/mailServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete current mail configuration.
+     */
+    async deleteMailConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteMailConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2297,9 +2537,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Marks project for deletion. Project will be deleted by a batch job.
+     * Creates request options for deleteProject without sending the request
      */
-    async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectRequestOpts(requestParameters: DeleteProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2315,12 +2555,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Marks project for deletion. Project will be deleted by a batch job.
+     */
+    async deleteProjectRaw(requestParameters: DeleteProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2333,9 +2581,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes shared project credentials specified by id.
+     * Creates request options for deleteProjectSharedCredentials without sending the request
      */
-    async deleteProjectSharedCredentialsRaw(requestParameters: DeleteProjectSharedCredentialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectSharedCredentialsRequestOpts(requestParameters: DeleteProjectSharedCredentialsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2359,12 +2607,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"sharedCredentialId"}}`, encodeURIComponent(String(requestParameters['sharedCredentialId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes shared project credentials specified by id.
+     */
+    async deleteProjectSharedCredentialsRaw(requestParameters: DeleteProjectSharedCredentialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectSharedCredentialsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2377,9 +2633,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the project variable.
+     * Creates request options for deleteProjectVariable without sending the request
      */
-    async deleteProjectVariableRaw(requestParameters: DeleteProjectVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteProjectVariableRequestOpts(requestParameters: DeleteProjectVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2403,12 +2659,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the project variable.
+     */
+    async deleteProjectVariableRaw(requestParameters: DeleteProjectVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteProjectVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2421,9 +2685,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a quick filter.
+     * Creates request options for deleteQuickFilter without sending the request
      */
-    async deleteQuickFilterRaw(requestParameters: DeleteQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteQuickFilterRequestOpts(requestParameters: DeleteQuickFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -2439,12 +2703,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/quickFilter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a quick filter.
+     */
+    async deleteQuickFilterRaw(requestParameters: DeleteQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteQuickFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2457,9 +2729,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove approval to create plans in given deployment project by given repository.
+     * Creates request options for deleteRepositoryMapping without sending the request
      */
-    async deleteRepositoryMappingRaw(requestParameters: DeleteRepositoryMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRepositoryMappingRequestOpts(requestParameters: DeleteRepositoryMappingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -2483,12 +2755,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove approval to create plans in given deployment project by given repository.
+     */
+    async deleteRepositoryMappingRaw(requestParameters: DeleteRepositoryMappingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRepositoryMappingRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2501,9 +2781,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove approval to create plans in given project by given repository.
+     * Creates request options for deleteRepositoryMapping1 without sending the request
      */
-    async deleteRepositoryMapping1Raw(requestParameters: DeleteRepositoryMapping1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRepositoryMapping1RequestOpts(requestParameters: DeleteRepositoryMapping1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2527,12 +2807,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove approval to create plans in given project by given repository.
+     */
+    async deleteRepositoryMapping1Raw(requestParameters: DeleteRepositoryMapping1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRepositoryMapping1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2545,9 +2833,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete ephemeral template configuration.
+     * Creates request options for deleteTemplateConfiguration without sending the request
      */
-    async deleteTemplateConfigurationRaw(requestParameters: DeleteTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteTemplateConfigurationRequestOpts(requestParameters: DeleteTemplateConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -2563,12 +2851,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete ephemeral template configuration.
+     */
+    async deleteTemplateConfigurationRaw(requestParameters: DeleteTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteTemplateConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2581,9 +2877,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Disable an agent.
+     * Creates request options for disableAgent without sending the request
      */
-    async disableAgentRaw(requestParameters: DisableAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+    async disableAgentRequestOpts(requestParameters: DisableAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -2599,12 +2895,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/disable`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Disable an agent.
+     */
+    async disableAgentRaw(requestParameters: DisableAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+        const requestOptions = await this.disableAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2618,9 +2922,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update deployment project.
+     * Creates request options for editDeploymentProject without sending the request
      */
-    async editDeploymentProjectRaw(requestParameters: EditDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+    async editDeploymentProjectRequestOpts(requestParameters: EditDeploymentProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -2645,13 +2949,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restUpdateDeploymentProjectRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update deployment project.
+     */
+    async editDeploymentProjectRaw(requestParameters: EditDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+        const requestOptions = await this.editDeploymentProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2665,9 +2977,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable an agent.
+     * Creates request options for enableAgent without sending the request
      */
-    async enableAgentRaw(requestParameters: EnableAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+    async enableAgentRequestOpts(requestParameters: EnableAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -2683,12 +2995,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/enable`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable an agent.
+     */
+    async enableAgentRaw(requestParameters: EnableAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+        const requestOptions = await this.enableAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2702,9 +3022,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables access (i.e. allowing modifications) for all Bamboo projects by the Bamboo Specs code stored in this repository. Changes in Bamboo Specs detected will trigger execution of Specs and thus an update of corresponding entities (such as build plans or deployments).
+     * Creates request options for enableAllProjectsAccess without sending the request
      */
-    async enableAllProjectsAccessRaw(requestParameters: EnableAllProjectsAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableAllProjectsAccessRequestOpts(requestParameters: EnableAllProjectsAccessRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -2729,13 +3049,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/enableAllProjectsAccess`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnableContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables access (i.e. allowing modifications) for all Bamboo projects by the Bamboo Specs code stored in this repository. Changes in Bamboo Specs detected will trigger execution of Specs and thus an update of corresponding entities (such as build plans or deployments).
+     */
+    async enableAllProjectsAccessRaw(requestParameters: EnableAllProjectsAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableAllProjectsAccessRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2748,9 +3076,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables access (i.e. allowing usage) to all project\'s repositories by the Bamboo Specs code stored in this repository.
+     * Creates request options for enableAllRepositoriesAccess without sending the request
      */
-    async enableAllRepositoriesAccessRaw(requestParameters: EnableAllRepositoriesAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableAllRepositoriesAccessRequestOpts(requestParameters: EnableAllRepositoriesAccessRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -2783,13 +3111,21 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnableContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables access (i.e. allowing usage) to all project\'s repositories by the Bamboo Specs code stored in this repository.
+     */
+    async enableAllRepositoriesAccessRaw(requestParameters: EnableAllRepositoriesAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableAllRepositoriesAccessRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2802,9 +3138,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables access (i.e. allowing usage in plans or deployment projects) for all Bamboo linked repositories by the Bamboo Specs code stored in this repository.
+     * Creates request options for enableAllRepositoriesAccess1 without sending the request
      */
-    async enableAllRepositoriesAccess1Raw(requestParameters: EnableAllRepositoriesAccess1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableAllRepositoriesAccess1RequestOpts(requestParameters: EnableAllRepositoriesAccess1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -2829,13 +3165,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/enableAllRepositoriesAccess`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnableContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables access (i.e. allowing usage in plans or deployment projects) for all Bamboo linked repositories by the Bamboo Specs code stored in this repository.
+     */
+    async enableAllRepositoriesAccess1Raw(requestParameters: EnableAllRepositoriesAccess1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableAllRepositoriesAccess1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2848,9 +3192,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables or disables detection of Bamboo Specs stored in the repository. If enabled, code changes detected in Bamboo Specs in new commits will trigger execution of Bamboo Specs and thus an update of corresponding entities (such as build plans, deployments or permissions).
+     * Creates request options for enableCi without sending the request
      */
-    async enableCiRaw(requestParameters: EnableCiRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableCiRequestOpts(requestParameters: EnableCiRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -2875,13 +3219,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/enableCi`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnableContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables or disables detection of Bamboo Specs stored in the repository. If enabled, code changes detected in Bamboo Specs in new commits will trigger execution of Bamboo Specs and thus an update of corresponding entities (such as build plans, deployments or permissions).
+     */
+    async enableCiRaw(requestParameters: EnableCiRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableCiRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2894,9 +3246,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enables build and deployment project creation by the Bamboo Specs code stored in this repository.
+     * Creates request options for enableProjectCreation without sending the request
      */
-    async enableProjectCreationRaw(requestParameters: EnableProjectCreationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async enableProjectCreationRequestOpts(requestParameters: EnableProjectCreationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -2921,13 +3273,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/enableProjectCreation`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEnableContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enables build and deployment project creation by the Bamboo Specs code stored in this repository.
+     */
+    async enableProjectCreationRaw(requestParameters: EnableProjectCreationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.enableProjectCreationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -2940,9 +3300,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Encrypts a given text based on the instance specific cipher. Encrypted data can be used i.a. in Repository-stored Specs. Feature can be enabled or disabled in Bamboo security configuration. Number of allowed requests per user is limited and can be modified in Bamboo security configuration.
+     * Creates request options for encrypt without sending the request
      */
-    async encryptRaw(requestParameters: EncryptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ManualEncryptionResponse>> {
+    async encryptRequestOpts(requestParameters: EncryptRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['manualEncryptionRequest'] == null) {
             throw new runtime.RequiredError(
                 'manualEncryptionRequest',
@@ -2959,13 +3319,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/encrypt`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['manualEncryptionRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Encrypts a given text based on the instance specific cipher. Encrypted data can be used i.a. in Repository-stored Specs. Feature can be enabled or disabled in Bamboo security configuration. Number of allowed requests per user is limited and can be modified in Bamboo security configuration.
+     */
+    async encryptRaw(requestParameters: EncryptRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ManualEncryptionResponse>> {
+        const requestOptions = await this.encryptRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -2979,9 +3347,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Export a deployment project to Bamboo Specs.
+     * Creates request options for exportDeploymentSpec without sending the request
      */
-    async exportDeploymentSpecRaw(requestParameters: ExportDeploymentSpecRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async exportDeploymentSpecRequestOpts(requestParameters: ExportDeploymentSpecRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -3005,12 +3373,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/specs`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Export a deployment project to Bamboo Specs.
+     */
+    async exportDeploymentSpecRaw(requestParameters: ExportDeploymentSpecRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.exportDeploymentSpecRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3023,9 +3399,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Export all of the plans for a project to Bamboo specs.
+     * Creates request options for exportProjectSpecs without sending the request
      */
-    async exportProjectSpecsRaw(requestParameters: ExportProjectSpecsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async exportProjectSpecsRequestOpts(requestParameters: ExportProjectSpecsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -3049,12 +3425,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/specs`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Export all of the plans for a project to Bamboo specs.
+     */
+    async exportProjectSpecsRaw(requestParameters: ExportProjectSpecsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.exportProjectSpecsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3067,9 +3451,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get list of all plans where user has admin permission and which override global expiry settings. If global expiry is not enabled it returns empty response.
+     * Creates request options for findPlansWithCustomExpirySettings without sending the request
      */
-    async findPlansWithCustomExpirySettingsRaw(requestParameters: FindPlansWithCustomExpirySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindPlansWithCustomExpirySettings200Response>> {
+    async findPlansWithCustomExpirySettingsRequestOpts(requestParameters: FindPlansWithCustomExpirySettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -3085,12 +3469,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/admin/expiry/custom/plan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get list of all plans where user has admin permission and which override global expiry settings. If global expiry is not enabled it returns empty response.
+     */
+    async findPlansWithCustomExpirySettingsRaw(requestParameters: FindPlansWithCustomExpirySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FindPlansWithCustomExpirySettings200Response>> {
+        const requestOptions = await this.findPlansWithCustomExpirySettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3104,9 +3496,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for existing linked repositories by name.
+     * Creates request options for findRepository without sending the request
      */
-    async findRepositoryRaw(requestParameters: FindRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+    async findRepositoryRequestOpts(requestParameters: FindRepositoryRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['searchTerm'] != null) {
@@ -3118,12 +3510,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/repository`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for existing linked repositories by name.
+     */
+    async findRepositoryRaw(requestParameters: FindRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+        const requestOptions = await this.findRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3137,9 +3537,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for usages of given repository.
+     * Creates request options for findUsage without sending the request
      */
-    async findUsageRaw(requestParameters: FindUsageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryUsageModel>> {
+    async findUsageRequestOpts(requestParameters: FindUsageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -3163,12 +3563,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/usage`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for usages of given repository.
+     */
+    async findUsageRaw(requestParameters: FindUsageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryUsageModel>> {
+        const requestOptions = await this.findUsageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3182,9 +3590,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves whether a given dark feature key is enabled for this instance.
+     * Creates request options for get without sending the request
      */
-    async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDarkFeature>> {
+    async getRequestOpts(requestParameters: GetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -3200,12 +3608,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/darkFeatures/{key}`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves whether a given dark feature key is enabled for this instance.
+     */
+    async getRaw(requestParameters: GetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDarkFeature>> {
+        const requestOptions = await this.getRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3219,9 +3635,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return active quick filters for currently logged in user.
+     * Creates request options for getActiveFilters without sending the request
      */
-    async getActiveFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+    async getActiveFiltersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3229,12 +3645,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter/active`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return active quick filters for currently logged in user.
+     */
+    async getActiveFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+        const requestOptions = await this.getActiveFiltersRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3248,9 +3672,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides a list of all agent authentication statuses.
+     * Creates request options for getAgentAuthentications without sending the request
      */
-    async getAgentAuthenticationsRaw(requestParameters: GetAgentAuthenticationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRemoteAgentAuthentication>>> {
+    async getAgentAuthenticationsRequestOpts(requestParameters: GetAgentAuthenticationsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['pending'] != null) {
@@ -3262,12 +3686,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/authentication`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides a list of all agent authentication statuses.
+     */
+    async getAgentAuthenticationsRaw(requestParameters: GetAgentAuthenticationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRemoteAgentAuthentication>>> {
+        const requestOptions = await this.getAgentAuthenticationsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3281,9 +3713,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the agents automatic management configuration
+     * Creates request options for getAgentAutomaticManagementConfiguration without sending the request
      */
-    async getAgentAutomaticManagementConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+    async getAgentAutomaticManagementConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3291,12 +3723,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/agents/offlineAgentRemoval`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the agents automatic management configuration
+     */
+    async getAgentAutomaticManagementConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+        const requestOptions = await this.getAgentAutomaticManagementConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3310,9 +3750,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a build agent definition by id.
+     * Creates request options for getAgentById without sending the request
      */
-    async getAgentByIdRaw(requestParameters: GetAgentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+    async getAgentByIdRequestOpts(requestParameters: GetAgentByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -3328,12 +3768,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/config/agents/{agentId}`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a build agent definition by id.
+     */
+    async getAgentByIdRaw(requestParameters: GetAgentByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+        const requestOptions = await this.getAgentByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3347,9 +3795,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * List agent\'s capabilities.
+     * Creates request options for getAgentCapabilities without sending the request
      */
-    async getAgentCapabilitiesRaw(requestParameters: GetAgentCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestCapability>>> {
+    async getAgentCapabilitiesRequestOpts(requestParameters: GetAgentCapabilitiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -3369,12 +3817,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/capability`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List agent\'s capabilities.
+     */
+    async getAgentCapabilitiesRaw(requestParameters: GetAgentCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestCapability>>> {
+        const requestOptions = await this.getAgentCapabilitiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3388,9 +3844,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides details of an agent.
+     * Creates request options for getAgentInformation without sending the request
      */
-    async getAgentInformationRaw(requestParameters: GetAgentInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentInformation>> {
+    async getAgentInformationRequestOpts(requestParameters: GetAgentInformationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -3422,12 +3878,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides details of an agent.
+     */
+    async getAgentInformationRaw(requestParameters: GetAgentInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgentInformation>> {
+        const requestOptions = await this.getAgentInformationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3441,9 +3905,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve configuration of Agent-Local Artifact Handler.
+     * Creates request options for getAgentLocalArtifactHandler without sending the request
      */
-    async getAgentLocalArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async getAgentLocalArtifactHandlerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3451,12 +3915,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/agentLocal`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve configuration of Agent-Local Artifact Handler.
+     */
+    async getAgentLocalArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.getAgentLocalArtifactHandlerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3470,9 +3942,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides information about status of agent, if it\'s online or offline.
+     * Creates request options for getAgentStatus without sending the request
      */
-    async getAgentStatusRaw(requestParameters: GetAgentStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAgentStatusRequestOpts(requestParameters: GetAgentStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -3488,12 +3960,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/agent/{agentId}/status`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides information about status of agent, if it\'s online or offline.
+     */
+    async getAgentStatusRaw(requestParameters: GetAgentStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAgentStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3506,9 +3986,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return collection of all agents of all types.
+     * Creates request options for getAgents without sending the request
      */
-    async getAgentsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAgents200Response>> {
+    async getAgentsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3516,12 +3996,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/agents`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return collection of all agents of all types.
+     */
+    async getAgentsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAgents200Response>> {
+        const requestOptions = await this.getAgentsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3535,9 +4023,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides a list of agents.
+     * Creates request options for getAgents1 without sending the request
      */
-    async getAgents1Raw(requestParameters: GetAgents1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestBuildAgent>>> {
+    async getAgents1RequestOpts(requestParameters: GetAgents1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['online'] != null) {
@@ -3549,12 +4037,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides a list of agents.
+     */
+    async getAgents1Raw(requestParameters: GetAgents1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestBuildAgent>>> {
+        const requestOptions = await this.getAgents1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3568,9 +4064,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a list of dark features that are enabled for all users.
+     * Creates request options for getAll without sending the request
      */
-    async getAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDarkFeature>>> {
+    async getAllRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3578,12 +4074,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/darkFeatures`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves a list of dark features that are enabled for all users.
+     */
+    async getAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDarkFeature>>> {
+        const requestOptions = await this.getAllRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3597,9 +4101,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch all elastic image configurations.
+     * Creates request options for getAll1 without sending the request
      */
-    async getAll1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestElasticImageConfig>>> {
+    async getAll1RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3607,12 +4111,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/elasticConfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch all elastic image configurations.
+     */
+    async getAll1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestElasticImageConfig>>> {
+        const requestOptions = await this.getAll1RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3626,9 +4138,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides a list of capabilities for a select list in the UI.  Filterable and paginable.
+     * Creates request options for getAllCapabilitiesOnServer without sending the request
      */
-    async getAllCapabilitiesOnServerRaw(requestParameters: GetAllCapabilitiesOnServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getAllCapabilitiesOnServerRequestOpts(requestParameters: GetAllCapabilitiesOnServerRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -3652,12 +4164,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/capability/groupedListing`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides a list of capabilities for a select list in the UI.  Filterable and paginable.
+     */
+    async getAllCapabilitiesOnServerRaw(requestParameters: GetAllCapabilitiesOnServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getAllCapabilitiesOnServerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -3670,10 +4190,10 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all deployment projects. This method fetch all deployment projects visible to user. It\'s not optimized for instances with large count of deployment projects and environments, use paged versions instead.
+     * Creates request options for getAllDeploymentProjects without sending the request
      * @deprecated
      */
-    async getAllDeploymentProjectsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DashboardProjectWithEnvironmentStatus>>> {
+    async getAllDeploymentProjectsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3681,12 +4201,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/dashboard`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all deployment projects. This method fetch all deployment projects visible to user. It\'s not optimized for instances with large count of deployment projects and environments, use paged versions instead.
+     * @deprecated
+     */
+    async getAllDeploymentProjectsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DashboardProjectWithEnvironmentStatus>>> {
+        const requestOptions = await this.getAllDeploymentProjectsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3701,9 +4230,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find all deployment projects with environments. Returns only deployment projects and environments visible for user.
+     * Creates request options for getAllDeploymentProjects1 without sending the request
      */
-    async getAllDeploymentProjects1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDeploymentProject>>> {
+    async getAllDeploymentProjects1RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3711,12 +4240,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/project/all`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find all deployment projects with environments. Returns only deployment projects and environments visible for user.
+     */
+    async getAllDeploymentProjects1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDeploymentProject>>> {
+        const requestOptions = await this.getAllDeploymentProjects1RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3730,9 +4267,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides list of available REST resources in Bamboo
+     * Creates request options for getAllServices without sending the request
      */
-    async getAllServicesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResources>> {
+    async getAllServicesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3740,12 +4277,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides list of available REST resources in Bamboo
+     */
+    async getAllServicesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResources>> {
+        const requestOptions = await this.getAllServicesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3759,9 +4304,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve audit log settings.
+     * Creates request options for getAuditLogConfiguration without sending the request
      */
-    async getAuditLogConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuditLogConfiguration>> {
+    async getAuditLogConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3769,12 +4314,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/auditLog`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve audit log settings.
+     */
+    async getAuditLogConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuditLogConfiguration>> {
+        const requestOptions = await this.getAuditLogConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3788,9 +4341,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch available reports list.
+     * Creates request options for getAvailableReports without sending the request
      */
-    async getAvailableReportsRaw(requestParameters: GetAvailableReportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReports>> {
+    async getAvailableReportsRequestOpts(requestParameters: GetAvailableReportsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -3810,12 +4363,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/chart/reports`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch available reports list.
+     */
+    async getAvailableReportsRaw(requestParameters: GetAvailableReportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestReports>> {
+        const requestOptions = await this.getAvailableReportsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3829,9 +4390,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve configuration of Bamboo Server Artifact Handler.
+     * Creates request options for getBambooRemoteArtifactHandler without sending the request
      */
-    async getBambooRemoteArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleRestArtifactHandler>> {
+    async getBambooRemoteArtifactHandlerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3839,12 +4400,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/bambooRemote`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve configuration of Bamboo Server Artifact Handler.
+     */
+    async getBambooRemoteArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleRestArtifactHandler>> {
+        const requestOptions = await this.getBambooRemoteArtifactHandlerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3858,9 +4427,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of build results for specified plan\'s branch. Plan might be top level plan (projectKey-planKey) or job plan (projectKey-planKey-jobKey).
+     * Creates request options for getBranchHistory without sending the request
      */
-    async getBranchHistoryRaw(requestParameters: GetBranchHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getBranchHistoryRequestOpts(requestParameters: GetBranchHistoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['buildKey'] == null) {
             throw new runtime.RequiredError(
                 'buildKey',
@@ -3932,12 +4501,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters['branchName'])));
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of build results for specified plan\'s branch. Plan might be top level plan (projectKey-planKey) or job plan (projectKey-planKey-jobKey).
+     */
+    async getBranchHistoryRaw(requestParameters: GetBranchHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getBranchHistoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -3951,9 +4528,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get broken builds for user.
+     * Creates request options for getBrokenBuildsForUser without sending the request
      */
-    async getBrokenBuildsForUserRaw(requestParameters: GetBrokenBuildsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBrokenBuildsForUser200Response>> {
+    async getBrokenBuildsForUserRequestOpts(requestParameters: GetBrokenBuildsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -3981,12 +4558,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/responsibility/latest/brokenBuild/byUser/{name}`;
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get broken builds for user.
+     */
+    async getBrokenBuildsForUserRaw(requestParameters: GetBrokenBuildsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBrokenBuildsForUser200Response>> {
+        const requestOptions = await this.getBrokenBuildsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4000,9 +4585,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for getBuild without sending the request
      */
-    async getBuildRaw(requestParameters: GetBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Result>> {
+    async getBuildRequestOpts(requestParameters: GetBuildRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4042,12 +4627,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide build result specified by projectKey-buildKey-buildNumber.
+     */
+    async getBuildRaw(requestParameters: GetBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Result>> {
+        const requestOptions = await this.getBuildRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4061,9 +4654,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for getBuildAlias without sending the request
      */
-    async getBuildAliasRaw(requestParameters: GetBuildAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Result>> {
+    async getBuildAliasRequestOpts(requestParameters: GetBuildAliasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4099,12 +4692,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide build result specified by projectKey-buildKey-buildNumber.
+     */
+    async getBuildAliasRaw(requestParameters: GetBuildAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Result>> {
+        const requestOptions = await this.getBuildAliasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4118,9 +4719,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of comments for build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for getBuildComments without sending the request
      */
-    async getBuildCommentsRaw(requestParameters: GetBuildCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComments>> {
+    async getBuildCommentsRequestOpts(requestParameters: GetBuildCommentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4152,12 +4753,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of comments for build result specified by projectKey-buildKey-buildNumber.
+     */
+    async getBuildCommentsRaw(requestParameters: GetBuildCommentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestComments>> {
+        const requestOptions = await this.getBuildCommentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4171,9 +4780,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve build concurrency settings.
+     * Creates request options for getBuildConcurrency without sending the request
      */
-    async getBuildConcurrencyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+    async getBuildConcurrencyRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -4181,12 +4790,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/build/concurrency`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve build concurrency settings.
+     */
+    async getBuildConcurrencyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+        const requestOptions = await this.getBuildConcurrencyRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4200,9 +4817,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of build results for specified plan. Plan might be top level plan (projectKey-planKey) or job plan (projectKey-planKey-jobKey).
+     * Creates request options for getBuildHistory without sending the request
      */
-    async getBuildHistoryRaw(requestParameters: GetBuildHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getBuildHistoryRequestOpts(requestParameters: GetBuildHistoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4266,12 +4883,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of build results for specified plan. Plan might be top level plan (projectKey-planKey) or job plan (projectKey-planKey-jobKey).
+     */
+    async getBuildHistoryRaw(requestParameters: GetBuildHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getBuildHistoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4285,9 +4910,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of labels for build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for getBuildLabels without sending the request
      */
-    async getBuildLabelsRaw(requestParameters: GetBuildLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildLabels>> {
+    async getBuildLabelsRequestOpts(requestParameters: GetBuildLabelsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4319,12 +4944,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of labels for build result specified by projectKey-buildKey-buildNumber.
+     */
+    async getBuildLabelsRaw(requestParameters: GetBuildLabelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildLabels>> {
+        const requestOptions = await this.getBuildLabelsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4338,9 +4971,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve build monitoring settings
+     * Creates request options for getBuildMonitoring without sending the request
      */
-    async getBuildMonitoringRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildMonitoring>> {
+    async getBuildMonitoringRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -4348,12 +4981,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/build/monitoring`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve build monitoring settings
+     */
+    async getBuildMonitoringRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildMonitoring>> {
+        const requestOptions = await this.getBuildMonitoringRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4367,9 +5008,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of build scheduled for execution and waiting in build queue.
+     * Creates request options for getBuildQueue1 without sending the request
      */
-    async getBuildQueue1Raw(requestParameters: GetBuildQueue1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuilds>> {
+    async getBuildQueue1RequestOpts(requestParameters: GetBuildQueue1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -4385,12 +5026,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/queue`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of build scheduled for execution and waiting in build queue.
+     */
+    async getBuildQueue1Raw(requestParameters: GetBuildQueue1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuilds>> {
+        const requestOptions = await this.getBuildQueue1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4404,9 +5053,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of build results related to changeset id passed as parameter. List of results contains results from all plans related to this changeset.
+     * Creates request options for getBuildResultsForChangeset without sending the request
      */
-    async getBuildResultsForChangesetRaw(requestParameters: GetBuildResultsForChangesetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getBuildResultsForChangesetRequestOpts(requestParameters: GetBuildResultsForChangesetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['csid'] == null) {
             throw new runtime.RequiredError(
                 'csid',
@@ -4422,12 +5071,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/result/byChangeset/{csid}`;
         urlPath = urlPath.replace(`{${"csid"}}`, encodeURIComponent(String(requestParameters['csid'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of build results related to changeset id passed as parameter. List of results contains results from all plans related to this changeset.
+     */
+    async getBuildResultsForChangesetRaw(requestParameters: GetBuildResultsForChangesetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getBuildResultsForChangesetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4441,9 +5098,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of build results related to changeset id passed as parameter. List of results contains results from all plans which have repositories checked out with this changeset.
+     * Creates request options for getBuildResultsForCheckoutChangeset without sending the request
      */
-    async getBuildResultsForCheckoutChangesetRaw(requestParameters: GetBuildResultsForCheckoutChangesetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getBuildResultsForCheckoutChangesetRequestOpts(requestParameters: GetBuildResultsForCheckoutChangesetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['csid'] == null) {
             throw new runtime.RequiredError(
                 'csid',
@@ -4459,12 +5116,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/result/byCheckoutChangeset/{csid}`;
         urlPath = urlPath.replace(`{${"csid"}}`, encodeURIComponent(String(requestParameters['csid'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of build results related to changeset id passed as parameter. List of results contains results from all plans which have repositories checked out with this changeset.
+     */
+    async getBuildResultsForCheckoutChangesetRaw(requestParameters: GetBuildResultsForCheckoutChangesetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getBuildResultsForCheckoutChangesetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4478,9 +5143,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch page of ephemeral agent template capabilities.
+     * Creates request options for getCapabilities without sending the request
      */
-    async getCapabilitiesRaw(requestParameters: GetCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEphemeralAgentTemplate>>> {
+    async getCapabilitiesRequestOpts(requestParameters: GetCapabilitiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -4504,12 +5169,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}/capability`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch page of ephemeral agent template capabilities.
+     */
+    async getCapabilitiesRaw(requestParameters: GetCapabilitiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEphemeralAgentTemplate>>> {
+        const requestOptions = await this.getCapabilitiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4523,9 +5196,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Clone an existing Plan into a new one, possibly into different project.
+     * Creates request options for getClone without sending the request
      */
-    async getCloneRaw(requestParameters: GetCloneRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+    async getCloneRequestOpts(requestParameters: GetCloneRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -4565,12 +5238,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"toBuildKey"}}`, encodeURIComponent(String(requestParameters['toBuildKey'])));
         urlPath = urlPath.replace(`{${"toProjectKey"}}`, encodeURIComponent(String(requestParameters['toProjectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Clone an existing Plan into a new one, possibly into different project.
+     */
+    async getCloneRaw(requestParameters: GetCloneRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestPlan>> {
+        const requestOptions = await this.getCloneRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4584,9 +5265,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves ephemeral agents configuration.
+     * Creates request options for getConfiguration without sending the request
      */
-    async getConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EphemeralAgentsConfigurationDTO>> {
+    async getConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -4594,12 +5275,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/ephemeral/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves ephemeral agents configuration.
+     */
+    async getConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EphemeralAgentsConfigurationDTO>> {
+        const requestOptions = await this.getConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4613,9 +5302,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves global build and deployment expiry configuration for this Bamboo instance.
+     * Creates request options for getConfiguration1 without sending the request
      */
-    async getConfiguration1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryConfiguration>> {
+    async getConfiguration1RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -4623,12 +5312,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/expiry/configuration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves global build and deployment expiry configuration for this Bamboo instance.
+     */
+    async getConfiguration1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryConfiguration>> {
+        const requestOptions = await this.getConfiguration1RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4642,9 +5339,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Elastic image configuration details.
+     * Creates request options for getConfiguration2 without sending the request
      */
-    async getConfiguration2Raw(requestParameters: GetConfiguration2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+    async getConfiguration2RequestOpts(requestParameters: GetConfiguration2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -4660,12 +5357,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/elasticConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Elastic image configuration details.
+     */
+    async getConfiguration2Raw(requestParameters: GetConfiguration2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+        const requestOptions = await this.getConfiguration2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4679,9 +5384,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch current user details
+     * Creates request options for getCurrentUser without sending the request
      */
-    async getCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserBean>> {
+    async getCurrentUserRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -4689,12 +5394,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/currentUser`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch current user details
+     */
+    async getCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserBean>> {
+        const requestOptions = await this.getCurrentUserRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4708,9 +5421,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get deployment version name preview.
+     * Creates request options for getDeploymentNamingPreview without sending the request
      */
-    async getDeploymentNamingPreviewRaw(requestParameters: GetDeploymentNamingPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamingPreview>> {
+    async getDeploymentNamingPreviewRequestOpts(requestParameters: GetDeploymentNamingPreviewRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -4745,12 +5458,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/projectVersioning/{deploymentProjectId}/namingPreview`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get deployment version name preview.
+     */
+    async getDeploymentNamingPreviewRaw(requestParameters: GetDeploymentNamingPreviewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamingPreview>> {
+        const requestOptions = await this.getDeploymentNamingPreviewRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4764,10 +5485,10 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get deployment project environments with deployment status. It\'s not optimized for instances with large count of deployment projects and environments, use paged versions instead.
+     * Creates request options for getDeploymentProject without sending the request
      * @deprecated
      */
-    async getDeploymentProjectRaw(requestParameters: GetDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DashboardProjectWithEnvironmentStatus>>> {
+    async getDeploymentProjectRequestOpts(requestParameters: GetDeploymentProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -4783,12 +5504,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/dashboard/{projectId}`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get deployment project environments with deployment status. It\'s not optimized for instances with large count of deployment projects and environments, use paged versions instead.
+     * @deprecated
+     */
+    async getDeploymentProjectRaw(requestParameters: GetDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DashboardProjectWithEnvironmentStatus>>> {
+        const requestOptions = await this.getDeploymentProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4803,9 +5533,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get deployment project by id.
+     * Creates request options for getDeploymentProject1 without sending the request
      */
-    async getDeploymentProject1Raw(requestParameters: GetDeploymentProject1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+    async getDeploymentProject1RequestOpts(requestParameters: GetDeploymentProject1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -4821,12 +5551,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get deployment project by id.
+     */
+    async getDeploymentProject1Raw(requestParameters: GetDeploymentProject1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProject>> {
+        const requestOptions = await this.getDeploymentProject1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4840,9 +5578,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get variables associated with deployment project.
+     * Creates request options for getDeploymentProjectVariables without sending the request
      */
-    async getDeploymentProjectVariablesRaw(requestParameters: GetDeploymentProjectVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionVariables>> {
+    async getDeploymentProjectVariablesRequestOpts(requestParameters: GetDeploymentProjectVariablesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -4858,12 +5596,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/projectVersioning/{deploymentProjectId}/variables`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get variables associated with deployment project.
+     */
+    async getDeploymentProjectVariablesRaw(requestParameters: GetDeploymentProjectVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VersionVariables>> {
+        const requestOptions = await this.getDeploymentProjectVariablesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4877,9 +5623,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get list of deployment versions.
+     * Creates request options for getDeploymentProjectVersions without sending the request
      */
-    async getDeploymentProjectVersionsRaw(requestParameters: GetDeploymentProjectVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionList>> {
+    async getDeploymentProjectVersionsRequestOpts(requestParameters: GetDeploymentProjectVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -4899,12 +5645,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/version`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get list of deployment versions.
+     */
+    async getDeploymentProjectVersionsRaw(requestParameters: GetDeploymentProjectVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionList>> {
+        const requestOptions = await this.getDeploymentProjectVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4918,9 +5672,10 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for getDeploymentProjectVersionsList without sending the request
      * @deprecated
      */
-    async getDeploymentProjectVersionsListRaw(requestParameters: GetDeploymentProjectVersionsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getDeploymentProjectVersionsListRequestOpts(requestParameters: GetDeploymentProjectVersionsListRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -4940,12 +5695,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/versions`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * @deprecated
+     */
+    async getDeploymentProjectVersionsListRaw(requestParameters: GetDeploymentProjectVersionsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getDeploymentProjectVersionsListRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -4958,9 +5721,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get paginated deployment projects with environments list.
+     * Creates request options for getDeploymentProjects without sending the request
      */
-    async getDeploymentProjectsRaw(requestParameters: GetDeploymentProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDeploymentProjects200Response>> {
+    async getDeploymentProjectsRequestOpts(requestParameters: GetDeploymentProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -4980,12 +5743,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/dashboard/paginate`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get paginated deployment projects with environments list.
+     */
+    async getDeploymentProjectsRaw(requestParameters: GetDeploymentProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDeploymentProjects200Response>> {
+        const requestOptions = await this.getDeploymentProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -4999,9 +5770,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get list of deployment projects for a build plan.
+     * Creates request options for getDeploymentProjectsForPlan without sending the request
      */
-    async getDeploymentProjectsForPlanRaw(requestParameters: GetDeploymentProjectsForPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestLinkedDeploymentProject>>> {
+    async getDeploymentProjectsForPlanRequestOpts(requestParameters: GetDeploymentProjectsForPlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -5020,12 +5791,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/project/forPlan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get list of deployment projects for a build plan.
+     */
+    async getDeploymentProjectsForPlanRaw(requestParameters: GetDeploymentProjectsForPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestLinkedDeploymentProject>>> {
+        const requestOptions = await this.getDeploymentProjectsForPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5039,9 +5818,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get result of version deployment to environment.
+     * Creates request options for getDeploymentResult without sending the request
      */
-    async getDeploymentResultRaw(requestParameters: GetDeploymentResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentResult>> {
+    async getDeploymentResultRequestOpts(requestParameters: GetDeploymentResultRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentResultId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentResultId',
@@ -5061,12 +5840,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/result/{deploymentResultId}`;
         urlPath = urlPath.replace(`{${"deploymentResultId"}}`, encodeURIComponent(String(requestParameters['deploymentResultId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get result of version deployment to environment.
+     */
+    async getDeploymentResultRaw(requestParameters: GetDeploymentResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentResult>> {
+        const requestOptions = await this.getDeploymentResultRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5080,9 +5867,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get environment latest release info.
+     * Creates request options for getEnvironmentStatutes without sending the request
      */
-    async getEnvironmentStatutesRaw(requestParameters: GetEnvironmentStatutesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEnvironmentStatusForDashboard>>> {
+    async getEnvironmentStatutesRequestOpts(requestParameters: GetEnvironmentStatutesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['environmentIds'] == null) {
             throw new runtime.RequiredError(
                 'environmentIds',
@@ -5099,13 +5886,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/deploy/dashboard/status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['environmentIds'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get environment latest release info.
+     */
+    async getEnvironmentStatutesRaw(requestParameters: GetEnvironmentStatutesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEnvironmentStatusForDashboard>>> {
+        const requestOptions = await this.getEnvironmentStatutesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5119,9 +5914,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets either pod or container related logs.
+     * Creates request options for getEphemeralAgentPodLogs without sending the request
      */
-    async getEphemeralAgentPodLogsRaw(requestParameters: GetEphemeralAgentPodLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEphemeralAgentPodLogs200Response>> {
+    async getEphemeralAgentPodLogsRequestOpts(requestParameters: GetEphemeralAgentPodLogsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pod'] == null) {
             throw new runtime.RequiredError(
                 'pod',
@@ -5149,12 +5944,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/pod/{pod}/logs`;
         urlPath = urlPath.replace(`{${"pod"}}`, encodeURIComponent(String(requestParameters['pod'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets either pod or container related logs.
+     */
+    async getEphemeralAgentPodLogsRaw(requestParameters: GetEphemeralAgentPodLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEphemeralAgentPodLogs200Response>> {
+        const requestOptions = await this.getEphemeralAgentPodLogsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5168,9 +5971,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets either pod or container all logs in the raw, plain text form.
+     * Creates request options for getEphemeralAgentPodRawLogs without sending the request
      */
-    async getEphemeralAgentPodRawLogsRaw(requestParameters: GetEphemeralAgentPodRawLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEphemeralAgentPodRawLogs200Response>> {
+    async getEphemeralAgentPodRawLogsRequestOpts(requestParameters: GetEphemeralAgentPodRawLogsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pod'] == null) {
             throw new runtime.RequiredError(
                 'pod',
@@ -5190,12 +5993,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/pod/{pod}/logs/raw`;
         urlPath = urlPath.replace(`{${"pod"}}`, encodeURIComponent(String(requestParameters['pod'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets either pod or container all logs in the raw, plain text form.
+     */
+    async getEphemeralAgentPodRawLogsRaw(requestParameters: GetEphemeralAgentPodRawLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetEphemeralAgentPodRawLogs200Response>> {
+        const requestOptions = await this.getEphemeralAgentPodRawLogsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5209,9 +6020,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the web sudo expiry from session.
+     * Creates request options for getExpiry without sending the request
      */
-    async getExpiryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getExpiryRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5219,12 +6030,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/websudo-session`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the web sudo expiry from session.
+     */
+    async getExpiryRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getExpiryRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -5237,9 +6056,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Plan\'s favicon which depends on last build result.
+     * Creates request options for getFaviconForPlan without sending the request
      */
-    async getFaviconForPlanRaw(requestParameters: GetFaviconForPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestFavicon>> {
+    async getFaviconForPlanRequestOpts(requestParameters: GetFaviconForPlanRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -5255,12 +6074,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/plan/favicon/{planKey}`;
         urlPath = urlPath.replace(`{${"planKey"}}`, encodeURIComponent(String(requestParameters['planKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Plan\'s favicon which depends on last build result.
+     */
+    async getFaviconForPlanRaw(requestParameters: GetFaviconForPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestFavicon>> {
+        const requestOptions = await this.getFaviconForPlanRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5274,9 +6101,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves whether a given dark feature key is enabled for a given user. A dark feature is enabled for a user if its either enabled for this instance or for the specific user.
+     * Creates request options for getForUser without sending the request
      */
-    async getForUserRaw(requestParameters: GetForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDarkFeature>> {
+    async getForUserRequestOpts(requestParameters: GetForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['userName'] == null) {
             throw new runtime.RequiredError(
                 'userName',
@@ -5300,12 +6127,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves whether a given dark feature key is enabled for a given user. A dark feature is enabled for a user if its either enabled for this instance or for the specific user.
+     */
+    async getForUserRaw(requestParameters: GetForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDarkFeature>> {
+        const requestOptions = await this.getForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5319,9 +6154,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve Bamboo server general configurations.
+     * Creates request options for getGeneralConfiguration without sending the request
      */
-    async getGeneralConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGeneralConfiguration>> {
+    async getGeneralConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5329,12 +6164,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/general`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve Bamboo server general configurations.
+     */
+    async getGeneralConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGeneralConfiguration>> {
+        const requestOptions = await this.getGeneralConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5348,9 +6191,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a global variable definition. Value will be encrypted if variable name contains key word password.
+     * Creates request options for getGlobalVariable without sending the request
      */
-    async getGlobalVariableRaw(requestParameters: GetGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+    async getGlobalVariableRequestOpts(requestParameters: GetGlobalVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableId'] == null) {
             throw new runtime.RequiredError(
                 'variableId',
@@ -5366,12 +6209,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/globalVariables/{variableId}`;
         urlPath = urlPath.replace(`{${"variableId"}}`, encodeURIComponent(String(requestParameters['variableId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a global variable definition. Value will be encrypted if variable name contains key word password.
+     */
+    async getGlobalVariableRaw(requestParameters: GetGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+        const requestOptions = await this.getGlobalVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5385,9 +6236,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return collection of all global variables. Value of variables that contain password in name will be encrypted with salted hash.
+     * Creates request options for getGlobalVariables without sending the request
      */
-    async getGlobalVariablesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariables>> {
+    async getGlobalVariablesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5395,12 +6246,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/globalVariables`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return collection of all global variables. Value of variables that contain password in name will be encrypted with salted hash.
+     */
+    async getGlobalVariablesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariables>> {
+        const requestOptions = await this.getGlobalVariablesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5414,9 +6273,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a list of groups in Bamboo. The list can be filtered by some attributes, e.g. name. Name is mandatory. Since name is unique, the result only contains 0 or 1 entry.
+     * Creates request options for getGroup without sending the request
      */
-    async getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestGroup>>> {
+    async getGroupRequestOpts(requestParameters: GetGroupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -5435,12 +6294,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/groups`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a list of groups in Bamboo. The list can be filtered by some attributes, e.g. name. Name is mandatory. Since name is unique, the result only contains 0 or 1 entry.
+     */
+    async getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestGroup>>> {
+        const requestOptions = await this.getGroupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5454,9 +6321,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get instant message server configuration.
+     * Creates request options for getIMServerConfig without sending the request
      */
-    async getIMServerConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestIMServerConfiguration>> {
+    async getIMServerConfigRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5464,12 +6331,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/imServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get instant message server configuration.
+     */
+    async getIMServerConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestIMServerConfiguration>> {
+        const requestOptions = await this.getIMServerConfigRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5483,9 +6358,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Chart url.
+     * Creates request options for getImageUrl without sending the request
      */
-    async getImageUrlRaw(requestParameters: GetImageUrlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChart>> {
+    async getImageUrlRequestOpts(requestParameters: GetImageUrlRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['buildKeys'] != null) {
@@ -5501,12 +6376,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/chart`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Chart url.
+     */
+    async getImageUrlRaw(requestParameters: GetImageUrlRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChart>> {
+        const requestOptions = await this.getImageUrlRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5520,9 +6403,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bamboo instance details.
+     * Creates request options for getInfo without sending the request
      */
-    async getInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInfo>> {
+    async getInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5530,12 +6413,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/info`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bamboo instance details.
+     */
+    async getInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestInfo>> {
+        const requestOptions = await this.getInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5549,9 +6440,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Obtain logs from an EC2 instance. Note that this method will return the console output of the instance, not Bamboo agent logs.
+     * Creates request options for getInstanceLog without sending the request
      */
-    async getInstanceLogRaw(requestParameters: GetInstanceLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticInstanceLog>> {
+    async getInstanceLogRequestOpts(requestParameters: GetInstanceLogRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['instanceId'] == null) {
             throw new runtime.RequiredError(
                 'instanceId',
@@ -5567,12 +6458,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/elasticInstances/instance/{instanceId}/logs`;
         urlPath = urlPath.replace(`{${"instanceId"}}`, encodeURIComponent(String(requestParameters['instanceId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Obtain logs from an EC2 instance. Note that this method will return the console output of the instance, not Bamboo agent logs.
+     */
+    async getInstanceLogRaw(requestParameters: GetInstanceLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticInstanceLog>> {
+        const requestOptions = await this.getInstanceLogRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5586,9 +6485,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all deployment projects associated with Jira issue key
+     * Creates request options for getJiraIssueStatusForProject without sending the request
      */
-    async getJiraIssueStatusForProjectRaw(requestParameters: GetJiraIssueStatusForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJiraIssueRelatedDeploymentProjects>> {
+    async getJiraIssueStatusForProjectRequestOpts(requestParameters: GetJiraIssueStatusForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['issueKey'] == null) {
             throw new runtime.RequiredError(
                 'issueKey',
@@ -5604,12 +6503,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/issue-status/{issueKey}`;
         urlPath = urlPath.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get all deployment projects associated with Jira issue key
+     */
+    async getJiraIssueStatusForProjectRaw(requestParameters: GetJiraIssueStatusForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestJiraIssueRelatedDeploymentProjects>> {
+        const requestOptions = await this.getJiraIssueStatusForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5623,9 +6530,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get deployment project environments and versions associated with Jira issue
+     * Creates request options for getJiraIssueStatusForProject1 without sending the request
      */
-    async getJiraIssueStatusForProject1Raw(requestParameters: GetJiraIssueStatusForProject1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProjectStatusForJiraIssue>> {
+    async getJiraIssueStatusForProject1RequestOpts(requestParameters: GetJiraIssueStatusForProject1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['issueKey'] == null) {
             throw new runtime.RequiredError(
                 'issueKey',
@@ -5649,12 +6556,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"issueKey"}}`, encodeURIComponent(String(requestParameters['issueKey'])));
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get deployment project environments and versions associated with Jira issue
+     */
+    async getJiraIssueStatusForProject1Raw(requestParameters: GetJiraIssueStatusForProject1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentProjectStatusForJiraIssue>> {
+        const requestOptions = await this.getJiraIssueStatusForProject1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5668,9 +6583,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the collection of jobs currently scheduled to run.
+     * Creates request options for getJobs without sending the request
      */
-    async getJobsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestScheduledJob>>> {
+    async getJobsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5678,12 +6593,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/scheduler/jobs`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the collection of jobs currently scheduled to run.
+     */
+    async getJobsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestScheduledJob>>> {
+        const requestOptions = await this.getJobsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5697,9 +6620,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of the latest build results for top level plans visible for users.
+     * Creates request options for getLatestBuildResults without sending the request
      */
-    async getLatestBuildResultsRaw(requestParameters: GetLatestBuildResultsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getLatestBuildResultsRequestOpts(requestParameters: GetLatestBuildResultsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['includeAllStates'] != null) {
@@ -5747,12 +6670,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/result`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of the latest build results for top level plans visible for users.
+     */
+    async getLatestBuildResultsRaw(requestParameters: GetLatestBuildResultsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getLatestBuildResultsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5766,9 +6697,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide list of latest build results for top level plans for specified project. List of results is limited to plans visible for user.
+     * Creates request options for getLatestBuildResultsForProject without sending the request
      */
-    async getLatestBuildResultsForProjectRaw(requestParameters: GetLatestBuildResultsForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+    async getLatestBuildResultsForProjectRequestOpts(requestParameters: GetLatestBuildResultsForProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -5824,12 +6755,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/result/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide list of latest build results for top level plans for specified project. List of results is limited to plans visible for user.
+     */
+    async getLatestBuildResultsForProjectRaw(requestParameters: GetLatestBuildResultsForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResults>> {
+        const requestOptions = await this.getLatestBuildResultsForProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5843,9 +6782,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the all users\' latest statuses of deployment version.
+     * Creates request options for getLatestVersionStatuses without sending the request
      */
-    async getLatestVersionStatusesRaw(requestParameters: GetLatestVersionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionStatuses>> {
+    async getLatestVersionStatusesRequestOpts(requestParameters: GetLatestVersionStatusesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentVersionId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentVersionId',
@@ -5861,12 +6800,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/version/{deploymentVersionId}/status`;
         urlPath = urlPath.replace(`{${"deploymentVersionId"}}`, encodeURIComponent(String(requestParameters['deploymentVersionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the all users\' latest statuses of deployment version.
+     */
+    async getLatestVersionStatusesRaw(requestParameters: GetLatestVersionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionStatuses>> {
+        const requestOptions = await this.getLatestVersionStatusesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5887,9 +6834,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the current mail server configuration.
+     * Creates request options for getMailConfiguration without sending the request
      */
-    async getMailConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+    async getMailConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -5897,12 +6844,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/mailServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the current mail server configuration.
+     */
+    async getMailConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+        const requestOptions = await this.getMailConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5916,9 +6871,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get broken builds for logged in user.
+     * Creates request options for getMyBrokenBuilds without sending the request
      */
-    async getMyBrokenBuildsRaw(requestParameters: GetMyBrokenBuildsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBrokenBuildsForUser200Response>> {
+    async getMyBrokenBuildsRequestOpts(requestParameters: GetMyBrokenBuildsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -5934,12 +6889,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/responsibility/latest/brokenBuild/myBrokenBuilds`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get broken builds for logged in user.
+     */
+    async getMyBrokenBuildsRaw(requestParameters: GetMyBrokenBuildsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBrokenBuildsForUser200Response>> {
+        const requestOptions = await this.getMyBrokenBuildsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5953,9 +6916,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get next deployment version name.
+     * Creates request options for getNextDeploymentVersions without sending the request
      */
-    async getNextDeploymentVersionsRaw(requestParameters: GetNextDeploymentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamingPreview>> {
+    async getNextDeploymentVersionsRequestOpts(requestParameters: GetNextDeploymentVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -5975,12 +6938,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/projectVersioning/{deploymentProjectId}/nextVersion`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get next deployment version name.
+     */
+    async getNextDeploymentVersionsRaw(requestParameters: GetNextDeploymentVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestNamingPreview>> {
+        const requestOptions = await this.getNextDeploymentVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -5994,9 +6965,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get both the asked node and cluster states together with all nodes\' statuses.
+     * Creates request options for getNodesStatus without sending the request
      */
-    async getNodesStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerNodesInfo>> {
+    async getNodesStatusRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6004,12 +6975,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/server/nodes`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get both the asked node and cluster states together with all nodes\' statuses.
+     */
+    async getNodesStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerNodesInfo>> {
+        const requestOptions = await this.getNodesStatusRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6023,9 +7002,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get deployment project environments.
+     * Creates request options for getPaginateDeploymentProject without sending the request
      */
-    async getPaginateDeploymentProjectRaw(requestParameters: GetPaginateDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDeploymentProjects200Response>> {
+    async getPaginateDeploymentProjectRequestOpts(requestParameters: GetPaginateDeploymentProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectId'] == null) {
             throw new runtime.RequiredError(
                 'projectId',
@@ -6053,12 +7032,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/dashboard/paginate/{projectId}`;
         urlPath = urlPath.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters['projectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get deployment project environments.
+     */
+    async getPaginateDeploymentProjectRaw(requestParameters: GetPaginateDeploymentProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetDeploymentProjects200Response>> {
+        const requestOptions = await this.getPaginateDeploymentProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6072,9 +7059,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves paginated project repositories specified by the project key.
+     * Creates request options for getPaginatedProjectRepositories without sending the request
      */
-    async getPaginatedProjectRepositoriesRaw(requestParameters: GetPaginatedProjectRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPaginatedProjectRepositories200Response>> {
+    async getPaginatedProjectRepositoriesRequestOpts(requestParameters: GetPaginatedProjectRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6102,12 +7089,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/repositories`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves paginated project repositories specified by the project key.
+     */
+    async getPaginatedProjectRepositoriesRaw(requestParameters: GetPaginatedProjectRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPaginatedProjectRepositories200Response>> {
+        const requestOptions = await this.getPaginatedProjectRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6121,9 +7116,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves paginated shared credentials for the project specified by the project key.
+     * Creates request options for getPaginatedProjectSharedCredentials without sending the request
      */
-    async getPaginatedProjectSharedCredentialsRaw(requestParameters: GetPaginatedProjectSharedCredentialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPaginatedProjectSharedCredentials200Response>> {
+    async getPaginatedProjectSharedCredentialsRequestOpts(requestParameters: GetPaginatedProjectSharedCredentialsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6151,12 +7146,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/sharedCredentials`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves paginated shared credentials for the project specified by the project key.
+     */
+    async getPaginatedProjectSharedCredentialsRaw(requestParameters: GetPaginatedProjectSharedCredentialsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPaginatedProjectSharedCredentials200Response>> {
+        const requestOptions = await this.getPaginatedProjectSharedCredentialsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6170,9 +7173,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get plan summary.
+     * Creates request options for getPlanSummary without sending the request
      */
-    async getPlanSummaryRaw(requestParameters: GetPlanSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChart>> {
+    async getPlanSummaryRequestOpts(requestParameters: GetPlanSummaryRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['buildKeys'] != null) {
@@ -6184,12 +7187,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/chart/planSummary`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get plan summary.
+     */
+    async getPlanSummaryRaw(requestParameters: GetPlanSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestChart>> {
+        const requestOptions = await this.getPlanSummaryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6203,9 +7214,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get information for project specified as project key.  - plans - list of plans for project  - plans.plan - list of plans with plan details (only plans visible - READ permission for user)  - plans.plan.actions - list of plans with plan details and actions available for user for plan  
+     * Creates request options for getProject without sending the request
      */
-    async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+    async getProjectRequestOpts(requestParameters: GetProjectRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6229,12 +7240,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get information for project specified as project key.  - plans - list of plans for project  - plans.plan - list of plans with plan details (only plans visible - READ permission for user)  - plans.plan.actions - list of plans with plan details and actions available for user for plan  
+     */
+    async getProjectRaw(requestParameters: GetProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProject>> {
+        const requestOptions = await this.getProjectRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6248,9 +7267,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the project variable by given name.
+     * Creates request options for getProjectVariable without sending the request
      */
-    async getProjectVariableRaw(requestParameters: GetProjectVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+    async getProjectVariableRequestOpts(requestParameters: GetProjectVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6274,12 +7293,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"variableName"}}`, encodeURIComponent(String(requestParameters['variableName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the project variable by given name.
+     */
+    async getProjectVariableRaw(requestParameters: GetProjectVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVariable>> {
+        const requestOptions = await this.getProjectVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6293,9 +7320,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the list of all variables for a project.
+     * Creates request options for getProjectVariables without sending the request
      */
-    async getProjectVariablesRaw(requestParameters: GetProjectVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestVariable>>> {
+    async getProjectVariablesRequestOpts(requestParameters: GetProjectVariablesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6311,12 +7338,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/variables`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the list of all variables for a project.
+     */
+    async getProjectVariablesRaw(requestParameters: GetProjectVariablesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestVariable>>> {
+        const requestOptions = await this.getProjectVariablesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6330,9 +7365,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all projects defined in Bamboo. Projects without any plan are not listed by default, unless _showEmpty_ query param is set to true.  - projects - list of projects projects.project - list of projects with project details  - projects.project.plans - list of project details and plans for project  - projects.project.plans.plan - list of project details and plans for project with plan details
+     * Creates request options for getProjects without sending the request
      */
-    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjects>> {
+    async getProjectsRequestOpts(requestParameters: GetProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -6348,12 +7383,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/project`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List all projects defined in Bamboo. Projects without any plan are not listed by default, unless _showEmpty_ query param is set to true.  - projects - list of projects projects.project - list of projects with project details  - projects.project.plans - list of project details and plans for project  - projects.project.plans.plan - list of project details and plans for project with plan details
+     */
+    async getProjectsRaw(requestParameters: GetProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestProjects>> {
+        const requestOptions = await this.getProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6367,9 +7410,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve Bamboo quarantine settings.
+     * Creates request options for getQuarantineSettings without sending the request
      */
-    async getQuarantineSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+    async getQuarantineSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6377,12 +7420,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/quarantine`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve Bamboo quarantine settings.
+     */
+    async getQuarantineSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+        const requestOptions = await this.getQuarantineSettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6396,9 +7447,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a single quick filter by id.
+     * Creates request options for getQuickFilter without sending the request
      */
-    async getQuickFilterRaw(requestParameters: GetQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+    async getQuickFilterRequestOpts(requestParameters: GetQuickFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -6414,12 +7465,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/quickFilter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a single quick filter by id.
+     */
+    async getQuickFilterRaw(requestParameters: GetQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+        const requestOptions = await this.getQuickFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6433,9 +7492,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Obtain a list of quick filters defined for this Bamboo instance.
+     * Creates request options for getQuickFilters without sending the request
      */
-    async getQuickFiltersRaw(requestParameters: GetQuickFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+    async getQuickFiltersRequestOpts(requestParameters: GetQuickFiltersRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['configured'] != null) {
@@ -6447,12 +7506,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Obtain a list of quick filters defined for this Bamboo instance.
+     */
+    async getQuickFiltersRaw(requestParameters: GetQuickFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+        const requestOptions = await this.getQuickFiltersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6466,9 +7533,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the reindex status.
+     * Creates request options for getReindexInfo without sending the request
      */
-    async getReindexInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReindexBean>> {
+    async getReindexInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6476,12 +7543,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/reindex`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the reindex status.
+     */
+    async getReindexInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReindexBean>> {
+        const requestOptions = await this.getReindexInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6495,9 +7570,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve the remote agent configuration
+     * Creates request options for getRemoteAgentConfiguration without sending the request
      */
-    async getRemoteAgentConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+    async getRemoteAgentConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6505,12 +7580,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/remoteAgentSupport`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve the remote agent configuration
+     */
+    async getRemoteAgentConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+        const requestOptions = await this.getRemoteAgentConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6524,9 +7607,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provides a list of all remote agent authentication statuses.
+     * Creates request options for getRemoteAgents without sending the request
      */
-    async getRemoteAgentsRaw(requestParameters: GetRemoteAgentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestBuildAgent>>> {
+    async getRemoteAgentsRequestOpts(requestParameters: GetRemoteAgentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['online'] != null) {
@@ -6538,12 +7621,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/remote`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provides a list of all remote agent authentication statuses.
+     */
+    async getRemoteAgentsRaw(requestParameters: GetRemoteAgentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestBuildAgent>>> {
+        const requestOptions = await this.getRemoteAgentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6557,9 +7648,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get responsible users for broken build result or plan.
+     * Creates request options for getResponsibleForPlanResult without sending the request
      */
-    async getResponsibleForPlanResultRaw(requestParameters: GetResponsibleForPlanResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getResponsibleForPlanResultRequestOpts(requestParameters: GetResponsibleForPlanResultRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -6583,12 +7674,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"planResultKeyOrPlanKey"}}`, encodeURIComponent(String(requestParameters['planResultKeyOrPlanKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get responsible users for broken build result or plan.
+     */
+    async getResponsibleForPlanResultRaw(requestParameters: GetResponsibleForPlanResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getResponsibleForPlanResultRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -6601,9 +7700,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the current elastic configuration.
+     * Creates request options for getRestElasticConfiguration without sending the request
      */
-    async getRestElasticConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticConfiguration>> {
+    async getRestElasticConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6611,12 +7710,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/elastic/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves the current elastic configuration.
+     */
+    async getRestElasticConfigurationRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticConfiguration>> {
+        const requestOptions = await this.getRestElasticConfigurationRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6630,9 +7737,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Provide runtime information for currently executing build result. The key difference to other methods is that method is optimized to provide information available in memory only, so no database calls are made. The information provided is not as wide as for finished results, but the call is optimized for speed.
+     * Creates request options for getResultStatus without sending the request
      */
-    async getResultStatusRaw(requestParameters: GetResultStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResultStatus>> {
+    async getResultStatusRequestOpts(requestParameters: GetResultStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -6664,12 +7771,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Provide runtime information for currently executing build result. The key difference to other methods is that method is optimized to provide information available in memory only, so no database calls are made. The information provided is not as wide as for finished results, but the call is optimized for speed.
+     */
+    async getResultStatusRaw(requestParameters: GetResultStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestResultStatus>> {
+        const requestOptions = await this.getResultStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6683,9 +7798,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch list of RSS repositories which can use given repository by RSS code.
+     * Creates request options for getRssRepositoriesAllowedToAccessRepository without sending the request
      */
-    async getRssRepositoriesAllowedToAccessRepositoryRaw(requestParameters: GetRssRepositoriesAllowedToAccessRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+    async getRssRepositoriesAllowedToAccessRepositoryRequestOpts(requestParameters: GetRssRepositoriesAllowedToAccessRepositoryRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -6701,12 +7816,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/rssrepository`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch list of RSS repositories which can use given repository by RSS code.
+     */
+    async getRssRepositoriesAllowedToAccessRepositoryRaw(requestParameters: GetRssRepositoriesAllowedToAccessRepositoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+        const requestOptions = await this.getRssRepositoriesAllowedToAccessRepositoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6720,9 +7843,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve configuration of S3 Artifact Handler.
+     * Creates request options for getS3ArtifactHandler without sending the request
      */
-    async getS3ArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async getS3ArtifactHandlerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6730,12 +7853,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/s3`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve configuration of S3 Artifact Handler.
+     */
+    async getS3ArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.getS3ArtifactHandlerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6749,9 +7880,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve security settings.
+     * Creates request options for getSecuritySettings without sending the request
      */
-    async getSecuritySettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecuritySettings>> {
+    async getSecuritySettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6759,12 +7890,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve security settings.
+     */
+    async getSecuritySettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestSecuritySettings>> {
+        const requestOptions = await this.getSecuritySettingsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6778,9 +7917,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve configuration of SFTP Artifact Handler.
+     * Creates request options for getSftpArtifactHandler without sending the request
      */
-    async getSftpArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleRestArtifactHandler>> {
+    async getSftpArtifactHandlerRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6788,12 +7927,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/sftp`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve configuration of SFTP Artifact Handler.
+     */
+    async getSftpArtifactHandlerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SimpleRestArtifactHandler>> {
+        const requestOptions = await this.getSftpArtifactHandlerRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6807,9 +7954,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resource providing status of RSS processing for a given repository and optional branch.
+     * Creates request options for getSpecsDetectionStatus without sending the request
      */
-    async getSpecsDetectionStatusRaw(requestParameters: GetSpecsDetectionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVcsLocationSpecsStatus>> {
+    async getSpecsDetectionStatusRequestOpts(requestParameters: GetSpecsDetectionStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -6833,12 +7980,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/scan/status`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resource providing status of RSS processing for a given repository and optional branch.
+     */
+    async getSpecsDetectionStatusRaw(requestParameters: GetSpecsDetectionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestVcsLocationSpecsStatus>> {
+        const requestOptions = await this.getSpecsDetectionStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6852,9 +8007,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves build and deployment expiry status.
+     * Creates request options for getStatus without sending the request
      */
-    async getStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryStatus>> {
+    async getStatusRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6862,12 +8017,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/expiry/status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieves build and deployment expiry status.
+     */
+    async getStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryStatus>> {
+        const requestOptions = await this.getStatusRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6881,9 +8044,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get both the asked node and cluster states.
+     * Creates request options for getStatus1 without sending the request
      */
-    async getStatus1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+    async getStatus1RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6891,12 +8054,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/server`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get both the asked node and cluster states.
+     */
+    async getStatus1Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+        const requestOptions = await this.getStatus1RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6910,9 +8081,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the current status of the Bamboo node. This endpoint enables a basic status check on the status of a Bamboo node. <p> The status endpoint will be responsive as long as the Bamboo REST plugin will be running. In other words, this endpoint does depend on the instance health and might not answer as a result of a failure or when Bamboo is still starting.
+     * Creates request options for getStatus2 without sending the request
      */
-    async getStatus2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnonymousServerStatusInfo>> {
+    async getStatus2RequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -6920,12 +8091,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/status`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the current status of the Bamboo node. This endpoint enables a basic status check on the status of a Bamboo node. <p> The status endpoint will be responsive as long as the Bamboo REST plugin will be running. In other words, this endpoint does depend on the instance health and might not answer as a result of a failure or when Bamboo is still starting.
+     */
+    async getStatus2Raw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAnonymousServerStatusInfo>> {
+        const requestOptions = await this.getStatus2RequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6939,9 +8118,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets ephemeral template configuration details.
+     * Creates request options for getTemplateConfiguration without sending the request
      */
-    async getTemplateConfigurationRaw(requestParameters: GetTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+    async getTemplateConfigurationRequestOpts(requestParameters: GetTemplateConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -6957,12 +8136,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets ephemeral template configuration details.
+     */
+    async getTemplateConfigurationRaw(requestParameters: GetTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+        const requestOptions = await this.getTemplateConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -6976,9 +8163,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch page of ephemeral templates.
+     * Creates request options for getTemplateConfigurationsPage without sending the request
      */
-    async getTemplateConfigurationsPageRaw(requestParameters: GetTemplateConfigurationsPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEphemeralAgentTemplate>>> {
+    async getTemplateConfigurationsPageRequestOpts(requestParameters: GetTemplateConfigurationsPageRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['filter'] != null) {
@@ -6998,12 +8185,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/ephemeral/templateConfiguration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch page of ephemeral templates.
+     */
+    async getTemplateConfigurationsPageRaw(requestParameters: GetTemplateConfigurationsPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestEphemeralAgentTemplate>>> {
+        const requestOptions = await this.getTemplateConfigurationsPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7017,9 +8212,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Extract variables value from version name.
+     * Creates request options for getVariablesFromName without sending the request
      */
-    async getVariablesFromNameRaw(requestParameters: GetVariablesFromNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getVariablesFromNameRequestOpts(requestParameters: GetVariablesFromNameRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -7046,12 +8241,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/projectVersioning/{deploymentProjectId}/parseVariables`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Extract variables value from version name.
+     */
+    async getVariablesFromNameRaw(requestParameters: GetVariablesFromNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getVariablesFromNameRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7064,9 +8267,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get associated build result of deployment version.
+     * Creates request options for getVersionAndPlanResult without sending the request
      */
-    async getVersionAndPlanResultRaw(requestParameters: GetVersionAndPlanResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionAndPlanResult>> {
+    async getVersionAndPlanResultRequestOpts(requestParameters: GetVersionAndPlanResultRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentVersionId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentVersionId',
@@ -7082,12 +8285,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/version/{deploymentVersionId}/build-result`;
         urlPath = urlPath.replace(`{${"deploymentVersionId"}}`, encodeURIComponent(String(requestParameters['deploymentVersionId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get associated build result of deployment version.
+     */
+    async getVersionAndPlanResultRaw(requestParameters: GetVersionAndPlanResultRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionAndPlanResult>> {
+        const requestOptions = await this.getVersionAndPlanResultRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7101,9 +8312,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return visible quick filters for currently logged in user.
+     * Creates request options for getVisibleFilters without sending the request
      */
-    async getVisibleFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+    async getVisibleFiltersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7111,12 +8322,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter/visible`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Return visible quick filters for currently logged in user.
+     */
+    async getVisibleFiltersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestQuickFilter>>> {
+        const requestOptions = await this.getVisibleFiltersRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7130,9 +8349,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Grant repository with RSS code to use target repository in build plans and deployments. If permission is not granted RSS import will fail when code tries to use target repository.
+     * Creates request options for grantRssRepositoryAccess without sending the request
      */
-    async grantRssRepositoryAccessRaw(requestParameters: GrantRssRepositoryAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+    async grantRssRepositoryAccessRequestOpts(requestParameters: GrantRssRepositoryAccessRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -7157,13 +8376,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/rssrepository`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restIdContainer'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Grant repository with RSS code to use target repository in build plans and deployments. If permission is not granted RSS import will fail when code tries to use target repository.
+     */
+    async grantRssRepositoryAccessRaw(requestParameters: GrantRssRepositoryAccessRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryMinimal>> {
+        const requestOptions = await this.grantRssRepositoryAccessRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7177,9 +8404,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * List of repositories which granted to create/edit environment in given deployment project by Repository stored Bamboo Specs.
+     * Creates request options for listAssignedRepositories without sending the request
      */
-    async listAssignedRepositoriesRaw(requestParameters: ListAssignedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+    async listAssignedRepositoriesRequestOpts(requestParameters: ListAssignedRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -7195,12 +8422,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/repository`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * List of repositories which granted to create/edit environment in given deployment project by Repository stored Bamboo Specs.
+     */
+    async listAssignedRepositoriesRaw(requestParameters: ListAssignedRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+        const requestOptions = await this.listAssignedRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7214,9 +8449,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch list of repositories which granted to create plan in given project by Repository stored Bamboo Specs.
+     * Creates request options for listAssignedRepositories1 without sending the request
      */
-    async listAssignedRepositories1Raw(requestParameters: ListAssignedRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+    async listAssignedRepositories1RequestOpts(requestParameters: ListAssignedRepositories1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -7232,12 +8467,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/repository`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fetch list of repositories which granted to create plan in given project by Repository stored Bamboo Specs.
+     */
+    async listAssignedRepositories1Raw(requestParameters: ListAssignedRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestRepository>>> {
+        const requestOptions = await this.listAssignedRepositories1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7251,9 +8494,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Pauses the cluster.
+     * Creates request options for pause without sending the request
      */
-    async pauseRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+    async pauseRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7261,12 +8504,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/server/pause`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Pauses the cluster.
+     */
+    async pauseRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+        const requestOptions = await this.pauseRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7280,9 +8531,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Prepare the asked node for restarting: suspend change detection, stop indexing, stop ec2 instance ordering etc.
+     * Creates request options for prepareForRestart without sending the request
      */
-    async prepareForRestartRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+    async prepareForRestartRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7290,12 +8541,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/server/prepareForRestart`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Prepare the asked node for restarting: suspend change detection, stop indexing, stop ec2 instance ordering etc.
+     */
+    async prepareForRestartRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+        const requestOptions = await this.prepareForRestartRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7309,9 +8568,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable or disable a dark feature for all users of this instance.
+     * Creates request options for put without sending the request
      */
-    async putRaw(requestParameters: PutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDarkFeature>> {
+    async putRequestOpts(requestParameters: PutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['key'] == null) {
             throw new runtime.RequiredError(
                 'key',
@@ -7336,13 +8595,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/darkFeatures/{key}`;
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDarkFeature'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable or disable a dark feature for all users of this instance.
+     */
+    async putRaw(requestParameters: PutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDarkFeature>> {
+        const requestOptions = await this.putRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7356,9 +8623,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable or disable a dark feature for a given user.
+     * Creates request options for put1 without sending the request
      */
-    async put1Raw(requestParameters: Put1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDarkFeature>> {
+    async put1RequestOpts(requestParameters: Put1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['userName'] == null) {
             throw new runtime.RequiredError(
                 'userName',
@@ -7391,13 +8658,21 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"userName"}}`, encodeURIComponent(String(requestParameters['userName'])));
         urlPath = urlPath.replace(`{${"key"}}`, encodeURIComponent(String(requestParameters['key'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restDarkFeature'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable or disable a dark feature for a given user.
+     */
+    async put1Raw(requestParameters: Put1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestUserDarkFeature>> {
+        const requestOptions = await this.put1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7411,9 +8686,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Refresh the web sudo expiry for the current session.
+     * Creates request options for refreshWebSudoSession without sending the request
      */
-    async refreshWebSudoSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async refreshWebSudoSessionRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7421,12 +8696,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/websudo-session`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Refresh the web sudo expiry for the current session.
+     */
+    async refreshWebSudoSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.refreshWebSudoSessionRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7439,9 +8722,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Kicks off a reindex.  Requires system admin permissions to perform this operation.
+     * Creates request options for reindex without sending the request
      */
-    async reindexRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReindexBean>> {
+    async reindexRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7449,12 +8732,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/reindex`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Kicks off a reindex.  Requires system admin permissions to perform this operation.
+     */
+    async reindexRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReindexBean>> {
+        const requestOptions = await this.reindexRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7468,9 +8759,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a comment from a build result.
+     * Creates request options for removeBuildComment without sending the request
      */
-    async removeBuildCommentRaw(requestParameters: RemoveBuildCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeBuildCommentRequestOpts(requestParameters: RemoveBuildCommentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -7510,12 +8801,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"commentId"}}`, encodeURIComponent(String(requestParameters['commentId'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a comment from a build result.
+     */
+    async removeBuildCommentRaw(requestParameters: RemoveBuildCommentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeBuildCommentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7528,9 +8827,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes label from build result specified by projectKey-buildKey-buildNumber.
+     * Creates request options for removeBuildLabel without sending the request
      */
-    async removeBuildLabelRaw(requestParameters: RemoveBuildLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeBuildLabelRequestOpts(requestParameters: RemoveBuildLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -7570,12 +8869,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes label from build result specified by projectKey-buildKey-buildNumber.
+     */
+    async removeBuildLabelRaw(requestParameters: RemoveBuildLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeBuildLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7588,9 +8895,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete custom plan expiry settings.
+     * Creates request options for removePlanCustomExpirySettings without sending the request
      */
-    async removePlanCustomExpirySettingsRaw(requestParameters: RemovePlanCustomExpirySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePlanCustomExpirySettingsRequestOpts(requestParameters: RemovePlanCustomExpirySettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -7606,12 +8913,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/admin/expiry/custom/plan/{planKey}`;
         urlPath = urlPath.replace(`{${"planKey"}}`, encodeURIComponent(String(requestParameters['planKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete custom plan expiry settings.
+     */
+    async removePlanCustomExpirySettingsRaw(requestParameters: RemovePlanCustomExpirySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePlanCustomExpirySettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7624,9 +8939,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove user\'s responsibility from broken build.
+     * Creates request options for removeResponsible without sending the request
      */
-    async removeResponsibleRaw(requestParameters: RemoveResponsibleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeResponsibleRequestOpts(requestParameters: RemoveResponsibleRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -7650,12 +8965,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"name"}}`, encodeURIComponent(String(requestParameters['name'])));
         urlPath = urlPath.replace(`{${"planResultKeyOrPlanKey"}}`, encodeURIComponent(String(requestParameters['planResultKeyOrPlanKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove user\'s responsibility from broken build.
+     */
+    async removeResponsibleRaw(requestParameters: RemoveResponsibleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeResponsibleRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7668,9 +8991,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove web sudo from session.
+     * Creates request options for removeWebSudoFromSession without sending the request
      */
-    async removeWebSudoFromSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeWebSudoFromSessionRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7678,12 +9001,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/websudo-session`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove web sudo from session.
+     */
+    async removeWebSudoFromSessionRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeWebSudoFromSessionRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7696,9 +9027,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resumes the cluster.
+     * Creates request options for resume without sending the request
      */
-    async resumeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+    async resumeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7706,12 +9037,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/server/resume`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resumes the cluster.
+     */
+    async resumeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestServerStatusInfo>> {
+        const requestOptions = await this.resumeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7725,9 +9064,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke access of RSS code stored in repository defined by repositoryId from repository defined by targetRepositoryId. Use this method when need to prevent usage of target repository by RSS code stored in repository referenced by repositoryId.
+     * Creates request options for revokePermissionToUseRepositoryByRssRepo without sending the request
      */
-    async revokePermissionToUseRepositoryByRssRepoRaw(requestParameters: RevokePermissionToUseRepositoryByRssRepoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokePermissionToUseRepositoryByRssRepoRequestOpts(requestParameters: RevokePermissionToUseRepositoryByRssRepoRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -7751,12 +9090,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
         urlPath = urlPath.replace(`{${"targetRepositoryId"}}`, encodeURIComponent(String(requestParameters['targetRepositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke access of RSS code stored in repository defined by repositoryId from repository defined by targetRepositoryId. Use this method when need to prevent usage of target repository by RSS code stored in repository referenced by repositoryId.
+     */
+    async revokePermissionToUseRepositoryByRssRepoRaw(requestParameters: RevokePermissionToUseRepositoryByRssRepoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokePermissionToUseRepositoryByRssRepoRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -7769,9 +9116,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Executes build and deployment expiry process. Will only start each process if it\'s not currently running.
+     * Creates request options for run without sending the request
      */
-    async runRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RunExpiryResponse>> {
+    async runRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -7779,12 +9126,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/expiry/run`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Executes build and deployment expiry process. Will only start each process if it\'s not currently running.
+     */
+    async runRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RunExpiryResponse>> {
+        const requestOptions = await this.runRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7798,9 +9153,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Modify ephemeral agents configuration.
+     * Creates request options for saveConfiguration without sending the request
      */
-    async saveConfigurationRaw(requestParameters: SaveConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EphemeralAgentsConfigurationDTO>> {
+    async saveConfigurationRequestOpts(requestParameters: SaveConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['ephemeralAgentsConfigurationDTO'] == null) {
             throw new runtime.RequiredError(
                 'ephemeralAgentsConfigurationDTO',
@@ -7817,13 +9172,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/ephemeral/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['ephemeralAgentsConfigurationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Modify ephemeral agents configuration.
+     */
+    async saveConfigurationRaw(requestParameters: SaveConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EphemeralAgentsConfigurationDTO>> {
+        const requestOptions = await this.saveConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7837,9 +9200,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a starts with search against projects, plans, plan branches, deployment projects
+     * Creates request options for search without sending the request
      */
-    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JsonSearchResultsList>> {
+    async searchRequestOpts(requestParameters: SearchRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['searchTerm'] != null) {
@@ -7855,12 +9218,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quicksearch`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a starts with search against projects, plans, plan branches, deployment projects
+     */
+    async searchRaw(requestParameters: SearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JsonSearchResultsList>> {
+        const requestOptions = await this.searchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7874,9 +9245,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * A starts-with search of authors based on their author name.
+     * Creates request options for searchAuthors without sending the request
      */
-    async searchAuthorsRaw(requestParameters: SearchAuthorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchAuthorsRequestOpts(requestParameters: SearchAuthorsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchTerm'] == null) {
             throw new runtime.RequiredError(
                 'searchTerm',
@@ -7907,12 +9278,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/authors`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * A starts-with search of authors based on their author name.
+     */
+    async searchAuthorsRaw(requestParameters: SearchAuthorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchAuthorsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7926,9 +9305,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for linked repositories which can be granted to create/modify environment by Repository stored Bamboo Specs in given deployment project.
+     * Creates request options for searchAvailableRepositories without sending the request
      */
-    async searchAvailableRepositoriesRaw(requestParameters: SearchAvailableRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+    async searchAvailableRepositoriesRequestOpts(requestParameters: SearchAvailableRepositoriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -7956,12 +9335,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/deploy/project/{deploymentProjectId}/repository/search`;
         urlPath = urlPath.replace(`{${"deploymentProjectId"}}`, encodeURIComponent(String(requestParameters['deploymentProjectId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for linked repositories which can be granted to create/modify environment by Repository stored Bamboo Specs in given deployment project.
+     */
+    async searchAvailableRepositoriesRaw(requestParameters: SearchAvailableRepositoriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+        const requestOptions = await this.searchAvailableRepositoriesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -7975,9 +9362,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for linked repositories which can be granted to create plans by Repository stored Bamboo Specs in given project
+     * Creates request options for searchAvailableRepositories1 without sending the request
      */
-    async searchAvailableRepositories1Raw(requestParameters: SearchAvailableRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+    async searchAvailableRepositories1RequestOpts(requestParameters: SearchAvailableRepositories1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -7997,12 +9384,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/project/{projectKey}/repository/search`;
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for linked repositories which can be granted to create plans by Repository stored Bamboo Specs in given project
+     */
+    async searchAvailableRepositories1Raw(requestParameters: SearchAvailableRepositories1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+        const requestOptions = await this.searchAvailableRepositories1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8016,9 +9411,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for existing linked repositories which can be granted to use given repository by RSS.
+     * Creates request options for searchAvailableRepositories2 without sending the request
      */
-    async searchAvailableRepositories2Raw(requestParameters: SearchAvailableRepositories2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+    async searchAvailableRepositories2RequestOpts(requestParameters: SearchAvailableRepositories2Request): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -8038,12 +9433,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/rssrepository/search`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for existing linked repositories which can be granted to use given repository by RSS.
+     */
+    async searchAvailableRepositories2Raw(requestParameters: SearchAvailableRepositories2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryList>> {
+        const requestOptions = await this.searchAvailableRepositories2RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8057,9 +9460,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a \"starts with\" search against full plan branch name and full plan branch key. Branches are restricted to \"masterPlanKey\" plan.
+     * Creates request options for searchBranches without sending the request
      */
-    async searchBranchesRaw(requestParameters: SearchBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchBranchesRequestOpts(requestParameters: SearchBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['masterPlanKey'] == null) {
             throw new runtime.RequiredError(
                 'masterPlanKey',
@@ -8106,12 +9509,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/branches`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a \"starts with\" search against full plan branch name and full plan branch key. Branches are restricted to \"masterPlanKey\" plan.
+     */
+    async searchBranchesRaw(requestParameters: SearchBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8125,9 +9536,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a contains search against deployment project name.
+     * Creates request options for searchDeployments without sending the request
      */
-    async searchDeploymentsRaw(requestParameters: SearchDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchDeploymentsRequestOpts(requestParameters: SearchDeploymentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -8151,12 +9562,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/deployments`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a contains search against deployment project name.
+     */
+    async searchDeploymentsRaw(requestParameters: SearchDeploymentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchDeploymentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8170,9 +9589,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for available plan child dependencies
+     * Creates request options for searchForAvailablePlanChildDependencies without sending the request
      */
-    async searchForAvailablePlanChildDependenciesRaw(requestParameters: SearchForAvailablePlanChildDependenciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDependencies>> {
+    async searchForAvailablePlanChildDependenciesRequestOpts(requestParameters: SearchForAvailablePlanChildDependenciesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -8215,12 +9634,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for available plan child dependencies
+     */
+    async searchForAvailablePlanChildDependenciesRaw(requestParameters: SearchForAvailablePlanChildDependenciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDependencies>> {
+        const requestOptions = await this.searchForAvailablePlanChildDependenciesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8234,9 +9661,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for available plan parent dependencies
+     * Creates request options for searchForAvailablePlanParentDependencies without sending the request
      */
-    async searchForAvailablePlanParentDependenciesRaw(requestParameters: SearchForAvailablePlanParentDependenciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDependencies>> {
+    async searchForAvailablePlanParentDependenciesRequestOpts(requestParameters: SearchForAvailablePlanParentDependenciesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -8279,12 +9706,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for available plan parent dependencies
+     */
+    async searchForAvailablePlanParentDependenciesRaw(requestParameters: SearchForAvailablePlanParentDependenciesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDependencies>> {
+        const requestOptions = await this.searchForAvailablePlanParentDependenciesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8298,9 +9733,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a \"starts with\" search against full job name and full job key.
+     * Creates request options for searchJobs without sending the request
      */
-    async searchJobsRaw(requestParameters: SearchJobsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchJobsRequestOpts(requestParameters: SearchJobsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -8328,12 +9763,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/search/jobs/{planKey}`;
         urlPath = urlPath.replace(`{${"planKey"}}`, encodeURIComponent(String(requestParameters['planKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a \"starts with\" search against full job name and full job key.
+     */
+    async searchJobsRaw(requestParameters: SearchJobsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchJobsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8347,9 +9790,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a \"starts with\" search against full plan name and full plan key.  Use \"type\" argument to filter by plan type by default will return TopLevelPlans
+     * Creates request options for searchPlans without sending the request
      */
-    async searchPlansRaw(requestParameters: SearchPlansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchPlansRequestOpts(requestParameters: SearchPlansRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -8381,12 +9824,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/plans`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a \"starts with\" search against full plan name and full plan key.  Use \"type\" argument to filter by plan type by default will return TopLevelPlans
+     */
+    async searchPlansRaw(requestParameters: SearchPlansRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchPlansRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8400,9 +9851,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a contains search against project name.
+     * Creates request options for searchProjects without sending the request
      */
-    async searchProjectsRaw(requestParameters: SearchProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchProjectsRequestOpts(requestParameters: SearchProjectsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -8426,12 +9877,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/projects`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a contains search against project name.
+     */
+    async searchProjectsRaw(requestParameters: SearchProjectsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchProjectsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8445,9 +9904,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for divergent branches names (i.e. vcs branches that have RSS execution results).
+     * Creates request options for searchSpecsBranches without sending the request
      */
-    async searchSpecsBranchesRaw(requestParameters: SearchSpecsBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranchList>> {
+    async searchSpecsBranchesRequestOpts(requestParameters: SearchSpecsBranchesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -8467,12 +9926,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/rssBranches`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for divergent branches names (i.e. vcs branches that have RSS execution results).
+     */
+    async searchSpecsBranchesRaw(requestParameters: SearchSpecsBranchesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBranchList>> {
+        const requestOptions = await this.searchSpecsBranchesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8486,9 +9953,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a \"starts with\" search against full stage name.
+     * Creates request options for searchStages without sending the request
      */
-    async searchStagesRaw(requestParameters: SearchStagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchStagesRequestOpts(requestParameters: SearchStagesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['planKey'] == null) {
             throw new runtime.RequiredError(
                 'planKey',
@@ -8520,12 +9987,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/search/stages/{planKey}`;
         urlPath = urlPath.replace(`{${"planKey"}}`, encodeURIComponent(String(requestParameters['planKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a \"starts with\" search against full stage name.
+     */
+    async searchStagesRaw(requestParameters: SearchStagesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchStagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8539,9 +10014,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * A starts-with search of users based on their username, full-name and if allowed email address.
+     * Creates request options for searchUsers without sending the request
      */
-    async searchUsersRaw(requestParameters: SearchUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchUsersRequestOpts(requestParameters: SearchUsersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchTerm'] == null) {
             throw new runtime.RequiredError(
                 'searchTerm',
@@ -8568,12 +10043,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/users`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * A starts-with search of users based on their username, full-name and if allowed email address.
+     */
+    async searchUsersRaw(requestParameters: SearchUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchUsersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8587,9 +10070,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Performs a contains search against a version name.
+     * Creates request options for searchVersions without sending the request
      */
-    async searchVersionsRaw(requestParameters: SearchVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchVersionsRequestOpts(requestParameters: SearchVersionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentProjectId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentProjectId',
@@ -8628,12 +10111,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/search/versions`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Performs a contains search against a version name.
+     */
+    async searchVersionsRaw(requestParameters: SearchVersionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchVersionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8647,9 +10138,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the agents automatic management configuration
+     * Creates request options for setAgentAutomaticManagementConfiguration without sending the request
      */
-    async setAgentAutomaticManagementConfigurationRaw(requestParameters: SetAgentAutomaticManagementConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+    async setAgentAutomaticManagementConfigurationRequestOpts(requestParameters: SetAgentAutomaticManagementConfigurationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -8659,13 +10150,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/agents/offlineAgentRemoval`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restOfflineAgentRemovalConfig'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the agents automatic management configuration
+     */
+    async setAgentAutomaticManagementConfigurationRaw(requestParameters: SetAgentAutomaticManagementConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+        const requestOptions = await this.setAgentAutomaticManagementConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8679,9 +10178,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update global build and deployment expiry configuration for this Bamboo instance. Partial configuration is not allowed (it will fail validation).
+     * Creates request options for setConfiguration without sending the request
      */
-    async setConfigurationRaw(requestParameters: SetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryConfiguration>> {
+    async setConfigurationRequestOpts(requestParameters: SetConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restCombinedExpiryConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restCombinedExpiryConfiguration',
@@ -8698,13 +10197,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/expiry/configuration`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCombinedExpiryConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update global build and deployment expiry configuration for this Bamboo instance. Partial configuration is not allowed (it will fail validation).
+     */
+    async setConfigurationRaw(requestParameters: SetConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestCombinedExpiryConfiguration>> {
+        const requestOptions = await this.setConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8718,9 +10225,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Saves the list of visible quick filters for currently logged in user.
+     * Creates request options for setVisibleFilters without sending the request
      */
-    async setVisibleFiltersRaw(requestParameters: SetVisibleFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async setVisibleFiltersRequestOpts(requestParameters: SetVisibleFiltersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['requestBody'] == null) {
             throw new runtime.RequiredError(
                 'requestBody',
@@ -8737,13 +10244,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/quickFilter/visible`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['requestBody'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Saves the list of visible quick filters for currently logged in user.
+     */
+    async setVisibleFiltersRaw(requestParameters: SetVisibleFiltersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.setVisibleFiltersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -8756,9 +10271,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fire build execution for specified plan. Effectively, this method adds build to the build queue, so is not guarantied that build would be executed immediately. Depending on currently executed builds and length of build queue, build may be executed when queue would be drained. Additional variables could be passed to this method either as form encoded POST payload or query parameters. PLEASE note: Query parameters are more important - override those stored in form payload. Variables defined in Bamboo as global variables or plan variables MUST be prefixed with bamboo.variable ie. <code>bamboo.variable.myVariable=valueForMyVariable</code>. When global or plan variables would be passed to this method, will override default values for variables.
+     * Creates request options for startBuild1 without sending the request
      */
-    async startBuild1Raw(requestParameters: StartBuild1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuild>> {
+    async startBuild1RequestOpts(requestParameters: StartBuild1Request): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -8794,12 +10309,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"projectKey"}}`, encodeURIComponent(String(requestParameters['projectKey'])));
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Fire build execution for specified plan. Effectively, this method adds build to the build queue, so is not guarantied that build would be executed immediately. Depending on currently executed builds and length of build queue, build may be executed when queue would be drained. Additional variables could be passed to this method either as form encoded POST payload or query parameters. PLEASE note: Query parameters are more important - override those stored in form payload. Variables defined in Bamboo as global variables or plan variables MUST be prefixed with bamboo.variable ie. <code>bamboo.variable.myVariable=valueForMyVariable</code>. When global or plan variables would be passed to this method, will override default values for variables.
+     */
+    async startBuild1Raw(requestParameters: StartBuild1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQueuedBuild>> {
+        const requestOptions = await this.startBuild1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8813,9 +10336,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Stop build execution.
+     * Creates request options for stopBuild without sending the request
      */
-    async stopBuildRaw(requestParameters: StopBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async stopBuildRequestOpts(requestParameters: StopBuildRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['projectKey'] == null) {
             throw new runtime.RequiredError(
                 'projectKey',
@@ -8847,12 +10370,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"buildKey"}}`, encodeURIComponent(String(requestParameters['buildKey'])));
         urlPath = urlPath.replace(`{${"buildNumber"}}`, encodeURIComponent(String(requestParameters['buildNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Stop build execution.
+     */
+    async stopBuildRaw(requestParameters: StopBuildRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.stopBuildRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -8865,9 +10396,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Test connection to ephemeral agents provider.
+     * Creates request options for testConnection without sending the request
      */
-    async testConnectionRaw(requestParameters: TestConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestConnectionResultDto>> {
+    async testConnectionRequestOpts(requestParameters: TestConnectionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['ephemeralAgentsConfigurationDTO'] == null) {
             throw new runtime.RequiredError(
                 'ephemeralAgentsConfigurationDTO',
@@ -8884,13 +10415,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/ephemeral/config/test-connection`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['ephemeralAgentsConfigurationDTO'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Test connection to ephemeral agents provider.
+     */
+    async testConnectionRaw(requestParameters: TestConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestConnectionResultDto>> {
+        const requestOptions = await this.testConnectionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8904,9 +10443,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Tests connection to a repository if the repository type supports connection testing. Request payload should contain repository configuration.
+     * Creates request options for testConnection1 without sending the request
      */
-    async testConnection1Raw(requestParameters: TestConnection1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryConnectionResult>> {
+    async testConnection1RequestOpts(requestParameters: TestConnection1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -8916,13 +10455,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/repository/testConnection`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'] as any,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Tests connection to a repository if the repository type supports connection testing. Request payload should contain repository configuration.
+     */
+    async testConnection1Raw(requestParameters: TestConnection1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRepositoryConnectionResult>> {
+        const requestOptions = await this.testConnection1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8936,9 +10483,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Trigger background job execution.
+     * Creates request options for triggerJob without sending the request
      */
-    async triggerJobRaw(requestParameters: TriggerJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+    async triggerJobRequestOpts(requestParameters: TriggerJobRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restScheduledJob'] == null) {
             throw new runtime.RequiredError(
                 'restScheduledJob',
@@ -8955,13 +10502,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/scheduler/jobs/trigger`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restScheduledJob'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Trigger background job execution.
+     */
+    async triggerJobRaw(requestParameters: TriggerJobRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+        const requestOptions = await this.triggerJobRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -8975,9 +10530,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resource for triggering Repository-stored Bamboo Specs in a \'forced\' way. Successful requests to this resource will trigger Bamboo Specs execution even if standard processing would have been skipped (e.g. no new commits to process).
+     * Creates request options for triggerSpecsScanning without sending the request
      */
-    async triggerSpecsScanningRaw(requestParameters: TriggerSpecsScanningRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async triggerSpecsScanningRequestOpts(requestParameters: TriggerSpecsScanningRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['repositoryId'] == null) {
             throw new runtime.RequiredError(
                 'repositoryId',
@@ -8997,12 +10552,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/repository/{repositoryId}/scanNow`;
         urlPath = urlPath.replace(`{${"repositoryId"}}`, encodeURIComponent(String(requestParameters['repositoryId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resource for triggering Repository-stored Bamboo Specs in a \'forced\' way. Successful requests to this resource will trigger Bamboo Specs execution even if standard processing would have been skipped (e.g. no new commits to process).
+     */
+    async triggerSpecsScanningRaw(requestParameters: TriggerSpecsScanningRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.triggerSpecsScanningRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -9015,9 +10578,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Webhook resource for triggering Repository-stored Bamboo Specs. Either repository ID or name must be provided via query parameters to identify the linked repository in which Bamboo Specs are defined.  Ambiguous requests, which reference more than one repository via the query params, will result in one parameter taking precedence over the others. There\'s no guarantee which one.  This resource does not require authorisation. It will always return HTTP 204 response on every valid request, even if the targeted repository doesn\'t exist or does not contain Bamboo Specs.
+     * Creates request options for triggerSpecsScanning1 without sending the request
      */
-    async triggerSpecsScanning1Raw(requestParameters: TriggerSpecsScanning1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async triggerSpecsScanning1RequestOpts(requestParameters: TriggerSpecsScanning1Request): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['name'] != null) {
@@ -9041,12 +10604,20 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/repository/scan`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Webhook resource for triggering Repository-stored Bamboo Specs. Either repository ID or name must be provided via query parameters to identify the linked repository in which Bamboo Specs are defined.  Ambiguous requests, which reference more than one repository via the query params, will result in one parameter taking precedence over the others. There\'s no guarantee which one.  This resource does not require authorisation. It will always return HTTP 204 response on every valid request, even if the targeted repository doesn\'t exist or does not contain Bamboo Specs.
+     */
+    async triggerSpecsScanning1Raw(requestParameters: TriggerSpecsScanning1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.triggerSpecsScanning1RequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -9059,9 +10630,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update existing agent capability. It\'s allowed to skip capability key at request payload.
+     * Creates request options for updateAgentCapability without sending the request
      */
-    async updateAgentCapabilityRaw(requestParameters: UpdateAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateAgentCapabilityRequestOpts(requestParameters: UpdateAgentCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -9094,13 +10665,21 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
         urlPath = urlPath.replace(`{${"capabilityKey"}}`, encodeURIComponent(String(requestParameters['capabilityKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRemoteAgentCapability'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update existing agent capability. It\'s allowed to skip capability key at request payload.
+     */
+    async updateAgentCapabilityRaw(requestParameters: UpdateAgentCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateAgentCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -9113,9 +10692,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update Agent-Local Artifact Handler configuration.
+     * Creates request options for updateAgentLocalHandler without sending the request
      */
-    async updateAgentLocalHandlerRaw(requestParameters: UpdateAgentLocalHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async updateAgentLocalHandlerRequestOpts(requestParameters: UpdateAgentLocalHandlerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restArtifactHandler'] == null) {
             throw new runtime.RequiredError(
                 'restArtifactHandler',
@@ -9132,13 +10711,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/agentLocal`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restArtifactHandler'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update Agent-Local Artifact Handler configuration.
+     */
+    async updateAgentLocalHandlerRaw(requestParameters: UpdateAgentLocalHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.updateAgentLocalHandlerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9152,9 +10739,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Bulk update of all images AMI id.
+     * Creates request options for updateAllImageIds without sending the request
      */
-    async updateAllImageIdsRaw(requestParameters: UpdateAllImageIdsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateAllImageIdsRequestOpts(requestParameters: UpdateAllImageIdsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['imageId'] == null) {
             throw new runtime.RequiredError(
                 'imageId',
@@ -9181,12 +10768,20 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/elasticConfiguration/image-id/{imageId}`;
         urlPath = urlPath.replace(`{${"imageId"}}`, encodeURIComponent(String(requestParameters['imageId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Bulk update of all images AMI id.
+     */
+    async updateAllImageIdsRaw(requestParameters: UpdateAllImageIdsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateAllImageIdsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -9199,9 +10794,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Enable/disable audit log.
+     * Creates request options for updateAuditLogConfiguration without sending the request
      */
-    async updateAuditLogConfigurationRaw(requestParameters: UpdateAuditLogConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuditLogConfiguration>> {
+    async updateAuditLogConfigurationRequestOpts(requestParameters: UpdateAuditLogConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restAuditLogConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restAuditLogConfiguration',
@@ -9218,13 +10813,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/auditLog`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAuditLogConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Enable/disable audit log.
+     */
+    async updateAuditLogConfigurationRaw(requestParameters: UpdateAuditLogConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAuditLogConfiguration>> {
+        const requestOptions = await this.updateAuditLogConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9238,9 +10841,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update Bamboo Server Artifact Handler configuration.
+     * Creates request options for updateBambooRemoteHandler without sending the request
      */
-    async updateBambooRemoteHandlerRaw(requestParameters: UpdateBambooRemoteHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async updateBambooRemoteHandlerRequestOpts(requestParameters: UpdateBambooRemoteHandlerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['simpleRestArtifactHandler'] == null) {
             throw new runtime.RequiredError(
                 'simpleRestArtifactHandler',
@@ -9257,13 +10860,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/bambooRemote`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['simpleRestArtifactHandler'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update Bamboo Server Artifact Handler configuration.
+     */
+    async updateBambooRemoteHandlerRaw(requestParameters: UpdateBambooRemoteHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.updateBambooRemoteHandlerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9277,9 +10888,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update ephemeral agent template capability.
+     * Creates request options for updateCapability without sending the request
      */
-    async updateCapabilityRaw(requestParameters: UpdateCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateCapabilityRequestOpts(requestParameters: UpdateCapabilityRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -9304,13 +10915,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}/capability`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restCapability'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update ephemeral agent template capability.
+     */
+    async updateCapabilityRaw(requestParameters: UpdateCapabilityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateCapabilityRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -9323,9 +10942,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update elastic image configuration.
+     * Creates request options for updateConfiguration without sending the request
      */
-    async updateConfigurationRaw(requestParameters: UpdateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+    async updateConfigurationRequestOpts(requestParameters: UpdateConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -9350,13 +10969,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/elasticConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restElasticImageConfig'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update elastic image configuration.
+     */
+    async updateConfigurationRaw(requestParameters: UpdateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticImageConfig>> {
+        const requestOptions = await this.updateConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9370,9 +10997,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update bamboo server general configurations. Partially update supported.
+     * Creates request options for updateGeneralConfiguration without sending the request
      */
-    async updateGeneralConfigurationRaw(requestParameters: UpdateGeneralConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+    async updateGeneralConfigurationRequestOpts(requestParameters: UpdateGeneralConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restGeneralConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restGeneralConfiguration',
@@ -9389,13 +11016,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/general`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGeneralConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update bamboo server general configurations. Partially update supported.
+     */
+    async updateGeneralConfigurationRaw(requestParameters: UpdateGeneralConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+        const requestOptions = await this.updateGeneralConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9409,9 +11044,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update value of a global variable.
+     * Creates request options for updateGlobalVariable without sending the request
      */
-    async updateGlobalVariableRaw(requestParameters: UpdateGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+    async updateGlobalVariableRequestOpts(requestParameters: UpdateGlobalVariableRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['variableId'] == null) {
             throw new runtime.RequiredError(
                 'variableId',
@@ -9436,13 +11071,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/globalVariables/{variableId}`;
         urlPath = urlPath.replace(`{${"variableId"}}`, encodeURIComponent(String(requestParameters['variableId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restGlobalVariable'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update value of a global variable.
+     */
+    async updateGlobalVariableRaw(requestParameters: UpdateGlobalVariableRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestGlobalVariable>> {
+        const requestOptions = await this.updateGlobalVariableRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9456,9 +11099,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update or create existing IM server configuration in bamboo. If IM server is already configured in bamboo, update existing configuration. Otherwise, create IM server configuration.
+     * Creates request options for updateIMServerConfig without sending the request
      */
-    async updateIMServerConfigRaw(requestParameters: UpdateIMServerConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestIMServerConfiguration>> {
+    async updateIMServerConfigRequestOpts(requestParameters: UpdateIMServerConfigRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restIMServerConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restIMServerConfiguration',
@@ -9475,13 +11118,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/imServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restIMServerConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update or create existing IM server configuration in bamboo. If IM server is already configured in bamboo, update existing configuration. Otherwise, create IM server configuration.
+     */
+    async updateIMServerConfigRaw(requestParameters: UpdateIMServerConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestIMServerConfiguration>> {
+        const requestOptions = await this.updateIMServerConfigRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9495,9 +11146,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the mail server configuration.
+     * Creates request options for updateMailConfiguration without sending the request
      */
-    async updateMailConfigurationRaw(requestParameters: UpdateMailConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+    async updateMailConfigurationRequestOpts(requestParameters: UpdateMailConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restMailConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restMailConfiguration',
@@ -9514,13 +11165,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/mailServer`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restMailConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the mail server configuration.
+     */
+    async updateMailConfigurationRaw(requestParameters: UpdateMailConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestMailConfiguration>> {
+        const requestOptions = await this.updateMailConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9534,9 +11193,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update Bamboo quarantine settings.
+     * Creates request options for updateQuarantineSettings without sending the request
      */
-    async updateQuarantineSettingsRaw(requestParameters: UpdateQuarantineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+    async updateQuarantineSettingsRequestOpts(requestParameters: UpdateQuarantineSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restQuarantineConfig'] == null) {
             throw new runtime.RequiredError(
                 'restQuarantineConfig',
@@ -9553,13 +11212,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/quarantine`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restQuarantineConfig'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update Bamboo quarantine settings.
+     */
+    async updateQuarantineSettingsRaw(requestParameters: UpdateQuarantineSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuarantineConfig>> {
+        const requestOptions = await this.updateQuarantineSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9573,9 +11240,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update quick filter\'s basic configuration, e.g. name or position on list. This method does not allow to configure quick filter\'s rules.
+     * Creates request options for updateQuickFilter without sending the request
      */
-    async updateQuickFilterRaw(requestParameters: UpdateQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+    async updateQuickFilterRequestOpts(requestParameters: UpdateQuickFilterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -9600,13 +11267,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/quickFilter/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restQuickFilter'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update quick filter\'s basic configuration, e.g. name or position on list. This method does not allow to configure quick filter\'s rules.
+     */
+    async updateQuickFilterRaw(requestParameters: UpdateQuickFilterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestQuickFilter>> {
+        const requestOptions = await this.updateQuickFilterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9620,9 +11295,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update the remote agent configuration
+     * Creates request options for updateRemoteAgentConfiguration without sending the request
      */
-    async updateRemoteAgentConfigurationRaw(requestParameters: UpdateRemoteAgentConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+    async updateRemoteAgentConfigurationRequestOpts(requestParameters: UpdateRemoteAgentConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restRemoteAgentConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restRemoteAgentConfiguration',
@@ -9639,13 +11314,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/remoteAgentSupport`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restRemoteAgentConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update the remote agent configuration
+     */
+    async updateRemoteAgentConfigurationRaw(requestParameters: UpdateRemoteAgentConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestRemoteAgentConfiguration>> {
+        const requestOptions = await this.updateRemoteAgentConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9659,9 +11342,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update agent details
+     * Creates request options for updateRestAgent without sending the request
      */
-    async updateRestAgentRaw(requestParameters: UpdateRestAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+    async updateRestAgentRequestOpts(requestParameters: UpdateRestAgentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentId'] == null) {
             throw new runtime.RequiredError(
                 'agentId',
@@ -9686,13 +11369,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/admin/latest/config/agents/{agentId}`;
         urlPath = urlPath.replace(`{${"agentId"}}`, encodeURIComponent(String(requestParameters['agentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restAgent'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update agent details
+     */
+    async updateRestAgentRaw(requestParameters: UpdateRestAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAgent>> {
+        const requestOptions = await this.updateRestAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9706,9 +11397,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update build concurrency settings. Partially update supported.
+     * Creates request options for updateRestBuildConcurrency without sending the request
      */
-    async updateRestBuildConcurrencyRaw(requestParameters: UpdateRestBuildConcurrencyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+    async updateRestBuildConcurrencyRequestOpts(requestParameters: UpdateRestBuildConcurrencyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restBuildConcurrency'] == null) {
             throw new runtime.RequiredError(
                 'restBuildConcurrency',
@@ -9725,13 +11416,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/build/concurrency`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBuildConcurrency'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update build concurrency settings. Partially update supported.
+     */
+    async updateRestBuildConcurrencyRaw(requestParameters: UpdateRestBuildConcurrencyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestBuildConcurrency>> {
+        const requestOptions = await this.updateRestBuildConcurrencyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9745,9 +11444,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update build monitoring settings. Partially update supported.
+     * Creates request options for updateRestBuildMonitoring without sending the request
      */
-    async updateRestBuildMonitoringRaw(requestParameters: UpdateRestBuildMonitoringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BuildMonitoringLink>> {
+    async updateRestBuildMonitoringRequestOpts(requestParameters: UpdateRestBuildMonitoringRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restBuildMonitoring'] == null) {
             throw new runtime.RequiredError(
                 'restBuildMonitoring',
@@ -9764,13 +11463,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/config/build/monitoring`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restBuildMonitoring'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update build monitoring settings. Partially update supported.
+     */
+    async updateRestBuildMonitoringRaw(requestParameters: UpdateRestBuildMonitoringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BuildMonitoringLink>> {
+        const requestOptions = await this.updateRestBuildMonitoringRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9784,9 +11491,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update elastic configuration.
+     * Creates request options for updateRestElasticConfiguration without sending the request
      */
-    async updateRestElasticConfigurationRaw(requestParameters: UpdateRestElasticConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticConfiguration>> {
+    async updateRestElasticConfigurationRequestOpts(requestParameters: UpdateRestElasticConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restElasticConfiguration'] == null) {
             throw new runtime.RequiredError(
                 'restElasticConfiguration',
@@ -9803,13 +11510,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/elastic/config`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restElasticConfiguration'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update elastic configuration.
+     */
+    async updateRestElasticConfigurationRaw(requestParameters: UpdateRestElasticConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestElasticConfiguration>> {
+        const requestOptions = await this.updateRestElasticConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9823,9 +11538,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update security settings. Partial update supported.
+     * Creates request options for updateRestSecuritySettings without sending the request
      */
-    async updateRestSecuritySettingsRaw(requestParameters: UpdateRestSecuritySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecuritySettingsLink>> {
+    async updateRestSecuritySettingsRequestOpts(requestParameters: UpdateRestSecuritySettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restSecuritySettings'] == null) {
             throw new runtime.RequiredError(
                 'restSecuritySettings',
@@ -9842,13 +11557,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/security/settings`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restSecuritySettings'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update security settings. Partial update supported.
+     */
+    async updateRestSecuritySettingsRaw(requestParameters: UpdateRestSecuritySettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecuritySettingsLink>> {
+        const requestOptions = await this.updateRestSecuritySettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9862,9 +11585,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update S3 Artifact Handler configuration.
+     * Creates request options for updateS3Handler without sending the request
      */
-    async updateS3HandlerRaw(requestParameters: UpdateS3HandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async updateS3HandlerRequestOpts(requestParameters: UpdateS3HandlerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restArtifactHandler'] == null) {
             throw new runtime.RequiredError(
                 'restArtifactHandler',
@@ -9881,13 +11604,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/s3`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restArtifactHandler'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update S3 Artifact Handler configuration.
+     */
+    async updateS3HandlerRaw(requestParameters: UpdateS3HandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.updateS3HandlerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9901,9 +11632,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update SFTP Artifact Handler configuration.
+     * Creates request options for updateSftpHandler without sending the request
      */
-    async updateSftpHandlerRaw(requestParameters: UpdateSftpHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+    async updateSftpHandlerRequestOpts(requestParameters: UpdateSftpHandlerRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['simpleRestArtifactHandler'] == null) {
             throw new runtime.RequiredError(
                 'simpleRestArtifactHandler',
@@ -9920,13 +11651,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/artifactHandlers/sftp`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['simpleRestArtifactHandler'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update SFTP Artifact Handler configuration.
+     */
+    async updateSftpHandlerRaw(requestParameters: UpdateSftpHandlerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestArtifactHandler>> {
+        const requestOptions = await this.updateSftpHandlerRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9940,9 +11679,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update ephemeral agent template.
+     * Creates request options for updateTemplateConfiguration without sending the request
      */
-    async updateTemplateConfigurationRaw(requestParameters: UpdateTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+    async updateTemplateConfigurationRequestOpts(requestParameters: UpdateTemplateConfigurationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['configurationId'] == null) {
             throw new runtime.RequiredError(
                 'configurationId',
@@ -9967,13 +11706,21 @@ export class DefaultApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/ephemeral/templateConfiguration/{configurationId}`;
         urlPath = urlPath.replace(`{${"configurationId"}}`, encodeURIComponent(String(requestParameters['configurationId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restEphemeralAgentTemplate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update ephemeral agent template.
+     */
+    async updateTemplateConfigurationRaw(requestParameters: UpdateTemplateConfigurationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestEphemeralAgentTemplate>> {
+        const requestOptions = await this.updateTemplateConfigurationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -9987,9 +11734,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update deployment version status.
+     * Creates request options for updateVersionStatus without sending the request
      */
-    async updateVersionStatusRaw(requestParameters: UpdateVersionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionStatuses>> {
+    async updateVersionStatusRequestOpts(requestParameters: UpdateVersionStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['deploymentVersionId'] == null) {
             throw new runtime.RequiredError(
                 'deploymentVersionId',
@@ -10013,12 +11760,20 @@ export class DefaultApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"deploymentVersionId"}}`, encodeURIComponent(String(requestParameters['deploymentVersionId'])));
         urlPath = urlPath.replace(`{${"newStatus"}}`, encodeURIComponent(String(requestParameters['newStatus'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update deployment version status.
+     */
+    async updateVersionStatusRaw(requestParameters: UpdateVersionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDeploymentVersionStatuses>> {
+        const requestOptions = await this.updateVersionStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -10032,9 +11787,9 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Server side verification that the encrypted value of a global variable has changed.
+     * Creates request options for verifyGlobalVariableValue without sending the request
      */
-    async verifyGlobalVariableValueRaw(requestParameters: VerifyGlobalVariableValueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async verifyGlobalVariableValueRequestOpts(requestParameters: VerifyGlobalVariableValueRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['restVerificationRequest'] == null) {
             throw new runtime.RequiredError(
                 'restVerificationRequest',
@@ -10051,13 +11806,21 @@ export class DefaultApi extends runtime.BaseAPI {
 
         let urlPath = `/admin/latest/globalVariables/verify`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['restVerificationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Server side verification that the encrypted value of a global variable has changed.
+     */
+    async verifyGlobalVariableValueRaw(requestParameters: VerifyGlobalVariableValueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.verifyGlobalVariableValueRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

@@ -71,9 +71,9 @@ export interface SearchEntityForAgentRequest {
 export class ResourceApi extends runtime.BaseAPI {
 
     /**
-     * Dedicate agent, elastic image or ephemeral template.
+     * Creates request options for addAgentAssignment without sending the request
      */
-    async addAgentAssignmentRaw(requestParameters: AddAgentAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDedicatedAgent>> {
+    async addAgentAssignmentRequestOpts(requestParameters: AddAgentAssignmentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['executorType'] != null) {
@@ -97,12 +97,20 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/assignment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Dedicate agent, elastic image or ephemeral template.
+     */
+    async addAgentAssignmentRaw(requestParameters: AddAgentAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestDedicatedAgent>> {
+        const requestOptions = await this.addAgentAssignmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -116,9 +124,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new access token for the current user.
+     * Creates request options for createAccessToken without sending the request
      */
-    async createAccessTokenRaw(requestParameters: CreateAccessTokenOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+    async createAccessTokenRequestOpts(requestParameters: CreateAccessTokenOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createAccessTokenRequest'] == null) {
             throw new runtime.RequiredError(
                 'createAccessTokenRequest',
@@ -135,13 +143,21 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/access-token`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['createAccessTokenRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new access token for the current user.
+     */
+    async createAccessTokenRaw(requestParameters: CreateAccessTokenOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RestAccessToken>> {
+        const requestOptions = await this.createAccessTokenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -155,9 +171,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get agent\'s assignment.
+     * Creates request options for getAgentAssignments without sending the request
      */
-    async getAgentAssignmentsRaw(requestParameters: GetAgentAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDedicatedAgent>>> {
+    async getAgentAssignmentsRequestOpts(requestParameters: GetAgentAssignmentsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['executorType'] != null) {
@@ -173,12 +189,20 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/assignment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get agent\'s assignment.
+     */
+    async getAgentAssignmentsRaw(requestParameters: GetAgentAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RestDedicatedAgent>>> {
+        const requestOptions = await this.getAgentAssignmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -192,9 +216,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a page of user\'s access tokens.
+     * Creates request options for getUserTokens without sending the request
      */
-    async getUserTokensRaw(requestParameters: GetUserTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserTokens200Response>> {
+    async getUserTokensRequestOpts(requestParameters: GetUserTokensRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['limit'] != null) {
@@ -210,12 +234,20 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/access-token`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Retrieve a page of user\'s access tokens.
+     */
+    async getUserTokensRaw(requestParameters: GetUserTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetUserTokens200Response>> {
+        const requestOptions = await this.getUserTokensRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -229,9 +261,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove agent\'s assignment.
+     * Creates request options for removeAssignment without sending the request
      */
-    async removeAssignmentRaw(requestParameters: RemoveAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeAssignmentRequestOpts(requestParameters: RemoveAssignmentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['executorType'] != null) {
@@ -255,12 +287,20 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/assignment`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove agent\'s assignment.
+     */
+    async removeAssignmentRaw(requestParameters: RemoveAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeAssignmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -273,9 +313,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Revoke current user\'s access token.
+     * Creates request options for revokeToken without sending the request
      */
-    async revokeTokenRaw(requestParameters: RevokeTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async revokeTokenRequestOpts(requestParameters: RevokeTokenRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['tokenId'] == null) {
             throw new runtime.RequiredError(
                 'tokenId',
@@ -291,12 +331,20 @@ export class ResourceApi extends runtime.BaseAPI {
         let urlPath = `/api/latest/access-token/{tokenId}`;
         urlPath = urlPath.replace(`{${"tokenId"}}`, encodeURIComponent(String(requestParameters['tokenId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Revoke current user\'s access token.
+     */
+    async revokeTokenRaw(requestParameters: RevokeTokenRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.revokeTokenRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -309,9 +357,9 @@ export class ResourceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search for assignments in specified entity\'s agents
+     * Creates request options for searchEntityForAgent without sending the request
      */
-    async searchEntityForAgentRaw(requestParameters: SearchEntityForAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+    async searchEntityForAgentRequestOpts(requestParameters: SearchEntityForAgentRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['maxResult'] != null) {
@@ -347,12 +395,20 @@ export class ResourceApi extends runtime.BaseAPI {
 
         let urlPath = `/api/latest/agent/assignment/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Search for assignments in specified entity\'s agents
+     */
+    async searchEntityForAgentRaw(requestParameters: SearchEntityForAgentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResultsList>> {
+        const requestOptions = await this.searchEntityForAgentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
