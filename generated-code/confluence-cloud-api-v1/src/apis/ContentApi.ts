@@ -54,10 +54,9 @@ export interface SearchContentByCQLRequest {
 export class ContentApi extends runtime.BaseAPI {
 
     /**
-     * Archives a list of pages. The pages to be archived are specified as a list of content IDs. This API accepts the archival request and returns a task ID. The archival process happens asynchronously. Use the /longtask/<taskId> REST API to get the copy task status.  Each content ID needs to resolve to page objects that are not already in an archived state. The content IDs need not belong to the same space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Archive\' permission for each of the pages in the corresponding space it belongs to.
-     * Archive pages
+     * Creates request options for archivePages without sending the request
      */
-    async archivePagesRaw(requestParameters: ArchivePagesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+    async archivePagesRequestOpts(requestParameters: ArchivePagesOperationRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -75,13 +74,22 @@ export class ContentApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/content/archive`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['archivePagesRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Archives a list of pages. The pages to be archived are specified as a list of content IDs. This API accepts the archival request and returns a task ID. The archival process happens asynchronously. Use the /longtask/<taskId> REST API to get the copy task status.  Each content ID needs to resolve to page objects that are not already in an archived state. The content IDs need not belong to the same space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Archive\' permission for each of the pages in the corresponding space it belongs to.
+     * Archive pages
+     */
+    async archivePagesRaw(requestParameters: ArchivePagesOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+        const requestOptions = await this.archivePagesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -96,10 +104,9 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Publishes a legacy draft of a page created from a blueprint. Legacy drafts will eventually be removed in favor of shared drafts. For now, this method works the same as [Publish shared draft](#api-content-blueprint-instance-draftId-put).  By default, the following objects are expanded: `body.storage`, `history`, `space`, `version`, `ancestors`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the draft and \'Add\' permission for the space that the content will be created in.
-     * Publish legacy draft
+     * Creates request options for publishLegacyDraft without sending the request
      */
-    async publishLegacyDraftRaw(requestParameters: PublishLegacyDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+    async publishLegacyDraftRequestOpts(requestParameters: PublishLegacyDraftRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['draftId'] == null) {
             throw new runtime.RequiredError(
                 'draftId',
@@ -140,13 +147,22 @@ export class ContentApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
         urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Publishes a legacy draft of a page created from a blueprint. Legacy drafts will eventually be removed in favor of shared drafts. For now, this method works the same as [Publish shared draft](#api-content-blueprint-instance-draftId-put).  By default, the following objects are expanded: `body.storage`, `history`, `space`, `version`, `ancestors`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the draft and \'Add\' permission for the space that the content will be created in.
+     * Publish legacy draft
+     */
+    async publishLegacyDraftRaw(requestParameters: PublishLegacyDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+        const requestOptions = await this.publishLegacyDraftRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -161,10 +177,9 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Publishes a shared draft of a page created from a blueprint.  By default, the following objects are expanded: `body.storage`, `history`, `space`, `version`, `ancestors`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the draft and \'Add\' permission for the space that the content will be created in.
-     * Publish shared draft
+     * Creates request options for publishSharedDraft without sending the request
      */
-    async publishSharedDraftRaw(requestParameters: PublishSharedDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+    async publishSharedDraftRequestOpts(requestParameters: PublishSharedDraftRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['draftId'] == null) {
             throw new runtime.RequiredError(
                 'draftId',
@@ -205,13 +220,22 @@ export class ContentApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/blueprint/instance/{draftId}`;
         urlPath = urlPath.replace(`{${"draftId"}}`, encodeURIComponent(String(requestParameters['draftId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Publishes a shared draft of a page created from a blueprint.  By default, the following objects are expanded: `body.storage`, `history`, `space`, `version`, `ancestors`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the draft and \'Add\' permission for the space that the content will be created in.
+     * Publish shared draft
+     */
+    async publishSharedDraftRaw(requestParameters: PublishSharedDraftRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+        const requestOptions = await this.publishSharedDraftRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -226,10 +250,9 @@ export class ContentApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
-     * Search content by CQL
+     * Creates request options for searchContentByCQL without sending the request
      */
-    async searchContentByCQLRaw(requestParameters: SearchContentByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+    async searchContentByCQLRequestOpts(requestParameters: SearchContentByCQLRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['cql'] == null) {
             throw new runtime.RequiredError(
                 'cql',
@@ -272,12 +295,21 @@ export class ContentApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/content/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the list of content that matches a Confluence Query Language (CQL) query. For information on CQL, see: [Advanced searching using CQL](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Example initial call: ``` /wiki/rest/api/content/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call. Example subsequent call (taken from example response): ``` /wiki/rest/api/content/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only content that the user has permission to view will be returned.
+     * Search content by CQL
+     */
+    async searchContentByCQLRaw(requestParameters: SearchContentByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+        const requestOptions = await this.searchContentByCQLRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

@@ -45,10 +45,9 @@ export interface UpdateLookAndFeelSettingsRequest {
 export class SettingsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the look and feel settings for the site or a single space. This includes attributes such as the color scheme, padding, and border radius.  The look and feel settings for a space can be inherited from the global look and feel settings or provided by a theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
-     * Get look and feel settings
+     * Creates request options for getLookAndFeelSettings without sending the request
      */
-    async getLookAndFeelSettingsRaw(requestParameters: GetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSettings>> {
+    async getLookAndFeelSettingsRequestOpts(requestParameters: GetLookAndFeelSettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['spaceKey'] != null) {
@@ -68,12 +67,21 @@ export class SettingsApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/lookandfeel`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the look and feel settings for the site or a single space. This includes attributes such as the color scheme, padding, and border radius.  The look and feel settings for a space can be inherited from the global look and feel settings or provided by a theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Get look and feel settings
+     */
+    async getLookAndFeelSettingsRaw(requestParameters: GetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSettings>> {
+        const requestOptions = await this.getLookAndFeelSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -88,10 +96,9 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the system information for the Confluence Cloud tenant. This information is used by Atlassian.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get system info
+     * Creates request options for getSystemInfo without sending the request
      */
-    async getSystemInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SystemInfoEntity>> {
+    async getSystemInfoRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -107,12 +114,21 @@ export class SettingsApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/systemInfo`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the system information for the Confluence Cloud tenant. This information is used by Atlassian.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get system info
+     */
+    async getSystemInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SystemInfoEntity>> {
+        const requestOptions = await this.getSystemInfoRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -127,10 +143,9 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the custom look and feel settings for the site or a single space. This changes the values of the custom settings to be the same as the default settings. It does not change which settings (default or custom) are selected. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Reset look and feel settings
+     * Creates request options for resetLookAndFeelSettings without sending the request
      */
-    async resetLookAndFeelSettingsRaw(requestParameters: ResetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async resetLookAndFeelSettingsRequestOpts(requestParameters: ResetLookAndFeelSettingsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['spaceKey'] != null) {
@@ -150,12 +165,21 @@ export class SettingsApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/lookandfeel/custom`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the custom look and feel settings for the site or a single space. This changes the values of the custom settings to be the same as the default settings. It does not change which settings (default or custom) are selected. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Reset look and feel settings
+     */
+    async resetLookAndFeelSettingsRaw(requestParameters: ResetLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resetLookAndFeelSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -169,10 +193,9 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the look and feel settings to the default (global) settings, the custom settings, or the current theme\'s settings for a space. The custom and theme settings can only be selected if there is already a theme set for a space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Select look and feel settings
+     * Creates request options for updateLookAndFeel without sending the request
      */
-    async updateLookAndFeelRaw(requestParameters: UpdateLookAndFeelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSelection>> {
+    async updateLookAndFeelRequestOpts(requestParameters: UpdateLookAndFeelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -197,13 +220,22 @@ export class SettingsApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/lookandfeel`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the look and feel settings to the default (global) settings, the custom settings, or the current theme\'s settings for a space. The custom and theme settings can only be selected if there is already a theme set for a space. Note, the default space settings are inherited from the current global settings.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Select look and feel settings
+     */
+    async updateLookAndFeelRaw(requestParameters: UpdateLookAndFeelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelSelection>> {
+        const requestOptions = await this.updateLookAndFeelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -218,10 +250,9 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the look and feel settings for the site or for a single space. If custom settings exist, they are updated. If no custom settings exist, then a set of custom settings is created.  Note, if a theme is selected for a space, the space look and feel settings are provided by the theme and cannot be overridden.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Update look and feel settings
+     * Creates request options for updateLookAndFeelSettings without sending the request
      */
-    async updateLookAndFeelSettingsRaw(requestParameters: UpdateLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelWithLinks>> {
+    async updateLookAndFeelSettingsRequestOpts(requestParameters: UpdateLookAndFeelSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -250,13 +281,22 @@ export class SettingsApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/lookandfeel/custom`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the look and feel settings for the site or for a single space. If custom settings exist, they are updated. If no custom settings exist, then a set of custom settings is created.  Note, if a theme is selected for a space, the space look and feel settings are provided by the theme and cannot be overridden.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Update look and feel settings
+     */
+    async updateLookAndFeelSettingsRaw(requestParameters: UpdateLookAndFeelSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LookAndFeelWithLinks>> {
+        const requestOptions = await this.updateLookAndFeelSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

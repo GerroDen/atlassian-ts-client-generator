@@ -49,10 +49,9 @@ export interface BulkAsyncConvertContentBodyResponseRequest {
 export class ContentBodyApi extends runtime.BaseAPI {
 
     /**
-     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - atlas_doc_format: editor, export_view, storage, styled_view, view - storage: atlas_doc_format, editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
-     * Asynchronously convert content body
+     * Creates request options for asyncConvertContentBodyRequest without sending the request
      */
-    async asyncConvertContentBodyRequestRaw(requestParameters: AsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
+    async asyncConvertContentBodyRequestRequestOpts(requestParameters: AsyncConvertContentBodyRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['to'] == null) {
             throw new runtime.RequiredError(
                 'to',
@@ -105,13 +104,22 @@ export class ContentBodyApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/contentbody/convert/async/{to}`;
         urlPath = urlPath.replace(`{${"to"}}`, encodeURIComponent(String(requestParameters['to'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Converts a content body from one format to another format asynchronously. Returns the asyncId for the asynchronous task.  Supported conversions:  - atlas_doc_format: editor, export_view, storage, styled_view, view - storage: atlas_doc_format, editor, export_view, styled_view, view - editor: storage  No other conversions are supported at the moment. Once a conversion is completed, it will be available for 5 minutes at the result endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Asynchronously convert content body
+     */
+    async asyncConvertContentBodyRequestRaw(requestParameters: AsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncId>> {
+        const requestOptions = await this.asyncConvertContentBodyRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -126,10 +134,9 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
-     * Get asynchronously converted content body from the id or the current status of the task.
+     * Creates request options for asyncConvertContentBodyResponse without sending the request
      */
-    async asyncConvertContentBodyResponseRaw(requestParameters: AsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncContentBody>> {
+    async asyncConvertContentBodyResponseRequestOpts(requestParameters: AsyncConvertContentBodyResponseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -153,12 +160,21 @@ export class ContentBodyApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/contentbody/convert/async/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: If request specifies \'contentIdContext\', \'View\' permission for the space, and permission to view the content.
+     * Get asynchronously converted content body from the id or the current status of the task.
+     */
+    async asyncConvertContentBodyResponseRaw(requestParameters: AsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AsyncContentBody>> {
+        const requestOptions = await this.asyncConvertContentBodyResponseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -173,10 +189,9 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Asynchronously converts content bodies from one format to another format in bulk. Use the Content body REST API to get the status of conversion tasks. Note that there is a maximum limit of 10 conversions per request to this endpoint.  Supported conversions:  - storage: editor, export_view, styled_view, view - editor: storage  Once a conversion task is completed, it is available for polling for up to 5 minutes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if the `spaceKeyContext` or `contentIdContext` are present.
-     * Create asynchronous content body conversion tasks in bulk
+     * Creates request options for bulkAsyncConvertContentBodyRequest without sending the request
      */
-    async bulkAsyncConvertContentBodyRequestRaw(requestParameters: BulkAsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AsyncId>>> {
+    async bulkAsyncConvertContentBodyRequestRequestOpts(requestParameters: BulkAsyncConvertContentBodyRequestRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -201,13 +216,22 @@ export class ContentBodyApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/contentbody/convert/async/bulk/tasks`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Asynchronously converts content bodies from one format to another format in bulk. Use the Content body REST API to get the status of conversion tasks. Note that there is a maximum limit of 10 conversions per request to this endpoint.  Supported conversions:  - storage: editor, export_view, styled_view, view - editor: storage  Once a conversion task is completed, it is available for polling for up to 5 minutes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if the `spaceKeyContext` or `contentIdContext` are present.
+     * Create asynchronous content body conversion tasks in bulk
+     */
+    async bulkAsyncConvertContentBodyRequestRaw(requestParameters: BulkAsyncConvertContentBodyRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AsyncId>>> {
+        const requestOptions = await this.bulkAsyncConvertContentBodyRequestRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -222,10 +246,9 @@ export class ContentBodyApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  Note that there is a maximum limit of 50 task results per request to this endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get asynchronous content body conversion task result in bulk
+     * Creates request options for bulkAsyncConvertContentBodyResponse without sending the request
      */
-    async bulkAsyncConvertContentBodyResponseRaw(requestParameters: BulkAsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AsyncContentBody>>> {
+    async bulkAsyncConvertContentBodyResponseRequestOpts(requestParameters: BulkAsyncConvertContentBodyResponseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['ids'] == null) {
             throw new runtime.RequiredError(
                 'ids',
@@ -252,12 +275,21 @@ export class ContentBodyApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/contentbody/convert/async/bulk/tasks`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the content body for the corresponding `asyncId` of a completed conversion task. If the task is not completed, the task status is returned instead.  Once a conversion task is completed, the result can be obtained for up to 5 minutes, or until an identical conversion request is made again with the `allowCache` parameter set to false.  Note that there is a maximum limit of 50 task results per request to this endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get asynchronous content body conversion task result in bulk
+     */
+    async bulkAsyncConvertContentBodyResponseRaw(requestParameters: BulkAsyncConvertContentBodyResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AsyncContentBody>>> {
+        const requestOptions = await this.bulkAsyncConvertContentBodyResponseRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

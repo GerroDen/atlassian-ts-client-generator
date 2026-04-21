@@ -59,10 +59,9 @@ export interface UpdateContentTemplateRequest {
 export class TemplateApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new content template. Note, blueprint templates cannot be created via the REST API.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space to create a space template or \'Confluence Administrator\' global permission to create a global template.
-     * Create content template
+     * Creates request options for createContentTemplate without sending the request
      */
-    async createContentTemplateRaw(requestParameters: CreateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+    async createContentTemplateRequestOpts(requestParameters: CreateContentTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -87,13 +86,22 @@ export class TemplateApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new content template. Note, blueprint templates cannot be created via the REST API.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space to create a space template or \'Confluence Administrator\' global permission to create a global template.
+     * Create content template
+     */
+    async createContentTemplateRaw(requestParameters: CreateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+        const requestOptions = await this.createContentTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -108,10 +116,9 @@ export class TemplateApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all templates provided by blueprints. Use this method to retrieve all global blueprint templates or all blueprint templates in a space.  Note, all global blueprints are inherited by each space. Space blueprints can be customised without affecting the global blueprints.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view blueprints for the space and permission to access the Confluence site (\'Can use\' global permission) to view global blueprints.
-     * Get blueprint templates
+     * Creates request options for getBlueprintTemplates without sending the request
      */
-    async getBlueprintTemplatesRaw(requestParameters: GetBlueprintTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlueprintTemplateArray>> {
+    async getBlueprintTemplatesRequestOpts(requestParameters: GetBlueprintTemplatesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['spaceKey'] != null) {
@@ -143,12 +150,21 @@ export class TemplateApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/template/blueprint`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all templates provided by blueprints. Use this method to retrieve all global blueprint templates or all blueprint templates in a space.  Note, all global blueprints are inherited by each space. Space blueprints can be customised without affecting the global blueprints.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view blueprints for the space and permission to access the Confluence site (\'Can use\' global permission) to view global blueprints.
+     * Get blueprint templates
+     */
+    async getBlueprintTemplatesRaw(requestParameters: GetBlueprintTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlueprintTemplateArray>> {
+        const requestOptions = await this.getBlueprintTemplatesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -163,10 +179,9 @@ export class TemplateApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a content template. This includes information about template, like the name, the space or blueprint that the template is in, the body of the template, and more.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view space templates and permission to access the Confluence site (\'Can use\' global permission) to view global templates.
-     * Get content template
+     * Creates request options for getContentTemplate without sending the request
      */
-    async getContentTemplateRaw(requestParameters: GetContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+    async getContentTemplateRequestOpts(requestParameters: GetContentTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentTemplateId'] == null) {
             throw new runtime.RequiredError(
                 'contentTemplateId',
@@ -194,12 +209,21 @@ export class TemplateApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
         urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a content template. This includes information about template, like the name, the space or blueprint that the template is in, the body of the template, and more.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view space templates and permission to access the Confluence site (\'Can use\' global permission) to view global templates.
+     * Get content template
+     */
+    async getContentTemplateRaw(requestParameters: GetContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+        const requestOptions = await this.getContentTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -214,10 +238,9 @@ export class TemplateApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content templates. Use this method to retrieve all global content templates or all content templates in a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view space templates and permission to access the Confluence site (\'Can use\' global permission) to view global templates.
-     * Get content templates
+     * Creates request options for getContentTemplates without sending the request
      */
-    async getContentTemplatesRaw(requestParameters: GetContentTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplateArray>> {
+    async getContentTemplatesRequestOpts(requestParameters: GetContentTemplatesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['spaceKey'] != null) {
@@ -249,12 +272,21 @@ export class TemplateApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/template/page`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all content templates. Use this method to retrieve all global content templates or all content templates in a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space to view space templates and permission to access the Confluence site (\'Can use\' global permission) to view global templates.
+     * Get content templates
+     */
+    async getContentTemplatesRaw(requestParameters: GetContentTemplatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplateArray>> {
+        const requestOptions = await this.getContentTemplatesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -269,10 +301,9 @@ export class TemplateApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a template. This results in different actions depending on the type of template:  - If the template is a content template, it is deleted. - If the template is a modified space-level blueprint template, it reverts to the template inherited from the global-level blueprint template. - If the template is a modified global-level blueprint template, it reverts to the default global-level blueprint template.   Note, unmodified blueprint templates cannot be deleted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**:         \'Admin\' permission for the space to delete a space template or \'Confluence Administrator\'         global permission to delete a global template.
-     * Remove template
+     * Creates request options for removeTemplate without sending the request
      */
-    async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeTemplateRequestOpts(requestParameters: RemoveTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentTemplateId'] == null) {
             throw new runtime.RequiredError(
                 'contentTemplateId',
@@ -296,12 +327,21 @@ export class TemplateApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/template/{contentTemplateId}`;
         urlPath = urlPath.replace(`{${"contentTemplateId"}}`, encodeURIComponent(String(requestParameters['contentTemplateId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a template. This results in different actions depending on the type of template:  - If the template is a content template, it is deleted. - If the template is a modified space-level blueprint template, it reverts to the template inherited from the global-level blueprint template. - If the template is a modified global-level blueprint template, it reverts to the default global-level blueprint template.   Note, unmodified blueprint templates cannot be deleted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**:         \'Admin\' permission for the space to delete a space template or \'Confluence Administrator\'         global permission to delete a global template.
+     * Remove template
+     */
+    async removeTemplateRaw(requestParameters: RemoveTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -315,10 +355,9 @@ export class TemplateApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates a content template. Note, blueprint templates cannot be updated via the REST API.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space to update a space template or \'Confluence Administrator\' global permission to update a global template.
-     * Update content template
+     * Creates request options for updateContentTemplate without sending the request
      */
-    async updateContentTemplateRaw(requestParameters: UpdateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+    async updateContentTemplateRequestOpts(requestParameters: UpdateContentTemplateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -343,13 +382,22 @@ export class TemplateApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/template`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates a content template. Note, blueprint templates cannot be updated via the REST API.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space to update a space template or \'Confluence Administrator\' global permission to update a global template.
+     * Update content template
+     */
+    async updateContentTemplateRaw(requestParameters: UpdateContentTemplateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentTemplate>> {
+        const requestOptions = await this.updateContentTemplateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

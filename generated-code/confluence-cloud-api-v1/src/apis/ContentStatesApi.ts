@@ -65,10 +65,9 @@ export interface SetContentStateRequest {
 export class ContentStatesApi extends runtime.BaseAPI {
 
     /**
-     * Gets content states that are available for the content to be set as. Will return all enabled Space Content States. Will only return most the 3 most recently published custom content states to match UI editor list. To get all custom content states, use the /content-states endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Gets available content states for content.
+     * Creates request options for getAvailableContentStates without sending the request
      */
-    async getAvailableContentStatesRaw(requestParameters: GetAvailableContentStatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AvailableContentStates>> {
+    async getAvailableContentStatesRequestOpts(requestParameters: GetAvailableContentStatesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -92,12 +91,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/state/available`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets content states that are available for the content to be set as. Will return all enabled Space Content States. Will only return most the 3 most recently published custom content states to match UI editor list. To get all custom content states, use the /content-states endpoint.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Gets available content states for content.
+     */
+    async getAvailableContentStatesRaw(requestParameters: GetAvailableContentStatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AvailableContentStates>> {
+        const requestOptions = await this.getAvailableContentStatesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -112,10 +120,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the current content state of the draft or current version of content. To specify the draft version, set the parameter status to draft, otherwise archived or current will get the relevant published state. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content state
+     * Creates request options for getContentState without sending the request
      */
-    async getContentStateRaw(requestParameters: GetContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+    async getContentStateRequestOpts(requestParameters: GetContentStateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -143,12 +150,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/state`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the current content state of the draft or current version of content. To specify the draft version, set the parameter status to draft, otherwise archived or current will get the relevant published state. **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get content state
+     */
+    async getContentStateRaw(requestParameters: GetContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+        const requestOptions = await this.getContentStateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -163,10 +179,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get object describing whether content states are allowed at all, if custom content states or space content states are restricted, and a list of space content states allowed for the space if they are not restricted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Get content state settings for space
+     * Creates request options for getContentStateSettings without sending the request
      */
-    async getContentStateSettingsRaw(requestParameters: GetContentStateSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateSettings>> {
+    async getContentStateSettingsRequestOpts(requestParameters: GetContentStateSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -190,12 +205,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state/settings`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get object describing whether content states are allowed at all, if custom content states or space content states are restricted, and a list of space content states allowed for the space if they are not restricted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Get content state settings for space
+     */
+    async getContentStateSettingsRaw(requestParameters: GetContentStateSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateSettings>> {
+        const requestOptions = await this.getContentStateSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -210,10 +234,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all content that has the provided content state in a space.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
-     * Get content in space with given content state
+     * Creates request options for getContentsWithState without sending the request
      */
-    async getContentsWithStateRaw(requestParameters: GetContentsWithStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+    async getContentsWithStateRequestOpts(requestParameters: GetContentsWithStateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -260,12 +283,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state/content`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all content that has the provided content state in a space.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Get content in space with given content state
+     */
+    async getContentsWithStateRaw(requestParameters: GetContentsWithStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+        const requestOptions = await this.getContentsWithStateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -280,10 +312,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get custom content states that authenticated user has created.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Must have user authentication.
-     * Get Custom Content States
+     * Creates request options for getCustomContentStates without sending the request
      */
-    async getCustomContentStatesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentState>>> {
+    async getCustomContentStatesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -299,12 +330,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/content-states`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get custom content states that authenticated user has created.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required** Must have user authentication.
+     * Get Custom Content States
+     */
+    async getCustomContentStatesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentState>>> {
+        const requestOptions = await this.getCustomContentStatesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -319,10 +359,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get content states that are suggested in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
-     * Get space suggested content states
+     * Creates request options for getSpaceContentStates without sending the request
      */
-    async getSpaceContentStatesRaw(requestParameters: GetSpaceContentStatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentState>>> {
+    async getSpaceContentStatesRequestOpts(requestParameters: GetSpaceContentStatesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -346,12 +385,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/state`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get content states that are suggested in the space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Get space suggested content states
+     */
+    async getSpaceContentStatesRaw(requestParameters: GetSpaceContentStatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentState>>> {
+        const requestOptions = await this.getSpaceContentStatesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -366,10 +414,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes the content state of the content specified and creates a new version (publishes the content without changing the body) of the content with the new status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Removes the content state of a content and publishes a new version.
+     * Creates request options for removeContentState without sending the request
      */
-    async removeContentStateRaw(requestParameters: RemoveContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+    async removeContentStateRequestOpts(requestParameters: RemoveContentStateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -397,12 +444,21 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/state`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes the content state of the content specified and creates a new version (publishes the content without changing the body) of the content with the new status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Removes the content state of a content and publishes a new version.
+     */
+    async removeContentStateRaw(requestParameters: RemoveContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+        const requestOptions = await this.removeContentStateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -417,10 +473,9 @@ export class ContentStatesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the content state of the content specified and creates a new version (publishes the content without changing the body) of the content with the new state.  You may pass in either an id of a state, or the name and color of a desired new state. If all 3 are passed in, id will be used. If the name and color passed in already exist under the current user\'s existing custom states, the existing state will be reused. If custom states are disabled in the space of the content (which can be determined by getting the content state space settings of the content\'s space) then this set will fail.  You may not remove a content state via this PUT request. You must use the DELETE method. A specified state is required in the body of this request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Set the content state of a content and publishes a new version of the content.
+     * Creates request options for setContentState without sending the request
      */
-    async setContentStateRaw(requestParameters: SetContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+    async setContentStateRequestOpts(requestParameters: SetContentStateRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -464,13 +519,22 @@ export class ContentStatesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/state`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['contentStateRestInput'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the content state of the content specified and creates a new version (publishes the content without changing the body) of the content with the new state.  You may pass in either an id of a state, or the name and color of a desired new state. If all 3 are passed in, id will be used. If the name and color passed in already exist under the current user\'s existing custom states, the existing state will be reused. If custom states are disabled in the space of the content (which can be determined by getting the content state space settings of the content\'s space) then this set will fail.  You may not remove a content state via this PUT request. You must use the DELETE method. A specified state is required in the body of this request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Set the content state of a content and publishes a new version of the content.
+     */
+    async setContentStateRaw(requestParameters: SetContentStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentStateResponse>> {
+        const requestOptions = await this.setContentStateRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

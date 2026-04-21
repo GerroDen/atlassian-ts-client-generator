@@ -31,10 +31,9 @@ export interface GetAllLabelContentRequest {
 export class LabelInfoApi extends runtime.BaseAPI {
 
     /**
-     * Returns label information and a list of contents associated with the label.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only contents that the user is permitted to view is returned.
-     * Get label information
+     * Creates request options for getAllLabelContent without sending the request
      */
-    async getAllLabelContentRaw(requestParameters: GetAllLabelContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelDetails>> {
+    async getAllLabelContentRequestOpts(requestParameters: GetAllLabelContentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['name'] == null) {
             throw new runtime.RequiredError(
                 'name',
@@ -73,12 +72,21 @@ export class LabelInfoApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/label`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns label information and a list of contents associated with the label.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). Only contents that the user is permitted to view is returned.
+     * Get label information
+     */
+    async getAllLabelContentRaw(requestParameters: GetAllLabelContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelDetails>> {
+        const requestOptions = await this.getAllLabelContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

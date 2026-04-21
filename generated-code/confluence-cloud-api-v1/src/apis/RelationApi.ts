@@ -90,10 +90,9 @@ export interface GetRelationshipRequest {
 export class RelationApi extends runtime.BaseAPI {
 
     /**
-     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `PUT /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Create relationship
+     * Creates request options for createRelationship without sending the request
      */
-    async createRelationshipRaw(requestParameters: CreateRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
+    async createRelationshipRequestOpts(requestParameters: CreateRelationshipRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['relationName'] == null) {
             throw new runtime.RequiredError(
                 'relationName',
@@ -165,12 +164,21 @@ export class RelationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
         urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a relationship between two entities (user, space, content). The \'favourite\' relationship is supported by default, but you can use this method to create any type of relationship between two entities.  For example, the following method creates a \'sibling\' relationship between two pieces of content: `PUT /wiki/rest/api/relation/sibling/from/content/123/to/content/456`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Create relationship
+     */
+    async createRelationshipRaw(requestParameters: CreateRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
+        const requestOptions = await this.createRelationshipRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -185,10 +193,9 @@ export class RelationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes a relationship between two entities (user, space, content).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). For favourite relationships, the current user can only delete their own favourite relationships. A space administrator can delete favourite relationships for any user.
-     * Delete relationship
+     * Creates request options for deleteRelationship without sending the request
      */
-    async deleteRelationshipRaw(requestParameters: DeleteRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRelationshipRequestOpts(requestParameters: DeleteRelationshipRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['relationName'] == null) {
             throw new runtime.RequiredError(
                 'relationName',
@@ -260,12 +267,21 @@ export class RelationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
         urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Deletes a relationship between two entities (user, space, content).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission). For favourite relationships, the current user can only delete their own favourite relationships. A space administrator can delete favourite relationships for any user.
+     * Delete relationship
+     */
+    async deleteRelationshipRaw(requestParameters: DeleteRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRelationshipRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -279,10 +295,9 @@ export class RelationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all target entities that have a particular relationship to the source entity. Note, relationships are one way.  For example, the following method finds all users that have a \'collaborator\' relationship to a piece of content with an ID of \'1234\': `GET /wiki/rest/api/relation/collaborator/to/content/1234/from/user` Note, \'collaborator\' is an example custom relationship type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
-     * Find source entities related to a target entity
+     * Creates request options for findSourcesForTarget without sending the request
      */
-    async findSourcesForTargetRaw(requestParameters: FindSourcesForTargetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
+    async findSourcesForTargetRequestOpts(requestParameters: FindSourcesForTargetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['relationName'] == null) {
             throw new runtime.RequiredError(
                 'relationName',
@@ -358,12 +373,21 @@ export class RelationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
         urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all target entities that have a particular relationship to the source entity. Note, relationships are one way.  For example, the following method finds all users that have a \'collaborator\' relationship to a piece of content with an ID of \'1234\': `GET /wiki/rest/api/relation/collaborator/to/content/1234/from/user` Note, \'collaborator\' is an example custom relationship type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
+     * Find source entities related to a target entity
+     */
+    async findSourcesForTargetRaw(requestParameters: FindSourcesForTargetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
+        const requestOptions = await this.findSourcesForTargetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -378,10 +402,9 @@ export class RelationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all target entities that have a particular relationship to the source entity. Note, relationships are one way.  For example, the following method finds all content that the current user has an \'ignore\' relationship with: `GET /wiki/rest/api/relation/ignore/from/user/current/to/content` Note, \'ignore\' is an example custom relationship type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
-     * Find target entities related to a source entity
+     * Creates request options for findTargetFromSource without sending the request
      */
-    async findTargetFromSourceRaw(requestParameters: FindTargetFromSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
+    async findTargetFromSourceRequestOpts(requestParameters: FindTargetFromSourceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['relationName'] == null) {
             throw new runtime.RequiredError(
                 'relationName',
@@ -457,12 +480,21 @@ export class RelationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"sourceKey"}}`, encodeURIComponent(String(requestParameters['sourceKey'])));
         urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all target entities that have a particular relationship to the source entity. Note, relationships are one way.  For example, the following method finds all content that the current user has an \'ignore\' relationship with: `GET /wiki/rest/api/relation/ignore/from/user/current/to/content` Note, \'ignore\' is an example custom relationship type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
+     * Find target entities related to a source entity
+     */
+    async findTargetFromSourceRaw(requestParameters: FindTargetFromSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RelationArray>> {
+        const requestOptions = await this.findTargetFromSourceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -477,10 +509,9 @@ export class RelationApi extends runtime.BaseAPI {
     }
 
     /**
-     * Find whether a particular type of relationship exists from a source entity to a target entity. Note, relationships are one way.  For example, you can use this method to find whether the current user has selected a particular page as a favorite (i.e. \'save for later\'): `GET /wiki/rest/api/relation/favourite/from/user/current/to/content/123`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
-     * Find relationship from source to target
+     * Creates request options for getRelationship without sending the request
      */
-    async getRelationshipRaw(requestParameters: GetRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
+    async getRelationshipRequestOpts(requestParameters: GetRelationshipRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['relationName'] == null) {
             throw new runtime.RequiredError(
                 'relationName',
@@ -556,12 +587,21 @@ export class RelationApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"targetType"}}`, encodeURIComponent(String(requestParameters['targetType'])));
         urlPath = urlPath.replace(`{${"targetKey"}}`, encodeURIComponent(String(requestParameters['targetKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Find whether a particular type of relationship exists from a source entity to a target entity. Note, relationships are one way.  For example, you can use this method to find whether the current user has selected a particular page as a favorite (i.e. \'save for later\'): `GET /wiki/rest/api/relation/favourite/from/user/current/to/content/123`  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view both the target entity and source entity.
+     * Find relationship from source to target
+     */
+    async getRelationshipRaw(requestParameters: GetRelationshipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Relation>> {
+        const requestOptions = await this.getRelationshipRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

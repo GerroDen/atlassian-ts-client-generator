@@ -60,10 +60,9 @@ export interface GetUserRequest {
 export class UsersApi extends runtime.BaseAPI {
 
     /**
-     * Returns information about how anonymous users are represented, like the profile picture and display name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get anonymous user
+     * Creates request options for getAnonymousUser without sending the request
      */
-    async getAnonymousUserRaw(requestParameters: GetAnonymousUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnonymous>> {
+    async getAnonymousUserRequestOpts(requestParameters: GetAnonymousUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -83,12 +82,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/anonymous`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about how anonymous users are represented, like the profile picture and display name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get anonymous user
+     */
+    async getAnonymousUserRaw(requestParameters: GetAnonymousUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnonymous>> {
+        const requestOptions = await this.getAnonymousUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -103,10 +111,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns user details for the ids provided in the request. Currently this API returns a maximum of 100 results. If more than 100 account ids are passed in, then the first 100 will be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get multiple users using ids
+     * Creates request options for getBulkUserLookup without sending the request
      */
-    async getBulkUserLookupRaw(requestParameters: GetBulkUserLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkUserLookupArray>> {
+    async getBulkUserLookupRequestOpts(requestParameters: GetBulkUserLookupRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -137,12 +144,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns user details for the ids provided in the request. Currently this API returns a maximum of 100 results. If more than 100 account ids are passed in, then the first 100 will be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get multiple users using ids
+     */
+    async getBulkUserLookupRaw(requestParameters: GetBulkUserLookupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkUserLookupArray>> {
+        const requestOptions = await this.getBulkUserLookupRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -157,10 +173,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the currently logged-in user. This includes information about the user, like the display name, userKey, account ID, profile picture, and more.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get current user
+     * Creates request options for getCurrentUser without sending the request
      */
-    async getCurrentUserRaw(requestParameters: GetCurrentUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+    async getCurrentUserRequestOpts(requestParameters: GetCurrentUserRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['expand'] != null) {
@@ -180,12 +195,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/current`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the currently logged-in user. This includes information about the user, like the display name, userKey, account ID, profile picture, and more.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get current user
+     */
+    async getCurrentUserRaw(requestParameters: GetCurrentUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        const requestOptions = await this.getCurrentUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -200,10 +224,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the groups that a user is a member of.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get group memberships for user
+     * Creates request options for getGroupMembershipsForUser without sending the request
      */
-    async getGroupMembershipsForUserRaw(requestParameters: GetGroupMembershipsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GroupArrayWithLinks>> {
+    async getGroupMembershipsForUserRequestOpts(requestParameters: GetGroupMembershipsForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -238,12 +261,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/memberof`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the groups that a user is a member of.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get group memberships for user
+     */
+    async getGroupMembershipsForUserRaw(requestParameters: GetGroupMembershipsForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GroupArrayWithLinks>> {
+        const requestOptions = await this.getGroupMembershipsForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -258,10 +290,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user\'s email address regardless of the user’s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user email address
+     * Creates request options for getPrivacyUnsafeUserEmail without sending the request
      */
-    async getPrivacyUnsafeUserEmailRaw(requestParameters: GetPrivacyUnsafeUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountIdEmailRecord>> {
+    async getPrivacyUnsafeUserEmailRequestOpts(requestParameters: GetPrivacyUnsafeUserEmailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -280,12 +311,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/email`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user\'s email address regardless of the user’s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get user email address
+     */
+    async getPrivacyUnsafeUserEmailRaw(requestParameters: GetPrivacyUnsafeUserEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountIdEmailRecord>> {
+        const requestOptions = await this.getPrivacyUnsafeUserEmailRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -300,10 +340,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user\'s email address regardless of the user’s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.  Any accounts which are not available will not be included in the result.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user email addresses in batch
+     * Creates request options for getPrivacyUnsafeUserEmailBulk without sending the request
      */
-    async getPrivacyUnsafeUserEmailBulkRaw(requestParameters: GetPrivacyUnsafeUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccountIdEmailRecord>>> {
+    async getPrivacyUnsafeUserEmailBulkRequestOpts(requestParameters: GetPrivacyUnsafeUserEmailBulkRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -322,12 +361,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user/email/bulk`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user\'s email address regardless of the user’s profile visibility settings. For Connect apps, this API is only available to apps approved by Atlassian, according to these [guidelines](https://community.developer.atlassian.com/t/guidelines-for-requesting-access-to-email-address/27603). For Forge apps, this API only supports access via asApp() requests.  Any accounts which are not available will not be included in the result.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get user email addresses in batch
+     */
+    async getPrivacyUnsafeUserEmailBulkRaw(requestParameters: GetPrivacyUnsafeUserEmailBulkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccountIdEmailRecord>>> {
+        const requestOptions = await this.getPrivacyUnsafeUserEmailBulkRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -342,10 +390,9 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user. This includes information about the user, such as the display name, account ID, profile picture, and more. The information returned may be restricted by the user\'s profile visibility settings.  **Note:** to add, edit, or delete users in your organization, see the [user management REST API](/cloud/admin/user-management/about/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get user
+     * Creates request options for getUser without sending the request
      */
-    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+    async getUserRequestOpts(requestParameters: GetUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['accountId'] == null) {
             throw new runtime.RequiredError(
                 'accountId',
@@ -376,12 +423,21 @@ export class UsersApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a user. This includes information about the user, such as the display name, account ID, profile picture, and more. The information returned may be restricted by the user\'s profile visibility settings.  **Note:** to add, edit, or delete users in your organization, see the [user management REST API](/cloud/admin/user-management/about/).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get user
+     */
+    async getUserRaw(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        const requestOptions = await this.getUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

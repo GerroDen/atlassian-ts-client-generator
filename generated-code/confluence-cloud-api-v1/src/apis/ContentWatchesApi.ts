@@ -110,10 +110,9 @@ export interface RemoveSpaceWatchRequest {
 export class ContentWatchesApi extends runtime.BaseAPI {
 
     /**
-     * Adds a user as a watcher to a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Add content watcher
+     * Creates request options for addContentWatcher without sending the request
      */
-    async addContentWatcherRaw(requestParameters: AddContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addContentWatcherRequestOpts(requestParameters: AddContentWatcherRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentId'] == null) {
             throw new runtime.RequiredError(
                 'contentId',
@@ -149,12 +148,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
         urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a user as a watcher to a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Add content watcher
+     */
+    async addContentWatcherRaw(requestParameters: AddContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addContentWatcherRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -168,10 +176,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds a user as a watcher to a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Add label watcher
+     * Creates request options for addLabelWatcher without sending the request
      */
-    async addLabelWatcherRaw(requestParameters: AddLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addLabelWatcherRequestOpts(requestParameters: AddLabelWatcherRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['xAtlassianToken'] == null) {
             throw new runtime.RequiredError(
                 'xAtlassianToken',
@@ -218,12 +225,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a user as a watcher to a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Add label watcher
+     */
+    async addLabelWatcherRaw(requestParameters: AddLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addLabelWatcherRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -237,10 +253,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds a user as a watcher to a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Add space watcher
+     * Creates request options for addSpaceWatcher without sending the request
      */
-    async addSpaceWatcherRaw(requestParameters: AddSpaceWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addSpaceWatcherRequestOpts(requestParameters: AddSpaceWatcherRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['xAtlassianToken'] == null) {
             throw new runtime.RequiredError(
                 'xAtlassianToken',
@@ -287,12 +302,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a user as a watcher to a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  Note, you must add the `X-Atlassian-Token: no-check` header when making a request, as this operation has XSRF protection.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Add space watcher
+     */
+    async addSpaceWatcherRaw(requestParameters: AddSpaceWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addSpaceWatcherRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -306,10 +330,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether a user is watching a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Get content watch status
+     * Creates request options for getContentWatchStatus without sending the request
      */
-    async getContentWatchStatusRaw(requestParameters: GetContentWatchStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+    async getContentWatchStatusRequestOpts(requestParameters: GetContentWatchStatusRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentId'] == null) {
             throw new runtime.RequiredError(
                 'contentId',
@@ -345,12 +368,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
         urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether a user is watching a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Get content watch status
+     */
+    async getContentWatchStatusRaw(requestParameters: GetContentWatchStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+        const requestOptions = await this.getContentWatchStatusRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -365,10 +397,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of watchers of a space
-     * Get space watchers
+     * Creates request options for getWatchersForSpace without sending the request
      */
-    async getWatchersForSpaceRaw(requestParameters: GetWatchersForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
+    async getWatchersForSpaceRequestOpts(requestParameters: GetWatchersForSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -400,12 +431,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/watch`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of watchers of a space
+     * Get space watchers
+     */
+    async getWatchersForSpaceRaw(requestParameters: GetWatchersForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
+        const requestOptions = await this.getWatchersForSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -420,10 +460,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the watches for a page. A user that watches a page will receive receive notifications when the page is updated.  If you want to manage watches for a page, use the following `user` methods:  - [Get content watch status for user](#api-user-watch-content-contentId-get) - [Add content watch](#api-user-watch-content-contentId-post) - [Remove content watch](#api-user-watch-content-contentId-delete)  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get watches for page
+     * Creates request options for getWatchesForPage without sending the request
      */
-    async getWatchesForPageRaw(requestParameters: GetWatchesForPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WatchArray>> {
+    async getWatchesForPageRequestOpts(requestParameters: GetWatchesForPageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -455,12 +494,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/notification/child-created`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the watches for a page. A user that watches a page will receive receive notifications when the page is updated.  If you want to manage watches for a page, use the following `user` methods:  - [Get content watch status for user](#api-user-watch-content-contentId-get) - [Add content watch](#api-user-watch-content-contentId-post) - [Remove content watch](#api-user-watch-content-contentId-delete)  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get watches for page
+     */
+    async getWatchesForPageRaw(requestParameters: GetWatchesForPageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WatchArray>> {
+        const requestOptions = await this.getWatchesForPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -475,10 +523,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all space watches for the space that the content is in. A user that watches a space will receive receive notifications when any content in the space is updated.  If you want to manage watches for a space, use the following `user` methods:  - [Get space watch status for user](#api-user-watch-space-spaceKey-get) - [Add space watch](#api-user-watch-space-spaceKey-post) - [Remove space watch](#api-user-watch-space-spaceKey-delete)  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get watches for space
+     * Creates request options for getWatchesForSpace without sending the request
      */
-    async getWatchesForSpaceRaw(requestParameters: GetWatchesForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
+    async getWatchesForSpaceRequestOpts(requestParameters: GetWatchesForSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -510,12 +557,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/notification/created`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all space watches for the space that the content is in. A user that watches a space will receive receive notifications when any content in the space is updated.  If you want to manage watches for a space, use the following `user` methods:  - [Get space watch status for user](#api-user-watch-space-spaceKey-get) - [Add space watch](#api-user-watch-space-spaceKey-post) - [Remove space watch](#api-user-watch-space-spaceKey-delete)  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get watches for space
+     */
+    async getWatchesForSpaceRaw(requestParameters: GetWatchesForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceWatchArray>> {
+        const requestOptions = await this.getWatchesForSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -530,10 +586,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether a user is watching a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Get label watch status
+     * Creates request options for isWatchingLabel without sending the request
      */
-    async isWatchingLabelRaw(requestParameters: IsWatchingLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+    async isWatchingLabelRequestOpts(requestParameters: IsWatchingLabelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['labelName'] == null) {
             throw new runtime.RequiredError(
                 'labelName',
@@ -569,12 +624,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether a user is watching a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Get label watch status
+     */
+    async isWatchingLabelRaw(requestParameters: IsWatchingLabelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+        const requestOptions = await this.isWatchingLabelRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -589,10 +653,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether a user is watching a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Get space watch status
+     * Creates request options for isWatchingSpace without sending the request
      */
-    async isWatchingSpaceRaw(requestParameters: IsWatchingSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+    async isWatchingSpaceRequestOpts(requestParameters: IsWatchingSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -628,12 +691,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether a user is watching a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Get space watch status
+     */
+    async isWatchingSpaceRaw(requestParameters: IsWatchingSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserWatch>> {
+        const requestOptions = await this.isWatchingSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -648,10 +720,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a user as a watcher from a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Remove content watcher
+     * Creates request options for removeContentWatcher without sending the request
      */
-    async removeContentWatcherRaw(requestParameters: RemoveContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeContentWatcherRequestOpts(requestParameters: RemoveContentWatcherRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['xAtlassianToken'] == null) {
             throw new runtime.RequiredError(
                 'xAtlassianToken',
@@ -698,12 +769,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/content/{contentId}`;
         urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a user as a watcher from a piece of content. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Remove content watcher
+     */
+    async removeContentWatcherRaw(requestParameters: RemoveContentWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeContentWatcherRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -717,10 +797,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a user as a watcher from a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Remove label watcher
+     * Creates request options for removeLabelWatcher without sending the request
      */
-    async removeLabelWatcherRaw(requestParameters: RemoveLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeLabelWatcherRequestOpts(requestParameters: RemoveLabelWatcherRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['labelName'] == null) {
             throw new runtime.RequiredError(
                 'labelName',
@@ -756,12 +835,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/label/{labelName}`;
         urlPath = urlPath.replace(`{${"labelName"}}`, encodeURIComponent(String(requestParameters['labelName'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a user as a watcher from a label. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Remove label watcher
+     */
+    async removeLabelWatcherRaw(requestParameters: RemoveLabelWatcherRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeLabelWatcherRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -775,10 +863,9 @@ export class ContentWatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a user as a watcher from a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
-     * Remove space watch
+     * Creates request options for removeSpaceWatch without sending the request
      */
-    async removeSpaceWatchRaw(requestParameters: RemoveSpaceWatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeSpaceWatchRequestOpts(requestParameters: RemoveSpaceWatchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -814,12 +901,21 @@ export class ContentWatchesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/user/watch/space/{spaceKey}`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a user as a watcher from a space. Choose the user by doing one of the following:  - Specify a user via a query parameter: Use the `accountId` to identify the user. - Do not specify a user: The currently logged-in user will be used.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission if specifying a user, otherwise permission to access the Confluence site (\'Can use\' global permission).
+     * Remove space watch
+     */
+    async removeSpaceWatchRaw(requestParameters: RemoveSpaceWatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeSpaceWatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

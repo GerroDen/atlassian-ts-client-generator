@@ -40,7 +40,7 @@ export interface AccountIdEmailRecord {
 export interface AddContentRestriction {
     /**
      * The restriction operation applied to content.
-     * @type {string}
+     * @type {AddContentRestrictionOperationEnum}
      * @memberof AddContentRestriction
      */
     operation: AddContentRestrictionOperationEnum;
@@ -92,7 +92,7 @@ export interface AddContentRestrictionRestrictions {
 export interface AddContentRestrictionRestrictionsGroupInner {
     /**
      * Set to 'group'.
-     * @type {string}
+     * @type {AddContentRestrictionRestrictionsGroupInnerTypeEnum}
      * @memberof AddContentRestrictionRestrictionsGroupInner
      */
     type: AddContentRestrictionRestrictionsGroupInnerTypeEnum;
@@ -122,7 +122,7 @@ export type AddContentRestrictionRestrictionsGroupInnerTypeEnum = typeof AddCont
 export interface AddContentRestrictionRestrictionsUserInner {
     /**
      * Set to 'known'.
-     * @type {string}
+     * @type {AddContentRestrictionRestrictionsUserInnerTypeEnum}
      * @memberof AddContentRestrictionRestrictionsUserInner
      */
     type: AddContentRestrictionRestrictionsUserInnerTypeEnum;
@@ -228,7 +228,7 @@ export interface AsyncContentBody {
     value?: string;
     /**
      * 
-     * @type {string}
+     * @type {AsyncContentBodyRepresentationEnum}
      * @memberof AsyncContentBody
      */
     representation?: AsyncContentBodyRepresentationEnum;
@@ -246,7 +246,7 @@ export interface AsyncContentBody {
     error?: string;
     /**
      * Rerunning is reserved for when the job is working, but there is a previous run's value in the cache. You may choose to continue polling, or use the cached value.
-     * @type {string}
+     * @type {AsyncContentBodyStatusEnum}
      * @memberof AsyncContentBody
      */
     status?: AsyncContentBodyStatusEnum;
@@ -482,7 +482,7 @@ export interface AttachmentUpdate {
     id: string;
     /**
      * Set this to `attachment`.
-     * @type {string}
+     * @type {AttachmentUpdateTypeEnum}
      * @memberof AttachmentUpdate
      */
     type: AttachmentUpdateTypeEnum;
@@ -687,7 +687,7 @@ export interface AuditRecordArray {
 export interface AuditRecordAuthor {
     /**
      * 
-     * @type {string}
+     * @type {AuditRecordAuthorTypeEnum}
      * @memberof AuditRecordAuthor
      */
     type: AuditRecordAuthorTypeEnum;
@@ -851,7 +851,7 @@ export interface AuditRecordCreate {
 export interface AuditRecordCreateAuthor {
     /**
      * Set to 'user'.
-     * @type {string}
+     * @type {AuditRecordCreateAuthorTypeEnum}
      * @memberof AuditRecordCreateAuthor
      */
     type: AuditRecordCreateAuthorTypeEnum;
@@ -1112,7 +1112,7 @@ export interface BulkContentBodyConversionInput {
 export interface BulkUserLookup {
     /**
      * 
-     * @type {string}
+     * @type {BulkUserLookupTypeEnum}
      * @memberof BulkUserLookup
      */
     type: BulkUserLookupTypeEnum;
@@ -1804,13 +1804,13 @@ export interface ContentBlueprintDraft {
     title: string;
     /**
      * The type of content. Set this to `page`.
-     * @type {string}
+     * @type {ContentBlueprintDraftTypeEnum}
      * @memberof ContentBlueprintDraft
      */
     type: ContentBlueprintDraftTypeEnum;
     /**
      * The status of the content. Set this to `current` or omit it altogether.
-     * @type {string}
+     * @type {ContentBlueprintDraftStatusEnum}
      * @memberof ContentBlueprintDraft
      */
     status?: ContentBlueprintDraftStatusEnum;
@@ -2008,7 +2008,7 @@ export interface ContentBodyConversionInput {
     contentIdContext?: string;
     /**
      * Mode used for rendering embedded content, such as attachments. - `current` renders the embedded content using the latest version. - `version-at-save` renders the embedded content using the version at the time of save.
-     * @type {string}
+     * @type {ContentBodyConversionInputEmbeddedContentRenderEnum}
      * @memberof ContentBodyConversionInput
      */
     embeddedContentRender?: ContentBodyConversionInputEmbeddedContentRenderEnum;
@@ -2074,7 +2074,7 @@ export interface ContentBodyCreate {
     /**
      * The content format type. Set the value of this property to
      * the name of the format being used, e.g. 'storage'.
-     * @type {string}
+     * @type {ContentBodyCreateRepresentationEnum}
      * @memberof ContentBodyCreate
      */
     representation: ContentBodyCreateRepresentationEnum;
@@ -2115,7 +2115,7 @@ export interface ContentBodyCreateStorage {
     /**
      * The content format type. Set the value of this property to
      * the name of the format being used, e.g. 'storage'.
-     * @type {string}
+     * @type {ContentBodyCreateStorageRepresentationEnum}
      * @memberof ContentBodyCreateStorage
      */
     representation: ContentBodyCreateStorageRepresentationEnum;
@@ -2463,7 +2463,7 @@ export interface ContentCreate {
     space?: ContentCreateSpace | null;
     /**
      * The status of the new content.
-     * @type {string}
+     * @type {ContentCreateStatusEnum}
      * @memberof ContentCreate
      */
     status?: ContentCreateStatusEnum;
@@ -3316,7 +3316,7 @@ export interface ContentPermissionRequest {
     subject: PermissionSubjectWithGroupId;
     /**
      * The content permission operation to check.
-     * @type {string}
+     * @type {ContentPermissionRequestOperationEnum}
      * @memberof ContentPermissionRequest
      */
     operation: ContentPermissionRequestOperationEnum;
@@ -3569,7 +3569,7 @@ export interface ContentPropertyVersion {
 export interface ContentRestriction {
     /**
      * 
-     * @type {string}
+     * @type {ContentRestrictionOperationEnum}
      * @memberof ContentRestriction
      */
     operation: ContentRestrictionOperationEnum;
@@ -3784,7 +3784,7 @@ export interface ContentRestrictionRestrictionsExpandable {
 export interface ContentRestrictionUpdate {
     /**
      * The restriction operation applied to content.
-     * @type {string}
+     * @type {ContentRestrictionUpdateOperationEnum}
      * @memberof ContentRestrictionUpdate
      */
     operation: ContentRestrictionUpdateOperationEnum;
@@ -3851,7 +3851,7 @@ export interface ContentRestrictionUpdateRestrictions {
 export interface ContentRestrictionUpdateRestrictionsGroupInner {
     /**
      * Set to 'group'.
-     * @type {string}
+     * @type {ContentRestrictionUpdateRestrictionsGroupInnerTypeEnum}
      * @memberof ContentRestrictionUpdateRestrictionsGroupInner
      */
     type: ContentRestrictionUpdateRestrictionsGroupInnerTypeEnum;
@@ -4384,7 +4384,7 @@ export interface ContentTemplateUpdate {
     name: string;
     /**
      * The type of the template. Set to `page`.
-     * @type {string}
+     * @type {ContentTemplateUpdateTemplateTypeEnum}
      * @memberof ContentTemplateUpdate
      */
     templateType: ContentTemplateUpdateTemplateTypeEnum;
@@ -4467,7 +4467,7 @@ export interface ContentUpdate {
      * The updated status of the content. Note, if you change the status of a page from
      * 'current' to 'draft' and it has an existing draft, the existing draft will be deleted
      * in favor of the updated page.
-     * @type {string}
+     * @type {ContentUpdateStatusEnum}
      * @memberof ContentUpdate
      */
     status?: ContentUpdateStatusEnum;
@@ -4771,7 +4771,7 @@ export interface CopyPageRequestBody {
 export interface CopyPageRequestDestination {
     /**
      * 
-     * @type {string}
+     * @type {CopyPageRequestDestinationTypeEnum}
      * @memberof CopyPageRequestDestination
      */
     type: CopyPageRequestDestinationTypeEnum;
@@ -4918,7 +4918,7 @@ export interface GlobalSpaceIdentifier {
 export interface Group {
     /**
      * 
-     * @type {string}
+     * @type {GroupTypeEnum}
      * @memberof Group
      */
     type: GroupTypeEnum;
@@ -4938,7 +4938,7 @@ export interface Group {
      * This property represents how this collection of users is used:
      *   - `USERBASE_GROUP`: This value indicates that the collection of users is used as a group.
      *   - `TEAM_COLLABORATION`: This value indicates that the collection of users is used as a team.
-     * @type {string}
+     * @type {GroupUsageTypeEnum}
      * @memberof Group
      */
     usageType?: GroupUsageTypeEnum;
@@ -4948,7 +4948,7 @@ export interface Group {
      *   - `EXTERNAL`: This value indicates that the collection of users is managed externally (through SCIM, HRIS, etc.).
      *   - `TEAM_MEMBERS`: This value indicates that the collection of users is managed by its members.
      *   - `OPEN`: This value indicates that the collection of users is not actively managed by any users.
-     * @type {string}
+     * @type {GroupManagedByEnum}
      * @memberof Group
      */
     managedBy?: GroupManagedByEnum;
@@ -5073,7 +5073,7 @@ export interface GroupCreate {
     [key: string]: any | any;
     /**
      * 
-     * @type {string}
+     * @type {GroupCreateTypeEnum}
      * @memberof GroupCreate
      */
     type: GroupCreateTypeEnum;
@@ -5824,7 +5824,7 @@ export interface LookAndFeelSelection {
     spaceKey: string;
     /**
      * 
-     * @type {string}
+     * @type {LookAndFeelSelectionLookAndFeelTypeEnum}
      * @memberof LookAndFeelSelection
      */
     lookAndFeelType: LookAndFeelSelectionLookAndFeelTypeEnum;
@@ -5849,7 +5849,7 @@ export type LookAndFeelSelectionLookAndFeelTypeEnum = typeof LookAndFeelSelectio
 export interface LookAndFeelSettings {
     /**
      * 
-     * @type {string}
+     * @type {LookAndFeelSettingsSelectedEnum}
      * @memberof LookAndFeelSettings
      */
     selected: LookAndFeelSettingsSelectedEnum;
@@ -6098,7 +6098,7 @@ export interface NavigationLookAndFeelHoverOrFocus {
 export interface OperationCheckResult {
     /**
      * The operation itself.
-     * @type {string}
+     * @type {OperationCheckResultOperationEnum}
      * @memberof OperationCheckResult
      */
     operation: OperationCheckResultOperationEnum;
@@ -6177,7 +6177,7 @@ export interface PermissionCheckResponse {
 export interface PermissionSubject {
     /**
      * 
-     * @type {string}
+     * @type {PermissionSubjectTypeEnum}
      * @memberof PermissionSubject
      */
     type: PermissionSubjectTypeEnum;
@@ -6209,7 +6209,7 @@ export type PermissionSubjectTypeEnum = typeof PermissionSubjectTypeEnum[keyof t
 export interface PermissionSubjectWithGroupId {
     /**
      * 
-     * @type {string}
+     * @type {PermissionSubjectWithGroupIdTypeEnum}
      * @memberof PermissionSubjectWithGroupId
      */
     type: PermissionSubjectWithGroupIdTypeEnum;
@@ -6398,7 +6398,7 @@ export interface RetentionPeriod {
     number: number;
     /**
      * The unit of time that the retention period is measured in.
-     * @type {string}
+     * @type {RetentionPeriodUnitsEnum}
      * @memberof RetentionPeriod
      */
     units: RetentionPeriodUnitsEnum;
@@ -7242,7 +7242,7 @@ export interface SpacePermissionCustomContent {
 export interface SpacePermissionCustomContentOperationsInner {
     /**
      * The operation type
-     * @type {string}
+     * @type {SpacePermissionCustomContentOperationsInnerKeyEnum}
      * @memberof SpacePermissionCustomContentOperationsInner
      */
     key: SpacePermissionCustomContentOperationsInnerKeyEnum;
@@ -7479,13 +7479,13 @@ export interface SpacePermissionV2 {
 export interface SpacePermissionV2Operation {
     /**
      * 
-     * @type {string}
+     * @type {SpacePermissionV2OperationKeyEnum}
      * @memberof SpacePermissionV2Operation
      */
     key: SpacePermissionV2OperationKeyEnum;
     /**
      * The space or content type that the operation applies to.
-     * @type {string}
+     * @type {SpacePermissionV2OperationTargetEnum}
      * @memberof SpacePermissionV2Operation
      */
     target: SpacePermissionV2OperationTargetEnum;
@@ -8200,7 +8200,7 @@ export interface TaskPageResponse {
 export interface TaskStatusUpdate {
     /**
      * 
-     * @type {string}
+     * @type {TaskStatusUpdateStatusEnum}
      * @memberof TaskStatusUpdate
      */
     status: TaskStatusUpdateStatusEnum;
@@ -8387,7 +8387,7 @@ export interface User {
     [key: string]: any | any;
     /**
      * 
-     * @type {string}
+     * @type {UserTypeEnum}
      * @memberof User
      */
     type: UserTypeEnum;
@@ -8416,7 +8416,7 @@ export interface User {
     accountId?: string | null;
     /**
      * The account type of the user, may return empty string if unavailable. App is if the user is a bot user created on behalf of an Atlassian app.
-     * @type {string}
+     * @type {UserAccountTypeEnum}
      * @memberof User
      */
     accountType?: UserAccountTypeEnum;
@@ -9026,7 +9026,7 @@ export interface VersionExpandable {
 export interface VersionRestore {
     /**
      * Set to 'restore'.
-     * @type {string}
+     * @type {VersionRestoreOperationKeyEnum}
      * @memberof VersionRestore
      */
     operationKey: VersionRestoreOperationKeyEnum;

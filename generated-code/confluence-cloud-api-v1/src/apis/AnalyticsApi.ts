@@ -35,10 +35,9 @@ export interface GetViewsRequest {
 export class AnalyticsApi extends runtime.BaseAPI {
 
     /**
-     * Get the total number of distinct viewers a piece of content has.
-     * Get viewers
+     * Creates request options for getViewers without sending the request
      */
-    async getViewersRaw(requestParameters: GetViewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViewers200Response>> {
+    async getViewersRequestOpts(requestParameters: GetViewersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentId'] == null) {
             throw new runtime.RequiredError(
                 'contentId',
@@ -66,12 +65,21 @@ export class AnalyticsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/analytics/content/{contentId}/viewers`;
         urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the total number of distinct viewers a piece of content has.
+     * Get viewers
+     */
+    async getViewersRaw(requestParameters: GetViewersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViewers200Response>> {
+        const requestOptions = await this.getViewersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -86,10 +94,9 @@ export class AnalyticsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the total number of views a piece of content has.
-     * Get views
+     * Creates request options for getViews without sending the request
      */
-    async getViewsRaw(requestParameters: GetViewsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViews200Response>> {
+    async getViewsRequestOpts(requestParameters: GetViewsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['contentId'] == null) {
             throw new runtime.RequiredError(
                 'contentId',
@@ -117,12 +124,21 @@ export class AnalyticsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/analytics/content/{contentId}/views`;
         urlPath = urlPath.replace(`{${"contentId"}}`, encodeURIComponent(String(requestParameters['contentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get the total number of views a piece of content has.
+     * Get views
+     */
+    async getViewsRaw(requestParameters: GetViewsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetViews200Response>> {
+        const requestOptions = await this.getViewsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

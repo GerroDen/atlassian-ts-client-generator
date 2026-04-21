@@ -36,10 +36,9 @@ export interface RestoreContentVersionRequest {
 export class ContentVersionsApi extends runtime.BaseAPI {
 
     /**
-     * Delete a historical version. This does not delete the changes made to the content in that version, rather the changes for the deleted version are rolled up into the next version. Note, you cannot delete the current version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Delete content version
+     * Creates request options for deleteContentVersion without sending the request
      */
-    async deleteContentVersionRaw(requestParameters: DeleteContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteContentVersionRequestOpts(requestParameters: DeleteContentVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -71,12 +70,21 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"versionNumber"}}`, encodeURIComponent(String(requestParameters['versionNumber'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a historical version. This does not delete the changes made to the content in that version, rather the changes for the deleted version are rolled up into the next version. Note, you cannot delete the current version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Delete content version
+     */
+    async deleteContentVersionRaw(requestParameters: DeleteContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteContentVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -90,10 +98,9 @@ export class ContentVersionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Restores a historical version to be the latest version. That is, a new version is created with the content of the historical version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Restore content version
+     * Creates request options for restoreContentVersion without sending the request
      */
-    async restoreContentVersionRaw(requestParameters: RestoreContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+    async restoreContentVersionRequestOpts(requestParameters: RestoreContentVersionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -130,13 +137,22 @@ export class ContentVersionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/version`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Restores a historical version to be the latest version. That is, a new version is created with the content of the historical version.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Restore content version
+     */
+    async restoreContentVersionRaw(requestParameters: RestoreContentVersionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Version>> {
+        const requestOptions = await this.restoreContentVersionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

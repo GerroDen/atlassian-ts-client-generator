@@ -48,10 +48,9 @@ export interface SearchUserRequest {
 export class SearchApi extends runtime.BaseAPI {
 
     /**
-     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
-     * Search content
+     * Creates request options for searchByCQL without sending the request
      */
-    async searchByCQLRaw(requestParameters: SearchByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
+    async searchByCQLRequestOpts(requestParameters: SearchByCQLRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['cql'] == null) {
             throw new runtime.RequiredError(
                 'cql',
@@ -126,12 +125,21 @@ export class SearchApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/search`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Searches for content using the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  **Note that CQL input queries submitted through the `/wiki/rest/api/search` endpoint no longer support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.**  See this [deprecation notice](https://developer.atlassian.com/cloud/confluence/deprecation-notice-search-api/) for more details.  Example initial call: ``` /wiki/rest/api/search?cql=type=page&limit=25 ```  Example response: ``` {   \"results\": [     { ... },     { ... },     ...     { ... }   ],   \"limit\": 25,   \"size\": 25,   ...   \"_links\": {     \"base\": \"<url>\",     \"context\": \"<url>\",     \"next\": \"/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg\",     \"self\": \"<url>\"   } } ```  When additional results are available, returns `next` and `prev` URLs to retrieve them in subsequent calls. The URLs each contain a cursor that points to the appropriate set of results. Use `limit` to specify the number of results returned in each call.  Example subsequent call (taken from example response): ``` /wiki/rest/api/search?cql=type=page&limit=25&cursor=raNDoMsTRiNg ``` The response to this will have a `prev` URL similar to the `next` in the example response.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the entities. Note, only entities that the user has permission to view will be returned.
+     * Search content
+     */
+    async searchByCQLRaw(requestParameters: SearchByCQLRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
+        const requestOptions = await this.searchByCQLRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -146,10 +154,9 @@ export class SearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Searches for users using user-specific queries from the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Note that CQL input queries submitted through the `/wiki/rest/api/search/user` endpoint only support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.  Note that some user fields may be set to null depending on the user\'s privacy settings. These are: email, profilePicture, displayName, and timeZone.
-     * Search users
+     * Creates request options for searchUser without sending the request
      */
-    async searchUserRaw(requestParameters: SearchUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
+    async searchUserRequestOpts(requestParameters: SearchUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['cql'] == null) {
             throw new runtime.RequiredError(
                 'cql',
@@ -192,12 +199,21 @@ export class SearchApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/search/user`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Searches for users using user-specific queries from the [Confluence Query Language (CQL)](https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/).  Note that CQL input queries submitted through the `/wiki/rest/api/search/user` endpoint only support user-specific fields like `user`, `user.fullname`, `user.accountid`, and `user.userkey`.  Note that some user fields may be set to null depending on the user\'s privacy settings. These are: email, profilePicture, displayName, and timeZone.
+     * Search users
+     */
+    async searchUserRaw(requestParameters: SearchUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchPageResponseSearchResult>> {
+        const requestOptions = await this.searchUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

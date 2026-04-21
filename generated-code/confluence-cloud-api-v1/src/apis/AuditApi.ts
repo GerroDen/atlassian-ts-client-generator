@@ -58,10 +58,9 @@ export interface SetRetentionPeriodRequest {
 export class AuditApi extends runtime.BaseAPI {
 
     /**
-     * Creates a record in the audit log.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Create audit record
+     * Creates request options for createAuditRecord without sending the request
      */
-    async createAuditRecordRaw(requestParameters: CreateAuditRecordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecord>> {
+    async createAuditRecordRequestOpts(requestParameters: CreateAuditRecordRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -86,13 +85,22 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a record in the audit log.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Create audit record
+     */
+    async createAuditRecordRaw(requestParameters: CreateAuditRecordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecord>> {
+        const requestOptions = await this.createAuditRecordRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -107,10 +115,9 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Exports audit records as a CSV file or ZIP file.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Export audit records
+     * Creates request options for exportAuditRecords without sending the request
      */
-    async exportAuditRecordsRaw(requestParameters: ExportAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+    async exportAuditRecordsRequestOpts(requestParameters: ExportAuditRecordsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startDate'] != null) {
@@ -142,12 +149,21 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit/export`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Exports audit records as a CSV file or ZIP file.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Export audit records
+     */
+    async exportAuditRecordsRaw(requestParameters: ExportAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        const requestOptions = await this.exportAuditRecordsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.BlobApiResponse(response);
     }
@@ -162,10 +178,9 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all records in the audit log, optionally for a certain date range. This contains information about events like space exports, group membership changes, app installations, etc. For more information, see [Audit log](https://confluence.atlassian.com/confcloud/audit-log-802164269.html) in the Confluence administrator\'s guide.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Get audit records
+     * Creates request options for getAuditRecords without sending the request
      */
-    async getAuditRecordsRaw(requestParameters: GetAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
+    async getAuditRecordsRequestOpts(requestParameters: GetAuditRecordsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startDate'] != null) {
@@ -201,12 +216,21 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all records in the audit log, optionally for a certain date range. This contains information about events like space exports, group membership changes, app installations, etc. For more information, see [Audit log](https://confluence.atlassian.com/confcloud/audit-log-802164269.html) in the Confluence administrator\'s guide.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Get audit records
+     */
+    async getAuditRecordsRaw(requestParameters: GetAuditRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
+        const requestOptions = await this.getAuditRecordsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -221,10 +245,9 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns records from the audit log, for a time period back from the current date. For example, you can use this method to get the last 3 months of records.  This contains information about events like space exports, group membership changes, app installations, etc. For more information, see [Audit log](https://confluence.atlassian.com/confcloud/audit-log-802164269.html) in the Confluence administrator\'s guide.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Get audit records for time period
+     * Creates request options for getAuditRecordsForTimePeriod without sending the request
      */
-    async getAuditRecordsForTimePeriodRaw(requestParameters: GetAuditRecordsForTimePeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
+    async getAuditRecordsForTimePeriodRequestOpts(requestParameters: GetAuditRecordsForTimePeriodRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['number'] != null) {
@@ -260,12 +283,21 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit/since`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns records from the audit log, for a time period back from the current date. For example, you can use this method to get the last 3 months of records.  This contains information about events like space exports, group membership changes, app installations, etc. For more information, see [Audit log](https://confluence.atlassian.com/confcloud/audit-log-802164269.html) in the Confluence administrator\'s guide.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Get audit records for time period
+     */
+    async getAuditRecordsForTimePeriodRaw(requestParameters: GetAuditRecordsForTimePeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditRecordArray>> {
+        const requestOptions = await this.getAuditRecordsForTimePeriodRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -280,10 +312,9 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the retention period for records in the audit log. The retention period is how long an audit record is kept for, from creation date until it is deleted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Get retention period
+     * Creates request options for getRetentionPeriod without sending the request
      */
-    async getRetentionPeriodRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
+    async getRetentionPeriodRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -299,12 +330,21 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit/retention`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the retention period for records in the audit log. The retention period is how long an audit record is kept for, from creation date until it is deleted.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Get retention period
+     */
+    async getRetentionPeriodRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
+        const requestOptions = await this.getRetentionPeriodRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -319,10 +359,9 @@ export class AuditApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 1 year.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
-     * Set retention period
+     * Creates request options for setRetentionPeriod without sending the request
      */
-    async setRetentionPeriodRaw(requestParameters: SetRetentionPeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
+    async setRetentionPeriodRequestOpts(requestParameters: SetRetentionPeriodRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -347,13 +386,22 @@ export class AuditApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/audit/retention`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the retention period for records in the audit log. The retention period can be set to a maximum of 1 year.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Confluence Administrator\' global permission.
+     * Set retention period
+     */
+    async setRetentionPeriodRaw(requestParameters: SetRetentionPeriodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RetentionPeriod>> {
+        const requestOptions = await this.setRetentionPeriodRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

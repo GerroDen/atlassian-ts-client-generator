@@ -30,10 +30,9 @@ export interface CheckContentPermissionRequest {
 export class ContentPermissionsApi extends runtime.BaseAPI {
 
     /**
-     * Check if a user or a group can perform an operation to the specified content. The `operation` to check must be provided. The user’s account ID or the ID of the group can be provided in the `subject` to check permissions against a specified user or group. The following permission checks are done to make sure that the user or group has the proper access:  - site permissions - space permissions - content restrictions  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) if checking permission for self, otherwise \'Confluence Administrator\' global permission is required.
-     * Check content permissions
+     * Creates request options for checkContentPermission without sending the request
      */
-    async checkContentPermissionRaw(requestParameters: CheckContentPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionCheckResponse>> {
+    async checkContentPermissionRequestOpts(requestParameters: CheckContentPermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -66,13 +65,22 @@ export class ContentPermissionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/permission/check`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Check if a user or a group can perform an operation to the specified content. The `operation` to check must be provided. The user’s account ID or the ID of the group can be provided in the `subject` to check permissions against a specified user or group. The following permission checks are done to make sure that the user or group has the proper access:  - site permissions - space permissions - content restrictions  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission) if checking permission for self, otherwise \'Confluence Administrator\' global permission is required.
+     * Check content permissions
+     */
+    async checkContentPermissionRaw(requestParameters: CheckContentPermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PermissionCheckResponse>> {
+        const requestOptions = await this.checkContentPermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

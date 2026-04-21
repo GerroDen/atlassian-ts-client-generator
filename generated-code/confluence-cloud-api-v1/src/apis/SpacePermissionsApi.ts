@@ -41,10 +41,9 @@ export interface RemovePermissionRequest {
 export class SpacePermissionsApi extends runtime.BaseAPI {
 
     /**
-     * Adds new custom content permission to space.  If the permission to be added is a group permission, the group can be identified by its group name or group id.  Note: Only apps can access this REST resource and only make changes to the respective app permissions.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Add new custom content permission to space
+     * Creates request options for addCustomContentPermissions without sending the request
      */
-    async addCustomContentPermissionsRaw(requestParameters: AddCustomContentPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addCustomContentPermissionsRequestOpts(requestParameters: AddCustomContentPermissionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -77,13 +76,22 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/permission/custom-content`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds new custom content permission to space.  If the permission to be added is a group permission, the group can be identified by its group name or group id.  Note: Only apps can access this REST resource and only make changes to the respective app permissions.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Add new custom content permission to space
+     */
+    async addCustomContentPermissionsRaw(requestParameters: AddCustomContentPermissionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addCustomContentPermissionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -97,10 +105,9 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds new permission to space.  If the permission to be added is a group permission, the group can be identified by its group name or group id.  Note: Apps cannot access this REST resource - including when utilizing user impersonation.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Add new permission to space
+     * Creates request options for addPermissionToSpace without sending the request
      */
-    async addPermissionToSpaceRaw(requestParameters: AddPermissionToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpacePermissionV2>> {
+    async addPermissionToSpaceRequestOpts(requestParameters: AddPermissionToSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -133,13 +140,22 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/permission`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds new permission to space.  If the permission to be added is a group permission, the group can be identified by its group name or group id.  Note: Apps cannot access this REST resource - including when utilizing user impersonation.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Add new permission to space
+     */
+    async addPermissionToSpaceRaw(requestParameters: AddPermissionToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpacePermissionV2>> {
+        const requestOptions = await this.addPermissionToSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -154,10 +170,9 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a space permission. Note that removing Read Space permission for a user or group will remove all the space permissions for that user or group.  Note: Apps cannot access this REST resource - including when utilizing user impersonation.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Remove a space permission
+     * Creates request options for removePermission without sending the request
      */
-    async removePermissionRaw(requestParameters: RemovePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removePermissionRequestOpts(requestParameters: RemovePermissionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -189,12 +204,21 @@ export class SpacePermissionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a space permission. Note that removing Read Space permission for a user or group will remove all the space permissions for that user or group.  Note: Apps cannot access this REST resource - including when utilizing user impersonation.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Remove a space permission
+     */
+    async removePermissionRaw(requestParameters: RemovePermissionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removePermissionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

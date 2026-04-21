@@ -106,10 +106,9 @@ export interface UpdateRestrictionsRequest {
 export class ContentRestrictionsApi extends runtime.BaseAPI {
 
     /**
-     * Adds a group to a content restriction by Group Id. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Add group to content restriction
+     * Creates request options for addGroupToContentRestrictionByGroupId without sending the request
      */
-    async addGroupToContentRestrictionByGroupIdRaw(requestParameters: AddGroupToContentRestrictionByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addGroupToContentRestrictionByGroupIdRequestOpts(requestParameters: AddGroupToContentRestrictionByGroupIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -149,12 +148,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
         urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a group to a content restriction by Group Id. That is, grant read or update permission to the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Add group to content restriction
+     */
+    async addGroupToContentRestrictionByGroupIdRaw(requestParameters: AddGroupToContentRestrictionByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addGroupToContentRestrictionByGroupIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -168,10 +176,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds restrictions to a piece of content. Note, this does not change any existing restrictions on the content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Add restrictions
+     * Creates request options for addRestrictions without sending the request
      */
-    async addRestrictionsRaw(requestParameters: AddRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+    async addRestrictionsRequestOpts(requestParameters: AddRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -208,13 +215,22 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds restrictions to a piece of content. Note, this does not change any existing restrictions on the content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Add restrictions
+     */
+    async addRestrictionsRaw(requestParameters: AddRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+        const requestOptions = await this.addRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -229,10 +245,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds a user to a content restriction. That is, grant read or update permission to the user for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Add user to content restriction
+     * Creates request options for addUserToContentRestriction without sending the request
      */
-    async addUserToContentRestrictionRaw(requestParameters: AddUserToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addUserToContentRestrictionRequestOpts(requestParameters: AddUserToContentRestrictionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -276,12 +291,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds a user to a content restriction. That is, grant read or update permission to the user for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Add user to content restriction
+     */
+    async addUserToContentRestrictionRaw(requestParameters: AddUserToContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addUserToContentRestrictionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -295,10 +319,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes all restrictions (read and update) on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Delete restrictions
+     * Creates request options for deleteRestrictions without sending the request
      */
-    async deleteRestrictionsRaw(requestParameters: DeleteRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+    async deleteRestrictionsRequestOpts(requestParameters: DeleteRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -326,12 +349,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes all restrictions (read and update) on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Delete restrictions
+     */
+    async deleteRestrictionsRaw(requestParameters: DeleteRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+        const requestOptions = await this.deleteRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -346,10 +378,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether the specified content restriction applies to a user. For example, if a page with `id=123` has a `read` restriction for a user with an account ID of `384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/user?accountId=384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`  Note that a response of `true` does not guarantee that the user can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content restriction status for user
+     * Creates request options for getContentRestrictionStatusForUser without sending the request
      */
-    async getContentRestrictionStatusForUserRaw(requestParameters: GetContentRestrictionStatusForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getContentRestrictionStatusForUserRequestOpts(requestParameters: GetContentRestrictionStatusForUserRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -393,12 +424,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether the specified content restriction applies to a user. For example, if a page with `id=123` has a `read` restriction for a user with an account ID of `384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/user?accountId=384093:32b4d9w0-f6a5-3535-11a3-9c8c88d10192`  Note that a response of `true` does not guarantee that the user can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get content restriction status for user
+     */
+    async getContentRestrictionStatusForUserRaw(requestParameters: GetContentRestrictionStatusForUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getContentRestrictionStatusForUserRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -412,10 +452,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `123456` group id, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/byGroupId/123456`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get content restriction status for group
+     * Creates request options for getIndividualGroupRestrictionStatusByGroupId without sending the request
      */
-    async getIndividualGroupRestrictionStatusByGroupIdRaw(requestParameters: GetIndividualGroupRestrictionStatusByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getIndividualGroupRestrictionStatusByGroupIdRequestOpts(requestParameters: GetIndividualGroupRestrictionStatusByGroupIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -455,12 +494,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
         urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns whether the specified content restriction applies to a group. For example, if a page with `id=123` has a `read` restriction for the `123456` group id, the following request will return `true`:  `/wiki/rest/api/content/123/restriction/byOperation/read/byGroupId/123456`  Note that a response of `true` does not guarantee that the group can view the page, as it does not account for account-inherited restrictions, space permissions, or even product access. For more information, see [Confluence permissions](https://confluence.atlassian.com/x/_AozKw).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get content restriction status for group
+     */
+    async getIndividualGroupRestrictionStatusByGroupIdRaw(requestParameters: GetIndividualGroupRestrictionStatusByGroupIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.getIndividualGroupRestrictionStatusByGroupIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -474,10 +522,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the restrictions on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get restrictions
+     * Creates request options for getRestrictions without sending the request
      */
-    async getRestrictionsRaw(requestParameters: GetRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+    async getRestrictionsRequestOpts(requestParameters: GetRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -513,12 +560,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the restrictions on a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get restrictions
+     */
+    async getRestrictionsRaw(requestParameters: GetRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+        const requestOptions = await this.getRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -533,10 +589,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns restrictions on a piece of content by operation. This method is similar to [Get restrictions](#api-content-id-restriction-get) except that the operations are properties of the return object, rather than items in a results array.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get restrictions by operation
+     * Creates request options for getRestrictionsByOperation without sending the request
      */
-    async getRestrictionsByOperationRaw(requestParameters: GetRestrictionsByOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetRestrictionsByOperation200ResponseValue; }>> {
+    async getRestrictionsByOperationRequestOpts(requestParameters: GetRestrictionsByOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -564,12 +619,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/restriction/byOperation`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns restrictions on a piece of content by operation. This method is similar to [Get restrictions](#api-content-id-restriction-get) except that the operations are properties of the return object, rather than items in a results array.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get restrictions by operation
+     */
+    async getRestrictionsByOperationRaw(requestParameters: GetRestrictionsByOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: GetRestrictionsByOperation200ResponseValue; }>> {
+        const requestOptions = await this.getRestrictionsByOperationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -584,10 +648,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the restictions on a piece of content for a given operation (read or update).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
-     * Get restrictions for operation
+     * Creates request options for getRestrictionsForOperation without sending the request
      */
-    async getRestrictionsForOperationRaw(requestParameters: GetRestrictionsForOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestriction>> {
+    async getRestrictionsForOperationRequestOpts(requestParameters: GetRestrictionsForOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -631,12 +694,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the restictions on a piece of content for a given operation (read or update).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to view the content.
+     * Get restrictions for operation
+     */
+    async getRestrictionsForOperationRaw(requestParameters: GetRestrictionsForOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestriction>> {
+        const requestOptions = await this.getRestrictionsForOperationRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -651,10 +723,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Remove group from content restriction
+     * Creates request options for removeGroupFromContentRestriction without sending the request
      */
-    async removeGroupFromContentRestrictionRaw(requestParameters: RemoveGroupFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeGroupFromContentRestrictionRequestOpts(requestParameters: RemoveGroupFromContentRestrictionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -694,12 +765,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
         urlPath = urlPath.replace(`{${"groupId"}}`, encodeURIComponent(String(requestParameters['groupId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Remove group from content restriction
+     */
+    async removeGroupFromContentRestrictionRaw(requestParameters: RemoveGroupFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeGroupFromContentRestrictionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -713,10 +793,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Remove user from content restriction
+     * Creates request options for removeUserFromContentRestriction without sending the request
      */
-    async removeUserFromContentRestrictionRaw(requestParameters: RemoveUserFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeUserFromContentRestrictionRequestOpts(requestParameters: RemoveUserFromContentRestrictionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -760,12 +839,21 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"operationKey"}}`, encodeURIComponent(String(requestParameters['operationKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a group from a content restriction. That is, remove read or update permission for the group for a piece of content.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Remove user from content restriction
+     */
+    async removeUserFromContentRestrictionRaw(requestParameters: RemoveUserFromContentRestrictionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeUserFromContentRestrictionRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -779,10 +867,9 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates restrictions for a piece of content. This removes the existing restrictions and replaces them with the restrictions in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
-     * Update restrictions
+     * Creates request options for updateRestrictions without sending the request
      */
-    async updateRestrictionsRaw(requestParameters: UpdateRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+    async updateRestrictionsRequestOpts(requestParameters: UpdateRestrictionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -819,13 +906,22 @@ export class ContentRestrictionsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/restriction`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates restrictions for a piece of content. This removes the existing restrictions and replaces them with the restrictions in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to edit the content.
+     * Update restrictions
+     */
+    async updateRestrictionsRaw(requestParameters: UpdateRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentRestrictionArray>> {
+        const requestOptions = await this.updateRestrictionsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

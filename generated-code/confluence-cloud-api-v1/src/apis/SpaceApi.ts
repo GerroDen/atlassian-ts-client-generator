@@ -44,10 +44,9 @@ export interface UpdateSpaceRequest {
 export class SpaceApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new space that is only visible to the creator. This method is the same as the [Create space](#api-space-post) method with permissions set to the current user only. Note, currently you cannot set space labels when creating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Create Space(s)\' global permission.
-     * Create private space
+     * Creates request options for createPrivateSpace without sending the request
      */
-    async createPrivateSpaceRaw(requestParameters: CreatePrivateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+    async createPrivateSpaceRequestOpts(requestParameters: CreatePrivateSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spacePrivateCreate'] == null) {
             throw new runtime.RequiredError(
                 'spacePrivateCreate',
@@ -72,13 +71,22 @@ export class SpaceApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/space/_private`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['spacePrivateCreate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new space that is only visible to the creator. This method is the same as the [Create space](#api-space-post) method with permissions set to the current user only. Note, currently you cannot set space labels when creating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Create Space(s)\' global permission.
+     * Create private space
+     */
+    async createPrivateSpaceRaw(requestParameters: CreatePrivateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+        const requestOptions = await this.createPrivateSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -93,10 +101,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a new space. Note, currently you cannot set space labels when creating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Create Space(s)\' global permission.
-     * Create space
+     * Creates request options for createSpace without sending the request
      */
-    async createSpaceRaw(requestParameters: CreateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+    async createSpaceRequestOpts(requestParameters: CreateSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['body'] == null) {
             throw new runtime.RequiredError(
                 'body',
@@ -121,13 +128,22 @@ export class SpaceApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/space`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a new space. Note, currently you cannot set space labels when creating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Create Space(s)\' global permission.
+     * Create space
+     */
+    async createSpaceRaw(requestParameters: CreateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+        const requestOptions = await this.createSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -142,10 +158,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Permanently deletes a space without sending it to the trash. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Delete space
+     * Creates request options for deleteSpace without sending the request
      */
-    async deleteSpaceRaw(requestParameters: DeleteSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+    async deleteSpaceRequestOpts(requestParameters: DeleteSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -169,12 +184,21 @@ export class SpaceApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Permanently deletes a space without sending it to the trash. Note, the space will be deleted in a long running task. Therefore, the space may not be deleted yet when this method has returned. Clients should poll the status link that is returned in the response until the task completes.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Delete space
+     */
+    async deleteSpaceRaw(requestParameters: DeleteSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+        const requestOptions = await this.deleteSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -189,10 +213,9 @@ export class SpaceApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the name, description, or homepage of a space.  -   For security reasons, permissions cannot be updated via the API and must be changed via the user interface instead. -   Currently you cannot set space labels when updating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Update space
+     * Creates request options for updateSpace without sending the request
      */
-    async updateSpaceRaw(requestParameters: UpdateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+    async updateSpaceRequestOpts(requestParameters: UpdateSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -225,13 +248,22 @@ export class SpaceApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the name, description, or homepage of a space.  -   For security reasons, permissions cannot be updated via the API and must be changed via the user interface instead. -   Currently you cannot set space labels when updating a space.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Update space
+     */
+    async updateSpaceRaw(requestParameters: UpdateSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Space>> {
+        const requestOptions = await this.updateSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

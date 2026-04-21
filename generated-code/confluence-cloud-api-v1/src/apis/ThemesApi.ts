@@ -48,10 +48,9 @@ export interface SetSpaceThemeRequest {
 export class ThemesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the globally assigned theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
-     * Get global theme
+     * Creates request options for getGlobalTheme without sending the request
      */
-    async getGlobalThemeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+    async getGlobalThemeRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -67,12 +66,21 @@ export class ThemesApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/theme/selected`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the globally assigned theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Get global theme
+     */
+    async getGlobalThemeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+        const requestOptions = await this.getGlobalThemeRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -87,10 +95,9 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the theme selected for a space, if one is set. If no space theme is set, this means that the space is inheriting the global look and feel settings.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
-     * Get space theme
+     * Creates request options for getSpaceTheme without sending the request
      */
-    async getSpaceThemeRaw(requestParameters: GetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+    async getSpaceThemeRequestOpts(requestParameters: GetSpaceThemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -114,12 +121,21 @@ export class ThemesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the theme selected for a space, if one is set. If no space theme is set, this means that the space is inheriting the global look and feel settings.  **[Permissions required](https://confluence.atlassian.com/x/_AozKw)**: ‘View’ permission for the space.
+     * Get space theme
+     */
+    async getSpaceThemeRaw(requestParameters: GetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+        const requestOptions = await this.getSpaceThemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -134,10 +150,9 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a theme. This includes information about the theme name, description, and icon.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
-     * Get theme
+     * Creates request options for getTheme without sending the request
      */
-    async getThemeRaw(requestParameters: GetThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+    async getThemeRequestOpts(requestParameters: GetThemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['themeKey'] == null) {
             throw new runtime.RequiredError(
                 'themeKey',
@@ -161,12 +176,21 @@ export class ThemesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/settings/theme/{themeKey}`;
         urlPath = urlPath.replace(`{${"themeKey"}}`, encodeURIComponent(String(requestParameters['themeKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a theme. This includes information about the theme name, description, and icon.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Get theme
+     */
+    async getThemeRaw(requestParameters: GetThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+        const requestOptions = await this.getThemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -181,10 +205,9 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
-     * Get themes
+     * Creates request options for getThemes without sending the request
      */
-    async getThemesRaw(requestParameters: GetThemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ThemeArray>> {
+    async getThemesRequestOpts(requestParameters: GetThemesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['start'] != null) {
@@ -208,12 +231,21 @@ export class ThemesApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/settings/theme`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all themes, not including the default theme.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: None
+     * Get themes
+     */
+    async getThemesRaw(requestParameters: GetThemesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ThemeArray>> {
+        const requestOptions = await this.getThemesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -228,10 +260,9 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Resets the space theme. This means that the space will inherit the global look and feel settings  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Reset space theme
+     * Creates request options for resetSpaceTheme without sending the request
      */
-    async resetSpaceThemeRaw(requestParameters: ResetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async resetSpaceThemeRequestOpts(requestParameters: ResetSpaceThemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -255,12 +286,21 @@ export class ThemesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Resets the space theme. This means that the space will inherit the global look and feel settings  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Reset space theme
+     */
+    async resetSpaceThemeRaw(requestParameters: ResetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resetSpaceThemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -274,10 +314,9 @@ export class ThemesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Sets the theme for a space. Note, if you want to reset the space theme to the default Confluence theme, use the \'Reset space theme\' method instead of this method.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Set space theme
+     * Creates request options for setSpaceTheme without sending the request
      */
-    async setSpaceThemeRaw(requestParameters: SetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+    async setSpaceThemeRequestOpts(requestParameters: SetSpaceThemeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -310,13 +349,22 @@ export class ThemesApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/theme`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Sets the theme for a space. Note, if you want to reset the space theme to the default Confluence theme, use the \'Reset space theme\' method instead of this method.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Set space theme
+     */
+    async setSpaceThemeRaw(requestParameters: SetSpaceThemeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Theme>> {
+        const requestOptions = await this.setSpaceThemeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

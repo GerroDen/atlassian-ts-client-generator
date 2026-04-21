@@ -40,10 +40,9 @@ export interface RemoveLabelFromContentUsingQueryParameterRequest {
 export class ContentLabelsApi extends runtime.BaseAPI {
 
     /**
-     * Adds labels to a piece of content. Does not modify the existing labels.  Notes:  - Labels can also be added when creating content ([Create content](#api-content-post)). - Labels can be updated when updating content ([Update content](#api-content-id-put)). This will delete the existing labels and replace them with the labels in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Add labels to content
+     * Creates request options for addLabelsToContent without sending the request
      */
-    async addLabelsToContentRaw(requestParameters: AddLabelsToContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+    async addLabelsToContentRequestOpts(requestParameters: AddLabelsToContentOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -76,13 +75,22 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/label`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds labels to a piece of content. Does not modify the existing labels.  Notes:  - Labels can also be added when creating content ([Create content](#api-content-post)). - Labels can be updated when updating content ([Update content](#api-content-id-put)). This will delete the existing labels and replace them with the labels in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Add labels to content
+     */
+    async addLabelsToContentRaw(requestParameters: AddLabelsToContentOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+        const requestOptions = await this.addLabelsToContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -97,10 +105,9 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Remove label from content
+     * Creates request options for removeLabelFromContent without sending the request
      */
-    async removeLabelFromContentRaw(requestParameters: RemoveLabelFromContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeLabelFromContentRequestOpts(requestParameters: RemoveLabelFromContentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -132,12 +139,21 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"label"}}`, encodeURIComponent(String(requestParameters['label'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content using query parameter](#api-content-id-label-delete) except that the label name is specified via a path parameter.  Use this method if the label name does not have \"/\" characters, as the path parameter does not accept \"/\" characters for security reasons. Otherwise, use [Remove label from content using query parameter](#api-content-id-label-delete).  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Remove label from content
+     */
+    async removeLabelFromContentRaw(requestParameters: RemoveLabelFromContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeLabelFromContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -151,10 +167,9 @@ export class ContentLabelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Remove label from content using query parameter
+     * Creates request options for removeLabelFromContentUsingQueryParameter without sending the request
      */
-    async removeLabelFromContentUsingQueryParameterRaw(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeLabelFromContentUsingQueryParameterRequestOpts(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,12 +204,21 @@ export class ContentLabelsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/label`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Removes a label from a piece of content. Labels can\'t be deleted from archived content. This is similar to [Remove label from content](#api-content-id-label-label-delete) except that the label name is specified via a query parameter.  Use this method if the label name has \"/\" characters, as [Remove label from content using query parameter](#api-content-id-label-delete) does not accept \"/\" characters for the label name.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Remove label from content using query parameter
+     */
+    async removeLabelFromContentUsingQueryParameterRaw(requestParameters: RemoveLabelFromContentUsingQueryParameterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeLabelFromContentUsingQueryParameterRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

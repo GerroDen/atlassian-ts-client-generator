@@ -34,10 +34,9 @@ export interface UpdateSpaceSettingsRequest {
 export class SpaceSettingsApi extends runtime.BaseAPI {
 
     /**
-     * Returns the settings of a space. Currently only the `routeOverrideEnabled` setting can be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
-     * Get space settings
+     * Creates request options for getSpaceSettings without sending the request
      */
-    async getSpaceSettingsRaw(requestParameters: GetSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
+    async getSpaceSettingsRequestOpts(requestParameters: GetSpaceSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -61,12 +60,21 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns the settings of a space. Currently only the `routeOverrideEnabled` setting can be returned.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space.
+     * Get space settings
+     */
+    async getSpaceSettingsRaw(requestParameters: GetSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
+        const requestOptions = await this.getSpaceSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -81,10 +89,9 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the settings for a space. Currently only the `routeOverrideEnabled` setting can be updated.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
-     * Update space settings
+     * Creates request options for updateSpaceSettings without sending the request
      */
-    async updateSpaceSettingsRaw(requestParameters: UpdateSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
+    async updateSpaceSettingsRequestOpts(requestParameters: UpdateSpaceSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -117,13 +124,22 @@ export class SpaceSettingsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/settings`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['spaceSettingsUpdate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the settings for a space. Currently only the `routeOverrideEnabled` setting can be updated.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Admin\' permission for the space.
+     * Update space settings
+     */
+    async updateSpaceSettingsRaw(requestParameters: UpdateSpaceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SpaceSettings>> {
+        const requestOptions = await this.updateSpaceSettingsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

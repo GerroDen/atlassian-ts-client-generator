@@ -61,10 +61,9 @@ export interface MovePageRequest {
 export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
 
     /**
-     * Copies a single page and its associated properties, permissions, attachments, and custom contents.  The `id` path parameter refers to the content ID of the page to copy. The target of the page to be copied  is defined using the `destination` in the request body and can be one of the following types.    - `space`: page will be copied to the specified space as a root page on the space   - `parent_page`: page will be copied as a child of the specified parent page   - `parent_content`: page will be copied as a child of the specified parent content   - `existing_page`: page will be copied and replace the specified page  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be copied in and permission to update the content if copying to an `existing_page`.
-     * Copy single page
+     * Creates request options for copyPage without sending the request
      */
-    async copyPageRaw(requestParameters: CopyPageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+    async copyPageRequestOpts(requestParameters: CopyPageOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -101,13 +100,22 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/copy`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['request'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Copies a single page and its associated properties, permissions, attachments, and custom contents.  The `id` path parameter refers to the content ID of the page to copy. The target of the page to be copied  is defined using the `destination` in the request body and can be one of the following types.    - `space`: page will be copied to the specified space as a root page on the space   - `parent_page`: page will be copied as a child of the specified parent page   - `parent_content`: page will be copied as a child of the specified parent content   - `existing_page`: page will be copied and replace the specified page  By default, the following objects are expanded: `space`, `history`, `version`.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Add\' permission for the space that the content will be copied in and permission to update the content if copying to an `existing_page`.
+     * Copy single page
+     */
+    async copyPageRaw(requestParameters: CopyPageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+        const requestOptions = await this.copyPageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -122,10 +130,9 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Copy page hierarchy allows the copying of an entire hierarchy of pages and their associated properties, permissions and attachments.  The id path parameter refers to the content id of the page to copy, and the new parent of this copied page is defined using the destinationPageId in the request body.  The titleOptions object defines the rules of renaming page titles during the copy;  for example, search and replace can be used in conjunction to rewrite the copied page titles.   Response example:  <pre><code>  {       \"id\" : \"1180606\",       \"links\" : {            \"status\" : \"/rest/api/longtask/1180606\"       }  }  </code></pre>  Use the /longtask/<taskId> REST API to get the copy task status.
-     * Copy page hierarchy
+     * Creates request options for copyPageHierarchy without sending the request
      */
-    async copyPageHierarchyRaw(requestParameters: CopyPageHierarchyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+    async copyPageHierarchyRequestOpts(requestParameters: CopyPageHierarchyOperationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -158,13 +165,22 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/pagehierarchy/copy`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['request'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Copy page hierarchy allows the copying of an entire hierarchy of pages and their associated properties, permissions and attachments.  The id path parameter refers to the content id of the page to copy, and the new parent of this copied page is defined using the destinationPageId in the request body.  The titleOptions object defines the rules of renaming page titles during the copy;  for example, search and replace can be used in conjunction to rewrite the copied page titles.   Response example:  <pre><code>  {       \"id\" : \"1180606\",       \"links\" : {            \"status\" : \"/rest/api/longtask/1180606\"       }  }  </code></pre>  Use the /longtask/<taskId> REST API to get the copy task status.
+     * Copy page hierarchy
+     */
+    async copyPageHierarchyRaw(requestParameters: CopyPageHierarchyOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+        const requestOptions = await this.copyPageHierarchyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -179,11 +195,10 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
-     * Get content descendants
+     * Creates request options for getContentDescendants without sending the request
      * @deprecated
      */
-    async getContentDescendantsRaw(requestParameters: GetContentDescendantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentChildren>> {
+    async getContentDescendantsRequestOpts(requestParameters: GetContentDescendantsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -211,12 +226,22 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/descendant`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a map of the descendants of a piece of content. This is similar to [Get content children](#api-content-id-child-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  The map will always include all descendant types that are valid for the content. However, if the content has no instances of a descendant type, the map will contain an empty array for that descendant type.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Get content descendants
+     * @deprecated
+     */
+    async getContentDescendantsRaw(requestParameters: GetContentDescendantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentChildren>> {
+        const requestOptions = await this.getContentDescendantsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -232,11 +257,10 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
-     * Get content descendants by type
+     * Creates request options for getDescendantsOfType without sending the request
      * @deprecated
      */
-    async getDescendantsOfTypeRaw(requestParameters: GetDescendantsOfTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+    async getDescendantsOfTypeRequestOpts(requestParameters: GetDescendantsOfTypeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -284,12 +308,22 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns all descendants of a given type, for a piece of content. This is similar to [Get content children by type](#api-content-id-child-type-get), except that this method returns child pages at all levels, rather than just the direct child pages.  A piece of content has different types of descendants, depending on its type:  - `page`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `whiteboard`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `database`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `embed`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `folder`: descendant is `page`, `whiteboard`, `database`, `embed`, `folder`, `comment`, `attachment` - `blogpost`: descendant is `comment`, `attachment` - `attachment`: descendant is `comment` - `comment`: descendant is `attachment`  Custom content types that are provided by apps can also be returned.  If the expand query parameter is used with the `body.export_view` and/or `body.styled_view` properties, then the query limit parameter will be restricted to a maximum value of 25.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'View\' permission for the space, and permission to view the content if it is a page.
+     * Get content descendants by type
+     * @deprecated
+     */
+    async getDescendantsOfTypeRaw(requestParameters: GetDescendantsOfTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+        const requestOptions = await this.getDescendantsOfTypeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -305,10 +339,9 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Move a page to a new location relative to a target page:  * `before` - move the page under the same parent as the target, before the target in the list of children * `after` - move the page under the same parent as the target, after the target in the list of children * `append` - move the page to be a child of the target  Caution: This API can move pages to the top level of a space. Top-level pages are difficult to find in the UI because they do not show up in the page tree display. To avoid this, never use `before` or `after` positions when the `targetId` is a top-level page.
-     * Move a page to a new location relative to a target page
+     * Creates request options for movePage without sending the request
      */
-    async movePageRaw(requestParameters: MovePageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MovePage200Response>> {
+    async movePageRequestOpts(requestParameters: MovePageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['pageId'] == null) {
             throw new runtime.RequiredError(
                 'pageId',
@@ -348,12 +381,21 @@ export class ContentChildrenAndDescendantsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"position"}}`, encodeURIComponent(String(requestParameters['position'])));
         urlPath = urlPath.replace(`{${"targetId"}}`, encodeURIComponent(String(requestParameters['targetId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Move a page to a new location relative to a target page:  * `before` - move the page under the same parent as the target, before the target in the list of children * `after` - move the page under the same parent as the target, after the target in the list of children * `append` - move the page to be a child of the target  Caution: This API can move pages to the top level of a space. Top-level pages are difficult to find in the UI because they do not show up in the page tree display. To avoid this, never use `before` or `after` positions when the `targetId` is a top-level page.
+     * Move a page to a new location relative to a target page
+     */
+    async movePageRaw(requestParameters: MovePageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MovePage200Response>> {
+        const requestOptions = await this.movePageRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

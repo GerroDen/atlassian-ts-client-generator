@@ -35,10 +35,9 @@ export interface GetTasksRequest {
 export class LongRunningTaskApi extends runtime.BaseAPI {
 
     /**
-     * Returns information about an active long-running task (e.g. space export), such as how long it has been running and the percentage of the task that has completed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get long-running task
+     * Creates request options for getTask without sending the request
      */
-    async getTaskRaw(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusWithLinks>> {
+    async getTaskRequestOpts(requestParameters: GetTaskRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -62,12 +61,21 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/longtask/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about an active long-running task (e.g. space export), such as how long it has been running and the percentage of the task that has completed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get long-running task
+     */
+    async getTaskRaw(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusWithLinks>> {
+        const requestOptions = await this.getTaskRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -82,10 +90,9 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns information about all active long-running tasks (e.g. space export), such as how long each task has been running and the percentage of each task that has completed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
-     * Get long-running tasks
+     * Creates request options for getTasks without sending the request
      */
-    async getTasksRaw(requestParameters: GetTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusArray>> {
+    async getTasksRequestOpts(requestParameters: GetTasksRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['key'] != null) {
@@ -113,12 +120,21 @@ export class LongRunningTaskApi extends runtime.BaseAPI {
 
         let urlPath = `/wiki/rest/api/longtask`;
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns information about all active long-running tasks (e.g. space export), such as how long each task has been running and the percentage of each task that has completed.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to access the Confluence site (\'Can use\' global permission).
+     * Get long-running tasks
+     */
+    async getTasksRaw(requestParameters: GetTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTaskStatusArray>> {
+        const requestOptions = await this.getTasksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

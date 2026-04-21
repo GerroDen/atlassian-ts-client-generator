@@ -48,10 +48,9 @@ export interface GetLabelsForSpaceRequest {
 export class ExperimentalApi extends runtime.BaseAPI {
 
     /**
-     * Adds labels to a piece of content. Does not modify the existing labels.  Notes:  - Labels can also be added when creating content ([Create content](#api-content-post)). - Labels can be updated when updating content ([Update content](#api-content-id-put)). This will delete the existing labels and replace them with the labels in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Add labels to a space
+     * Creates request options for addLabelsToSpace without sending the request
      */
-    async addLabelsToSpaceRaw(requestParameters: AddLabelsToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+    async addLabelsToSpaceRequestOpts(requestParameters: AddLabelsToSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -84,13 +83,22 @@ export class ExperimentalApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['labelCreate'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds labels to a piece of content. Does not modify the existing labels.  Notes:  - Labels can also be added when creating content ([Create content](#api-content-post)). - Labels can be updated when updating content ([Update content](#api-content-id-put)). This will delete the existing labels and replace them with the labels in the request.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Add labels to a space
+     */
+    async addLabelsToSpaceRaw(requestParameters: AddLabelsToSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+        const requestOptions = await this.addLabelsToSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -105,10 +113,9 @@ export class ExperimentalApi extends runtime.BaseAPI {
     }
 
     /**
-     * 
-     * Remove label from a space
+     * Creates request options for deleteLabelFromSpace without sending the request
      */
-    async deleteLabelFromSpaceRaw(requestParameters: DeleteLabelFromSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteLabelFromSpaceRequestOpts(requestParameters: DeleteLabelFromSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -147,12 +154,21 @@ export class ExperimentalApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * 
+     * Remove label from a space
+     */
+    async deleteLabelFromSpaceRaw(requestParameters: DeleteLabelFromSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteLabelFromSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -166,10 +182,9 @@ export class ExperimentalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Moves a pagetree rooted at a page to the space\'s trash:  - If the content\'s type is `page` and its status is `current`, it will be trashed including all its descendants. - For every other combination of content type and status, this API is not supported.  This API accepts the pageTree delete request and returns a task ID. The delete process happens asynchronously.   Response example:  <pre><code>  {       \"id\" : \"1180606\",       \"links\" : {            \"status\" : \"/rest/api/longtask/1180606\"       }  }  </code></pre>  Use the `/longtask/<taskId>` REST API to get the copy task status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
-     * Delete page tree
+     * Creates request options for deletePageTree without sending the request
      */
-    async deletePageTreeRaw(requestParameters: DeletePageTreeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+    async deletePageTreeRequestOpts(requestParameters: DeletePageTreeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -193,12 +208,21 @@ export class ExperimentalApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/pageTree`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Moves a pagetree rooted at a page to the space\'s trash:  - If the content\'s type is `page` and its status is `current`, it will be trashed including all its descendants. - For every other combination of content type and status, this API is not supported.  This API accepts the pageTree delete request and returns a task ID. The delete process happens asynchronously.   Response example:  <pre><code>  {       \"id\" : \"1180606\",       \"links\" : {            \"status\" : \"/rest/api/longtask/1180606\"       }  }  </code></pre>  Use the `/longtask/<taskId>` REST API to get the copy task status.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: \'Delete\' permission for the space that the content is in.
+     * Delete page tree
+     */
+    async deletePageTreeRaw(requestParameters: DeletePageTreeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LongTask>> {
+        const requestOptions = await this.deletePageTreeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -213,10 +237,9 @@ export class ExperimentalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of labels associated with a space. Can provide a prefix as well as other filters to select different types of labels.
-     * Get Space Labels
+     * Creates request options for getLabelsForSpace without sending the request
      */
-    async getLabelsForSpaceRaw(requestParameters: GetLabelsForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+    async getLabelsForSpaceRequestOpts(requestParameters: GetLabelsForSpaceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['spaceKey'] == null) {
             throw new runtime.RequiredError(
                 'spaceKey',
@@ -252,12 +275,21 @@ export class ExperimentalApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/space/{spaceKey}/label`;
         urlPath = urlPath.replace(`{${"spaceKey"}}`, encodeURIComponent(String(requestParameters['spaceKey'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a list of labels associated with a space. Can provide a prefix as well as other filters to select different types of labels.
+     * Get Space Labels
+     */
+    async getLabelsForSpaceRaw(requestParameters: GetLabelsForSpaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LabelArray>> {
+        const requestOptions = await this.getLabelsForSpaceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

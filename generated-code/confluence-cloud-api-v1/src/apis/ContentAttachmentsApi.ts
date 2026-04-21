@@ -63,10 +63,9 @@ export interface UpdateAttachmentPropertiesRequest {
 export class ContentAttachmentsApi extends runtime.BaseAPI {
 
     /**
-     * Adds an attachment to a piece of content. This method only adds a new attachment. If you want to update an existing attachment, use [Create or update attachments](#api-content-id-child-attachment-put).  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command attaches a file (\'example.txt\') to a container (id=\'123\') with a comment and `minorEdits`=true.  ``` bash curl -D- \\   -u admin:admin \\   -X POST \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   https://myhost/wiki/rest/api/content/123/child/attachment ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Create attachment
+     * Creates request options for createAttachment without sending the request
      */
-    async createAttachmentRaw(requestParameters: CreateAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+    async createAttachmentRequestOpts(requestParameters: CreateAttachmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -140,13 +139,22 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds an attachment to a piece of content. This method only adds a new attachment. If you want to update an existing attachment, use [Create or update attachments](#api-content-id-child-attachment-put).  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command attaches a file (\'example.txt\') to a container (id=\'123\') with a comment and `minorEdits`=true.  ``` bash curl -D- \\   -u admin:admin \\   -X POST \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   https://myhost/wiki/rest/api/content/123/child/attachment ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Create attachment
+     */
+    async createAttachmentRaw(requestParameters: CreateAttachmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+        const requestOptions = await this.createAttachmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -161,10 +169,9 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Adds an attachment to a piece of content. If the attachment already exists for the content, then the attachment is updated (i.e. a new version of the attachment is created).  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command attaches a file (\'example.txt\') to a piece of content (id=\'123\') with a comment and `minorEdits`=true. If the \'example.txt\' file already exists, it will update it with a new version of the attachment.  ``` bash curl -D- \\   -u admin:admin \\   -X PUT \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   http://myhost/rest/api/content/123/child/attachment ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Create or update attachment
+     * Creates request options for createOrUpdateAttachments without sending the request
      */
-    async createOrUpdateAttachmentsRaw(requestParameters: CreateOrUpdateAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+    async createOrUpdateAttachmentsRequestOpts(requestParameters: CreateOrUpdateAttachmentsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -238,13 +245,22 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         let urlPath = `/wiki/rest/api/content/{id}/child/attachment`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Adds an attachment to a piece of content. If the attachment already exists for the content, then the attachment is updated (i.e. a new version of the attachment is created).  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command attaches a file (\'example.txt\') to a piece of content (id=\'123\') with a comment and `minorEdits`=true. If the \'example.txt\' file already exists, it will update it with a new version of the attachment.  ``` bash curl -D- \\   -u admin:admin \\   -X PUT \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   http://myhost/rest/api/content/123/child/attachment ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Create or update attachment
+     */
+    async createOrUpdateAttachmentsRaw(requestParameters: CreateOrUpdateAttachmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentArray>> {
+        const requestOptions = await this.createOrUpdateAttachmentsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -259,10 +275,9 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Redirects the client to a URL that serves an attachment\'s binary data.
-     * Get URI to download attachment
+     * Creates request options for downloadAttatchment without sending the request
      */
-    async downloadAttatchmentRaw(requestParameters: DownloadAttatchmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async downloadAttatchmentRequestOpts(requestParameters: DownloadAttatchmentRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -302,12 +317,21 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Redirects the client to a URL that serves an attachment\'s binary data.
+     * Get URI to download attachment
+     */
+    async downloadAttatchmentRaw(requestParameters: DownloadAttatchmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.downloadAttatchmentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -321,10 +345,9 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the binary data of an attachment, given the attachment ID, and optionally the comment and the minor edit field.  This method is essentially the same as [Create or update attachments](#api-content-id-child-attachment-put), except that it matches the attachment ID rather than the name.  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command updates an attachment (id=\'att456\') that is attached to a piece of content (id=\'123\') with a comment and `minorEdits`=true.  ``` bash curl -D- \\   -u admin:admin \\   -X POST \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   http://myhost/rest/api/content/123/child/attachment/att456/data ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Update attachment data
+     * Creates request options for updateAttachmentData without sending the request
      */
-    async updateAttachmentDataRaw(requestParameters: UpdateAttachmentDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+    async updateAttachmentDataRequestOpts(requestParameters: UpdateAttachmentDataRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -402,13 +425,22 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the binary data of an attachment, given the attachment ID, and optionally the comment and the minor edit field.  This method is essentially the same as [Create or update attachments](#api-content-id-child-attachment-put), except that it matches the attachment ID rather than the name.  Note, you must set a `X-Atlassian-Token: nocheck` header on the request for this method, otherwise it will be blocked. This protects against XSRF attacks, which is necessary as this method accepts multipart/form-data.  The media type \'multipart/form-data\' is defined in [RFC 7578](https://www.ietf.org/rfc/rfc7578.txt). Most client libraries have classes that make it easier to implement multipart posts, like the [MultipartEntityBuilder](https://hc.apache.org/httpcomponents-client-5.1.x/current/httpclient5/apidocs/) Java class provided by Apache HTTP Components.  Note, according to [RFC 7578](https://tools.ietf.org/html/rfc7578#section-4.5), in the case where the form data is text, the charset parameter for the \"text/plain\" Content-Type may be used to indicate the character encoding used in that part. In the case of this API endpoint, the `comment` body parameter should be sent with `type=text/plain` and `charset=utf-8` values. This will force the charset to be UTF-8.  Example: This curl command updates an attachment (id=\'att456\') that is attached to a piece of content (id=\'123\') with a comment and `minorEdits`=true.  ``` bash curl -D- \\   -u admin:admin \\   -X POST \\   -H \'X-Atlassian-Token: nocheck\' \\   -F \'file=@\"example.txt\"\' \\   -F \'minorEdit=\"true\"\' \\   -F \'comment=\"Example attachment comment\"; type=text/plain; charset=utf-8\' \\   http://myhost/rest/api/content/123/child/attachment/att456/data ``` **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Update attachment data
+     */
+    async updateAttachmentDataRaw(requestParameters: UpdateAttachmentDataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+        const requestOptions = await this.updateAttachmentDataRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -423,10 +455,9 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates the attachment properties, i.e. the non-binary data of an attachment like the filename, media-type, comment, and parent container.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
-     * Update attachment properties
+     * Creates request options for updateAttachmentProperties without sending the request
      */
-    async updateAttachmentPropertiesRaw(requestParameters: UpdateAttachmentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+    async updateAttachmentPropertiesRequestOpts(requestParameters: UpdateAttachmentPropertiesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -467,13 +498,22 @@ export class ContentAttachmentsApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
         urlPath = urlPath.replace(`{${"attachmentId"}}`, encodeURIComponent(String(requestParameters['attachmentId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['body'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Updates the attachment properties, i.e. the non-binary data of an attachment like the filename, media-type, comment, and parent container.  **[Permissions](https://confluence.atlassian.com/x/_AozKw) required**: Permission to update the content.
+     * Update attachment properties
+     */
+    async updateAttachmentPropertiesRaw(requestParameters: UpdateAttachmentPropertiesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Content>> {
+        const requestOptions = await this.updateAttachmentPropertiesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
