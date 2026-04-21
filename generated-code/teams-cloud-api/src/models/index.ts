@@ -71,7 +71,7 @@ export interface PublicApiExternalReference {
     id: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiExternalReferenceSourceEnum}
      * @memberof PublicApiExternalReference
      */
     source: PublicApiExternalReferenceSourceEnum;
@@ -334,7 +334,7 @@ export interface PublicApiTeam {
     organizationId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamStateEnum}
      * @memberof PublicApiTeam
      */
     state: PublicApiTeamStateEnum;
@@ -346,7 +346,7 @@ export interface PublicApiTeam {
     teamId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamTeamTypeEnum}
      * @memberof PublicApiTeam
      */
     teamType: PublicApiTeamTeamTypeEnum;
@@ -399,7 +399,7 @@ export interface PublicApiTeamCreationPayload {
     siteId?: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamCreationPayloadTeamTypeEnum}
      * @memberof PublicApiTeamCreationPayload
      */
     teamType: PublicApiTeamCreationPayloadTeamTypeEnum;
@@ -468,7 +468,7 @@ export interface PublicApiTeamResponse {
     organizationId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamResponseStateEnum}
      * @memberof PublicApiTeamResponse
      */
     state: PublicApiTeamResponseStateEnum;
@@ -480,7 +480,7 @@ export interface PublicApiTeamResponse {
     teamId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamResponseTeamTypeEnum}
      * @memberof PublicApiTeamResponse
      */
     teamType: PublicApiTeamResponseTeamTypeEnum;
@@ -551,7 +551,7 @@ export interface PublicApiTeamResponseWithMembers {
     organizationId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamResponseWithMembersStateEnum}
      * @memberof PublicApiTeamResponseWithMembers
      */
     state: PublicApiTeamResponseWithMembersStateEnum;
@@ -563,7 +563,7 @@ export interface PublicApiTeamResponseWithMembers {
     teamId: string;
     /**
      * 
-     * @type {string}
+     * @type {PublicApiTeamResponseWithMembersTeamTypeEnum}
      * @memberof PublicApiTeamResponseWithMembers
      */
     teamType: PublicApiTeamResponseWithMembersTeamTypeEnum;

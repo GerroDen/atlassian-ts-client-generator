@@ -80,9 +80,9 @@ export interface UploadAndSetTeamCoverPhotoRequest {
 export class TeamsPublicAPIApi extends runtime.BaseAPI {
 
     /**
-     * Archive teams in bulk.
+     * Creates request options for archiveTeams without sending the request
      */
-    async archiveTeamsRaw(requestParameters: ArchiveTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiBulkOperationResponse>> {
+    async archiveTeamsRequestOpts(requestParameters: ArchiveTeamsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -107,13 +107,21 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/org/{orgId}/teams/archive`;
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiBulkOperationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Archive teams in bulk.
+     */
+    async archiveTeamsRaw(requestParameters: ArchiveTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiBulkOperationResponse>> {
+        const requestOptions = await this.archiveTeamsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -127,10 +135,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates a team, and adds the requesting user as the initial member.
-     * Create a team.
+     * Creates request options for createTeam without sending the request
      */
-    async createTeamRaw(requestParameters: CreateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponseWithMembers>> {
+    async createTeamRequestOpts(requestParameters: CreateTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -155,13 +162,22 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/org/{orgId}/teams/`;
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiTeamCreationPayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates a team, and adds the requesting user as the initial member.
+     * Create a team.
+     */
+    async createTeamRaw(requestParameters: CreateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponseWithMembers>> {
+        const requestOptions = await this.createTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -176,9 +192,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a team.
+     * Creates request options for deleteTeam without sending the request
      */
-    async deleteTeamRaw(requestParameters: DeleteTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteTeamRequestOpts(requestParameters: DeleteTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -202,12 +218,20 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a team.
+     */
+    async deleteTeamRaw(requestParameters: DeleteTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -220,9 +244,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a single team.
+     * Creates request options for getTeam without sending the request
      */
-    async getTeamRaw(requestParameters: GetTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+    async getTeamRequestOpts(requestParameters: GetTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -250,12 +274,20 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a single team.
+     */
+    async getTeamRaw(requestParameters: GetTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+        const requestOptions = await this.getTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -269,10 +301,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * This returns a list of all teams contained under an organization. This may be used as an option to export teams data within your organization.
-     * Get a list of teams.
+     * Creates request options for queryTeams without sending the request
      */
-    async queryTeamsRaw(requestParameters: QueryTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamPaginationResult>> {
+    async queryTeamsRequestOpts(requestParameters: QueryTeamsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -300,12 +331,21 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/org/{orgId}/teams`;
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This returns a list of all teams contained under an organization. This may be used as an option to export teams data within your organization.
+     * Get a list of teams.
+     */
+    async queryTeamsRaw(requestParameters: QueryTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamPaginationResult>> {
+        const requestOptions = await this.queryTeamsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -320,9 +360,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Restore a single soft-deleted team
+     * Creates request options for restoreTeam without sending the request
      */
-    async restoreTeamRaw(requestParameters: RestoreTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async restoreTeamRequestOpts(requestParameters: RestoreTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -346,12 +386,20 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Restore a single soft-deleted team
+     */
+    async restoreTeamRaw(requestParameters: RestoreTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.restoreTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -364,9 +412,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Unarchive teams in bulk.
+     * Creates request options for unarchiveTeams without sending the request
      */
-    async unarchiveTeamsRaw(requestParameters: UnarchiveTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiBulkOperationResponse>> {
+    async unarchiveTeamsRequestOpts(requestParameters: UnarchiveTeamsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -391,13 +439,21 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/org/{orgId}/teams/unarchive`;
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiBulkOperationRequest'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Unarchive teams in bulk.
+     */
+    async unarchiveTeamsRaw(requestParameters: UnarchiveTeamsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiBulkOperationResponse>> {
+        const requestOptions = await this.unarchiveTeamsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -411,10 +467,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * This will only update the fields that get passed in and leave the rest as unmodified.
-     * Modify a team.
+     * Creates request options for updateTeam without sending the request
      */
-    async updateTeamRaw(requestParameters: UpdateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+    async updateTeamRequestOpts(requestParameters: UpdateTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -447,13 +502,22 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiTeamUpdatePayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This will only update the fields that get passed in and leave the rest as unmodified.
+     * Modify a team.
+     */
+    async updateTeamRaw(requestParameters: UpdateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+        const requestOptions = await this.updateTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -468,10 +532,9 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * This updates the cover photo of the team. The cover photo must be a valid image file.
-     * Upload a team cover photo
+     * Creates request options for uploadAndSetTeamCoverPhoto without sending the request
      */
-    async uploadAndSetTeamCoverPhotoRaw(requestParameters: UploadAndSetTeamCoverPhotoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async uploadAndSetTeamCoverPhotoRequestOpts(requestParameters: UploadAndSetTeamCoverPhotoRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['teamId'] == null) {
             throw new runtime.RequiredError(
                 'teamId',
@@ -514,13 +577,22 @@ export class TeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/{teamId}/cover-photo`;
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: formParams,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * This updates the cover photo of the team. The cover photo must be a valid image file.
+     * Upload a team cover photo
+     */
+    async uploadAndSetTeamCoverPhotoRaw(requestParameters: UploadAndSetTeamCoverPhotoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.uploadAndSetTeamCoverPhotoRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

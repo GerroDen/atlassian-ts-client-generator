@@ -49,10 +49,9 @@ export interface RemoveMembersRequest {
 export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
 
     /**
-     * The account IDs specified will be added to the team.
-     * Add a set of membership(s).
+     * Creates request options for addMembers without sending the request
      */
-    async addMembersRaw(requestParameters: AddMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipAddResponse>> {
+    async addMembersRequestOpts(requestParameters: AddMembersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -85,13 +84,22 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiMembershipAddPayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * The account IDs specified will be added to the team.
+     * Add a set of membership(s).
+     */
+    async addMembersRaw(requestParameters: AddMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipAddResponse>> {
+        const requestOptions = await this.addMembersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -106,10 +114,9 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a set of account IDs who are members of the team, alongside a pagination cursor to retrieve the next page (if available).
-     * Fetch a set of membership(s).
+     * Creates request options for fetchMembers without sending the request
      */
-    async fetchMembersRaw(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiFetchResponsePublicApiMembershipAccountId>> {
+    async fetchMembersRequestOpts(requestParameters: FetchMembersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -139,13 +146,22 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiMembershipFetchPayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Returns a set of account IDs who are members of the team, alongside a pagination cursor to retrieve the next page (if available).
+     * Fetch a set of membership(s).
+     */
+    async fetchMembersRaw(requestParameters: FetchMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiFetchResponsePublicApiMembershipAccountId>> {
+        const requestOptions = await this.fetchMembersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -160,10 +176,9 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * The account IDs specified will be removed from the team.
-     * Remove a set of membership(s).
+     * Creates request options for removeMembers without sending the request
      */
-    async removeMembersRaw(requestParameters: RemoveMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipRemoveResponse>> {
+    async removeMembersRequestOpts(requestParameters: RemoveMembersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -196,13 +211,22 @@ export class TeamsMembersPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiMembershipRemovePayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * The account IDs specified will be removed from the team.
+     * Remove a set of membership(s).
+     */
+    async removeMembersRaw(requestParameters: RemoveMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiMembershipRemoveResponse>> {
+        const requestOptions = await this.removeMembersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }

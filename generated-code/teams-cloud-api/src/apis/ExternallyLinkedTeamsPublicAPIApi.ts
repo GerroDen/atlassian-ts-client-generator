@@ -38,10 +38,9 @@ export interface LinkTeamToExternalSourceRequest {
 export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
 
     /**
-     * Creates an external linked team, and membership will be synced with the external reference.
-     * Create an external linked team.
+     * Creates request options for createExternalLinkedTeam without sending the request
      */
-    async createExternalLinkedTeamRaw(requestParameters: CreateExternalLinkedTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+    async createExternalLinkedTeamRequestOpts(requestParameters: CreateExternalLinkedTeamRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -66,13 +65,22 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
         let urlPath = `/public/teams/v1/org/{orgId}/teams/external`;
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiExternalTeamCreationPayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Creates an external linked team, and membership will be synced with the external reference.
+     * Create an external linked team.
+     */
+    async createExternalLinkedTeamRaw(requestParameters: CreateExternalLinkedTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicApiTeamResponse>> {
+        const requestOptions = await this.createExternalLinkedTeamRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response);
     }
@@ -87,10 +95,9 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
     }
 
     /**
-     * Links an existing team to an external reference, and membership and team name will be synced with the external reference.
-     * Link an existing team to an external reference.
+     * Creates request options for linkTeamToExternalSource without sending the request
      */
-    async linkTeamToExternalSourceRaw(requestParameters: LinkTeamToExternalSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async linkTeamToExternalSourceRequestOpts(requestParameters: LinkTeamToExternalSourceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -123,13 +130,22 @@ export class ExternallyLinkedTeamsPublicAPIApi extends runtime.BaseAPI {
         urlPath = urlPath.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId'])));
         urlPath = urlPath.replace(`{${"teamId"}}`, encodeURIComponent(String(requestParameters['teamId'])));
 
-        const response = await this.request({
+        return {
             path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: requestParameters['publicApiLinkTeamToExternalSourcePayload'],
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Links an existing team to an external reference, and membership and team name will be synced with the external reference.
+     * Link an existing team to an external reference.
+     */
+    async linkTeamToExternalSourceRaw(requestParameters: LinkTeamToExternalSourceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.linkTeamToExternalSourceRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
