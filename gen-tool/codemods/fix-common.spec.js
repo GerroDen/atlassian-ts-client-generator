@@ -43,4 +43,70 @@ describe("fix-common", () => {
   restRepositorySelector?: Array<RestRepositorySelector>;
 }`);
   });
+
+  it("replaces definition of FetchAPI and appends RequestCredentials", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export type FetchAPI = WindowOrWorkerGlobalScope['fetch'];`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export type FetchAPI = typeof globalThis.fetch;
+export type RequestCredentials = "omit" | "include" | "same-origin";`);
+  });
+
+  it("updates signature of BaseAPI.fetchApi with optional init parameter to reflect the native fetch signature", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export class BaseAPI {
+    private fetchApi = async (url: string, init: RequestInit) => {
+    }
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export class BaseAPI {
+    private fetchApi = async (url: string, init?: RequestInit) => {
+    }
+}`);
+  });
+
+  it("updates middleware contexts to reflect signature of native fetch", () => {
+    const result = applyTransform(
+      transformer,
+      options,
+      {
+        source: `export interface RequestContext {
+    init: RequestInit;
+}
+
+export interface ResponseContext {
+    init: RequestInit;
+}
+
+export interface ErrorContext {
+    init: RequestInit;
+}`,
+      },
+      options,
+    );
+
+    expect(result).toBe(`export interface RequestContext {
+    init?: RequestInit
+}
+
+export interface ResponseContext {
+    init?: RequestInit
+}
+
+export interface ErrorContext {
+    init?: RequestInit
+}`);
+  });
 });
